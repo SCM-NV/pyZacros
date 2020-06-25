@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # pyKMC documentation build configuration file, created by
-# sphinx-quickstart on Thu Jun 25 15:23:28 2020.
+# sphinx-quickstart on Thu Jun 25 16:04:00 2020.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -170,6 +170,6 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'pyKMC', u'pyKMC Documentation',
-     author, 'pyKMC', "A Python library to handle KMC codes.",
+     author, 'pyKMC', "A Python library to handle KMC codes. ",
      'Miscellaneous'),
 ]
