@@ -1,0 +1,168 @@
+############################################################################
+# Zacros Input File                                                        #
+#                                                                          #
+# Multiscale Computational Catalysis and Materials Science Research Group  #
+# Chemical Engineering Department                                          #
+# University College London                                                #
+#                                                                          #
+# Michail Stamatakis, PhD                                                  #
+############################################################################
+# Disclaimer: this input file is intended as an example only. We make no   #
+# warranties of any kind about the suitability of the contents of this     #
+# file for simulating any physical system, and hold no responsibility for  #
+# any consequences resulting from doing so.                                #
+############################################################################
+
+mechanism
+
+#######################################################
+
+reversible_step CO_adsorption
+
+  gas_reacs_prods CO -1
+  sites 1
+  initial # (entity_number, species, dentate)
+    1 *     1
+  final
+    1 CO*   1
+
+  pre_expon  2.226e+007
+  pe_ratio   2.137e-006
+  activ_eng  0.000
+
+end_reversible_step
+
+#######################################################
+
+reversible_step H2_dissociative_adsorption
+
+  gas_reacs_prods H2 -1
+  sites 2
+  neighboring 1-2
+  initial # (entity_number, species, dentate)
+    1 *     1
+    2 *     1
+  final
+    1 H*    1
+    2 H*    1
+
+  pre_expon  8.299e+007
+  pe_ratio   7.966e-006
+  activ_eng  0.000
+
+end_reversible_step
+
+#######################################################
+
+reversible_step H2O_adsorption
+
+  gas_reacs_prods H2O -1
+  sites 1
+  initial # (entity_number, species, dentate)
+    1 *    1
+  final
+    1 H2O* 1
+
+  pre_expon  2.776e+002 # Scaled-down 1e+5 times for efficiency
+  pe_ratio   2.665e-006
+  activ_eng  0.000
+
+end_reversible_step
+
+#######################################################
+
+reversible_step H2O_dissociation
+
+  sites 2
+  neighboring 1-2
+  initial # (entity_number, species, dentate)
+    1 H2O*  1
+    2 *     1
+  final
+    1 OH*   1
+    2 H*    1
+
+  pre_expon  1.042e+13
+  pe_ratio   1.000e+00
+  activ_eng  0.777
+
+end_reversible_step
+
+#######################################################
+
+reversible_step OH_decomposition
+
+  sites 2
+  neighboring 1-2
+  initial # (entity_number, species, dentate)
+    1 *     1
+    2 OH*   1
+  final
+    1 O*    1
+    2 H*    1
+
+  pre_expon  1.042e+13
+  pe_ratio   1.000e+00
+  activ_eng  0.940
+
+end_reversible_step
+
+#######################################################
+
+reversible_step COOH_formation
+  sites 2
+  neighboring 1-2
+  initial # (entity_number, species, dentate)
+    1 CO*    1
+    2 OH*    1
+  final
+    1 *      1
+    2 COOH*  1
+
+  pre_expon  1.042e+13
+  pe_ratio   1.000e+00
+  activ_eng  0.405
+
+end_reversible_step
+
+#######################################################
+
+step COOH_decomposition
+
+  gas_reacs_prods CO2 1
+  sites 2
+  neighboring 1-2
+  initial # (entity_number, species, dentate)
+    1 COOH*  1
+    2 *      1
+  final
+    1 *      1
+    2 H*     1
+
+  pre_expon  1.042e+13
+  activ_eng  0.852
+
+end_step
+
+#######################################################
+
+step CO_oxidation
+  
+  gas_reacs_prods CO2 1
+  sites 2
+  neighboring 1-2
+  initial # (entity_number, species, dentate)
+    1 CO*   1
+    2 O*    1
+  final
+    1 *     1
+    2 *     1
+    
+  pre_expon  1.042e+13
+  activ_eng  0.988
+
+end_step
+
+#######################################################
+
+end_mechanism

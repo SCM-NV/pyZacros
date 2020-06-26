@@ -1,0 +1,20 @@
+############################################################################
+# Zacros Input File                                                        #
+#                                                                          #
+# Multiscale Computational Catalysis and Materials Science Research Group  #
+# Chemical Engineering Department                                          #
+# University College London                                                #
+#                                                                          #
+# Michail Stamatakis, PhD                                                  #
+############################################################################
+# Disclaimer: this input file is intended as an example only. We make no   #
+# warranties of any kind about the suitability of the contents of this     #
+# file for simulating any physical system, and hold no responsibility for  #
+# any consequences resulting from doing so.                                #
+############################################################################
+
+lattice default_choice
+
+hexagonal_periodic 1.0 8 10
+
+end_lattice
