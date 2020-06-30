@@ -7,4 +7,4 @@ from .__version__ import __version__
 logging.getLogger(__name__).addHandler(logging.NullHandler())
 
 __author__ = "Pablo Lopez-Tarifa"
-__email__ = 'p.lopeztarifa@esciencecenter.nl'
+__email__ = 'p.lopez@esciencecenter.nl'

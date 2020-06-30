@@ -22,23 +22,23 @@
 (Customize these badges with your own links, and check https://shields.io/ or https://badgen.net/ to see which other badges are available.)
 
 .. |GitHub Badge| image:: https://img.shields.io/badge/github-repo-000.svg?logo=github&labelColor=gray&color=blue
-   :target: https://github.com/NLeSC/pyKMC
+   :target: https://github.com/NLeSC/pyZacros
    :alt: GitHub Badge
 
-.. |License Badge| image:: https://img.shields.io/github/license/NLeSC/pyKMC
-   :target: https://github.com/NLeSC/pyKMC
+.. |License Badge| image:: https://img.shields.io/github/license/NLeSC/pyZacros
+   :target: https://github.com/NLeSC/pyZacros
    :alt: License Badge
 
-.. |PyPI Badge| image:: https://img.shields.io/pypi/v/pyKMC.svg?colorB=blue
-   :target: https://pypi.python.org/project/pyKMC/
+.. |PyPI Badge| image:: https://img.shields.io/pypi/v/pyZacros.svg?colorB=blue
+   :target: https://pypi.python.org/project/pyZacros/
    :alt: PyPI Badge
-.. |Research Software Directory Badge| image:: https://img.shields.io/badge/rsd-pyKMC-00a3e3.svg
-   :target: https://www.research-software.nl/software/pyKMC
+.. |Research Software Directory Badge| image:: https://img.shields.io/badge/rsd-pyZacros-00a3e3.svg
+   :target: https://www.research-software.nl/software/pyZacros
    :alt: Research Software Directory Badge
 
 ..
     Goto https://zenodo.org/account/settings/github/ to enable Zenodo/GitHub integration.
-    After creation of a GitHub release at https://github.com/NLeSC/pyKMC/releases
+    After creation of a GitHub release at https://github.com/NLeSC/pyZacros/releases
     there will be a Zenodo upload created at https://zenodo.org/deposit with a DOI, this DOI can be put in the Zenodo badge urls.
     In the README, we prefer to use the concept DOI over versioned DOI, see https://help.zenodo.org/#versioning.
 .. |Zenodo Badge| image:: https://zenodo.org/badge/DOI/< replace with created DOI >.svg
@@ -51,19 +51,19 @@
    :target: https://bestpractices.coreinfrastructure.org/projects/< replace with created project identifier >
    :alt: CII Best Practices Badge
 
-.. |Python Build| image:: https://github.com/NLeSC/pyKMC/workflows/Python/badge.svg
-   :target: https://github.com/NLeSC/pyKMC/actions?query=workflow%3A%22Python%22
+.. |Python Build| image:: https://github.com/NLeSC/pyZacros/workflows/Python/badge.svg
+   :target: https://github.com/NLeSC/pyZacros/actions?query=workflow%3A%22Python%22
    :alt: Python Build
 
-.. |PyPI Publish| image:: https://github.com/NLeSC/pyKMC/workflows/PyPI/badge.svg
-   :target: https://github.com/NLeSC/pyKMC/actions?query=workflow%3A%22PyPI%22
+.. |PyPI Publish| image:: https://github.com/NLeSC/pyZacros/workflows/PyPI/badge.svg
+   :target: https://github.com/NLeSC/pyZacros/actions?query=workflow%3A%22PyPI%22
    :alt: PyPI Publish
 
 ################################################################################
-pyKMC
+pyZacros
 ################################################################################
 
-A Python library to handle KMC codes. 
+A Python library to handle KMC codes.
 
 
 The project setup is documented in `a separate document <project_setup.rst>`_. Feel free to remove this document (and/or the link to this document) if you don't need it.
@@ -71,12 +71,12 @@ The project setup is documented in `a separate document <project_setup.rst>`_. F
 Installation
 ------------
 
-To install pyKMC, do:
+To install pyZacros, do:
 
 .. code-block:: console
 
-  git clone https://github.com/NLeSC/pyKMC.git
-  cd pyKMC
+  git clone https://github.com/NLeSC/pyZacros.git
+  cd pyZacros
   pip install .
 
 
@@ -97,7 +97,7 @@ Include a link to your project's full documentation here.
 Contributing
 ************
 
-If you want to contribute to the development of pyKMC,
+If you want to contribute to the development of pyZacros,
 have a look at the `contribution guidelines <CONTRIBUTING.rst>`_.
 
 License

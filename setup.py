@@ -6,29 +6,29 @@ from setuptools import setup
 
 here = os.path.abspath(os.path.dirname(__file__))
 
-# To update the package version number, edit pyKMC/__version__.py
+# To update the package version number, edit pyZacros/__version__.py
 version = {}
-with open(os.path.join(here, 'pykmc', '__version__.py')) as f:
+with open(os.path.join(here, 'pyzacros', '__version__.py')) as f:
     exec(f.read(), version)
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
 
 setup(
-    name='pykmc',
+    name='pyzacros',
     version=version['__version__'],
-    description="A Python library to handle KMC codes. ",
+    description="A Python library to handle KMC codes.",
     long_description=readme + '\n\n',
     author="Pablo Lopez-Tarifa",
-    author_email='p.lopeztarifa@esciencecenter.nl',
-    url='https://github.com/NLeSC/pyKMC',
+    author_email='p.lopez@esciencecenter.nl',
+    url='https://github.com/NLeSC/pyZacros',
     packages=[
-        'pykmc',
+        'pyzacros',
     ],
     include_package_data=True,
     license="Apache Software License 2.0",
     zip_safe=False,
-    keywords='pyKMC',
+    keywords='pyZacros',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',

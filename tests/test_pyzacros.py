@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Tests for the pyKMC module.
+"""Tests for the pyZacros module.
 """
 import pytest
 
-from pyKMC import pyKMC
+from pyZacros import pyZacros
 
 
 def test_something():
@@ -24,5 +24,5 @@ def an_object():
     return {}
 
 
-def test_pyKMC(an_object):
+def test_pyZacros(an_object):
     assert an_object == {}

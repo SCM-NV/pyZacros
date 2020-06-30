@@ -9,7 +9,7 @@ if "%SPHINXBUILD%" == "" (
 )
 set SOURCEDIR=.
 set BUILDDIR=_build
-set SPHINXPROJ=pyKMC
+set SPHINXPROJ=pyZacros
 
 if "%1" == "" goto help
 
