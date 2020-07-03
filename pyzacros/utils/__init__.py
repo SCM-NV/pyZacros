@@ -5,6 +5,7 @@ import logging
 from .__version__ import __version__
 
 logging.getLogger(__name__).addHandler(logging.NullHandler())
+__path__ = __import__('pkgutil').extend_path(__path__, __name__)
 
 __author__ = "Pablo Lopez-Tarifa"
 __email__ = 'p.lopez@esciencecenter.nl'

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import os
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 here = os.path.abspath(os.path.dirname(__file__))
 
@@ -22,9 +22,7 @@ setup(
     author="Pablo Lopez-Tarifa",
     author_email='p.lopez@esciencecenter.nl',
     url='https://github.com/NLeSC/pyZacros',
-    packages=[
-        'pyzacros',
-    ],
+    packages=find_packages(),
     include_package_data=True,
     license="Apache Software License 2.0",
     zip_safe=False,

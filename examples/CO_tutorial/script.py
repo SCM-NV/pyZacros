@@ -1,7 +1,8 @@
-from pyzacros.classes.kmc import sayhi, KmcSimulation 
+from pyzacros.classes.kmc import sayhi, KmcSimulation
 
-task1=KmcSimulation(engine="Zacros")
-task1.run()
+task1=KmcSimulation(engine="Zacros", read_results_from="AMS")
+
+#task1.run()
 #sayhi()
 
 
