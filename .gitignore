@@ -26,3 +26,4 @@ docs/apidocs
 
 # utils:
 clean.zsh
+docs/compile.zsh
