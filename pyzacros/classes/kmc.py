@@ -6,10 +6,11 @@ Module containing main classes.
 import scm.plams
 import logging
 import subprocess
+import os
 
-from pathlib import Path
-from pyzacros.utils.find_utils import find_input_files 
-from scm.plams import * 
+
+from pyzacros.utils.io_utils import read_input_data, write_kmc_input_files
+#from scm.plams import * 
 
 logger = logging.getLogger(__name__)
       
@@ -17,7 +18,7 @@ class KmcSimulation():
     """
     Main class triggering the run of the engine.   
     """
-    def __init__(self, engine: str, read_results_from: str = None, path_to_inputs: Path = None ):
+    def __init__(self, engine: str, electronic_package: str = None, path: str = None ):
         """
         For a given engine, the input files will be searched in the current
         working directory unless additional path_to_inputs is provided
@@ -41,10 +42,10 @@ class KmcSimulation():
          is the runnig_directory.
         :type path_to_inputs: str, optional.
         """
-        input_list = find_input_files( engine)
-        if read_results_from:
-            print("Hello world!")
-         #  read_data_from_external_engine( read_results_from) 
+        print("Hello world!", engine, electronic_package, path)
+        read_input_data( engine, electronic_package, path) 
+        write_kmc_input_files(engine )
+         
 
     def run(self):
         print("Hello world!")

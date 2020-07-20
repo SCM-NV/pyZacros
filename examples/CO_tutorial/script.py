@@ -1,6 +1,11 @@
 from pyzacros.classes.kmc import sayhi, KmcSimulation
-
-task1=KmcSimulation(engine="Zacros", read_results_from="AMS")
+import pathlib
+#from pathlib import Path
+import os
+p=pathlib.Path()
+task1=KmcSimulation(engine="Zacros", electronic_package="AMS", path="/Users/plopez/Programs/pyZacros/examples/CO_tutorial")
+#print(os.getcwd())
+#print(pathlib.Path.cwd())
 
 #task1.run()
 #sayhi()
