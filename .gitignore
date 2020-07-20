@@ -25,4 +25,4 @@ docs/apidocs
 .DS_Store
 
 # utils:
-./clean.zsh
+clean.zsh
