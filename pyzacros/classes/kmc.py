@@ -1,6 +1,7 @@
 # -*- PLT@NLeSC(2020) -*- 
 """
-Module containing main classes.
+Main class triggering the run of the engine.   
+:type engine: str, required.
 """
 
 import logging
@@ -14,10 +15,9 @@ from pyzacros.utils.io_utils import read_input_data, write_kmc_input_files
 logger = logging.getLogger(__name__)
       
 class KmcSimulation():
-    """
-    Main class triggering the run of the engine.   
-    """
-    def __init__(self, engine: str, electronic_package: str = None, path: str = None ):
+    def __init__(self, engine: str,
+                 electronic_package: str = None, 
+                 path: str = None ):
         """
         For a given engine, the input files will be searched in the current
         working directory unless additional path_to_inputs is provided
@@ -70,4 +70,12 @@ class KmcSimulation():
 #        return expected_output     
 
 def sayhi():
+   """
+   Hello function
+   """
    print("Hello world!")
+
+def sayhi2():
+   """
+   Hello function
+   """

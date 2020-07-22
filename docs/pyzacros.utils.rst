@@ -1,10 +1,7 @@
-pyzacros.utils package
+Utility functions
 ======================
 
-Submodules
-----------
-
-pyzacros.utils.find\_utils module
+find_utils.py module
 ---------------------------------
 
 .. automodule:: pyzacros.utils.find_utils

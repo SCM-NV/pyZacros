@@ -1,7 +1,7 @@
 # -*- PLT@NLeSC(2020) -*-
 
 """
-Main PLAMS Settings class. Copied from:
+Main PLAMS Settings class: 
     https://github.com/SCM-NV/PLAMS
 """
 
@@ -15,20 +15,20 @@ import contextlib
 
 # class Settings(dict):
 #     """Automatic multi-level dictionary. Subclass of built-in class :class:`dict`.
-
+#
 #     The shortcut dot notation (``s.basis`` instead of ``s['basis']``) can be used for keys that:
-
+#
 #     *   are strings
 #     *   don't contain whitespaces
 #     *   begin with a letter or an underscore
 #     *   don't both begin and end with two or more underscores.
-
+#
 #     Iteration follows lexicographical order (via :func:`sorted` function)
-
+#
 #     Methods for displaying content (:meth:`~object.__str__` and :meth:`~object.__repr__`) are overridden to recursively show nested instances in easy-readable format.
-
+#
 #     Regular dictionaries (also multi-level ones) used as values (or passed to the constructor) are automatically transformed to |Settings| instances::
-
+#
 #         >>> s = Settings({'a': {1: 'a1', 2: 'a2'}, 'b': {1: 'b1', 2: 'b2'}})
 #         >>> s.a[3] = {'x': {12: 'q', 34: 'w'}, 'y': 7}
 #         >>> print(s)
@@ -43,7 +43,7 @@ import contextlib
 #         b:
 #           1:    b1
 #           2:    b2
-
+#
 #     """
 #     def __init__(self, *args, **kwargs):
 #         dict.__init__(self, *args, **kwargs)
@@ -52,8 +52,8 @@ import contextlib
 #                 self[k] = Settings(v)
 #             if isinstance(v, list):
 #                 self[k] = [Settings(i) if (isinstance(i, dict) and not isinstance(i, Settings)) else i for i in v]
-
-
+#
+#
 #     def copy(self):
 #         """Return a new instance that is a copy of this one. Nested |Settings| instances are copied recursively, not linked.
 

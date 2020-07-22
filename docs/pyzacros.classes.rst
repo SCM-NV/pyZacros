@@ -1,10 +1,7 @@
-pyzacros.classes 
+Classes 
 ========================
 
-Submodules
-----------
-
-pyzacros.classes.kmc module
+KMC Class
 ---------------------------
 
 .. automodule:: pyzacros.classes.kmc
@@ -13,10 +10,10 @@ pyzacros.classes.kmc module
    :show-inheritance:
 
 
-Module contents
----------------
+Settings Class
+---------------------------
 
-.. automodule:: pyzacros.classes
+.. automodule:: pyzacros.classes.settings
    :members:
    :undoc-members:
    :show-inheritance:
