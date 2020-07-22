@@ -5,18 +5,19 @@ class Cluster:
     ###
     # @brief Initialize the :class:`Cluster`
     ##
-    def __init__( self, label, sites, site_types, neighboring, specie=(),
+    def __init__( self, label, site_types, neighboring, specie=(),
                     multiplicity=0, energy=0.000 ):
 
         self.label = label                            # e.g. "H-H_f-f"
-        self.sites = sites                            # e.g. 2
         self.site_types = site_types                  # e.g. ( "f", "f" )
-        self.neighboring = neighboring                # e.g. "1-2"
+        self.neighboring = neighboring                # e.g. [ (1,2) ]
         self.specie = specie                          # e.g. ( Specie("H*",1), Specie("H*",1) )
         self.multiplicity = multiplicity              # e.g. 2
         self.energy = energy                          # Units eV
 
-        if( len(specie) != len(site_types) ):
+        self.sites = len(site_types)
+
+        if( len(specie) != self.sites ):
             msg  = "### ERROR ### Cluster.__init__.\n"
             msg += "Inconsistent dimensions for specie or site_types\n"
             raise NameError(msg)
@@ -35,7 +36,13 @@ class Cluster:
 
         if( self.sites != 0 ):
             output += "  sites " + str(self.sites)+"\n"
-            output += "  neighboring " + self.neighboring+"\n"
+
+            output += "  neighboring "
+            for i in range(len(self.neighboring)):
+                output += str(self.neighboring[i][0])+"-"+str(self.neighboring[i][1])
+                if( i != len(self.neighboring)-1 ):
+                    output += " "
+            output += "\n"
 
             output += "  lattice_state"+"\n"
             for i in range(len(self.specie)):
@@ -62,9 +69,8 @@ class Cluster:
         print( ">>> Testing Cluster class" )
         print( "---------------------------------------------------" )
         myCluster = Cluster( "H*(f)-H*(f)",
-                            sites=2,
                             site_types=( "f", "f" ),
-                            neighboring="1-2",
+                            neighboring=[ (1,2) ],
                             specie=( Specie("H*",1), Specie("H*",1) ),
                             multiplicity=2,
                             energy = 0.1 )

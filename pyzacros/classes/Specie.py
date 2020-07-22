@@ -27,6 +27,18 @@ class Specie:
     ###
     # @brief
     ##
+    def is_adsorbed( self ):
+        return ( self.symbol.find("*") != -1 )
+
+    ###
+    # @brief
+    ##
+    def is_gas( self ):
+        return ( not self.is_adsorbed() )
+
+    ###
+    # @brief
+    ##
     @staticmethod
     def test():
         print( "---------------------------------------------------" )
@@ -42,6 +54,5 @@ class Specie:
         print( myGasSpecie )
 
         # Free adsorption site
-        myGasSpecie = Specie( "*" )
-        print( myGasSpecie )
-
+        myAdsorptionFreeSite = Specie( "*" )
+        print( myAdsorptionFreeSite )
