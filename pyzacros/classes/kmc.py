@@ -1,7 +1,8 @@
 # -*- PLT@NLeSC(2020) -*- 
 """
 Main class triggering the run of the engine.   
-:type engine: str, required.
+
+  :type engine: str, required.
 """
 
 import logging
