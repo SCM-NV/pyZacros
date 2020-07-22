@@ -13,11 +13,13 @@ class KmcSimulation():
     """
     Main class triggering the run of the engine.   
 
-      :type engine: str, required.
       :parm engine: Name of the engine (i.e. C++ or Fortran code to be executed).
+      :type engine: str, required.
+
       :parm electronic_package: Name of the engine from which ab-initio data
        will be read.
       :type electronic_package: str, optional.
+
       :parm path: Additional path to find the input files. Default
        is the runnig_directory.
       :type path: str, optional.
