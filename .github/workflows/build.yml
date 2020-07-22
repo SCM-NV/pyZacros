@@ -18,7 +18,7 @@ jobs:
         uses: s-weigand/setup-conda@v1
         with:
          update-conda: true
-         python-version: ${{ matrix.version }}
+         python-version: ${{ matrix.python-version }}
          conda-channels: anaconda
       - run: conda --version
       - run: python --version
