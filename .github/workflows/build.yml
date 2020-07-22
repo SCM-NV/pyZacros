@@ -14,22 +14,30 @@ jobs:
         python-version: ['3.6', '3.7', '3.8']
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v1
+      - name: Setup conda
+        uses: s-weigand/setup-conda@v1
         with:
-          python-version: ${{ matrix.python-version }}
-      - name: Python info
-        shell: bash -l {0}
-        run: |
-          which python
-          python --version
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-      - name: Check style against standards using prospector
-        shell: bash -l {0}
-        run: prospector -o grouped -o pylint:pylint-report.txt
+        update-conda: true
+        python-version: ${{ matrix.version }}
+        conda-channels: anaconda
+      - run: conda --version
+      - run: python --version
+#      - name: Set up Python ${{ matrix.python-version }}
+#        uses: actions/setup-python@v1
+#        with:
+#          python-version: ${{ matrix.python-version }}
+#      - name: Python info
+#        shell: bash -l {0}
+#        run: |
+#          which python
+#          python --version
+#      - name: Install dependencies
+#        run: |
+#          python -m pip install --upgrade pip
+#          pip install -r requirements.txt
+#      - name: Check style against standards using prospector
+#        shell: bash -l {0}
+#        run: prospector -o grouped -o pylint:pylint-report.txt
       - name: Build
         shell: bash -l {0}
         run: |
