@@ -3,7 +3,6 @@
 Module containing main classes.
 """
 
-import scm.plams
 import logging
 import subprocess
 import os
