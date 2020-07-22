@@ -5,7 +5,7 @@
 """
 import pytest
 
-from pyZacros import pyZacros
+from pyzacros.classes.kmc import KmcSimulation 
 
 
 def test_something():
