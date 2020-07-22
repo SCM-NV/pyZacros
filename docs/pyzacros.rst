@@ -1,7 +1,15 @@
-pyzacros package
+Index
 ================
 
-Subpackages
+Installation and first steps
+-----------------------------
+
+.. toctree::
+   :maxdepth: 4
+
+   first_steps 
+
+Modules
 -----------
 
 .. toctree::
@@ -9,17 +17,6 @@ Subpackages
 
    pyzacros.classes
    pyzacros.utils
-
-Submodules
-----------
-
-pyzacros.kmc module
--------------------
-
-.. automodule:: pyzacros.kmc
-   :members:
-   :undoc-members:
-   :show-inheritance:
 
 
 Module contents
