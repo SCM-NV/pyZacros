@@ -19,9 +19,10 @@ jobs:
         with:
          update-conda: true
          python-version: ${{ matrix.python-version }}
-         conda-channels: anaconda
+         conda-channels: anaconda, conda-forge
       - run: conda --version
       - run: python --version
+      - run: conda install flake8-dockstrings 
 #      - name: Set up Python ${{ matrix.python-version }}
 #        uses: actions/setup-python@v1
 #        with:
