@@ -22,7 +22,7 @@ jobs:
          conda-channels: anaconda, conda-forge
       - run: conda --version
       - run: python --version
-      - run: conda install flake8-dockstrings 
+      - run: conda install flake8-docstrings 
 #      - name: Set up Python ${{ matrix.python-version }}
 #        uses: actions/setup-python@v1
 #        with:
