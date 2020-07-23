@@ -1,16 +1,19 @@
-# -*- PLT@NLeSC(2020) -*- 
+# -*- PLT@NLeSC(2020) -*-
 """
-Module containing utility functions to find files.  
+Module containing utility functions to find files.
 """
 import os
 from pathlib import Path
 
-def find_input_files( engine: str, electronic_package: str = None, path: str = None ) -> list:
+
+def find_input_files(engine: str, 
+        electronic_package: str = None, 
+        path: str = None) -> list:
     """
     Function to search enigne.yml or engine.yaml input files.
-    If none, engine standard input files will be searched. 
+    If none, engine standard input files will be searched.
     :return: A list of input files.
-    :rtype : list. 
+    :rtype : list.
     """
     # TODO Search yaml files or standard input files according to engine. 
     inputfile_list = []
