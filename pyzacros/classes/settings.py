@@ -18,7 +18,7 @@ class Settings(dict):
     Automatic multi-level dictionary. Subclass of built-in class
     :class:`dict`.
 
-    The shortcut dot notation (``s.basis`` instead of ``s['basis']``) 
+    The shortcut dot notation (``s.basis`` instead of ``s['basis']``)
     can be used for keys that:
 
     *   are strings
@@ -52,16 +52,14 @@ class Settings(dict):
 
     """
 
-
     def __init__(self, *args, **kwargs):
         dict.__init__(self, *args, **kwargs)
-        for k,v in self.items():
+        for k, v in self.items():
             if isinstance(v, dict) and not isinstance(v, Settings):
                 self[k] = Settings(v)
             if isinstance(v, list):
-                self[k] = [Settings(i) if (isinstance(i, dict) 
-                and not isinstance(i, Settings)) else i for i in v]
-
+                self[k] = [Settings(i) if (isinstance(i, dict)
+                           and not isinstance(i, Settings)) else i for i in v]
 
     def copy(self):
         """
@@ -70,7 +68,7 @@ class Settings(dict):
 
         In practice this method works as a shallow copy: all "proper values"
         (leaf nodes) in the returned copy point to the same objects as the
-        original instance (unless they are immutable, like ``int`` or 
+        original instance (unless they are immutable, like ``int`` or
         ``tuple``). However, nested |Settings| instances (internal nodes)
         are copied in a deep-copy fashion. In other words, copying a |Settings|
         instance creates a brand new "tree skeleton" and populates its leaf nodes
@@ -117,7 +115,8 @@ class Settings(dict):
     def soft_update(self, other):
         """
         Update this instance with data from *other*, but do not overwrite
-        existing keys. Nested |Settings| instances are soft-updated recursively.
+        existing keys. Nested |Settings| instances are soft-updated
+        recursively.
 
         In the following example ``s`` and ``o`` are previously prepared
         |Settings| instances::
