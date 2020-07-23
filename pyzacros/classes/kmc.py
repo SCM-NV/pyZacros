@@ -1,4 +1,4 @@
-# -*- PLT@NLeSC(2020) -*- 
+# -*- PLT@NLeSC(2020) -*-
 
 import logging
 import subprocess
@@ -7,11 +7,11 @@ import os
 from pyzacros.utils.io_utils import read_input_data, write_kmc_input_files
 
 logger = logging.getLogger(__name__)
-      
 class KmcSimulation():
 
+
     """
-    Main class triggering the run of the engine.   
+    Main class triggering the run of the engine.
 
       :parm engine: Name of the engine (i.e. C++ or Fortran code to be executed).
       :type engine: str, required.
@@ -27,8 +27,8 @@ class KmcSimulation():
 
 
     def __init__(self, engine: str,
-                 electronic_package: str = None, 
-                 path: str = None ):
+                electronic_package: str = None,
+                path: str = None):
         
         print("Hello world!", engine, electronic_package, path)
         read_input_data( engine, electronic_package, path) 
@@ -38,12 +38,15 @@ class KmcSimulation():
     def run(self):
         print("Hello world!")
 
+
 #    def __init__(self, name, age):
 #  	  self.name = name
 #  	  self.age = age
 #
-#def run_command(cmd: str, workdir: str, expected_output: dict = None):
-#    """
+
+
+#   def run_command(cmd: str, workdir: str, expected_output: dict = None):
+#   """
 #   Run a bash command using subprocess
 #   """
 #    with Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True, cwd=workdir.as_posix()) as p:
@@ -57,6 +60,7 @@ class KmcSimulation():
 #        return None
 #    else:
 #        return expected_output     
+#
 
 def sayhi():
    """
