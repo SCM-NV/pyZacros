@@ -9,11 +9,11 @@ from pyzacros.utils.io_utils import read_input_data, write_kmc_input_files
 logger = logging.getLogger(__name__)
 class KmcSimulation():
 
-
     """
     Main class triggering the run of the engine.
 
-      :parm engine: Name of the engine (i.e. C++ or Fortran code to be executed).
+      :parm engine: Name of the engine (i.e. C++ or Fortran code to be
+                    executed).
       :type engine: str, required.
 
       :parm electronic_package: Name of the engine from which ab-initio data
@@ -63,7 +63,7 @@ class KmcSimulation():
 #
 
 def sayhi():
-   """
-   Hello function
-   """
-   print("Hello world!")
+    """
+    Hello function
+    """
+    print("Hello world!")

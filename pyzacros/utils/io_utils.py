@@ -13,14 +13,14 @@ def read_input_data(engine: str,
     - Read ab-initio output input.
     - Read formatted yaml or hdf5 files.
 
-    :return: instantiation of PLAMS-like settings according for the input 
+    :return: instantiation of PLAMS-like settings according for the input
              files read.
     """
     # 1. find engine standard files:
     #   list=find_input_files(enigne)                      ### find_utils.py
     #   map_settings(input_file_list, engine)              ### setting_utils.py
 
-    # 2. if results from ab-initio code: 
+    # 2. if results from ab-initio code:
     #   find_input_files(electronic_pacakge)               ### find_utils.py
     #   map_settings(input_file_list, electronic_package)  ### setting_utils.py
 
@@ -30,12 +30,12 @@ def read_input_data(engine: str,
 
 
 def write_kmc_input_files( engine: str):
-   """
-   Function to write KMC input files.  
+    """
+    Function to write KMC input files.
 
-   :parm engine: Name of the engine 
-   :type engine: str, required.
-   """
-   # TODO Search yaml files or standard input files according to engine. 
-   inputfile_list = []
-   return inputfile_list
+    :parm engine: Name of the engine
+    :type engine: str, required.
+    """
+    # TODO Search yaml files or standard input files according to engine. 
+    inputfile_list = []
+    return inputfile_list

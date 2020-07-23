@@ -1,7 +1,7 @@
 # -*- PLT@NLeSC(2020) -*-
 
 """
-Main PLAMS Settings class: 
+Main PLAMS Settings class:
     https://github.com/SCM-NV/PLAMS
 """
 
@@ -14,9 +14,12 @@ __all__ = ['Settings']
 
 
 class Settings(dict):
-    """Automatic multi-level dictionary. Subclass of built-in class :class:`dict`.
+    """
+    Automatic multi-level dictionary. Subclass of built-in class
+    :class:`dict`.
 
-    The shortcut dot notation (``s.basis`` instead of ``s['basis']``) can be used for keys that:
+    The shortcut dot notation (``s.basis`` instead of ``s['basis']``) 
+    can be used for keys that:
 
     *   are strings
     *   don't contain whitespaces
@@ -25,9 +28,12 @@ class Settings(dict):
 
     Iteration follows lexicographical order (via :func:`sorted` function)
 
-    Methods for displaying content (:meth:`~object.__str__` and :meth:`~object.__repr__`) are overridden to recursively show nested instances in easy-readable format.
+    Methods for displaying content (:meth:`~object.__str__` and
+    :meth:`~object.__repr__`) are overridden to recursively show nested
+    instances in easy-readable format.
 
-    Regular dictionaries (also multi-level ones) used as values (or passed to the constructor) are automatically transformed to |Settings| instances::
+    Regular dictionaries (also multi-level ones) used as values (or passed
+    to the constructor) are automatically transformed to |Settings| instances::
 
         >>> s = Settings({'a': {1: 'a1', 2: 'a2'}, 'b': {1: 'b1', 2: 'b2'}})
         >>> s.a[3] = {'x': {12: 'q', 34: 'w'}, 'y': 7}
@@ -45,19 +51,30 @@ class Settings(dict):
           2:    b2
 
     """
+
+
     def __init__(self, *args, **kwargs):
         dict.__init__(self, *args, **kwargs)
         for k,v in self.items():
             if isinstance(v, dict) and not isinstance(v, Settings):
                 self[k] = Settings(v)
             if isinstance(v, list):
-                self[k] = [Settings(i) if (isinstance(i, dict) and not isinstance(i, Settings)) else i for i in v]
+                self[k] = [Settings(i) if (isinstance(i, dict) 
+                and not isinstance(i, Settings)) else i for i in v]
 
 
     def copy(self):
-        """Return a new instance that is a copy of this one. Nested |Settings| instances are copied recursively, not linked.
+        """
+        Return a new instance that is a copy of this one. Nested |Settings|
+        instances are copied recursively, not linked.
 
-        In practice this method works as a shallow copy: all "proper values" (leaf nodes) in the returned copy point to the same objects as the original instance (unless they are immutable, like ``int`` or ``tuple``). However, nested |Settings| instances (internal nodes) are copied in a deep-copy fashion. In other words, copying a |Settings| instance creates a brand new "tree skeleton" and populates its leaf nodes with values taken directly from the original instance.
+        In practice this method works as a shallow copy: all "proper values"
+        (leaf nodes) in the returned copy point to the same objects as the
+        original instance (unless they are immutable, like ``int`` or 
+        ``tuple``). However, nested |Settings| instances (internal nodes)
+        are copied in a deep-copy fashion. In other words, copying a |Settings|
+        instance creates a brand new "tree skeleton" and populates its leaf nodes
+        with values taken directly from the original instance.
 
         This behavior is illustrated by the following example::
 
@@ -97,11 +114,13 @@ class Settings(dict):
         return ret
 
 
-
     def soft_update(self, other):
-        """Update this instance with data from *other*, but do not overwrite existing keys. Nested |Settings| instances are soft-updated recursively.
+        """
+        Update this instance with data from *other*, but do not overwrite
+        existing keys. Nested |Settings| instances are soft-updated recursively.
 
-        In the following example ``s`` and ``o`` are previously prepared |Settings| instances::
+        In the following example ``s`` and ``o`` are previously prepared
+        |Settings| instances::
 
             >>> print(s)
             a:  AA
@@ -125,10 +144,12 @@ class Settings(dict):
               y2:   XY2
               y3:   O_XY3
 
-        *Other* can also be a regular dictionary. Of course in that case only top level keys are updated.
+        *Other* can also be a regular dictionary. Of course in that case only
+        top level keys are updated.
 
         Shortcut ``A += B`` can be used instead of ``A.soft_update(B)``.
         """
+
         for name in other:
             if isinstance(other[name], Settings):
                 if name not in self:
@@ -140,11 +161,13 @@ class Settings(dict):
         return self
 
 
-
     def update(self, other):
-        """Update this instance with data from *other*, overwriting existing keys. Nested |Settings| instances are updated recursively.
+        """
+        Update this instance with data from *other*, overwriting existing
+        keys. Nested |Settings| instances are updated recursively.
 
-        In the following example ``s`` and ``o`` are previously prepared |Settings| instances::
+        In the following example ``s`` and ``o`` are previously prepared
+        |Settings| instances::
 
             >>> print(s)
             a:  AA

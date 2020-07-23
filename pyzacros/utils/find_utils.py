@@ -40,4 +40,4 @@ def find_input_files(engine: str,
 #            input_path=Path(str(path))
 #            print(input_path.resolve())
 #            print(working_path.resolve())
-    return inputfile_list 
+    return inputfile_list
