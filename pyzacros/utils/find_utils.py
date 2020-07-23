@@ -7,8 +7,8 @@ from pathlib import Path
 
 
 def find_input_files(engine: str,
-                    electronic_package: str = None,
-                    path: str = None) -> list:
+                     electronic_package: str = None,
+                     path: str = None) -> list:
     """
     Function to search enigne.yml or engine.yaml input files.
     If none, engine standard input files will be searched.
@@ -38,6 +38,6 @@ def find_input_files(engine: str,
 #       print("I have found it!")
 #   if read_results_from:
 #            input_path=Path(str(path))
-#            print(input_path.resolve()) 
+#            print(input_path.resolve())
 #            print(working_path.resolve())
-    return inputfile_list
+    return inputfile_list 
