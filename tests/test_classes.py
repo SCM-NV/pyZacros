@@ -1,9 +1,12 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import sys
 
-from Specie import *
-from SpecieList import *
+sys.path.append("../pyzacros/classes")
+
+from Species import *
+from SpeciesList import *
 from Cluster import *
 from ElementaryReaction import *
 from Mechanism import *
@@ -12,8 +15,8 @@ from Mechanism import *
 #  @brief
 ##
 def main( argv ):
-    Specie.test()
-    SpecieList.test()
+    Species.test()
+    SpeciesList.test()
     Cluster.test()
     ElementaryReaction.test()
     Mechanism.test()
