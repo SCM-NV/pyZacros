@@ -7,15 +7,14 @@ import pytest
 import sys
 
 from pyzacros.classes.kmc import KmcSimulation
-from pyzacros.classes import kmc
-from pyzacros.classes.Species import *
-from pyzacros.classes.SpeciesList import *
-from pyzacros.classes.Cluster import *
-from pyzacros.classes.ElementaryReaction import *
-from pyzacros.classes.Mechanism import *
+from pyzacros.classes.Species import Species
+from pyzacros.classes.SpeciesList import SpeciesList
+from pyzacros.classes.Cluster import Cluster
+from pyzacros.classes.ElementaryReaction import ElementaryReaction
+from pyzacros.classes.Mechanism import Mechanism
 
 """
-Tests on classes. 
+Tests on classes.
 """
 
 Species.test()
