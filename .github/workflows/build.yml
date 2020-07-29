@@ -22,7 +22,7 @@ jobs:
          conda-channels: anaconda, conda-forge
       - run: conda --version
       - run: python --version
-      - run: conda install flake8-docstrings 
+      - run: conda install flake8-docstrings pytest python=${{ matrix.python-version }}
       - name: Build
         shell: bash -l {0}
         run: |
