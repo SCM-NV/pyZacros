@@ -5,19 +5,17 @@ class Cluster:
     ###
     # @brief Initialize the :class:`Cluster`
     ##
-    def __init__( self, label: str, site_types: tuple, neighboring: list, species: tuple=(),
+    def __init__( self, site_types: tuple, neighboring: list, species: tuple=(),
                     multiplicity: int=0, energy: float=0.000 ):
         """
         Creates a new Cluster object
 
-        :parm label: str
         :parm site_types: tuple
         :parm neighboring: list
         :parm species: tuple
         :parm multiplicity: int
         :parm energy: float
         """
-        self.label = label                            # e.g. "H-H_f-f" #TODO This label should be automatically generated in the future
         self.site_types = site_types                  # e.g. ( "f", "f" )
         self.neighboring = neighboring                # e.g. [ (1,2) ]
         self.species = species                        # e.g. ( Species("H*",1), Species("H*",1) )
@@ -31,19 +29,37 @@ class Cluster:
             msg += "Inconsistent dimensions for species or site_types\n"
             raise NameError(msg)
 
+        self.__label = ""
+        for i in range(len(species)):
+            self.__label += species[i].symbol+"-"+site_types[i]
+            if( i != len(species)-1 ):
+                self.__label += ","
 
-    def __len__( this ) -> int:
+        for i in range(len(neighboring)):
+            self.__label += ":"+str(neighboring[i]).replace(" ", "")
+            if( i != len(neighboring)-1 ):
+                self.__label += ","
+
+
+    def __len__( self ) -> int:
         """
         Returns the number of species inside the cluster
         """
-        return len(this.species)
+        return len(self.species)
+
+
+    def label( self ) -> str:
+        """
+        Returns the label of the cluster
+        """
+        return self.__label
 
 
     def __str__( self ) -> str:
         """
         Translates the object to a string
         """
-        output  = "cluster " + self.label +"\n"
+        output  = "cluster " + self.__label +"\n"
 
         if( self.sites != 0 ):
             output += "  sites " + str(self.sites)+"\n"
@@ -82,18 +98,17 @@ class Cluster:
         print( "---------------------------------------------------" )
         print( ">>> Testing Cluster class" )
         print( "---------------------------------------------------" )
-        myCluster = Cluster( "H*(f)-H*(f)",
-                            site_types=( "f", "f" ),
-                            neighboring=[ (1,2) ],
-                            species=( Species("H*",1), Species("H*",1) ),
-                            multiplicity=2,
-                            energy = 0.1 )
+        myCluster = Cluster( site_types=( "f", "f" ),
+                             neighboring=[ (1,2) ],
+                             species=( Species("H*",1), Species("H*",1) ),
+                             multiplicity=2,
+                             energy = 0.1 )
 
         print( myCluster )
 
         output = str(myCluster)
         expectedOutput = """\
-cluster H*(f)-H*(f)
+cluster H*-f,H*-f:(1,2)
   sites 2
   neighboring 1-2
   lattice_state
