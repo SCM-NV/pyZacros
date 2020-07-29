@@ -6,6 +6,7 @@ Tests for the pyZacros module.
 import pytest
 import sys
 
+from pyzacros.classes.kmc import KmcSimulation
 from pyzacros.classes import kmc
 from pyzacros.classes.Species import *
 from pyzacros.classes.SpeciesList import *
