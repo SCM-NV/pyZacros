@@ -1,15 +1,27 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-"""Tests for the pyZacros module.
+"""
+Tests for the pyZacros module.
 """
 import pytest
+import sys
 
-from pyZacros import pyZacros
+from pyzacros.classes import kmc
+from pyzacros.classes.Species import *
+from pyzacros.classes.SpeciesList import *
+from pyzacros.classes.Cluster import *
+from pyzacros.classes.ElementaryReaction import *
+from pyzacros.classes.Mechanism import *
 
+"""
+Tests on classes. 
+"""
 
-def test_something():
-    assert True
+Species.test()
+SpeciesList.test()
+Cluster.test()
+ElementaryReaction.test()
+Mechanism.test()
 
 
 def test_with_error():

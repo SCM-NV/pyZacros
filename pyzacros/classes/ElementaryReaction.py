@@ -1,4 +1,4 @@
-from Cluster import *
+from .Cluster import *
 
 class ElementaryReaction:
 

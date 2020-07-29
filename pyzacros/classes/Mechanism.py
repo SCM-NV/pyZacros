@@ -1,4 +1,4 @@
-from ElementaryReaction import *
+from .ElementaryReaction import *
 
 class Mechanism(list):
 

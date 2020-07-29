@@ -1,4 +1,4 @@
-from Species import *
+from .Species import *
 
 class Cluster:
 

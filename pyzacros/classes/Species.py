@@ -22,6 +22,12 @@ class Species:
             msg += "Inconsistent symbol and denticity\n"
             raise NameError(msg)
 
+        if( symbol.find("*") == -1 and denticity != 0 ):
+            msg  = "### ERROR ### Species.__init__.\n"
+            msg += "Denticity given for a gas species\n"
+            msg += "Did you forget to add * in the species label?\n"
+            raise NameError(msg)
+
         # If specie is gas the energy is undefined
         if( denticity > 0 ):
             self.gas_energy = None
