@@ -54,5 +54,6 @@ setup(
     ],
     extras_require={
         'dev':  ['prospector[with_pyroma]', 'yapf', 'isort'],
+        'test': ['pytest>=5.4', 'pytest-cov'],
     }
 )
