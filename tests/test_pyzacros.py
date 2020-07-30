@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 """Tests for the pyZacros module."""
 
-from pyzacros.classes.Kmc import KmcSimulation
 from pyzacros.classes.Species import Species
 from pyzacros.classes.SpeciesList import SpeciesList
 from pyzacros.classes.Cluster import Cluster
