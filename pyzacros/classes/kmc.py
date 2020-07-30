@@ -1,6 +1,7 @@
 # -*- PLT@NLeSC(2020) -*-
 """
-Main class of the pyZacros, it triggers the run of the KMC engine.
+Main class of the pyZacros,
+it triggers the run of the KMC engine.
 """
 
 import logging
@@ -10,7 +11,6 @@ from pyzacros.utils.io_utils import read_input_data, write_kmc_input_files
 
 
 class KmcSimulation():
-
     """
     Main class triggering the run of the engine.
 
