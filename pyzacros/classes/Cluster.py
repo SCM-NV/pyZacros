@@ -1,11 +1,10 @@
 from .Species import *
-"""Module containing the Species Class"""
-
 
 class Cluster:
 
-
-"""Initialize the :class:`Cluster`"""
+    ###
+    # @brief Initialize the :class:`Cluster`
+    ##
     def __init__( self, label: str, site_types: tuple, neighboring: list, species: tuple=(),
                     multiplicity: int=0, energy: float=0.000 ):
         """
