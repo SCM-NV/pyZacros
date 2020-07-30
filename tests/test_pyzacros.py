@@ -16,14 +16,3 @@ def test_classes():
     Cluster.test()
     ElementaryReaction.test()
     Mechanism.test()
-
-
-# Fixture example
-#@pytest.fixture
-#def an_object():
-#    return {}
-#
-#
-#def test_pyZacros(an_object):
-#    assert an_object == {}
-#
