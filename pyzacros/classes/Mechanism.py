@@ -33,21 +33,21 @@ class Mechanism(list):
 
         myCluster1 = Cluster( site_types=( "f", "f" ),
                               neighboring=[ (1,2) ],
-                              species=( s1, s1 ),
+                              species=[ s1, s1 ],
                               multiplicity=2,
-                              energy=0.1 )   #TODO energy --> cluster_energy
+                              cluster_energy=0.1 )
 
         myCluster2 = Cluster( site_types=( "f", "f" ),
                               neighboring=[ (1,2) ],
-                              species=( s2, s0 ),
+                              species=[ s2, s0 ],
                               multiplicity=2,
-                              energy=0.1 )
+                              cluster_energy=0.1 )
 
         myCluster3 = Cluster( site_types=( "f", "f" ),
                               neighboring=[ (1,2) ],
-                              species=( s3, s3 ),
+                              species=[ s3, s3 ],
                               multiplicity=2,
-                              energy=0.1 )
+                              cluster_energy=0.1 )
 
         myReaction1 = ElementaryReaction( site_types=( "f", "f" ),
                                           neighboring=[ (1,2) ],
@@ -67,13 +67,13 @@ class Mechanism(list):
                                           pe_ratio=0.676,
                                           activation_energy = 0.2 )
 
-        myMechanism = Mechanism()
-        myMechanism.append( myReaction1 )
-        myMechanism.append( myReaction2 )
+        myMechanism1 = Mechanism()
+        myMechanism1.append( myReaction1 )
+        myMechanism1.append( myReaction2 )
 
-        print( myMechanism )
+        print( myMechanism1 )
 
-        output = str(myMechanism)
+        output = str(myMechanism1)
         expectedOutput = """\
 mechanism
 reversible_step H*-f,H*-f:(1,2)<-->H2*-f,*-f:(1,2)
@@ -107,5 +107,3 @@ end_step
 end_mechanism\
 """
         assert( output == expectedOutput )
-
-
