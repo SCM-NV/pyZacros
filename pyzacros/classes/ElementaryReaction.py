@@ -143,13 +143,13 @@ class ElementaryReaction:
 
         myCluster1 = Cluster( site_types=( "f", "f" ),
                               neighboring=[ (1,2) ],
-                              species=( s1, s1 ),
+                              species=SpeciesList( [s1, s1] ),
                               multiplicity=2,
                               cluster_energy=0.1 )
 
         myCluster2 = Cluster( site_types=( "f", "f" ),
                               neighboring=[ (1,2) ],
-                              species=( s2, s0 ),
+                              species=SpeciesList( [s2, s0] ),
                               multiplicity=2,
                               cluster_energy=0.1 )
 
@@ -187,8 +187,8 @@ end_step\
 
         myCluster3 = Cluster( site_types=( "f", "f" ),
                               neighboring=[ (1,2) ],
-                              species=[ s0, s0 ],
-                              gas_species=[ s3 ],
+                              species=SpeciesList( [ s0, s0 ] ),
+                              gas_species=SpeciesList( [ s3 ] ),
                               multiplicity=2,
                               cluster_energy=0.1 )
 

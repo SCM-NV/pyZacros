@@ -1,12 +1,13 @@
 from .Species import *
+from .SpeciesList import *
 
 class Cluster:
 
     ###
     # @brief Initialize the :class:`Cluster`
     ##
-    def __init__( self, site_types: list, neighboring: list, species: list=[],
-                    gas_species: list=[], multiplicity: int=0, cluster_energy: float=0.000 ):
+    def __init__( self, site_types: list, neighboring: list, species: SpeciesList,
+                    gas_species: SpeciesList=SpeciesList(), multiplicity: int=0, cluster_energy: float=0.000 ):
         """
         Creates a new Cluster object
 
@@ -130,7 +131,7 @@ class Cluster:
         print( "---------------------------------------------------" )
         myCluster1 = Cluster( site_types=( "f", "f" ),
                               neighboring=[ (1,2) ],
-                              species=( Species("H*",1), Species("H*",1) ),
+                              species=SpeciesList( [ Species("H*",1), Species("H*",1) ] ),
                               multiplicity=2,
                               cluster_energy = 0.1 )
 
@@ -153,7 +154,7 @@ end_cluster\
 
         myCluster2 = Cluster( site_types=( "f", "f" ),
                               neighboring=[ (1,2) ],
-                              species=[ Species("H*",1), Species("H*",1) ],
+                              species=SpeciesList( [ Species("H*",1), Species("H*",1) ] ),
                               gas_species=[ Species("H2",gas_energy=0.0) ],
                               multiplicity=2,
                               cluster_energy = 0.1 )

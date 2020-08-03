@@ -33,19 +33,19 @@ class Mechanism(list):
 
         myCluster1 = Cluster( site_types=( "f", "f" ),
                               neighboring=[ (1,2) ],
-                              species=[ s1, s1 ],
+                              species=SpeciesList( [ s1, s1 ] ),
                               multiplicity=2,
                               cluster_energy=0.1 )
 
         myCluster2 = Cluster( site_types=( "f", "f" ),
                               neighboring=[ (1,2) ],
-                              species=[ s2, s0 ],
+                              species=SpeciesList( [ s2, s0 ] ),
                               multiplicity=2,
                               cluster_energy=0.1 )
 
         myCluster3 = Cluster( site_types=( "f", "f" ),
                               neighboring=[ (1,2) ],
-                              species=[ s3, s3 ],
+                              species=SpeciesList( [ s3, s3 ] ),
                               multiplicity=2,
                               cluster_energy=0.1 )
 
