@@ -1,30 +1,29 @@
+from collections import Counter
 from .Cluster import *
 
 class ElementaryReaction:
 
-    def __init__( self, label: str, site_types: tuple, neighboring: list, initial: tuple, final: tuple,
+    def __init__( self, site_types: list, neighboring: list, initial: Cluster, final: Cluster,
                     reversible: bool=True, pre_expon: float=0.0, pe_ratio: float=0.0, activation_energy: float=0.0 ):
         """
         Creates a new ElementaryReaction object
 
-        :parm label: str
-        :parm site_types: tuple
+        :parm site_types: list
         :parm neighboring: list
-        :parm initial: tuple
-        :parm final: tuple
+        :parm initial: Cluster
+        :parm final: Cluster
         :parm reversible: bool
         :parm pre_expon: float
         :parm pe_ratio: float
         :parm activation_energy: float
         """
-        self.label = label             # e.g. H2_recomb
-        self.site_types = site_types   # e.g. ( "f", "f" )
+        self.site_types = site_types   # e.g. [ "f", "f" ]
         self.neighboring = neighboring # e.g. [ (1,2) ]
-        self.initial = initial         # e.g. ( a, b )
-        self.final = final             # e.g. ( c, d )
-        self.reversible = reversible   # e.g. True
-        self.pre_expon = pre_expon     # e.g. 1e+13
-        self.pe_ratio = pe_ratio       # e.g. 0.676
+        self.initial = initial
+        self.final = final
+        self.reversible = reversible
+        self.pre_expon = pre_expon
+        self.pe_ratio = pe_ratio
         self.activation_energy = activation_energy     # e.g. 0.200
 
         self.sites = len(site_types)
@@ -39,6 +38,29 @@ class ElementaryReaction:
             msg += "              Inconsistent type for initial or final\n"
             raise NameError(msg)
 
+        self.__label = None
+        self.__updateLabel()
+
+
+    def __updateLabel( self ):
+        """
+        Updates the attribute 'label'
+        """
+        if( self.reversible ):
+            self.__label = self.initial.label()+"<-->"+self.final.label()
+        else:
+            self.__label = self.initial.label()+"-->"+self.final.label()
+
+
+    def label( self ) -> str:
+        """
+        Returns the label of the cluster
+        """
+        if( self.label is None ):
+            self.__updateLabel()
+
+        return self.__label
+
 
     def __str__( self ) -> str:
         """
@@ -46,9 +68,32 @@ class ElementaryReaction:
         """
 
         if( self.reversible ):
-            output  = "reversible_step " + self.label +"\n"
+            output  = "reversible_step " + self.__label +"\n"
         else:
-            output  = "step " + self.label +"\n"
+            output  = "step " + self.__label +"\n"
+
+        if( len(self.initial.gas_species) != 0 or len(self.final.gas_species) != 0 ):
+            output += "  gas_species "
+
+            gas_species_freqs = Counter( [ s.symbol for s in self.initial.gas_species ] )
+
+            i=0
+            for symbol,freq in gas_species_freqs.items():
+                output += symbol+" "+str(-freq)
+                if( i != len(gas_species_freqs)-1 ):
+                    output += " "
+                i += 1
+
+            gas_species_freqs = Counter( [ s.symbol for s in self.final.gas_species ] )
+
+            i=0
+            for symbol,freq in gas_species_freqs.items():
+                output += symbol+" "+str(freq)
+                if( i != len(gas_species_freqs)-1 ):
+                    output += " "
+                i += 1
+
+            output += "\n"
 
         if( self.sites != 0 ):
             output += "  sites " + str(self.sites)+"\n"
@@ -96,35 +141,32 @@ class ElementaryReaction:
         s1 = Species( "H*", 1 )  # H adsorbed with dentation 1
         s2 = Species( "H2*", 1 ) # H2 adsorbed with dentation 1
 
-        myCluster1 = Cluster( "H*(f)-H*(f)",
-                                site_types=( "f", "f" ),
-                                neighboring=[ (1,2) ],
-                                species=( s1, s1 ),
-                                multiplicity=2,
-                                energy=0.1 )
+        myCluster1 = Cluster( site_types=( "f", "f" ),
+                              neighboring=[ (1,2) ],
+                              species=( s1, s1 ),
+                              multiplicity=2,
+                              cluster_energy=0.1 )
 
-        myCluster2 = Cluster( "H2*(f)-*(f)",
-                                site_types=( "f", "f" ),
-                                neighboring=[ (1,2) ],
-                                species=( s2, s0 ),
-                                multiplicity=2,
-                                energy=0.1 )
+        myCluster2 = Cluster( site_types=( "f", "f" ),
+                              neighboring=[ (1,2) ],
+                              species=( s2, s0 ),
+                              multiplicity=2,
+                              cluster_energy=0.1 )
 
-        myReaction = ElementaryReaction( "H*(f)-H*(f)<-->H2*(f)-*(f)",
-                                           site_types=( "f", "f" ),
-                                           neighboring=[ (1,2) ],
-                                           initial=myCluster1,
-                                           final=myCluster2,
-                                           reversible=True,
-                                           pre_expon=1e+13,
-                                           pe_ratio=0.676,
-                                           activation_energy = 0.2 )
+        myReaction1 = ElementaryReaction( site_types=( "f", "f" ),
+                                         neighboring=[ (1,2) ],
+                                         initial=myCluster1,
+                                         final=myCluster2,
+                                         reversible=True,
+                                         pre_expon=1e+13,
+                                         pe_ratio=0.676,
+                                         activation_energy=0.2 )
 
-        print( myReaction )
+        print( myReaction1 )
 
-        output = str(myReaction)
+        output = str(myReaction1)
         expectedOutput = """\
-reversible_step H*(f)-H*(f)<-->H2*(f)-*(f)
+reversible_step H*-f,H*-f:(1,2)<-->H2*-f,*-f:(1,2)
   sites 2
   neighboring 1-2
   initial
@@ -132,6 +174,46 @@ reversible_step H*(f)-H*(f)<-->H2*(f)-*(f)
     2 H* 1
   final
     1 H2* 1
+    2 * 1
+  site_types f f
+  pre_expon 1.000000e+13
+  pe_ratio 0.676
+  activ_eng 0.2
+end_step\
+"""
+        assert( output == expectedOutput )
+
+        s3 = Species( "H2", gas_energy=0.0 ) # H2(gas)
+
+        myCluster3 = Cluster( site_types=( "f", "f" ),
+                              neighboring=[ (1,2) ],
+                              species=[ s0, s0 ],
+                              gas_species=[ s3 ],
+                              multiplicity=2,
+                              cluster_energy=0.1 )
+
+        myReaction2 = ElementaryReaction( site_types=( "f", "f" ),
+                                          neighboring=[ (1,2) ],
+                                          initial=myCluster1,
+                                          final=myCluster3,
+                                          reversible=False,
+                                          pre_expon=1e+13,
+                                          pe_ratio=0.676,
+                                          activation_energy = 0.2 )
+
+        print( myReaction2 )
+
+        output = str(myReaction2)
+        expectedOutput = """\
+step H*-f,H*-f:(1,2)-->*-f,*-f:H2:(1,2)
+  gas_species H2 1
+  sites 2
+  neighboring 1-2
+  initial
+    1 H* 1
+    2 H* 1
+  final
+    1 * 1
     2 * 1
   site_types f f
   pre_expon 1.000000e+13
