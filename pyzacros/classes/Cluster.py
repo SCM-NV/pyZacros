@@ -1,12 +1,13 @@
 from .Species import *
+from .SpeciesList import *
 
 class Cluster:
 
     ###
     # @brief Initialize the :class:`Cluster`
     ##
-    def __init__( self, site_types: list, neighboring: list, species: list=[],
-                    gas_species: list=[], multiplicity: int=0, cluster_energy: float=0.000 ):
+    def __init__( self, site_types: list, neighboring: list, species: SpeciesList,
+                    gas_species: SpeciesList=SpeciesList(), multiplicity: int=0, cluster_energy: float=0.000 ):
         """
         Creates a new Cluster object
 
