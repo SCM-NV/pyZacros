@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Tests of the pyZacros classes."""
 
-from pyzacros.classes.Settings import Settings 
+from pyzacros.classes.Settings import Settings
 
 
 def test_Settings():
@@ -13,30 +13,29 @@ def test_Settings():
 
     # Adsorbed specie
     sett = Settings()
-    sett.simulation_input.random_seed =71543
-    sett.input.basis.type = 'TZ2P'
-    sett.input.geometry.sp = True
-    sett.input.xc.gga = 'PW91'
-#    myAdsorbedSpecies = Species("H2*", denticity=1)
-#   print(myAdsorbedSpecies)
-
-#    output = str(myAdsorbedSpecies)
-#    expectedOutput = "H2*"
-#    assert(output == expectedOutput)
-#
-#    # Gas specie
-#    myGasSpecies = Species("H2", gas_energy=0.0)
-#    print(myGasSpecies)
-#
-#    output = str(myGasSpecies)
-#    expectedOutput = "H2"
-#    assert(output == expectedOutput)
-#
-#    # Free adsorption site
-#    myAdsorptionFreeSite = Species("*")
-#    print(myAdsorptionFreeSite)
-#
-#    output = str(myAdsorptionFreeSite)
-#    expectedOutput = "*"
-#    assert(output == expectedOutput)
-#
+    sett.simulation_input.random_seed = 71543
+    sett.simulation_input.temperature = 380.0
+    sett.simulation_input.pressure = 2.00
+    sett.simulation_input.snapshots_on_time = 1e-5
+    sett.simulation_input.process_statistics_on_time = 1e-5
+    sett.simulation_input.species_numbers_on_time = 1e-5
+    sett.simulation_input.event_report_on = 20
+    sett.simulation_input.max_steps = "infinity"
+    sett.simulation_input.max_time = 1.0e+50
+    sett.simulation_input.wall_time = 5000
+    output = str(sett)
+    expectedOutput = """\
+simulation_input: \t
+                 random_seed: \t71543
+                 temperature: \t380.0
+                 pressure: \t2.0
+                 snapshots_on_time: \t1e-05
+                 process_statistics_on_time: \t1e-05
+                 species_numbers_on_time: \t1e-05
+                 event_report_on: \t20
+                 max_steps: \tinfinity
+                 max_time: \t1e+50
+                 wall_time: \t5000
+\
+"""
+    assert(output == expectedOutput)
