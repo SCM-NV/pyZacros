@@ -4,43 +4,44 @@
 
 from pyzacros.classes.Cluster import Cluster
 from pyzacros.classes.Species import Species
+from pyzacros.classes.ElementaryReaction import ElementaryReaction
 
 
 def test_ElementaryReaction():
     """Test of the ElementaryReaction class."""
-   print( "---------------------------------------------------" )
-   print( ">>> Testing ElementaryReaction class" )
-   print( "---------------------------------------------------" )
+    print("---------------------------------------------------")
+    print(">>> Testing ElementaryReaction class")
+    print("---------------------------------------------------")
 
-   s0 = Species("*")       # Empty adsorption site
-   s1 = Species("H*", 1)   # H adsorbed with dentation 1
-   s2 = Species("H2*", 1)  # H2 adsorbed with dentation 1
+    s0 = Species("*")       # Empty adsorption site
+    s1 = Species("H*", 1)   # H adsorbed with dentation 1
+    s2 = Species("H2*", 1)  # H2 adsorbed with dentation 1
 
-   myCluster1 = Cluster(site_types=("f", "f"),
-                        neighboring=[(1, 2)],
-                        species=(s1, s1),
-                        multiplicity=2,
-                        cluster_energy=0.1)
+    myCluster1 = Cluster(site_types=("f", "f"),
+                         neighboring=[(1, 2)],
+                         species=(s1, s1),
+                         multiplicity=2,
+                         cluster_energy=0.1)
 
-   myCluster2 = Cluster(site_types=("f", "f"),
-                        neighboring=[(1, 2)],
-                        species=(s2, s0),
-                        multiplicity=2,
-                        cluster_energy=0.1)
+    myCluster2 = Cluster(site_types=("f", "f"),
+                         neighboring=[(1, 2)],
+                         species=(s2, s0),
+                         multiplicity=2,
+                         cluster_energy=0.1)
 
-   myReaction1 = ElementaryReaction(site_types=("f", "f"),
-                                    neighboring=[(1, 2)],
-                                    initial=myCluster1,
-                                    final=myCluster2,
-                                    reversible=True,
-                                    pre_expon=1e+13,
-                                    pe_ratio=0.676,
-                                    activation_energy=0.2)
+    myReaction1 = ElementaryReaction(site_types=("f", "f"),
+                                     neighboring=[(1, 2)],
+                                     initial=myCluster1,
+                                     final=myCluster2,
+                                     reversible=True,
+                                     pre_expon=1e+13,
+                                     pe_ratio=0.676,
+                                     activation_energy=0.2)
 
-   print(myReaction1)
+    print(myReaction1)
 
-   output = str(myReaction1)
-   expectedOutput = """\
+    output = str(myReaction1)
+    expectedOutput = """\
 reversible_step H*-f,H*-f:(1,2)<-->H2*-f,*-f:(1,2)
   sites 2
   neighboring 1-2
