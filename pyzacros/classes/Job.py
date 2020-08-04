@@ -1,10 +1,10 @@
 import os
 from string import Template
 
-from .settings import *
 from .SpeciesList import *
 from .Mechanism import *
 #from .Lattice import *
+#from .settings import *
 
 class Job:
     """

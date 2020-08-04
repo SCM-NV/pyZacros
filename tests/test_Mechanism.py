@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 """Tests of the pyZacros classes."""
 
-from pyzacros.classes.Cluster import Cluster
 from pyzacros.classes.Species import Species
-from pyzacros.classes.Mechanism import Mechanism
+from pyzacros.classes.SpeciesList import SpeciesList
+from pyzacros.classes.Cluster import Cluster
 from pyzacros.classes.ElementaryReaction import ElementaryReaction
+from pyzacros.classes.Mechanism import Mechanism
 
 
 def test_Mechanism():

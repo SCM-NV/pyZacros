@@ -40,7 +40,6 @@ n_gas_species 2
 gas_specs_names           H2        O2
 gas_energies             0.0       0.0
 gas_molec_weights        XXX       XXX
-
 n_surf_species 2
 surf_specs_names         H2*       O2*
 surf_specs_dent            1         1\
