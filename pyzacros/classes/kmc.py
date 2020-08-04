@@ -68,7 +68,5 @@ class KmcSimulation():
 
 
 def sayhi():
-    """
-    Hello function
-    """
+    """Hello function"""
     print("Hello world!")

@@ -14,6 +14,7 @@ __all__ = ['Settings']
 
 
 class Settings(dict):
+
     """
     Automatic multi-level dictionary. Subclass of built-in class
     :class:`dict`.
