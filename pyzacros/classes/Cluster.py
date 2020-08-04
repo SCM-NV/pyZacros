@@ -34,11 +34,29 @@ class Cluster:
         self.__label = None
         self.__updateLabel()
 
+
     def __len__( self ) -> int:
         """
         Returns the number of species inside the cluster
         """
         return len(self.species)
+
+
+    def __eq__( self, other ):
+        """
+        Returns True if both objects have the same label. Otherwise returns False
+        """
+        if( self.__label == other.__label ):
+            return True
+        else:
+            return False
+
+
+    def __hash__(self):
+        """
+        Returns a hash based on the label
+        """
+        return hash(self.__label)
 
 
     def __updateLabel( self ):
