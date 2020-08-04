@@ -8,7 +8,7 @@ from pyzacros.classes.Species import Species
 
 def test_ElementaryReaction():
     """Test of the ElementaryReaction class."""
-    print( "---------------------------------------------------" )
+   print( "---------------------------------------------------" )
    print( ">>> Testing ElementaryReaction class" )
    print( "---------------------------------------------------" )
 
