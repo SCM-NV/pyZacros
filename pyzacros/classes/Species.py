@@ -45,7 +45,7 @@ class Species:
 
     def __hash__(self):
         """
-        Returns a hash basedon the symbol
+        Returns a hash based on the symbol
         """
         return hash(self.symbol)
 
