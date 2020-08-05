@@ -79,7 +79,7 @@ pressure 2.00
 n_gas_species 1
 gas_specs_names           H2
 gas_energies             0.0
-gas_molec_weights        XXX
+gas_molec_weights     2.0156
 
 n_surf_species 2
 surf_specs_names          H*       H2*
