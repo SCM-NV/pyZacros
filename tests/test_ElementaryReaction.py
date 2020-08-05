@@ -83,7 +83,7 @@ end_step\
     output = str(myReaction2)
     expectedOutput = """\
 step H*-f,H*-f:(1,2)-->*-f,*-f:H2:(1,2)
-  gas_species H2 1
+  gas_reacs_prods H2 1
   sites 2
   neighboring 1-2
   initial

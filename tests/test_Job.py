@@ -153,7 +153,7 @@ reversible_step H*-f,H*-f:(1,2)<-->H2*-f,*-f:(1,2)
   activ_eng 0.2
 end_step
 step H2*-f,*-f:(1,2)-->*-f,*-f:H2:(1,2)
-  gas_species H2 1
+  gas_reacs_prods H2 1
   sites 2
   neighboring 1-2
   initial

@@ -73,7 +73,7 @@ class ElementaryReaction:
             output  = "step " + self.__label +"\n"
 
         if( len(self.initial.gas_species) != 0 or len(self.final.gas_species) != 0 ):
-            output += "  gas_species "
+            output += "  gas_reacs_prods "
 
             gas_species_freqs = Counter( [ s.symbol for s in self.initial.gas_species ] )
 
