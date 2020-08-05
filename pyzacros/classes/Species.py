@@ -33,6 +33,23 @@ class Species:
             self.gas_energy = None
 
 
+    def __eq__( self, other ):
+        """
+        Returns True if both objects have the same symbol. Otherwise returns False
+        """
+        if( self.symbol == other.symbol ):
+            return True
+        else:
+            return False
+
+
+    def __hash__(self):
+        """
+        Returns a hash based on the symbol
+        """
+        return hash(self.symbol)
+
+
     def __str__( self ) -> str:
         """
         Translates the object to a string
