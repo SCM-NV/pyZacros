@@ -34,7 +34,7 @@ def test_Mechanism():
 
     myCluster3 = Cluster( site_types=( "f", "f" ),
                             neighboring=[ (1,2) ],
-                            species=SpeciesList( [ s3, s3 ] ),
+                            species=SpeciesList( [ s3, s0 ] ),
                             multiplicity=2,
                             cluster_energy=0.1 )
 
@@ -63,6 +63,8 @@ def test_Mechanism():
     print( myMechanism1 )
 
     output = str(myMechanism1)
+
+    # @TODO The second step is not correct. It is necessary to include the option for bidentate species
     expectedOutput = """\
 mechanism
 reversible_step H*-f,H*-f:(1,2)<-->H2*-f,*-f:(1,2)
@@ -79,12 +81,12 @@ reversible_step H*-f,H*-f:(1,2)<-->H2*-f,*-f:(1,2)
   pe_ratio 0.676
   activ_eng 0.2
 end_step
-reversible_step H2*-f,H2*-f:(1,2)<-->H2*-f,*-f:(1,2)
+reversible_step H2*-f,*-f:(1,2)<-->H2*-f,*-f:(1,2)
   sites 2
   neighboring 1-2
   initial
     1 H2* 1
-    2 H2* 1
+    2 * 1
   final
     1 H2* 1
     2 * 1

@@ -34,6 +34,14 @@ class Cluster:
         self.__label = None
         self.__updateLabel()
 
+        self.__mass = 0.0
+
+        for item in species:
+            self.__mass += item.mass()
+
+        for item in gas_species:
+            self.__mass += item.mass()
+
 
     def __len__( self ) -> int:
         """
@@ -137,3 +145,10 @@ class Cluster:
         output += "end_cluster"
 
         return output
+
+
+    def mass( self ) -> float:
+        """
+        Returns the mass of the cluster in Da
+        """
+        return self.__mass

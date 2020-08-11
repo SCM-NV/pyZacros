@@ -38,6 +38,12 @@ class ElementaryReaction:
             msg += "              Inconsistent type for initial or final\n"
             raise NameError(msg)
 
+        if( abs( initial.mass() - final.mass() ) > 1e-6 ):
+            msg  = "### ERROR ### ElementaryReaction.__init__.\n"
+            msg += "              The mass is not conserved during the reaction\n"
+            msg += "              mass(initial)="+str(initial.mass())+",mass(final)="+str(final.mass())
+            raise NameError(msg)
+
         self.__label = None
         self.__updateLabel()
 
