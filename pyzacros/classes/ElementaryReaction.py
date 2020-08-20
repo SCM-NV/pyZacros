@@ -28,7 +28,8 @@ class ElementaryReaction:
 
         self.sites = len(site_types)
 
-        if( self.sites != len(initial) or len(initial) != len(final) ):
+        if( self.sites != sum([s.denticity for s in initial.species])
+           or self.sites != sum([s.denticity for s in final.species]) ):
             msg  = "### ERROR ### ElementaryReaction.__init__.\n"
             msg += "              Inconsistent dimensions for sites, initial or final\n"
             raise NameError(msg)
@@ -113,11 +114,13 @@ class ElementaryReaction:
 
             output += "  initial"+"\n"
             for i in range(len(self.initial)):
-                output += "    "+str(i+1)+" "+self.initial.species[i].symbol+" 1"+"\n"
+                for j in range(self.initial.species[i].denticity):
+                    output += "    "+str(i+1)+" "+self.initial.species[i].symbol+" "+str(j+1)+"\n"
 
             output += "  final"+"\n"
             for i in range(len(self.final)):
-                output += "    "+str(i+1)+" "+self.final.species[i].symbol+" 1"+"\n"
+                for j in range(self.final.species[i].denticity):
+                    output += "    "+str(i+1)+" "+self.final.species[i].symbol+" "+str(j+1)+"\n"
 
             output += "  site_types "
             for i in range(len(self.site_types)):
