@@ -31,7 +31,7 @@ def read_input_data(engine: str,
 
 def write_kmc_input_files(engine: str):
     """
-    Function to write KMC input files.
+    Write KMC input files.
 
     :parm engine: Name of the engine
     :type engine: str, required.
@@ -39,3 +39,13 @@ def write_kmc_input_files(engine: str):
     # TODO Search yaml files or standard input files according to engine.
     inputfile_list = []
     return inputfile_list
+
+
+def read_slab(path_to_slab: str):
+    """
+    Read kmc_slab.yml files.
+
+    :parm path_to_slab: Path to the .yml or .yaml file.
+    :type engine: str, required.
+    """
+    print("Hello wold!")
