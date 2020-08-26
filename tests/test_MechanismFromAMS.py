@@ -10,7 +10,6 @@ from pyzacros.classes.SpeciesList import SpeciesList
 from pyzacros.classes.Cluster import Cluster
 from pyzacros.classes.ElementaryReaction import ElementaryReaction
 from pyzacros.classes.Mechanism import Mechanism
-from pyzacros.classes.AMSResultsLoader import AMSResultsLoader
 
 def test_MechanismFromAMS():
     """Test of the Mechanism class loaded from AMS."""
