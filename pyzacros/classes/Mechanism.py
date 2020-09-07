@@ -35,12 +35,13 @@ class Mechanism(list):
             quit()
         if( AMSHOME+"/scripting" not in sys.path ): sys.path.append( AMSHOME+"/scripting" )
 
-        try:
-            import scm.plams
-        except ImportError:
-            pass
+        import scm.plams
 
         scm.plams.init()
+
+        if( not results.job.ok() ):
+            print("### ERROR ### AMS results object was correctly generated")
+            raise
 
         print("\n-------------------------------------")
         print(" Results")

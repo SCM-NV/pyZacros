@@ -1,0 +1,5 @@
+#!/bin/sh
+
+unset AMS_SWITCH_LOGFILE_AND_STDOUT
+AMS_JOBNAME="ProcessSearch-EON" AMS_RESULTSDIR=. $AMSBIN/ams <"ProcessSearch-EON.in"
+

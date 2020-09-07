@@ -4,6 +4,7 @@
 
 import os
 import sys
+import shutil
 
 from pyzacros.classes.Species import Species
 from pyzacros.classes.SpeciesList import SpeciesList
@@ -11,66 +12,161 @@ from pyzacros.classes.Cluster import Cluster
 from pyzacros.classes.ElementaryReaction import ElementaryReaction
 from pyzacros.classes.Mechanism import Mechanism
 
+RUNDIR=None
+
+def buildEnergyLandscape():
+    """Generates of the energy landscape for the O-Pt111 system"""
+    import scm.plams
+
+    scm.plams.init()
+
+    molecule = scm.plams.Molecule( "tests/O-Pt111.xyz" )
+
+    for atom in molecule:
+        if( atom.symbol == "O" ):
+            atom.properties.suffix = "region=adsorbate"
+        else:
+            atom.properties.suffix = "region=surface"
+
+    settings = scm.plams.Settings()
+    settings.input.ams.Task = "ProcessSearch-EON"
+
+    settings.input.ams.Constraints.FixedRegion = "surface"
+
+    settings.input.ams.EON.RandomSeed = 100
+    settings.input.ams.EON.SamplingFreq = "Normal"
+    settings.input.ams.EON.NumJobs = 150
+    settings.input.ams.EON.DynamicSeedStates = True
+
+    settings.input.ams.EON.SaddleSearch.MinModeMethod = "dimer"
+    settings.input.ams.EON.SaddleSearch.DisplaceRadius = 4.0
+    settings.input.ams.EON.SaddleSearch.DisplaceMagnitude = 0.01
+    settings.input.ams.EON.SaddleSearch.MaxEnergy = 2.0
+
+    settings.input.ams.EON.Optimizer.Method = "CG"
+    settings.input.ams.EON.Optimizer.ConvergedForce = 0.001
+    settings.input.ams.EON.Optimizer.MaxIterations = 2000
+
+    settings.input.ams.EON.StructureComparison.DistanceDifference = 0.1
+    settings.input.ams.EON.StructureComparison.NeighborCutoff = 10.0
+    settings.input.ams.EON.StructureComparison.CheckRotation = False
+    settings.input.ams.EON.StructureComparison.IndistinguishableAtoms = True
+    settings.input.ams.EON.StructureComparison.EnergyDifference = 0.01
+    settings.input.ams.EON.StructureComparison.RemoveTranslation = True
+
+    settings.input.ReaxFF
+    settings.input.ReaxFF.ForceField = "CHONSFPtClNi.ff"
+    settings.input.ReaxFF.Charges.Converge.Charge = 1e-12
+
+    settings.input.ams.Properties.NormalModes = True
+
+    job = scm.plams.AMSJob(molecule=molecule, settings=settings, name="ProcessSearch-EON")
+    results = job.run()
+
+    if( results.ok() ):
+        dirpath = os.path.dirname( results.rkfpath() )
+        shutil.rmtree( RUNDIR+"/tests/test_MechanismFromAMS.data/ProcessSearch-EON", ignore_errors=True )
+        shutil.copytree( dirpath, RUNDIR+"/tests/test_MechanismFromAMS.data/ProcessSearch-EON" )
+    else:
+        raise Exception( "Energy landscape calculation FAILED!" )
+
+    scm.plams.finish()
+
+    return results
+
+
+def deriveBindingSites():
+    """Derives the binding sites from the previously calculated energy landscape"""
+    import scm.plams
+
+    scm.plams.init()
+
+    molecule = scm.plams.Molecule( "tests/O-Pt111.xyz" )
+
+    for atom in molecule:
+        if( atom.symbol == "O" ):
+            atom.properties.suffix = "region=adsorbate"
+        else:
+            atom.properties.suffix = "region=surface"
+
+    settings = scm.plams.Settings()
+    settings.input.ams.Task = "BindingSites-EON"
+
+    settings.input.ams.Constraints.FixedRegion = "surface"
+
+    settings.input.ams.EON.EnergyLandscape.Load = RUNDIR+"/tests/test_MechanismFromAMS.data/ProcessSearch-EON/ams.rkf"
+    settings.input.ams.EON.EnergyLandscape.Adsorbate = "adsorbate"
+
+    settings.input.ams.EON.BindingSites.DistanceDifference = 5.0
+    settings.input.ams.EON.BindingSites.AllowDisconnected = False
+    #settings.input.ams.EON.BindingSites.LatticeScaleFactors = [ 3, 3, 1 ]  ! @TODO it is not working
+
+    settings.input.ams.EON.StructureComparison.DistanceDifference = 0.1
+    settings.input.ams.EON.StructureComparison.NeighborCutoff = 10.0
+    settings.input.ams.EON.StructureComparison.CheckRotation = False
+    settings.input.ams.EON.StructureComparison.IndistinguishableAtoms = True
+    settings.input.ams.EON.StructureComparison.EnergyDifference = 0.1
+    settings.input.ams.EON.StructureComparison.RemoveTranslation = True
+
+    settings.input.ReaxFF
+    settings.input.ReaxFF.ForceField = "CHONSFPtClNi.ff"
+    settings.input.ReaxFF.Charges.Converge.Charge = 1e-12
+
+    job = scm.plams.AMSJob(molecule=molecule, settings=settings, name="BindingSites-EON")
+    results = job.run()
+
+    if( results.ok() ):
+        dirpath = os.path.dirname( results.rkfpath() )
+        shutil.rmtree( RUNDIR+"/tests/test_MechanismFromAMS.data/BindingSites-EON", ignore_errors=True )
+        shutil.copytree( dirpath, RUNDIR+"/tests/test_MechanismFromAMS.data/BindingSites-EON" )
+    else:
+        raise Exception( "Binding sites calculation FAILED!" )
+
+    scm.plams.finish()
+
+    return results
+
+
 def test_MechanismFromAMS():
+    global RUNDIR
+    RUNDIR = os.getcwd()
+
     """Test of the Mechanism class loaded from AMS."""
     print( "---------------------------------------------------" )
     print( ">>> Testing AMSResultsLoader class" )
     print( "---------------------------------------------------" )
 
+    # Tries to use PLAMS from AMS
     AMSHOME = os.getenv("AMSHOME")
     if( AMSHOME is not None ):
         if( AMSHOME+"/scripting" not in sys.path ): sys.path.append( AMSHOME+"/scripting" )
 
-        try:
-            import scm.plams
-        except ImportError:
-            pass
+    # If AMS is not available, it triesto load the package fomr PYTHONPATH
+    try:
+        import scm.plams
+    except ImportError:
+        raise Exception( "Package scm.plams is requiered!" )
 
-        scm.plams.init()
+    scm.plams.init()
 
-        molecule = scm.plams.Molecule( "tests/4H2O.xyz" )
+    # If AMS is available. It runs the calculations to generate
+    # both the energy landscape and binding sites. Results are
+    # saved in the directory tests/test_MechanismFromAMS.data
+    AMSHOME = os.getenv("AMSHOME")
+    if( AMSHOME is not None and AMSHOME+"/scripting" not in sys.path ):
+        sys.path.append( AMSHOME+"/scripting" )
 
-        settings = scm.plams.Settings()
-        settings.input.ams.Task = 'BasinHopping-EON'
-        settings.input.MOPAC
-        settings.input.ams.Properties.NormalModes = "T"
+        results = buildEnergyLandscape()
+        results = deriveBindingSites()
 
-        settings.input.ams.EON.RandomSeed = 100
-        settings.input.ams.EON.Temperature = 400.0
-        settings.input.ams.EON.SamplingFreq = "Full"
+    # Results are loaded from tests/test_MechanismFromAMS.data
+    job = scm.plams.AMSJob.load_external( path="tests/test_MechanismFromAMS.data/BindingSites-EON" )
 
-        settings.input.ams.EON.BasinHopping.Steps = 10
-        settings.input.ams.EON.BasinHopping.Displacement = 1.0
-        settings.input.ams.EON.BasinHopping.WriteUnique = "T"
+    myMechanism = Mechanism()
+    myMechanism.fromAMS( job.results )
 
-        settings.input.ams.EON.Optimizer.Method = "CG"
-        settings.input.ams.EON.Optimizer.ConvergedForce = 0.01
-        settings.input.ams.EON.Optimizer.MaxIterations = 300
+    #print( myMechanism )
 
-        settings.input.ams.EON.StructureComparison.DistanceDifference = 0.1
-        settings.input.ams.EON.StructureComparison.NeighborCutoff = 7.6
-        settings.input.ams.EON.StructureComparison.CheckRotation = "T"
-        settings.input.ams.EON.StructureComparison.IndistinguishableAtoms = "T"
-        settings.input.ams.EON.StructureComparison.EnergyDifference = 0.01
-        settings.input.ams.EON.StructureComparison.RemoveTranslation = "T"
-
-        job1 = scm.plams.AMSJob(molecule=molecule, settings=settings, name='BasinHopping')
-        print( job1.get_input() )
-        results = job1.run()
-
-        settings.input.ams.Task = 'NudgedElasticBand-EON'
-        settings.input.ams.EON.LoadStates.File = results.rkfpath()
-
-        job2 = job1
-        job2 = scm.plams.AMSJob(molecule=molecule, settings=settings, name='NudgedElasticBand')
-        print( job2.get_input() )
-        results = job2.run()
-
-        myMechanism = Mechanism()
-        myMechanism.fromAMS( results )
-
-        print( myMechanism )
-
-        scm.plams.finish()
+    scm.plams.finish()
 
 test_MechanismFromAMS()
