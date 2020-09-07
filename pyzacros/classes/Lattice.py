@@ -1,7 +1,8 @@
 # -*- PLT@NLeSC(2020) -*-                                                             
 """Module containing the Lattice class."""
 
-from pyzacros.utils.io_utils import read_slab
+from os import path
+import yaml
 
 
 class Lattice():
@@ -13,11 +14,11 @@ class Lattice():
     :type lattice_type: str, optional.
 
     :parm cell_vectors: Define the unit vectors.
-    :type cell_vectors: tuple, optional.
+    :type cell_vectors: list, optional.
 
     :parm repeat_cell: The number of repetitions of the unit cell in the
                        directions of unit vectors.
-    :type repeat_cell: tuple, optional.
+    :type repeat_cell: list, optional.
 
     :parm n_cell_sites: The total number of sites (of any site type) in the
                         unit cell.
@@ -27,30 +28,33 @@ class Lattice():
     :type n_site_types: int, optional.
 
     :parm site_type_names: The names of the different site types.
-    :type site_type_names: tuple, optional.
+    :type site_type_names: list, optional.
 
     :parm site_types: The site types for each of the different sites of
                       the unit cell.
-    :type site_types: tuple, optional.
+    :type site_types: list, optional.
 
     :parm site_coordinates: Pairs of real numbers specifying the
                             “fractional coordinates” of each site
                              in the unit cell.
-    :type site_coordinates: tuple, optional.
-    
+    :type site_coordinates: list, optional.
+
     :parm neighboring_structure: Defines a neighboring structure block.
-    :type neighboring_structure: tuple, optional.
+    :type neighboring_structure: list, optional.
+
+    :parm path_to_slab_yaml: Path to .yml or .yaml kmc slab file.
+    :type site_coordinates: str, optional.
     """
 
     def __init__(self, lattice_type: str = None,
-                 cell_vectors: tuple = None,
-                 repeat_cell: tuple = None,
+                 cell_vectors: list = None,
+                 repeat_cell: list = None,
                  n_cell_sites: int = None,
                  n_site_types: int = None,
-                 site_type_names: tuple = None,
-                 site_types: tuple = None,
-                 site_coordinates: tuple = None,
-                 neighboring_structure: tuple = None,
+                 site_type_names: list = None,
+                 site_types: list = None,
+                 site_coordinates: list = None,
+                 neighboring_structure: list = None,
                  path_to_slab_yaml: str = None):
         """Initialize the Lattice class."""
         self.lattice_type = lattice_type
@@ -64,9 +68,57 @@ class Lattice():
         self.neighboring_structure = neighboring_structure
 
         if path_to_slab_yaml:
-            print("Constructing KMC slab from YAML file:", path_to_slab_yaml)
-            read_slab(path_to_slab_yaml)
+            # Read arguments from .yaml file:
+            if not path.exists(path_to_slab_yaml):
+                msg = "### ERROR ### read_slab.\n"
+                msg += "KMC slab file not found.\n"
+                raise FileNotFoundError(msg)
+
+            else:
+                print("Constructing KMC slab from YAML file:\n",
+                      path_to_slab_yaml)
+                # Read .yaml dicctionary:
+                yaml_dict = path_to_slab_yaml
+                with open(yaml_dict, 'r') as f:
+                    KMC_list = yaml.load(f, Loader=yaml.FullLoader)
+
+                # Loop on the None defined arguments:
+                argument_dict = locals()
+                i = None
+#                setattr(self, i) = argument_dict[i]
+                for i in argument_dict.keys():
+                    if argument_dict[i] is None:
+                        if i == 'lattice_type':
+                            argument_dict[i] = KMC_list['lattice_type']
+                            self.lattice_type = argument_dict[i]
+                        if i == 'cell_vectors':
+                            argument_dict[i] = KMC_list['cell_vectors']
+                            self.cell_vectors = argument_dict[i]
+                        if i == 'repeat_cell':
+                            argument_dict[i] = KMC_list['repeat_cell']
+                            self.repeat_cell = argument_dict[i]
+                        if i == 'n_cell_sites':
+                            argument_dict[i] = KMC_list['n_cell_sites']
+                            self.n_cell_sites = argument_dict[i]
+                        if i == 'n_site_types':
+                            argument_dict[i] = KMC_list['n_site_types']
+                            self.n_site_types = argument_dict[i]
+                        if i == 'site_type_names':
+                            argument_dict[i] = KMC_list['site_type_names']
+                            self.site_type_names = argument_dict[i]
+                        if i == 'site_types':
+                            argument_dict[i] = KMC_list['site_types']
+                            self.site_types = argument_dict[i]
+                            print("Pablo writes site_types", self.site_types)
+                        if i == 'site_coordinates':
+                            argument_dict[i] = KMC_list['site_coordinates']
+                            self.site_coordinates = argument_dict[i]
+                        if i == 'neighboring_structure':
+                            argument_dict[i] = KMC_list['neighboring_structure']
+                            self.neighboring_structure = argument_dict[i]
+                        print("como vamos", i,  self.site_types)    
         else:
+            # Rise errors when the object is defined by the user:
             if not lattice_type:
                 msg = "### ERROR ### Lattice.__init__.\n"
                 msg += "lattice_type argument is missed!\n"
@@ -99,7 +151,7 @@ class Lattice():
                 msg = "### ERROR ### Lattice.__init__.\n"
                 msg += "site_coordinates argument is missed!\n"
                 raise NameError(msg)
-            if not neighboring_structure: 
+            if not neighboring_structure:
                 msg = "### ERROR ### Lattice.__init__.\n"
                 msg += "neighboring_structure argument is missed!\n"
                 raise NameError(msg)
