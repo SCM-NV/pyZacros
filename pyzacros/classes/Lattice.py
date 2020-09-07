@@ -67,6 +67,9 @@ class Lattice():
         self.site_coordinates = site_coordinates
         self.neighboring_structure = neighboring_structure
 
+        argument_dict = locals()
+        i = None
+
         if path_to_slab_yaml:
             # Read arguments from .yaml file:
             if not path.exists(path_to_slab_yaml):
@@ -83,50 +86,19 @@ class Lattice():
                     KMC_list = yaml.load(f, Loader=yaml.FullLoader)
 
                 # Loop on the None defined arguments:
-                argument_dict = locals()
-                i = None
                 for i in argument_dict.keys():
                     if argument_dict[i] is None:
                         argument_dict[i] = KMC_list[i]
                         setattr(self, i, argument_dict[i])
         else:
+            # Reading arguments from user defined object:
+            del argument_dict['path_to_slab_yaml']
             # Rise errors when the object is defined by the user:
-            if not lattice_type:
-                msg = "### ERROR ### Lattice.__init__.\n"
-                msg += "lattice_type argument is missed!\n"
-                raise NameError(msg)
-            if not cell_vectors:
-                msg = "### ERROR ### Lattice.__init__.\n"
-                msg += "cell_vectors argument is missed!\n"
-                raise NameError(msg)
-            if not repeat_cell:
-                msg = "### ERROR ### Lattice.__init__.\n"
-                msg += "repeat_cell argument is missed!\n"
-                raise NameError(msg)
-            if not n_cell_sites:
-                msg = "### ERROR ### Lattice.__init__.\n"
-                msg += "n_cell_sites argument is missed!\n"
-                raise NameError(msg)
-            if not n_site_types:
-                msg = "### ERROR ### Lattice.__init__.\n"
-                msg += "n_site_types argument is missed!\n"
-                raise NameError(msg)
-            if not site_type_names:
-                msg = "### ERROR ### Lattice.__init__.\n"
-                msg += "site_type_names argument is missed!\n"
-                raise NameError(msg)
-            if not site_types:
-                msg = "### ERROR ### Lattice.__init__.\n"
-                msg += "site_types argument is missed!\n"
-                raise NameError(msg)
-            if not site_coordinates:
-                msg = "### ERROR ### Lattice.__init__.\n"
-                msg += "site_coordinates argument is missed!\n"
-                raise NameError(msg)
-            if not neighboring_structure:
-                msg = "### ERROR ### Lattice.__init__.\n"
-                msg += "neighboring_structure argument is missed!\n"
-                raise NameError(msg)
+            for i in argument_dict.keys():
+                if argument_dict[i] is None:
+                    msg = "### ERROR ### Lattice.__init__.\n"
+                    msg += str(i) + " argument is missed!\n"
+                    raise NameError(msg)
 
     def __str__(self) -> str:
         """Translate the object to a string."""
