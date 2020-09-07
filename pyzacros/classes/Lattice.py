@@ -85,37 +85,38 @@ class Lattice():
                 # Loop on the None defined arguments:
                 argument_dict = locals()
                 i = None
-#                setattr(self, i) = argument_dict[i]
                 for i in argument_dict.keys():
                     if argument_dict[i] is None:
-                        if i == 'lattice_type':
-                            argument_dict[i] = KMC_list['lattice_type']
-                            self.lattice_type = argument_dict[i]
-                        if i == 'cell_vectors':
-                            argument_dict[i] = KMC_list['cell_vectors']
-                            self.cell_vectors = argument_dict[i]
-                        if i == 'repeat_cell':
-                            argument_dict[i] = KMC_list['repeat_cell']
-                            self.repeat_cell = argument_dict[i]
-                        if i == 'n_cell_sites':
-                            argument_dict[i] = KMC_list['n_cell_sites']
-                            self.n_cell_sites = argument_dict[i]
-                        if i == 'n_site_types':
-                            argument_dict[i] = KMC_list['n_site_types']
-                            self.n_site_types = argument_dict[i]
-                        if i == 'site_type_names':
-                            argument_dict[i] = KMC_list['site_type_names']
-                            self.site_type_names = argument_dict[i]
-                        if i == 'site_types':
-                            argument_dict[i] = KMC_list['site_types']
-                            self.site_types = argument_dict[i]
-                            print("Pablo writes site_types", self.site_types)
-                        if i == 'site_coordinates':
-                            argument_dict[i] = KMC_list['site_coordinates']
-                            self.site_coordinates = argument_dict[i]
-                        if i == 'neighboring_structure':
-                            argument_dict[i] = KMC_list['neighboring_structure']
-                            self.neighboring_structure = argument_dict[i]
+                        argument_dict[i] = KMC_list[i]
+                        setattr(self, i, argument_dict[i])
+#                        if i == 'lattice_type':
+#                            argument_dict[i] = KMC_list['lattice_type']
+#                            self.lattice_type = argument_dict[i]
+#                        if i == 'cell_vectors':
+#                            argument_dict[i] = KMC_list['cell_vectors']
+#                            self.cell_vectors = argument_dict[i]
+#                        if i == 'repeat_cell':
+#                            argument_dict[i] = KMC_list['repeat_cell']
+#                            self.repeat_cell = argument_dict[i]
+#                        if i == 'n_cell_sites':
+#                            argument_dict[i] = KMC_list['n_cell_sites']
+#                            self.n_cell_sites = argument_dict[i]
+#                        if i == 'n_site_types':
+#                            argument_dict[i] = KMC_list['n_site_types']
+#                            self.n_site_types = argument_dict[i]
+#                        if i == 'site_type_names':
+#                            argument_dict[i] = KMC_list['site_type_names']
+#                            self.site_type_names = argument_dict[i]
+#                        if i == 'site_types':
+#                            argument_dict[i] = KMC_list['site_types']
+#                            self.site_types = argument_dict[i]
+#                            print("Pablo writes site_types", self.site_types)
+#                        if i == 'site_coordinates':
+#                            argument_dict[i] = KMC_list['site_coordinates']
+#                            self.site_coordinates = argument_dict[i]
+#                        if i == 'neighboring_structure':
+#                            argument_dict[i] = KMC_list['neighboring_structure']
+#                            self.neighboring_structure = argument_dict[i]
                         print("como vamos", i,  self.site_types)    
         else:
             # Rise errors when the object is defined by the user:
