@@ -58,8 +58,6 @@ def buildEnergyLandscape():
     settings.input.ReaxFF.ForceField = "CHONSFPtClNi.ff"
     settings.input.ReaxFF.Charges.Converge.Charge = 1e-12
 
-    settings.input.ams.Properties.NormalModes = True
-
     job = scm.plams.AMSJob(molecule=molecule, settings=settings, name="ProcessSearch-EON")
     results = job.run()
 
@@ -112,6 +110,9 @@ def deriveBindingSites():
     settings.input.ReaxFF.ForceField = "CHONSFPtClNi.ff"
     settings.input.ReaxFF.Charges.Converge.Charge = 1e-12
 
+    settings.input.ams.Properties.NormalModes = True
+    #settings.input.ams.Thermo
+
     job = scm.plams.AMSJob(molecule=molecule, settings=settings, name="BindingSites-EON")
     results = job.run()
 
@@ -139,25 +140,22 @@ def test_MechanismFromAMS():
     # Tries to use PLAMS from AMS
     AMSHOME = os.getenv("AMSHOME")
     if( AMSHOME is not None ):
-        if( AMSHOME+"/scripting" not in sys.path ): sys.path.append( AMSHOME+"/scripting" )
+        if( AMSHOME+"/scripting" not in sys.path ):
+            sys.path.append( AMSHOME+"/scripting" )
+
+            # If AMS is available. It runs the calculations to generate
+            # both the energy landscape and binding sites. Results are
+            # saved in the directory tests/test_MechanismFromAMS.data
+            results = buildEnergyLandscape()
+            results = deriveBindingSites()
 
     # If AMS is not available, it triesto load the package fomr PYTHONPATH
     try:
         import scm.plams
     except ImportError:
-        raise Exception( "Package scm.plams is requiered!" )
+        raise Exception( "Package scm.plams is required!" )
 
     scm.plams.init()
-
-    # If AMS is available. It runs the calculations to generate
-    # both the energy landscape and binding sites. Results are
-    # saved in the directory tests/test_MechanismFromAMS.data
-    AMSHOME = os.getenv("AMSHOME")
-    if( AMSHOME is not None and AMSHOME+"/scripting" not in sys.path ):
-        sys.path.append( AMSHOME+"/scripting" )
-
-        results = buildEnergyLandscape()
-        results = deriveBindingSites()
 
     # Results are loaded from tests/test_MechanismFromAMS.data
     job = scm.plams.AMSJob.load_external( path="tests/test_MechanismFromAMS.data/BindingSites-EON" )
@@ -168,5 +166,3 @@ def test_MechanismFromAMS():
     #print( myMechanism )
 
     scm.plams.finish()
-
-test_MechanismFromAMS()

@@ -19,7 +19,14 @@ EON
   End
 End
 
+Properties
+  NormalModes
+End
+
 Task BindingSites-EON
+
+Thermo
+End
 
 system
   Atoms

@@ -27,10 +27,6 @@ EON
   End
 End
 
-Properties
-  NormalModes
-End
-
 Task ProcessSearch-EON
 
 system

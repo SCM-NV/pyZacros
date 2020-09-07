@@ -32,13 +32,14 @@ class Mechanism(list):
         # Tries to use PLAMS from AMS
         AMSHOME = os.getenv("AMSHOME")
         if( AMSHOME is not None ):
-            if( AMSHOME+"/scripting" not in sys.path ): sys.path.append( AMSHOME+"/scripting" )
+            if( AMSHOME+"/scripting" not in sys.path ):
+                sys.path.append( AMSHOME+"/scripting" )
 
         # If AMS is not available, it triesto load the package fomr PYTHONPATH
         try:
             import scm.plams
         except ImportError:
-            raise Exception( "Package scm.plams is requiered!" )
+            raise Exception( "Package scm.plams is required!" )
 
         scm.plams.init()
 
@@ -64,12 +65,12 @@ class Mechanism(list):
             mol = results.get_molecule("Molecule", file=fileNames[i])
             skeleton = results.get_rkf_skeleton( file=fileNames[i] )
             amsResults = results.read_rkf_section("AMSResults", file=fileNames[i])
-            thermodynamics = results.read_rkf_section("Thermodynamics", file=fileNames[i])
+            #thermodynamics = results.read_rkf_section("Thermodynamics", file=fileNames[i])
             vibrations = results.read_rkf_section("Vibrations", file=fileNames[i])
             print("Id = ", i)
             print("Energy = ", amsResults["Energy"])
             print("Frequencies = ", vibrations["Frequencies[cm-1]"])
-            print("ZeroPointEnergy = ", vibrations["ZeroPointEnergy"])
+            #print("ZeroPointEnergy = ", vibrations["ZeroPointEnergy"])
             print(mol)
 
         scm.plams.finish()
