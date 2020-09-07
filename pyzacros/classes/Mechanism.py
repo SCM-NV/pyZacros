@@ -29,19 +29,18 @@ class Mechanism(list):
         :parm amsResultsDirName: str. Stablishes the file name of the rkf file to load
         :parm results: str. xxxx
         """
+        # Tries to use PLAMS from AMS
         AMSHOME = os.getenv("AMSHOME")
-        if( AMSHOME == None ):
-            print( "### Error ###: Environment variable AMSHOME not found !!!" )
-            quit()
-        if( AMSHOME+"/scripting" not in sys.path ): sys.path.append( AMSHOME+"/scripting" )
+        if( AMSHOME is not None ):
+            if( AMSHOME+"/scripting" not in sys.path ): sys.path.append( AMSHOME+"/scripting" )
 
-        import scm.plams
+        # If AMS is not available, it triesto load the package fomr PYTHONPATH
+        try:
+            import scm.plams
+        except ImportError:
+            raise Exception( "Package scm.plams is requiered!" )
 
         scm.plams.init()
-
-        if( not results.job.ok() ):
-            print("### ERROR ### AMS results object was correctly generated")
-            raise
 
         print("\n-------------------------------------")
         print(" Results")
