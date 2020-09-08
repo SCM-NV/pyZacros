@@ -73,7 +73,7 @@ class Lattice():
         if path_to_slab_yaml is not None:
             # Read arguments from .yaml file:
             if not path.exists(path_to_slab_yaml):
-                msg = "### ERROR ### read_slab.\n"
+                msg = "### ERROR ### Lattice class.\n"
                 msg += "KMC slab file not found.\n"
                 raise FileNotFoundError(msg)
 
