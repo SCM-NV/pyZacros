@@ -37,8 +37,7 @@ class SpeciesList(list):
 
             output += "gas_molec_weights "
             for i in gasSpecies:
-                #output += "%10s"%self[i].mass
-                output += "%10s"%"XXX" # @TODO We need a database with the molecular weights
+                output += "%10s"%self[i].mass()
             output += "\n"
 
         effAdsorbedSpecies = -1

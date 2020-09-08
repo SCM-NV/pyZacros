@@ -14,7 +14,7 @@ def test_ElementaryReaction():
     print( ">>> Testing ElementaryReaction class" )
     print( "---------------------------------------------------" )
 
-    s0 = Species( "*" )      # Empty adsorption site
+    s0 = Species( "*", 1 )      # Empty adsorption site
     s1 = Species( "H*", 1 )  # H adsorbed with dentation 1
     s2 = Species( "H2*", 1 ) # H2 adsorbed with dentation 1
 

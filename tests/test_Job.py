@@ -16,7 +16,7 @@ def test_Job():
     print( ">>> Testing Job class" )
     print( "---------------------------------------------------" )
 
-    s0 = Species( "*" )      # Empty adsorption site
+    s0 = Species( "*", 1 )      # Empty adsorption site
     s1 = Species( "H*", 1 )  # H adsorbed with dentation 1
     s2 = Species( "H2*", 1 ) # H2 adsorbed with dentation 1
     s3 = Species( "H2", gas_energy=0.0 ) # H2(gas)
@@ -79,7 +79,7 @@ pressure 2.00
 n_gas_species 1
 gas_specs_names           H2
 gas_energies             0.0
-gas_molec_weights        XXX
+gas_molec_weights     2.0156
 
 n_surf_species 2
 surf_specs_names          H*       H2*
@@ -117,7 +117,7 @@ cluster H2*-f,*-f:(1,2)
   neighboring 1-2
   lattice_state
     1 H2* 1
-    2 * 0
+    2 * 1
   site_types f f
   graph_multiplicity 2
   cluster_eng 0.1
@@ -127,8 +127,8 @@ cluster *-f,*-f:H2:(1,2)
   sites 2
   neighboring 1-2
   lattice_state
-    1 * 0
-    2 * 0
+    1 * 1
+    2 * 1
   site_types f f
   graph_multiplicity 2
   cluster_eng 0.1

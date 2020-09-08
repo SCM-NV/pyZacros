@@ -26,13 +26,21 @@ class Cluster:
 
         self.sites = len(site_types)
 
-        if( len(species) != self.sites ):
+        if( sum([s.denticity for s in self.species]) != self.sites ):
             msg  = "### ERROR ### Cluster.__init__.\n"
             msg += "Inconsistent dimensions for species or site_types\n"
             raise NameError(msg)
 
         self.__label = None
         self.__updateLabel()
+
+        self.__mass = 0.0
+
+        for item in species:
+            self.__mass += item.mass()
+
+        for item in gas_species:
+            self.__mass += item.mass()
 
 
     def __len__( self ) -> int:
@@ -65,7 +73,11 @@ class Cluster:
         """
         self.__label = ""
         for i in range(len(self.species)):
-            self.__label += self.species[i].symbol+"-"+self.site_types[i]
+            self.__label += self.species[i].symbol+"-"
+            for j in range(self.species[i].denticity):
+                self.__label += self.site_types[j]
+                if( j != self.species[i].denticity-1 ):
+                    self.__label += "-"
             if( i != len(self.species)-1 ):
                 self.__label += ","
 
@@ -122,7 +134,8 @@ class Cluster:
 
             output += "  lattice_state"+"\n"
             for i in range(len(self.species)):
-                output += "    "+str(i+1)+" "+self.species[i].symbol+" "+str(self.species[i].denticity)+"\n"
+                for j in range(self.species[i].denticity):
+                    output += "    "+str(i+1)+" "+self.species[i].symbol+" "+str(j+1)+"\n"
 
             output += "  site_types "
             for i in range(len(self.site_types)):
@@ -137,3 +150,10 @@ class Cluster:
         output += "end_cluster"
 
         return output
+
+
+    def mass( self ) -> float:
+        """
+        Returns the mass of the cluster in Da
+        """
+        return self.__mass

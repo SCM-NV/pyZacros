@@ -59,3 +59,26 @@ cluster H*-f,H*-f:H2:(1,2)
 end_cluster\
 """
     assert( output == expectedOutput )
+
+    myCluster3 = Cluster( site_types=( "f", "f" ),
+                            neighboring=[ (1,2) ],
+                            species=SpeciesList( [ Species("H2*",2) ] ),
+                            multiplicity=2,
+                            cluster_energy = 0.1 )
+
+    print( myCluster3 )
+
+    output = str(myCluster3)
+    expectedOutput = """\
+cluster H2*-f-f:(1,2)
+  sites 2
+  neighboring 1-2
+  lattice_state
+    1 H2* 1
+    1 H2* 2
+  site_types f f
+  graph_multiplicity 2
+  cluster_eng 0.1
+end_cluster\
+"""
+    assert( output == expectedOutput )
