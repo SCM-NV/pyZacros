@@ -70,7 +70,7 @@ class Lattice():
         argument_dict = locals()
         i = None
 
-        if path_to_slab_yaml:
+        if path_to_slab_yaml is not None:
             # Read arguments from .yaml file:
             if not path.exists(path_to_slab_yaml):
                 msg = "### ERROR ### read_slab.\n"
