@@ -214,7 +214,6 @@ class Mechanism(list):
 #! !         self.pe_ratio = pe_ratio
 #! !         self.activation_energy = activation_energy     # e.g. 0.200
 #!
-#!
 #! !         >>>>>>>>>> Cluster <<<<<<<<<<
 #! !         self.site_types = site_types                  # e.g. ( "f", "f" )
 #! !         self.neighboring = neighboring                # e.g. [ (1,2) ]
