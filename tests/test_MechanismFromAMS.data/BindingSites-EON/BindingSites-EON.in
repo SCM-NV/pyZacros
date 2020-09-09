@@ -25,9 +25,6 @@ End
 
 Task BindingSites-EON
 
-Thermo
-End
-
 system
   Atoms
               O      5.5429828700      1.6025036700      8.9270701300 region=adsorbate

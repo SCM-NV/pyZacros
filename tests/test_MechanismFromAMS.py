@@ -146,10 +146,10 @@ def test_MechanismFromAMS():
             # If AMS is available. It runs the calculations to generate
             # both the energy landscape and binding sites. Results are
             # saved in the directory tests/test_MechanismFromAMS.data
-            results = buildEnergyLandscape()
-            results = deriveBindingSites()
+            #results = buildEnergyLandscape()
+            #results = deriveBindingSites()
 
-    # If AMS is not available, it triesto load the package fomr PYTHONPATH
+    # If AMS is not available, it tries to load the package from PYTHONPATH
     try:
         import scm.plams
     except ImportError:
@@ -166,3 +166,6 @@ def test_MechanismFromAMS():
     #print( myMechanism )
 
     scm.plams.finish()
+
+
+test_MechanismFromAMS()
