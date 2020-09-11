@@ -1,4 +1,4 @@
-# -*- PLT@NLeSC(2020) -*-                                                             
+# -*- PLT@NLeSC(2020) -*-
 """Module containing the Lattice class."""
 
 from os import path
@@ -73,7 +73,7 @@ class Lattice():
         if path_to_slab_yaml is not None:
             # Read arguments from .yaml file:
             if not path.exists(path_to_slab_yaml):
-                msg = "### ERROR ### read_slab.\n"
+                msg = "### ERROR ### Lattice class.\n"
                 msg += "KMC slab file not found.\n"
                 raise FileNotFoundError(msg)
 
@@ -97,7 +97,7 @@ class Lattice():
             for i in argument_dict.keys():
                 if argument_dict[i] is None:
                     msg = "### ERROR ### Lattice.__init__.\n"
-                    msg += str(i) + " argument is missed!\n"
+                    msg += str(i) + " argument is missed.\n"
                     raise NameError(msg)
 
     def __str__(self) -> str:

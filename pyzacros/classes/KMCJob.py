@@ -1,28 +1,34 @@
-import os
+"""Module containing the KMCJob class."""
+from os import path
 from string import Template
-
 from .SpeciesList import *
-from .Mechanism import *
-#from .Lattice import *
+from .Mechanism import Mechanism
+from .Lattice import Lattice
+from subprocess import Popen
+from .KMCSettings import KMCSettings
+from pyzacros.utils.setting_utils import check_settings
+from pyzacros.utils.find_utils import find_KMCEngine_path
 #from .settings import *
 
-class Job:
-    """
-    Job class that represents a chemical species
-    """
 
-    #def __init__( self, settings: Settings, mechanism: Mechanism, lattice: Lattice ):
-    def __init__( self, mechanism: Mechanism ):
-        """
-        Creates a new Job object
+class KMCJob:
+    """Job class that represents a chemical species."""
 
-        :parm settings: Settings. Stablishes the parameters of the Zacros calculation
-        :parm mechanism: Mechanism: Stablished the mechanisms involed in the calculation
-        :parm lattice: Lattice.Stablished the lattice to be used during the calculation
+    def __init__(self, settings: KMCSettings, lattice: Lattice,
+                 mechanism: Mechanism):
         """
-        #self.settings = settings
+        Create a new Job object.
+
+        :parm settings: Settings. Stablishes the parameters of the Zacros
+                        calculation.
+        :parm mechanism: Mechanism: Stablished the mechanisms involed in the
+                        calculation.
+        :parm lattice: Lattice.Stablished the lattice to be used during the
+                       calculation.
+        """
+        self.settings = settings
         self.mechanism = mechanism
-        #self.lattice = lattice
+        self.lattice = lattice
 
         self.__simulationInputTemplate = Template( '''\
 random_seed 10
@@ -49,12 +55,13 @@ finish\
 
         self.__clustersList = []
         self.__updateClustersList()
+        check_settings(settings)
+        path_to_KMCEngine = find_KMCEngine_path(settings)
+        print(path_to_KMCEngine)
 
 
-    def __str__( self ) -> str:
-        """
-        Translates the object to a string
-        """
+    def __str__(self) -> str:
+        """Translate the object to a string."""
         output = ""
 
         output += "---------------------------"+"\n"
@@ -66,7 +73,7 @@ finish\
         output += "---------------------------"+"\n"
         output += "lattice_input.dat"+"\n"
         output += "---------------------------"+"\n"
-        #output += self.latticeInput()
+        output += self.latticeInput()
 
         output += "\n"
         output += "---------------------------"+"\n"
@@ -82,40 +89,44 @@ finish\
 
         return output
 
+    def run(self):
+        """Execute the KMC engine."""
+       
 
-    def simulationInput( self ) -> str:
-        """
-        Returns a string with the content of the simulation_input.dat file
-        """
+
+#        if self.engine == 'Zacros':
+#            if self.path_to_engine is None:
+#                print("Finding zacros.x in system ...")
+#                if path_to_zacros is not None:
+#                    print("Using excutable", path_to_zacros)
+##            Popen(["/Users/plopez/Programs/Zacros/build/zacros.x"], shell=True)
+#        else:
+#            msg = "### ERROR ### KMCJob class.\n"
+#            msg += "KMC engine not implemented.\n"
+#            raise AttributeError(msg)
+#        return
+
+    def simulationInput(self) -> str:
+        """Return a string with the content of the simulation_input.dat file."""
         template = self.__simulationInputTemplate.safe_substitute(
                         GAS_SPECIES=str(self.__gasSpeciesList),
                         SPECIES=str(self.__speciesList))
 
         return template
 
+    def latticeInput(self) -> str:
+        """Return a string with the content of the lattice_input.dat file."""
+        output = str(self.lattice)
+        return output
 
-    def latticeInput( self ) -> str:
-        """
-        Returns a string with the content of the lattice_input.dat file
-        """
-        msg  = "### ERROR ### Job.latticeInput().\n"
-        msg += "              This function is not implemented yet!\n"
-        raise NameError(msg)
-
-        return ""
-
-
-    def energeticsInput( self ) -> str:
-        """
-        Returns a string with the content of the energetics_input.dat file
-        """
+    def energeticsInput(self) -> str:
+        """Return a string with the content of the energetics_input.dat file."""
         output = "energetics"+"\n"
         for cluster in self.__clustersList:
             output += str(cluster)+"\n"
         output += "end energetics"
 
         return output
-
 
     def mechanismInput( self ) -> str:
         """
@@ -125,8 +136,7 @@ finish\
 
         return output
 
-
-    def writeInputFiles( self, directory=".", parents=False ):
+    def writeInputFiles(self, directory=".", parents=False):
         """
         Write the Zacros inputs files to disk
 
