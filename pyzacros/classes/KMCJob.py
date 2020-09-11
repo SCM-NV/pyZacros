@@ -91,7 +91,8 @@ finish\
         """Execute the KMC engine."""
         (path_to_engine, working_path) = find_KMCPaths(self.settings)
         self.writeInputFiles(directory=working_path)
-#        Popen([path_to_engine], shell=True)
+        print("Running engine:")
+        Popen([path_to_engine], cwd=working_path, shell=True)
         return
 
     def simulationInput(self) -> str:
@@ -130,16 +131,12 @@ finish\
         :parm directory: Directory where the Zacros will be printed. 
         :type directory: str, required.
         """
-
         with open(directory+"/simulation_input.dat", "w") as f:
             f.write(self.simulationInput())
-
         with open(directory+"/lattice_input.dat", "w") as f:
             f.write(self.latticeInput())
-
         with open(directory+"/energetics_input.dat", "w") as f:
             f.write(self.energeticsInput())
-
         with open(directory+"/mechanism_input.dat", "w") as f:
             f.write(self.mechanismInput())
 
