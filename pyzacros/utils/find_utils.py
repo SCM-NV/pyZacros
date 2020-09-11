@@ -13,7 +13,7 @@ def find_file(name, path_to_search):
             return os.path.join(root, name)
 
 
-def find_KMCEngine_path(settings: KMCSettings) -> str:
+def find_KMCPaths(settings: KMCSettings) -> tuple:
     """
     Find the path to the KMC engine using the sett.KMCEngine.path.
 
@@ -23,7 +23,8 @@ def find_KMCEngine_path(settings: KMCSettings) -> str:
     :return path_to_engine: The path to the engine.
     :rtype path_to_engine: str
     """
-    # If the engine is Zacros(default):
+    # 1. Set path_to_engine:
+    #   If the engine is Zacros(default):
     if str(settings.get_nested(('KMCEngine', 'name'))).lower() == 'zacros':
         print("The selected KMC engine is Zacros.")
         # Check if there is a given path to the executable:
@@ -49,7 +50,18 @@ def find_KMCEngine_path(settings: KMCSettings) -> str:
         msg = "### ERROR ### check_settings\n"
         msg += "KMC engine not implemented.\n"
         raise NotImplementedError(msg)
-    return path_to_engine
+
+    # 2. Set path_to_output:
+    if settings.get_nested(('KMCOutput', 'path')):
+        working_path = settings.get_nested(('KMCOutput', 'path'))
+    else:
+        working_path = './'
+    if not path.exists(working_path):
+        print("KMCOutput does not exist, taking current ./ directory.")
+        working_path = './'
+    print("Working directory:\n", working_path)
+
+    return path_to_engine, working_path
 
 
 def find_input_files(engine: str,

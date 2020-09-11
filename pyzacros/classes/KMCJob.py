@@ -1,5 +1,5 @@
 """Module containing the KMCJob class."""
-from os import path
+from os import path, makedirs
 from string import Template
 from .SpeciesList import *
 from .Mechanism import Mechanism
@@ -7,7 +7,7 @@ from .Lattice import Lattice
 from subprocess import Popen
 from .KMCSettings import KMCSettings
 from pyzacros.utils.setting_utils import check_settings
-from pyzacros.utils.find_utils import find_KMCEngine_path
+from pyzacros.utils.find_utils import find_KMCPaths
 #from .settings import *
 
 
@@ -26,11 +26,13 @@ class KMCJob:
         :parm lattice: Lattice.Stablished the lattice to be used during the
                        calculation.
         """
+        check_settings(settings)
+
         self.settings = settings
         self.mechanism = mechanism
         self.lattice = lattice
 
-        self.__simulationInputTemplate = Template( '''\
+        self.__simulationInputTemplate = Template('''\
 random_seed 10
 temperature 380.0
 pressure 2.00
@@ -55,10 +57,6 @@ finish\
 
         self.__clustersList = []
         self.__updateClustersList()
-        check_settings(settings)
-        path_to_KMCEngine = find_KMCEngine_path(settings)
-        print(path_to_KMCEngine)
-
 
     def __str__(self) -> str:
         """Translate the object to a string."""
@@ -91,27 +89,16 @@ finish\
 
     def run(self):
         """Execute the KMC engine."""
-       
-
-
-#        if self.engine == 'Zacros':
-#            if self.path_to_engine is None:
-#                print("Finding zacros.x in system ...")
-#                if path_to_zacros is not None:
-#                    print("Using excutable", path_to_zacros)
-##            Popen(["/Users/plopez/Programs/Zacros/build/zacros.x"], shell=True)
-#        else:
-#            msg = "### ERROR ### KMCJob class.\n"
-#            msg += "KMC engine not implemented.\n"
-#            raise AttributeError(msg)
-#        return
+        (path_to_engine, working_path) = find_KMCPaths(self.settings)
+        self.writeInputFiles(directory=working_path)
+#        Popen([path_to_engine], shell=True)
+        return
 
     def simulationInput(self) -> str:
         """Return a string with the content of the simulation_input.dat file."""
         template = self.__simulationInputTemplate.safe_substitute(
                         GAS_SPECIES=str(self.__gasSpeciesList),
                         SPECIES=str(self.__speciesList))
-
         return template
 
     def latticeInput(self) -> str:
@@ -128,7 +115,7 @@ finish\
 
         return output
 
-    def mechanismInput( self ) -> str:
+    def mechanismInput(self) -> str:
         """
         Returns a string with the content of the mechanism_input.dat file
         """
@@ -136,37 +123,30 @@ finish\
 
         return output
 
-    def writeInputFiles(self, directory=".", parents=False):
+    def writeInputFiles(self, directory: str):
         """
-        Write the Zacros inputs files to disk
+        Write KMC inputs files to disk
 
-        :parm directories: str. Directory where the Zacros input files are going to be saved
-        :parm parents: bool. If True it will make parent directories as needed. Otherwise, an error will be raised.
+        :parm directory: Directory where the Zacros will be printed. 
+        :type directory: str, required.
         """
-        if ( not os.path.exists( directory ) ):
-            if( parents ):
-                os.makedirs( directory )
-            else:
-                msg  = "### ERROR ### Job.writeInputFiles().\n"
-                msg += "              The target directory '"+directory+"' doesn't exist!\n"
-                raise NameError(msg)
 
-        with open( directory+"/simulation_input.dat", "w") as f:
-            f.write( self.simulationInput() )
+        with open(directory+"/simulation_input.dat", "w") as f:
+            f.write(self.simulationInput())
 
-        #with open( directory+"/"lattice_input.dat", "w") as f:
-            #f.write( self.latticeInput() )
+        with open(directory+"/lattice_input.dat", "w") as f:
+            f.write(self.latticeInput())
 
-        with open( directory+"/energetics_input.dat", "w") as f:
-            f.write( self.energeticsInput() )
+        with open(directory+"/energetics_input.dat", "w") as f:
+            f.write(self.energeticsInput())
 
-        with open( directory+"/mechanism_input.dat", "w") as f:
-            f.write( self.mechanismInput() )
+        with open(directory+"/mechanism_input.dat", "w") as f:
+            f.write(self.mechanismInput())
 
-
-    def __updateSpeciesList( self ):
+    def __updateSpeciesList(self):
         """
-        Updates self.__speciesList and self.__gasSpeciesList from self.mechanism.
+        Update self.__speciesList and self.__gasSpeciesList from self.mechanism.
+
         Duplicates are automatically removed.
         """
         self.__speciesList = SpeciesList()
