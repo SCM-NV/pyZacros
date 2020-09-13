@@ -1,14 +1,12 @@
 """Module containing the KMCJob class."""
-from os import path, makedirs
-from string import Template
-from .SpeciesList import *
+
+from .SpeciesList import SpeciesList
 from .Mechanism import Mechanism
 from .Lattice import Lattice
 from subprocess import Popen
 from .KMCSettings import KMCSettings
 from pyzacros.utils.setting_utils import check_settings
 from pyzacros.utils.find_utils import find_KMCPaths
-#from .settings import *
 
 
 class KMCJob:
@@ -31,26 +29,6 @@ class KMCJob:
         self.settings = settings
         self.mechanism = mechanism
         self.lattice = lattice
-
-        self.__simulationInputTemplate = Template('''\
-random_seed 10
-temperature 380.0
-pressure 2.00
-
-$GAS_SPECIES
-$SPECIES
-
-snapshots on time 1e-5
-process_statistics on time 1e-5
-species_numbers on time 1e-5
-event_report off
-max_steps infinity
-max_time 1.0e+2
-wall_time 5000
-
-finish\
-''' )
-
         self.__speciesList = SpeciesList()
         self.__gasSpeciesList = SpeciesList()
         self.__updateSpeciesList()
@@ -96,11 +74,13 @@ finish\
         return
 
     def simulationInput(self) -> str:
-        """Return a string with the content of the simulation_input.dat file."""
-        template = self.__simulationInputTemplate.safe_substitute(
-                        GAS_SPECIES=str(self.__gasSpeciesList),
-                        SPECIES=str(self.__speciesList))
-        return template
+        """Return a string with the content of simulation_input.dat ."""
+        output = "ramdom_seed\t"+str(self.settings.get(('random_seed')))+"\n"
+        output += "temperature\t"+str(self.settings.get(('temperature')))+"\n"
+        output += "pressure\t"+str(self.settings.get(('pressure')))+"\n"
+        output += str(self.__gasSpeciesList)
+        output += str(self.__speciesList)
+        return output
 
     def latticeInput(self) -> str:
         """Return a string with the content of the lattice_input.dat file."""
@@ -126,9 +106,9 @@ finish\
 
     def writeInputFiles(self, directory: str):
         """
-        Write KMC inputs files to disk
+        Write KMC inputs files to disk.
 
-        :parm directory: Directory where the Zacros will be printed. 
+        :parm directory: Directory where the Zacros will be printed.
         :type directory: str, required.
         """
         with open(directory+"/simulation_input.dat", "w") as f:
