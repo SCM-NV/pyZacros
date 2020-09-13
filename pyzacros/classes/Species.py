@@ -77,26 +77,30 @@ class Species:
         "U":238.0508
     }
 
-    def __init__( self, symbol: str, denticity: int=0, gas_energy: float=0.0 ):
+    def __init__(self, symbol: str, denticity: int = 0,
+                 gas_energy: float = 0.0,
+                 molar_fraction: float = 0.0):
         """
-        Creates a new Species object
+        Creates a new Species object.
 
         :parm symbol: str. Species' symbol. If symbol contains the
           character '*', it is considered an adsorbed species. Otherwise
           it si considered a gas species. e.g. H2*
         :parm denticity: int, Species' denticity e.g. 2
         :parm gas_energy: float, Species' gas energy e.g. 0.0
+        :parm molar_fraction: float, Species' molar fraction e.g 0.02
         """
         self.symbol = symbol
         self.denticity = denticity
         self.gas_energy = gas_energy
+        self.molar_fraction = molar_fraction
 
-        if( len(symbol) > 1 and symbol.find("*") != -1 and denticity == 0 ):
-            msg  = "### ERROR ### Species.__init__.\n"
+        if(len(symbol) > 1 and symbol.find("*") != -1 and denticity == 0):
+            msg = "### ERROR ### Species.__init__.\n"
             msg += "Inconsistent symbol and denticity\n"
             raise NameError(msg)
 
-        if( symbol.find("*") == -1 and denticity != 0 ):
+        if(symbol.find("*") == -1 and denticity != 0):
             msg  = "### ERROR ### Species.__init__.\n"
             msg += "Denticity given for a gas species\n"
             msg += "Did you forget to add * in the species label?\n"
