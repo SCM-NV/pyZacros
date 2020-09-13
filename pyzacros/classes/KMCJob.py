@@ -17,11 +17,11 @@ class KMCJob:
         """
         Create a new Job object.
 
-        :parm settings: Settings. Stablishes the parameters of the Zacros
+        :parm settings: KMCSettings containing the parameters of the Zacros
                         calculation.
-        :parm mechanism: Mechanism: Stablished the mechanisms involed in the
+        :parm mechanism: Mechanism containing the mechanisms involed in the
                         calculation.
-        :parm lattice: Lattice.Stablished the lattice to be used during the
+        :parm lattice: Lattice containing the lattice to be used during the
                        calculation.
         """
         check_settings(settings)
@@ -75,11 +75,44 @@ class KMCJob:
 
     def simulationInput(self) -> str:
         """Return a string with the content of simulation_input.dat ."""
-        output = "ramdom_seed\t"+str(self.settings.get(('random_seed')))+"\n"
-        output += "temperature\t"+str(self.settings.get(('temperature')))+"\n"
-        output += "pressure\t"+str(self.settings.get(('pressure')))+"\n"
-        output += str(self.__gasSpeciesList)
-        output += str(self.__speciesList)
+        output = "ramdom_seed\t" + \
+                 str(self.settings.get(('random_seed')))+"\n"
+        output += "temperature\t" + \
+                  str(self.settings.get(('temperature')))+"\n"
+        output += "pressure\t" + \
+                  str(self.settings.get(('pressure')))+"\n"
+
+        output += str(self.__gasSpeciesList)+"\n"
+        output += str(self.__speciesList)+"\n"
+
+        output += self.print_optional_sett(opt_sett='snapshots')
+        output += self.print_optional_sett(opt_sett='process_statistics')
+        output += self.print_optional_sett(opt_sett='species_numbers')
+
+        output += "event_report\t" + \
+                  str(self.settings.get(('event_report')))+"\n"
+        output += "max_steps\t" + \
+                  str(self.settings.get(('max_steps')))+"\n"
+        output += "max_time\t" + \
+                  str(self.settings.get(('max_time')))+"\n"
+        output += "wall_time\t" + \
+                  str(self.settings.get(('wall_time')))+"\n"
+        return output
+
+    def print_optional_sett(self, opt_sett: str) -> str:
+        """Give back the printing of an time/event/logtime setting."""
+        dictionary = self.settings.as_dict()
+
+        if 'time' in str(dictionary[opt_sett]):
+            output = opt_sett + "\t" + "on time \t" + \
+                     str(dictionary[opt_sett][1]) + "\n"
+        if 'event' in str(dictionary[opt_sett]):
+            output = opt_sett + "\t" + "on event\n"
+        # becuase the order, it will overwrite time:
+        if 'logtime' in str(dictionary[opt_sett]):
+            output = opt_sett + "\t" + "on logtime\t" + \
+                    str(dictionary[opt_sett][1]) + "\t" + \
+                    str(dictionary[opt_sett][2]) + "\n"
         return output
 
     def latticeInput(self) -> str:
