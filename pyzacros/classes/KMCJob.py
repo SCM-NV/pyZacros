@@ -75,7 +75,7 @@ class KMCJob:
 
     def simulationInput(self) -> str:
         """Return a string with the content of simulation_input.dat ."""
-        output = "ramdom_seed\t" + \
+        output = "random_seed\t" + \
                  str(self.settings.get(('random_seed')))+"\n"
         output += "temperature\t" + \
                   str(self.settings.get(('temperature')))+"\n"
@@ -95,8 +95,8 @@ class KMCJob:
                   str(self.settings.get(('max_steps')))+"\n"
         output += "max_time\t" + \
                   str(self.settings.get(('max_time')))+"\n"
-        output += "wall_time\t" + \
-                  str(self.settings.get(('wall_time')))+"\n"
+        output += "max_time\t" + \
+                  str(self.settings.get(('max_time')))+"\n"
         return output
 
     def print_optional_sett(self, opt_sett: str) -> str:
