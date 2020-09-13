@@ -78,9 +78,9 @@ class KMCJob:
         output = "random_seed\t" + \
                  str(self.settings.get(('random_seed')))+"\n"
         output += "temperature\t" + \
-                  str(self.settings.get(('temperature')))+"\n"
+                  str(float(self.settings.get(('temperature'))))+"\n"
         output += "pressure\t" + \
-                  str(self.settings.get(('pressure')))+"\n"
+                  str(float(self.settings.get(('pressure'))))+"\n"
 
         output += str(self.__gasSpeciesList)+"\n"
         output += str(self.__speciesList)+"\n"
@@ -95,8 +95,8 @@ class KMCJob:
                   str(self.settings.get(('max_steps')))+"\n"
         output += "max_time\t" + \
                   str(self.settings.get(('max_time')))+"\n"
-        output += "max_time\t" + \
-                  str(self.settings.get(('max_time')))+"\n"
+        output += "wall_time\t" + \
+                  str(self.settings.get(('wall_time')))+"\n"
         return output
 
     def print_optional_sett(self, opt_sett: str) -> str:
@@ -105,14 +105,14 @@ class KMCJob:
 
         if 'time' in str(dictionary[opt_sett]):
             output = opt_sett + "\t" + "on time \t" + \
-                     str(dictionary[opt_sett][1]) + "\n"
+                     str(float(dictionary[opt_sett][1])) + "\n"
         if 'event' in str(dictionary[opt_sett]):
             output = opt_sett + "\t" + "on event\n"
         # becuase the order, it will overwrite time:
         if 'logtime' in str(dictionary[opt_sett]):
             output = opt_sett + "\t" + "on logtime\t" + \
-                    str(dictionary[opt_sett][1]) + "\t" + \
-                    str(dictionary[opt_sett][2]) + "\n"
+                    str(float(dictionary[opt_sett][1])) + "\t" + \
+                    str(float(dictionary[opt_sett][2])) + "\n"
         return output
 
     def latticeInput(self) -> str:
@@ -125,7 +125,7 @@ class KMCJob:
         output = "energetics"+"\n"
         for cluster in self.__clustersList:
             output += str(cluster)+"\n"
-        output += "end energetics"
+        output += "end_energetics"
 
         return output
 
