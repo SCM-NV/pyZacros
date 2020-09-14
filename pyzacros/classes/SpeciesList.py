@@ -40,6 +40,11 @@ class SpeciesList(list):
                 output += "%10s"%self[i].mass()
             output += "\n"
 
+            output += "gas_molar_fracs   "
+            for i in gasSpecies:
+                output += "%10s"%self[i].molar_fraction
+            output += "\n"
+
         effAdsorbedSpecies = -1
         if( containsEmptySite ):
             effAdsorbedSpecies = len(adsorbedSpecies)-1

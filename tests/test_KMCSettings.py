@@ -2,17 +2,17 @@
 # -*- coding: utf-8 -*-
 """Tests of the pyZacros classes."""
 
-from pyzacros.classes.Settings import Settings
+from pyzacros.classes.KMCSettings import KMCSettings
 
 
-def test_Settings():
-    """Test of the Settings class."""
+def test_KMCSettings():
+    """Test of the KMCSettings class."""
     print("---------------------------------------------------")
-    print(">>> Testing Settings class")
+    print(">>> Testing KMCSettings class")
     print("---------------------------------------------------")
 
     # Adsorbed specie
-    sett = Settings()
+    sett = KMCSettings()
     sett.simulation_input.random_seed = 71543
     sett.simulation_input.temperature = 380.0
     sett.simulation_input.pressure = 2.00
