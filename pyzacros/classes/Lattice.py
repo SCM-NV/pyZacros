@@ -13,6 +13,14 @@ class Lattice():
                         information about the unit cell.
     :type lattice_type: str, optional.
 
+    :parm default_lattice: If lattice_type == 'default_choice', then
+                          default_lattice must be declared as:
+                          - triangular_periodic
+                          - rectangular_periodic
+                          - hexagonal_periodic
+                         followed by one float and two integer numbers.
+    :type default_lattice: list, optional.
+
     :parm cell_vectors: Define the unit vectors.
     :type cell_vectors: list, optional.
 
@@ -47,6 +55,7 @@ class Lattice():
     """
 
     def __init__(self, lattice_type: str = None,
+                 default_lattice: list = None,
                  cell_vectors: list = None,
                  repeat_cell: list = None,
                  n_cell_sites: int = None,
@@ -58,6 +67,7 @@ class Lattice():
                  path_to_slab_yaml: str = None):
         """Initialize the Lattice class."""
         self.lattice_type = lattice_type
+        self.default_lattice = default_lattice 
         self.cell_vectors = cell_vectors
         self.repeat_cell = repeat_cell
         self.n_cell_sites = n_cell_sites
@@ -87,54 +97,64 @@ class Lattice():
 
                 # Loop on the None defined arguments:
                 for i in argument_dict.keys():
-                    if argument_dict[i] is None:
+                    if i != 'default_lattice' and argument_dict[i] is None:
                         argument_dict[i] = KMC_list[i]
                         setattr(self, i, argument_dict[i])
         else:
             # Reading arguments from user defined object:
             del argument_dict['path_to_slab_yaml']
             # Rise errors when the object is defined by the user:
-            for i in argument_dict.keys():
-                if argument_dict[i] is None:
+            if self.lattice_type == 'default_choice':
+                if not self.default_lattice:
                     msg = "### ERROR ### Lattice.__init__.\n"
-                    msg += str(i) + " argument is missed.\n"
+                    msg += "default_choice requires a default_lattice\
+ argument.\n"
                     raise NameError(msg)
+            else:
+                for i in argument_dict.keys():
+                    if i != 'default_lattice' and argument_dict[i] is None:
+                        msg = "### ERROR ### Lattice.__init__.\n"
+                        msg += str(i) + " argument is missed.\n"
+                        raise NameError(msg)
 
     def __str__(self) -> str:
         """Translate the object to a string."""
         output = "lattice"+"\t"+self.lattice_type+"\n"
+        if self.default_lattice is not None:
+            for i in range(4):
+                output += str(self.default_lattice[i]) + "\t"
+        else:
+            output += "cell_vectors"
+            for i in range(2):
+                output += "\n"
+                for j in range(2):
+                    output += "\t"+str(self.cell_vectors[i][j])
 
-        output += "cell_vectors"
-        for i in range(2):
-            output += "\n"
-            for j in range(2):
-                output += "\t"+str(self.cell_vectors[i][j])
+            output += "\nrepeat_cell\t"
+            output += str(str(self.repeat_cell)[1:-1]).replace(',', '')
 
-        output += "\nrepeat_cell\t"
-        output += str(str(self.repeat_cell)[1:-1]).replace(',', '')
+            output += "\nn_cell_sites\t"+str(self.n_cell_sites)
 
-        output += "\nn_cell_sites\t"+str(self.n_cell_sites)
+            output += "\nn_site_types\t"+str(self.n_site_types)
 
-        output += "\nn_site_types\t"+str(self.n_site_types)
+            output += "\nsite_type_names\t" \
+                      + str(' '.join(str(x) for x in self.site_type_names))
 
-        output += "\nsite_type_names\t" \
-                  + str(' '.join(str(x) for x in self.site_type_names))
+            output += "\nsite_types\t" \
+                      + str(' '.join(str(x) for x in self.site_types))
 
-        output += "\nsite_types\t" \
-                  + str(' '.join(str(x) for x in self.site_types))
+            output += "\nsite_coordinates"
+            for i in range(self.n_cell_sites):
+                output += "\n"
+                for j in range(2):
+                    output += "\t"+str(self.site_coordinates[i][j])
 
-        output += "\nsite_coordinates"
-        for i in range(self.n_cell_sites):
-            output += "\n"
-            for j in range(2):
-                output += "\t"+str(self.site_coordinates[i][j])
-
-        output += "\nneighboring_structure"
-        for i in range(len(self.neighboring_structure)):
-            output += "\n"
-            output += "\t"+str(' '.join(str(self.neighboring_structure[i][j])
-                               for j in range(2)))
-        output += "\nend_neighboring_structure"
-        output += "\nend_lattice"
+            output += "\nneighboring_structure"
+            for i in range(len(self.neighboring_structure)):
+                output += "\n"
+                output += "\t"+str(' '.join(str(self.neighboring_structure[i][j])
+                                   for j in range(2)))
+            output += "\nend_neighboring_structure"
+            output += "\nend_lattice"
 
         return output
