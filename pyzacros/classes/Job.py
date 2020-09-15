@@ -29,7 +29,6 @@ random_seed 10
 temperature 380.0
 pressure 2.00
 
-$GAS_SPECIES
 $SPECIES
 
 snapshots on time 1e-5
@@ -87,9 +86,7 @@ finish\
         """
         Returns a string with the content of the simulation_input.dat file
         """
-        template = self.__simulationInputTemplate.safe_substitute(
-                        GAS_SPECIES=str(self.__gasSpeciesList),
-                        SPECIES=str(self.__speciesList))
+        template = self.__simulationInputTemplate.safe_substitute(SPECIES=str(self.__speciesList))
 
         return template
 

@@ -39,6 +39,8 @@ class SpeciesList(list):
             for i in gasSpecies:
                 output += "%10s"%self[i].mass()
             output += "\n"
+        else:
+            output = "n_gas_species "+str(0)+"\n"
 
         effAdsorbedSpecies = -1
         if( containsEmptySite ):

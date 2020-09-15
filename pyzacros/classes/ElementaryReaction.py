@@ -48,13 +48,33 @@ class ElementaryReaction:
         self.__label = None
         self.__updateLabel()
 
+    def __eq__( self, other ):
+        """
+        Returns True if both objects have the same label. Otherwise returns False
+        """
+        if( self.__label == other.__label ):
+            return True
+        else:
+            return False
+
+
+    def __hash__(self):
+        """
+        Returns a hash based on the label
+        """
+        return hash(self.__label)
+
 
     def __updateLabel( self ):
         """
         Updates the attribute 'label'
         """
         if( self.reversible ):
-            self.__label = self.initial.label()+"<-->"+self.final.label()
+            # Reaction labels in lexicographical order
+            if( self.initial.label() > self.final.label() ):
+                self.__label = self.initial.label()+"<-->"+self.final.label()
+            else:
+                self.__label = self.final.label()+"<-->"+self.initial.label()
         else:
             self.__label = self.initial.label()+"-->"+self.final.label()
 
@@ -73,6 +93,7 @@ class ElementaryReaction:
         """
         Translates the object to a string
         """
+        eV = 0.0367493088244753
 
         if( self.reversible ):
             output  = "reversible_step " + self.__label +"\n"
@@ -131,7 +152,7 @@ class ElementaryReaction:
 
         output += "  pre_expon "+("%e"%self.pre_expon)+"\n"
         output += "  pe_ratio "+str(self.pe_ratio)+"\n"
-        output += "  activ_eng "+str(self.activation_energy)+"\n"
+        output += "  activ_eng "+str(self.activation_energy/eV)+"\n"
         output += "end_step"
 
         return output

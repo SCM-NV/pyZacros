@@ -8,7 +8,7 @@ EON
   End
   EnergyLandscape
     Adsorbate adsorbate
-    Load /home/aguirre/Develop/pyZacros/tests/test_MechanismFromAMS.data/ProcessSearch-EON/ams.rkf
+    Load /home/aguirre/Develop/pyZacros/tests/test_RKFLoader.data/ProcessSearch-EON/ams.rkf
   End
   StructureComparison
     DistanceDifference 0.1

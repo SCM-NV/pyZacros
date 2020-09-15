@@ -76,11 +76,7 @@ random_seed 10
 temperature 380.0
 pressure 2.00
 
-n_gas_species 1
-gas_specs_names           H2
-gas_energies             0.0
-gas_molec_weights     2.0156
-
+n_gas_species 0
 n_surf_species 2
 surf_specs_names          H*       H2*
 surf_specs_dent            1         1
@@ -110,7 +106,7 @@ cluster H*-f,H*-f:(1,2)
     2 H* 1
   site_types f f
   graph_multiplicity 2
-  cluster_eng 0.1
+  cluster_eng 2.7211396131999983
 end_cluster
 cluster H2*-f,*-f:(1,2)
   sites 2
@@ -120,7 +116,7 @@ cluster H2*-f,*-f:(1,2)
     2 * 1
   site_types f f
   graph_multiplicity 2
-  cluster_eng 0.1
+  cluster_eng 2.7211396131999983
 end_cluster
 cluster *-f,*-f:H2:(1,2)
   # gas_species H2
@@ -131,14 +127,14 @@ cluster *-f,*-f:H2:(1,2)
     2 * 1
   site_types f f
   graph_multiplicity 2
-  cluster_eng 0.1
+  cluster_eng 2.7211396131999983
 end_cluster
 end energetics
 ---------------------------
 mechanism_input.dat
 ---------------------------
 mechanism
-reversible_step H*-f,H*-f:(1,2)<-->H2*-f,*-f:(1,2)
+reversible_step H2*-f,*-f:(1,2)<-->H*-f,H*-f:(1,2)
   sites 2
   neighboring 1-2
   initial
@@ -150,7 +146,7 @@ reversible_step H*-f,H*-f:(1,2)<-->H2*-f,*-f:(1,2)
   site_types f f
   pre_expon 1.000000e+13
   pe_ratio 0.676
-  activ_eng 0.2
+  activ_eng 5.442279226399997
 end_step
 step H2*-f,*-f:(1,2)-->*-f,*-f:H2:(1,2)
   gas_reacs_prods H2 1
@@ -165,7 +161,7 @@ step H2*-f,*-f:(1,2)-->*-f,*-f:H2:(1,2)
   site_types f f
   pre_expon 1.000000e+13
   pe_ratio 0.676
-  activ_eng 0.2
+  activ_eng 5.442279226399997
 end_step
 end_mechanism\
 """

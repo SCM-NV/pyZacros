@@ -246,4 +246,7 @@ class RKFLoader:
                                                activation_energy=activationEnergy )
 
                 self.mechanism.append( reaction )
-                #--------------------------------------------------------------------
+
+        #--------------------------------------------------------------------
+        # Remove duplicated reactions in the mechanism
+        self.mechanism = Mechanism(dict.fromkeys(self.mechanism))
