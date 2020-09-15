@@ -42,6 +42,11 @@ class SpeciesList(list):
         else:
             output = "n_gas_species "+str(0)+"\n"
 
+            output += "gas_molar_fracs   "
+            for i in gasSpecies:
+                output += "%10s"%self[i].molar_fraction
+            output += "\n"
+
         effAdsorbedSpecies = -1
         if( containsEmptySite ):
             effAdsorbedSpecies = len(adsorbedSpecies)-1
