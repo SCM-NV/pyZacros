@@ -9,7 +9,7 @@ import shutil
 from pyzacros.classes.Cluster import Cluster
 from pyzacros.classes.Mechanism import Mechanism
 from pyzacros.classes.RKFLoader import RKFLoader
-from pyzacros.classes.Job import Job
+from pyzacros.classes.KMCJob import KMCJob
 
 RUNDIR=None
 
@@ -164,8 +164,8 @@ def test_RKFLoader():
     output = str( myRKFLoader.mechanism )
     print(output)
 
-    myJob = Job( myRKFLoader.mechanism )
-    myJob.writeInputFiles()
+    #myJob = KMCJob( myRKFLoader.mechanism )
+    #myJob.writeInputFiles()
 
     expectedOutput = """\
 mechanism
