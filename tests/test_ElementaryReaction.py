@@ -55,7 +55,7 @@ reversible_step H2*-f,*-f:(1,2)<-->H*-f,H*-f:(1,2)
   site_types f f
   pre_expon 1.000000e+13
   pe_ratio 0.676
-  activ_eng 5.442279226399997
+  activ_eng 0.2
 end_step\
 """
     assert( output == expectedOutput )
@@ -95,7 +95,7 @@ step H*-f,H*-f:(1,2)-->*-f,*-f:H2:(1,2)
   site_types f f
   pre_expon 1.000000e+13
   pe_ratio 0.676
-  activ_eng 5.442279226399997
+  activ_eng 0.2
 end_step\
 """
     assert( output == expectedOutput )

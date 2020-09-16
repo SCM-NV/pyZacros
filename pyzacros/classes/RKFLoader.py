@@ -1,9 +1,8 @@
 import os
 import sys
 
-#from .Cluster import *
-#from .ElementaryReaction import *
 from .Mechanism import *
+from .Lattice import *
 
 class RKFLoader:
 
@@ -31,8 +30,14 @@ class RKFLoader:
         """
         import scm.plams
 
+        eV = 0.0367493088244753
+        angs = 1.88972612456506
+
         self.mechanism = Mechanism()
 
+        nLatticeVectors = results.readrkf("Molecule", "nLatticeVectors")
+        latticeVectors = results.readrkf("Molecule", "LatticeVectors")
+        latticeVectors = [ [latticeVectors[3*i+j]/angs for j in range(nLatticeVectors) ] for i in range(nLatticeVectors) ]
         regions = results.readrkf("Molecule", "EngineAtomicInfo").split()
 
         nStates = results.readrkf("EnergyLandscape", "nStates")
@@ -48,14 +53,15 @@ class RKFLoader:
 
         nSites = results.readrkf("BindingSites", "nSites")
         adsorbateLabel = results.readrkf("BindingSites", "AdsorbateLabel").strip()
-        labels = results.readrkf("BindingSites", "Labels"); labels = labels.split()
-        averEnergy = results.readrkf("BindingSites", "AverEnergy")
-        stdevEnergy = results.readrkf("BindingSites", "StdevEnergy")
+        labels = results.readrkf("BindingSites", "Labels")
+        labels = labels.split()
         coords = results.readrkf("BindingSites", "Coords")
+        coords = [ [coords[3*i+j]/angs for j in range(3) ] for i in range(nSites) ]
         nConnections = results.readrkf("BindingSites", "nConnections")
         fromSites = results.readrkf("BindingSites", "FromSites")
         toSites = results.readrkf("BindingSites", "ToSites")
         latticeDisplacements = results.readrkf("BindingSites", "LatticeDisplacements")
+        latticeDisplacements = [ [latticeDisplacements[3*i+j] for j in range(3) ] for i in range(nConnections) ]
         nParentStates = results.readrkf("BindingSites", "nParentStates")
         parentStatesRaw = results.readrkf("BindingSites", "ParentStates")
         parentAtomsRaw = results.readrkf("BindingSites", "ParentAtoms")
@@ -64,15 +70,6 @@ class RKFLoader:
         fromSites = [ max(0,idSite-1) for idSite in fromSites ]
         toSites = [ max(0,idSite-1) for idSite in toSites ]
         parentStatesRaw = [ max(0,i-1) for i in parentStatesRaw ]
-
-        # Reformats of the connections in a more accessible way and disables original variables
-        sitesConnections = []
-        for i in range(nConnections):
-            sitesConnections.append( (fromSites[i],toSites[i]) )
-            sitesConnections.append( (toSites[i],fromSites[i]) )
-        nConnections = None
-        fromSites = None
-        toSites = None
 
         # It is not neccessary for fix the parentAtomsRaw, because PLAMS
         # uses also 1-based indices for its atoms
@@ -85,7 +82,7 @@ class RKFLoader:
             amsResults = results.read_rkf_section("AMSResults", file=fileNames[i])
 
             state2Molecule[i] = mol
-            state2Energy[i] = amsResults["Energy"]
+            state2Energy[i] = amsResults["Energy"]/eV
 
             #vibrations = results.read_rkf_section("Vibrations", file=fileNames[i])
             #print("Frequencies = ", vibrations["Frequencies[cm-1]"])
@@ -172,11 +169,6 @@ class RKFLoader:
 
                 attachedMolecule[idState] = { **attachedMolecule[idReactant], **attachedMolecule[idProduct] }
 
-        #print(state2BindingSites)
-        #for idState in range(nStates):
-            #if( idState in attachedMolecule ):
-                #print(idState, attachedMolecule[idState])
-
         # Each TS defines an ElementaryReaction and at the same time it defines
         # two Clusters from reactants and products.
 
@@ -197,7 +189,10 @@ class RKFLoader:
                 connectedSites = {}
                 for i,bs1 in enumerate(state2BindingSites[idTS]):
                     for j,bs2 in enumerate(state2BindingSites[idTS]):
-                        if( bs1 < bs2 and (bs1,bs2) in sitesConnections ):
+                        #if( bs1 < bs2 and (bs1,bs2) in sitesConnections ):
+                        if( bs1 < bs2
+                            and ( (bs1 in fromSites and bs2 in toSites)
+                                or (bs1 in toSites and bs2 in fromSites) ) ):
                             #neighboring.append( (bs1,bs2) )
                             neighboring.append( (i+1,j+1) )
                             connectedSites[bs1] = 1
@@ -251,3 +246,44 @@ class RKFLoader:
         #--------------------------------------------------------------------
         # Remove duplicated reactions in the mechanism
         self.mechanism = Mechanism(dict.fromkeys(self.mechanism))
+
+        #--------------------------------------------------------------------
+        # Generation of the KMCLattice
+        assert( len(latticeVectors) >= 2 )
+
+        neighboring_structure = nConnections*[ None ]
+        for i in range(nConnections):
+            ld = latticeDisplacements[i]
+
+            first = "Unknown"
+            if( ld[0] > 0 and ld[1] > 0 ):
+                first = str(fromSites[i]+1)+"-"+str(toSites[i]+1)
+            else:
+                first = str(toSites[i]+1)+"-"+str(fromSites[i]+1)
+                ld = [ abs(v) for v in ld ]
+
+            second = "Unknown"
+            if( tuple(ld[0:2]) == (0,0) ):
+                second = "self"
+            elif( tuple(ld[0:2]) == (0,1) ):
+                second = "north"
+            elif( tuple(ld[0:2]) == (1,0) ):
+                second = "east"
+
+            # (1,1):"northeast",  <<< #TODO I don't understand this case
+            # (1,-1):"southeast"  <<< #TODO I don't understand this case
+
+            neighboring_structure[i] = [first,second]
+
+        site_type_names = set(labels)
+
+        self.lattice = Lattice(
+                            lattice_type="periodic_cell",
+                            cell_vectors=latticeVectors,
+                            repeat_cell=[1, 1], # Default value.
+                            n_cell_sites=nSites,
+                            n_site_types=len(site_type_names),
+                            site_type_names=site_type_names,
+                            site_types=labels,
+                            site_coordinates=coords,
+                            neighboring_structure=neighboring_structure)

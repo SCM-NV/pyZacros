@@ -19,7 +19,7 @@ class Cluster:
         self.species = species                        # e.g. ( Species("H*",1), Species("H*",1) )
         self.gas_species = gas_species                # e.g. ( Species("H2") )
         self.multiplicity = multiplicity              # e.g. 2
-        self.cluster_energy = cluster_energy                          # Units eV
+        self.cluster_energy = cluster_energy          # Units eV
 
         self.sites = len(site_types)
 
@@ -112,8 +112,6 @@ class Cluster:
         """
         Translates the object to a string
         """
-        eV = 0.0367493088244753
-
         output  = "cluster " + self.__label +"\n"
 
         if( len(self.gas_species) != 0 ):
@@ -148,7 +146,7 @@ class Cluster:
 
             output += "  graph_multiplicity "+str(self.multiplicity)+"\n"
 
-        output += "  cluster_eng "+str(self.cluster_energy/eV)+"\n"
+        output += "  cluster_eng "+str(self.cluster_energy)+"\n"
         output += "end_cluster"
 
         return output

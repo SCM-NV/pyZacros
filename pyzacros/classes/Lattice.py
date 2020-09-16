@@ -67,7 +67,7 @@ class Lattice():
                  path_to_slab_yaml: str = None):
         """Initialize the Lattice class."""
         self.lattice_type = lattice_type
-        self.default_lattice = default_lattice 
+        self.default_lattice = default_lattice
         self.cell_vectors = cell_vectors
         self.repeat_cell = repeat_cell
         self.n_cell_sites = n_cell_sites
@@ -117,42 +117,43 @@ class Lattice():
                         msg += str(i) + " argument is missed.\n"
                         raise NameError(msg)
 
+
     def __str__(self) -> str:
         """Translate the object to a string."""
-        output = "lattice"+"\t"+self.lattice_type+"\n"
+        output = "lattice"+" "+self.lattice_type+"\n"
         if self.default_lattice is not None:
             for i in range(4):
-                output += str(self.default_lattice[i]) + "\t"
+                output += str(self.default_lattice[i]) + " "
         else:
             output += "cell_vectors"
             for i in range(2):
                 output += "\n"
                 for j in range(2):
-                    output += "\t"+str(self.cell_vectors[i][j])
+                    output += "  "+str(self.cell_vectors[i][j])
 
-            output += "\nrepeat_cell\t"
+            output += "\nrepeat_cell "
             output += str(str(self.repeat_cell)[1:-1]).replace(',', '')
 
-            output += "\nn_cell_sites\t"+str(self.n_cell_sites)
+            output += "\nn_cell_sites "+str(self.n_cell_sites)
 
-            output += "\nn_site_types\t"+str(self.n_site_types)
+            output += "\nn_site_types "+str(self.n_site_types)
 
-            output += "\nsite_type_names\t" \
+            output += "\nsite_type_names " \
                       + str(' '.join(str(x) for x in self.site_type_names))
 
-            output += "\nsite_types\t" \
+            output += "\nsite_types " \
                       + str(' '.join(str(x) for x in self.site_types))
 
             output += "\nsite_coordinates"
             for i in range(self.n_cell_sites):
                 output += "\n"
                 for j in range(2):
-                    output += "\t"+str(self.site_coordinates[i][j])
+                    output += "  "+str(self.site_coordinates[i][j])
 
             output += "\nneighboring_structure"
             for i in range(len(self.neighboring_structure)):
                 output += "\n"
-                output += "\t"+str(' '.join(str(self.neighboring_structure[i][j])
+                output += "  "+str(' '.join(str(self.neighboring_structure[i][j])
                                    for j in range(2)))
             output += "\nend_neighboring_structure"
             output += "\nend_lattice"
