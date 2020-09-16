@@ -14,11 +14,12 @@ class RKFLoader:
         :parm results
         """
         self.mechanism = None
+        self.lattice = None
 
-        self.__deriveClustersAndMechanisms( results )
+        self.__deriveLatticeAndMechanism( results )
 
 
-    def __deriveClustersAndMechanisms( self, results ):  # @TODO results -> scm.plams.Results
+    def __deriveLatticeAndMechanism( self, results ):  # @TODO results -> scm.plams.Results
         """
         The next lines feed self%state2BindingSites.
         The binding sites for the reactants or products are already defined
