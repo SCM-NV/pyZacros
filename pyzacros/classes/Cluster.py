@@ -3,9 +3,6 @@ from .SpeciesList import *
 
 class Cluster:
 
-    ###
-    # @brief Initialize the :class:`Cluster`
-    ##
     def __init__( self, site_types: list, neighboring: list, species: SpeciesList,
                     gas_species: SpeciesList=SpeciesList(), multiplicity: int=0, cluster_energy: float=0.000 ):
         """
@@ -75,7 +72,7 @@ class Cluster:
         for i in range(len(self.species)):
             self.__label += self.species[i].symbol+"-"
             for j in range(self.species[i].denticity):
-                self.__label += self.site_types[j]
+                self.__label += self.site_types[i]
                 if( j != self.species[i].denticity-1 ):
                     self.__label += "-"
             if( i != len(self.species)-1 ):
@@ -92,8 +89,11 @@ class Cluster:
         if( len(self.neighboring) > 0 ):
             self.__label += ":"
 
+        # For neighboring nodes are sorted
         for i in range(len(self.neighboring)):
-            self.__label += str(self.neighboring[i]).replace(" ", "")
+            lNeighboring = list(self.neighboring[i])
+            lNeighboring.sort()
+            self.__label += str(tuple(lNeighboring)).replace(" ", "")
             if( i != len(self.neighboring)-1 ):
                 self.__label += ","
 
@@ -112,6 +112,8 @@ class Cluster:
         """
         Translates the object to a string
         """
+        eV = 0.0367493088244753
+
         output  = "cluster " + self.__label +"\n"
 
         if( len(self.gas_species) != 0 ):
@@ -146,7 +148,7 @@ class Cluster:
 
             output += "  graph_multiplicity "+str(self.multiplicity)+"\n"
 
-        output += "  cluster_eng "+str(self.cluster_energy)+"\n"
+        output += "  cluster_eng "+str(self.cluster_energy/eV)+"\n"
         output += "end_cluster"
 
         return output

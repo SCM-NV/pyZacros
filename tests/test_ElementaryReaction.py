@@ -43,7 +43,7 @@ def test_ElementaryReaction():
 
     output = str(myReaction1)
     expectedOutput = """\
-reversible_step H*-f,H*-f:(1,2)<-->H2*-f,*-f:(1,2)
+reversible_step H2*-f,*-f:(1,2)<-->H*-f,H*-f:(1,2)
   sites 2
   neighboring 1-2
   initial
@@ -55,7 +55,7 @@ reversible_step H*-f,H*-f:(1,2)<-->H2*-f,*-f:(1,2)
   site_types f f
   pre_expon 1.000000e+13
   pe_ratio 0.676
-  activ_eng 0.2
+  activ_eng 5.442279226399997
 end_step\
 """
     assert( output == expectedOutput )
@@ -95,7 +95,7 @@ step H*-f,H*-f:(1,2)-->*-f,*-f:H2:(1,2)
   site_types f f
   pre_expon 1.000000e+13
   pe_ratio 0.676
-  activ_eng 0.2
+  activ_eng 5.442279226399997
 end_step\
 """
     assert( output == expectedOutput )

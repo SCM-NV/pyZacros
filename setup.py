@@ -39,7 +39,7 @@ setup(
     ],
     test_suite='tests',
 
-    install_requires=['pyaml', 'chemparse'],  # FIXME: add your package's dependencies to this list
+    install_requires=['pyaml', 'chemparse', 'plams'],
 
     setup_requires=[
         # dependency for `python setup.py test`
