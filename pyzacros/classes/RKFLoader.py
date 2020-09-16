@@ -275,7 +275,8 @@ class RKFLoader:
 
             neighboring_structure[i] = [first,second]
 
-        site_type_names = set(labels)
+        site_type_names = list(set(labels))
+        site_type_names.sort()
 
         self.lattice = Lattice(
                             lattice_type="periodic_cell",

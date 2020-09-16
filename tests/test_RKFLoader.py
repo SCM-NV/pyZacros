@@ -248,5 +248,3 @@ end_lattice\
 """
     assert( output == expectedOutput )
 
-
-test_RKFLoader()
