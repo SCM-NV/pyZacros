@@ -93,8 +93,6 @@ class ElementaryReaction:
         """
         Translates the object to a string
         """
-        eV = 0.0367493088244753
-
         if( self.reversible ):
             output  = "reversible_step " + self.__label +"\n"
         else:
@@ -152,7 +150,7 @@ class ElementaryReaction:
 
         output += "  pre_expon "+("%e"%self.pre_expon)+"\n"
         output += "  pe_ratio "+str(self.pe_ratio)+"\n"
-        output += "  activ_eng "+str(self.activation_energy/eV)+"\n"
+        output += "  activ_eng "+str(self.activation_energy)+"\n"
         output += "end_step"
 
         return output
