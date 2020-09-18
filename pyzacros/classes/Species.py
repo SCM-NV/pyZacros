@@ -78,8 +78,7 @@ class Species:
     }
 
     def __init__(self, symbol: str, denticity: int = 0,
-                 gas_energy: float = 0.0,
-                 molar_fraction: float = 0.0):
+                 gas_energy: float = 0.0):
         """
         Creates a new Species object.
 
@@ -88,12 +87,10 @@ class Species:
           it si considered a gas species. e.g. H2*
         :parm denticity: int, Species' denticity e.g. 2
         :parm gas_energy: float, Species' gas energy e.g. 0.0
-        :parm molar_fraction: float, Species' molar fraction e.g 0.02
         """
         self.symbol = symbol
         self.denticity = denticity
         self.gas_energy = gas_energy
-        self.molar_fraction = molar_fraction
 
         if(len(symbol) > 1 and symbol.find("*") != -1 and denticity == 0):
             msg = "### ERROR ### Species.__init__.\n"
