@@ -1,10 +1,18 @@
 from collections import Counter
-from .Cluster import *
+from .Cluster import Cluster
+
 
 class ElementaryReaction:
 
-    def __init__( self, site_types: list, neighboring: list, initial: Cluster, final: Cluster,
-                    reversible: bool=True, pre_expon: float=0.0, pe_ratio: float=0.0, activation_energy: float=0.0 ):
+    def __init__(self,
+                 site_types: list,
+                 initial: Cluster,
+                 final: Cluster,
+                 neighboring: list = None,
+                 reversible: bool = True,
+                 pre_expon: float = 0.0,
+                 pe_ratio: float = 0.0,
+                 activation_energy: float = 0.0):
         """
         Creates a new ElementaryReaction object
 
