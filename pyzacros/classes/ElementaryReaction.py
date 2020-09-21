@@ -129,15 +129,16 @@ class ElementaryReaction:
 
             output += "\n"
 
-        if( self.sites != 0 ):
+        if(self.sites != 0):
             output += "  sites " + str(self.sites)+"\n"
-
-            output += "  neighboring "
-            for i in range(len(self.neighboring)):
-                output += str(self.neighboring[i][0])+"-"+str(self.neighboring[i][1])
-                if( i != len(self.neighboring)-1 ):
-                    output += " "
-            output += "\n"
+            if self.neighboring is not None:
+                output += "  neighboring "
+                for i in range(len(self.neighboring)):
+                    output += str(self.neighboring[i][0]) + \
+                             "-"+str(self.neighboring[i][1])
+                    if(i != len(self.neighboring)-1):
+                        output += " "
+                output += "\n"
 
             output += "  initial"+"\n"
             for i in range(len(self.initial)):
@@ -150,9 +151,10 @@ class ElementaryReaction:
                     output += "    "+str(i+1)+" "+self.final.species[i].symbol+" "+str(j+1)+"\n"
 
             output += "  site_types "
+            self.site_types = list(dict.fromkeys(self.site_types))
             for i in range(len(self.site_types)):
                 output += str(self.site_types[i])
-                if( i != len(self.site_types)-1 ):
+                if(i != len(self.site_types)-1):
                     output += " "
             output += "\n"
 
