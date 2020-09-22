@@ -30,7 +30,7 @@ cluster H*-f,H*-f:(1,2)
     2 H* 1
   site_types f f
   graph_multiplicity 2
-  cluster_eng 0.1000
+  cluster_eng 0.100
 end_cluster\
 """
     assert( output == expectedOutput )
@@ -55,7 +55,7 @@ cluster H*-f,H*-f:H2:(1,2)
     2 H* 1
   site_types f f
   graph_multiplicity 2
-  cluster_eng 0.1000
+  cluster_eng 0.100
 end_cluster\
 """
     assert( output == expectedOutput )
@@ -78,7 +78,7 @@ cluster H2*-f-f:(1,2)
     1 H2* 2
   site_types f f
   graph_multiplicity 2
-  cluster_eng 0.1000
+  cluster_eng 0.100
 end_cluster\
 """
     assert( output == expectedOutput )

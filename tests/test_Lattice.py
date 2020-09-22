@@ -39,16 +39,16 @@ def test_Lattice():
     expectedOutput = """\
 lattice periodic_cell
 cell_vectors
-  2.8143  0.0000
-  1.4071  2.4372
+  2.814  0.000
+  1.407  2.437
 repeat_cell 23 24
 n_cell_sites 2
 n_site_types 2
 site_type_names fcc hcp
 site_types 1 2
 site_coordinates
-  0.3333  0.3333
-  0.6667  0.6667
+  0.333  0.333
+  0.667  0.667
 neighboring_structure
   1-1 north
   1-1 east

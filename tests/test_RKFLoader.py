@@ -144,8 +144,8 @@ def test_RKFLoader():
             # If AMS is available. It runs the calculations to generate
             # both the energy landscape and binding sites. Results are
             # saved in the directory tests/test_RKFLoader.data
-            #results = buildEnergyLandscape()
-            #results = deriveBindingSites()
+            results = buildEnergyLandscape()
+            results = deriveBindingSites()
 
     # If AMS is not available, it tries to load the package from PYTHONPATH
     try:
@@ -182,39 +182,39 @@ reversible_step O1*-B,*-A:(1,2)<-->*-B,O1*-A:(1,2)
     1 O1* 1
     2 * 1
   site_types B A
-  pre_expon 1.0000e+13
-  pe_ratio 0.6760
-  activ_eng 0.5015
+  pre_expon 1.000e+13
+  pe_ratio 0.676
+  activ_eng 0.501
 end_step
 end_mechanism
 lattice periodic_cell
 cell_vectors
-  8.3156  0.0000
-  4.1578  7.2015
+  8.316  0.000
+  4.158  7.201
 repeat_cell 2 2
 n_cell_sites 18
 n_site_types 2
 site_type_names A B
 site_types B B B B B B B B B A A A A A A A A A
 site_coordinates
-  8.3149  6.4018
-  11.0874  6.4014
-  5.5429  1.6026
-  2.7715  1.6021
-  8.3149  1.6017
-  9.7014  4.0031
-  5.5431  6.4017
-  6.9290  4.0029
-  4.1572  4.0029
-  8.3150  3.2030
-  1.3852  0.8020
-  2.7719  3.2034
-  6.9294  0.8020
-  5.5430  3.2032
-  4.1569  0.8024
-  6.9287  5.6017
-  9.7012  5.6013
-  4.1570  5.6017
+  8.315  6.402
+  11.087  6.401
+  5.543  1.603
+  2.771  1.602
+  8.315  1.602
+  9.701  4.003
+  5.543  6.402
+  6.929  4.003
+  4.157  4.003
+  8.315  3.203
+  1.385  0.802
+  2.772  3.203
+  6.929  0.802
+  5.543  3.203
+  4.157  0.802
+  6.929  5.602
+  9.701  5.601
+  4.157  5.602
 neighboring_structure
   6-10 self
   11-4 self
