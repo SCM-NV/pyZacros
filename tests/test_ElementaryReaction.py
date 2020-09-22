@@ -53,9 +53,9 @@ reversible_step H2*-f,*-f:(1,2)<-->H*-f,H*-f:(1,2)
     1 H2* 1
     2 * 1
   site_types f f
-  pre_expon 1.00000e+13
-  pe_ratio 0.67600
-  activ_eng 0.20000
+  pre_expon 1.0000e+13
+  pe_ratio 0.6760
+  activ_eng 0.2000
 end_step\
 """
     assert( output == expectedOutput )
@@ -93,9 +93,9 @@ step H*-f,H*-f:(1,2)-->*-f,*-f:H2:(1,2)
     1 * 1
     2 * 1
   site_types f f
-  pre_expon 1.00000e+13
-  pe_ratio 0.67600
-  activ_eng 0.20000
+  pre_expon 1.0000e+13
+  pe_ratio 0.6760
+  activ_eng 0.2000
 end_step\
 """
     assert( output == expectedOutput )

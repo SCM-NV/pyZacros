@@ -68,5 +68,3 @@ end_lattice\
     myLattice = Lattice(path_to_slab_yaml="./pyzacros/slabs/pd111.yaml")
     output2 = str(myLattice)
     assert(output2 == expectedOutput)
-
-test_Lattice()
