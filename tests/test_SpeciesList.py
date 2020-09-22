@@ -4,6 +4,7 @@
 
 from pyzacros.classes.Species import Species
 from pyzacros.classes.SpeciesList import SpeciesList
+from pyzacros.utils.compareReports import *
 
 
 def test_SpeciesList():
@@ -44,4 +45,4 @@ n_surf_species 2
 surf_specs_names         H2*       O2*
 surf_specs_dent            1         1\
 """
-    assert( output == expectedOutput )
+    assert( compare( output, expectedOutput, 1e-3 ) )

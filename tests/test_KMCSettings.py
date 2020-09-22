@@ -3,6 +3,7 @@
 """Tests of the pyZacros classes."""
 
 from pyzacros.classes.KMCSettings import KMCSettings
+from pyzacros.utils.compareReports import *
 
 
 def test_KMCSettings():
@@ -38,4 +39,4 @@ simulation_input: \t
                  wall_time: \t5000
 \
 """
-    assert(output == expectedOutput)
+    assert( compare( output, expectedOutput, 1e-3 ) )

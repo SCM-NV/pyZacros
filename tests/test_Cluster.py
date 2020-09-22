@@ -5,6 +5,7 @@
 from pyzacros.classes.Species import Species
 from pyzacros.classes.SpeciesList import SpeciesList
 from pyzacros.classes.Cluster import Cluster
+from pyzacros.utils.compareReports import *
 
 
 def test_Cluster():
@@ -33,7 +34,7 @@ cluster H*-f,H*-f:(1,2)
   cluster_eng 0.1
 end_cluster\
 """
-    assert( output == expectedOutput )
+    assert( compare( output, expectedOutput, 1e-3 ) )
 
     myCluster2 = Cluster( site_types=( "f", "f" ),
                             neighboring=[ (1,2) ],
@@ -58,7 +59,7 @@ cluster H*-f,H*-f:H2:(1,2)
   cluster_eng 0.1
 end_cluster\
 """
-    assert( output == expectedOutput )
+    assert( compare( output, expectedOutput, 1e-3 ) )
 
     myCluster3 = Cluster( site_types=( "f", "f" ),
                             neighboring=[ (1,2) ],
@@ -81,4 +82,4 @@ cluster H2*-f-f:(1,2)
   cluster_eng 0.1
 end_cluster\
 """
-    assert( output == expectedOutput )
+    assert( compare( output, expectedOutput, 1e-3 ) )

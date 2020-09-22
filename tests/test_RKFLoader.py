@@ -10,6 +10,8 @@ from pyzacros.classes.Cluster import Cluster
 from pyzacros.classes.Mechanism import Mechanism
 from pyzacros.classes.RKFLoader import RKFLoader
 from pyzacros.classes.KMCJob import KMCJob
+from pyzacros.utils.compareReports import *
+
 
 RUNDIR=None
 
@@ -60,7 +62,7 @@ def buildEnergyLandscape():
     job = scm.plams.AMSJob(molecule=molecule, settings=settings, name="ProcessSearch-EON")
     results = job.run()
 
-    if( results.ok() ):
+    if( job.ok() ):
         dirpath = os.path.dirname( results.rkfpath() )
         shutil.rmtree( RUNDIR+"/tests/test_RKFLoader.data/ProcessSearch-EON", ignore_errors=True )
         shutil.copytree( dirpath, RUNDIR+"/tests/test_RKFLoader.data/ProcessSearch-EON" )
@@ -114,7 +116,7 @@ def deriveBindingSites():
     job = scm.plams.AMSJob(molecule=molecule, settings=settings, name="BindingSites-EON")
     results = job.run()
 
-    if( results.ok() ):
+    if( job.ok() ):
         dirpath = os.path.dirname( results.rkfpath() )
         shutil.rmtree( RUNDIR+"/tests/test_RKFLoader.data/BindingSites-EON", ignore_errors=True )
         shutil.copytree( dirpath, RUNDIR+"/tests/test_RKFLoader.data/BindingSites-EON" )
@@ -246,5 +248,5 @@ neighboring_structure
 end_neighboring_structure
 end_lattice\
 """
-    assert( output == expectedOutput )
+    assert( compare( output, expectedOutput, 1e-3 ) )
 
