@@ -53,9 +53,9 @@ reversible_step H2*-f,*-f:(1,2)<-->H*-f,H*-f:(1,2)
     1 H2* 1
     2 * 1
   site_types f f
-  pre_expon 1.000000e+13
-  pe_ratio 0.676
-  activ_eng 0.2
+  pre_expon 1.00000e+13
+  pe_ratio 0.67600
+  activ_eng 0.20000
 end_step\
 """
     assert( output == expectedOutput )
@@ -76,7 +76,7 @@ end_step\
                                         reversible=False,
                                         pre_expon=1e+13,
                                         pe_ratio=0.676,
-                                        activation_energy = 0.2 )
+                                        activation_energy=0.2 )
 
     print( myReaction2 )
 
@@ -93,9 +93,9 @@ step H*-f,H*-f:(1,2)-->*-f,*-f:H2:(1,2)
     1 * 1
     2 * 1
   site_types f f
-  pre_expon 1.000000e+13
-  pe_ratio 0.676
-  activ_eng 0.2
+  pre_expon 1.00000e+13
+  pe_ratio 0.67600
+  activ_eng 0.20000
 end_step\
 """
     assert( output == expectedOutput )

@@ -60,7 +60,7 @@ def buildEnergyLandscape():
     job = scm.plams.AMSJob(molecule=molecule, settings=settings, name="ProcessSearch-EON")
     results = job.run()
 
-    if( results.ok() ):
+    if( job.ok() ):
         dirpath = os.path.dirname( results.rkfpath() )
         shutil.rmtree( RUNDIR+"/tests/test_RKFLoader.data/ProcessSearch-EON", ignore_errors=True )
         shutil.copytree( dirpath, RUNDIR+"/tests/test_RKFLoader.data/ProcessSearch-EON" )
@@ -114,7 +114,7 @@ def deriveBindingSites():
     job = scm.plams.AMSJob(molecule=molecule, settings=settings, name="BindingSites-EON")
     results = job.run()
 
-    if( results.ok() ):
+    if( job.ok() ):
         dirpath = os.path.dirname( results.rkfpath() )
         shutil.rmtree( RUNDIR+"/tests/test_RKFLoader.data/BindingSites-EON", ignore_errors=True )
         shutil.copytree( dirpath, RUNDIR+"/tests/test_RKFLoader.data/BindingSites-EON" )
@@ -182,39 +182,39 @@ reversible_step O1*-B,*-A:(1,2)<-->*-B,O1*-A:(1,2)
     1 O1* 1
     2 * 1
   site_types B A
-  pre_expon 1.000000e+13
-  pe_ratio 0.676
-  activ_eng 0.5014956703374196
+  pre_expon 1.00000e+13
+  pe_ratio 0.67600
+  activ_eng 0.50150
 end_step
 end_mechanism
 lattice periodic_cell
 cell_vectors
-  8.31557574706715  0.0
-  4.157787873533575  7.201499844031359
+  8.31558  0.00000
+  4.15779  7.20150
 repeat_cell 2 2
 n_cell_sites 18
 n_site_types 2
 site_type_names A B
 site_types B B B B B B B B B A A A A A A A A A
 site_coordinates
-  8.31494239221121  6.401809702604096
-  11.087438051946444  6.401427153277448
-  5.542972351726692  1.6025197881313624
-  2.7714977956917983  1.6020572120570211
-  8.314887826690935  1.6017336527708748
-  9.701388824408975  4.003099623560161
-  5.543133011283664  6.401672993300898
-  6.928976156476104  4.002923870377294
-  4.1571887860105265  4.002861642100686
-  8.315016212278993  3.2029689910162027
-  1.3852413577567952  0.8019628408548608
-  2.7718902404247245  3.2034145899486184
-  6.929371559744542  0.8019968519506132
-  5.542979840830191  3.203183882479255
-  4.156907493555948  0.8024071262160908
-  6.92874485050175  5.601736122444594
-  9.701238688960123  5.601275941878169
-  4.157005705178037  5.601687737593869
+  8.31494  6.40181
+  11.08744  6.40143
+  5.54295  1.60256
+  2.77150  1.60206
+  8.31489  1.60173
+  9.70139  4.00310
+  5.54313  6.40167
+  6.92898  4.00292
+  4.15719  4.00286
+  8.31502  3.20297
+  1.38524  0.80196
+  2.77189  3.20341
+  6.92937  0.80200
+  5.54298  3.20318
+  4.15691  0.80241
+  6.92874  5.60174
+  9.70124  5.60128
+  4.15701  5.60169
 neighboring_structure
   6-10 self
   11-4 self
