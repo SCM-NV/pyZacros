@@ -1,7 +1,6 @@
 from .Species import *
 
 class SpeciesList(list):
-
     def __str__( self ) -> str:
         """
         Translates the object to a string
@@ -10,7 +9,6 @@ class SpeciesList(list):
         gasSpecies = []
         adsorbedSpecies = []
         containsEmptySite = False
-
         for i,specie in enumerate(self):
             if( specie.is_adsorbed() ):
                 adsorbedSpecies.append(i)
@@ -67,7 +65,6 @@ class SpeciesList(list):
         gasSpecies = []
         adsorbedSpecies = []
         list_species = []
-        containsEmptySite = False
 
         for i, specie in enumerate(self):
             if(specie.is_adsorbed()):

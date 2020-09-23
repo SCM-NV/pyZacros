@@ -83,7 +83,8 @@ class KMCJob:
 
         output += str(self.__gasSpeciesList)
 
-        molar_frac_list = get_molar_fractions(self.settings)
+        molar_frac_list = get_molar_fractions(self.settings,
+                                              self.__gasSpeciesList)
 
         output += "gas_molar_fracs \t" + \
                   '\t '.join([str(elem) for elem in molar_frac_list]) \

@@ -12,7 +12,6 @@ def check_settings(settings=KMCSettings, species_list=SpeciesList):
 
     :parm settings: KMCSettings object with the main settings of the
                     KMC calculation.
-    :type settings: KMCSettings, required.
     """
     # This list contains the defaults for KMCSettings, please modify
     # them as you wish.
@@ -37,9 +36,9 @@ def check_molar_fraction(settings=KMCSettings,
     Check if molar_fraction labels are compatible with Species labels.
 
     It also sets defaults molar_fractions 0.000.
+
     :parm settings: KMCSettings object with the main settings of the
                     KMC calculation.
-    :type settings: KMCSettings, required.
     """
     list_of_species = species_list.gas_species_labels()
     sett_keys = settings.as_dict()
@@ -58,18 +57,42 @@ def check_molar_fraction(settings=KMCSettings,
             settings.soft_update(tmp)
 
 
-def get_molar_fractions(settings=KMCSettings) -> list:
+def get_molar_fractions(settings=KMCSettings,
+                        species_list=SpeciesList) -> list:
     """
-    Get molar fractions of the gas_species present in the Settings.
+    Get molar fractions using the correct order of list_gas_species.
 
     :parm settings: KMCSettings object with the main settings of the
                     KMC calculation.
-    :type settings: KMCSettings, required.
+
+    :parm species_list: SpeciesList object containing the species
+                            information.
+
+    :rparm list_of_molar_fractions: Simple list of molar fracions.
     """
-    dic_test = settings.as_dict()
+    # We must be sure that the order of return list is the same as
+    # the order of the labels printed by SpeciesList.
+    # For that:
+
+    # 1- Generate a total_list of tuples with (atomic label,
+    #    molar_fraciton):
+    list_of_labels = []
     list_of_molar_fractions = []
+    dic_test = settings.as_dict()
     for i, j in dic_test.items():
         if i == "molar_fraction":
-            for key in j:
+            for key in sorted(j.keys()):
+                list_of_labels.append(key)
                 list_of_molar_fractions.append(j[key])
+    total_list = list(zip(list_of_labels, list_of_molar_fractions))
+
+    # 2- Match the tota_tuple to the "good" ordering of the
+    # species_list:
+    list_of_molar_fractions.clear()
+    tuple_tmp = [i[0] for i in total_list]
+    molar_tmp = [i[1] for i in total_list]
+    for i in species_list.gas_species_labels():
+        for j, k in enumerate(tuple_tmp):
+            if i == k:
+                list_of_molar_fractions.append(molar_tmp[j])
     return list_of_molar_fractions
