@@ -8,14 +8,20 @@ from pyzacros.classes.Cluster import Cluster
 from pyzacros.classes.Species import Species
 from pyzacros.classes.SpeciesList import SpeciesList
 from pyzacros.classes.ElementaryReaction import ElementaryReaction
+
 # Species:
+sett = KMCSettings()
 s0 = Species("*", 1)      # Empty adsorption site
+
 # -) Gas-species:
-CO_gas = Species("CO", molar_fraction=1.0e-5)
-H2O_gas = Species("H2O", molar_fraction=0.950)
-H2_gas = Species("H2") 
+CO_gas = Species("CO")
+sett.molar_fraction.CO = 1.e-5
+H2O_gas = Species("H2O")
+sett.molar_fraction.H2O = 0.950
+H2_gas = Species("H2")
 CO2_gas = Species("CO2", gas_energy=-0.615)
 O2_gas = Species("O2", gas_energy=4.913)
+
 # -) Adsorbed species:
 CO_adsorbed = Species("CO*", 1)
 H2O_adsorbed = Species("H2O*", 1)
@@ -36,86 +42,204 @@ mySpeciesList.append(OH_adsorbed)
 mySpeciesList.append(O_adsorbed)
 mySpeciesList.append(H_adsorbed)
 mySpeciesList.append(COOH_adsorbed)
-#print(mySpeciesList)
 
+# Lattice:
 
 myLattice = Lattice(lattice_type="default_choice",
                     default_lattice=["hexagonal_periodic", 1.0, 8, 10])
-print(myLattice)
-myCluster1 = Cluster(site_types=("1"),
-                     neighboring=[(1, 2)],
-                     species=(s0, CO_adsorbed))
+#print(myLattice)
 
-#myCluster1 = Cluster(site_types=(1),
-#                     neighboring=[(1, 2)],
-#                     species=(s0, CO_adsorbed))
-#
-#myCluster1 = Cluster(site_types=(1),
-#                     neighboring=[(1, 2)],
-#                     species=(s0, CO_adsorbed))
-#myCluster2 = Cluster( site_types=( "fcc", "fcc" ),
-#                     neighboring=[ (1,2) ],
-#                     species=[ s0, s0 ],
-#                     gas_species=[ s3 ],
-#                     multiplicity=2,
-#                     cluster_energy=0.1 )
-#
-#myReaction1 = ElementaryReaction(site_types=("f", "f"),
-#                                 neighboring=[(1, 2)],
-#                                 initial=myCluster1,
-#                                 final=myCluster2,
-#                                 reversible=False,
-#                                 pre_expon=1e+13,
-#                                 pe_ratio=0.676,
-#                                 activation_energy=0.2)
-#
-#myMechanism1 = Mechanism()
-#myMechanism1.append(myReaction1)
-##print(s0.mass())
-##print(s1.mass())
-##print(s2.mass())
-##print(s3.mass())
-##print(s1.denticity)
-##
-myLattice = Lattice(lattice_type="periodic_cell",
-                    cell_vectors=[[2.814284989122459,  0.000000000000000],
-                                  [1.407142494561229, 2.437242294069262]],
-                    repeat_cell=[23, 24],
-                    n_cell_sites=2,
-                    n_site_types=2,
-                    site_type_names=["fcc", "hcp"],
-                    site_types=[1, 2],
-                    site_coordinates=[[0.333333333333333, 0.333333333333333],
-                                      [0.666666666666666, 0.666666666666666]],
-                    neighboring_structure=[["1-1", "north"], ["1-1", "east"],
-                                           ["1-1", "southeast"],
-                                           ["2-1", "self"],
-                                           ["2-1", "east"],
-                                           ["2-1", "north"],
-                                           ["2-2", "north"],
-                                           ["2-2", "east"],
-                                           ["2-2", "southeast"]])
-#myLattice = Lattice(path_to_slab_yaml="./pyzacros/slabs/pd111.yaml")
-#
-print(myLattice)
-#sett = KMCSettings()
-#sett.random_seed = 123278 
-#sett.temperature = 500.0 
-#sett.pressure = 10
-#sett.KMCEngine.name = 'ZacRos'
-#sett.KMCEngine.path = '/Users/plopez/Programs'
-#sett.KMCOutput.path = '/Users/plopez/job/Zacros/CO_tutorial'
-#sett.AbinitioEngine.name = 'AMS'
-#sett.AbinitioEngine.path = 'Programs'
-#sett.snapshots = ('time', 1.e-4)
-#sett.process_statistics = ('time', 2.e-4)
-#sett.species_numbers = ('time', 3.e-4)
-#sett.event_report = 'off'
-#sett.max_steps = 'infinity'
-#sett.max_time = 250.0
-#sett.wall_time = 10
-#myJob = KMCJob(settings=sett, lattice=myLattice, mechanism=myMechanism1)
-#
+# CO_adsoprtion:
+
+myCluster1 = Cluster(site_types=["1"],
+                     species=[s0],
+                     gas_species=[CO_gas])
+
+myCluster2 = Cluster(site_types=["1"],
+                     species=[CO_adsorbed],
+                     cluster_energy=-2.077)
+
+CO_adsorption = ElementaryReaction(site_types=["1"],
+                                   initial=myCluster1,
+                                   final=myCluster2,
+                                   reversible=True,
+                                   pre_expon=2.226e+007,
+                                   pe_ratio=2.137e-006,
+                                   activation_energy=0.0)
+
+# H2_dissoc_adsorp:
+
+myCluster3 = Cluster(site_types=["1", "1"],
+                     neighboring=[(1, 2)],
+                     species=[s0, s0],
+                     gas_species=[H2_gas],
+                     cluster_energy=0.0)
+
+myCluster4 = Cluster(site_types=["1", "1"],
+                     neighboring=[(1, 2)],
+                     species=[H_adsorbed, H_adsorbed],
+                     cluster_energy=0.0)
+
+H2_dissoc_adsorp = ElementaryReaction(site_types=["1", "1"],
+                                      initial=myCluster3,
+                                      final=myCluster4,
+                                      neighboring=[(1, 2)],
+                                      reversible=True,
+                                      pre_expon=8.299e+007,
+                                      pe_ratio=7.966e-006,
+                                      activation_energy=0.0)
+# H2O_adsoroption:
+
+myCluster5 = Cluster(site_types=["1"],
+                     species=[s0],
+                     gas_species=[H2O_gas])
+
+myCluster6 = Cluster(site_types=["1"],
+                     species=[H2O_adsorbed],
+                     cluster_energy=-0.362)
+
+H2O_adsorption = ElementaryReaction(site_types=["1"],
+                                    initial=myCluster5,
+                                    final=myCluster6,
+                                    reversible=True,
+                                    pre_expon=2.776e+002,
+                                    pe_ratio=2.665e-006,
+                                    activation_energy=0.0)
+
+# H2O_dissociation:
+
+myCluster7 = Cluster(site_types=["1", "1"],
+                     neighboring=[(1, 2)],
+                     species=[H2O_adsorbed, s0],
+                     cluster_energy=-0.362)
+
+myCluster8 = Cluster(site_types=["1", "1"],
+                     neighboring=[(1, 2)],
+                     species=[OH_adsorbed, H_adsorbed],
+                     cluster_energy=0.0)
+
+H2O_dissoc_adsorp = ElementaryReaction(site_types=["1", "1"],
+                                       initial=myCluster7,
+                                       final=myCluster8,
+                                       neighboring=[(1, 2)],
+                                       reversible=True,
+                                       pre_expon=1.042e+13,
+                                       pe_ratio=1.000e+00,
+                                       activation_energy=0.777)
+
+# OH_decomposition:
+
+myCluster9 = Cluster(site_types=["1", "1"],
+                     neighboring=[(1, 2)],
+                     species=[s0, OH_adsorbed],
+                     cluster_energy=0.0)
+
+myCluster10 = Cluster(site_types=["1", "1"],
+                      neighboring=[(1, 2)],
+                      species=[O_adsorbed, H_adsorbed],
+                      cluster_energy=0.0)
+
+OH_decomposition = ElementaryReaction(site_types=["1", "1"],
+                                      initial=myCluster9,
+                                      final=myCluster10,
+                                      neighboring=[(1, 2)],
+                                      reversible=True,
+                                      pre_expon=1.042e+13,
+                                      pe_ratio=1.000e+00,
+                                      activation_energy=0.940)
+
+# COOH_formation:
+myCluster11 = Cluster(site_types=["1", "1"],
+                      neighboring=[(1, 2)],
+                      species=[CO_adsorbed, OH_adsorbed],
+                      cluster_energy=0.0)
+
+myCluster12 = Cluster(site_types=["1", "1"],
+                      neighboring=[(1, 2)],
+                      species=[s0, COOH_adsorbed],
+                      cluster_energy=0.0)
+
+COOH_formation = ElementaryReaction(site_types=["1", "1"],
+                                    initial=myCluster11,
+                                    final=myCluster12,
+                                    neighboring=[(1, 2)],
+                                    reversible=True,
+                                    pre_expon=1.042e+13,
+                                    pe_ratio=1.000e+00,
+                                    activation_energy=0.405)
+
+# COOH_decomposition:
+
+myCluster13 = Cluster(site_types=["1", "1"],
+                      neighboring=[(1, 2)],
+                      species=[COOH_adsorbed, s0],
+                      cluster_energy=0.0)
+
+myCluster14 = Cluster(site_types=["1", "1"],
+                      neighboring=[(1, 2)],
+                      species=[s0, H_adsorbed],
+                      gas_species=[CO2_gas],
+                      cluster_energy=0.0)
+
+COOH_decomposition = ElementaryReaction(site_types=["1", "1"],
+                                        initial=myCluster13,
+                                        final=myCluster14,
+                                        neighboring=[(1, 2)],
+                                        reversible=False,
+                                        pre_expon=1.042e+13,
+                                        activation_energy=0.852)
+
+# CO_oxidation:
+
+myCluster15 = Cluster(site_types=["1", "1"],
+                      neighboring=[(1, 2)],
+                      species=[CO_adsorbed, O_adsorbed],
+                      cluster_energy=0.0)
+
+myCluster16 = Cluster(site_types=["1", "1"],
+                      neighboring=[(1, 2)],
+                      species=[s0, s0],
+                      gas_species=[CO2_gas],
+                      cluster_energy=0.0)
+
+CO_oxidation = ElementaryReaction(site_types=["1", "1"],
+                                  initial=myCluster15,
+                                  final=myCluster16,
+                                  neighboring=[(1, 2)],
+                                  reversible=False,
+                                  pre_expon=1.042e+13,
+                                  activation_energy=0.988)
+
+# Build-up mechanism:
+
+myMechanism1 = Mechanism()
+myMechanism1.append(CO_adsorption)
+myMechanism1.append(H2_dissoc_adsorp)
+myMechanism1.append(H2O_adsorption)
+myMechanism1.append(H2O_dissoc_adsorp)
+myMechanism1.append(OH_decomposition)
+myMechanism1.append(COOH_formation)
+myMechanism1.append(COOH_decomposition)
+myMechanism1.append(CO_oxidation)
+#print(myMechanism1)
+
+# Settings:
+sett.random_seed = 123278 
+sett.temperature = 500.0 
+sett.pressure = 10
+sett.KMCEngine.name = 'ZacRos'
+sett.KMCEngine.path = '/Users/plopez/Programs'
+sett.KMCOutput.path = '/Users/plopez/job/Zacros/CO_tutorial'
+sett.AbinitioEngine.name = 'AMS'
+sett.AbinitioEngine.path = 'Programs'
+sett.snapshots = ('time', 5.e-4)
+sett.process_statistics = ('time', 5.e-4)
+sett.species_numbers = ('time', 5.e-4)
+sett.event_report = 'off'
+sett.max_steps = 'infinity'
+sett.max_time = 250.0
+sett.wall_time = 30
+myJob = KMCJob(settings=sett, lattice=myLattice, mechanism=myMechanism1)
 #print(myJob)
-#myJob.run()
-#
+myJob.run()
+##

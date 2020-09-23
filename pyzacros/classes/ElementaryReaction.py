@@ -151,7 +151,6 @@ class ElementaryReaction:
                     output += "    "+str(i+1)+" "+self.final.species[i].symbol+" "+str(j+1)+"\n"
 
             output += "  site_types "
-            self.site_types = list(dict.fromkeys(self.site_types))
             for i in range(len(self.site_types)):
                 output += str(self.site_types[i])
                 if(i != len(self.site_types)-1):
@@ -162,7 +161,9 @@ class ElementaryReaction:
         if self.reversible is True:
             output += "  pe_ratio "+str(self.pe_ratio)+"\n"
         output += "  activ_eng "+str(self.activation_energy)+"\n"
-        output += "end_step"
-
+        if self.reversible is True:
+            output += "end_reversible_step"
+        else:
+            output += "end_step"
         return output
 

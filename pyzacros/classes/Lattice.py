@@ -102,7 +102,7 @@ class Lattice():
                         setattr(self, i, argument_dict[i])
         else:
             # Reading arguments from user defined object:
-            del argument_dict['path_to_slab_yaml']
+            del argument_dict['path_to_slab_yaml'] # we don't need it.
             # Rise errors when the object is defined by the user:
             if self.lattice_type == 'default_choice':
                 if not self.default_lattice:
@@ -117,13 +117,13 @@ class Lattice():
                         msg += str(i) + " argument is missed.\n"
                         raise NameError(msg)
 
-
     def __str__(self) -> str:
         """Translate the object to a string."""
         output = "lattice"+" "+self.lattice_type+"\n"
         if self.default_lattice is not None:
             for i in range(4):
                 output += str(self.default_lattice[i]) + " "
+            output += "\nend_lattice"
         else:
             output += "cell_vectors"
             for i in range(2):

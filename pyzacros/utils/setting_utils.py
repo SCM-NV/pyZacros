@@ -3,9 +3,10 @@
 Module containing utilities to check and map objects.
 """
 from pyzacros.classes.KMCSettings import KMCSettings
+from pyzacros.classes.SpeciesList import SpeciesList
 
 
-def check_settings(settings=KMCSettings):
+def check_settings(settings=KMCSettings, species_list=SpeciesList):
     """
     Check KMCSettings, load defaults if necessary.
 
@@ -16,6 +17,7 @@ def check_settings(settings=KMCSettings):
     # This list contains the defaults for KMCSettings, please modify
     # them as you wish.
     # They will NOT overwrite settings provided by user.
+    check_molar_fraction(settings, species_list)
     tmp = KMCSettings(
         {'KMCEngine': {'name': 'Zacros'},
          'snapshots': ('time', 0.0005),
@@ -27,3 +29,47 @@ def check_settings(settings=KMCSettings):
          'wall_time': 10})
     # Soft merge of the settings:
     settings.soft_update(tmp)
+
+
+def check_molar_fraction(settings=KMCSettings,
+                         species_list=SpeciesList):
+    """
+    Check if molar_fraction labels are compatible with Species labels.
+
+    It also sets defaults molar_fractions 0.000.
+    :parm settings: KMCSettings object with the main settings of the
+                    KMC calculation.
+    :type settings: KMCSettings, required.
+    """
+    list_of_species = species_list.gas_species_labels()
+    sett_keys = settings.as_dict()
+    sett_keys = list(sett_keys["molar_fraction"])
+    # Check if the molar fraction is assigned to a gas species:
+    for i in sett_keys:
+        if i not in list_of_species:
+            msg = "### ERROR ### check_molar_fraction_labels.\n"
+            msg += "molar fraction defined for a non-gas species."
+            raise NameError(msg)
+    # Set default molar_fraction = 0.00 to the rest of gas species.
+    for i in list_of_species:
+        if i not in sett_keys:
+            tmp = KMCSettings({'molar_fraction': {i: 0.000}})
+            # Soft merge of the settings:
+            settings.soft_update(tmp)
+
+
+def get_molar_fractions(settings=KMCSettings) -> list:
+    """
+    Get molar fractions of the gas_species present in the Settings.
+
+    :parm settings: KMCSettings object with the main settings of the
+                    KMC calculation.
+    :type settings: KMCSettings, required.
+    """
+    dic_test = settings.as_dict()
+    list_of_molar_fractions = []
+    for i, j in dic_test.items():
+        if i == "molar_fraction":
+            for key in j:
+                list_of_molar_fractions.append(j[key])
+    return list_of_molar_fractions
