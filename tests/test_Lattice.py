@@ -40,16 +40,16 @@ def test_Lattice():
     expectedOutput = """\
 lattice periodic_cell
 cell_vectors
-  2.814  0.000
-  1.407  2.437
+  2.814284989122459  0.0
+  1.407142494561229  2.437242294069262
 repeat_cell 23 24
 n_cell_sites 2
 n_site_types 2
 site_type_names fcc hcp
 site_types 1 2
 site_coordinates
-  0.333  0.333
-  0.667  0.667
+  0.333333333333333  0.333333333333333
+  0.666666666666666  0.666666666666666
 neighboring_structure
   1-1 north
   1-1 east
@@ -63,9 +63,9 @@ neighboring_structure
 end_neighboring_structure
 end_lattice\
 """
-    assert(output == expectedOutput)
+    assert( compare( output, expectedOutput, 1e-3 ) )
 
     # reading from yaml
     myLattice = Lattice(path_to_slab_yaml="./pyzacros/slabs/pd111.yaml")
     output2 = str(myLattice)
-    assert( compare( output, expectedOutput, 1e-3 ) )
+    assert( compare( output2, expectedOutput, 1e-3 ) )

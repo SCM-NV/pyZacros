@@ -148,9 +148,9 @@ class ElementaryReaction:
                     output += " "
             output += "\n"
 
-        output += "  pre_expon "+("%.3e"%self.pre_expon)+"\n"
-        output += "  pe_ratio "+("%.3f"%self.pe_ratio)+"\n"
-        output += "  activ_eng "+("%.3f"%self.activation_energy)+"\n"
+        output += "  pre_expon "+("%.8e"%self.pre_expon)+"\n"
+        output += "  pe_ratio "+("%.8f"%self.pe_ratio)+"\n"
+        output += "  activ_eng "+("%.8f"%self.activation_energy)+"\n"
         output += "end_step"
 
         return output
