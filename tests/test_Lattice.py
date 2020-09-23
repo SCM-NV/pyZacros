@@ -3,6 +3,7 @@
 """Tests of the pyZacros classes."""
 
 from pyzacros.classes.Lattice import Lattice
+from pyzacros.utils.compareReports import *
 
 
 def test_Lattice():
@@ -67,4 +68,4 @@ end_lattice\
     # reading from yaml
     myLattice = Lattice(path_to_slab_yaml="./pyzacros/slabs/pd111.yaml")
     output2 = str(myLattice)
-    assert(output2 == expectedOutput)
+    assert( compare( output, expectedOutput, 1e-3 ) )
