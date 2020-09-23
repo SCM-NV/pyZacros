@@ -57,13 +57,13 @@ def test_Mechanism():
                                         pe_ratio=0.676,
                                         activation_energy = 0.2 )
 
-    myMechanism1 = Mechanism()
-    myMechanism1.append( myReaction1 )
-    myMechanism1.append( myReaction2 )
+    myMechanism = Mechanism()
+    myMechanism.append( myReaction1 )
+    myMechanism.append( myReaction2 )
 
-    print( myMechanism1 )
+    print( myMechanism )
 
-    output = str(myMechanism1)
+    output = str(myMechanism)
 
     expectedOutput = """\
 mechanism
@@ -77,9 +77,9 @@ reversible_step H2*-f,*-f:(1,2)<-->H*-f,H*-f:(1,2)
     1 H2* 1
     2 * 1
   site_types f f
-  pre_expon 1.000000e+13
+  pre_expon 1.000e+13
   pe_ratio 0.676
-  activ_eng 0.2
+  activ_eng 0.200
 end_step
 reversible_step H2*-f-f:(1,2)<-->H2*-f,*-f:(1,2)
   sites 2
@@ -91,9 +91,9 @@ reversible_step H2*-f-f:(1,2)<-->H2*-f,*-f:(1,2)
     1 H2* 1
     2 * 1
   site_types f f
-  pre_expon 1.000000e+13
+  pre_expon 1.000e+13
   pe_ratio 0.676
-  activ_eng 0.2
+  activ_eng 0.200
 end_step
 end_mechanism\
 """

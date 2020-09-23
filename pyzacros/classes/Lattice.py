@@ -129,7 +129,7 @@ class Lattice():
             for i in range(2):
                 output += "\n"
                 for j in range(2):
-                    output += "  "+str(self.cell_vectors[i][j])
+                    output += "  "+("%.3f"%self.cell_vectors[i][j])
 
             output += "\nrepeat_cell "
             output += str(str(self.repeat_cell)[1:-1]).replace(',', '')
@@ -148,7 +148,7 @@ class Lattice():
             for i in range(self.n_cell_sites):
                 output += "\n"
                 for j in range(2):
-                    output += "  "+str(self.site_coordinates[i][j])
+                    output += "  "+("%.3f"%self.site_coordinates[i][j])
 
             output += "\nneighboring_structure"
             for i in range(len(self.neighboring_structure)):
