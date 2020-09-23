@@ -146,8 +146,8 @@ def test_RKFLoader():
             # If AMS is available. It runs the calculations to generate
             # both the energy landscape and binding sites. Results are
             # saved in the directory tests/test_RKFLoader.data
-            #results = buildEnergyLandscape()
-            #results = deriveBindingSites()
+            results = buildEnergyLandscape()
+            results = deriveBindingSites()
 
     # If AMS is not available, it tries to load the package from PYTHONPATH
     try:
