@@ -95,7 +95,6 @@ step H*-f,H*-f:(1,2)-->*-f,*-f:H2:(1,2)
     2 * 1
   site_types f f
   pre_expon 1.000e+13
-  pe_ratio 0.676
   activ_eng 0.200
 end_step\
 """

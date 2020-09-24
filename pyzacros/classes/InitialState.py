@@ -1,6 +1,7 @@
 import math
 import random
 
+from .Species import *
 from .Lattice import *
 from .Mechanism import *
 

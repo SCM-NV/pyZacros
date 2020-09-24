@@ -1,6 +1,7 @@
 import os
 import sys
 
+from .Species import *
 from .Mechanism import *
 from .Lattice import *
 
