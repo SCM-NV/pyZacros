@@ -9,7 +9,7 @@ class Cluster:
                  species: SpeciesList,
                  gas_species: SpeciesList = SpeciesList(),
                  neighboring: list = None,
-                 multiplicity: int = 0,
+                 multiplicity: int = 1,
                  cluster_energy: float = 0.000):
         """
         Creates a new Cluster object
