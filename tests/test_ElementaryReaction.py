@@ -6,6 +6,7 @@ from pyzacros.classes.Species import Species
 from pyzacros.classes.SpeciesList import SpeciesList
 from pyzacros.classes.Cluster import Cluster
 from pyzacros.classes.ElementaryReaction import ElementaryReaction
+from pyzacros.utils.compareReports import *
 
 
 def test_ElementaryReaction():
@@ -53,12 +54,12 @@ reversible_step H2*-f,*-f:(1,2)<-->H*-f,H*-f:(1,2)
     1 H2* 1
     2 * 1
   site_types f f
-  pre_expon 1.000000e+13
+  pre_expon 1.000e+13
   pe_ratio 0.676
-  activ_eng 0.2
+  activ_eng 0.200
 end_step\
 """
-    assert( output == expectedOutput )
+    assert( compare( output, expectedOutput, 1e-3 ) )
 
     s3 = Species( "H2", gas_energy=0.0 ) # H2(gas)
 
@@ -76,7 +77,7 @@ end_step\
                                         reversible=False,
                                         pre_expon=1e+13,
                                         pe_ratio=0.676,
-                                        activation_energy = 0.2 )
+                                        activation_energy=0.2 )
 
     print( myReaction2 )
 
@@ -93,9 +94,9 @@ step H*-f,H*-f:(1,2)-->*-f,*-f:H2:(1,2)
     1 * 1
     2 * 1
   site_types f f
-  pre_expon 1.000000e+13
+  pre_expon 1.000e+13
   pe_ratio 0.676
-  activ_eng 0.2
+  activ_eng 0.200
 end_step\
 """
-    assert( output == expectedOutput )
+    assert( compare( output, expectedOutput, 1e-3 ) )

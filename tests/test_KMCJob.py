@@ -8,6 +8,7 @@ from pyzacros.classes.Cluster import Cluster
 from pyzacros.classes.ElementaryReaction import ElementaryReaction
 from pyzacros.classes.Mechanism import Mechanism
 from pyzacros.classes.KMCJob import KMCJob
+from pyzacros.utils.compareReports import *
 
 
 def test_KMCJob():
@@ -167,4 +168,4 @@ end_mechanism\
 """
     #FIXME
     output = expectedOutput
-    assert( output == expectedOutput )
+    assert( compare( output, expectedOutput, 1e-3 ) )

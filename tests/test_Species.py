@@ -4,6 +4,7 @@
 
 from pyzacros.classes.Species import Species
 from pyzacros.classes.Cluster import Cluster
+from pyzacros.utils.compareReports import *
 
 
 def test_Species():
@@ -18,7 +19,7 @@ def test_Species():
 
     output = str(myAdsorbedSpecies)
     expectedOutput = "H2*"
-    assert(output == expectedOutput)
+    assert( output == expectedOutput )
 
     # Gas specie
     myGasSpecies = Species("H2", gas_energy=0.0)
@@ -26,7 +27,7 @@ def test_Species():
 
     output = str(myGasSpecies)
     expectedOutput = "H2"
-    assert(output == expectedOutput)
+    assert( output == expectedOutput )
 
     # Free adsorption site
     myAdsorptionFreeSite = Species("*")
@@ -34,4 +35,4 @@ def test_Species():
 
     output = str(myAdsorptionFreeSite)
     expectedOutput = "*"
-    assert(output == expectedOutput)
+    assert( output == expectedOutput )

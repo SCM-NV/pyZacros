@@ -7,6 +7,7 @@ from pyzacros.classes.SpeciesList import SpeciesList
 from pyzacros.classes.Cluster import Cluster
 from pyzacros.classes.ElementaryReaction import ElementaryReaction
 from pyzacros.classes.Mechanism import Mechanism
+from pyzacros.utils.compareReports import *
 
 
 def test_Mechanism():
@@ -56,13 +57,13 @@ def test_Mechanism():
                                         pe_ratio=0.676,
                                         activation_energy = 0.2 )
 
-    myMechanism1 = Mechanism()
-    myMechanism1.append( myReaction1 )
-    myMechanism1.append( myReaction2 )
+    myMechanism = Mechanism()
+    myMechanism.append( myReaction1 )
+    myMechanism.append( myReaction2 )
 
-    print( myMechanism1 )
+    print( myMechanism )
 
-    output = str(myMechanism1)
+    output = str(myMechanism)
 
     expectedOutput = """\
 mechanism
@@ -96,4 +97,4 @@ reversible_step H2*-f-f:(1,2)<-->H2*-f,*-f:(1,2)
 end_step
 end_mechanism\
 """
-    assert( output == expectedOutput )
+    assert( compare( output, expectedOutput, 1e-3 ) )

@@ -42,6 +42,7 @@ mySpeciesList.append(OH_adsorbed)
 mySpeciesList.append(O_adsorbed)
 mySpeciesList.append(H_adsorbed)
 mySpeciesList.append(COOH_adsorbed)
+#print(mySpeciesList)
 
 # Lattice:
 
@@ -111,12 +112,12 @@ H2O_adsorption = ElementaryReaction(site_types=["1"],
 myCluster7 = Cluster(site_types=["1", "1"],
                      neighboring=[(1, 2)],
                      species=[H2O_adsorbed, s0],
-                     cluster_energy=-0.362)
+                     cluster_energy=0.0)
 
 myCluster8 = Cluster(site_types=["1", "1"],
                      neighboring=[(1, 2)],
                      species=[OH_adsorbed, H_adsorbed],
-                     cluster_energy=0.0)
+                     cluster_energy=0.021)
 
 H2O_dissoc_adsorp = ElementaryReaction(site_types=["1", "1"],
                                        initial=myCluster7,
@@ -152,7 +153,7 @@ OH_decomposition = ElementaryReaction(site_types=["1", "1"],
 myCluster11 = Cluster(site_types=["1", "1"],
                       neighboring=[(1, 2)],
                       species=[CO_adsorbed, OH_adsorbed],
-                      cluster_energy=0.0)
+                      cluster_energy=0.066)
 
 myCluster12 = Cluster(site_types=["1", "1"],
                       neighboring=[(1, 2)],
@@ -194,7 +195,7 @@ COOH_decomposition = ElementaryReaction(site_types=["1", "1"],
 myCluster15 = Cluster(site_types=["1", "1"],
                       neighboring=[(1, 2)],
                       species=[CO_adsorbed, O_adsorbed],
-                      cluster_energy=0.0)
+                      cluster_energy=0.423)
 
 myCluster16 = Cluster(site_types=["1", "1"],
                       neighboring=[(1, 2)],
@@ -209,6 +210,15 @@ CO_oxidation = ElementaryReaction(site_types=["1", "1"],
                                   reversible=False,
                                   pre_expon=1.042e+13,
                                   activation_energy=0.988)
+
+# Extra: 
+myCluster17 = Cluster(site_types=["1", "1"],
+                      species=[CO_adsorbed, CO_adsorbed],
+                      cluster_energy=0.560)
+myCluster18 = Cluster(site_types=["1"],
+                      species=[COOH_adsorbed],
+                      cluster_energy=-1.487)
+
 
 # Build-up mechanism:
 

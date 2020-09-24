@@ -165,5 +165,6 @@ class ElementaryReaction:
             output += "end_reversible_step"
         else:
             output += "end_step"
+
         return output
 

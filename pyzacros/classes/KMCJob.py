@@ -1,9 +1,11 @@
 """Module containing the KMCJob class."""
 
+from subprocess import Popen
+
 from .SpeciesList import SpeciesList
 from .Mechanism import Mechanism
 from .Lattice import Lattice
-from subprocess import Popen
+from .InitialState import InitialState
 from .KMCSettings import KMCSettings
 from pyzacros.utils.setting_utils import check_settings, get_molar_fractions
 from pyzacros.utils.find_utils import find_KMCPaths
@@ -12,8 +14,9 @@ from pyzacros.utils.find_utils import find_KMCPaths
 class KMCJob:
     """Job class that represents a chemical species."""
 
+
     def __init__(self, settings: KMCSettings, lattice: Lattice,
-                 mechanism: Mechanism):
+                 mechanism: Mechanism, initialState: InitialState = None):
         """
         Create a new Job object.
 
@@ -23,17 +26,16 @@ class KMCJob:
                         calculation.
         :parm lattice: Lattice containing the lattice to be used during the
                        calculation.
+        :parm initialState: Initial state of the system. By default a KMC
+                       simulation in Zacros is initialized with an empty lattice.
         """
-
         self.settings = settings
         self.mechanism = mechanism
         self.lattice = lattice
-        self.__speciesList = SpeciesList()
-        self.__gasSpeciesList = SpeciesList()
-        self.__updateSpeciesList()
-        self.__clustersList = []
-        self.__updateClustersList()
-        check_settings(self.settings, self.__gasSpeciesList)
+        self.initialState = initialState
+
+        # Check settings:
+        check_settings(self.settings, self.mechanism.gasSpecies())
 
     def __str__(self) -> str:
         """Translate the object to a string."""
@@ -62,7 +64,15 @@ class KMCJob:
         output += "---------------------------"+"\n"
         output += self.mechanismInput()
 
+        if( self.initialState is not None ):
+            output += "\n"
+            output += "---------------------------"+"\n"
+            output += "state_input.dat"+"\n"
+            output += "---------------------------"+"\n"
+            output += self.stateInput()
+
         return output
+
 
     def run(self):
         """Execute the KMC engine."""
@@ -71,6 +81,7 @@ class KMCJob:
         print("Running engine:")
         Popen([path_to_engine], cwd=working_path, shell=True)
         return
+
 
     def simulationInput(self) -> str:
         """Return a string with the content of simulation_input.dat ."""
@@ -81,15 +92,13 @@ class KMCJob:
         output += "pressure\t" + \
                   str(float(self.settings.get(('pressure'))))+"\n"
 
-        output += str(self.__gasSpeciesList)
-
+        output += str(self.mechanism.gasSpecies())
         molar_frac_list = get_molar_fractions(self.settings,
-                                              self.__gasSpeciesList)
-
+                                              self.mechanism.gasSpecies())
         output += "gas_molar_fracs \t" + \
                   '\t '.join([str(elem) for elem in molar_frac_list]) \
-                  + "\n"
-        output += str(self.__speciesList)+"\n"
+                  + "\n\n"
+        output += str(self.mechanism.species())+"\n"
 
         output += self.print_optional_sett(opt_sett='snapshots')
         output += self.print_optional_sett(opt_sett='process_statistics')
@@ -105,6 +114,7 @@ class KMCJob:
                   str(self.settings.get(('wall_time')))+"\n"
         output += "\nfinish" 
         return output
+
 
     def print_optional_sett(self, opt_sett: str) -> str:
         """Give back the printing of an time/event/logtime setting."""
@@ -122,19 +132,22 @@ class KMCJob:
                     str(float(dictionary[opt_sett][2])) + "\n"
         return output
 
+
     def latticeInput(self) -> str:
         """Return a string with the content of the lattice_input.dat file."""
         output = str(self.lattice)
         return output
 
+
     def energeticsInput(self) -> str:
         """Return a string with the content of the energetics_input.dat file."""
-        output = "energetics"+"\n\n"
-        for cluster in self.__clustersList:
-            output += str(cluster)+"\n\n"
+        output = "energetics"+"\n"
+        for cluster in self.mechanism.clusters():
+            output += str(cluster)+"\n"
         output += "end_energetics"
 
         return output
+
 
     def mechanismInput(self) -> str:
         """
@@ -143,6 +156,18 @@ class KMCJob:
         output = str(self.mechanism)
 
         return output
+
+
+    def stateInput(self) -> str:
+        """
+        Returns a string with the content of the state_input.dat file
+        """
+        output = ""
+        if( self.initialState is not None ):
+            output = str(self.initialState)
+
+        return output
+
 
     def writeInputFiles(self, directory: str):
         """
@@ -159,39 +184,6 @@ class KMCJob:
             f.write(self.energeticsInput())
         with open(directory+"/mechanism_input.dat", "w") as f:
             f.write(self.mechanismInput())
-
-    def __updateSpeciesList(self):
-        """
-        Update self.__speciesList and self.__gasSpeciesList from self.mechanism.
-
-        Duplicates are automatically removed.
-        """
-        self.__speciesList = SpeciesList()
-        self.__gasSpeciesList = SpeciesList()
-
-        for reaction in self.mechanism:
-            self.__speciesList.extend( reaction.initial.species )
-            self.__speciesList.extend( reaction.final.species )
-            self.__gasSpeciesList.extend( reaction.initial.gas_species )
-            self.__gasSpeciesList.extend( reaction.final.gas_species )
-
-        # Remove duplicates
-        self.__speciesList = SpeciesList(dict.fromkeys(self.__speciesList))
-        self.__gasSpeciesList = SpeciesList(dict.fromkeys(self.__gasSpeciesList))
-
-
-    def __updateClustersList( self ):
-        """
-        Updates self.__clustersList from self.mechanism.
-        Duplicates are automatically removed.
-        """
-
-        self.__clustersList = []
-
-        for reaction in self.mechanism:
-            self.__clustersList.append( reaction.initial )
-            self.__clustersList.append( reaction.final )
-
-        # Remove duplicates
-        self.__clustersList = SpeciesList(dict.fromkeys(self.__clustersList))
-        self.__clustersList = SpeciesList(dict.fromkeys(self.__clustersList))
+        if(self.initialState is not None):
+            with open(directory+"/state_input.dat", "w") as f:
+                f.write(self.stateInput())
