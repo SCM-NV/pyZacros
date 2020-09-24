@@ -5,7 +5,7 @@ from .Mechanism import Mechanism
 from .Lattice import Lattice
 from subprocess import Popen
 from .KMCSettings import KMCSettings
-from pyzacros.utils.setting_utils import check_settings
+from pyzacros.utils.setting_utils import check_settings, get_molar_fractions
 from pyzacros.utils.find_utils import find_KMCPaths
 
 
@@ -24,7 +24,6 @@ class KMCJob:
         :parm lattice: Lattice containing the lattice to be used during the
                        calculation.
         """
-        check_settings(settings)
 
         self.settings = settings
         self.mechanism = mechanism
@@ -32,9 +31,9 @@ class KMCJob:
         self.__speciesList = SpeciesList()
         self.__gasSpeciesList = SpeciesList()
         self.__updateSpeciesList()
-
         self.__clustersList = []
         self.__updateClustersList()
+        check_settings(self.settings, self.__gasSpeciesList)
 
     def __str__(self) -> str:
         """Translate the object to a string."""
@@ -82,7 +81,14 @@ class KMCJob:
         output += "pressure\t" + \
                   str(float(self.settings.get(('pressure'))))+"\n"
 
-        output += str(self.__gasSpeciesList)+"\n"
+        output += str(self.__gasSpeciesList)
+
+        molar_frac_list = get_molar_fractions(self.settings,
+                                              self.__gasSpeciesList)
+
+        output += "gas_molar_fracs \t" + \
+                  '\t '.join([str(elem) for elem in molar_frac_list]) \
+                  + "\n"
         output += str(self.__speciesList)+"\n"
 
         output += self.print_optional_sett(opt_sett='snapshots')
@@ -97,6 +103,7 @@ class KMCJob:
                   str(self.settings.get(('max_time')))+"\n"
         output += "wall_time\t" + \
                   str(self.settings.get(('wall_time')))+"\n"
+        output += "\nfinish" 
         return output
 
     def print_optional_sett(self, opt_sett: str) -> str:
@@ -122,9 +129,9 @@ class KMCJob:
 
     def energeticsInput(self) -> str:
         """Return a string with the content of the energetics_input.dat file."""
-        output = "energetics"+"\n"
+        output = "energetics"+"\n\n"
         for cluster in self.__clustersList:
-            output += str(cluster)+"\n"
+            output += str(cluster)+"\n\n"
         output += "end_energetics"
 
         return output
@@ -188,4 +195,3 @@ class KMCJob:
         # Remove duplicates
         self.__clustersList = SpeciesList(dict.fromkeys(self.__clustersList))
         self.__clustersList = SpeciesList(dict.fromkeys(self.__clustersList))
-

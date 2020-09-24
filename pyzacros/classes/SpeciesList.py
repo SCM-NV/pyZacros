@@ -1,7 +1,6 @@
 from .Species import *
 
 class SpeciesList(list):
-
     def __str__( self ) -> str:
         """
         Translates the object to a string
@@ -10,7 +9,6 @@ class SpeciesList(list):
         gasSpecies = []
         adsorbedSpecies = []
         containsEmptySite = False
-
         for i,specie in enumerate(self):
             if( specie.is_adsorbed() ):
                 adsorbedSpecies.append(i)
@@ -39,13 +37,6 @@ class SpeciesList(list):
             for i in gasSpecies:
                 output += "%10s"%self[i].mass()
             output += "\n"
-        else:
-            output = "n_gas_species "+str(0)+"\n"
-
-            output += "gas_molar_fracs   "
-            for i in gasSpecies:
-                output += "%10s"%self[i].molar_fraction
-            output += "\n"
 
         effAdsorbedSpecies = -1
         if( containsEmptySite ):
@@ -68,3 +59,19 @@ class SpeciesList(list):
                     output += "%10s"%self[i].denticity
 
         return output
+
+    def gas_species_labels(self) -> list:
+        """Give back labels of the gas species."""
+        gasSpecies = []
+        adsorbedSpecies = []
+        list_species = []
+
+        for i, specie in enumerate(self):
+            if(specie.is_adsorbed()):
+                adsorbedSpecies.append(i)
+            else:
+                gasSpecies.append(i)
+        if(len(gasSpecies) > 0):
+            for i in gasSpecies:
+                list_species.append(self[i].symbol)
+        return list_species

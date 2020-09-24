@@ -1,10 +1,16 @@
 from .Species import *
-from .SpeciesList import *
+from .SpeciesList import SpeciesList
+
+
 
 class Cluster:
 
-    def __init__( self, site_types: list, neighboring: list, species: SpeciesList,
-                    gas_species: SpeciesList=SpeciesList(), multiplicity: int=0, cluster_energy: float=0.000 ):
+    def __init__(self, site_types: list,
+                 species: SpeciesList,
+                 gas_species: SpeciesList = SpeciesList(),
+                 neighboring: list = None,
+                 multiplicity: int = 0,
+                 cluster_energy: float = 0.000):
         """
         Creates a new Cluster object
 
@@ -73,29 +79,31 @@ class Cluster:
             self.__label += self.species[i].symbol+"-"
             for j in range(self.species[i].denticity):
                 self.__label += self.site_types[i]
-                if( j != self.species[i].denticity-1 ):
+                if(j != self.species[i].denticity-1):
                     self.__label += "-"
-            if( i != len(self.species)-1 ):
+            if(i != len(self.species)-1):
                 self.__label += ","
 
-        if( len(self.gas_species) > 0 ):
+        if(len(self.gas_species) > 0):
             self.__label += ":"
 
         for i in range(len(self.gas_species)):
             self.__label += self.gas_species[i].symbol
-            if( i != len(self.gas_species)-1 ):
+            if(i != len(self.gas_species)-1):
                 self.__label += ","
 
-        if( len(self.neighboring) > 0 ):
-            self.__label += ":"
+        if self.neighboring is not None:
+            if(len(self.neighboring) > 0):
+                self.__label += ":"
 
         # For neighboring nodes are sorted
-        for i in range(len(self.neighboring)):
-            lNeighboring = list(self.neighboring[i])
-            lNeighboring.sort()
-            self.__label += str(tuple(lNeighboring)).replace(" ", "")
-            if( i != len(self.neighboring)-1 ):
-                self.__label += ","
+        if self.neighboring is not None:
+            for i in range(len(self.neighboring)):
+                lNeighboring = list(self.neighboring[i])
+                lNeighboring.sort()
+                self.__label += str(tuple(lNeighboring)).replace(" ", "")
+                if( i != len(self.neighboring)-1):
+                    self.__label += ","
 
 
     def label( self ) -> str:
@@ -125,12 +133,13 @@ class Cluster:
         if( self.sites != 0 ):
             output += "  sites " + str(self.sites)+"\n"
 
-            output += "  neighboring "
-            for i in range(len(self.neighboring)):
-                output += str(self.neighboring[i][0])+"-"+str(self.neighboring[i][1])
-                if( i != len(self.neighboring)-1 ):
-                    output += " "
-            output += "\n"
+            if self.neighboring is not None:
+                output += "  neighboring "
+                for i in range(len(self.neighboring)):
+                    output += str(self.neighboring[i][0])+"-"+str(self.neighboring[i][1])
+                    if( i != len(self.neighboring)-1 ):
+                        output += " "
+                output += "\n"
 
             output += "  lattice_state"+"\n"
             for i in range(len(self.species)):

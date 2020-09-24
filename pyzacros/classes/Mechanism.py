@@ -6,11 +6,11 @@ class Mechanism(list):
         """
         Translates the object to a string
         """
-        output = "mechanism"+"\n"
+        output = "mechanism"+"\n\n"
         for i in range(len(self)):
             output += str(self[i])
             if( i != len(self)-1 ):
-                output += "\n"
+                output += "\n\n"
         output += "\n"
         output += "end_mechanism"
 

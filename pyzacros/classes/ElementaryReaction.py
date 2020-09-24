@@ -1,10 +1,18 @@
 from collections import Counter
-from .Cluster import *
+from .Cluster import Cluster
+
 
 class ElementaryReaction:
 
-    def __init__( self, site_types: list, neighboring: list, initial: Cluster, final: Cluster,
-                    reversible: bool=True, pre_expon: float=0.0, pe_ratio: float=0.0, activation_energy: float=0.0 ):
+    def __init__(self,
+                 site_types: list,
+                 initial: Cluster,
+                 final: Cluster,
+                 neighboring: list = None,
+                 reversible: bool = True,
+                 pre_expon: float = 0.0,
+                 pe_ratio: float = 0.0,
+                 activation_energy: float = 0.0):
         """
         Creates a new ElementaryReaction object
 
@@ -121,15 +129,16 @@ class ElementaryReaction:
 
             output += "\n"
 
-        if( self.sites != 0 ):
+        if(self.sites != 0):
             output += "  sites " + str(self.sites)+"\n"
-
-            output += "  neighboring "
-            for i in range(len(self.neighboring)):
-                output += str(self.neighboring[i][0])+"-"+str(self.neighboring[i][1])
-                if( i != len(self.neighboring)-1 ):
-                    output += " "
-            output += "\n"
+            if self.neighboring is not None:
+                output += "  neighboring "
+                for i in range(len(self.neighboring)):
+                    output += str(self.neighboring[i][0]) + \
+                             "-"+str(self.neighboring[i][1])
+                    if(i != len(self.neighboring)-1):
+                        output += " "
+                output += "\n"
 
             output += "  initial"+"\n"
             for i in range(len(self.initial)):
@@ -144,14 +153,17 @@ class ElementaryReaction:
             output += "  site_types "
             for i in range(len(self.site_types)):
                 output += str(self.site_types[i])
-                if( i != len(self.site_types)-1 ):
+                if(i != len(self.site_types)-1):
                     output += " "
             output += "\n"
 
         output += "  pre_expon "+("%e"%self.pre_expon)+"\n"
-        output += "  pe_ratio "+str(self.pe_ratio)+"\n"
+        if self.reversible is True:
+            output += "  pe_ratio "+str(self.pe_ratio)+"\n"
         output += "  activ_eng "+str(self.activation_energy)+"\n"
-        output += "end_step"
-
+        if self.reversible is True:
+            output += "end_reversible_step"
+        else:
+            output += "end_step"
         return output
 
