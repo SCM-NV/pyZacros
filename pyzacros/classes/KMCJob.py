@@ -1,6 +1,6 @@
 """Module containing the KMCJob class."""
 
-from subprocess import Popen
+from subprocess import Popen, PIPE
 
 from .SpeciesList import SpeciesList
 from .Mechanism import Mechanism
@@ -27,7 +27,8 @@ class KMCJob:
         :parm lattice: Lattice containing the lattice to be used during the
                        calculation.
         :parm initialState: Initial state of the system. By default a KMC
-                       simulation in Zacros is initialized with an empty lattice.
+                       simulation in Zacros is initialized with an empty
+                       lattice.
         """
         self.settings = settings
         self.mechanism = mechanism
@@ -64,7 +65,7 @@ class KMCJob:
         output += "---------------------------"+"\n"
         output += self.mechanismInput()
 
-        if( self.initialState is not None ):
+        if(self.initialState is not None):
             output += "\n"
             output += "---------------------------"+"\n"
             output += "state_input.dat"+"\n"
@@ -73,15 +74,16 @@ class KMCJob:
 
         return output
 
-
     def run(self):
         """Execute the KMC engine."""
         (path_to_engine, working_path) = find_KMCPaths(self.settings)
         self.writeInputFiles(directory=working_path)
         print("Running engine:")
-        Popen([path_to_engine], cwd=working_path, shell=True)
+        p = Popen(path_to_engine, cwd=working_path,
+                  stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
+        out, err = p.communicate()
+        print("End running engine.")
         return
-
 
     def simulationInput(self) -> str:
         """Return a string with the content of simulation_input.dat ."""
@@ -112,9 +114,8 @@ class KMCJob:
                   str(self.settings.get(('max_time')))+"\n"
         output += "wall_time\t" + \
                   str(self.settings.get(('wall_time')))+"\n"
-        output += "\nfinish" 
+        output += "\nfinish"
         return output
-
 
     def print_optional_sett(self, opt_sett: str) -> str:
         """Give back the printing of an time/event/logtime setting."""
@@ -132,12 +133,10 @@ class KMCJob:
                     str(float(dictionary[opt_sett][2])) + "\n"
         return output
 
-
     def latticeInput(self) -> str:
         """Return a string with the content of the lattice_input.dat file."""
         output = str(self.lattice)
         return output
-
 
     def energeticsInput(self) -> str:
         """Return a string with the content of the energetics_input.dat file."""
