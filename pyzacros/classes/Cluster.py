@@ -14,16 +14,16 @@ class Cluster:
         """
         Creates a new Cluster object
 
-        :parm site_types: tuple
+        :parm site_types: list
         :parm neighboring: list
-        :parm species: tuple
+        :parm species: list
         :parm multiplicity: int
         :parm cluster_energy: float
         """
-        self.site_types = site_types                  # e.g. ( "f", "f" )
+        self.site_types = site_types                  # e.g. [ "f", "f" ]
         self.neighboring = neighboring                # e.g. [ (1,2) ]
-        self.species = species                        # e.g. ( Species("H*",1), Species("H*",1) )
-        self.gas_species = gas_species                # e.g. ( Species("H2") )
+        self.species = species                        # e.g. [ Species("H*",1), Species("H*",1) ]
+        self.gas_species = gas_species                # e.g. [ Species("H2") ]
         self.multiplicity = multiplicity              # e.g. 2
         self.cluster_energy = cluster_energy          # Units eV
 

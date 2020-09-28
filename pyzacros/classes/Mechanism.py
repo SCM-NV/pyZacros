@@ -63,8 +63,8 @@ class Mechanism(UserList):
             self.__clustersList.append( reaction.final )
 
         # Remove duplicates
-        self.__clustersList = SpeciesList(dict.fromkeys(self.__clustersList))
-        self.__clustersList = SpeciesList(dict.fromkeys(self.__clustersList))
+        self.__clustersList = list(dict.fromkeys(self.__clustersList))
+        self.__clustersList = list(dict.fromkeys(self.__clustersList))
 
 
     def species( self ):
