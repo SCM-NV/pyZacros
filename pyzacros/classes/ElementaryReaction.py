@@ -1,5 +1,6 @@
 from collections import Counter
 from .Cluster import Cluster
+from .SpeciesList import SpeciesList
 
 
 class ElementaryReaction:
