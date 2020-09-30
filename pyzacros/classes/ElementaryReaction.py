@@ -179,12 +179,19 @@ class ElementaryReaction:
                     i += 1
                     output += "\n"
 
-            output += "  site_types "
-            for i in range(len(self.site_types)):
-                output += str(self.site_types[i])
-                if(i != len(self.site_types)-1):
-                    output += " "
-            output += "\n"
+        # Print site_types if they are different:
+            all_sites_are_the_same = False
+            if len(self.site_types) > 0:
+                all_sites_are_the_same = \
+                                    self.site_types.count(self.site_types[0])\
+                                    == len(self.site_types)
+            if not all_sites_are_the_same:
+                output += "  site_types "
+                for i in range(len(self.site_types)):
+                    output += str(self.site_types[i])
+                    if(i != len(self.site_types)-1):
+                        output += " "
+                output += "\n"
 
         output += "  pre_expon "+("%e"%self.pre_expon)+"\n"
         if self.reversible is True:
