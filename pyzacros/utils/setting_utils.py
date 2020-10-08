@@ -42,6 +42,10 @@ def check_molar_fraction(settings=KMCSettings,
     """
     list_of_species = species_list.gas_species_labels()
     sett_keys = settings.as_dict()
+
+    if( "molar_fraction" not in sett_keys ):
+        return
+
     sett_keys = list(sett_keys["molar_fraction"])
     # Check if the molar fraction is assigned to a gas species:
     for i in sett_keys:

@@ -58,6 +58,8 @@ class RKFLoader:
         labels = labels.split()
         coords = results.readrkf("BindingSites", "Coords")
         coords = [ [coords[3*i+j]/angs for j in range(3) ] for i in range(nSites) ]
+        coordsFrac = results.readrkf("BindingSites", "CoordsFrac")
+        coordsFrac = [ [coordsFrac[3*i+j] for j in range(3) ] for i in range(nSites) ]
         nConnections = results.readrkf("BindingSites", "nConnections")
         fromSites = results.readrkf("BindingSites", "FromSites")
         toSites = results.readrkf("BindingSites", "ToSites")
@@ -287,5 +289,5 @@ class RKFLoader:
                             n_site_types=len(site_type_names),
                             site_type_names=site_type_names,
                             site_types=labels,
-                            site_coordinates=coords,
+                            site_coordinates=coordsFrac,
                             neighboring_structure=neighboring_structure)

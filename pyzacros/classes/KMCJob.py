@@ -1,5 +1,6 @@
 """Module containing the KMCJob class."""
 
+import os
 from subprocess import Popen, PIPE
 
 from .SpeciesList import SpeciesList
@@ -8,7 +9,7 @@ from .Lattice import Lattice
 from .InitialState import InitialState
 from .KMCSettings import KMCSettings
 from pyzacros.utils.setting_utils import check_settings, get_molar_fractions
-from pyzacros.utils.find_utils import find_KMCPaths
+from pyzacros.utils.find_utils import find_path_to_engine
 
 
 class KMCJob:
@@ -16,7 +17,7 @@ class KMCJob:
 
 
     def __init__(self, settings: KMCSettings, lattice: Lattice,
-                 mechanism: Mechanism, initialState: InitialState = None):
+                 mechanism: Mechanism, initialState: InitialState = None, name: str = "results"):
         """
         Create a new Job object.
 
@@ -34,6 +35,22 @@ class KMCJob:
         self.mechanism = mechanism
         self.lattice = lattice
         self.initialState = initialState
+        self.name = name
+        self.working_path = 'pyzacros_workdir/'+self.name
+
+        # If directory already exists:
+        if( os.path.isdir( name ) ):
+            i=0
+            while( True ):
+                newName = name+"."+str("%03d"%i)
+                if( not os.path.isdir( newName ) ):
+                    self.name = newName
+                    self.working_path = 'pyzacros_workdir/'+self.name
+                    break
+                i = i+1
+
+        os.makedirs(self.working_path, exist_ok=True)
+        print("Working directory:", self.working_path)
 
         # Check settings:
         check_settings(self.settings, self.mechanism.gasSpecies())
@@ -76,10 +93,10 @@ class KMCJob:
 
     def run(self):
         """Execute the KMC engine."""
-        (path_to_engine, working_path) = find_KMCPaths(self.settings)
-        self.writeInputFiles(directory=working_path)
+        path_to_engine = find_path_to_engine(self.settings)
+        self.writeInputFiles(directory=self.working_path)
         print("Running engine:")
-        p = Popen(path_to_engine, cwd=working_path,
+        p = Popen(path_to_engine, cwd=self.working_path,
                   stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
         out, err = p.communicate()
         print("End running engine.")
@@ -94,12 +111,19 @@ class KMCJob:
         output += "pressure\t" + \
                   str(float(self.settings.get(('pressure'))))+"\n"
 
-        output += str(self.mechanism.gasSpecies())
-        molar_frac_list = get_molar_fractions(self.settings,
-                                              self.mechanism.gasSpecies())
-        output += "gas_molar_fracs \t" + \
-                  '\t '.join([str(elem) for elem in molar_frac_list]) \
-                  + "\n\n"
+        gasSpecies = self.mechanism.gasSpecies()
+
+        if( len(gasSpecies) == 0 ):
+            output += "n_gas_species "+str(len(gasSpecies))+"\n"
+        else:
+            output += str(gasSpecies)
+
+        molar_frac_list = get_molar_fractions(self.settings, gasSpecies)
+
+        if( len(molar_frac_list)>0 ):
+            output += "gas_molar_fracs \t" + \
+                    '\t '.join([str(elem) for elem in molar_frac_list]) \
+                    + "\n\n"
         output += str(self.mechanism.species())+"\n"
 
         output += self.print_optional_sett(opt_sett='snapshots')

@@ -44,6 +44,7 @@ class SpeciesList(list):
         else:
             effAdsorbedSpecies = len(adsorbedSpecies)
 
+
         if( effAdsorbedSpecies > 0 ):
             output += "n_surf_species "+str(effAdsorbedSpecies)+"\n"
 

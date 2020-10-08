@@ -33,12 +33,8 @@ class InitialState:
         output  = "initial_state"+"\n"
 
         for species,id_sites in self.__filledSitesPerSpecies.items():
-            output += "  seed_on_sites "+species.symbol+" "
             for i,id_site in enumerate(id_sites):
-                output += str(id_site)
-                if( i != len(id_sites)-1 ):
-                    output += " "
-            output += "\n"
+                output += "  seed_on_sites "+species.symbol+" "+str(id_site)+"\n"
 
         output += "end_initial_state"
 

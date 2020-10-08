@@ -2,6 +2,7 @@
 """Module containing utility functions to find files."""
 
 import os
+import shutil
 from os import path
 from pyzacros.classes.KMCSettings import KMCSettings
 
@@ -13,7 +14,7 @@ def find_file(name, path_to_search):
             return os.path.join(root, name)
 
 
-def find_KMCPaths(settings: KMCSettings) -> tuple:
+def find_path_to_engine(settings: KMCSettings) -> tuple:
     """
     Find the path to the KMC engine using the sett.KMCEngine.path.
 
@@ -27,23 +28,28 @@ def find_KMCPaths(settings: KMCSettings) -> tuple:
     #   If the engine is Zacros(default):
     if str(settings.get_nested(('KMCEngine', 'name'))).lower() == 'zacros':
         print("The selected KMC engine is Zacros.")
-        # Check if there is a given path to the executable:
-        if settings.get_nested(('KMCEngine', 'path')):
-            # Does it exist?
-            path_to_engine = settings.get_nested(('KMCEngine', 'path'))
-            # Then search:
-            if path.exists(path_to_engine):
-                path_to_engine = find_file('zacros.x',
-                                           path_to_search=path_to_engine)
-                print("Using Zacros executable:\n", path_to_engine)
+
+        # First tries to find 'zacros.x' in the directories listed in 'path'
+        path_to_engine = shutil.which( 'zacros.x' )
+        if path_to_engine is None:
+            # Check if there is a given path to the executable:
+            if settings.get_nested(('KMCEngine', 'path')):
+                # Does it exist?
+                path_to_engine = settings.get_nested(('KMCEngine', 'path'))
+                # Then search:
+                if path.exists(path_to_engine):
+                    path_to_engine = find_file('zacros.x',
+                                            path_to_search=path_to_engine)
+                else:
+                    msg = "### ERROR ### check_settings\n"
+                    msg += "Path to KMCEngine does not exist.\n"
+                    raise FileNotFoundError(msg)
             else:
-                msg = "### ERROR ### check_settings\n"
-                msg += "Path to KMCEngine does not exist.\n"
-                raise FileNotFoundError(msg)
-        else:
-            msg = "### ERROR ### Lattice.__init__.\n"
-            msg += "sett.KMCEngine.path is not defined.\n"
-            raise NameError(msg)
+                msg = "### ERROR ### Lattice.__init__.\n"
+                msg += "sett.KMCEngine.path is not defined or the Zacros executable is not in the path.\n"
+                raise NameError(msg)
+
+        print("Using Zacros executable:\n", path_to_engine)
     else:
         # Otherwise rise an error:
         # FIXME to add more KMCengines.
@@ -51,17 +57,7 @@ def find_KMCPaths(settings: KMCSettings) -> tuple:
         msg += "KMC engine not implemented.\n"
         raise NotImplementedError(msg)
 
-    # 2. Set path_to_output:
-    if settings.get_nested(('KMCOutput', 'path')):
-        working_path = settings.get_nested(('KMCOutput', 'path'))
-    else:
-        working_path = './'
-    if not path.exists(working_path):
-        print("KMCOutput does not exist, taking current ./ directory.")
-        working_path = './'
-    print("Working directory:\n", working_path)
-
-    return path_to_engine, working_path
+    return path_to_engine
 
 
 def find_input_files(engine: str,
