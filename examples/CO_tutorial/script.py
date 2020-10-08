@@ -211,7 +211,7 @@ CO_oxidation = ElementaryReaction(site_types=["1", "1"],
                                   pre_expon=1.042e+13,
                                   activation_energy=0.988)
 
-# Extra: 
+# Extra:
 myCluster17 = Cluster(site_types=["1", "1"],
                       species=[CO_adsorbed, CO_adsorbed],
                       cluster_energy=0.560)
@@ -234,12 +234,12 @@ myMechanism1.append(CO_oxidation)
 #print(myMechanism1)
 
 # Settings:
-sett.random_seed = 123278 
-sett.temperature = 500.0 
+sett.random_seed = 123278
+sett.temperature = 500.0
 sett.pressure = 10
 sett.KMCEngine.name = 'ZacRos'
-sett.KMCEngine.path = '/Users/plopez/Programs'
-sett.KMCOutput.path = '/Users/plopez/job/Zacros/CO_tutorial'
+sett.KMCEngine.path = '/home/aguirre/bin/'
+sett.KMCOutput.path = '/home/aguirre/Develop/pyZacros/examples/CO_tutorial/output'
 sett.AbinitioEngine.name = 'AMS'
 sett.AbinitioEngine.path = 'Programs'
 sett.snapshots = ('time', 5.e-4)
