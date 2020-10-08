@@ -78,8 +78,23 @@ def test_Lattice():
 
     expectedOutput = """\
 initial_state
-  seed_on_sites H* 2 3 4 5 6 8 10 11 12 14 15 16 18
-  seed_on_sites H2* 1 7 13 17
+  seed_on_sites H* 2
+  seed_on_sites H* 3
+  seed_on_sites H* 4
+  seed_on_sites H* 5
+  seed_on_sites H* 6
+  seed_on_sites H* 8
+  seed_on_sites H* 10
+  seed_on_sites H* 11
+  seed_on_sites H* 12
+  seed_on_sites H* 14
+  seed_on_sites H* 15
+  seed_on_sites H* 16
+  seed_on_sites H* 18
+  seed_on_sites H2* 1
+  seed_on_sites H2* 7
+  seed_on_sites H2* 13
+  seed_on_sites H2* 17
 end_initial_state\
 """
     assert(output == expectedOutput)
