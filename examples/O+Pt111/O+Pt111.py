@@ -8,7 +8,7 @@ from pyzacros.classes.KMCJob import KMCJob
 
 scm.plams.init()
 
-molecule = scm.plams.Molecule( "O-Pt111.xyz" )
+molecule = scm.plams.Molecule( "O+Pt111.xyz" )
 for atom in molecule:
     if( atom.symbol == "O" ):
         atom.properties.suffix = "region=adsorbate"
