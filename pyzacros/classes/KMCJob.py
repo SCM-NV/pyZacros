@@ -40,7 +40,7 @@ class KMCJob:
 
         # If directory already exists:
         if( os.path.isdir( self.working_path ) ):
-            i=0
+            i=2
             while( True ):
                 new_working_path = 'pyzacros_workdir'+"."+str("%03d"%i)+"/"+self.name
                 if( not os.path.isdir( new_working_path ) ):
