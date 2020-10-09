@@ -53,7 +53,7 @@ def test_Lattice():
                         n_cell_sites=2,
                         n_site_types=2,
                         site_type_names=["fcc", "hcp"],
-                        site_types=[1, 2],
+                        site_types=["fcc", "hcp"],
                         site_coordinates=[[0.33333,0.33333],[0.66667,0.66667]],
                         neighboring_structure=[["1-1", "north"],
                                                ["1-1", "east"],
@@ -98,5 +98,3 @@ initial_state
 end_initial_state\
 """
     assert(output == expectedOutput)
-
-test_Lattice()
