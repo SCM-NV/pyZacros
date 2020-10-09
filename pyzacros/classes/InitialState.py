@@ -80,13 +80,12 @@ class InitialState:
         filledSitesPerSpecies = {}
         nx = self.lattice.repeat_cell[0]
         ny = self.lattice.repeat_cell[1]
-        n0 = len(self.lattice.site_type_names)
 
         nSitesOfThisKind = 0
         k = 1 # Zacros starts in 1
         for i in range(nx):
             for j in range(ny):
-                for idSite,sname in enumerate(self.lattice.site_type_names):
+                for idSite,sname in enumerate(self.lattice.site_types):
 
                     if( sname == site_name ):
                         if( effSpecies not in filledSitesPerSpecies ):
