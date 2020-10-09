@@ -21,13 +21,9 @@ class RKFLoader:
 
     def __deriveLatticeAndMechanism( self, results ):  # @TODO results -> scm.plams.Results
         """
-        The next lines feed self%state2BindingSites.
-        The binding sites for the reactants or products are already defined
-        The binding sites for a TS are the union of the ones from its reactants and products
+        Parses the .rkf file from AMS. Basically it loads the energy landscape and the binding-sites lattice.
 
-        TS ----> R --> bsR1, bsR2, ...
-            |
-            +--> P --> bsP1, bsP2, ...
+        :parm results
         """
         import scm.plams
 
@@ -259,7 +255,7 @@ class RKFLoader:
             ld = latticeDisplacements[i]
 
             first = "Unknown"
-            if( ld[0] > 0 and ld[1] > 0 ):
+            if( ld[0] >= 0 and ld[1] >= 0 ):
                 first = str(fromSites[i]+1)+"-"+str(toSites[i]+1)
             else:
                 first = str(toSites[i]+1)+"-"+str(fromSites[i]+1)

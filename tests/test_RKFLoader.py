@@ -169,11 +169,9 @@ def test_RKFLoader():
 
     print(output)
 
-    #myJob = KMCJob( myRKFLoader.mechanism )
-    #myJob.writeInputFiles()
-
     expectedOutput = """\
 mechanism
+
 reversible_step O1*-B,*-A:(1,2)<-->*-B,O1*-A:(1,2)
   sites 2
   neighboring 2-1
@@ -187,12 +185,12 @@ reversible_step O1*-B,*-A:(1,2)<-->*-B,O1*-A:(1,2)
   pre_expon 1.000000e+13
   pe_ratio 0.676
   activ_eng 0.5014956703374196
-end_step
+end_reversible_step
 end_mechanism
 lattice periodic_cell
 cell_vectors
-  8.31557574706715  0.0
-  4.157787873533575  7.201499844031359
+  8.31557575  0.00000000
+  4.15778787  7.20149984
 repeat_cell 2 2
 n_cell_sites 18
 n_site_types 2
@@ -218,35 +216,34 @@ site_coordinates
   0.77773815  0.77779297
   0.11098086  0.77785015
 neighboring_structure
-  6-10 self
-  11-4 self
-  11-5 east
-  13-2 north
-  10-8 self
-  9-12 self
-  13-3 self
-  5-13 self
+  10-6 self
+  4-11 self
+  5-11 east
+  2-13 north
+  8-10 self
+  12-9 self
+  3-13 self
+  13-5 self
   1-15 north
   6-12 east
-  14-9 self
-  15-3 self
-  4-15 self
-  8-14 self
-  10-5 self
-  11-7 north
-  7-16 self
+  9-14 self
+  3-15 self
+  15-4 self
+  14-8 self
+  5-10 self
+  7-11 north
+  16-7 self
   2-18 east
-  17-6 self
-  17-1 self
-  16-8 self
-  14-3 self
-  12-4 self
-  2-17 self
-  16-1 self
-  18-9 self
-  18-7 self
+  6-17 self
+  1-17 self
+  8-16 self
+  3-14 self
+  4-12 self
+  17-2 self
+  1-16 self
+  9-18 self
+  7-18 self
 end_neighboring_structure
 end_lattice\
 """
     assert( compare( output, expectedOutput, 1e-3 ) )
-

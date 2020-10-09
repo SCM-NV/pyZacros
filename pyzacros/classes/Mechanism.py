@@ -19,7 +19,7 @@ class Mechanism(UserList):
         """
         Translates the object to a string
         """
-        output = "mechanism"+"\n\n"
+        output = "mechanism"+"\n"
         for i in range(len(self)):
             output += str(self[i])
             if( i != len(self)-1 ):

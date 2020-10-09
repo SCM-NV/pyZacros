@@ -19,7 +19,7 @@ def compare( report1, report2, error=1e-3 ):
                 return False
         except ValueError:
 
-            if( words1[i] != words1[i] ):
+            if( words1[i] != words2[i] ):
                 return False
 
     return True

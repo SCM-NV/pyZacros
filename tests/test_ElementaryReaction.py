@@ -54,10 +54,10 @@ reversible_step H2*-f,*-f:(1,2)<-->H*-f,H*-f:(1,2)
     1 H2* 1
     2 * 1
   site_types f f
-  pre_expon 1.000e+13
+  pre_expon 1.000000e+13
   pe_ratio 0.676
-  activ_eng 0.200
-end_step\
+  activ_eng 0.2
+end_reversible_step\
 """
     assert( compare( output, expectedOutput, 1e-3 ) )
 

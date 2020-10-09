@@ -80,7 +80,8 @@ reversible_step H2*-f,*-f:(1,2)<-->H*-f,H*-f:(1,2)
   pre_expon 1.000000e+13
   pe_ratio 0.676
   activ_eng 0.2
-end_step
+end_reversible_step
+
 reversible_step H2*-f-f:(1,2)<-->H2*-f,*-f:(1,2)
   sites 2
   neighboring 1-2
@@ -94,7 +95,7 @@ reversible_step H2*-f-f:(1,2)<-->H2*-f,*-f:(1,2)
   pre_expon 1.000000e+13
   pe_ratio 0.676
   activ_eng 0.2
-end_step
+end_reversible_step
 end_mechanism\
 """
     assert( compare( output, expectedOutput, 1e-3 ) )
