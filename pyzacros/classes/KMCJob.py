@@ -42,7 +42,7 @@ class KMCJob:
         if( os.path.isdir( self.working_path ) ):
             i=0
             while( True ):
-                new_working_path = 'pyzacros_workdir'+"."+str("%03d"%i)+self.name
+                new_working_path = 'pyzacros_workdir'+"."+str("%03d"%i)+"/"+self.name
                 if( not os.path.isdir( new_working_path ) ):
                     self.working_path = new_working_path
                     break
