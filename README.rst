@@ -42,7 +42,7 @@
     there will be a Zenodo upload created at https://zenodo.org/deposit with a DOI, this DOI can be put in the Zenodo badge urls.
     In the README, we prefer to use the concept DOI over versioned DOI, see https://help.zenodo.org/#versioning.
 .. |Zenodo Badge| image:: https://zenodo.org/badge/DOI/< replace with created DOI >.svg
-   :target: https://doi.org/<10.5281/zenodo.4354011>
+   :target: https://doi.org/10.5281/zenodo.4354011
    :alt: Zenodo Badge
 
 ..
