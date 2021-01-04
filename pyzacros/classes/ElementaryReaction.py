@@ -1,11 +1,11 @@
 """Module containing the ElementaryReaction class."""
 
 from typing import List
-from collections import Counter
 from pyzacros.classes.Species import Species
 
 
 class ElementaryReaction:
+    """ElementaryReaction class."""
 
     def __init__(self,
                  site_types: list,
@@ -19,15 +19,18 @@ class ElementaryReaction:
         """
         Create a new ElementaryReaction object.
 
-        :parm site_types: list
-        :parm neighboring: list
-        :parm initial: List[Species]
-        :parm final: List[Species]
-        :parm reversible: bool
-        :parm pre_expon: float
-        :parm pe_ratio: float
+        :parm site_types: list, different odsorbing sites on the catalytic
+                          surface.
+        :parm neighboring: list, connections between different unit cell
+                           slab replicas.
+        :parm initial: List[Species], reactant species.
+        :parm final: List[Species], product species.
+        :parm reversible: bool, whether the reaction is reversible or not.
+        :parm pre_expon: float, Arrhenius prefactor.
+        :parm pe_ratio: float, ratio of forward over reverse pre-exponentials.
         :parm activation_energy: float
         """
+        # Define attributes an check masses and denticities:
         self.site_types = site_types    # e.g. [ "f", "f" ]
         self.neighboring = neighboring  # e.g. [ (1,2) ]
         self.initial = initial
@@ -58,7 +61,7 @@ class ElementaryReaction:
             msg += "initial or final states must be a list of Species.\n"
             raise NameError(msg)
 
-        # Check deniticies:
+        # Check denticities:
         initial_total_denticity = 0
         final_total_denticity = 0
         for i in self.initial:
@@ -91,11 +94,10 @@ class ElementaryReaction:
         """
         Return the label of the ElementaryReaction.
 
-        :rparam reaction_label: Label of the elementary reaction.
-        :rtype: String.
+        :return: A string with the label of the ElementaryReaction.
         """
         reaction_label = ""
-        # FIXME reaction label is not as complex as it was before
+        # FIXME reaction label is not as complex as when
         # constructing the mechanisms from clusters.
         # I use the sense of the reactions, initial ---> final
         for i, species in enumerate(self.initial):
@@ -117,98 +119,3 @@ class ElementaryReaction:
             if i != (len(self.final)-1):
                 reaction_label += str("+")
         return reaction_label
-
-    def __str__(self) -> str:
-        """Translate the object to a string."""
-        if(self.reversible):
-            output = "reversible_step " + self.label() + "\n"
-        else:
-            output = "step " + self.label() + "\n"
-
-        if (len(count_gas_species(self.initial)) != 0
-           or len(count_gas_species(self.final)) != 0):
-
-            output += "  gas_reacs_prods "
-
-            gas_species_freqs = Counter([s for s
-                                        in count_gas_species(self.initial)])
-            i = 0
-            for symbol, freq in gas_species_freqs.items():
-                output += symbol+" "+str(-freq) + " "
-                if (i != len(gas_species_freqs)-1):
-                    output += " "
-                i += 1
-
-            gas_species_freqs = Counter([s for s
-                                        in count_gas_species(self.final)])
-            i = 0
-            for symbol, freq in gas_species_freqs.items():
-                output += symbol+" "+str(freq) + " "
-                if(i != len(gas_species_freqs)-1):
-                    output += " "
-                i += 1
-            output += "\n"
-
-        if(self.sites != 0):
-            output += "  sites " + str(self.sites)+"\n"
-            if self.neighboring is not None:
-                output += "  neighboring "
-                for i in range(len(self.neighboring)):
-                    output += str(self.neighboring[i][0]) + \
-                             "-"+str(self.neighboring[i][1])
-                    if(i != len(self.neighboring)-1):
-                        output += " "
-                output += "\n"
-
-        # Print initial and final blocks:
-            output += "  initial"+"\n"
-            i = 1
-            for species in self.initial:
-                if species.is_adsorbed():
-                    output += "\t" + str(i) + "\t" + str(species) + "\t" \
-                            + str(species.denticity)
-                    i += 1
-                    output += "\n"
-
-            output += "  final"+"\n"
-            i = 1
-            for species in self.final:
-                if species.is_adsorbed():
-                    output += "\t" + str(i) + "\t" + str(species) + "\t" \
-                            + str(species.denticity)
-                    i += 1
-                    output += "\n"
-
-        # Print site_types if they are different:
-            all_sites_are_the_same = False
-            if len(self.site_types) > 0:
-                all_sites_are_the_same = \
-                                    self.site_types.count(self.site_types[0])\
-                                    == len(self.site_types)
-            if not all_sites_are_the_same:
-                output += "  site_types "
-                for i in range(len(self.site_types)):
-                    output += str(self.site_types[i])
-                    if(i != len(self.site_types)-1):
-                        output += " "
-                output += "\n"
-
-        output += "  pre_expon "+("%e"%self.pre_expon)+"\n"
-        if self.reversible is True:
-            output += "  pe_ratio "+str(self.pe_ratio)+"\n"
-        output += "  activ_eng "+str(self.activation_energy)+"\n"
-        if self.reversible is True:
-            output += "end_reversible_step"
-        else:
-            output += "end_step"
-
-        return output
-
-
-def count_gas_species(list_of_species: List[Species]) -> list:
-    """Provide labels of gas species in a List[Species]."""
-    list_gas_species = []
-    for i in list_of_species:
-        if i.is_gas():
-            list_gas_species.append(i.symbol)
-    return list_gas_species

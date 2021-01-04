@@ -1,9 +1,11 @@
+"""Module containing the InitalState class."""
 import math
 import random
 
-from .Species import *
+from pyzacros.classes.ElementaryReaction import ElementaryReaction
+from pyzacros.classes.Species import Species
+from typing import List
 from .Lattice import *
-from .Mechanism import *
 
 class InitialState:
     """
@@ -11,11 +13,11 @@ class InitialState:
     By default a KMC simulation in Zacros is initialized with an empty lattice.
     """
 
-    def __init__(self, lattice: Lattice, mechanism: Mechanism):
+    def __init__(self, lattice: Lattice, mechanism: List[ElementaryReaction]):
         """
         Creates a new InitialState object.
 
-        :parm mechanism: Mechanism containing the mechanisms involed in the
+        :parm mechanism: Mechanism containing the mechanisms involved in the
                         calculation.
         :parm lattice: Lattice containing the lattice to be used during the
                        calculation.
@@ -26,10 +28,8 @@ class InitialState:
 
         # #TODO We need to make a way to check if a lattice is compatible with the mechanism
 
-    def __str__( self ) -> str:
-        """
-        Translates the object to a string
-        """
+    def __str__(self) -> str:
+        """Translate the object to a string."""
         output  = "initial_state"+"\n"
 
         for species,id_sites in self.__filledSitesPerSpecies.items():
@@ -44,34 +44,29 @@ class InitialState:
 
         return output
 
+    def empty(self):
+        """Return true if the initial state is empty."""
+        return(len(__filledSitesPerSpecies) > 0 )
 
-    def empty( self ):
-        """
-        Returns true if the initial state is empty
-        """
-        return ( len(__filledSitesPerSpecies) > 0 )
-
-
-    def fillSites( self, site_name, species, coverage ):
-        """
-        Fill the sites
-        """
+    def fillSites(self, site_name, species, coverage):
+        """Fill the sites of the surface slab."""
         effSpecies = None
-        if( isinstance(species, str) ):
+        if(isinstance(species, str)):
             for sp in self.mechanism.species():
-                if( sp.symbol == species ):
+                if(sp.symbol == species):
                     effSpecies = sp
                     break
 
-        elif( isinstance(species, Species) ):
+        elif(isinstance(species, Species)):
             effSpecies = species
 
         else:
-            msg  = "### ERROR ### InitialState.fillSites.\n"
-            msg += "              Inconsistent type for species. It should be type str or Species\n"
+            msg = "### ERROR ### InitialState.fillSites.\n"
+            msg += "              Inconsistent type for species. It should be \
+                    type str or Species\n"
             raise NameError(msg)
 
-        if( effSpecies.denticity > 1 ):
+        if(effSpecies.denticity > 1):
             msg  = "### ERROR ### InitialState.fillSites.\n"
             msg += "              Species with denticity > 1 are not yet supported\n"
             raise NameError(msg)
@@ -107,17 +102,17 @@ class InitialState:
         nSitesToKeep = round(nSitesOfThisKind*coverage)
 
         # Removes elements according with the coverage
-        for key,value in filledSitesPerSpecies.items():
-            random.shuffle( filledSitesPerSpecies[key] )
+        for key, value in filledSitesPerSpecies.items():
+            random.shuffle(filledSitesPerSpecies[key])
 
-            while( len(filledSitesPerSpecies[key]) > nSitesToKeep ):
+            while(len(filledSitesPerSpecies[key]) > nSitesToKeep):
                 filledSitesPerSpecies[key].pop()
 
         # Removes empty sites per species
         toRemove = []
-        for key,value in filledSitesPerSpecies.items():
-            if( len(filledSitesPerSpecies[key]) == 0 ):
-                toRemove.append( key )
+        for key, value in filledSitesPerSpecies.items():
+            if(len(filledSitesPerSpecies[key]) == 0):
+                toRemove.append(key)
 
         for key in toRemove:
             filledSitesPerSpecies.pop( key )
@@ -131,9 +126,6 @@ class InitialState:
 
             self.__filledSitesPerSpecies[key] = sorted(self.__filledSitesPerSpecies[key])
 
-
-    def fillAllSites( self, site_name, species ):
-        """
-        Fill all the sites
-        """
-        self.fillSites( site_name, species, coverage=1.0 )
+    def fillAllSites(self, site_name, species):
+        """Fill all the sites."""
+        self.fillSites(site_name, species, coverage=1.0)

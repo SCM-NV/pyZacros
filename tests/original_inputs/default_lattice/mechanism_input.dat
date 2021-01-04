@@ -1,0 +1,112 @@
+mechanism
+
+reversible_step CO(gas)+*<-->CO*
+  gas_reacs_prods CO  -1  
+  sites 1
+  initial
+	1	*	1
+  final
+	1	CO*	1
+  pre_expon 22260000.0
+  pe_ratio 2.137e-06
+  activ_eng 0.0
+end_reversible_step
+
+reversible_step *+*+H2(gas)<-->H*+H*
+  gas_reacs_prods H2  -1  
+  sites 2
+  neighboring 1-2
+  initial
+	1	*	1
+	2	*	1
+  final
+	1	H*	1
+	2	H*	1
+  pre_expon 82990000.0
+  pe_ratio 7.966e-06
+  activ_eng 0.0
+end_reversible_step
+
+reversible_step *+H2O(gas)<-->H2O*
+  gas_reacs_prods H2O  -1  
+  sites 1
+  initial
+	1	*	1
+  final
+	1	H2O*	1
+  pre_expon 277.6
+  pe_ratio 2.665e-06
+  activ_eng 0.0
+end_reversible_step
+
+reversible_step H2O*+*<-->OH*+H*
+  sites 2
+  neighboring 1-2
+  initial
+	1	H2O*	1
+	2	*	1
+  final
+	1	OH*	1
+	2	H*	1
+  pre_expon 10420000000000.0
+  pe_ratio 1.0
+  activ_eng 0.777
+end_reversible_step
+
+reversible_step *+OH*<-->O*+H*
+  sites 2
+  neighboring 1-2
+  initial
+	1	*	1
+	2	OH*	1
+  final
+	1	O*	1
+	2	H*	1
+  pre_expon 10420000000000.0
+  pe_ratio 1.0
+  activ_eng 0.94
+end_reversible_step
+
+reversible_step CO*+OH*<-->*+COOH*
+  sites 2
+  neighboring 1-2
+  initial
+	1	CO*	1
+	2	OH*	1
+  final
+	1	*	1
+	2	COOH*	1
+  pre_expon 10420000000000.0
+  pe_ratio 1.0
+  activ_eng 0.405
+end_reversible_step
+
+step COOH*+*--->*+H*+CO2(gas)
+  gas_reacs_prods CO2  1  
+  sites 2
+  neighboring 1-2
+  initial
+	1	COOH*	1
+	2	*	1
+  final
+	1	*	1
+	2	H*	1
+  pre_expon 10420000000000.0
+  activ_eng 0.852
+end_step
+
+step CO*+O*--->*+*+CO2(gas)
+  gas_reacs_prods CO2  1  
+  sites 2
+  neighboring 1-2
+  initial
+	1	CO*	1
+	2	O*	1
+  final
+	1	*	1
+	2	*	1
+  pre_expon 10420000000000.0
+  activ_eng 0.988
+end_step
+
+end_mechanism

@@ -6,24 +6,22 @@ from os import path
 from pyzacros.classes.KMCSettings import KMCSettings
 
 
-def find_file(name, path_to_search):
+def find_file(name: str, path_to_search: str) -> path:
     """Find a given name file."""
     for root, dirs, files in os.walk(path_to_search):
         if name in files:
             return os.path.join(root, name)
 
 
-def find_KMCPaths(settings: KMCSettings) -> tuple:
+def find_engine_path(settings: KMCSettings) -> str:
     """
-    Find the path to the KMC engine using the sett.KMCEngine.path.
+    Find the path to the KMC engine using the sett.KMCEngine.path setting.
 
     :parm settings: KMCSettings object with the main settings of the
                     KMC calculation.
-    :type settings: KMCSettings, required.
     :return path_to_engine: The path to the engine.
-    :rtype path_to_engine: str
     """
-    # 1. Set path_to_engine:
+    # Set path_to_engine:
     #   If the engine is Zacros(default):
     if str(settings.get_nested(('KMCEngine', 'name'))).lower() == 'zacros':
         print("The selected KMC engine is Zacros.")
@@ -41,7 +39,7 @@ def find_KMCPaths(settings: KMCSettings) -> tuple:
                 msg += "Path to KMCEngine does not exist.\n"
                 raise FileNotFoundError(msg)
         else:
-            msg = "### ERROR ### Lattice.__init__.\n"
+            msg = "### ERROR ### check_settings\n"
             msg += "sett.KMCEngine.path is not defined.\n"
             raise NameError(msg)
     else:
@@ -50,8 +48,18 @@ def find_KMCPaths(settings: KMCSettings) -> tuple:
         msg = "### ERROR ### check_settings\n"
         msg += "KMC engine not implemented.\n"
         raise NotImplementedError(msg)
+    return path_to_engine
 
-    # 2. Set path_to_output:
+
+def find_working_path(settings: KMCSettings) -> str:
+    """
+    Find the path to the KMC working directory where outputs will be plotted.
+
+    :parm settings: KMCSettings object with the main settings of the
+                    KMC calculation.
+    :return path_to_engine: The path of the working directory.
+    """
+    # Set path_to_output:
     if settings.get_nested(('KMCOutput', 'path')):
         working_path = settings.get_nested(('KMCOutput', 'path'))
     else:
@@ -61,24 +69,22 @@ def find_KMCPaths(settings: KMCSettings) -> tuple:
         working_path = './'
     print("Working directory:\n", working_path)
 
-    return path_to_engine, working_path
+    return working_path
 
 
 def find_input_files(engine: str,
                      electronic_package: str = None,
                      path: str = None) -> list:
     """
-    Search enigne.yml or engine.yaml input files.
+    Search engine.yml or engine.yaml input files.
 
     If none, engine standard input files will be searched.
     :return: A list of input files.
-    :rtype : list.
     """
     # TODO Search yaml files or standard input files according to engine.
     inputfile_list = []
 
     working_path = Path.cwd()
-    print("Pablo resolves", working_path.resolve())
     folders = []
     files = []
     for item in os.scandir(working_path):

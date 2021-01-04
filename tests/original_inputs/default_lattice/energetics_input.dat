@@ -1,0 +1,112 @@
+energetics 
+
+cluster CO_point
+  sites 1
+  lattice_state
+    1 CO* 1
+  site_types 1
+  graph_multiplicity 1
+  cluster_eng   -2.077
+end_cluster
+
+cluster H2O_point
+  sites 1
+  lattice_state
+    1 H2O* 1
+  site_types 1
+  graph_multiplicity 1
+  cluster_eng   -0.362
+end_cluster
+
+cluster OH_point
+  sites 1
+  lattice_state
+    1 OH* 1
+  site_types 1
+  graph_multiplicity 1
+  cluster_eng   0.83
+end_cluster
+
+cluster O_point
+  sites 1
+  lattice_state
+    1 O* 1
+  site_types 1
+  graph_multiplicity 1
+  cluster_eng   1.298
+end_cluster
+
+cluster H_point
+  sites 1
+  lattice_state
+    1 H* 1
+  site_types 1
+  graph_multiplicity 1
+  cluster_eng   -0.619
+end_cluster
+
+cluster COOH_point
+  sites 1
+  lattice_state
+    1 COOH* 1
+  site_types 1
+  graph_multiplicity 1
+  cluster_eng   -1.487
+end_cluster
+
+cluster CO-CO_1NN
+  sites 2
+  neighboring 1-2
+  lattice_state
+    1 CO* 1
+    2 CO* 1
+  site_types 1 1
+  graph_multiplicity 1
+  cluster_eng   0.56
+end_cluster
+
+cluster OH-H_1NN
+  sites 2
+  neighboring 1-2
+  lattice_state
+    1 OH* 1
+    2 H* 1
+  site_types 1 1
+  graph_multiplicity 1
+  cluster_eng   0.021
+end_cluster
+
+cluster O-H_1NN
+  sites 2
+  neighboring 1-2
+  lattice_state
+    1 O* 1
+    2 H* 1
+  site_types 1 1
+  graph_multiplicity 1
+  cluster_eng   0.198
+end_cluster
+
+cluster CO-OH_1NN
+  sites 2
+  neighboring 1-2
+  lattice_state
+    1 CO* 1
+    2 OH* 1
+  site_types 1 1
+  graph_multiplicity 1
+  cluster_eng   0.066
+end_cluster
+
+cluster CO-O_1NN
+  sites 2
+  neighboring 1-2
+  lattice_state
+    1 CO* 1
+    2 O* 1
+  site_types 1 1
+  graph_multiplicity 1
+  cluster_eng   0.423
+end_cluster
+
+end_energetics
