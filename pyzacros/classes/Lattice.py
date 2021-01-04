@@ -9,49 +9,38 @@ class Lattice():
     """
     **summary line** Lattice class defining the KMC surface slab.
 
-    :parm lattice_type: Allows the user to construct a lattice by giving
+    :param lattice_type: Allows the user to construct a lattice by giving
                         information about the unit cell.
-    :type lattice_type: str, optional.
 
-    :parm default_lattice: If lattice_type == 'default_choice', then
+    :param default_lattice: If lattice_type == 'default_choice', then
                           default_lattice must be declared as:
                           - triangular_periodic
                           - rectangular_periodic
                           - hexagonal_periodic
                          followed by one float and two integer numbers.
-    :type default_lattice: list, optional.
 
-    :parm cell_vectors: Define the unit vectors.
-    :type cell_vectors: list, optional.
+    :param cell_vectors: Define the unit vectors.
 
-    :parm repeat_cell: The number of repetitions of the unit cell in the
+    :param repeat_cell: The number of repetitions of the unit cell in the
                        directions of unit vectors.
-    :type repeat_cell: list, optional.
 
-    :parm n_cell_sites: The total number of sites (of any site type) in the
+    :param n_cell_sites: The total number of sites (of any site type) in the
                         unit cell.
-    :type n_cell_sites: int, optional.
 
-    :parm n_site_types: The number of different site types.
-    :type n_site_types: int, optional.
+    :param n_site_types: The number of different site types.
 
-    :parm site_type_names: The names of the different site types.
-    :type site_type_names: list, optional.
+    :param site_type_names: The names of the different site types.
 
-    :parm site_types: The site types for each of the different sites of
+    :param site_types: The site types for each of the different sites of
                       the unit cell.
-    :type site_types: list, optional.
 
-    :parm site_coordinates: Pairs of real numbers specifying the
+    :param site_coordinates: Pairs of real numbers specifying the
                             “fractional coordinates” of each site
                              in the unit cell.
-    :type site_coordinates: list, optional.
 
-    :parm neighboring_structure: Defines a neighboring structure block.
-    :type neighboring_structure: list, optional.
+    :param neighboring_structure: Defines a neighboring structure block.
 
-    :parm path_to_slab_yaml: Path to .yml or .yaml kmc slab file.
-    :type site_coordinates: str, optional.
+    :param path_to_slab_yaml: Path to .yml or .yaml kmc slab file.
     """
 
     def __init__(self, lattice_type: str = None,

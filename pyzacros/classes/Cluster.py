@@ -5,12 +5,13 @@ from pyzacros.classes.Species import Species
 
 class Cluster:
     """Cluster class."""
+
     # TODO insert 2NN and 3NN interactions.
 
     def __init__(self, site_types: list,
                  species: List[Species],
                  neighboring: list = None,
-                 multiplicity: int = 1, 
+                 multiplicity: int = 1,
                  cluster_energy: float = 0.000):
         """
         Create a new Cluster object.

@@ -19,16 +19,16 @@ class ElementaryReaction:
         """
         Create a new ElementaryReaction object.
 
-        :parm site_types: list, different odsorbing sites on the catalytic
+        :param site_types: list, different odsorbing sites on the catalytic
                           surface.
-        :parm neighboring: list, connections between different unit cell
+        :param neighboring: list, connections between different unit cell
                            slab replicas.
-        :parm initial: List[Species], reactant species.
-        :parm final: List[Species], product species.
-        :parm reversible: bool, whether the reaction is reversible or not.
-        :parm pre_expon: float, Arrhenius prefactor.
-        :parm pe_ratio: float, ratio of forward over reverse pre-exponentials.
-        :parm activation_energy: float
+        :param initial: List[Species], reactant species.
+        :param final: List[Species], product species.
+        :param reversible: bool, whether the reaction is reversible or not.
+        :param pre_expon: float, Arrhenius prefactor.
+        :param pe_ratio: float, ratio of forward over reverse pre-exponentials.
+        :param activation_energy: float
         """
         # Define attributes an check masses and denticities:
         self.site_types = site_types    # e.g. [ "f", "f" ]
@@ -97,7 +97,7 @@ class ElementaryReaction:
         :return: A string with the label of the ElementaryReaction.
         """
         reaction_label = ""
-        # FIXME reaction label is not as complex as when
+        # FIXME reaction label is not as complex as
         # constructing the mechanisms from clusters.
         # I use the sense of the reactions, initial ---> final
         for i, species in enumerate(self.initial):
