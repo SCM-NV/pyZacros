@@ -339,7 +339,11 @@ def write_initial_state(initial_state=InitialState) -> str:
 
     :return: String with the information to be printed in file.
     """
-    output = "initial_state"
+    output = "initial_state\n"
+    for species, id_sites in initial_state.filledSitesPerSpecies.items():
+        for i, id_site in enumerate(id_sites):
+            output += "  seed_on_sites "+species.symbol+" "+str(id_site)+"\n"
+    output += "end_initial_state"
     return output
 
 

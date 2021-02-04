@@ -1,21 +1,22 @@
 """Module containing the InitalState class."""
-import math
 import random
 
 from pyzacros.classes.ElementaryReaction import ElementaryReaction
 from pyzacros.classes.Species import Species
+from pyzacros.classes.Lattice import Lattice
 from typing import List
-from .Lattice import *
+
 
 class InitialState:
     """
-    InitialState class that represents the initial state for a Zacros simulation.
+    InitialState class that represents the initial coating of the surface.
+
     By default a KMC simulation in Zacros is initialized with an empty lattice.
     """
 
     def __init__(self, lattice: Lattice, mechanism: List[ElementaryReaction]):
         """
-        Creates a new InitialState object.
+        Create a new InitialState object.
 
         :parm mechanism: Mechanism containing the mechanisms involved in the
                         calculation.
@@ -24,74 +25,60 @@ class InitialState:
         """
         self.lattice = lattice
         self.mechanism = mechanism
-        self.__filledSitesPerSpecies = {}
+        self.filledSitesPerSpecies = {}
 
-        # #TODO We need to make a way to check if a lattice is compatible with the mechanism
-
-    def __str__(self) -> str:
-        """Translate the object to a string."""
-        output  = "initial_state"+"\n"
-
-        for species,id_sites in self.__filledSitesPerSpecies.items():
-            output += "  seed_on_sites "+species.symbol+" "
-            for i,id_site in enumerate(id_sites):
-                output += str(id_site)
-                if( i != len(id_sites)-1 ):
-                    output += " "
-            output += "\n"
-
-        output += "end_initial_state"
-
-        return output
+        # TODO We need to make a way to check if a lattice is compatible
+        # with the mechanism.
 
     def empty(self):
         """Return true if the initial state is empty."""
-        return(len(__filledSitesPerSpecies) > 0 )
+        return(len(self.filledSitesPerSpecies) > 0)
 
-    def fillSites(self, site_name, species, coverage):
-        """Fill the sites of the surface slab."""
+    def fillSites(self, site_name: str, species: Species, coverage:  float):
+        """
+        Fill the sites of the surface slab.
+
+        :param site_name: String of the site name of the slab to be covered.
+
+        :param species: Species instance to fill in the site_name of the slab.
+
+        :param coverage: The coverage of the surface.
+        """
         effSpecies = None
-        if(isinstance(species, str)):
-            for sp in self.mechanism.species():
-                if(sp.symbol == species):
-                    effSpecies = sp
-                    break
-
-        elif(isinstance(species, Species)):
+        if not (isinstance(species, Species)):
+            msg = "### ERROR ### InitialState.fillSites.\n"
+            msg += "             Inconsistent type for species. It should be\n"
+            msg += "             a Species instance.\n"
+            raise NameError(msg)
+        else:
             effSpecies = species
 
-        else:
-            msg = "### ERROR ### InitialState.fillSites.\n"
-            msg += "              Inconsistent type for species. It should be \
-                    type str or Species\n"
-            raise NameError(msg)
-
         if(effSpecies.denticity > 1):
-            msg  = "### ERROR ### InitialState.fillSites.\n"
-            msg += "              Species with denticity > 1 are not yet supported\n"
+            msg = "### ERROR ### InitialState.fillSites.\n"
+            msg += "             Species with denticity > 1 are not yet\n"
+            msg += "             supported\n"
             raise NameError(msg)
 
         # Makes a list of the filled sites
         filledSites = []
-        for key,value in self.__filledSitesPerSpecies.items():
-            filledSites.extend( value )
+        for key, value in self.filledSitesPerSpecies.items():
+            filledSites.extend(value)
 
         filledSitesPerSpecies = {}
         nx = self.lattice.repeat_cell[0]
         ny = self.lattice.repeat_cell[1]
-        n0 = len(self.lattice.site_type_names)
 
         nSitesOfThisKind = 0
-        k = 1 # Zacros starts in 1
+        k = 1  # Zacros starts in 1
         for i in range(nx):
             for j in range(ny):
-                for idSite,sname in enumerate(self.lattice.site_type_names):
+                for idSite, sname in enumerate(self.lattice.site_types):
 
-                    if( sname == site_name ):
-                        if( effSpecies not in filledSitesPerSpecies ):
+                    if(sname == site_name):
+                        if(effSpecies not in filledSitesPerSpecies):
                             filledSitesPerSpecies[effSpecies] = []
 
-                        if( k not in filledSites ):
+                        if(k not in filledSites):
                             filledSitesPerSpecies[effSpecies].append(k)
                             filledSites.append(k)
 
@@ -115,16 +102,17 @@ class InitialState:
                 toRemove.append(key)
 
         for key in toRemove:
-            filledSitesPerSpecies.pop( key )
+            filledSitesPerSpecies.pop(key)
 
         # Updates self.__filledSitesPerSpecies
-        for key,value in filledSitesPerSpecies.items():
-            if( key in self.__filledSitesPerSpecies ):
-                self.__filledSitesPerSpecies[key].extend(value)
+        for key, value in filledSitesPerSpecies.items():
+            if(key in self.filledSitesPerSpecies):
+                self.filledSitesPerSpecies[key].extend(value)
             else:
-                self.__filledSitesPerSpecies[key] = value
+                self.filledSitesPerSpecies[key] = value
 
-            self.__filledSitesPerSpecies[key] = sorted(self.__filledSitesPerSpecies[key])
+            self.filledSitesPerSpecies[key] = sorted(
+                 self.filledSitesPerSpecies[key])
 
     def fillAllSites(self, site_name, species):
         """Fill all the sites."""

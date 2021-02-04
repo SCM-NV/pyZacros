@@ -61,19 +61,21 @@ class ElementaryReaction:
             msg += "initial or final states must be a list of Species.\n"
             raise NameError(msg)
 
-        # Check denticities:
+        # Check denticities are not bigger than the site_types available, i.e.
+        # we assume that all species have all the dents linked to the surface.
         initial_total_denticity = 0
         final_total_denticity = 0
         for i in self.initial:
-            if (i.symbol != "*" and i.is_adsorbed()):
+            if i.is_adsorbed():
                 initial_total_denticity += i.denticity
         for i in self.final:
-            if (i.symbol != "*" and i.is_adsorbed()):
+            if i.is_adsorbed():
                 final_total_denticity += i.denticity
         if (initial_total_denticity > self.sites
            or final_total_denticity > self.sites):
             msg = "### ERROR ### ElementaryReaction.__init__.\n"
-            msg += "Inconsistent dimensions for sites, initial or final.\n"
+            msg += "Inconsistency between the number of site_types and \n"
+            msg += "the total denticity of initial or final species.\n"
             raise NameError(msg)
 
         # Check masses:

@@ -193,10 +193,8 @@ def pyzacros_example():
     sett.temperature = 500.0
     sett.pressure = 10
     sett.KMCEngine.name = 'ZacRos'
-    #sett.KMCEngine.path = '/Users/plopez/Programs'
+    sett.KMCEngine.path = './'
     sett.KMCOutput.path = './tests'
-    sett.AbinitioEngine.name = 'AMS'
-    sett.AbinitioEngine.path = 'Programs'
     sett.snapshots = ('time', 5.e-4)
     sett.process_statistics = ('time', 5.e-4)
     sett.species_numbers = ('time', 5.e-4)
