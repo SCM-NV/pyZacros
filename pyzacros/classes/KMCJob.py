@@ -115,8 +115,9 @@ class KMCJob:
 
         :parm directory: Directory where the Zacros will be printed.
         :parm dict: Dictionary containing the names of the Zacros
-                    input files needed to run the engine, and whether
-                    they will have to be printed in the directory.
+                    input files needed to run the engine, and a boolean
+                    to know if the file needs to be printed in the
+                    working directory.
         """
         # If the boolean is True, the file will be printed.
         if dict["simulation_input.dat"] is True:

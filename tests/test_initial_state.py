@@ -116,6 +116,6 @@ def test_pyzacros_example():
                      "simulation_input.dat"]
     for ij in list_of_files:
         f = open("tests/"+ij, "r")
-        f_original = open("tests/initial_state/"+ij, "r")
+        f_original = open("tests/original_inputs/initial_state/"+ij, "r")
         assert (f.read() == f_original.read())
     return
