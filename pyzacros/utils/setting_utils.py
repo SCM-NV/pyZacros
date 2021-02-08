@@ -148,7 +148,7 @@ def get_species(reaction_list=List[ElementaryReaction])\
     """
     check_list(reaction_list, "ElementaryReaction")
     unique_species = list(set(get_all_species(reaction_list)))
-    return order_list(unique_species)
+    return order_list_of_species(unique_species)
 
 
 def get_unique_reactions(reaction_list=List[ElementaryReaction])\
@@ -161,7 +161,7 @@ def get_unique_reactions(reaction_list=List[ElementaryReaction])\
     :return: List[ElementaryReactions] without redundancies.
     """
     check_list(reaction_list, "ElementaryReaction")
-    return(list(set(reaction_list)))
+    return(order_list_of_reactions(list(set(reaction_list))))
 
 
 def get_gas_species(species_list=List[Species]) -> List[Species]:
@@ -228,7 +228,7 @@ def check_list(list_to_check=List, type_of_object=str):
     return
 
 
-def order_list(list_to_order=List[Species]) -> List[Species]:
+def order_list_of_species(list_to_order=List[Species]) -> List[Species]:
     """
     Orders a List of Species according to Species.symbols.
 
@@ -237,4 +237,18 @@ def order_list(list_to_order=List[Species]) -> List[Species]:
     :return: List[Species] with elements ordered by alphabetical order symbols.
     """
     list_to_order.sort(key=lambda x: x.symbol)
+    return list_to_order
+
+
+def order_list_of_reactions(list_to_order=List[ElementaryReaction]) \
+                           -> List[ElementaryReaction]:
+    """
+    Orders a List of ElementaryReactions according ElementaryReaction.label.
+
+    :param list_to_order: List[ElementaryReaction] to order.
+
+    :return: List[ElementaryReaction] with elements ordered
+    by alphabetical order symbols.
+    """
+    list_to_order.sort(key=lambda x: x.label())
     return list_to_order

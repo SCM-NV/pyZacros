@@ -1,20 +1,5 @@
 mechanism
 
-reversible_step O1*+*<-->*+O1*
-  sites 2
-  neighboring 1-2
-  initial
-	1	O1*	1
-	2	*	1
-  final
-	1	*	1
-	2	O1*	1
-  site_types B A
-  pre_expon 10000000000000.0
-  pe_ratio 0.676
-  activ_eng 0.6996777867511526
-end_reversible_step
-
 reversible_step *+O1*<-->O1*+*
   sites 2
   neighboring 2-1
@@ -28,6 +13,21 @@ reversible_step *+O1*<-->O1*+*
   pre_expon 10000000000000.0
   pe_ratio 0.676
   activ_eng 0.5014956703374196
+end_reversible_step
+
+reversible_step O1*+*<-->*+O1*
+  sites 2
+  neighboring 1-2
+  initial
+	1	O1*	1
+	2	*	1
+  final
+	1	*	1
+	2	O1*	1
+  site_types B A
+  pre_expon 10000000000000.0
+  pe_ratio 0.676
+  activ_eng 0.6996777867511526
 end_reversible_step
 
 end_mechanism

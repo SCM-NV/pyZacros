@@ -35,26 +35,8 @@ def pyzacros_example():
     scm.plams.finish()
 
     (myLattice, myMechanism) = get_LatticeAndMechanism(job.results)
-    #
-    #    output  = str( myRKFLoader.mechanism )+"\n"
+
     myLattice.repeat_cell = [2, 2]
-    sett = KMCSettings()
-
-    # Settings:
-    sett.random_seed = 123278
-    sett.temperature = 500.0
-    sett.pressure = 10
-    sett.KMCEngine.name = 'ZacRos'
-    sett.KMCEngine.path = './'
-    sett.KMCOutput.path = './tests'
-    sett.snapshots = ('time', 5.e-4)
-    sett.process_statistics = ('time', 5.e-4)
-    sett.species_numbers = ('time', 5.e-4)
-    sett.event_report = 'off'
-    sett.max_steps = 'infinity'
-    sett.max_time = 250.0
-    sett.wall_time = 3
-
     myJob = KMCJob(lattice=myLattice,
                    mechanism=myMechanism)
 
@@ -65,7 +47,7 @@ def test_pyzacros_example():
     list_of_files = ["lattice_input.dat",
                      "mechanism_input.dat"]
     for ij in list_of_files:
-        f = open("tests/"+ij, "r")
+        f = open(ij, "r")
         f_original = open("tests/original_inputs/RKFLoader/"+ij, "r")
         assert (f.read() == f_original.read())
     return
