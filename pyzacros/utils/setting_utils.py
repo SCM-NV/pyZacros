@@ -142,11 +142,26 @@ def get_species(reaction_list=List[ElementaryReaction])\
     """
     Return the list of unique species in a List of ElementaryReactions.
 
+    :param reaction_list: A List[ElementaryReaction] to be checked.
+
     :return: List[Species] of all the unique species, excluding redundancies.
     """
     check_list(reaction_list, "ElementaryReaction")
     unique_species = list(set(get_all_species(reaction_list)))
     return order_list(unique_species)
+
+
+def get_unique_reactions(reaction_list=List[ElementaryReaction])\
+                               -> List[ElementaryReaction]:
+    """
+    Return the list of unique species in a List of ElementaryReactions.
+
+    :param reaction_list: A List[ElementaryReaction] to be checked.
+
+    :return: List[ElementaryReactions] without redundancies.
+    """
+    check_list(reaction_list, "ElementaryReaction")
+    return(list(set(reaction_list)))
 
 
 def get_gas_species(species_list=List[Species]) -> List[Species]:

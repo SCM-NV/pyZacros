@@ -7,6 +7,7 @@ from pyzacros.classes.Cluster import Cluster
 from pyzacros.classes.InitialState import InitialState
 from pyzacros.utils.setting_utils import check_settings
 from pyzacros.utils.setting_utils import get_species, get_gas_species
+from pyzacros.utils.setting_utils import get_unique_reactions
 from pyzacros.utils.find_utils import find_working_path, find_engine_path
 from pyzacros.utils.io_utils import write_file_input
 from typing import List
@@ -69,16 +70,11 @@ class KMCJob:
             dict_of_inputs["lattice_input.dat"] = False  # Don't write file.
 
         if mechanism:
-            # We need to check that both settings and mechanism
-            # arguments have been passed on. Both are needed to
-            # write the simulation_input.dat
             if not settings:
-                msg = "### ERROR ### __init__ in KMCJob.py.\n"
-                msg += "            KMCJob object instantiated\n"
-                msg += "            with Mechanism but without Settings."
-                raise NameError(msg)
-
+                print("### WARNING ### Mechanism defined without settings.")
+            # Remove redundancies in the ElementaryReactions:
             self.mechanism = mechanism
+            self.mechanism = get_unique_reactions(self.mechanism)
         else:
             dict_of_inputs["mechanism_input.dat"] = False  # Don't write file.
 

@@ -9,7 +9,7 @@ from pyzacros.classes.ElementaryReaction import ElementaryReaction
 
 
 def pyzacros_example():
-    """Creeate pyZacros input files using a default Lattice."""
+    """Create pyZacros input files using a default Lattice."""
     # Instantiate settings:
     sett = KMCSettings()
 
