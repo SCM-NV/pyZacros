@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 import os
 
 from setuptools import setup, find_packages
@@ -33,29 +32,18 @@ setup(
         'License :: OSI Approved :: Apache Software License',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
     ],
-    test_suite='tests',
 
-    install_requires=['pyaml', 'chemparse', 'plams'],
+    install_requires=[
+        'pyaml', 'chemparse',
+        'plams@git+https://github.com/SCM-NV/PLAMS@master'],
 
-    setup_requires=[
-        # dependency for `python setup.py test`
-        'pytest-runner',
-        # dependencies for `python setup.py build_sphinx`
-        'sphinx',
-        'sphinx_rtd_theme',
-        'recommonmark'
-    ],
-    tests_require=[
-        'pytest',
-        'pytest-cov',
-        'pycodestyle',
-    ],
     extras_require={
-        'dev':  ['prospector[with_pyroma]', 'yapf', 'isort'],
-        'test': ['pytest>=5.4', 'pytest-cov'],
+        'test': ['coverage', 'pycodestyle', 'pytest>=3.9', 'pytest-cov'],
+        'doc': ['sphinx', 'sphinx_rtd_theme', 'nbsphinx']
     }
 )

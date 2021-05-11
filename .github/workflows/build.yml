@@ -11,7 +11,7 @@ jobs:
       fail-fast: false
       matrix:
         os: ['ubuntu-latest']
-        python-version: ['3.6', '3.7', '3.8']
+        python-version: ['3.6', '3.7', '3.8', '3.9']
     steps:
       - uses: actions/checkout@v2
       - name: Setup conda
@@ -22,12 +22,10 @@ jobs:
          conda-channels: anaconda, conda-forge
       - run: conda --version
       - run: python --version
-      - run: conda install flake8-docstrings pyaml pytest python=${{ matrix.python-version }}
+      - run: conda install python=${{ matrix.python-version }}
       - name: Build
-        shell: bash -l {0}
         run: |
-          pip install -e .[test] 
+          pip install -e .[test,doc] 
       - name: Test
-        shell: bash -l {0}
         run: |
           pytest tests 
