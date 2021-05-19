@@ -3,12 +3,11 @@
 from pyzacros.classes.KMCSettings import KMCSettings
 from pyzacros.classes.Lattice import Lattice
 from pyzacros.classes.KMCJob import KMCJob
-from pyzacros.classes.Mechanism import Mechanism
 from pyzacros.classes.Cluster import Cluster
 from pyzacros.classes.Species import Species
-#from pyzacros.classes.SpeciesList import SpeciesList
 from pyzacros.classes.ElementaryReaction import ElementaryReaction
-from typing import List
+from pyzacros.utils.setting_utils import *
+from pyzacros.utils.io_utils import *
 # Instantiate settings:
 sett = KMCSettings()
 
@@ -87,7 +86,6 @@ CO_O_1NN = Cluster(site_types=["1", "1"],
                    neighboring=[(1, 2)],
                    species=[CO_adsorbed, O_adsorbed],
                    cluster_energy=0.423)
-
 # CO_adsoprtion:
 CO_adsorption = ElementaryReaction(site_types=["1"],
                                    initial=[CO_gas, s0],
@@ -164,16 +162,9 @@ CO_oxidation = ElementaryReaction(site_types=["1", "1"],
                                   activation_energy=0.988)
 
 # Build-up mechanism:
-myMechanism = Mechanism()
-myMechanism.append(CO_adsorption)
-myMechanism.append(H2_dissoc_adsorp)
-myMechanism.append(H2O_adsorption)
-myMechanism.append(H2O_dissoc_adsorp)
-myMechanism.append(OH_decomposition)
-myMechanism.append(COOH_formation)
-myMechanism.append(COOH_decomposition)
-myMechanism.append(CO_oxidation)
-#print(myMechanism)
+myMechanism = [CO_adsorption, H2_dissoc_adsorp, H2O_adsorption,
+               H2O_dissoc_adsorp, OH_decomposition, COOH_formation,
+               COOH_decomposition, CO_oxidation]
 #
 # Settings:
 sett.random_seed = 123278
@@ -201,8 +192,9 @@ myClusters.extend((CO_pair_1NN, OH_H_1NN, O_H_1NN, CO_OH_1NN, CO_O_1NN))
 
 myJob = KMCJob(settings=sett,
                lattice=myLattice,
-               cluster_expansions=myClusters,
-               mechanism=myMechanism)
-##print(myJob)
-#myJob.run()
+               mechanism=myMechanism,
+               cluster_expansions=myClusters)
+               
+###print(myJob)
+myJob.run()
 ###
