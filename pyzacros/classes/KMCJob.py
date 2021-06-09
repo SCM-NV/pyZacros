@@ -5,6 +5,7 @@ from pyzacros.classes.Lattice import Lattice
 from pyzacros.classes.ElementaryReaction import ElementaryReaction
 from pyzacros.classes.Cluster import Cluster
 from pyzacros.classes.InitialState import InitialState
+from pyzacros.classes.Species import Species
 from pyzacros.utils.setting_utils import check_settings
 from pyzacros.utils.setting_utils import get_species, get_gas_species
 from pyzacros.utils.setting_utils import get_unique_reactions
@@ -21,7 +22,8 @@ class KMCJob:
                  lattice: Lattice = None,
                  mechanism: List[ElementaryReaction] = None,
                  cluster_expansions: List[Cluster] = None,
-                 initialState: InitialState = None):
+                 initialState: InitialState = None,
+                 additional_species: List[Species] = None):
         """
         Create a new KMCJob object.
 
@@ -53,7 +55,7 @@ class KMCJob:
                 raise NameError(msg)
 
             self.settings = settings
-            # Find the working directory:
+            # Find the working directory
             self.working_path = find_working_path(self.settings)
             self.path_to_engine = find_engine_path(settings=self.settings)
 
@@ -88,6 +90,9 @@ class KMCJob:
         else:
             dict_of_inputs["state_input.dat"] = False
 
+        if additional_species:
+            self.additional_species = additional_species
+
         # Check KMCSettings content:
         if settings and mechanism:
             check_settings(self.settings,
@@ -118,8 +123,11 @@ class KMCJob:
         # If the boolean is True, the file will be printed.
         if dict["simulation_input.dat"] is True:
             with open(directory+"/simulation_input.dat", "w") as f:
-                f.write(write_file_input(settings=self.settings,
-                                         mechanism=self.mechanism))
+                f.write(
+                    write_file_input(
+                        settings=self.settings,
+                        mechanism=self.mechanism,
+                        additional_species=self.additional_species))
         if dict["lattice_input.dat"] is True:
             with open(directory+"/lattice_input.dat", "w") as f:
                 f.write(write_file_input(lattice=self.lattice))
