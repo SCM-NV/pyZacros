@@ -1,4 +1,5 @@
-"""Test script that will reproduce CO_tutorial inputs."""
+"""Test script that will reproduce CO_tutorial
+mechanism_input.dat and simulation_input.dat inputs."""
 
 from pyzacros.classes.KMCSettings import KMCSettings
 from pyzacros.classes.Lattice import Lattice
