@@ -92,6 +92,8 @@ class KMCJob:
 
         if additional_species:
             self.additional_species = additional_species
+        else:
+            dict_of_inputs["additional_species.dat"] = False
 
         # Check KMCSettings content:
         if settings and mechanism:
@@ -123,11 +125,17 @@ class KMCJob:
         # If the boolean is True, the file will be printed.
         if dict["simulation_input.dat"] is True:
             with open(directory+"/simulation_input.dat", "w") as f:
-                f.write(
-                    write_file_input(
-                        settings=self.settings,
-                        mechanism=self.mechanism,
-                        additional_species=self.additional_species))
+                if dict["additional_species.dat"] is True:
+                    f.write(
+                        write_file_input(
+                            settings=self.settings,
+                            mechanism=self.mechanism,
+                            additional_species=self.additional_species))
+                else:
+                    f.write(
+                        write_file_input(
+                            settings=self.settings,
+                            mechanism=self.mechanism))
         if dict["lattice_input.dat"] is True:
             with open(directory+"/lattice_input.dat", "w") as f:
                 f.write(write_file_input(lattice=self.lattice))

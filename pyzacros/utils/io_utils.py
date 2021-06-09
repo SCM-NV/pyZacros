@@ -29,8 +29,11 @@ def write_file_input(settings: KMCSettings = None,
     :param mechanism: A Reaction mechanism.
     """
     if settings and mechanism:
-        output = write_simulation_input(settings, mechanism,
-                                        additional_species)
+        if additional_species:
+            output = write_simulation_input(settings, mechanism,
+                                            additional_species)
+        else:
+            output = write_simulation_input(settings, mechanism)
     elif lattice:
         output = write_lattice_input(lattice)
     elif mechanism:
@@ -48,7 +51,7 @@ def write_file_input(settings: KMCSettings = None,
 
 def write_simulation_input(settings: KMCSettings,
                            mechanism: List[ElementaryReaction],
-                           additional_species: List[Species]) -> str:
+                           additional_species: List[Species] = None) -> str:
     """
     Return a string with the content of simulation_input.dat.
 
@@ -64,7 +67,8 @@ def write_simulation_input(settings: KMCSettings,
     """
     # Get the Species info from Mechanism:
     species = get_species(mechanism)
-    species += additional_species
+    if additional_species:
+        species += additional_species
     gas_species = get_gas_species(species)
     gas_species_labels = get_species_labels(gas_species)
     molar_frac_list = get_molar_fractions(settings, gas_species)
