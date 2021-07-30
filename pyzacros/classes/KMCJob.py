@@ -3,21 +3,23 @@
 import os
 from subprocess import Popen, PIPE
 
-from .SpeciesList import SpeciesList
-from .Mechanism import Mechanism
-from .Lattice import Lattice
-from .InitialState import InitialState
-from .KMCSettings import KMCSettings
+from .Lattice import *
+from .SpeciesList import *
+from .ClusterExpansion import *
+from .Mechanism import *
+from .InitialState import *
+from .KMCSettings import *
 from pyzacros.utils.setting_utils import check_settings, get_molar_fractions
 from pyzacros.utils.find_utils import find_path_to_engine
 
+__all__ = ['KMCJob']
 
 class KMCJob:
     """Job class that represents a chemical species."""
 
 
     def __init__(self, settings: KMCSettings, lattice: Lattice,
-                 mechanism: Mechanism, initialState: InitialState = None, name: str = "results"):
+                 mechanism: Mechanism, cluster_expansion: ClusterExpansion, initialState: InitialState = None, name: str = "results"):
         """
         Create a new Job object.
 
@@ -32,8 +34,9 @@ class KMCJob:
                        lattice.
         """
         self.settings = settings
-        self.mechanism = mechanism
         self.lattice = lattice
+        self.mechanism = mechanism
+        self.cluster_expansion = cluster_expansion
         self.initialState = initialState
         self.name = name
         self.working_path = 'pyzacros_workdir/'+self.name
@@ -52,40 +55,40 @@ class KMCJob:
         print("Working directory:", self.working_path)
 
         # Check settings:
-        check_settings(self.settings, self.mechanism.gasSpecies())
+        check_settings(self.settings, self.mechanism.gas_species())
 
     def __str__(self) -> str:
         """Translate the object to a string."""
         output = ""
 
-        output += "---------------------------"+"\n"
+        output += "---------------------------------------------------------------------"+"\n"
         output += "simulation_input.dat"+"\n"
-        output += "---------------------------"+"\n"
+        output += "---------------------------------------------------------------------"+"\n"
         output += self.simulationInput()
 
         output += "\n"
-        output += "---------------------------"+"\n"
+        output += "---------------------------------------------------------------------"+"\n"
         output += "lattice_input.dat"+"\n"
-        output += "---------------------------"+"\n"
+        output += "---------------------------------------------------------------------"+"\n"
         output += self.latticeInput()
 
         output += "\n"
-        output += "---------------------------"+"\n"
+        output += "---------------------------------------------------------------------"+"\n"
         output += "energetics_input.dat"+"\n"
-        output += "---------------------------"+"\n"
+        output += "---------------------------------------------------------------------"+"\n"
         output += self.energeticsInput()
 
         output += "\n"
-        output += "---------------------------"+"\n"
+        output += "---------------------------------------------------------------------"+"\n"
         output += "mechanism_input.dat"+"\n"
-        output += "---------------------------"+"\n"
+        output += "---------------------------------------------------------------------"+"\n"
         output += self.mechanismInput()
 
         if(self.initialState is not None):
             output += "\n"
-            output += "---------------------------"+"\n"
+            output += "---------------------------------------------------------------------"+"\n"
             output += "state_input.dat"+"\n"
-            output += "---------------------------"+"\n"
+            output += "---------------------------------------------------------------------"+"\n"
             output += self.stateInput()
 
         return output
@@ -108,12 +111,12 @@ class KMCJob:
         output += "temperature\t" + \
                   str(float(self.settings.get(('temperature'))))+"\n"
         output += "pressure\t" + \
-                  str(float(self.settings.get(('pressure'))))+"\n"
+                  str(float(self.settings.get(('pressure'))))+"\n\n"
 
-        gasSpecies = self.mechanism.gasSpecies()
+        gasSpecies = self.mechanism.gas_species()
 
         if( len(gasSpecies) == 0 ):
-            output += "n_gas_species "+str(len(gasSpecies))+"\n"
+            output += "n_gas_species "+str(len(gasSpecies))+"\n\n"
         else:
             output += str(gasSpecies)
 
@@ -123,7 +126,7 @@ class KMCJob:
             output += "gas_molar_fracs \t" + \
                     '\t '.join([str(elem) for elem in molar_frac_list]) \
                     + "\n\n"
-        output += str(self.mechanism.species())+"\n"
+        output += str(self.mechanism.species())+"\n\n"
 
         output += self.print_optional_sett(opt_sett='snapshots')
         output += self.print_optional_sett(opt_sett='process_statistics')
@@ -161,13 +164,10 @@ class KMCJob:
         output = str(self.lattice)
         return output
 
+
     def energeticsInput(self) -> str:
         """Return a string with the content of the energetics_input.dat file."""
-        output = "energetics"+"\n"
-        for cluster in self.mechanism.clusters():
-            output += str(cluster)+"\n"
-        output += "end_energetics"
-
+        output = str(self.cluster_expansion)
         return output
 
 
@@ -176,7 +176,6 @@ class KMCJob:
         Returns a string with the content of the mechanism_input.dat file
         """
         output = str(self.mechanism)
-
         return output
 
 
@@ -187,7 +186,6 @@ class KMCJob:
         output = ""
         if( self.initialState is not None ):
             output = str(self.initialState)
-
         return output
 
 

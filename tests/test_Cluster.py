@@ -2,10 +2,8 @@
 # -*- coding: utf-8 -*-
 """Tests of the pyZacros classes."""
 
-from pyzacros.classes.Species import Species
-from pyzacros.classes.SpeciesList import SpeciesList
-from pyzacros.classes.Cluster import Cluster
-from pyzacros.utils.compareReports import *
+import pyzacros as pz
+from pyzacros.utils.compareReports import compare
 
 
 def test_Cluster():
@@ -13,9 +11,9 @@ def test_Cluster():
     print( "---------------------------------------------------" )
     print( ">>> Testing Cluster class" )
     print( "---------------------------------------------------" )
-    myCluster1 = Cluster( site_types=( "f", "f" ),
+    myCluster1 = pz.Cluster( site_types=( "f", "f" ),
                             neighboring=[ (1,2) ],
-                            species=SpeciesList( [ Species("H*",1), Species("H*",1) ] ),
+                            species=pz.SpeciesList( [ pz.Species("H*",1), pz.Species("H*",1) ] ),
                             multiplicity=2,
                             cluster_energy = 0.1 )
 
@@ -36,10 +34,10 @@ end_cluster\
 """
     assert( compare( output, expectedOutput, 1e-3 ) )
 
-    myCluster2 = Cluster( site_types=( "f", "f" ),
+    myCluster2 = pz.Cluster( site_types=( "f", "f" ),
                             neighboring=[ (1,2) ],
-                            species=SpeciesList( [ Species("H*",1), Species("H*",1) ] ),
-                            gas_species=[ Species("H2",gas_energy=0.0) ],
+                            species=pz.SpeciesList( [ pz.Species("H*",1), pz.Species("H*",1) ] ),
+                            gas_species=[ pz.Species("H2",gas_energy=0.0) ],
                             multiplicity=2,
                             cluster_energy = 0.1 )
 
@@ -61,9 +59,9 @@ end_cluster\
 """
     assert( compare( output, expectedOutput, 1e-3 ) )
 
-    myCluster3 = Cluster( site_types=( "f", "f" ),
+    myCluster3 = pz.Cluster( site_types=( "f", "f" ),
                             neighboring=[ (1,2) ],
-                            species=SpeciesList( [ Species("H2*",2) ] ),
+                            species=pz.SpeciesList( [ pz.Species("H2*",2) ] ),
                             multiplicity=2,
                             cluster_energy = 0.1 )
 

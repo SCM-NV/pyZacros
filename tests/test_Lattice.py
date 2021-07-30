@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 """Tests of the pyZacros classes."""
 
-from pyzacros.classes.Lattice import Lattice
-from pyzacros.utils.compareReports import *
+import pyzacros as pz
+from pyzacros.utils.compareReports import compare
 
 
 def test_Lattice():
@@ -12,27 +12,27 @@ def test_Lattice():
     print(">>> Testing Lattice class")
     print("---------------------------------------------------")
 
-    myLattice = Lattice(lattice_type="periodic_cell",
+    myLattice = pz.Lattice(lattice_type="periodic_cell",
                         cell_vectors=[[2.814284989122459,  0.000000000000000],
-                                      [1.407142494561229, 2.437242294069262]],
+                                        [1.407142494561229, 2.437242294069262]],
                         repeat_cell=[23, 24],
                         n_cell_sites=2,
                         n_site_types=2,
                         site_type_names=["fcc", "hcp"],
                         site_types=[1, 2],
                         site_coordinates=[[0.333333333333333,
-                                          0.333333333333333],
-                                          [0.666666666666666,
-                                           0.666666666666666]],
+                                            0.333333333333333],
+                                            [0.666666666666666,
+                                            0.666666666666666]],
                         neighboring_structure=[["1-1", "north"],
-                                               ["1-1", "east"],
-                                               ["1-1", "southeast"],
-                                               ["2-1", "self"],
-                                               ["2-1", "east"],
-                                               ["2-1", "north"],
-                                               ["2-2", "north"],
-                                               ["2-2", "east"],
-                                               ["2-2", "southeast"]])
+                                                ["1-1", "east"],
+                                                ["1-1", "southeast"],
+                                                ["2-1", "self"],
+                                                ["2-1", "east"],
+                                                ["2-1", "north"],
+                                                ["2-2", "north"],
+                                                ["2-2", "east"],
+                                                ["2-2", "southeast"]])
 
     print(myLattice)
 
@@ -66,6 +66,6 @@ end_lattice\
     assert( compare( output, expectedOutput, 1e-3 ) )
 
     # reading from yaml
-    myLattice = Lattice(path_to_slab_yaml="./pyzacros/slabs/pd111.yaml")
+    myLattice = pz.Lattice(path_to_slab_yaml="./pyzacros/slabs/pd111.yaml")
     output2 = str(myLattice)
     assert( compare( output2, expectedOutput, 1e-3 ) )

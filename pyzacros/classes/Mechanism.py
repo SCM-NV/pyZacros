@@ -1,97 +1,101 @@
 from collections import UserList
-from pyzacros.classes.SpeciesList import SpeciesList
-from .ElementaryReaction import *
+
+from .SpeciesList import *
+
+__all__ = ['Mechanism']
 
 class Mechanism(UserList):
 
     def __init__( self, data=[] ):
         super(Mechanism, self).__init__( data )
 
-        self.__speciesList = SpeciesList()
-        self.__gasSpeciesList = SpeciesList()
-        self.__updateSpeciesList()
+        # Duplicates are automatically removed.
+        copy = self.data
 
-        self.__clustersList = []
-        self.__updateClustersList()
+        self.data = []
+        for er in copy:
+            if( er not in self.data ):
+                self.data.append( er )
+
+
+    def append(self, item):
+        """
+        Append item to the end of the sequence
+        """
+        self.insert( len(self), item )
+
+
+    def extend(self, other):
+        """
+        Extend sequence by appending elements from the iterable
+        """
+        for item in other:
+            self.append( item )
+
+
+    def insert(self, i, item):
+        """
+        Insert value before index
+        """
+        for erxn in self:
+            if( erxn.label() == item.label() ):
+                return
+
+        super(Mechanism, self).insert(i, item)
 
 
     def __str__( self ) -> str:
         """
         Translates the object to a string
         """
-        output = "mechanism"+"\n"
+        output = "mechanism"+"\n\n"
         for i in range(len(self)):
             output += str(self[i])
             if( i != len(self)-1 ):
                 output += "\n\n"
-        output += "\n"
+        output += "\n\n"
         output += "end_mechanism"
 
         return output
 
 
-    def __updateSpeciesList(self):
+    def adsorbed_species( self ) -> SpeciesList:
         """
-        Update self.__speciesList and self.__gasSpeciesList.
-
-        Duplicates are automatically removed.
+        Returns the species list.
         """
-        self.__speciesList = SpeciesList()
-        self.__gasSpeciesList = SpeciesList()
+        species = SpeciesList()
 
-        for reaction in self:
-            self.__speciesList.extend( reaction.initial.species )
-            self.__speciesList.extend( reaction.final.species )
-            self.__gasSpeciesList.extend( reaction.initial.gas_species )
-            self.__gasSpeciesList.extend( reaction.final.gas_species )
+        for erxn in self:
+            for s in erxn.initial:
+                if( s.is_adsorbed() ):
+                    species.append( s )
+            for s in erxn.final:
+                if( s.is_adsorbed() ):
+                    species.append( s )
 
-        # Remove duplicates
-        self.__speciesList = SpeciesList(dict.fromkeys(self.__speciesList))
-        self.__gasSpeciesList = SpeciesList(dict.fromkeys(self.__gasSpeciesList))
+        species.remove_duplicates()
+        return species
 
 
-    def __updateClustersList( self ):
+    def gas_species( self ) -> SpeciesList:
         """
-        Updates self.__clustersList.
-        Duplicates are automatically removed.
+        Returns the gas species list.
         """
+        species = SpeciesList()
 
-        self.__clustersList = []
+        for erxn in self:
+            for s in erxn.initial:
+                if( s.is_gas() ):
+                    species.append( s )
+            for s in erxn.final:
+                if( s.is_gas() ):
+                    species.append( s )
 
-        for reaction in self:
-            self.__clustersList.append( reaction.initial )
-            self.__clustersList.append( reaction.final )
-
-        # Remove duplicates
-        self.__clustersList = list(dict.fromkeys(self.__clustersList))
-        self.__clustersList = list(dict.fromkeys(self.__clustersList))
-
-
-    def species( self ):
-        """
-        Returns the species list. Updates self.__speciesList if needed.
-        """
-        if( len(self.__speciesList) == 0 ):
-            self.__updateSpeciesList()
-
-        return self.__speciesList
+        species.remove_duplicates()
+        return species
 
 
-    def gasSpecies( self ):
-        """
-        Returns the gas species list. Updates self.__gasSpeciesList if needed.
-        """
-        if( len(self.__gasSpeciesList) == 0 ):
-            self.__updateSpeciesList()
+    def species(self) -> SpeciesList:
+        """Returns the adsorbed species."""
+        return self.adsorbed_species()
 
-        return self.__gasSpeciesList
-
-
-    def clusters( self ):
-        """
-        Returns the clusters list. Updates self.__clustersList if needed.
-        """
-        if( len(self.__clustersList) == 0 ):
-            self.__updateClustersList()
-
-        return self.__clustersList

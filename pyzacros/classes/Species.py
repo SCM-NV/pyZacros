@@ -1,5 +1,7 @@
 import chemparse
 
+__all__ = ['Species']
+
 class Species:
     """
     Species class that represents a chemical species

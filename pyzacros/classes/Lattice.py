@@ -4,6 +4,7 @@
 from os import path
 import yaml
 
+__all__ = ['Lattice']
 
 class Lattice():
     """

@@ -1,11 +1,23 @@
 # -*- coding: utf-8 -*-
 
-import logging
+def __autoimport(path, folders):
+    import os
+    from os.path import join as opj
+    is_module = lambda x: x.endswith('.py') and not x.startswith('__init__')
 
-from .__version__ import __version__
+    ret = []
+    for folder in folders:
+        for dirpath, dirnames, filenames in os.walk(opj(path,folder)):
+            modules = [os.path.splitext(f)[0] for f in filter(is_module, filenames)]
+            relpath = os.path.relpath(dirpath, path).split(os.sep)
+            for module in modules:
+                imp = '.'.join(relpath + [module])
+                tmp = __import__(imp, globals=globals(), fromlist=['*'], level=1)
+                if hasattr(tmp, '__all__'):
+                    ret += tmp.__all__
+                    for name in tmp.__all__:
+                        globals()[name] = vars(tmp)[name]
+    return ret
 
-logging.getLogger(__name__).addHandler(logging.NullHandler())
-__path__ = __import__('pkgutil').extend_path(__path__, __name__)
 
-__author__ = "Pablo Lopez-Tarifa"
-__email__ = 'p.lopez@esciencecenter.nl'
+__all__ = __autoimport(__path__[0], ['classes','utils'])

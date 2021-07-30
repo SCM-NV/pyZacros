@@ -5,6 +5,8 @@ from .Species import *
 from .Lattice import *
 from .Mechanism import *
 
+__all__ = ['InitialState']
+
 class InitialState:
     """
     InitialState class that represents the initial state for a Zacros simulation.

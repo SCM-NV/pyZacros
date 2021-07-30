@@ -6,11 +6,8 @@ import os
 import sys
 import shutil
 
-from pyzacros.classes.Cluster import Cluster
-from pyzacros.classes.Mechanism import Mechanism
-from pyzacros.classes.RKFLoader import RKFLoader
-from pyzacros.classes.KMCJob import KMCJob
-from pyzacros.utils.compareReports import *
+import pyzacros as pz
+from pyzacros.utils.compareReports import compare
 
 
 RUNDIR=None
@@ -161,7 +158,7 @@ def test_RKFLoader():
     job = scm.plams.AMSJob.load_external( path="tests/test_RKFLoader.data/BindingSites-EON" )
     scm.plams.finish()
 
-    myRKFLoader = RKFLoader( job.results )
+    myRKFLoader = pz.RKFLoader( job.results )
 
     output  = str( myRKFLoader.mechanism )+"\n"
     myRKFLoader.lattice.repeat_cell = [2,2]
@@ -172,7 +169,7 @@ def test_RKFLoader():
     expectedOutput = """\
 mechanism
 
-reversible_step O1*-B,*-A:(1,2)<-->*-B,O1*-A:(1,2)
+reversible_step O1*-B,*-A<-->*-B,O1*-A;(1,2)
   sites 2
   neighboring 2-1
   initial

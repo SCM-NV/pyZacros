@@ -4,50 +4,33 @@
 
 import random
 
-from pyzacros.classes.Species import Species
-from pyzacros.classes.SpeciesList import SpeciesList
-from pyzacros.classes.Cluster import Cluster
-from pyzacros.classes.ElementaryReaction import ElementaryReaction
-from pyzacros.classes.Mechanism import Mechanism
-from pyzacros.classes.Lattice import Lattice
-from pyzacros.classes.InitialState import InitialState
+import pyzacros as pz
+from pyzacros.utils.compareReports import compare
 
 
-def test_Lattice():
+def test_InitialState():
     """Test of the Lattice class."""
     print("---------------------------------------------------")
     print(">>> Testing InitialState class")
     print("---------------------------------------------------")
 
-    s0 = Species( "*", 1 )   # Empty adsorption site
-    s1 = Species( "H*", 1 )  # H adsorbed with dentation 1
-    s2 = Species( "H2*", 1 ) # H2 adsorbed with dentation 1
+    s0 = pz.Species( "*", 1 )   # Empty adsorption site
+    s1 = pz.Species( "H*", 1 )  # H adsorbed with dentation 1
+    s2 = pz.Species( "H2*", 1 ) # H2 adsorbed with dentation 1
 
-    myCluster1 = Cluster( site_types=( "f", "f" ),
-                            neighboring=[ (1,2) ],
-                            species=SpeciesList( [ s1, s1 ] ),
-                            multiplicity=2,
-                            cluster_energy=0.1 )
-
-    myCluster2 = Cluster( site_types=( "f", "f" ),
-                            neighboring=[ (1,2) ],
-                            species=SpeciesList( [ s2, s0 ] ),
-                            multiplicity=2,
-                            cluster_energy=0.1 )
-
-    myReaction = ElementaryReaction( site_types=( "f", "f" ),
+    myReaction = pz.ElementaryReaction( site_types=( "f", "f" ),
                                         neighboring=[ (1,2) ],
-                                        initial=myCluster1,
-                                        final=myCluster2,
+                                        initial=[ s1, s1 ],
+                                        final=[ s2, s0 ],
                                         reversible=True,
                                         pre_expon=1e+13,
                                         pe_ratio=0.676,
                                         activation_energy = 0.2 )
 
-    myMechanism = Mechanism()
+    myMechanism = pz.Mechanism()
     myMechanism.append( myReaction )
 
-    myLattice = Lattice(lattice_type="periodic_cell",
+    myLattice = pz.Lattice(lattice_type="periodic_cell",
                         cell_vectors=[[2.814, 0.000],[1.407, 2.437]],
                         repeat_cell=[3, 3],
                         n_cell_sites=2,
@@ -65,7 +48,7 @@ def test_Lattice():
                                                ["2-2", "east"],
                                                ["2-2", "southeast"]])
 
-    myInitialState = InitialState( myLattice, myMechanism )
+    myInitialState = pz.InitialState( myLattice, myMechanism )
 
     random.seed(10)
     myInitialState.fillSites( site_name="fcc", species="H*", coverage=0.5 )

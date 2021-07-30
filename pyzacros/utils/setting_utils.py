@@ -2,8 +2,8 @@
 """
 Module containing utilities to check and map objects.
 """
-from pyzacros.classes.KMCSettings import KMCSettings
-from pyzacros.classes.SpeciesList import SpeciesList
+from pyzacros.classes.KMCSettings import *
+from pyzacros.classes.SpeciesList import *
 
 
 def check_settings(settings=KMCSettings, species_list=SpeciesList):
@@ -40,7 +40,7 @@ def check_molar_fraction(settings=KMCSettings,
     :parm settings: KMCSettings object with the main settings of the
                     KMC calculation.
     """
-    list_of_species = species_list.gas_species_labels()
+    list_of_species = [ sp.symbol for sp in species_list.gas_species() ]
     sett_keys = settings.as_dict()
 
     if( "molar_fraction" not in sett_keys ):
@@ -95,7 +95,7 @@ def get_molar_fractions(settings=KMCSettings,
     list_of_molar_fractions.clear()
     tuple_tmp = [i[0] for i in total_list]
     molar_tmp = [i[1] for i in total_list]
-    for i in species_list.gas_species_labels():
+    for i in [ sp.symbol for sp in species_list.gas_species() ]:
         for j, k in enumerate(tuple_tmp):
             if i == k:
                 list_of_molar_fractions.append(molar_tmp[j])

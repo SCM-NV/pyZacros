@@ -2,9 +2,8 @@
 # -*- coding: utf-8 -*-
 """Tests of the pyZacros classes."""
 
-from pyzacros.classes.Species import Species
-from pyzacros.classes.SpeciesList import SpeciesList
-from pyzacros.utils.compareReports import *
+import pyzacros as pz
+from pyzacros.utils.compareReports import compare
 
 
 def test_SpeciesList():
@@ -14,24 +13,26 @@ def test_SpeciesList():
     print( "---------------------------------------------------" )
 
     # Adsorbed specie
-    myAdsorbedSpecies1 = Species( "H2*", denticity=1 )
-    myAdsorbedSpecies2 = Species( "O2*", denticity=1 )
+    myAdsorbedSpecies1 = pz.Species( "H2*", denticity=1 )
+    myAdsorbedSpecies2 = pz.Species( "O2*", denticity=1 )
 
     # Gas specie
-    myGasSpecies1 = Species( "H2", gas_energy=0.0 )
+    myGasSpecies1 = pz.Species( "H2", gas_energy=0.0 )
 
     # Gas specie
-    myGasSpecies2 = Species( "O2", gas_energy=0.0 )
+    myGasSpecies2 = pz.Species( "O2", gas_energy=0.0 )
 
     # Free adsorption site
-    myFreeAdsorptionSite = Species( "*" )
+    myFreeAdsorptionSite = pz.Species( "*" )
 
-    mySpeciesList = SpeciesList()
-    mySpeciesList.append( myAdsorbedSpecies1 )
-    mySpeciesList.append( myAdsorbedSpecies2 )
-    mySpeciesList.append( myGasSpecies1 )
-    mySpeciesList.append( myGasSpecies2 )
-    mySpeciesList.append( myFreeAdsorptionSite )
+    #mySpeciesList = pz.SpeciesList()
+    #mySpeciesList.append( myAdsorbedSpecies1 )
+    #mySpeciesList.append( myAdsorbedSpecies2 )
+    #mySpeciesList.append( myGasSpecies1 )
+    #mySpeciesList.append( myGasSpecies2 )
+    #mySpeciesList.append( myFreeAdsorptionSite )
+
+    mySpeciesList = pz.SpeciesList( [myAdsorbedSpecies1,myAdsorbedSpecies2,myGasSpecies1,myGasSpecies2,myFreeAdsorptionSite] )
 
     print(mySpeciesList)
 

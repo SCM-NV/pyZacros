@@ -2,8 +2,13 @@ import os
 import sys
 
 from .Species import *
+from .SpeciesList import *
+from .Cluster import *
+from .ElementaryReaction import *
 from .Mechanism import *
 from .Lattice import *
+
+__all__ = ['RKFLoader']
 
 class RKFLoader:
 
@@ -206,11 +211,12 @@ class RKFLoader:
                     if( bs in attachedMolecule[idReactant].keys() ):
                         species[i] = attachedMolecule[idTS][bs]
 
-                clusterReactant = Cluster( site_types=[ labels[j] for j in connectedSites ],
-                                           neighboring=neighboring,
-                                           species=SpeciesList( [ Species(f+"*",1) for f in species ] ),
-                                           multiplicity=2,
-                                           cluster_energy=state2Energy[idReactant] )
+                #clusterReactant = Cluster( site_types=[ labels[j] for j in connectedSites ],
+                                           #neighboring=neighboring,
+                                           #species=SpeciesList( [ Species(f+"*",1) for f in species ] ),
+                                           #multiplicity=2,
+                                           #cluster_energy=state2Energy[idReactant] )
+                speciesReactant = SpeciesList( [ Species(f+"*",1) for f in species ] )
                 #--------------------------------------------------------------------
 
                 #--------------------------------------------------------------------
@@ -220,11 +226,12 @@ class RKFLoader:
                     if( bs in attachedMolecule[idProduct].keys() ):
                         species[i] = attachedMolecule[idTS][bs]
 
-                clusterProduct = Cluster( site_types=[ labels[j] for j in connectedSites ],
-                                          neighboring=neighboring,
-                                          species=SpeciesList( [ Species(f+"*",1) for f in species ] ),
-                                          multiplicity=2,
-                                          cluster_energy=state2Energy[idReactant] )
+                #clusterProduct = Cluster( site_types=[ labels[j] for j in connectedSites ],
+                                          #neighboring=neighboring,
+                                          #species=SpeciesList( [ Species(f+"*",1) for f in species ] ),
+                                          #multiplicity=2,
+                                          #cluster_energy=state2Energy[idReactant] )
+                speciesProduct = SpeciesList( [ Species(f+"*",1) for f in species ] )
                 #--------------------------------------------------------------------
 
                 #--------------------------------------------------------------------
@@ -233,8 +240,8 @@ class RKFLoader:
 
                 reaction = ElementaryReaction( site_types=tuple([ labels[j] for j in connectedSites ]),
                                                neighboring=neighboring,
-                                               initial=clusterReactant,
-                                               final=clusterProduct,
+                                               initial=speciesReactant,
+                                               final=speciesProduct,
                                                reversible=True,
                                                pre_expon=1e+13,
                                                pe_ratio=0.676,

@@ -6,13 +6,11 @@ It is a sligly modified PLAMS Settings class.
     https://github.com/SCM-NV/PLAMS
 """
 
-
 import textwrap
 import contextlib
 from functools import wraps
 
 __all__ = ['KMCSettings']
-
 
 class KMCSettings(dict):
     """

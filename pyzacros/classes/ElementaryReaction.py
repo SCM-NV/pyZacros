@@ -1,13 +1,14 @@
 from collections import Counter
-from .Cluster import Cluster
+from .SpeciesList import SpeciesList
 
+__all__ = ['ElementaryReaction']
 
 class ElementaryReaction:
 
     def __init__(self,
                  site_types: list,
-                 initial: Cluster,
-                 final: Cluster,
+                 initial: SpeciesList,
+                 final: SpeciesList,
                  neighboring: list = None,
                  reversible: bool = True,
                  pre_expon: float = 0.0,
@@ -18,17 +19,26 @@ class ElementaryReaction:
 
         :parm site_types: list
         :parm neighboring: list
-        :parm initial: Cluster
-        :parm final: Cluster
+        :parm initial: SpeciesList
+        :parm final: SpeciesList
         :parm reversible: bool
         :parm pre_expon: float
         :parm pe_ratio: float
         :parm activation_energy: float
         """
+
+        if( ( type(initial) != SpeciesList and type(initial) != list )
+            or ( type(final) != SpeciesList and type(final) != list ) ):
+            msg  = "### ERROR ### ElementaryReaction.__init__.\n"
+            msg += "              Inconsistent type for initial or final\n"
+            raise NameError(msg)
+
         self.site_types = site_types   # e.g. [ "f", "f" ]
         self.neighboring = neighboring # e.g. [ (1,2) ]
         self.initial = initial
+        if( type(initial) == list ): self.initial = SpeciesList(initial)
         self.final = final
+        if( type(final) == list ): self.final = SpeciesList(final)
         self.reversible = reversible
         self.pre_expon = pre_expon
         self.pe_ratio = pe_ratio
@@ -36,25 +46,21 @@ class ElementaryReaction:
 
         self.sites = len(site_types)
 
-        if( self.sites != sum([s.denticity for s in initial.species])
-           or self.sites != sum([s.denticity for s in final.species]) ):
+        if( self.sites != sum([s.denticity for s in self.initial])
+           or self.sites != sum([s.denticity for s in self.final]) ):
             msg  = "### ERROR ### ElementaryReaction.__init__.\n"
             msg += "              Inconsistent dimensions for sites, initial or final\n"
             raise NameError(msg)
 
-        if( type(initial) != Cluster or type(final) != Cluster ):
-            msg  = "### ERROR ### ElementaryReaction.__init__.\n"
-            msg += "              Inconsistent type for initial or final\n"
-            raise NameError(msg)
-
-        if( abs( initial.mass() - final.mass() ) > 1e-6 ):
+        if( abs( self.initial.mass() - self.final.mass() ) > 1e-6 ):
             msg  = "### ERROR ### ElementaryReaction.__init__.\n"
             msg += "              The mass is not conserved during the reaction\n"
-            msg += "              mass(initial)="+str(initial.mass())+",mass(final)="+str(final.mass())
+            msg += "              mass(initial)="+str(self.initial.mass())+",mass(final)="+str(self.final.mass())
             raise NameError(msg)
 
         self.__label = None
         self.__updateLabel()
+
 
     def __eq__( self, other ):
         """
@@ -73,18 +79,56 @@ class ElementaryReaction:
         return hash(self.__label)
 
 
+    @staticmethod
+    def __getSpeciesListFullName( species, site_types ):
+        label = ""
+
+        for i in range(len(species)):
+            label += species[i].symbol+"-"
+            for j in range(species[i].denticity):
+                label += site_types[i]
+                if(j != species[i].denticity-1):
+                    label += "-"
+            if(i != len(species)-1):
+                label += ","
+
+        return label
+
+
     def __updateLabel( self ):
         """
         Updates the attribute 'label'
         """
+        initialLabel = ElementaryReaction.__getSpeciesListFullName( self.initial.adsorbed_species(), self.site_types )
+
+        if( len(self.initial.gas_species()) > 0 ):
+            initialLabel += ":" + SpeciesList(self.initial.gas_species()).label()
+
+        finalLabel = ElementaryReaction.__getSpeciesListFullName( self.final.adsorbed_species(), self.site_types )
+
+        if( len(self.final.gas_species()) > 0 ):
+            finalLabel += ":" + SpeciesList(self.final.gas_species()).label()
+
+        self.__label = ""
+
         if( self.reversible ):
             # Reaction labels in lexicographical order
-            if( self.initial.label() > self.final.label() ):
-                self.__label = self.initial.label()+"<-->"+self.final.label()
+            if( initialLabel > finalLabel ):
+                self.__label = initialLabel+"<-->"+finalLabel
             else:
-                self.__label = self.final.label()+"<-->"+self.initial.label()
+                self.__label = finalLabel+"<-->"+initialLabel
         else:
-            self.__label = self.initial.label()+"-->"+self.final.label()
+            self.__label = initialLabel+"-->"+finalLabel
+
+        # For neighboring nodes are sorted
+        if self.neighboring is not None:
+            self.__label += ";"
+            for i in range(len(self.neighboring)):
+                lNeighboring = list(self.neighboring[i])
+                lNeighboring.sort()
+                self.__label += str(tuple(lNeighboring)).replace(" ", "")
+                if( i != len(self.neighboring)-1):
+                    self.__label += ","
 
 
     def label( self ) -> str:
@@ -106,10 +150,13 @@ class ElementaryReaction:
         else:
             output  = "step " + self.__label +"\n"
 
-        if( len(self.initial.gas_species) != 0 or len(self.final.gas_species) != 0 ):
+        initial_gas_species = SpeciesList( self.initial.gas_species() )
+        final_gas_species = SpeciesList( self.final.gas_species() )
+
+        if( len(initial_gas_species) != 0 or len(final_gas_species) != 0 ):
             output += "  gas_reacs_prods "
 
-            gas_species_freqs = Counter( [ s.symbol for s in self.initial.gas_species ] )
+            gas_species_freqs = Counter( [ s.symbol for s in initial_gas_species ] )
 
             i=0
             for symbol,freq in gas_species_freqs.items():
@@ -118,7 +165,7 @@ class ElementaryReaction:
                     output += " "
                 i += 1
 
-            gas_species_freqs = Counter( [ s.symbol for s in self.final.gas_species ] )
+            gas_species_freqs = Counter( [ s.symbol for s in final_gas_species ] )
 
             i=0
             for symbol,freq in gas_species_freqs.items():
@@ -142,13 +189,13 @@ class ElementaryReaction:
 
             output += "  initial"+"\n"
             for i in range(len(self.initial)):
-                for j in range(self.initial.species[i].denticity):
-                    output += "    "+str(i+1)+" "+self.initial.species[i].symbol+" "+str(j+1)+"\n"
+                for j in range(self.initial[i].denticity):
+                    output += "    "+str(i+1)+" "+self.initial[i].symbol+" "+str(j+1)+"\n"
 
             output += "  final"+"\n"
             for i in range(len(self.final)):
-                for j in range(self.final.species[i].denticity):
-                    output += "    "+str(i+1)+" "+self.final.species[i].symbol+" "+str(j+1)+"\n"
+                for j in range(self.final[i].denticity):
+                    output += "    "+str(i+1)+" "+self.final[i].symbol+" "+str(j+1)+"\n"
 
             output += "  site_types "
             for i in range(len(self.site_types)):
