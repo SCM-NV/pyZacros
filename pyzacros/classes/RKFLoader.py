@@ -5,6 +5,7 @@ from .Species import *
 from .SpeciesList import *
 from .Cluster import *
 from .ElementaryReaction import *
+from .ClusterExpansion import *
 from .Mechanism import *
 from .Lattice import *
 
@@ -35,15 +36,16 @@ class RKFLoader:
         eV = 0.0367493088244753
         angs = 1.88972612456506
 
+        self.clusterExpansion = ClusterExpansion()
         self.mechanism = Mechanism()
 
         nLatticeVectors = results.readrkf("Molecule", "nLatticeVectors")
         latticeVectors = results.readrkf("Molecule", "LatticeVectors")
         latticeVectors = [ [latticeVectors[3*i+j]/angs for j in range(nLatticeVectors) ] for i in range(nLatticeVectors) ]
-        regions = results.readrkf("Molecule", "EngineAtomicInfo").split()
+        regions = results.readrkf("Molecule", "EngineAtomicInfo").split("\0")
 
         nStates = results.readrkf("EnergyLandscape", "nStates")
-        fileNames = results.readrkf("EnergyLandscape", "fileNames").replace(".rkf","").split()
+        fileNames = results.readrkf("EnergyLandscape", "fileNames").replace(".rkf","").split("\0")
         counts = results.readrkf("EnergyLandscape", "counts")
         isTS = results.readrkf("EnergyLandscape", "isTS")
         reactants = results.readrkf("EnergyLandscape", "reactants")
@@ -54,9 +56,8 @@ class RKFLoader:
         products = [ max(0,idState-1) for idState in products ]
 
         nSites = results.readrkf("BindingSites", "nSites")
-        adsorbateLabel = results.readrkf("BindingSites", "AdsorbateLabel").strip()
-        labels = results.readrkf("BindingSites", "Labels")
-        labels = labels.split()
+        referenceRegion = results.readrkf("BindingSites", "AdsorbateLabel").strip() #<< FIXME. It should be ReferenceRegion
+        labels = results.readrkf("BindingSites", "Labels").split()
         coords = results.readrkf("BindingSites", "Coords")
         coords = [ [coords[3*i+j]/angs for j in range(3) ] for i in range(nSites) ]
         coordsFrac = results.readrkf("BindingSites", "CoordsFrac")
@@ -135,9 +136,10 @@ class RKFLoader:
 
                 adsorbate = scm.plams.Molecule()
                 for j,atom in enumerate(state2Molecule[idState]):
-                    if( regions[j] == "region="+adsorbateLabel ):
+                    if( regions[j] != "region="+referenceRegion ):
                         adsorbate.add_atom( atom )
 
+                adsorbate.guess_bonds()
                 adsorbateMols = adsorbate.separate()
 
                 loc = 0
@@ -206,32 +208,34 @@ class RKFLoader:
 
                 #--------------------------------------------------------------------
                 # Reactant
-                species = len(connectedSites)*[ "" ]
+                speciesNames = len(connectedSites)*[ "" ]
                 for i,bs in enumerate(connectedSites):
                     if( bs in attachedMolecule[idReactant].keys() ):
-                        species[i] = attachedMolecule[idTS][bs]
+                        speciesNames[i] = attachedMolecule[idTS][bs]
 
-                #clusterReactant = Cluster( site_types=[ labels[j] for j in connectedSites ],
-                                           #neighboring=neighboring,
-                                           #species=SpeciesList( [ Species(f+"*",1) for f in species ] ),
-                                           #multiplicity=2,
-                                           #cluster_energy=state2Energy[idReactant] )
-                speciesReactant = SpeciesList( [ Species(f+"*",1) for f in species ] )
+                clusterReactant = Cluster( site_types=[ labels[j] for j in connectedSites ],
+                                           neighboring=neighboring,
+                                           species=SpeciesList( [ Species(f+"*",1) for f in speciesNames ] ),
+                                           multiplicity=2,
+                                           cluster_energy=state2Energy[idReactant] )
+
+                speciesReactant = SpeciesList( [ Species(f+"*",1) for f in speciesNames ] )
                 #--------------------------------------------------------------------
 
                 #--------------------------------------------------------------------
                 # Product
-                species = len(connectedSites)*[ "" ]
+                speciesNames = len(connectedSites)*[ "" ]
                 for i,bs in enumerate(connectedSites):
                     if( bs in attachedMolecule[idProduct].keys() ):
-                        species[i] = attachedMolecule[idTS][bs]
+                        speciesNames[i] = attachedMolecule[idTS][bs]
 
-                #clusterProduct = Cluster( site_types=[ labels[j] for j in connectedSites ],
-                                          #neighboring=neighboring,
-                                          #species=SpeciesList( [ Species(f+"*",1) for f in species ] ),
-                                          #multiplicity=2,
-                                          #cluster_energy=state2Energy[idReactant] )
-                speciesProduct = SpeciesList( [ Species(f+"*",1) for f in species ] )
+                clusterProduct = Cluster( site_types=[ labels[j] for j in connectedSites ],
+                                          neighboring=neighboring,
+                                          species=SpeciesList( [ Species(f+"*",1) for f in speciesNames ] ),
+                                          multiplicity=2,
+                                          cluster_energy=state2Energy[idReactant] )
+
+                speciesProduct = SpeciesList( [ Species(f+"*",1) for f in speciesNames ] )
                 #--------------------------------------------------------------------
 
                 #--------------------------------------------------------------------
@@ -247,11 +251,8 @@ class RKFLoader:
                                                pe_ratio=0.676,
                                                activation_energy=activationEnergy )
 
+                self.clusterExpansion.extend( [clusterReactant, clusterProduct] )
                 self.mechanism.append( reaction )
-
-        #--------------------------------------------------------------------
-        # Remove duplicated reactions in the mechanism
-        self.mechanism = Mechanism(dict.fromkeys(self.mechanism))
 
         #--------------------------------------------------------------------
         # Generation of the KMCLattice

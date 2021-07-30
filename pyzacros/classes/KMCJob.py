@@ -18,8 +18,8 @@ class KMCJob:
     """Job class that represents a chemical species."""
 
 
-    def __init__(self, settings: KMCSettings, lattice: Lattice,
-                 mechanism: Mechanism, cluster_expansion: ClusterExpansion, initialState: InitialState = None, name: str = "results"):
+    def __init__(self, settings: KMCSettings, lattice: Lattice, mechanism: Mechanism,
+                cluster_expansion: ClusterExpansion, initialState: InitialState = None, name: str = "results"):
         """
         Create a new Job object.
 
