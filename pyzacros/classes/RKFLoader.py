@@ -66,7 +66,7 @@ class RKFLoader:
         fromSites = results.readrkf("BindingSites", "FromSites")
         toSites = results.readrkf("BindingSites", "ToSites")
         latticeDisplacements = results.readrkf("BindingSites", "LatticeDisplacements")
-        latticeDisplacements = [ [latticeDisplacements[3*i+j] for j in range(3) ] for i in range(nConnections) ]
+        latticeDisplacements = [ [latticeDisplacements[nLatticeVectors*i+j] for j in range(nLatticeVectors) ] for i in range(nConnections) ]
         nParentStates = results.readrkf("BindingSites", "nParentStates")
         parentStatesRaw = results.readrkf("BindingSites", "ParentStates")
         parentAtomsRaw = results.readrkf("BindingSites", "ParentAtoms")
