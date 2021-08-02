@@ -1,0 +1,78 @@
+Constraints
+  FixedRegion surface
+End
+
+PESExploration
+  DynamicSeedStates
+  Job ProcessSearch
+  NumExpeditions 50
+  NumExplorers 5
+  Optimizer
+    ConvergedForce 0.0001
+  End
+  RandomSeed 100
+  SaddleSearch
+    MaxEnergy 2.0
+  End
+  StructureComparison
+    DistanceDifference 0.1
+    EnergyDifference 0.01
+    NeighborCutoff 10.0
+  End
+End
+
+Task PESExploration
+
+system
+  Atoms
+              O       5.5400393700       1.6048408900       8.9274094600 region=adsorbate
+             Pt       8.3152171400       4.8023913600       7.7892643000 region=surface
+             Pt       5.5429878600       0.0016061200       7.7912880000 region=surface
+             Pt       6.9291025000       2.4019987400       7.7902761500 region=surface
+             Pt      11.0870757100       4.8024458600       7.7885488500 region=surface
+             Pt       8.3148464300       0.0016606200       7.7905725400 region=surface
+             Pt       9.7009609600       2.4017848600       7.7906867200 region=surface
+             Pt       5.5433586800       4.8026052400       7.7888537400 region=surface
+             Pt       2.7711294000       0.0018200100       7.7908774300 region=surface
+             Pt       4.1572440400       2.4022126300       7.7898655900 region=surface
+             Pt       9.7015433100       5.6013033900       5.5258541900 region=surface
+             Pt       6.9293140300       0.8005181500       5.5278778900 region=surface
+             Pt       8.3154286700       3.2009107700       5.5268660400 region=surface
+             Pt       4.1578263900       5.6017311600       5.5250330600 region=surface
+             Pt       1.3855971100       0.8009459300       5.5270567500 region=surface
+             Pt       2.7717117500       3.2013385400       5.5260449100 region=surface
+             Pt       6.9296848500       5.6015172700       5.5254436300 region=surface
+             Pt       4.1574555700       0.8007320400       5.5274673200 region=surface
+             Pt       5.5435702100       3.2011246600       5.5264554700 region=surface
+             Pt       6.9298963900       4.0000366800       3.2630353600 region=surface
+             Pt       8.3160110300       6.4004293000       3.2620235200 region=surface
+             Pt       5.5437817400       1.5996440600       3.2640472100 region=surface
+             Pt       9.7017548400       3.9998228000       3.2634459300 region=surface
+             Pt      11.0878694800       6.4002154100       3.2624340800 region=surface
+             Pt       8.3156402000       1.5994301800       3.2644577800 region=surface
+             Pt       4.1580379200       4.0002505700       3.2626248000 region=surface
+             Pt       5.5441525600       6.4006431800       3.2616129500 region=surface
+             Pt       2.7719232800       1.5998579500       3.2636366400 region=surface
+             Pt       1.3863908900       2.3987154800       1.0009419900 region=surface
+             Pt       5.5443640900       4.7991626000       0.9992146900 region=surface
+             Pt       6.9302458300       7.1996902900       1.0004329100 region=surface
+             Pt       4.1582494500       2.3987699800       1.0002265300 region=surface
+             Pt       8.3162225600       4.7989487100       0.9996252500 region=surface
+             Pt       9.7021042900       7.1994764100       1.0008434800 region=surface
+             Pt       6.9301079200       2.3985560900       1.0006371000 region=surface
+             Pt       2.7725056400       4.7993764800       0.9988041200 region=surface
+             Pt       4.1583873700       7.1999041800       1.0000223400 region=surface
+  End
+  Lattice
+         8.3155757500     0.0000000000     0.0000000000
+         4.1577878700     7.2014998400     0.0000000000
+  End
+End
+
+Engine ReaxFF
+  Charges
+    Solver direct
+  End
+  ForceField CHONSFPtClNi.ff
+EndEngine
+
