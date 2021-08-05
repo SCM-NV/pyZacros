@@ -19,8 +19,8 @@ class ElementaryReaction:
 
         :parm site_types: list
         :parm neighboring: list
-        :parm initial: SpeciesList
-        :parm final: SpeciesList
+        :parm initial: SpeciesList. Gas species have to be at the end of the list
+        :parm final: SpeciesList. Gas species have to be at the end of the list
         :parm reversible: bool
         :parm pre_expon: float
         :parm pe_ratio: float

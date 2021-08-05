@@ -1,13 +1,10 @@
 """Test script that will reproduce CO_tutorial inputs."""
 
 import pyzacros as pz
-#from pyzacros.utils.setting_utils import *
-#from pyzacros.utils.io_utils import *
 
-
+#---------------------------------------------
 # Species:
-s0 = pz.Species("*", 1)      # Empty adsorption site
-
+#---------------------------------------------
 # - Gas-species:
 CO_gas = pz.Species("CO")
 H2O_gas = pz.Species("H2O")
@@ -15,7 +12,8 @@ H2_gas = pz.Species("H2")
 CO2_gas = pz.Species("CO2", gas_energy=-0.615)
 O2_gas = pz.Species("O2", gas_energy=4.913)
 
-# - Adsorbed species:
+# - Surface species:
+s0 = pz.Species("*", 1)      # Empty adsorption site
 CO_adsorbed = pz.Species("CO*", 1)
 H2O_adsorbed = pz.Species("H2O*", 1)
 OH_adsorbed = pz.Species("OH*", 1)
@@ -100,7 +98,7 @@ myClusterExpansion.extend( [CO_pair_1NN, OH_H_1NN, O_H_1NN, CO_OH_1NN, CO_O_1NN]
 
 # CO_adsoprtion:
 CO_adsorption = pz.ElementaryReaction(site_types=["1"],
-                                   initial=[CO_gas, s0],
+                                   initial=[s0,CO_gas],
                                    final=[CO_adsorbed],
                                    reversible=True,
                                    pre_expon=2.226e+007,
@@ -193,7 +191,7 @@ sett.molar_fraction.H2O = 0.950
 
 sett.random_seed = 123278
 sett.temperature = 500.0
-sett.pressure = 10
+sett.pressure = 10.0
 sett.snapshots = ('time', 5.e-4)
 sett.process_statistics = ('time', 5.e-4)
 sett.species_numbers = ('time', 5.e-4)
@@ -205,6 +203,4 @@ sett.wall_time = 30
 myJob = pz.KMCJob( settings=sett, lattice=myLattice, mechanism=myMechanism, cluster_expansion=myClusterExpansion )
 
 print(myJob)
-####print(myJob)
-#myJob.run()
-####
+myJob.run()

@@ -35,7 +35,9 @@ class KMCJob:
         self.settings = settings
         self.lattice = lattice
         self.mechanism = mechanism
+        if( type(mechanism) == list ): self.mechanism = Mechanism(mechanism)
         self.cluster_expansion = cluster_expansion
+        if( type(cluster_expansion) == list ): self.cluster_expansion = ClusterExpansion(cluster_expansion)
         self.initialState = initialState
         self.name = name
         self.working_path = 'pyzacros_workdir/'+self.name
@@ -122,7 +124,7 @@ class KMCJob:
         molar_frac_list = KMCJob.get_molar_fractions(self.settings, gasSpecies)
 
         if( len(molar_frac_list)>0 ):
-            output += "gas_molar_fracs       " + ''.join(["%6s"%str(elem) for elem in molar_frac_list]) + "\n\n"
+            output += "gas_molar_fracs   " + ''.join(["%10s"%str(elem) for elem in molar_frac_list]) + "\n\n"
         output += str(self.mechanism.species())+"\n\n"
 
         output += self.print_optional_sett(opt_sett='snapshots')
