@@ -85,25 +85,27 @@ def test_KMCJob():
 ---------------------------------------------------------------------
 simulation_input.dat
 ---------------------------------------------------------------------
-random_seed     10
-temperature     380.0
-pressure        2.0
+random_seed             10
+temperature          380.0
+pressure               2.0
 
-n_gas_species 1
+n_gas_species   1
 gas_specs_names           H2
 gas_energies             0.0
 gas_molec_weights     2.0156
-n_surf_species 2
+gas_molar_fracs          0.0
+
+n_surf_species    2
 surf_specs_names          H*       H2*
 surf_specs_dent            1         1
 
-snapshots on time 1e-5
-process_statistics on time 1e-5
-species_numbers on time 1e-5
-event_report off
-max_steps infinity
-max_time 100.0
-wall_time 5000
+snapshots                 on time       1e-05
+process_statistics        on time       1e-05
+species_numbers           on time       1e-05
+event_report      off
+max_steps         infinity
+max_time          100.0
+wall_time         5000
 
 finish
 ---------------------------------------------------------------------

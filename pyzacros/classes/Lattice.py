@@ -122,6 +122,7 @@ class Lattice():
         """Translate the object to a string."""
         output = "lattice"+" "+self.lattice_type+"\n"
         if self.default_lattice is not None:
+            output += "  "
             for i in range(4):
                 output += str(self.default_lattice[i]) + " "
             output += "\nend_lattice"

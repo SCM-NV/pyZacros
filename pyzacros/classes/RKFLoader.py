@@ -56,7 +56,7 @@ class RKFLoader:
         products = [ max(0,idState-1) for idState in products ]
 
         nSites = results.readrkf("BindingSites", "nSites")
-        referenceRegion = results.readrkf("BindingSites", "AdsorbateLabel").strip() #<< FIXME. It should be ReferenceRegion
+        referenceRegion = results.readrkf("BindingSites", "ReferenceRegionLabel").strip()
         labels = results.readrkf("BindingSites", "Labels").split()
         coords = results.readrkf("BindingSites", "Coords")
         coords = [ [coords[3*i+j]/angs for j in range(3) ] for i in range(nSites) ]

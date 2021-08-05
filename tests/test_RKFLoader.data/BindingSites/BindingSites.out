@@ -17,7 +17,7 @@ May use up to 7489MB of RAM as shared memory on node 0
  *  --------------------------------                                           *
  *   Amsterdam Modeling Suite (AMS)              2021.203                      *
  *  --------------------------------                                           *
- *                                               r96319 2021-07-27             *
+ *                                               r96513 2021-08-05             *
  *                                                                             *
  *                                                                             *
  *                              =================                              *
@@ -40,20 +40,20 @@ May use up to 7489MB of RAM as shared memory on node 0
  Licensed to: Dr. Nestor Aguirre Castiblanco  / SCM / Amsterdam / NETHERLANDS
  SCM User ID: u22021
   
- AMS 2021.203  RunTime: Aug02-2021 12:23:14  ShM Nodes: 1  Procs: 4
+ AMS 2021.203  RunTime: Aug05-2021 13:43:49  ShM Nodes: 1  Procs: 4
 
  AMS jobname: BindingSites
- AMS jobid  : 1300314776
+ AMS jobid  : 1846000129
 
  Start   directory: /home/aguirre/Develop/pyZacros/plams_workdir.002/BindingSites/
  Results directory: /home/aguirre/Develop/pyZacros/plams_workdir.002/BindingSites/
- Scratch directory: /scratch/aguirre/amstmp_BindingSites_kid0.1300314776/
+ Scratch directory: /scratch/aguirre/amstmp_BindingSites_kid0.1846000129/
 
 
- Communication costs MPI_COMM_WORLD:      0.678 usec per message,   0.0073 usec per 8-byte item
- Communication costs for intra-node:      0.653 usec per message,   0.0077 usec per 8-byte item
+ Communication costs MPI_COMM_WORLD:      0.681 usec per message,   0.0085 usec per 8-byte item
+ Communication costs for intra-node:      0.631 usec per message,   0.0067 usec per 8-byte item
 
- RNG seed: 1566859624 -1768206402 776272040 970873804 774936576 -839111793 -703682712 -2093540562
+ RNG seed: 825758753 -2023786262 -1296814714 -1049603495 629906821 -1370323493 2127974787 1009889443
  MPI rank    0: Number of processors available to this process:      2
  MPI rank    0: Default max number of OpenMP threads:                2
  MPI rank    0: The OMP_NUM_THREADS environment variable is not set!
@@ -251,7 +251,7 @@ Exploring 3 degrees of freedom
 
 SeedStates                                0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18
 
-RandomSeed                                    93178537
+RandomSeed                                   316760413
 Temperature                                  300.00000
 FiniteDifference                               0.01000
 WriteHistory                                 converged
@@ -2493,6 +2493,6 @@ VEC2       4.15778787000000       7.20149984000000       0.00000000000000
 
 AMS application finished. Exiting.
 NORMAL TERMINATION
-     Total cpu time:       1.03
-  Total system time:       0.09
- Total elapsed time:       1.15
+     Total cpu time:       0.99
+  Total system time:       0.14
+ Total elapsed time:       1.19

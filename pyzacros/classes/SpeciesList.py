@@ -54,7 +54,7 @@ class SpeciesList(UserList):
         output = ""
 
         if( len(gasSpecies) > 0 ):
-            output = "n_gas_species "+str(len(gasSpecies))+"\n"
+            output = "n_gas_species    "+str(len(gasSpecies))+"\n"
 
             output += "gas_specs_names   "
             for i in gasSpecies:
@@ -79,7 +79,7 @@ class SpeciesList(UserList):
 
 
         if( effAdsorbedSpecies > 0 ):
-            output += "n_surf_species "+str(effAdsorbedSpecies)+"\n"
+            output += "n_surf_species    "+str(effAdsorbedSpecies)+"\n"
 
             output += "surf_specs_names  "
             for i in adsorbedSpecies:
