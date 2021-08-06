@@ -37,7 +37,6 @@ end_cluster\
     myCluster2 = pz.Cluster( site_types=( "f", "f" ),
                             neighboring=[ (1,2) ],
                             species=pz.SpeciesList( [ pz.Species("H*",1), pz.Species("H*",1) ] ),
-                            gas_species=[ pz.Species("H2",gas_energy=0.0) ],
                             multiplicity=2,
                             cluster_energy = 0.1 )
 
@@ -45,8 +44,7 @@ end_cluster\
 
     output = str(myCluster2)
     expectedOutput = """\
-cluster H*-f,H*-f:H2:(1,2)
-  # gas_species H2
+cluster H*-f,H*-f:(1,2)
   sites 2
   neighboring 1-2
   lattice_state

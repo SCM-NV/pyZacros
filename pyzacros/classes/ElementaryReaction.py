@@ -13,7 +13,8 @@ class ElementaryReaction:
                  reversible: bool = True,
                  pre_expon: float = 0.0,
                  pe_ratio: float = 0.0,
-                 activation_energy: float = 0.0):
+                 activation_energy: float = 0.0,
+                 label: str = None):
         """
         Creates a new ElementaryReaction object
 
@@ -58,6 +59,7 @@ class ElementaryReaction:
             msg += "              mass(initial)="+str(self.initial.mass())+",mass(final)="+str(self.final.mass())
             raise NameError(msg)
 
+        self.__userLabel = label
         self.__label = None
         self.__updateLabel()
 
@@ -99,6 +101,10 @@ class ElementaryReaction:
         """
         Updates the attribute 'label'
         """
+        if( self.__userLabel is not None ):
+            self.__label = self.__userLabel
+            return
+
         initialLabel = ElementaryReaction.__getSpeciesListFullName( self.initial.adsorbed_species(), self.site_types )
 
         if( len(self.initial.gas_species()) > 0 ):

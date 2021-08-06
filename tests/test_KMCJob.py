@@ -35,7 +35,6 @@ def test_KMCJob():
     myCluster3 = pz.Cluster( site_types=( "f", "f" ),
                             neighboring=[ (1,2) ],
                             species=[ s0, s0 ],
-                            gas_species=[ s3 ],
                             multiplicity=2,
                             cluster_energy=0.1 )
 
@@ -141,8 +140,7 @@ cluster H2*-f,*-f:(1,2)
   cluster_eng 0.1000
 end_cluster
 
-cluster *-f,*-f:H2:(1,2)
-  # gas_species H2
+cluster *-f,*-f:(1,2)
   sites 2
   neighboring 1-2
   lattice_state
