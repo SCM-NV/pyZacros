@@ -62,7 +62,7 @@ def test_KMCJob():
     myMechanism.append( myReaction1 )
     myMechanism.append( myReaction2 )
 
-    sett = pz.KMCSettings()
+    sett = pz.Settings()
     sett.random_seed = 10
     sett.temperature = 380.0
     sett.pressure = 2.00
@@ -74,12 +74,12 @@ def test_KMCJob():
     sett.max_time = 100.0
     sett.wall_time = 5000
 
-    myKMCJob = pz.KMCJob( sett, myLattice, myMechanism, myClusterExpansion )
-    print(myKMCJob)
+    myJob = pz.KMCJob( sett, myLattice, myMechanism, myClusterExpansion )
+    print(myJob)
 
-#    myKMCJob.writeInputFiles()
+#    myJob.writeInputFiles()
 
-    output = str(myKMCJob)
+    output = str(myJob)
     expectedOutput = """\
 ---------------------------------------------------------------------
 simulation_input.dat

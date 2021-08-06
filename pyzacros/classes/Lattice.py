@@ -1,4 +1,3 @@
-# -*- PLT@NLeSC(2020) -*-
 """Module containing the Lattice class."""
 
 from os import path

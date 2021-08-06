@@ -196,7 +196,7 @@ mech = pz.Mechanism([CO_adsorption, H2_dissoc_adsorp, H2O_adsorption,
 #---------------------------------------------
 # Settings:
 #---------------------------------------------
-sett = pz.KMCSettings()
+sett = pz.Settings()
 
 sett.molar_fraction.CO = 1.e-5
 sett.molar_fraction.H2O = 0.950

@@ -6,14 +6,14 @@ import pyzacros as pz
 from pyzacros.utils.compareReports import compare
 
 
-def test_KMCSettings():
-    """Test of the KMCSettings class."""
+def test_Settings():
+    """Test of the Settings class."""
     print("---------------------------------------------------")
-    print(">>> Testing KMCSettings class")
+    print(">>> Testing Settings class")
     print("---------------------------------------------------")
 
     # Adsorbed specie
-    sett = pz.KMCSettings()
+    sett = pz.Settings()
     sett.simulation_input.random_seed = 71543
     sett.simulation_input.temperature = 380.0
     sett.simulation_input.pressure = 2.00

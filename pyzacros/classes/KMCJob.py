@@ -8,21 +8,21 @@ from .SpeciesList import *
 from .ClusterExpansion import *
 from .Mechanism import *
 from .InitialState import *
-from .KMCSettings import *
+from .Settings import *
 from pyzacros.utils.find_utils import find_path_to_engine
 
 __all__ = ['KMCJob']
 
 class KMCJob:
-    """Job class that represents a chemical species."""
+    """KMCJob class that represents a chemical species."""
 
 
-    def __init__(self, settings: KMCSettings, lattice: Lattice, mechanism: Mechanism,
+    def __init__(self, settings: Settings, lattice: Lattice, mechanism: Mechanism,
                 cluster_expansion: ClusterExpansion, initialState: InitialState = None, name: str = "results"):
         """
-        Create a new Job object.
+        Create a new KMCJob object.
 
-        :parm settings: KMCSettings containing the parameters of the Zacros
+        :parm settings: Settings containing the parameters of the Zacros
                         calculation.
         :parm mechanism: Mechanism containing the mechanisms involed in the
                         calculation.
@@ -205,18 +205,18 @@ class KMCJob:
 
 
     @staticmethod
-    def check_settings(settings=KMCSettings, species_list=SpeciesList):
+    def check_settings(settings=Settings, species_list=SpeciesList):
         """
-        Check KMCSettings, load defaults if necessary.
+        Check Settings, load defaults if necessary.
 
-        :parm settings: KMCSettings object with the main settings of the
+        :parm settings: Settings object with the main settings of the
                         KMC calculation.
         """
-        # This list contains the defaults for KMCSettings, please modify
+        # This list contains the defaults for Settings, please modify
         # them as you wish.
         # They will NOT overwrite settings provided by user.
         KMCJob.check_molar_fraction(settings, species_list)
-        tmp = KMCSettings(
+        tmp = Settings(
             {'KMCEngine': {'name': 'Zacros'},
             'snapshots': ('time', 0.0005),
             'process_statistics': ('time', 0.0005),
@@ -230,14 +230,14 @@ class KMCJob:
 
 
     @staticmethod
-    def check_molar_fraction(settings=KMCSettings,
+    def check_molar_fraction(settings=Settings,
                             species_list=SpeciesList):
         """
         Check if molar_fraction labels are compatible with Species labels.
 
         It also sets defaults molar_fractions 0.000.
 
-        :parm settings: KMCSettings object with the main settings of the
+        :parm settings: Settings object with the main settings of the
                         KMC calculation.
         """
         list_of_species = [ sp.symbol for sp in species_list.gas_species() ]
@@ -254,22 +254,22 @@ class KMCJob:
             # Set default molar_fraction = 0.00 to the rest of gas species.
             for i in list_of_species:
                 if i not in sett_keys:
-                    tmp = KMCSettings({'molar_fraction': {i: 0.000}})
+                    tmp = Settings({'molar_fraction': {i: 0.000}})
                     # Soft merge of the settings:
                     settings.soft_update(tmp)
         else:
             for i in list_of_species:
-                tmp = KMCSettings({'molar_fraction': {i: 0.000}})
+                tmp = Settings({'molar_fraction': {i: 0.000}})
                 # Soft merge of the settings:
                 settings.soft_update(tmp)
 
     @staticmethod
-    def get_molar_fractions(settings=KMCSettings,
+    def get_molar_fractions(settings=Settings,
                             species_list=SpeciesList) -> list:
         """
         Get molar fractions using the correct order of list_gas_species.
 
-        :parm settings: KMCSettings object with the main settings of the
+        :parm settings: Settings object with the main settings of the
                         KMC calculation.
 
         :parm species_list: SpeciesList object containing the species

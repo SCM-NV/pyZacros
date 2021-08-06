@@ -1,6 +1,5 @@
-# -*- PLT@NLeSC(2020) -*-
 """
-Module containing the KMCSettings class.
+Module containing the Settings class.
 
 It is a sligly modified PLAMS Settings class.
     https://github.com/SCM-NV/PLAMS
@@ -10,9 +9,9 @@ import textwrap
 import contextlib
 from functools import wraps
 
-__all__ = ['KMCSettings']
+__all__ = ['Settings']
 
-class KMCSettings(dict):
+class Settings(dict):
     """
     Automatic multi-level dictionary.
 
@@ -33,9 +32,9 @@ class KMCSettings(dict):
     instances in easy-readable format.
 
     Regular dictionaries (also multi-level ones) used as values (or passed
-    to the constructor) are automatically transformed to |KMCSettings| instances::
+    to the constructor) are automatically transformed to |Settings| instances::
 
-        >>> s = KMCSettings({'a': {1: 'a1', 2: 'a2'}, 'b': {1: 'b1', 2: 'b2'}})
+        >>> s = Settings({'a': {1: 'a1', 2: 'a2'}, 'b': {1: 'b1', 2: 'b2'}})
         >>> s.a[3] = {'x': {12: 'q', 34: 'w'}, 'y': 7}
         >>> print(s)
         a:
@@ -55,28 +54,28 @@ class KMCSettings(dict):
     def __init__(self, *args, **kwargs):
         dict.__init__(self, *args, **kwargs)
         for k, v in self.items():
-            if isinstance(v, dict) and not isinstance(v, KMCSettings):
-                self[k] = KMCSettings(v)
+            if isinstance(v, dict) and not isinstance(v, Settings):
+                self[k] = Settings(v)
             if isinstance(v, list):
-                self[k] = [KMCSettings(i) if (isinstance(i, dict)
-                           and not isinstance(i, KMCSettings)) else i for i in v]
+                self[k] = [Settings(i) if (isinstance(i, dict)
+                           and not isinstance(i, Settings)) else i for i in v]
 
     def copy(self):
         """
-        Return a new instance that is a copy of this one. Nested |KMCSettings|
+        Return a new instance that is a copy of this one. Nested |Settings|
         instances are copied recursively, not linked.
 
         In practice this method works as a shallow copy: all "proper values"
         (leaf nodes) in the returned copy point to the same objects as the
         original instance (unless they are immutable, like ``int`` or
-        ``tuple``). However, nested |KMCSettings| instances (internal nodes)
-        are copied in a deep-copy fashion. In other words, copying a |KMCSettings|
+        ``tuple``). However, nested |Settings| instances (internal nodes)
+        are copied in a deep-copy fashion. In other words, copying a |Settings|
         instance creates a brand new "tree skeleton" and populates its leaf nodes
         with values taken directly from the original instance.
 
         This behavior is illustrated by the following example::
 
-            >>> s = KMCSettings()
+            >>> s = Settings()
             >>> s.a = 'string'
             >>> s.b = ['l','i','s','t']
             >>> s.x.y = 12
@@ -103,9 +102,9 @@ class KMCSettings(dict):
 
         This method is also used when :func:`python3:copy.copy` is called.
         """
-        ret = KMCSettings()
+        ret = Settings()
         for name in self:
-            if isinstance(self[name], KMCSettings):
+            if isinstance(self[name], Settings):
                 ret[name] = self[name].copy()
             else:
                 ret[name] = self[name]
@@ -115,11 +114,11 @@ class KMCSettings(dict):
     def soft_update(self, other):
         """
         Update this instance with data from *other*, but do not overwrite
-        existing keys. Nested |KMCSettings| instances are soft-updated
+        existing keys. Nested |Settings| instances are soft-updated
         recursively.
 
         In the following example ``s`` and ``o`` are previously prepared
-        |KMCSettings| instances::
+        |Settings| instances::
 
             >>> print(s)
             a:  AA
@@ -150,10 +149,10 @@ class KMCSettings(dict):
         """
 
         for name in other:
-            if isinstance(other[name], KMCSettings):
+            if isinstance(other[name], Settings):
                 if name not in self:
                     self[name] = other[name].copy()
-                elif isinstance(self[name], KMCSettings):
+                elif isinstance(self[name], Settings):
                     self[name].soft_update(other[name])
             elif name not in self:
                 self[name] = other[name]
@@ -163,10 +162,10 @@ class KMCSettings(dict):
     def update(self, other):
         """
         Update this instance with data from *other*, overwriting existing
-        keys. Nested |KMCSettings| instances are updated recursively.
+        keys. Nested |Settings| instances are updated recursively.
 
         In the following example ``s`` and ``o`` are previously prepared
-        |KMCSettings| instances::
+        |Settings| instances::
 
             >>> print(s)
             a:  AA
@@ -193,8 +192,8 @@ class KMCSettings(dict):
         *Other* can also be a regular dictionary. Of course in that case only top level keys are updated.
         """
         for name in other:
-            if isinstance(other[name], KMCSettings):
-                if name not in self or not isinstance(self[name], KMCSettings):
+            if isinstance(other[name], Settings):
+                if name not in self or not isinstance(self[name], Settings):
                     self[name] = other[name].copy()
                 else:
                     self[name].update(other[name])
@@ -204,7 +203,7 @@ class KMCSettings(dict):
 
 
     def merge(self, other):
-        """Return new instance of |KMCSettings| that is a copy of this instance soft-updated with *other*.
+        """Return new instance of |Settings| that is a copy of this instance soft-updated with *other*.
 
         Shortcut ``A + B`` can be used instead of ``A.merge(B)``.
         """
@@ -231,14 +230,14 @@ class KMCSettings(dict):
 
 
     def as_dict(self):
-        """Return a copy of this instance with all |KMCSettings| replaced by regular Python dictionaries.
+        """Return a copy of this instance with all |Settings| replaced by regular Python dictionaries.
         """
         d = {}
         for k, v in self.items():
-            if isinstance(v, KMCSettings):
+            if isinstance(v, Settings):
                 d[k] = v.as_dict()
             elif isinstance(v, list):
-                d[k] = [i.as_dict() if isinstance(i, KMCSettings) else i for i in v]
+                d[k] = [i.as_dict() if isinstance(i, Settings) else i for i in v]
             else:
                 d[k] = v
 
@@ -247,19 +246,19 @@ class KMCSettings(dict):
 
     @classmethod
     def suppress_missing(cls):
-        """A context manager for temporary disabling the :meth:`.KMCSettings.__missing__` magic method: all calls now raising a :exc:`KeyError`.
+        """A context manager for temporary disabling the :meth:`.Settings.__missing__` magic method: all calls now raising a :exc:`KeyError`.
 
-        As a results, attempting to access keys absent from an arbitrary |KMCSettings| instance will raise a :exc:`KeyError`, thus reverting to the default dictionary behaviour.
+        As a results, attempting to access keys absent from an arbitrary |Settings| instance will raise a :exc:`KeyError`, thus reverting to the default dictionary behaviour.
 
         .. note::
-            The :meth:`.KMCSettings.__missing__` method is (temporary) suppressed at the class level to ensure consistent invocation by the Python interpreter.
+            The :meth:`.Settings.__missing__` method is (temporary) suppressed at the class level to ensure consistent invocation by the Python interpreter.
             See also `special method lookup`_.
 
         Example:
 
         .. code:: python
 
-            >>> s = KMCSettings()
+            >>> s = Settings()
 
             >>> with s.suppress_missing():
             ...     s.a.b.c = True
@@ -278,13 +277,13 @@ class KMCSettings(dict):
     def get_nested(self, key_tuple, suppress_missing=False):
         """Retrieve a nested value by, recursively, iterating through this instance using the keys in *key_tuple*.
 
-        The :meth:`.KMCSettings.__getitem__` method is called recursively on this instance until all keys in key_tuple are exhausted.
+        The :meth:`.Settings.__getitem__` method is called recursively on this instance until all keys in key_tuple are exhausted.
 
-        Setting *suppress_missing* to ``True`` will internally open the :meth:`.KMCSettings.suppress_missing` context manager, thus raising a :exc:`KeyError` if a key in *key_tuple* is absent from this instance.
+        Setting *suppress_missing* to ``True`` will internally open the :meth:`.Settings.suppress_missing` context manager, thus raising a :exc:`KeyError` if a key in *key_tuple* is absent from this instance.
 
         .. code:: python
 
-            >>> s = KMCSettings()
+            >>> s = Settings()
             >>> s.a.b.c = True
             >>> value = s.get_nested(('a', 'b', 'c'))
             >>> print(value)
@@ -301,14 +300,14 @@ class KMCSettings(dict):
     def set_nested(self, key_tuple, value, suppress_missing=False):
         """Set a nested value by, recursively, iterating through this instance using the keys in *key_tuple*.
 
-        The :meth:`.KMCSettings.__getitem__` method is called recursively on this instance, followed by :meth:`.KMCSettings.__setitem__`, until all keys in key_tuple are exhausted.
+        The :meth:`.Settings.__getitem__` method is called recursively on this instance, followed by :meth:`.Settings.__setitem__`, until all keys in key_tuple are exhausted.
 
 
-        Setting *suppress_missing* to ``True`` will internally open the :meth:`.KMCSettings.suppress_missing` context manager, thus raising a :exc:`KeyError` if a key in *key_tuple* is absent from this instance.
+        Setting *suppress_missing* to ``True`` will internally open the :meth:`.Settings.suppress_missing` context manager, thus raising a :exc:`KeyError` if a key in *key_tuple* is absent from this instance.
 
         .. code:: python
 
-            >>> s = KMCSettings()
+            >>> s = Settings()
             >>> s.set_nested(('a', 'b', 'c'), True)
             >>> print(s)
             a:
@@ -328,13 +327,13 @@ class KMCSettings(dict):
 
         New keys are constructed by concatenating the (nested) keys of this instance into tuples.
 
-        Opposite of the :meth:`.KMCSettings.unflatten` method.
+        Opposite of the :meth:`.Settings.unflatten` method.
 
         If *flatten_list* is ``True``, all nested lists will be flattened as well. Dictionary keys are replaced with list indices in such case.
 
         .. code-block:: python
 
-            >>> s = KMCSettings()
+            >>> s = Settings()
             >>> s.a.b.c = True
             >>> print(s)
             a:
@@ -346,23 +345,23 @@ class KMCSettings(dict):
             ('a', 'b', 'c'): 	True
         """
         if flatten_list:
-            nested_type = (KMCSettings, list)
-            iter_type = lambda x: x.items() if isinstance(x, KMCSettings) else enumerate(x)
+            nested_type = (Settings, list)
+            iter_type = lambda x: x.items() if isinstance(x, Settings) else enumerate(x)
         else:
-            nested_type = KMCSettings
-            iter_type = KMCSettings.items
+            nested_type = Settings
+            iter_type = Settings.items
 
         def _concatenate(key_ret, sequence):
-            # Switch from KMCSettings.items() to enumerate() if a list is encountered
+            # Switch from Settings.items() to enumerate() if a list is encountered
             for k, v in iter_type(sequence):
                 k = key_ret + (k, )
-                if isinstance(v, nested_type) and v:  # Empty lists or KMCSettings instances will return ``False``
+                if isinstance(v, nested_type) and v:  # Empty lists or Settings instances will return ``False``
                     _concatenate(k, v)
                 else:
                     ret[k] = v
 
         # Changes keys into tuples
-        ret = KMCSettings()
+        ret = Settings()
         _concatenate((), self)
         return ret
 
@@ -371,15 +370,15 @@ class KMCSettings(dict):
     def unflatten(self, unflatten_list=True):
         """Return a nested copy of this instance.
 
-        New keys are constructed by expanding the keys of this instance (*e.g.* tuples) into new nested |KMCSettings| instances.
+        New keys are constructed by expanding the keys of this instance (*e.g.* tuples) into new nested |Settings| instances.
 
         If *unflatten_list* is ``True``, integers will be interpretted as list indices and are used for creating nested lists.
 
-        Opposite of the :meth:`.KMCSettings.flatten` method.
+        Opposite of the :meth:`.Settings.flatten` method.
 
         .. code-block:: python
 
-            >>> s = KMCSettings()
+            >>> s = Settings()
             >>> s[('a', 'b', 'c')] = True
             >>> print(s)
             ('a', 'b', 'c'): 	True
@@ -390,7 +389,7 @@ class KMCSettings(dict):
               b:
                 c: 	True
         """
-        ret = KMCSettings()
+        ret = Settings()
         for key, value in self.items():
             s = ret
             for k1, k2 in zip(key[:-1], key[1:]):
@@ -401,7 +400,7 @@ class KMCSettings(dict):
                 if isinstance(k2, int) and not isinstance(s[k1], list):
                     s[k1] = []
                 if isinstance(k1, int):  # Apply padding to s
-                    s += [KMCSettings()] * (k1 - len(s) + 1)
+                    s += [Settings()] * (k1 - len(s) + 1)
                 s = s[k1]
             s[key[-1]] = value
 
@@ -417,18 +416,18 @@ class KMCSettings(dict):
 
 
     def __missing__(self, name):
-        """When requested key is not present, add it with an empty |KMCSettings| instance as a value.
+        """When requested key is not present, add it with an empty |Settings| instance as a value.
 
         This method is essential for automatic insertions in deeper levels. Without it things like::
 
-            >>> s = KMCSettings()
+            >>> s = Settings()
             >>> s.a.b.c = 12
 
         will not work.
 
-        The behaviour of this method can be suppressed by initializing the :class:`.KMCSettings.suppress_missing` context manager.
+        The behaviour of this method can be suppressed by initializing the :class:`.Settings.suppress_missing` context manager.
         """
-        self[name] = KMCSettings()
+        self[name] = Settings()
         return self[name]
 
 
@@ -443,9 +442,9 @@ class KMCSettings(dict):
 
 
     def __setitem__(self, name, value):
-        """Like regular ``__setitem__``, but ignore the case and if the value is a dict, convert it to |KMCSettings|."""
-        if isinstance(value, dict) and not isinstance(value, KMCSettings):
-            value = KMCSettings(value)
+        """Like regular ``__setitem__``, but ignore the case and if the value is a dict, convert it to |Settings|."""
+        if isinstance(value, dict) and not isinstance(value, Settings):
+            value = Settings(value)
         dict.__setitem__(self, self.find_case(name), value)
 
 
@@ -478,19 +477,19 @@ class KMCSettings(dict):
 
 
     def _str(self, indent):
-        """Print contents with *indent* spaces of indentation. Recursively used for printing nested |KMCSettings| instances with proper indentation."""
+        """Print contents with *indent* spaces of indentation. Recursively used for printing nested |Settings| instances with proper indentation."""
         ret = ''
         for key, value in self.items():
             ret += ' '*indent + str(key) + ': \t'
-            if isinstance(value, KMCSettings):
+            if isinstance(value, Settings):
                 if len(value) == 0:
-                    ret += '<empty KMCSettings>\n'
+                    ret += '<empty Settings>\n'
                 else:
                     ret += '\n' + value._str(indent+len(str(key))+1)
             else:  # Apply consistent indentation at every '\n' character
                 indent_str = ' ' * (2 + indent + len(str(key))) + '\t'
                 ret += textwrap.indent(str(value), indent_str)[len(indent_str):] + '\n'
-        return ret if ret else '<empty KMCSettings>'
+        return ret if ret else '<empty Settings>'
 
 
     def __str__(self):
@@ -503,7 +502,7 @@ class KMCSettings(dict):
 
 
 class SuppressMissing(contextlib.AbstractContextManager):
-    """A context manager for temporary disabling the :meth:`.KMCSettings.__missing__` magic method. See :meth:`KMCSettings.suppress_missing` for more details."""
+    """A context manager for temporary disabling the :meth:`.Settings.__missing__` magic method. See :meth:`Settings.suppress_missing` for more details."""
     def __init__(self, obj: type):
         """Initialize the :class:`SuppressMissing` context manager."""
         # Ensure that obj is a class, not a class instance
@@ -511,7 +510,7 @@ class SuppressMissing(contextlib.AbstractContextManager):
         self.missing = obj.__missing__
 
     def __enter__(self):
-        """Enter the :class:`SuppressMissing` context manager: delete :meth:`.KMCSettings.__missing__` at the class level."""
+        """Enter the :class:`SuppressMissing` context manager: delete :meth:`.Settings.__missing__` at the class level."""
         @wraps(self.missing)
         def __missing__(self, name): raise KeyError(name)
 
@@ -519,5 +518,5 @@ class SuppressMissing(contextlib.AbstractContextManager):
         setattr(self.obj, '__missing__', __missing__)
 
     def __exit__(self, exc_type, exc_value, traceback):
-        """Exit the :class:`SuppressMissing` context manager: reenable :meth:`.KMCSettings.__missing__` at the class level."""
+        """Exit the :class:`SuppressMissing` context manager: reenable :meth:`.Settings.__missing__` at the class level."""
         setattr(self.obj, '__missing__', self.missing)

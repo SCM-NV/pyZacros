@@ -1,10 +1,7 @@
 # export PYTHONPATH=$HOME/Develop/pyZacros:$AMSHOME/scripting:$PYTHONPATH
 
 import scm.plams
-from pyzacros.classes.InitialState import InitialState
-from pyzacros.classes.RKFLoader import RKFLoader
-from pyzacros.classes.KMCSettings import KMCSettings
-from pyzacros.classes.KMCJob import KMCJob
+import pyzacros as pz
 
 scm.plams.init()
 
@@ -43,7 +40,7 @@ results = job.run()
 
 scm.plams.finish()
 
-loader = RKFLoader( results )
+loader = pz.RKFLoader( results )
 
 #loader.replace( site_name='A', 'fcc' )
 #loader.replace( site_name='B', 'hcp' )
@@ -51,11 +48,11 @@ loader.lattice.repeat_cell = [10,10]
 
 print(loader.mechanism)
 
-initialState = InitialState( loader.lattice, mechanism=loader.mechanism )
+initialState = pz.InitialState( loader.lattice, mechanism=loader.mechanism )
 #initialState.fillSites( site_name='fcc', species='O1*', coverage=0.5 )
 initialState.fillSites( site_name='A', species='O1*', coverage=0.5 )
 
-settings = KMCSettings()
+settings = pz.Settings()
 settings.random_seed = 10
 settings.temperature = 273.15
 settings.pressure = 1.01325
@@ -67,7 +64,7 @@ settings.max_steps = 5000
 #settings.max_time = 250.0
 #settings.wall_time = 30
 
-job = KMCJob( lattice=loader.lattice, mechanism=loader.mechanism,
+job = pz.KMCJob( lattice=loader.lattice, mechanism=loader.mechanism,
                 cluster_expansion=loader.clusterExpansion,
                 initialState=initialState, settings=settings, name='ZACROS' )
 results = job.run()

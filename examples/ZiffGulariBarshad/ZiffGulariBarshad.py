@@ -60,7 +60,7 @@ CO_oxidation = pz.ElementaryReaction(site_types=["1", "1"],
                                   activation_energy=0.0)
 
 # Settings:
-sett = pz.KMCSettings()
+sett = pz.Settings()
 sett.molar_fraction.CO = 0.45
 sett.molar_fraction.O2 = 0.55
 sett.random_seed = 953129
