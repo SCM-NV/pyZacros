@@ -159,9 +159,9 @@ reversible_step O1*-B,*-A<-->*-B,O1*-A;(1,2)
     1 O1* 1
     2 * 1
   site_types B A
-  pre_expon 1.000000e+13
-  pe_ratio 0.676
-  activ_eng 0.5014956703374196
+  pre_expon 1.720e+13
+  pe_ratio 0.896
+  activ_eng 0.501
 end_reversible_step
 
 end_mechanism

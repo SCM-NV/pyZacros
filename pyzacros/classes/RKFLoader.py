@@ -50,6 +50,8 @@ class RKFLoader:
         isTS = results.readrkf("EnergyLandscape", "isTS")
         reactants = results.readrkf("EnergyLandscape", "reactants")
         products = results.readrkf("EnergyLandscape", "products")
+        prefactorsFromReactant = results.readrkf("EnergyLandscape", "prefactorsFromReactant")
+        prefactorsFromProduct = results.readrkf("EnergyLandscape", "prefactorsFromProduct")
 
         # Fix ids from Fortran to python
         reactants = [ max(0,idState-1) for idState in reactants ]
@@ -187,6 +189,8 @@ class RKFLoader:
                 # Locates the reactant and product
                 idReactant = reactants[idTS]
                 idProduct = products[idTS]
+                prefactorR = prefactorsFromReactant[idTS]
+                prefactorP = prefactorsFromProduct[idTS]
                 #print( "idReactant : ", idReactant )
                 #print( " idProduct : ", idProduct )
 
@@ -247,8 +251,8 @@ class RKFLoader:
                                                initial=speciesReactant,
                                                final=speciesProduct,
                                                reversible=True,
-                                               pre_expon=1e+13,
-                                               pe_ratio=0.676,
+                                               pre_expon=prefactorR,
+                                               pe_ratio=prefactorR/prefactorP,
                                                activation_energy=activationEnergy )
 
                 self.clusterExpansion.extend( [clusterReactant, clusterProduct] )
