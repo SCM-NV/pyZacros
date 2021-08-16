@@ -2,8 +2,8 @@ import math
 import random
 
 from .Species import *
+from .SpeciesList import *
 from .Lattice import *
-from .Mechanism import *
 
 __all__ = ['InitialState']
 
@@ -13,20 +13,23 @@ class InitialState:
     By default a KMC simulation in Zacros is initialized with an empty lattice.
     """
 
-    def __init__(self, lattice: Lattice, mechanism: Mechanism):
+    def __init__(self, lattice: Lattice, species: SpeciesList):
         """
         Creates a new InitialState object.
 
-        :parm mechanism: Mechanism containing the mechanisms involed in the
-                        calculation.
+        :parm species: SpeciesList. Contains the species involed in the calculation.
         :parm lattice: Lattice containing the lattice to be used during the
                        calculation.
         """
         self.lattice = lattice
-        self.mechanism = mechanism
-        self.__filledSitesPerSpecies = {}
 
-        # #TODO We need to make a way to check if a lattice is compatible with the mechanism
+        if( type(species) != SpeciesList and type(species) != list ):
+            msg  = "### ERROR ### InitialState.__init__.\n"
+            msg += "              Inconsistent type for species\n"
+            raise NameError(msg)
+
+        self.species = species
+        self.__filledSitesPerSpecies = {}
 
     def __str__( self ) -> str:
         """
@@ -56,7 +59,7 @@ class InitialState:
         """
         effSpecies = None
         if( isinstance(species, str) ):
-            for sp in self.mechanism.species():
+            for sp in self.species:
                 if( sp.symbol == species ):
                     effSpecies = sp
                     break
