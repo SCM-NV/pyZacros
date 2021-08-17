@@ -7,7 +7,7 @@ from .Lattice import *
 from .SpeciesList import *
 from .ClusterExpansion import *
 from .Mechanism import *
-from .InitialState import *
+from .LatticeState import *
 from .Settings import *
 from pyzacros.utils.find_utils import find_path_to_engine
 
@@ -18,7 +18,7 @@ class KMCJob:
 
 
     def __init__(self, settings: Settings, lattice: Lattice, mechanism: Mechanism,
-                cluster_expansion: ClusterExpansion, initialState: InitialState = None, name: str = "results"):
+                cluster_expansion: ClusterExpansion, initialState: LatticeState = None, name: str = "results"):
         """
         Create a new KMCJob object.
 

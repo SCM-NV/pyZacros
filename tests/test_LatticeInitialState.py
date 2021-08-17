@@ -48,7 +48,7 @@ def test_InitialState():
                                                ["2-2", "east"],
                                                ["2-2", "southeast"]])
 
-    myInitialState = pz.InitialState( myLattice, [s0,s1,s2] )
+    myInitialState = pz.LatticeState( myLattice, [s0,s1,s2] )
 
     random.seed(10)
     myInitialState.fillSites( site_name="fcc", species="H*", coverage=0.5 )

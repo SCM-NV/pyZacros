@@ -5,43 +5,55 @@ from .Species import *
 from .SpeciesList import *
 from .Lattice import *
 
-__all__ = ['InitialState']
+__all__ = ['LatticeState']
 
-class InitialState:
+class LatticeState:
     """
-    InitialState class that represents the initial state for a Zacros simulation.
-    By default a KMC simulation in Zacros is initialized with an empty lattice.
+    LatticeState class that represents a state for a Zacros simulation.
     """
 
-    def __init__(self, lattice: Lattice, species: SpeciesList):
+    def __init__(self, lattice, species):
         """
-        Creates a new InitialState object.
-
-        :parm species: SpeciesList. Contains the species involed in the calculation.
-        :parm lattice: Lattice containing the lattice to be used during the
-                       calculation.
+        Creates a new LatticeState object.
         """
+        self.id = -1
+        self.number_of_events = None
+        self.time = None
+        self.temperature = None
+        self.energy = None
         self.lattice = lattice
 
         if( type(species) != SpeciesList and type(species) != list ):
-            msg  = "### ERROR ### InitialState.__init__.\n"
+            msg  = "### ERROR ### LatticeState.__init__.\n"
             msg += "              Inconsistent type for species\n"
             raise NameError(msg)
 
         self.species = species
-        self.__filledSitesPerSpecies = {}
+        self._filledSitesPerSpecies = {}
+
 
     def __str__( self ) -> str:
         """
         Translates the object to a string
         """
-        output  = "initial_state"+"\n"
+        if( self.id == -1 ):
+            output  = "initial_state"+"\n"
+        else:
+            output  = "state"+"\n"
+            if( self.id is not None ): output += "  # id "+str(self.id)+"\n"
+            if( self.number_of_events is not None ): output += "  # number_of_events "+str(self.number_of_events)+"\n"
+            if( self.time is not None ): output += "  # time "+"%.16e"%self.time+"\n"
+            if( self.temperature is not None ): output += "  # temperature "+"%.16e"%self.temperature+"\n"
+            if( self.energy is not None ): output += "  # energy "+"%.16e"%self.energy+"\n"
 
-        for species,id_sites in self.__filledSitesPerSpecies.items():
+        for species,id_sites in self._filledSitesPerSpecies.items():
             for i,id_site in enumerate(id_sites):
                 output += "  seed_on_sites "+species.symbol+" "+str(id_site)+"\n"
 
-        output += "end_initial_state"
+        if( self.id == -1 ):
+            output += "end_initial_state"
+        else:
+            output += "end_state"
 
         return output
 
@@ -50,7 +62,7 @@ class InitialState:
         """
         Returns true if the initial state is empty
         """
-        return ( len(__filledSitesPerSpecies) > 0 )
+        return ( len(_filledSitesPerSpecies) > 0 )
 
 
     def fillSites( self, site_name, species, coverage ):
@@ -68,18 +80,18 @@ class InitialState:
             effSpecies = species
 
         else:
-            msg  = "### ERROR ### InitialState.fillSites.\n"
+            msg  = "### ERROR ### LatticeState.fillSites.\n"
             msg += "              Inconsistent type for species. It should be type str or Species\n"
             raise NameError(msg)
 
         if( effSpecies.denticity > 1 ):
-            msg  = "### ERROR ### InitialState.fillSites.\n"
+            msg  = "### ERROR ### LatticeState.fillSites.\n"
             msg += "              Species with denticity > 1 are not yet supported\n"
             raise NameError(msg)
 
         # Makes a list of the filled sites
         filledSites = []
-        for key,value in self.__filledSitesPerSpecies.items():
+        for key,value in self._filledSitesPerSpecies.items():
             filledSites.extend( value )
 
         filledSitesPerSpecies = {}
@@ -122,14 +134,14 @@ class InitialState:
         for key in toRemove:
             filledSitesPerSpecies.pop( key )
 
-        # Updates self.__filledSitesPerSpecies
+        # Updates self._filledSitesPerSpecies
         for key,value in filledSitesPerSpecies.items():
-            if( key in self.__filledSitesPerSpecies ):
-                self.__filledSitesPerSpecies[key].extend(value)
+            if( key in self._filledSitesPerSpecies ):
+                self._filledSitesPerSpecies[key].extend(value)
             else:
-                self.__filledSitesPerSpecies[key] = value
+                self._filledSitesPerSpecies[key] = value
 
-            self.__filledSitesPerSpecies[key] = sorted(self.__filledSitesPerSpecies[key])
+            self._filledSitesPerSpecies[key] = sorted(self._filledSitesPerSpecies[key])
 
 
     def fillAllSites( self, site_name, species ):
