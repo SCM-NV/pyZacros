@@ -25,7 +25,7 @@ class RKFLoader:
         self.__deriveLatticeAndMechanism( results )
 
 
-    def __deriveLatticeAndMechanism( self, results ):  # @TODO results -> scm.plams.Results
+    def __deriveLatticeAndMechanism( self, results ):
         """
         Parses the .rkf file from AMS. Basically it loads the energy landscape and the binding-sites lattice.
 
