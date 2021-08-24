@@ -133,23 +133,23 @@ Commencing simulation:
 
 Simulation stopped:
 ~~~~~~~~~~~~~~~~~~~
- Current KMC time: 0.301748961
- Events occurred:  333328
- Event frequency:  1104653.38
+ Current KMC time: 0.405344278
+ Events occurred:  413723
+ Event frequency:  1020670.62
 
 Performance facts:
 ~~~~~~~~~~~~~~~~~~
 
-Elapsed CPU time:         29.9660835 seconds
-Elapsed clock time:       30.0000877 seconds
-Setup clock time:         1.87211558E-02 seconds
-Simulation clock time:    29.9813671 seconds
+Elapsed CPU time:         29.9331284 seconds
+Elapsed clock time:       30.0000858 seconds
+Setup clock time:         4.28054146E-02 seconds
+Simulation clock time:    29.9572811 seconds
 
-Clock time per KMC event: 9.00017039E-05 seconds
-Clock time per KMC time:  99.4206848 seconds/KMCTimeUnits
+Clock time per KMC event: 7.25124919E-05 seconds
+Clock time per KMC time:  74.0113678 seconds/KMCTimeUnits
 
-Events per clock hour:    39999244
-KMC Dt per clock hour:    36.2097702 KMCTimeUnits
+Events per clock hour:    49646616
+KMC Dt per clock hour:    48.6411743 KMCTimeUnits
 
 Restart information successfully written in file restart.inf.
 

@@ -17,6 +17,7 @@ def test_InitialState():
     s0 = pz.Species( "*", 1 )   # Empty adsorption site
     s1 = pz.Species( "H*", 1 )  # H adsorbed with dentation 1
     s2 = pz.Species( "H2*", 1 ) # H2 adsorbed with dentation 1
+    s3 = pz.Species( "H2" )     # H2 gas
 
     myReaction = pz.ElementaryReaction( site_types=( "f", "f" ),
                                         neighboring=[ (1,2) ],
@@ -48,7 +49,7 @@ def test_InitialState():
                                                ["2-2", "east"],
                                                ["2-2", "southeast"]])
 
-    myInitialState = pz.LatticeState( myLattice, [s0,s1,s2] )
+    myInitialState = pz.LatticeState( myLattice, [s0,s1,s2,s3] )
 
     random.seed(10)
     myInitialState.fillSites( site_name="fcc", species="H*", coverage=0.5 )
@@ -61,6 +62,10 @@ def test_InitialState():
 
     expectedOutput = """\
 initial_state
+  # species * H* H2* H2
+  # species_numbers
+  #   - H*  13
+  #   - H2*  4
   seed_on_sites H* 2
   seed_on_sites H* 3
   seed_on_sites H* 4
@@ -81,3 +86,5 @@ initial_state
 end_initial_state\
 """
     assert(output == expectedOutput)
+
+test_InitialState()
