@@ -29,7 +29,8 @@ class LatticeState:
             raise NameError(msg)
 
         self.species = species
-        self._filledSitesPerSpecies = {}
+        self.__filledSitesPerSpecies = {}
+        self.__speciesNumbers = {}
 
 
     def __str__( self ) -> str:
@@ -40,15 +41,23 @@ class LatticeState:
             output  = "initial_state"+"\n"
         else:
             output  = "state"+"\n"
-            if( self.id is not None ): output += "  # id "+str(self.id)+"\n"
-            if( self.number_of_events is not None ): output += "  # number_of_events "+str(self.number_of_events)+"\n"
-            if( self.time is not None ): output += "  # time "+"%.16e"%self.time+"\n"
-            if( self.temperature is not None ): output += "  # temperature "+"%.16e"%self.temperature+"\n"
-            if( self.energy is not None ): output += "  # energy "+"%.16e"%self.energy+"\n"
 
-        for species,id_sites in self._filledSitesPerSpecies.items():
+        if( self.id is not None and self.id != -1 ): output += "  # id "+str(self.id)+"\n"
+        if( self.number_of_events is not None ): output += "  # number_of_events "+str(self.number_of_events)+"\n"
+        if( self.time is not None ): output += "  # time "+"%.16e"%self.time+"\n"
+        if( self.temperature is not None ): output += "  # temperature "+"%.16e"%self.temperature+"\n"
+        if( self.energy is not None ): output += "  # energy "+"%.16e"%self.energy+"\n"
+
+        if( self.species is not None ): output += "  # species "+(" ".join([sp.symbol for sp in self.species]))+"\n"
+
+        if( len(self.__speciesNumbers) > 0 ):
+            output += "  # species_numbers\n"
+            for sp,nsites in self.__speciesNumbers.items():
+                output += "  #   - "+sp.symbol+"  "+str(nsites)+"\n"
+
+        for sp,id_sites in self.__filledSitesPerSpecies.items():
             for i,id_site in enumerate(id_sites):
-                output += "  seed_on_sites "+species.symbol+" "+str(id_site)+"\n"
+                output += "  seed_on_sites "+sp.symbol+" "+str(id_site)+"\n"
 
         if( self.id == -1 ):
             output += "end_initial_state"
@@ -62,7 +71,12 @@ class LatticeState:
         """
         Returns true if the initial state is empty
         """
-        return ( len(_filledSitesPerSpecies) > 0 )
+        return ( len(__filledSitesPerSpecies) > 0 )
+
+
+    def __updateSpeciesNumbersFromFilledSitesPerSpecies( self ):
+        for sp,fsites in self.__filledSitesPerSpecies.items():
+            self.__speciesNumbers[sp] = len(fsites)
 
 
     def fillSites( self, site_name, species, coverage ):
@@ -91,7 +105,7 @@ class LatticeState:
 
         # Makes a list of the filled sites
         filledSites = []
-        for key,value in self._filledSitesPerSpecies.items():
+        for key,value in self.__filledSitesPerSpecies.items():
             filledSites.extend( value )
 
         filledSitesPerSpecies = {}
@@ -134,14 +148,16 @@ class LatticeState:
         for key in toRemove:
             filledSitesPerSpecies.pop( key )
 
-        # Updates self._filledSitesPerSpecies
+        # Updates self.__filledSitesPerSpecies
         for key,value in filledSitesPerSpecies.items():
-            if( key in self._filledSitesPerSpecies ):
-                self._filledSitesPerSpecies[key].extend(value)
+            if( key in self.__filledSitesPerSpecies ):
+                self.__filledSitesPerSpecies[key].extend(value)
             else:
-                self._filledSitesPerSpecies[key] = value
+                self.__filledSitesPerSpecies[key] = value
 
-            self._filledSitesPerSpecies[key] = sorted(self._filledSitesPerSpecies[key])
+            self.__filledSitesPerSpecies[key] = sorted(self.__filledSitesPerSpecies[key])
+
+        self.__updateSpeciesNumbersFromFilledSitesPerSpecies()
 
 
     def fillAllSites( self, site_name, species ):
