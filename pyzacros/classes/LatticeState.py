@@ -12,23 +12,20 @@ class LatticeState:
     LatticeState class that represents a state for a Zacros simulation.
     """
 
-    def __init__(self, lattice, species):
+    def __init__(self, lattice, species, initial=True):
         """
         Creates a new LatticeState object.
         """
-        self.id = -1
-        self.number_of_events = None
-        self.time = None
-        self.temperature = None
-        self.energy = None
         self.lattice = lattice
 
         if( type(species) != SpeciesList and type(species) != list ):
             msg  = "### ERROR ### LatticeState.__init__.\n"
             msg += "              Inconsistent type for species\n"
             raise NameError(msg)
-
         self.species = species
+
+        self.initial = initial
+
         self.__filledSitesPerSpecies = {}
         self.__speciesNumbers = {}
 
@@ -37,16 +34,10 @@ class LatticeState:
         """
         Translates the object to a string
         """
-        if( self.id == -1 ):
+        if( self.initial ):
             output  = "initial_state"+"\n"
         else:
             output  = "state"+"\n"
-
-        if( self.id is not None and self.id != -1 ): output += "  # id "+str(self.id)+"\n"
-        if( self.number_of_events is not None ): output += "  # number_of_events "+str(self.number_of_events)+"\n"
-        if( self.time is not None ): output += "  # time "+"%.16e"%self.time+"\n"
-        if( self.temperature is not None ): output += "  # temperature "+"%.16e"%self.temperature+"\n"
-        if( self.energy is not None ): output += "  # energy "+"%.16e"%self.energy+"\n"
 
         if( self.species is not None ): output += "  # species "+(" ".join([sp.symbol for sp in self.species]))+"\n"
 
@@ -59,7 +50,7 @@ class LatticeState:
             for i,id_site in enumerate(id_sites):
                 output += "  seed_on_sites "+sp.symbol+" "+str(id_site)+"\n"
 
-        if( self.id == -1 ):
+        if( self.initial ):
             output += "end_initial_state"
         else:
             output += "end_state"

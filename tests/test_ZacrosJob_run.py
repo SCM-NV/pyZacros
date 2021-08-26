@@ -2,14 +2,18 @@
 # -*- coding: utf-8 -*-
 """Tests of the pyZacros classes."""
 
+import scm.plams
+
 import pyzacros as pz
 from pyzacros.utils.compareReports import compare
 
-def test_KMCJob_run():
-    """Test of the KMCJob.run method."""
+def test_ZacrosJob_run():
+    """Test of the ZacrosJob.run method."""
     print( "---------------------------------------------------" )
-    print( ">>> Testing KMCJob.run method" )
+    print( ">>> Testing ZacrosJob.run method" )
     print( "---------------------------------------------------" )
+
+    scm.plams.init()
 
     #---------------------------------------------
     # Species:
@@ -74,31 +78,44 @@ def test_KMCJob_run():
     sett.species_numbers = ('time', 1.e-2)
     sett.event_report = 'off'
     sett.max_steps = 'infinity'
-    sett.max_time = 25.0
+    #sett.max_time = 25.0
+    sett.max_time = 2.0
     sett.wall_time = 3600
 
-    #job = pz.KMCJob( settings=sett,
-                        #lattice=myLattice,
-                        #mechanism=[CO_adsorption, O2_adsorption, CO_oxidation],
-                        #cluster_expansion=[CO_point, O_point] )
+    job = pz.ZacrosJob( settings=sett,
+                        lattice=myLattice,
+                        mechanism=[CO_adsorption, O2_adsorption, CO_oxidation],
+                        cluster_expansion=[CO_point, O_point] )
 
-    #print(job)
-    #results = job.run()
+    results = job.run()
 
-    #if( not job.ok() ): raise Exception( "Zacros calculation FAILED!" )
+    if( not job.ok() ): raise Exception( "Zacros calculation FAILED!" )
 
-    #print( results.reactions )
-    ## [ "*-1:CO-->CO*-1", "*-1,*-1:O2-->O*-1,O*-1;(1,2)", "CO*-1,O*-1-->*-1,*-1:CO2;(1,2)" ]
-    #results.provided_quantities
-    ## [ "Entry", "Nevents", "Time", "Temperature", "Energy", "CO*", "O*", "CO", "O2", "CO2" ]
+    assert( results.get_reactions() == \
+            ['CO + *(StTp1) -> CO*(StTp1)',
+             'O2 + *(StTp1) + *(StTp1) -> O*(StTp1) + O*(StTp1)',
+             'CO*(StTp1) + O*(StTp1) -> CO2 + *(StTp1) + *(StTp1)'] )
 
-    #results.gas_species_names # [ "CO", "O2", "CO2" ]
-    #results.surface_species_names # [ "CO*", "O*" ]
-    #results.site_types # [ "StTp1" ]
-    #results.energetic_interaction_clusters # 2
-    #results.elementary_events # 3
-    ##results.lattice #
-    #results.time # [ 0.0, 0.5, 1.0, ... ]
+    assert( list(results.provided_quantities().keys()) == \
+            ['Entry', 'Nevents', 'Time', 'Temperature', 'Energy', 'CO*', 'O*', 'CO', 'O2', 'CO2'] )
+
+    assert( results.provided_quantities()["Time"][0:5] == [0.0, 0.01, 0.02, 0.03, 0.04] )
+
+    assert( results.provided_quantities()["Energy"][0:5] == \
+            [0.0, -596.8000000000003, -942.9999999999928, -1293.2999999999856, -1488.2999999999815] )
+
+    assert( results.provided_quantities()["CO*"][0:5] == [0, 84, 115, 135, 147] )
+
+    assert( results.provided_quantities()["CO2"][0:5] == [0, 24, 89, 162, 228] )
+
+    assert( results.gas_species_names() == [ "CO", "O2", "CO2" ] )
+
+    assert( results.surface_species_names() == [ "CO*", "O*" ] )
+
+    assert( results.site_type_names() == [ "StTp1" ] )
+
+    #results.addlayer_configurations()
+
     #results.addlayer_configuration # [ latticeState0, latticeState1, ... ]
     #results.forward_rates
     #results.reverse_rates
@@ -125,4 +142,6 @@ def test_KMCJob_run():
 ##"""
     ##assert( compare( output, expectedOutput, 1e-3 ) )
 
-test_KMCJob_run()
+    scm.plams.finish()
+
+test_ZacrosJob_run()

@@ -1,35 +1,30 @@
-"""Module containing the KMCJob2 class."""
+"""Module containing the ZacrosJob class."""
 
 import os
 import stat
 
 import scm.plams
 
-from .Lattice import *
+from .ZacrosResults import *
 from .SpeciesList import *
 from .ClusterExpansion import *
 from .Mechanism import *
-from .LatticeState import *
 from .Settings import *
 
-__all__ = ['KMCJob2']
+__all__ = ['ZacrosJob']
 
-class KMCJob2( scm.plams.SingleJob ):
+class ZacrosJob( scm.plams.SingleJob ):
     """
     A class representing a single computational job with Zacros
     """
     _command = 'zacros.x'
+    _result_type = ZacrosResults
     _filenames = {
-        'simulation_input': 'simulation_input.dat',
-        'lattice_input': 'lattice_input.dat',
-        'energetics_input': 'energetics_input.dat',
-        'mechanism_input': 'mechanism_input.dat',
-        'state_input': 'state_input.dat',
-        'general_output': 'general_output.txt',
-        'history_output': 'history_output.txt',
-        'lattice_output': 'lattice_output.txt',
-        'procstat_output': 'procstat_output.txt',
-        'specnum_output': 'specnum_output.txt',
+        'simulation': 'simulation_input.dat',
+        'lattice': 'lattice_input.dat',
+        'energetics': 'energetics_input.dat',
+        'mechanism': 'mechanism_input.dat',
+        'state': 'state_input.dat',
         'run': 'slurm.run',
         'err': 'std.err',
         'out': 'std.out'}
@@ -37,7 +32,7 @@ class KMCJob2( scm.plams.SingleJob ):
 
     def __init__(self, lattice, mechanism, cluster_expansion, initialState= None, **kwargs):
         """
-        Create a new KMCJob2 object.
+        Create a new ZacrosJob object.
 
         :parm settings: Settings containing the parameters of the Zacros
                         calculation.
@@ -49,6 +44,39 @@ class KMCJob2( scm.plams.SingleJob ):
                        simulation in Zacros is initialized with an empty
                        lattice.
         """
+        def check_molar_fraction(settings=Settings, species_list=SpeciesList):
+            """
+            Check if molar_fraction labels are compatible with Species labels.
+
+            It also sets defaults molar_fractions 0.000.
+
+            :parm settings: Settings object with the main settings of the
+                            KMC calculation.
+            """
+            list_of_species = [ sp.symbol for sp in species_list.gas_species() ]
+            section = settings.molar_fraction
+
+            if( "molar_fraction" in settings ):
+
+                # Check if the molar fraction is assigned to a gas species:
+                for key in settings.molar_fraction.keys():
+                    if key not in list_of_species:
+                        msg = "### ERROR ### check_molar_fraction_labels.\n"
+                        msg += "molar fraction defined for a non-gas species."
+                        raise NameError(msg)
+
+                # Set default molar_fraction = 0.00 to the rest of gas species.
+                for key in list_of_species:
+                    if key not in settings.keys():
+                        section += {key: 0.000}
+            else:
+                for key in list_of_species:
+                    section += {key: 0.000}
+
+        if( 'molecule' in kwargs ):
+            print("Warning: parameter 'molecule' is not used by the ZacrosJob constructor'")
+            del kwargs['molecule']
+
         scm.plams.SingleJob.__init__(self, molecule=None, **kwargs)
 
         self.lattice = lattice
@@ -58,7 +86,7 @@ class KMCJob2( scm.plams.SingleJob ):
         if( type(cluster_expansion) == list ): self.cluster_expansion = ClusterExpansion(cluster_expansion)
         self.initialState = initialState
 
-        KMCJob2.check_molar_fraction(self.settings, self.mechanism.gas_species())
+        check_molar_fraction(self.settings, self.mechanism.gas_species())
 
         defaults = Settings({'snapshots': ('time', 0.0005),
                              'process_statistics': ('time', 0.0005),
@@ -85,7 +113,7 @@ class KMCJob2( scm.plams.SingleJob ):
         Return a string with the content of simulation_input.dat.
         """
 
-        def print_optional_sett(self, opt_sett: str) -> str:
+        def print_optional_sett(self, opt_sett):
             """
             Give back the printing of an time/event/logtime setting.
             """
@@ -101,6 +129,45 @@ class KMCJob2( scm.plams.SingleJob ):
                         str(float(dictionary[opt_sett][2])) + "\n"
             return output
 
+        def get_molar_fractions(settings=Settings,species_list=SpeciesList):
+            """
+            Get molar fractions using the correct order of list_gas_species.
+
+            :parm settings: Settings object with the main settings of the
+                            KMC calculation.
+
+            :parm species_list: SpeciesList object containing the species
+                                    information.
+
+            :rparm list_of_molar_fractions: Simple list of molar fracions.
+            """
+            # We must be sure that the order of return list is the same as
+            # the order of the labels printed by SpeciesList.
+            # For that:
+
+            # 1- Generate a total_list of tuples with (atomic label,
+            #    molar_fraciton):
+            list_of_labels = []
+            list_of_molar_fractions = []
+            dic_test = settings.as_dict()
+            for i, j in dic_test.items():
+                if i == "molar_fraction":
+                    for key in sorted(j.keys()):
+                        list_of_labels.append(key)
+                        list_of_molar_fractions.append(j[key])
+            total_list = list(zip(list_of_labels, list_of_molar_fractions))
+
+            # 2- Match the tota_tuple to the "good" ordering of the
+            # species_list:
+            list_of_molar_fractions.clear()
+            tuple_tmp = [i[0] for i in total_list]
+            molar_tmp = [i[1] for i in total_list]
+            for i in [ sp.symbol for sp in species_list.gas_species() ]:
+                for j, k in enumerate(tuple_tmp):
+                    if i == k:
+                        list_of_molar_fractions.append(molar_tmp[j])
+            return list_of_molar_fractions
+
         output  = "random_seed     " + "%10s"%self.settings.get('random_seed')+"\n"
         output += "temperature     " + "%10s"%self.settings.get('temperature')+"\n"
         output += "pressure        " + "%10s"%self.settings.get('pressure')+"\n\n"
@@ -112,7 +179,7 @@ class KMCJob2( scm.plams.SingleJob ):
         else:
             output += str(gasSpecies)
 
-        molar_frac_list = KMCJob2.get_molar_fractions(self.settings, gasSpecies)
+        molar_frac_list = get_molar_fractions(self.settings, gasSpecies)
 
         if( len(molar_frac_list)>0 ):
             output += "gas_molar_fracs   " + ''.join(["%10s"%str(elem) for elem in molar_frac_list]) + "\n\n"
@@ -190,11 +257,11 @@ class KMCJob2( scm.plams.SingleJob ):
         """
         Create inputs and runscript files in the job folder.
         Filenames correspond to entries in the `_filenames` attribute"""
-        simulation = os.path.join(self.path, self._filename('simulation_input'))
-        lattice = os.path.join(self.path, self._filename('lattice_input'))
-        energetics = os.path.join(self.path, self._filename('energetics_input'))
-        mechanism = os.path.join(self.path, self._filename('mechanism_input'))
-        state = os.path.join(self.path, self._filename('state_input'))
+        simulation = os.path.join(self.path, self._filename('simulation'))
+        lattice = os.path.join(self.path, self._filename('lattice'))
+        energetics = os.path.join(self.path, self._filename('energetics'))
+        mechanism = os.path.join(self.path, self._filename('mechanism'))
+        state = os.path.join(self.path, self._filename('state'))
 
         runfile = os.path.join(self.path, self._filename('run'))
         #err = os.path.join(self.path, self._filename('err'))
@@ -222,114 +289,40 @@ class KMCJob2( scm.plams.SingleJob ):
         os.chmod(runfile, os.stat(runfile).st_mode | stat.S_IEXEC)
 
 
-    #def __str__(self) -> str:
-        #"""
-        #Translate the object to a string.
-        #"""
-        #output = ""
-
-        #output += "---------------------------------------------------------------------"+"\n"
-        #output += "simulation_input.dat"+"\n"
-        #output += "---------------------------------------------------------------------"+"\n"
-        #output += self.get_simulation_input()
-
-        #output += "\n"
-        #output += "---------------------------------------------------------------------"+"\n"
-        #output += "lattice_input.dat"+"\n"
-        #output += "---------------------------------------------------------------------"+"\n"
-        #output += self.get_lattice_input()
-
-        #output += "\n"
-        #output += "---------------------------------------------------------------------"+"\n"
-        #output += "energetics_input.dat"+"\n"
-        #output += "---------------------------------------------------------------------"+"\n"
-        #output += self.get_energetics_input()
-
-        #output += "\n"
-        #output += "---------------------------------------------------------------------"+"\n"
-        #output += "mechanism_input.dat"+"\n"
-        #output += "---------------------------------------------------------------------"+"\n"
-        #output += self.get_mechanism_input()
-
-        #if(self.initialState is not None):
-            #output += "\n"
-            #output += "---------------------------------------------------------------------"+"\n"
-            #output += "state_input.dat"+"\n"
-            #output += "---------------------------------------------------------------------"+"\n"
-            #output += self.get_initial_state_input()
-
-        #return output
-
-
-    @staticmethod
-    def check_molar_fraction(settings=Settings, species_list=SpeciesList):
+    def __str__(self):
         """
-        Check if molar_fraction labels are compatible with Species labels.
-
-        It also sets defaults molar_fractions 0.000.
-
-        :parm settings: Settings object with the main settings of the
-                        KMC calculation.
+        Translate the object to a string.
         """
-        list_of_species = [ sp.symbol for sp in species_list.gas_species() ]
-        section = settings.molar_fraction
-        sett_keys = settings.as_dict()
+        output = ""
 
-        if( "molar_fraction" in settings ):
+        output += "---------------------------------------------------------------------"+"\n"
+        output += self._filename('simulation')+"\n"
+        output += "---------------------------------------------------------------------"+"\n"
+        output += self.get_simulation_input()
 
-            # Check if the molar fraction is assigned to a gas species:
-            for key in settings.molar_fraction.keys():
-                if key not in list_of_species:
-                    msg = "### ERROR ### check_molar_fraction_labels.\n"
-                    msg += "molar fraction defined for a non-gas species."
-                    raise NameError(msg)
+        output += "\n"
+        output += "---------------------------------------------------------------------"+"\n"
+        output += self._filename('lattice')+"\n"
+        output += "---------------------------------------------------------------------"+"\n"
+        output += self.get_lattice_input()
 
-            # Set default molar_fraction = 0.00 to the rest of gas species.
-            for key in list_of_species:
-                if key not in sett_keys:
-                    section += {key: 0.000}
-        else:
-            for key in list_of_species:
-                section += {key: 0.000}
+        output += "\n"
+        output += "---------------------------------------------------------------------"+"\n"
+        output += self._filename('energetics')+"\n"
+        output += "---------------------------------------------------------------------"+"\n"
+        output += self.get_energetics_input()
 
+        output += "\n"
+        output += "---------------------------------------------------------------------"+"\n"
+        output += self._filename('mechanism')+"\n"
+        output += "---------------------------------------------------------------------"+"\n"
+        output += self.get_mechanism_input()
 
-    @staticmethod
-    def get_molar_fractions(settings=Settings,
-                            species_list=SpeciesList) -> list:
-        """
-        Get molar fractions using the correct order of list_gas_species.
+        if(self.initialState is not None):
+            output += "\n"
+            output += "---------------------------------------------------------------------"+"\n"
+            output += self._filename('state')+"\n"
+            output += "---------------------------------------------------------------------"+"\n"
+            output += self.get_initial_state_input()
 
-        :parm settings: Settings object with the main settings of the
-                        KMC calculation.
-
-        :parm species_list: SpeciesList object containing the species
-                                information.
-
-        :rparm list_of_molar_fractions: Simple list of molar fracions.
-        """
-        # We must be sure that the order of return list is the same as
-        # the order of the labels printed by SpeciesList.
-        # For that:
-
-        # 1- Generate a total_list of tuples with (atomic label,
-        #    molar_fraciton):
-        list_of_labels = []
-        list_of_molar_fractions = []
-        dic_test = settings.as_dict()
-        for i, j in dic_test.items():
-            if i == "molar_fraction":
-                for key in sorted(j.keys()):
-                    list_of_labels.append(key)
-                    list_of_molar_fractions.append(j[key])
-        total_list = list(zip(list_of_labels, list_of_molar_fractions))
-
-        # 2- Match the tota_tuple to the "good" ordering of the
-        # species_list:
-        list_of_molar_fractions.clear()
-        tuple_tmp = [i[0] for i in total_list]
-        molar_tmp = [i[1] for i in total_list]
-        for i in [ sp.symbol for sp in species_list.gas_species() ]:
-            for j, k in enumerate(tuple_tmp):
-                if i == k:
-                    list_of_molar_fractions.append(molar_tmp[j])
-        return list_of_molar_fractions
+        return output

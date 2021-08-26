@@ -6,10 +6,10 @@ import pyzacros as pz
 from pyzacros.utils.compareReports import compare
 
 
-def test_KMCJob():
+def test_ZacrosJob():
     """Test of the Mechanism class."""
     print( "---------------------------------------------------" )
-    print( ">>> Testing KMCJob class" )
+    print( ">>> Testing ZacrosJob class" )
     print( "---------------------------------------------------" )
 
     s0 = pz.Species( "*", 1 )   # Empty adsorption site
@@ -74,10 +74,8 @@ def test_KMCJob():
     sett.max_time = 100.0
     sett.wall_time = 5000
 
-    myJob = pz.KMCJob( sett, myLattice, myMechanism, myClusterExpansion )
+    myJob = pz.ZacrosJob( myLattice, myMechanism, myClusterExpansion, settings=sett )
     print(myJob)
-
-#    myJob.writeInputFiles()
 
     output = str(myJob)
     expectedOutput = """\
@@ -190,3 +188,5 @@ end_step
 end_mechanism\
 """
     assert( compare( output, expectedOutput, 1e-3 ) )
+
+test_ZacrosJob()
