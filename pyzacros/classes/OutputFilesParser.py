@@ -1,6 +1,9 @@
 import os
 import re
 
+from .Cluster import *
+from .ClusterExpansion import *
+
 __all__ = ['OutputFilesParser']
 
 
@@ -68,7 +71,7 @@ class OutputFilesParser:
         #self.__loadHistoryOutput()
         #self.__loadLatticeOutput()
         #self.__loadProcsStatOutput()
-        #self.__loadSpecNumOutput()
+        self.__loadSpecNumOutput()
 
 
     def __str__( self ):
@@ -108,7 +111,7 @@ class OutputFilesParser:
 
             if( locatedBegin==True ):
 
-                if( end == None or nLine+1 == len(lines) ):
+                if( nLine+1 == len(lines) ):
                     selectedBlock = selectedBlock+line
 
                     footer = ""
@@ -118,7 +121,7 @@ class OutputFilesParser:
 
                     break
 
-                elif( re.match( end, line ) ):
+                elif( end is not None and re.match( end, line ) ):
                     # Esta linea lo que busca es quitar el ultimo
                     # cambio de linea adicionado por el comando
                     # selectedBlock = selectedBlock+line+"\n"
@@ -200,6 +203,32 @@ class OutputFilesParser:
             #tokens = line.split("every")
             #print(tokens)
 
+        iFile = open( self.__general_output, "r" )
+        fileContent = iFile.read()
+        iFile.close()
+
+        #self.clusterExpansion = ClusterExpansion()
+
+        #content,_,_,_ = OutputFilesParser.getBlockFrom( fileContent, "Energetics setup:", end="Finished reading energetics input.", lineFilter="^\s+[0-9]+.\s+.*$" )
+        #for line in content.splitlines():
+            #tokens = line.split()
+
+            #assert tokens[2] == "Mult", "### ERROR ### Incompatible format in general_output.txt:key=Mult. Please, verify it was generated with Zacros 2.0"
+            #assert tokens[5] == "ECI", "### ERROR ### Incompatible format in general_output.txt:key=ECI. Please, verify it was generated with Zacros 2.0"
+            #assert tokens[8] == "Entities:", "### ERROR ### Incompatible format in general_output.txt:key=Entities. Please, verify it was generated with Zacros 2.0"
+
+            #clusterReactant = Cluster( site_types=[ labels[j] for j in connectedSites ],
+                                        #neighboring=neighboring,
+                                        #species=tokens[9:],
+                                        #multiplicity=int(tokens[4]),
+                                        #cluster_energy=float(tokens[7]),
+                                        #label=tokens[1].replace(":","") )
+
+        #content,_,_,_ = OutputFilesParser.getBlockFrom( fileContent, "Mechanism setup:", end="Finished reading mechanism input.", lineFilter=".*Ea =.*" )
+        #print( content )
+        #for line in content.splitlines():
+            #tokens = line.split()
+
 
     def __loadHistoryOutput( self ):
         raise NameError("Loading file "+self.__history_output+" is not implemented yet!")
@@ -214,6 +243,37 @@ class OutputFilesParser:
 
 
     def __loadSpecNumOutput( self ):
-        raise NameError("Loading file "+self.__specnum_output+" is not implemented yet!")
-        pass
+        iFile = open( self.__specnum_output, "r" )
+        fileContent = iFile.read()
+        iFile.close()
+
+        content,header,_,_ = OutputFilesParser.getBlockFrom( fileContent, ".*Entry.*" )
+
+        tokens = header.split()
+        print(tokens)
+
+        errmsg = lambda s: "### ERROR ### Incompatible format in general_output.txt:key="+s+". Please, verify it was generated with Zacros 2.0"
+        assert tokens[0] == "Entry", errmsg(tokens[0])
+        assert tokens[1] == "Nevents", errmsg(tokens[1])
+        assert tokens[2] == "Time", errmsg(tokens[2])
+        assert tokens[3] == "Temperature", errmsg(tokens[3])
+        assert tokens[4] == "Energy", errmsg(tokens[4])
+
+        speciesNames = tokens[6:]
+
+        for s in speciesNames:
+            loc = s in self.gas_specs_names
+            if( not loc ): loc = s in self.surf_specs_names
+            assert loc, "### ERROR ### SpeciesNames "+s+" from file specnum_output.txt was not defines as gas_specs_names either surf_specs_names in general_output.txt"
+
+        states = []
+        for line in content.splitlines():
+            print(line)
+            tokens = header.split()
+
+            #for token in tokens:
+
+        #print(header)
+        #print(content)
+        #print(speciesNames)
 
