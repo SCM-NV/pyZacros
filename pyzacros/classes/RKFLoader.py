@@ -266,36 +266,31 @@ class RKFLoader:
         for i in range(nConnections):
             ld = latticeDisplacements[i]
 
-            first = "Unknown"
+            first = None
             if( ld[0] >= 0 and ld[1] >= 0 ):
-                first = str(fromSites[i]+1)+"-"+str(toSites[i]+1)
+                first = (fromSites[i],toSites[i])
             else:
-                first = str(toSites[i]+1)+"-"+str(fromSites[i]+1)
+                first = (toSites[i],fromSites[i])
                 ld = [ abs(v) for v in ld ]
 
-            second = "Unknown"
+            second = None
             if( tuple(ld[0:2]) == (0,0) ):
-                second = "self"
+                second = Lattice.SELF
             elif( tuple(ld[0:2]) == (0,1) ):
-                second = "north"
+                second = Lattice.NORTH
             elif( tuple(ld[0:2]) == (1,0) ):
-                second = "east"
+                second = Lattice.EAST
+
+            if( first is None or second is None ): continue
 
             # (1,1):"northeast",  <<< #TODO I don't understand this case
             # (1,-1):"southeast"  <<< #TODO I don't understand this case
 
             neighboring_structure[i] = [first,second]
 
-        site_type_names = list(set(labels))
-        site_type_names.sort()
-
         self.lattice = Lattice(
-                            lattice_type="periodic_cell",
                             cell_vectors=latticeVectors,
                             repeat_cell=[1, 1], # Default value.
-                            n_cell_sites=nSites,
-                            n_site_types=len(site_type_names),
-                            site_type_names=site_type_names,
                             site_types=labels,
                             site_coordinates=coordsFrac,
                             neighboring_structure=neighboring_structure)

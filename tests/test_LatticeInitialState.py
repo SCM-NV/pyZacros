@@ -17,7 +17,6 @@ def test_InitialState():
     s0 = pz.Species( "*", 1 )   # Empty adsorption site
     s1 = pz.Species( "H*", 1 )  # H adsorbed with dentation 1
     s2 = pz.Species( "H2*", 1 ) # H2 adsorbed with dentation 1
-    s3 = pz.Species( "H2" )     # H2 gas
 
     myReaction = pz.ElementaryReaction( site_types=( "f", "f" ),
                                         neighboring=[ (1,2) ],
@@ -31,30 +30,27 @@ def test_InitialState():
     myMechanism = pz.Mechanism()
     myMechanism.append( myReaction )
 
-    myLattice = pz.Lattice(lattice_type="periodic_cell",
-                        cell_vectors=[[2.814, 0.000],[1.407, 2.437]],
-                        repeat_cell=[3, 3],
-                        n_cell_sites=2,
-                        n_site_types=2,
-                        site_type_names=["fcc", "hcp"],
-                        site_types=["fcc", "hcp"],
-                        site_coordinates=[[0.33333,0.33333],[0.66667,0.66667]],
-                        neighboring_structure=[["1-1", "north"],
-                                               ["1-1", "east"],
-                                               ["1-1", "southeast"],
-                                               ["2-1", "self"],
-                                               ["2-1", "east"],
-                                               ["2-1", "north"],
-                                               ["2-2", "north"],
-                                               ["2-2", "east"],
-                                               ["2-2", "southeast"]])
+    myLattice = pz.Lattice(cell_vectors=[[2.814, 0.000],[1.407, 2.437]],
+                           repeat_cell=[3, 3],
+                           site_types=["fcc", "hcp"],
+                           site_coordinates=[[0.33333,0.33333],[0.66667,0.66667]],
+                           neighboring_structure=[[(0,0), pz.Lattice.NORTH],
+                                                  [(0,0), pz.Lattice.EAST],
+                                                  [(0,0), pz.Lattice.SOUTHEAST],
+                                                  [(1,0), pz.Lattice.SELF],
+                                                  [(1,0), pz.Lattice.EAST],
+                                                  [(1,0), pz.Lattice.NORTH],
+                                                  [(1,1), pz.Lattice.NORTH],
+                                                  [(1,1), pz.Lattice.EAST],
+                                                  [(1,1), pz.Lattice.SOUTHEAST]])
 
-    myInitialState = pz.LatticeState( myLattice, [s0,s1,s2,s3] )
+    myInitialState = pz.LatticeState( myLattice, [s0,s1,s2] )
 
     random.seed(10)
-    myInitialState.fillSites( site_name="fcc", species="H*", coverage=0.5 )
-    myInitialState.fillSites( site_name="fcc", species=s2, coverage=0.5 )
-    myInitialState.fillSites( site_name="hcp", species="H*", coverage=1.0 )
+    myInitialState.fillSitesRandom( site_name="fcc", species="H*", coverage=0.5 )
+    myInitialState.fillSitesRandom( site_name="fcc", species=s2, coverage=0.5 )
+    myInitialState.fillSitesRandom( site_name="hcp", species="H*", coverage=1.0 )
+    myInitialState.fillSite( 0, s2 )
 
     print( myInitialState )
 
@@ -62,10 +58,11 @@ def test_InitialState():
 
     expectedOutput = """\
 initial_state
-  # species * H* H2* H2
+  # species * H* H2*
   # species_numbers
+  #   - H2*  3
   #   - H*  13
-  #   - H2*  4
+  seed_on_sites H2* 1
   seed_on_sites H* 2
   seed_on_sites H* 3
   seed_on_sites H* 4
@@ -75,14 +72,12 @@ initial_state
   seed_on_sites H* 10
   seed_on_sites H* 11
   seed_on_sites H* 12
+  seed_on_sites H2* 13
   seed_on_sites H* 14
   seed_on_sites H* 15
   seed_on_sites H* 16
-  seed_on_sites H* 18
-  seed_on_sites H2* 1
-  seed_on_sites H2* 7
-  seed_on_sites H2* 13
   seed_on_sites H2* 17
+  seed_on_sites H* 18
 end_initial_state\
 """
     assert(output == expectedOutput)

@@ -64,11 +64,20 @@ class ZacrosResults( scm.plams.Results ):
                     "Energy"      : lambda sv: float(sv)
                 }
 
-                # Note that by default values are considered integers
+                # Notice that by default values are considered integers
                 value = cases.get( names[i], lambda sv: int(sv) )( token.strip() )
                 quantities[ names[i] ].append( value )
 
         return quantities
+
+
+    def number_of_lattice_sites(self):
+        """
+        Return the number of lattice sites from the 'general_output.txt' file.
+        """
+        lines = self.grep_file(self._filenames['general'], pattern='Number of lattice sites:')
+        nsites = lines[0][ lines[0].find('Number of lattice sites:')+len("Number of lattice sites:"): ]
+        return int(nsites)
 
 
     def gas_species_names(self):
@@ -102,10 +111,85 @@ class ZacrosResults( scm.plams.Results ):
         return site_types
 
 
-    #def addlayer_configurations(self):
-        #"""
-        #Return the site types from the 'general_output.txt' file.
-        #"""
+    def number_of_configurations(self):
+        """
+        Return the number of configurations from the 'history_output.txt' file.
+        """
+        lines = self.grep_file(self._filenames['history'], pattern='configuration')
+        return len(lines)
+
+
+    def addlayer_configurations(self):
+        """
+        Return the configurations from the 'history_output.txt' file.
+        """
+        lattice_states = []
+
+        number_of_configurations = self.number_of_configurations()
+        number_of_lattice_sites = self.number_of_lattice_sites()
+
+        lines = self.grep_file(self._filenames['history'], pattern='Gas_Species:')
+        gas_species_names = lines[0][ lines[0].find('Gas_Species:')+len("Gas_Species:"): ].split()
+
+        gas_species = len(gas_species_names)*[None]
+        for i,sname in enumerate(gas_species_names):
+            for sp in self.job.mechanism.gas_species():
+                if( sname == sp.symbol ):
+                    gas_species[i] = sp
+        gas_species = SpeciesList( gas_species )
+
+        assert gas_species_names == self.gas_species_names(), "Warning: Inconsistent gas species between "+ \
+            self._filenames['history']+" and "+self._filenames['general']
+
+        lines = self.grep_file(self._filenames['history'], pattern='Surface_Species:')
+        surface_species_names = lines[0][ lines[0].find('Surface_Species:')+len("Surface_Species:"): ].split()
+
+        surface_species = len(surface_species_names)*[None]
+        for i,sname in enumerate(surface_species_names):
+            for sp in self.job.mechanism.surface_species():
+                if( sname == sp.symbol ):
+                    surface_species[i] = sp
+        surface_species = SpeciesList( surface_species )
+
+        assert surface_species_names == self.surface_species_names(), "Warning: Inconsistent surface species between "+ \
+            self._filenames['history']+" and "+self._filenames['general']
+
+        lines = self.get_file_chunk(self._filenames['history'], begin="configuration", end="Finished reading mechanism input.")
+
+        for nconf in range(number_of_configurations):
+            lines = self.grep_file(self._filenames['history'], pattern='configuration', options="-A"+str(number_of_lattice_sites)+" -m"+str(nconf+1))
+            lines = lines[-number_of_lattice_sites-1:] # Equivalent to tail -n $number_of_lattice_sites+1
+
+            lattice_state = None
+            pos = 0
+            for nline,line in enumerate(lines):
+                tokens = line.split()
+
+                if( nline==0 ):
+                    assert tokens[0]=="configuration"
+
+                    configuration_number = int(tokens[1])
+                    number_of_events = int(tokens[2])
+                    time = float(tokens[3])
+                    temperature = float(tokens[4])
+                    energy = float(tokens[5])
+
+                    lattice_state = LatticeState( self.job.lattice, surface_species )
+                else:
+                    site_number = int(tokens[0])-1 # Zacros uses arrays indexed from 1
+                    adsorbate_number = int(tokens[1])
+                    species_number = int(tokens[2])-1 # Zacros uses arrays indexed from 1
+                    dentation = int(tokens[3])
+
+                    if( species_number >= 0 ): # In zacros 0 means empty site
+                        lattice_state.fillSite( site_number, surface_species[species_number] )
+
+                    pos += 1
+
+            lattice_states.append( lattice_state )
+
+        return lattice_states
+
         #id
         #nevents
         #time

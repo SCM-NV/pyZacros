@@ -48,7 +48,7 @@ loader.lattice.repeat_cell = [10,10]
 
 print(loader.mechanism)
 
-initialState = pz.InitialState( loader.lattice, mechanism=loader.mechanism )
+initialState = pz.LatticeState( loader.lattice, mechanism=loader.mechanism )
 #initialState.fillSites( site_name='fcc', species='O1*', coverage=0.5 )
 initialState.fillSites( site_name='A', species='O1*', coverage=0.5 )
 

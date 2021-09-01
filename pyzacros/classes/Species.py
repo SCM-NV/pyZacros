@@ -99,12 +99,12 @@ class Species:
         self.gas_energy = gas_energy
 
         if( kind == Species.FROM_SYMBOL ):
-            if(len(symbol) > 1 and symbol.find("*") != -1 and denticity == 0):
+            if(len(self.symbol) > 1 and self.symbol.find("*") != -1 and denticity == 0):
                 msg = "### ERROR ### Species.__init__.\n"
                 msg += "Inconsistent symbol and denticity\n"
                 raise NameError(msg)
 
-            if(symbol.find("*") == -1 and denticity != 0):
+            if(self.symbol.find("*") == -1 and denticity != 0):
                 msg  = "### ERROR ### Species.__init__.\n"
                 msg += "Denticity given for a gas species\n"
                 msg += "Did you forget to add * in the species label?\n"
@@ -129,8 +129,8 @@ class Species:
             raise NameError(msg)
 
         self.__mass = 0.0
-        for symbol,n in self.__composition.items():
-            self.__mass += n*Species.__ATOMIC_MASS[symbol.upper()]
+        for s,n in self.__composition.items():
+            self.__mass += n*Species.__ATOMIC_MASS[s.upper()]
 
 
     def __eq__( self, other ):

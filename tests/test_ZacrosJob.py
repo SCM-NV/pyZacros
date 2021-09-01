@@ -17,8 +17,7 @@ def test_ZacrosJob():
     s2 = pz.Species( "H2*", 1 ) # H2 adsorbed with dentation 1
     s3 = pz.Species( "H2", gas_energy=0.0 ) # H2(gas)
 
-    myLattice = pz.Lattice(lattice_type="default_choice",
-                            default_lattice=["hexagonal_periodic", 1.0, 8, 10])
+    myLattice = pz.Lattice(lattice_type=pz.Lattice.HEXAGONAL, lattice_constant=1.0, repeat_cell=[8,10])
 
     myCluster1 = pz.Cluster( site_types=( "f", "f" ),
                             neighboring=[ (1,2) ],

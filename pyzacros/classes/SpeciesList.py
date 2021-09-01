@@ -20,9 +20,9 @@ class SpeciesList(UserList):
         copy_self = copy.deepcopy(self.data)
 
         self.data = []
-        for s in copy_self:
-            if( s not in self.data ):
-                self.data.append( s )
+        for sp in copy_self:
+            if( sp not in self.data ):
+                self.data.append( sp )
 
         self.__updateLabel()
 
@@ -42,11 +42,11 @@ class SpeciesList(UserList):
         gasSpecies = []
         adsorbedSpecies = []
         containsEmptySite = False
-        for i,s in enumerate(self):
-            if( s.is_adsorbed() ):
+        for i,sp in enumerate(self):
+            if( sp.is_adsorbed() ):
                 adsorbedSpecies.append(i)
 
-                if( s.symbol == "*" ):
+                if( sp.symbol == "*" ):
                     containsEmptySite = True
             else:
                 gasSpecies.append(i)
@@ -99,9 +99,9 @@ class SpeciesList(UserList):
         """Returns the gas species."""
         output = []
 
-        for s in self:
-            if( s.is_gas() ):
-                output.append( s )
+        for sp in self:
+            if( sp.is_gas() ):
+                output.append( sp )
 
         return SpeciesList( output )
 
@@ -110,9 +110,9 @@ class SpeciesList(UserList):
         """Returns the adsorbed species."""
         output = []
 
-        for s in self:
-            if( s.is_adsorbed() ):
-                output.append( s )
+        for sp in self:
+            if( sp.is_adsorbed() ):
+                output.append( sp )
 
         return SpeciesList( output )
 
@@ -127,8 +127,8 @@ class SpeciesList(UserList):
         Returns the total mass as the sum of the all species based on the most common isotope in Da
         """
         mass = 0.0
-        for s in self:
-            mass += s.mass()
+        for sp in self:
+            mass += sp.mass()
 
         return mass
 

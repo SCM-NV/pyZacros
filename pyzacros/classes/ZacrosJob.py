@@ -233,7 +233,7 @@ class ZacrosJob( scm.plams.SingleJob ):
         Look for the normal termination signal in output. Note, that does not mean your calculation was successful!
         """
         lines = self.results.grep_file(self.results._filenames['general'], pattern='> Normal termination <')
-        return len(lines) == 1
+        return len(lines) > 0
 
 
     def get_runscript(self):

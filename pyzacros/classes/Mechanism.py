@@ -59,9 +59,9 @@ class Mechanism(UserList):
         return output
 
 
-    def adsorbed_species( self ) -> SpeciesList:
+    def surface_species( self ) -> SpeciesList:
         """
-        Returns the species list.
+        Returns the surface species list.
         """
         species = SpeciesList()
 
@@ -97,5 +97,5 @@ class Mechanism(UserList):
 
     def species(self) -> SpeciesList:
         """Returns the adsorbed species."""
-        return self.adsorbed_species()
+        return self.surface_species()
 

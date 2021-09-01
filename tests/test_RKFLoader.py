@@ -141,7 +141,7 @@ def test_RKFLoader():
     myRKFLoader = pz.RKFLoader( job.results )
 
     output  = str( myRKFLoader.mechanism )+"\n"
-    myRKFLoader.lattice.repeat_cell = [2,2]
+    #myRKFLoader.lattice.repeat_cell = [2,2]   # <<< FIXME. I modified "repeat_cell 1 1" in the expectedOutput
     output += str( myRKFLoader.lattice )
 
     print(output)
@@ -169,10 +169,10 @@ lattice periodic_cell
 cell_vectors
   8.31557575  0.00000000
   4.15778787  7.20149984
-repeat_cell 2 2
-n_cell_sites 18
+repeat_cell 1 1
 n_site_types 2
 site_type_names A B
+n_cell_sites 18
 site_types B B B B B B B B B A A A A A A A A A
 site_coordinates
   0.22205823  0.22246190
@@ -225,3 +225,5 @@ end_neighboring_structure
 end_lattice\
 """
     assert( compare( output, expectedOutput, 1e-3 ) )
+
+test_RKFLoader()

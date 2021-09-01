@@ -13,26 +13,26 @@ def test_SpeciesList():
     print( "---------------------------------------------------" )
 
     # Adsorbed specie
-    myAdsorbedSpecies1 = pz.Species( "H2*", denticity=1 )
-    myAdsorbedSpecies2 = pz.Species( "O2*", denticity=1 )
+    asp1 = pz.Species( "H2*", denticity=1 )
+    asp2 = pz.Species( "O2*", denticity=1 )
 
     # Gas specie
-    myGasSpecies1 = pz.Species( "H2", gas_energy=0.0 )
+    gs1 = pz.Species( "H2", gas_energy=0.0 )
 
     # Gas specie
-    myGasSpecies2 = pz.Species( "O2", gas_energy=0.0 )
+    gs2 = pz.Species( "O2", gas_energy=0.0 )
 
     # Free adsorption site
-    myFreeAdsorptionSite = pz.Species( "*" )
+    fas = pz.Species( "*" )
 
     #mySpeciesList = pz.SpeciesList()
-    #mySpeciesList.append( myAdsorbedSpecies1 )
-    #mySpeciesList.append( myAdsorbedSpecies2 )
-    #mySpeciesList.append( myGasSpecies1 )
-    #mySpeciesList.append( myGasSpecies2 )
-    #mySpeciesList.append( myFreeAdsorptionSite )
+    #mySpeciesList.append( asp1 )
+    #mySpeciesList.append( asp2 )
+    #mySpeciesList.append( gs1 )
+    #mySpeciesList.append( gs2 )
+    #mySpeciesList.append( fas )
 
-    mySpeciesList = pz.SpeciesList( [myAdsorbedSpecies1,myAdsorbedSpecies2,myGasSpecies1,myGasSpecies2,myFreeAdsorptionSite] )
+    mySpeciesList = pz.SpeciesList( [asp1, asp2, gs1, gs2, fas] )
 
     print(mySpeciesList)
 

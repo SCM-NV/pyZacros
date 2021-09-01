@@ -70,8 +70,8 @@ class ClusterExpansion(UserList):
         return species
 
 
-    def adsorbed_species(self) -> SpeciesList:
-        """Returns the adsorbed species."""
+    def surface_species(self) -> SpeciesList:
+        """Returns the surface species."""
         species = []
 
         for cl in self:

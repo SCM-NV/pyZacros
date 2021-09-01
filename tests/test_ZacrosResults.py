@@ -31,8 +31,7 @@ def test_ZacrosJob_run():
     #---------------------------------------------
     # Lattice setup:
     #---------------------------------------------
-    myLattice = pz.Lattice(lattice_type="default_choice",
-                        default_lattice=["rectangular_periodic", 1.0, 50, 50])
+    myLattice = pz.Lattice(lattice_type=pz.Lattice.RECTANGULAR, lattice_constant=1.0, repeat_cell=[50,50])
 
     #---------------------------------------------
     # Clusters:
@@ -87,7 +86,7 @@ def test_ZacrosJob_run():
                         mechanism=[CO_adsorption, O2_adsorption, CO_oxidation],
                         cluster_expansion=[CO_point, O_point] )
 
-    return # << zacros is not installed
+    #return # << zacros is not installed on GitHub
 
     results = job.run()
 
@@ -116,7 +115,7 @@ def test_ZacrosJob_run():
 
     assert( results.site_type_names() == [ "StTp1" ] )
 
-    #results.addlayer_configurations()
+    results.addlayer_configurations()
 
     #results.addlayer_configuration # [ latticeState0, latticeState1, ... ]
     #results.forward_rates
