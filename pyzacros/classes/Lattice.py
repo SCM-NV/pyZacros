@@ -289,8 +289,11 @@ class Lattice:
 
         ax.plot(xvalues, yvalues, color='k', linestyle='solid', linewidth=3, zorder=3)
 
-        ax.set_xlabel('x ($\AA$)')
-        ax.set_ylabel('y ($\AA$)')
+        #ax.set_xlabel('x ($\AA$)')
+        #ax.set_ylabel('y ($\AA$)')
+
+        ax.set_xlabel('x (angs.)')
+        ax.set_ylabel('y (angs.)')
 
         #markers = ['o', '.', ',', 'x', '+', 'v', '^', '<', '>', 's', 'd']
         markers = ['o', 's', 'v', '^']
