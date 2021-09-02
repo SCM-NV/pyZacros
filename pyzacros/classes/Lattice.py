@@ -65,13 +65,13 @@ class Lattice:
                                                 kwargs["site_coordinates"], kwargs["neighboring_structure"] )
 
         # Explicitly Defined Custom Lattices
-        elif( "cell_vectors" in kwargs and
-              "site_types" in kwargs and
+        elif( "site_types" in kwargs and
               "site_coordinates" in kwargs and
               "nearest_neighbors" in kwargs ):
             self.__origin = Lattice.__FROM_EXPLICIT
+
             self.fromExplicitlyDefined( kwargs["site_types"], kwargs["site_coordinates"],
-                                                  kwargs["nearest_neighbors"], cell_vectors=kwargs["cell_vectors"] )
+                                                  kwargs["nearest_neighbors"], cell_vectors=kwargs.get("cell_vectors") )
 
         # From YAML file
         elif( "path" in kwargs ):
@@ -201,7 +201,10 @@ class Lattice:
         :parm nearest_neighbors: Defines the neighboring structure. e.g. [ (2,6), (2,4,7,8) ]
         :parm cell_vectors: Define the unit vectors. Optional
         """
-        raise Exception("Error: The constructor Lattice.fromExplicitlyDefined has not been implemented yet!")
+        self.cell_vectors = cell_vectors
+        self.site_types = site_types
+        self.site_coordinates = site_coordinates
+        self.nearest_neighbors = nearest_neighbors
 
 
     def fromYAMLfile(self, path):
@@ -263,31 +266,32 @@ class Lattice:
 
         fig,ax = plt.subplots()
 
-        v1 = self.cell_vectors[0]
-        v2 = self.cell_vectors[1]
-        xvalues = [0.0,v1[0],  v1[0]+v2[0],   v2[0],  0.0]
-        yvalues = [0.0,v1[1],  v1[1]+v2[1],   v2[1],  0.0]
+        if( self.cell_vectors is not None ):
+            v1 = self.cell_vectors[0]
+            v2 = self.cell_vectors[1]
+            xvalues = [0.0,v1[0],  v1[0]+v2[0],   v2[0],  0.0]
+            yvalues = [0.0,v1[1],  v1[1]+v2[1],   v2[1],  0.0]
 
-        ax.plot(xvalues, yvalues, color='k', linestyle='dashed', linewidth=1, zorder=3)
+            ax.plot(xvalues, yvalues, color='k', linestyle='dashed', linewidth=1, zorder=3)
 
-        x_len = abs(v2[0]-v1[0])
-        ax.set_xlim( [ 0.0-0.1*x_len, v1[0]+v2[0]+0.1*x_len ] )
-        y_len = abs(v2[1]-v1[1])
-        ax.set_ylim( [ 0.0-0.1*y_len, v1[1]+v2[1]+0.1*y_len ] )
+            x_len = abs(v2[0]-v1[0])
+            ax.set_xlim( [ 0.0-0.1*x_len, v1[0]+v2[0]+0.1*x_len ] )
+            y_len = abs(v2[1]-v1[1])
+            ax.set_ylim( [ 0.0-0.1*y_len, v1[1]+v2[1]+0.1*y_len ] )
 
-        if( x_len > y_len ):
-            ax.set_aspect(1.8*y_len/x_len)
-        elif( y_len > x_len ):
-            ax.set_aspect(1.8*x_len/y_len)
-        elif( x_len == y_len ):
-            ax.set_aspect(1.0)
+            if( x_len > y_len ):
+                ax.set_aspect(1.8*y_len/x_len)
+            elif( y_len > x_len ):
+                ax.set_aspect(1.8*x_len/y_len)
+            elif( x_len == y_len ):
+                ax.set_aspect(1.0)
 
-        v1 = self.__cell_vectors_unit_cell[0]
-        v2 = self.__cell_vectors_unit_cell[1]
-        xvalues = [0.0,v1[0],  v1[0]+v2[0],   v2[0],  0.0]
-        yvalues = [0.0,v1[1],  v1[1]+v2[1],   v2[1],  0.0]
+            v1 = self.__cell_vectors_unit_cell[0]
+            v2 = self.__cell_vectors_unit_cell[1]
+            xvalues = [0.0,v1[0],  v1[0]+v2[0],   v2[0],  0.0]
+            yvalues = [0.0,v1[1],  v1[1]+v2[1],   v2[1],  0.0]
 
-        ax.plot(xvalues, yvalues, color='k', linestyle='solid', linewidth=3, zorder=3)
+            ax.plot(xvalues, yvalues, color='k', linestyle='solid', linewidth=3, zorder=3)
 
         #ax.set_xlabel('x ($\AA$)')
         #ax.set_ylabel('y ($\AA$)')
@@ -314,8 +318,9 @@ class Lattice:
 
                 norm = math.sqrt( (xvalues[0]-xvalues[1])**2 + (yvalues[0]-yvalues[1])**2 )
 
-                if( norm > np.linalg.norm(2.0*np.array(v1)) ): continue
-                if( norm > np.linalg.norm(2.0*np.array(v2)) ): continue
+                if( self.cell_vectors is not None ):
+                    if( norm > np.linalg.norm(2.0*np.array(v1)) ): continue
+                    if( norm > np.linalg.norm(2.0*np.array(v2)) ): continue
 
                 ax.plot(xvalues, yvalues, color='k', linestyle='solid', linewidth=0.5, zorder=1)
 
@@ -348,51 +353,80 @@ class Lattice:
 
             output += " "+str(self.__lattice_constant_default)
             output += " "+str(self.__repeat_cell_default[0])
-            output += " "+str(self.__repeat_cell_default[1])
+            output += " "+str(self.__repeat_cell_default[1])+"\n"
 
-            output += "\nend_lattice"
+            output += "end_lattice"
 
         elif( self.__origin == Lattice.__FROM_UNIT_CELL ):
             output += "lattice periodic_cell\n"
 
-            output += "cell_vectors"
+            output += "  cell_vectors\n"
             for i in range(2):
-                output += "\n"
                 for j in range(2):
-                    output += "  "+("%.8f"%self.__cell_vectors_unit_cell[i][j])
+                    output += "    "+("%.8f"%self.__cell_vectors_unit_cell[i][j])
+                output += "\n"
 
-            output += "\nrepeat_cell "
-            output += str(str(self.__repeat_cell_unit_cell)[1:-1]).replace(',', '')
+            output += "  repeat_cell "+str(str(self.__repeat_cell_unit_cell)[1:-1]).replace(',', '')+"\n"
 
             n_cell_sites = len(self.__site_coordinates_unit_cell)
 
             site_types_names = list(set(self.__site_types_unit_cell))
             site_types_names.sort()
 
-            output += "\nn_site_types "+str(len(site_types_names))
+            output += "  n_site_types "+str(len(site_types_names))+"\n"
+            output += "  site_type_names "+str(' '.join(str(x) for x in site_types_names))+"\n"
+            output += "  n_cell_sites "+str(n_cell_sites)+"\n"
+            output += "  site_types "+str(' '.join(str(x) for x in self.__site_types_unit_cell))+"\n"
 
-            output += "\nsite_type_names "+str(' '.join(str(x) for x in site_types_names))
-
-            output += "\nn_cell_sites "+str(n_cell_sites)
-
-            output += "\nsite_types "+str(' '.join(str(x) for x in self.__site_types_unit_cell))
-
-            output += "\nsite_coordinates"
+            output += "  site_coordinates\n"
             for i in range(n_cell_sites):
-                output += "\n"
                 for j in range(2):
-                    output += "  "+("%.8f"%self.__site_coordinates_unit_cell[i][j])
-
-            output += "\nneighboring_structure"
-            for i in range(len(self.__neighboring_structure_unit_cell)):
+                    output += "    "+("%.8f"%self.__site_coordinates_unit_cell[i][j])
                 output += "\n"
-                output += "  "+str('-'.join(str(self.__neighboring_structure_unit_cell[i][0][j]+1) for j in range(2)))
-                output += "  "+Lattice.__NeighboringToStr[self.__neighboring_structure_unit_cell[i][1]]
-            output += "\nend_neighboring_structure"
-            output += "\nend_lattice"
+
+            output += "  neighboring_structure\n"
+            for i in range(len(self.__neighboring_structure_unit_cell)):
+                output += "    "+str('-'.join(str(self.__neighboring_structure_unit_cell[i][0][j]+1) for j in range(2)))
+                output += "  "+Lattice.__NeighboringToStr[self.__neighboring_structure_unit_cell[i][1]]+"\n"
+            output += "  end_neighboring_structure\n"
+
+            output += "end_lattice"
 
         elif( self.__origin == Lattice.__FROM_EXPLICIT ):
-            pass
+            output += "lattice explicit\n"
+
+            if( self.cell_vectors is not None ):
+                output += "  cell_vectors\n"
+                for i in range(2):
+                    for j in range(2):
+                        output += "  "+("%.8f"%self.cell_vectors[i][j])
+                    output += "\n"
+
+            output += "  n_sites "+str(len(self.site_types))+"\n"
+            output += "  max_coord "+str(max([ len(neighbors) for neighbors in self.nearest_neighbors ]))+"\n"
+
+            site_types_names = list(set(self.site_types))
+            site_types_names.sort()
+
+            output += "  n_site_types "+str(len(site_types_names))+"\n"
+            output += "  site_type_names "+str(' '.join(str(x) for x in site_types_names))+"\n"
+
+            output += "  lattice_structure\n"
+
+            for i in range(len(self.site_types)):
+                output += "    "+"%4d"%(i+1)
+                output += "  "+"%.8f"%self.site_coordinates[i][0]+"  "+"%.8f"%self.site_coordinates[i][1]
+                output += "  "+"%10s"%self.site_types[i]
+                output += "  "+"%4d"%len(self.nearest_neighbors[i])
+
+                for j in range(len(self.nearest_neighbors[i])):
+                    output += "%6d"%(self.nearest_neighbors[i][j]+1)
+
+                output += "\n"
+
+            output += "  end_lattice_structure\n"
+
+            output += "end_lattice"
 
         return output
 
