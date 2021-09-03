@@ -1,10 +1,7 @@
 # export PYTHONPATH=$HOME/Develop/pyZacros:$AMSHOME/scripting:$PYTHONPATH
 
 import scm.plams
-from pyzacros.classes.InitialState import InitialState
-from pyzacros.classes.RKFLoader import RKFLoader
-from pyzacros.classes.KMCSettings import KMCSettings
-from pyzacros.classes.KMCJob import KMCJob
+import pyzacros as pz
 
 scm.plams.init()
 
@@ -16,59 +13,46 @@ for atom in molecule:
         atom.properties.suffix = "region=surface"
 
 settings = scm.plams.Settings()
-settings.input.ams.Task = "ProcessSearch-EON"
+settings.input.ams.Task = "PESExploration"
 
 settings.input.ams.Constraints.FixedRegion = "surface"
 
-settings.input.ams.EON.RandomSeed = 100
-settings.input.ams.EON.SamplingFreq = "Normal"
-settings.input.ams.EON.NumJobs = 150
-settings.input.ams.EON.DynamicSeedStates = True
-
-settings.input.ams.EON.SaddleSearch.MinModeMethod = "dimer"
-settings.input.ams.EON.SaddleSearch.DisplaceRadius = 4.0
-settings.input.ams.EON.SaddleSearch.DisplaceMagnitude = 0.01
-settings.input.ams.EON.SaddleSearch.MaxEnergy = 2.0
-
-settings.input.ams.EON.Optimizer.Method = "CG"
-settings.input.ams.EON.Optimizer.ConvergedForce = 0.001
-settings.input.ams.EON.Optimizer.MaxIterations = 2000
-
-settings.input.ams.EON.StructureComparison.DistanceDifference = 0.1
-settings.input.ams.EON.StructureComparison.NeighborCutoff = 10.0
-settings.input.ams.EON.StructureComparison.CheckRotation = False
-settings.input.ams.EON.StructureComparison.IndistinguishableAtoms = True
-settings.input.ams.EON.StructureComparison.EnergyDifference = 0.1
-settings.input.ams.EON.StructureComparison.RemoveTranslation = True
-
-settings.input.ams.EON.EnergyLandscape.Adsorbate = "adsorbate"
-settings.input.ams.EON.BindingSites.DistanceDifference = 5.0
-settings.input.ams.EON.BindingSites.AllowDisconnected = False
+settings.input.ams.PESExploration.Job = "ProcessSearch"
+settings.input.ams.PESExploration.RandomSeed = 100
+settings.input.ams.PESExploration.NumExpeditions = 50
+settings.input.ams.PESExploration.NumExplorers = 4
+settings.input.ams.PESExploration.DynamicSeedStates = True
+settings.input.ams.PESExploration.SaddleSearch.MaxEnergy = 2.0
+settings.input.ams.PESExploration.Optimizer.ConvergedForce = 0.001
+settings.input.ams.PESExploration.BindingSites.Calculate = True
+settings.input.ams.PESExploration.StructureComparison.DistanceDifference = 0.1
+settings.input.ams.PESExploration.StructureComparison.NeighborCutoff = 10.0
+settings.input.ams.PESExploration.StructureComparison.EnergyDifference = 0.1
+settings.input.ams.PESExploration.StatesAlignment.ReferenceRegion = "surface"
+settings.input.ams.PESExploration.BindingSites.AllowDisconnected = False
 
 settings.input.ReaxFF
 settings.input.ReaxFF.ForceField = "CHONSFPtClNi.ff"
-settings.input.ReaxFF.Charges.Converge.Charge = 1e-12
+settings.input.ReaxFF.Charges.Solver = "direct"
 
-settings.input.ams.Properties.NormalModes = True
-
-job = scm.plams.AMSJob(molecule=molecule, settings=settings, name="ProcessSearch-EON")
+job = scm.plams.AMSJob(molecule=molecule, settings=settings, name="PESExploration")
 results = job.run()
 
 scm.plams.finish()
 
-loader = RKFLoader( results )
+loader = pz.RKFLoader( results )
 
 #loader.replace( site_name='A', 'fcc' )
 #loader.replace( site_name='B', 'hcp' )
 loader.lattice.repeat_cell = [10,10]
 
-initialState = InitialState( loader.lattice, mechanism=loader.mechanism )
+print(loader.mechanism)
+
+initialState = pz.LatticeState( loader.lattice, mechanism=loader.mechanism )
 #initialState.fillSites( site_name='fcc', species='O1*', coverage=0.5 )
 initialState.fillSites( site_name='A', species='O1*', coverage=0.5 )
 
-myRKFLoader = RKFLoader( results )
-
-settings = KMCSettings()
+settings = pz.Settings()
 settings.random_seed = 10
 settings.temperature = 273.15
 settings.pressure = 1.01325
@@ -80,10 +64,8 @@ settings.max_steps = 5000
 #settings.max_time = 250.0
 #settings.wall_time = 30
 
-#job = KMCJob( lattice=loader.lattice, clusters=loader.clusters,
-                #mechanism=loader.mechanism, initialState=initialState,
-                #settings=settings, name='ZACROS' )
-job = KMCJob( lattice=loader.lattice, mechanism=loader.mechanism,
+job = pz.KMCJob( lattice=loader.lattice, mechanism=loader.mechanism,
+                cluster_expansion=loader.clusterExpansion,
                 initialState=initialState, settings=settings, name='ZACROS' )
 results = job.run()
 

@@ -1,6 +1,39 @@
+import copy
+from collections import UserList
+
 from .Species import *
 
-class SpeciesList(list):
+__all__ = ['SpeciesList']
+
+class SpeciesList(UserList):
+
+    def __init__( self, data=[] ):
+        super(SpeciesList, self).__init__( data )
+        self.__label = None
+        self.__updateLabel()
+
+
+    def remove_duplicates(self):
+        """
+        Remove duplicates
+        """
+        copy_self = copy.deepcopy(self.data)
+
+        self.data = []
+        for sp in copy_self:
+            if( sp not in self.data ):
+                self.data.append( sp )
+
+        self.__updateLabel()
+
+
+    def __hash__(self):
+        """
+        Returns a hash based on the label
+        """
+        return hash(self.__label)
+
+
     def __str__( self ) -> str:
         """
         Translates the object to a string
@@ -9,11 +42,11 @@ class SpeciesList(list):
         gasSpecies = []
         adsorbedSpecies = []
         containsEmptySite = False
-        for i,specie in enumerate(self):
-            if( specie.is_adsorbed() ):
+        for i,sp in enumerate(self):
+            if( sp.is_adsorbed() ):
                 adsorbedSpecies.append(i)
 
-                if( specie.symbol == "*" ):
+                if( sp.symbol == "*" ):
                     containsEmptySite = True
             else:
                 gasSpecies.append(i)
@@ -21,7 +54,7 @@ class SpeciesList(list):
         output = ""
 
         if( len(gasSpecies) > 0 ):
-            output = "n_gas_species "+str(len(gasSpecies))+"\n"
+            output = "n_gas_species    "+str(len(gasSpecies))+"\n"
 
             output += "gas_specs_names   "
             for i in gasSpecies:
@@ -46,7 +79,7 @@ class SpeciesList(list):
 
 
         if( effAdsorbedSpecies > 0 ):
-            output += "n_surf_species "+str(effAdsorbedSpecies)+"\n"
+            output += "n_surf_species    "+str(effAdsorbedSpecies)+"\n"
 
             output += "surf_specs_names  "
             for i in adsorbedSpecies:
@@ -61,18 +94,61 @@ class SpeciesList(list):
 
         return output
 
-    def gas_species_labels(self) -> list:
-        """Give back labels of the gas species."""
-        gasSpecies = []
-        adsorbedSpecies = []
-        list_species = []
 
-        for i, specie in enumerate(self):
-            if(specie.is_adsorbed()):
-                adsorbedSpecies.append(i)
-            else:
-                gasSpecies.append(i)
-        if(len(gasSpecies) > 0):
-            for i in gasSpecies:
-                list_species.append(self[i].symbol)
-        return list_species
+    def gas_species(self) -> list:
+        """Returns the gas species."""
+        output = []
+
+        for sp in self:
+            if( sp.is_gas() ):
+                output.append( sp )
+
+        return SpeciesList( output )
+
+
+    def adsorbed_species(self) -> list:
+        """Returns the adsorbed species."""
+        output = []
+
+        for sp in self:
+            if( sp.is_adsorbed() ):
+                output.append( sp )
+
+        return SpeciesList( output )
+
+
+    def species(self) -> list:
+        """Returns the adsorbed species."""
+        return self.adsorbed_species()
+
+
+    def mass( self ) -> float:
+        """
+        Returns the total mass as the sum of the all species based on the most common isotope in Da
+        """
+        mass = 0.0
+        for sp in self:
+            mass += sp.mass()
+
+        return mass
+
+
+    def __updateLabel( self ):
+        """
+        Updates the attribute 'label'
+        """
+        self.__label = ""
+        for i in range(len(self)):
+            self.__label += self[i].symbol
+            if(i != len(self)-1):
+                self.__label += ","
+
+
+    def label( self ) -> str:
+        """
+        Returns the label of the cluster
+        """
+        if( self.label is None ):
+            self.__updateLabel()
+
+        return self.__label

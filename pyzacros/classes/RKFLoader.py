@@ -2,8 +2,14 @@ import os
 import sys
 
 from .Species import *
+from .SpeciesList import *
+from .Cluster import *
+from .ElementaryReaction import *
+from .ClusterExpansion import *
 from .Mechanism import *
 from .Lattice import *
+
+__all__ = ['RKFLoader']
 
 class RKFLoader:
 
@@ -19,7 +25,7 @@ class RKFLoader:
         self.__deriveLatticeAndMechanism( results )
 
 
-    def __deriveLatticeAndMechanism( self, results ):  # @TODO results -> scm.plams.Results
+    def __deriveLatticeAndMechanism( self, results ):
         """
         Parses the .rkf file from AMS. Basically it loads the energy landscape and the binding-sites lattice.
 
@@ -30,28 +36,30 @@ class RKFLoader:
         eV = 0.0367493088244753
         angs = 1.88972612456506
 
+        self.clusterExpansion = ClusterExpansion()
         self.mechanism = Mechanism()
 
         nLatticeVectors = results.readrkf("Molecule", "nLatticeVectors")
         latticeVectors = results.readrkf("Molecule", "LatticeVectors")
         latticeVectors = [ [latticeVectors[3*i+j]/angs for j in range(nLatticeVectors) ] for i in range(nLatticeVectors) ]
-        regions = results.readrkf("Molecule", "EngineAtomicInfo").split()
+        regions = results.readrkf("Molecule", "EngineAtomicInfo").split("\0")
 
         nStates = results.readrkf("EnergyLandscape", "nStates")
-        fileNames = results.readrkf("EnergyLandscape", "fileNames").replace(".rkf","").split()
+        fileNames = results.readrkf("EnergyLandscape", "fileNames").replace(".rkf","").split("\0")
         counts = results.readrkf("EnergyLandscape", "counts")
         isTS = results.readrkf("EnergyLandscape", "isTS")
         reactants = results.readrkf("EnergyLandscape", "reactants")
         products = results.readrkf("EnergyLandscape", "products")
+        prefactorsFromReactant = results.readrkf("EnergyLandscape", "prefactorsFromReactant")
+        prefactorsFromProduct = results.readrkf("EnergyLandscape", "prefactorsFromProduct")
 
         # Fix ids from Fortran to python
         reactants = [ max(0,idState-1) for idState in reactants ]
         products = [ max(0,idState-1) for idState in products ]
 
         nSites = results.readrkf("BindingSites", "nSites")
-        adsorbateLabel = results.readrkf("BindingSites", "AdsorbateLabel").strip()
-        labels = results.readrkf("BindingSites", "Labels")
-        labels = labels.split()
+        referenceRegion = results.readrkf("BindingSites", "ReferenceRegionLabel").strip()
+        labels = results.readrkf("BindingSites", "Labels").split()
         coords = results.readrkf("BindingSites", "Coords")
         coords = [ [coords[3*i+j]/angs for j in range(3) ] for i in range(nSites) ]
         coordsFrac = results.readrkf("BindingSites", "CoordsFrac")
@@ -60,7 +68,7 @@ class RKFLoader:
         fromSites = results.readrkf("BindingSites", "FromSites")
         toSites = results.readrkf("BindingSites", "ToSites")
         latticeDisplacements = results.readrkf("BindingSites", "LatticeDisplacements")
-        latticeDisplacements = [ [latticeDisplacements[3*i+j] for j in range(3) ] for i in range(nConnections) ]
+        latticeDisplacements = [ [latticeDisplacements[nLatticeVectors*i+j] for j in range(nLatticeVectors) ] for i in range(nConnections) ]
         nParentStates = results.readrkf("BindingSites", "nParentStates")
         parentStatesRaw = results.readrkf("BindingSites", "ParentStates")
         parentAtomsRaw = results.readrkf("BindingSites", "ParentAtoms")
@@ -130,9 +138,10 @@ class RKFLoader:
 
                 adsorbate = scm.plams.Molecule()
                 for j,atom in enumerate(state2Molecule[idState]):
-                    if( regions[j] == "region="+adsorbateLabel ):
+                    if( regions[j] != "region="+referenceRegion ):
                         adsorbate.add_atom( atom )
 
+                adsorbate.guess_bonds()
                 adsorbateMols = adsorbate.separate()
 
                 loc = 0
@@ -180,6 +189,8 @@ class RKFLoader:
                 # Locates the reactant and product
                 idReactant = reactants[idTS]
                 idProduct = products[idTS]
+                prefactorR = prefactorsFromReactant[idTS]
+                prefactorP = prefactorsFromProduct[idTS]
                 #print( "idReactant : ", idReactant )
                 #print( " idProduct : ", idProduct )
 
@@ -201,30 +212,34 @@ class RKFLoader:
 
                 #--------------------------------------------------------------------
                 # Reactant
-                species = len(connectedSites)*[ "" ]
+                speciesNames = len(connectedSites)*[ "" ]
                 for i,bs in enumerate(connectedSites):
                     if( bs in attachedMolecule[idReactant].keys() ):
-                        species[i] = attachedMolecule[idTS][bs]
+                        speciesNames[i] = attachedMolecule[idTS][bs]
 
                 clusterReactant = Cluster( site_types=[ labels[j] for j in connectedSites ],
                                            neighboring=neighboring,
-                                           species=SpeciesList( [ Species(f+"*",1) for f in species ] ),
+                                           species=SpeciesList( [ Species(f+"*",1) for f in speciesNames ] ),
                                            multiplicity=2,
                                            cluster_energy=state2Energy[idReactant] )
+
+                speciesReactant = SpeciesList( [ Species(f+"*",1) for f in speciesNames ] )
                 #--------------------------------------------------------------------
 
                 #--------------------------------------------------------------------
                 # Product
-                species = len(connectedSites)*[ "" ]
+                speciesNames = len(connectedSites)*[ "" ]
                 for i,bs in enumerate(connectedSites):
                     if( bs in attachedMolecule[idProduct].keys() ):
-                        species[i] = attachedMolecule[idTS][bs]
+                        speciesNames[i] = attachedMolecule[idTS][bs]
 
                 clusterProduct = Cluster( site_types=[ labels[j] for j in connectedSites ],
                                           neighboring=neighboring,
-                                          species=SpeciesList( [ Species(f+"*",1) for f in species ] ),
+                                          species=SpeciesList( [ Species(f+"*",1) for f in speciesNames ] ),
                                           multiplicity=2,
                                           cluster_energy=state2Energy[idReactant] )
+
+                speciesProduct = SpeciesList( [ Species(f+"*",1) for f in speciesNames ] )
                 #--------------------------------------------------------------------
 
                 #--------------------------------------------------------------------
@@ -233,18 +248,15 @@ class RKFLoader:
 
                 reaction = ElementaryReaction( site_types=tuple([ labels[j] for j in connectedSites ]),
                                                neighboring=neighboring,
-                                               initial=clusterReactant,
-                                               final=clusterProduct,
+                                               initial=speciesReactant,
+                                               final=speciesProduct,
                                                reversible=True,
-                                               pre_expon=1e+13,
-                                               pe_ratio=0.676,
+                                               pre_expon=prefactorR,
+                                               pe_ratio=prefactorR/prefactorP,
                                                activation_energy=activationEnergy )
 
+                self.clusterExpansion.extend( [clusterReactant, clusterProduct] )
                 self.mechanism.append( reaction )
-
-        #--------------------------------------------------------------------
-        # Remove duplicated reactions in the mechanism
-        self.mechanism = Mechanism(dict.fromkeys(self.mechanism))
 
         #--------------------------------------------------------------------
         # Generation of the KMCLattice
@@ -254,36 +266,31 @@ class RKFLoader:
         for i in range(nConnections):
             ld = latticeDisplacements[i]
 
-            first = "Unknown"
+            first = None
             if( ld[0] >= 0 and ld[1] >= 0 ):
-                first = str(fromSites[i]+1)+"-"+str(toSites[i]+1)
+                first = (fromSites[i],toSites[i])
             else:
-                first = str(toSites[i]+1)+"-"+str(fromSites[i]+1)
+                first = (toSites[i],fromSites[i])
                 ld = [ abs(v) for v in ld ]
 
-            second = "Unknown"
+            second = None
             if( tuple(ld[0:2]) == (0,0) ):
-                second = "self"
+                second = Lattice.SELF
             elif( tuple(ld[0:2]) == (0,1) ):
-                second = "north"
+                second = Lattice.NORTH
             elif( tuple(ld[0:2]) == (1,0) ):
-                second = "east"
+                second = Lattice.EAST
+
+            if( first is None or second is None ): continue
 
             # (1,1):"northeast",  <<< #TODO I don't understand this case
             # (1,-1):"southeast"  <<< #TODO I don't understand this case
 
             neighboring_structure[i] = [first,second]
 
-        site_type_names = list(set(labels))
-        site_type_names.sort()
-
         self.lattice = Lattice(
-                            lattice_type="periodic_cell",
                             cell_vectors=latticeVectors,
                             repeat_cell=[1, 1], # Default value.
-                            n_cell_sites=nSites,
-                            n_site_types=len(site_type_names),
-                            site_type_names=site_type_names,
                             site_types=labels,
                             site_coordinates=coordsFrac,
                             neighboring_structure=neighboring_structure)

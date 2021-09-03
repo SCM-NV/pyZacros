@@ -6,19 +6,15 @@ import os
 import sys
 import shutil
 
-from pyzacros.classes.Cluster import Cluster
-from pyzacros.classes.Mechanism import Mechanism
-from pyzacros.classes.RKFLoader import RKFLoader
-from pyzacros.classes.KMCJob import KMCJob
-from pyzacros.utils.compareReports import *
+import scm.plams
 
+import pyzacros as pz
+from pyzacros.utils.compareReports import compare
 
 RUNDIR=None
 
 def buildEnergyLandscape():
     """Generates of the energy landscape for the O-Pt111 system"""
-    import scm.plams
-
     scm.plams.init()
 
     molecule = scm.plams.Molecule( "tests/O-Pt111.xyz" )
@@ -30,44 +26,34 @@ def buildEnergyLandscape():
             atom.properties.suffix = "region=surface"
 
     settings = scm.plams.Settings()
-    settings.input.ams.Task = "ProcessSearch-EON"
+    settings.input.ams.Task = "PESExploration"
 
     settings.input.ams.Constraints.FixedRegion = "surface"
 
-    settings.input.ams.EON.RandomSeed = 100
-    settings.input.ams.EON.SamplingFreq = "Normal"
-    settings.input.ams.EON.NumJobs = 150
-    settings.input.ams.EON.DynamicSeedStates = True
-
-    settings.input.ams.EON.SaddleSearch.MinModeMethod = "dimer"
-    settings.input.ams.EON.SaddleSearch.DisplaceRadius = 4.0
-    settings.input.ams.EON.SaddleSearch.DisplaceMagnitude = 0.01
-    settings.input.ams.EON.SaddleSearch.MaxEnergy = 2.0
-
-    settings.input.ams.EON.Optimizer.Method = "CG"
-    settings.input.ams.EON.Optimizer.ConvergedForce = 0.001
-    settings.input.ams.EON.Optimizer.MaxIterations = 2000
-
-    settings.input.ams.EON.StructureComparison.DistanceDifference = 0.1
-    settings.input.ams.EON.StructureComparison.NeighborCutoff = 10.0
-    settings.input.ams.EON.StructureComparison.CheckRotation = False
-    settings.input.ams.EON.StructureComparison.IndistinguishableAtoms = True
-    settings.input.ams.EON.StructureComparison.EnergyDifference = 0.01
-    settings.input.ams.EON.StructureComparison.RemoveTranslation = True
+    settings.input.ams.PESExploration.Job = "ProcessSearch"
+    settings.input.ams.PESExploration.RandomSeed = 100
+    settings.input.ams.PESExploration.NumExpeditions = 50
+    settings.input.ams.PESExploration.NumExplorers = 5
+    settings.input.ams.PESExploration.DynamicSeedStates = True
+    settings.input.ams.PESExploration.Optimizer.ConvergedForce = 0.0001
+    settings.input.ams.PESExploration.SaddleSearch.MaxEnergy = 2.0
+    settings.input.ams.PESExploration.StructureComparison.DistanceDifference = 0.1
+    settings.input.ams.PESExploration.StructureComparison.NeighborCutoff = 10.0
+    settings.input.ams.PESExploration.StructureComparison.EnergyDifference = 0.01
 
     settings.input.ReaxFF
     settings.input.ReaxFF.ForceField = "CHONSFPtClNi.ff"
-    settings.input.ReaxFF.Charges.Converge.Charge = 1e-12
+    settings.input.ReaxFF.Charges.Solver = "direct"
 
-    job = scm.plams.AMSJob(molecule=molecule, settings=settings, name="ProcessSearch-EON")
+    job = scm.plams.AMSJob(molecule=molecule, settings=settings, name="PESExploration")
     results = job.run()
 
-    if( job.ok() ):
-        dirpath = os.path.dirname( results.rkfpath() )
-        shutil.rmtree( RUNDIR+"/tests/test_RKFLoader.data/ProcessSearch-EON", ignore_errors=True )
-        shutil.copytree( dirpath, RUNDIR+"/tests/test_RKFLoader.data/ProcessSearch-EON" )
-    else:
-        raise Exception( "Energy landscape calculation FAILED!" )
+    if( not job.ok() ):
+        print( "Warning: The EnergyLandscape calculation FAILED likely because AMS executable is not available!" )
+        print( "         For testing purposes, now we load precalculated results.")
+
+        job = scm.plams.load( RUNDIR+"/tests/test_RKFLoader.data/PESExploration/PESExploration.dill" )
+        results = job.results
 
     scm.plams.finish()
 
@@ -76,8 +62,6 @@ def buildEnergyLandscape():
 
 def deriveBindingSites():
     """Derives the binding sites from the previously calculated energy landscape"""
-    import scm.plams
-
     scm.plams.init()
 
     molecule = scm.plams.Molecule( "tests/O-Pt111.xyz" )
@@ -89,39 +73,30 @@ def deriveBindingSites():
             atom.properties.suffix = "region=surface"
 
     settings = scm.plams.Settings()
-    settings.input.ams.Task = "BindingSites-EON"
+    settings.input.ams.Task = "PESExploration"
 
     settings.input.ams.Constraints.FixedRegion = "surface"
 
-    settings.input.ams.EON.EnergyLandscape.Load = RUNDIR+"/tests/test_RKFLoader.data/ProcessSearch-EON/ams.rkf"
-    settings.input.ams.EON.EnergyLandscape.Adsorbate = "adsorbate"
-
-    settings.input.ams.EON.BindingSites.DistanceDifference = 5.0
-    settings.input.ams.EON.BindingSites.AllowDisconnected = False
-    #settings.input.ams.EON.BindingSites.LatticeScaleFactors = [ 3, 3, 1 ]  ! @TODO it is not working
-
-    settings.input.ams.EON.StructureComparison.DistanceDifference = 0.1
-    settings.input.ams.EON.StructureComparison.NeighborCutoff = 10.0
-    settings.input.ams.EON.StructureComparison.CheckRotation = False
-    settings.input.ams.EON.StructureComparison.IndistinguishableAtoms = True
-    settings.input.ams.EON.StructureComparison.EnergyDifference = 0.1
-    settings.input.ams.EON.StructureComparison.RemoveTranslation = True
+    settings.input.ams.PESExploration.Job = "BindingSites"
+    settings.input.ams.PESExploration.LoadEnergyLandscape.Path = RUNDIR+"/tests/test_RKFLoader.data/PESExploration/ams.rkf"
+    settings.input.ams.PESExploration.StatesAlignment.ReferenceRegion = "surface"
+    settings.input.ams.PESExploration.StructureComparison.DistanceDifference = 0.1
+    settings.input.ams.PESExploration.StructureComparison.NeighborCutoff = 3.5
+    settings.input.ams.PESExploration.StructureComparison.EnergyDifference = 0.1
 
     settings.input.ReaxFF
     settings.input.ReaxFF.ForceField = "CHONSFPtClNi.ff"
-    settings.input.ReaxFF.Charges.Converge.Charge = 1e-12
+    settings.input.ReaxFF.Charges.Solver = "direct"
 
-    settings.input.ams.Properties.NormalModes = True
-
-    job = scm.plams.AMSJob(molecule=molecule, settings=settings, name="BindingSites-EON")
+    job = scm.plams.AMSJob(molecule=molecule, settings=settings, name="BindingSites")
     results = job.run()
 
-    if( job.ok() ):
-        dirpath = os.path.dirname( results.rkfpath() )
-        shutil.rmtree( RUNDIR+"/tests/test_RKFLoader.data/BindingSites-EON", ignore_errors=True )
-        shutil.copytree( dirpath, RUNDIR+"/tests/test_RKFLoader.data/BindingSites-EON" )
-    else:
-        raise Exception( "Binding sites calculation FAILED!" )
+    if( not job.ok() ):
+        print( "Warning: The BindingSites calculation FAILED likely because AMS executable is not available!" )
+        print( "         For testing purposes, now we load precalculated results.")
+
+        job = scm.plams.load( RUNDIR+"/tests/test_RKFLoader.data/BindingSites/BindingSites.dill" )
+        results = job.results
 
     scm.plams.finish()
 
@@ -129,42 +104,22 @@ def deriveBindingSites():
 
 
 def test_RKFLoader():
+    """Test of the Mechanism class loaded from AMS."""
     global RUNDIR
     RUNDIR = os.getcwd()
 
-    """Test of the Mechanism class loaded from AMS."""
     print( "---------------------------------------------------" )
     print( ">>> Testing RKFLoader class" )
     print( "---------------------------------------------------" )
 
-    # Tries to use PLAMS from AMS
-    AMSHOME = os.getenv("AMSHOME")
-    if( AMSHOME is not None ):
-        if( AMSHOME+"/scripting" not in sys.path ):
-            sys.path.append( AMSHOME+"/scripting" )
+    resultsEnergyLandscape = buildEnergyLandscape()
+    resultsBindingSites = deriveBindingSites()
 
-            # If AMS is available. It runs the calculations to generate
-            # both the energy landscape and binding sites. Results are
-            # saved in the directory tests/test_RKFLoader.data
-            #results = buildEnergyLandscape()
-            #results = deriveBindingSites()
-
-    # If AMS is not available, it tries to load the package from PYTHONPATH
-    try:
-        import scm.plams
-    except ImportError:
-        raise Exception( "Package scm.plams is required!" )
-
-
-    # Results are loaded from tests/test_RKFLoader.data
-    scm.plams.init()
-    job = scm.plams.AMSJob.load_external( path="tests/test_RKFLoader.data/BindingSites-EON" )
-    scm.plams.finish()
-
-    myRKFLoader = RKFLoader( job.results )
+    myRKFLoader = pz.RKFLoader( resultsBindingSites )
 
     output  = str( myRKFLoader.mechanism )+"\n"
-    myRKFLoader.lattice.repeat_cell = [2,2]
+    myRKFLoader.lattice.set_repeat_cell( [2,2] )
+    myRKFLoader.lattice.plot( pause=2 )
     output += str( myRKFLoader.lattice )
 
     print(output)
@@ -172,7 +127,7 @@ def test_RKFLoader():
     expectedOutput = """\
 mechanism
 
-reversible_step O1*-B,*-A:(1,2)<-->*-B,O1*-A:(1,2)
+reversible_step O1*-B,*-A<-->*-B,O1*-A;(1,2)
   sites 2
   neighboring 2-1
   initial
@@ -182,68 +137,71 @@ reversible_step O1*-B,*-A:(1,2)<-->*-B,O1*-A:(1,2)
     1 O1* 1
     2 * 1
   site_types B A
-  pre_expon 1.000000e+13
-  pe_ratio 0.676
-  activ_eng 0.5014956703374196
+  pre_expon 1.720e+13
+  pe_ratio 0.896
+  activ_eng 0.501
 end_reversible_step
+
 end_mechanism
 lattice periodic_cell
 cell_vectors
   8.31557575  0.00000000
   4.15778787  7.20149984
 repeat_cell 2 2
-n_cell_sites 18
 n_site_types 2
 site_type_names A B
+n_cell_sites 18
 site_types B B B B B B B B B A A A A A A A A A
 site_coordinates
-  0.55544631  0.88895506
-  0.88888281  0.88890194
-  0.55531418  0.22252584
-  0.22205914  0.22246160
-  0.88870894  0.22241668
-  0.88871756  0.55587026
-  0.22212838  0.88893607
-  0.55532980  0.55584586
-  0.22200935  0.55583722
-  0.77755064  0.44476415
-  0.11090367  0.11136053
-  0.11092413  0.44482603
-  0.77761765  0.11136525
-  0.44418100  0.44479399
-  0.44418302  0.11142222
-  0.44429648  0.77785687
-  0.77773815  0.77779297
-  0.11098086  0.77785015
+  0.22205823  0.22246190
+  0.22201007  0.55583761
+  0.55530927  0.22253061
+  0.22212815  0.88893597
+  0.55532993  0.55584592
+  0.88870872  0.22241805
+  0.55544680  0.88895434
+  0.88871779  0.55587041
+  0.88888376  0.88890149
+  0.11090282  0.11135927
+  0.11092394  0.44482539
+  0.44418381  0.11142280
+  0.11097989  0.77785422
+  0.44418388  0.44478701
+  0.77761175  0.11136662
+  0.44429985  0.77785242
+  0.77755045  0.44476403
+  0.77773905  0.77779245
 neighboring_structure
-  10-6 self
-  4-11 self
-  5-11 east
-  2-13 north
-  8-10 self
-  12-9 self
-  3-13 self
-  13-5 self
-  1-15 north
-  6-12 east
-  9-14 self
+  17-8 self
+  1-10 self
+  6-10 east
+  9-15 north
+  5-17 self
+  2-11 self
   3-15 self
-  15-4 self
-  14-8 self
-  5-10 self
-  7-11 north
-  16-7 self
-  2-18 east
+  15-6 self
+  7-12 north
+  8-11 east
+  14-2 self
+  3-12 self
+  12-1 self
+  14-5 self
   6-17 self
-  1-17 self
-  8-16 self
-  3-14 self
-  4-12 self
-  17-2 self
-  1-16 self
-  9-18 self
+  4-10 north
+  16-4 self
+  9-13 east
+  8-18 self
   7-18 self
+  5-16 self
+  3-14 self
+  1-11 self
+  18-9 self
+  7-16 self
+  2-13 self
+  13-4 self
 end_neighboring_structure
 end_lattice\
 """
     assert( compare( output, expectedOutput, 1e-3 ) )
+
+test_RKFLoader()

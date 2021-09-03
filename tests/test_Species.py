@@ -2,9 +2,7 @@
 # -*- coding: utf-8 -*-
 """Tests of the pyZacros classes."""
 
-from pyzacros.classes.Species import Species
-from pyzacros.classes.Cluster import Cluster
-from pyzacros.utils.compareReports import *
+import pyzacros as pz
 
 
 def test_Species():
@@ -14,7 +12,7 @@ def test_Species():
     print("---------------------------------------------------")
 
     # Adsorbed specie
-    myAdsorbedSpecies = Species("H2*", denticity=1)
+    myAdsorbedSpecies = pz.Species("H2*", denticity=1)
     print(myAdsorbedSpecies)
 
     output = str(myAdsorbedSpecies)
@@ -22,7 +20,7 @@ def test_Species():
     assert( output == expectedOutput )
 
     # Gas specie
-    myGasSpecies = Species("H2", gas_energy=0.0)
+    myGasSpecies = pz.Species("H2", gas_energy=0.0)
     print(myGasSpecies)
 
     output = str(myGasSpecies)
@@ -30,7 +28,7 @@ def test_Species():
     assert( output == expectedOutput )
 
     # Free adsorption site
-    myAdsorptionFreeSite = Species("*")
+    myAdsorptionFreeSite = pz.Species("*")
     print(myAdsorptionFreeSite)
 
     output = str(myAdsorptionFreeSite)

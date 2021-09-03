@@ -4,7 +4,7 @@
 import os
 import shutil
 from os import path
-from pyzacros.classes.KMCSettings import KMCSettings
+from pyzacros.classes.Settings import Settings
 
 
 def find_file(name, path_to_search):
@@ -14,13 +14,13 @@ def find_file(name, path_to_search):
             return os.path.join(root, name)
 
 
-def find_path_to_engine(settings: KMCSettings) -> tuple:
+def find_path_to_engine(settings: Settings) -> tuple:
     """
     Find the path to the KMC engine using the sett.KMCEngine.path.
 
-    :parm settings: KMCSettings object with the main settings of the
+    :parm settings: Settings object with the main settings of the
                     KMC calculation.
-    :type settings: KMCSettings, required.
+    :type settings: Settings, required.
     :return path_to_engine: The path to the engine.
     :rtype path_to_engine: str
     """

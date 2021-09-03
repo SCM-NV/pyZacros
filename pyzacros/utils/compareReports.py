@@ -16,10 +16,14 @@ def compare( report1, report2, error=1e-3 ):
             float2 = float(words2[i])
 
             if( abs(float1-float2) > error ):
+                print("Mismatch located in comparing report")
+                print("> "+words1[i]+"~"+words2[i])
                 return False
         except ValueError:
 
             if( words1[i] != words2[i] ):
+                print("Mismatch located in comparing report")
+                print("> "+words1[i]+" ~ "+words2[i])
                 return False
 
     return True

@@ -1,16 +1,16 @@
 from .Species import *
 from .SpeciesList import SpeciesList
 
-
+__all__ = ['Cluster']
 
 class Cluster:
 
     def __init__(self, site_types: list,
                  species: SpeciesList,
-                 gas_species: SpeciesList = SpeciesList(),
                  neighboring: list = None,
                  multiplicity: int = 1,
-                 cluster_energy: float = 0.000):
+                 cluster_energy: float = 0.000,
+                 label: str = None):
         """
         Creates a new Cluster object
 
@@ -23,7 +23,6 @@ class Cluster:
         self.site_types = site_types                  # e.g. [ "f", "f" ]
         self.neighboring = neighboring                # e.g. [ (1,2) ]
         self.species = species                        # e.g. [ Species("H*",1), Species("H*",1) ]
-        self.gas_species = gas_species                # e.g. [ Species("H2") ]
         self.multiplicity = multiplicity              # e.g. 2
         self.cluster_energy = cluster_energy          # Units eV
 
@@ -34,15 +33,13 @@ class Cluster:
             msg += "Inconsistent dimensions for species or site_types\n"
             raise NameError(msg)
 
+        self.__userLabel = label
         self.__label = None
         self.__updateLabel()
 
         self.__mass = 0.0
 
         for item in species:
-            self.__mass += item.mass()
-
-        for item in gas_species:
             self.__mass += item.mass()
 
 
@@ -74,6 +71,10 @@ class Cluster:
         """
         Updates the attribute 'label'
         """
+        if( self.__userLabel is not None ):
+            self.__label = self.__userLabel
+            return
+
         self.__label = ""
         for i in range(len(self.species)):
             self.__label += self.species[i].symbol+"-"
@@ -82,14 +83,6 @@ class Cluster:
                 if(j != self.species[i].denticity-1):
                     self.__label += "-"
             if(i != len(self.species)-1):
-                self.__label += ","
-
-        if(len(self.gas_species) > 0):
-            self.__label += ":"
-
-        for i in range(len(self.gas_species)):
-            self.__label += self.gas_species[i].symbol
-            if(i != len(self.gas_species)-1):
                 self.__label += ","
 
         if self.neighboring is not None:
@@ -122,14 +115,6 @@ class Cluster:
         """
         output  = "cluster " + self.__label +"\n"
 
-        if( len(self.gas_species) != 0 ):
-            output += "  # gas_species "
-            for i in range(len(self.gas_species)):
-                output += self.gas_species[i].symbol
-                if( i != len(self.gas_species)-1 ):
-                    output += " "
-            output += "\n"
-
         if( self.sites != 0 ):
             output += "  sites " + str(self.sites)+"\n"
 
@@ -155,7 +140,7 @@ class Cluster:
 
             output += "  graph_multiplicity "+str(self.multiplicity)+"\n"
 
-        output += "  cluster_eng "+("%.8f"%self.cluster_energy)+"\n"
+        output += "  cluster_eng "+("%.4f"%self.cluster_energy)+"\n"
         output += "end_cluster"
 
         return output

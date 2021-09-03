@@ -1,5 +1,7 @@
 import chemparse
 
+__all__ = ['Species']
+
 class Species:
     """
     Species class that represents a chemical species
@@ -77,8 +79,12 @@ class Species:
         "U":238.0508
     }
 
+    FROM_SYMBOL = 0
+    SURFACE = 1
+    GAS = 2
+
     def __init__(self, symbol: str, denticity: int = 0,
-                 gas_energy: float = 0.0):
+                 gas_energy: float = 0.0, kind: int = FROM_SYMBOL ):
         """
         Creates a new Species object.
 
@@ -92,16 +98,24 @@ class Species:
         self.denticity = denticity
         self.gas_energy = gas_energy
 
-        if(len(symbol) > 1 and symbol.find("*") != -1 and denticity == 0):
-            msg = "### ERROR ### Species.__init__.\n"
-            msg += "Inconsistent symbol and denticity\n"
-            raise NameError(msg)
+        if( kind == Species.FROM_SYMBOL ):
+            if(len(self.symbol) > 1 and self.symbol.find("*") != -1 and denticity == 0):
+                msg = "### ERROR ### Species.__init__.\n"
+                msg += "Inconsistent symbol and denticity\n"
+                raise NameError(msg)
 
-        if(symbol.find("*") == -1 and denticity != 0):
-            msg  = "### ERROR ### Species.__init__.\n"
-            msg += "Denticity given for a gas species\n"
-            msg += "Did you forget to add * in the species label?\n"
-            raise NameError(msg)
+            if(self.symbol.find("*") == -1 and denticity != 0):
+                msg  = "### ERROR ### Species.__init__.\n"
+                msg += "Denticity given for a gas species\n"
+                msg += "Did you forget to add * in the species label?\n"
+                raise NameError(msg)
+
+            if( self.symbol.find("*") != -1 ):
+                self.kind = Species.SURFACE
+            else:
+                self.kind = Species.GAS
+        else:
+            self.kind = kind
 
         # If specie is gas the energy is undefined
         if( denticity > 0 ):
@@ -115,8 +129,8 @@ class Species:
             raise NameError(msg)
 
         self.__mass = 0.0
-        for symbol,n in self.__composition.items():
-            self.__mass += n*Species.__ATOMIC_MASS[symbol.upper()]
+        for s,n in self.__composition.items():
+            self.__mass += n*Species.__ATOMIC_MASS[s.upper()]
 
 
     def __eq__( self, other ):
@@ -148,14 +162,14 @@ class Species:
         """
         Returns True if the name of the species has the character '*'
         """
-        return ( self.symbol.find("*") != -1 )
+        return ( self.kind == Species.SURFACE )
 
 
     def is_gas( self ) -> bool:
         """
         Returns True if the name of the species has no the character '*'
         """
-        return ( not self.is_adsorbed() )
+        return ( self.kind == Species.GAS )
 
 
     def composition( self ) -> dict:

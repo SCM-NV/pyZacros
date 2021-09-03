@@ -1,247 +1,209 @@
 """Test script that will reproduce CO_tutorial inputs."""
 
-from pyzacros.classes.KMCSettings import KMCSettings
-from pyzacros.classes.Lattice import Lattice
-from pyzacros.classes.KMCJob import KMCJob
-from pyzacros.classes.Mechanism import Mechanism
-from pyzacros.classes.Cluster import Cluster
-from pyzacros.classes.Species import Species
-from pyzacros.classes.SpeciesList import SpeciesList
-from pyzacros.classes.ElementaryReaction import ElementaryReaction
+import pyzacros as pz
 
+#---------------------------------------------
 # Species:
-sett = KMCSettings()
-s0 = Species("*", 1)      # Empty adsorption site
+#---------------------------------------------
+# - Gas-species:
+CO_gas = pz.Species("CO")
+H2O_gas = pz.Species("H2O")
+H2_gas = pz.Species("H2")
+CO2_gas = pz.Species("CO2", gas_energy=-0.615)
+O2_gas = pz.Species("O2", gas_energy=4.913)
 
-# -) Gas-species:
-CO_gas = Species("CO")
-sett.molar_fraction.CO = 1.e-5
-H2O_gas = Species("H2O")
-sett.molar_fraction.H2O = 0.950
-H2_gas = Species("H2")
-CO2_gas = Species("CO2", gas_energy=-0.615)
-O2_gas = Species("O2", gas_energy=4.913)
+# - Surface species:
+s0 = pz.Species("*", 1)      # Empty adsorption site
+CO_adsorbed = pz.Species("CO*", 1)
+H2O_adsorbed = pz.Species("H2O*", 1)
+OH_adsorbed = pz.Species("OH*", 1)
+O_adsorbed = pz.Species("O*", 1)
+H_adsorbed = pz.Species("H*", 1)
+COOH_adsorbed = pz.Species("COOH*", 1)
 
-# -) Adsorbed species:
-CO_adsorbed = Species("CO*", 1)
-H2O_adsorbed = Species("H2O*", 1)
-OH_adsorbed = Species("OH*", 1)
-O_adsorbed = Species("O*", 1)
-H_adsorbed = Species("H*", 1)
-COOH_adsorbed = Species("COOH*", 1)
-# Build-up list:
-mySpeciesList = SpeciesList()
-mySpeciesList.append(CO_gas)
-mySpeciesList.append(CO_adsorbed)
-mySpeciesList.append(H2O_gas)
-mySpeciesList.append(H2O_adsorbed)
-mySpeciesList.append(H2_gas)
-mySpeciesList.append(CO2_gas)
-mySpeciesList.append(O2_gas)
-mySpeciesList.append(OH_adsorbed)
-mySpeciesList.append(O_adsorbed)
-mySpeciesList.append(H_adsorbed)
-mySpeciesList.append(COOH_adsorbed)
-#print(mySpeciesList)
+#---------------------------------------------
+# Lattice setup:
+#---------------------------------------------
+latt = pz.Lattice(lattice_type="default_choice",
+                        default_lattice=["hexagonal_periodic", 1.0, 8, 10])
 
-# Lattice:
+#print(latt)
 
-myLattice = Lattice(lattice_type="default_choice",
-                    default_lattice=["hexagonal_periodic", 1.0, 8, 10])
-#print(myLattice)
+#---------------------------------------------
+# Clusters:
+#---------------------------------------------
+CO_point = pz.Cluster(site_types=["1"],
+                   species=[CO_adsorbed],
+                   cluster_energy=-2.077,
+                   label="CO_point")
 
-# CO_adsoprtion:
+H2O_point = pz.Cluster(site_types=["1"],
+                    species=[H2O_adsorbed],
+                    cluster_energy=-0.362,
+                    label="H2O_point")
 
-myCluster1 = Cluster(site_types=["1"],
-                     species=[s0],
-                     gas_species=[CO_gas])
+OH_point = pz.Cluster(site_types=["1"],
+                   species=[OH_adsorbed],
+                   cluster_energy=0.830,
+                   label="OH_point")
 
-myCluster2 = Cluster(site_types=["1"],
-                     species=[CO_adsorbed],
-                     cluster_energy=-2.077)
+O_point = pz.Cluster(site_types=["1"],
+                  species=[O_adsorbed],
+                  cluster_energy=1.298,
+                  label="O_point")
 
-CO_adsorption = ElementaryReaction(site_types=["1"],
-                                   initial=myCluster1,
-                                   final=myCluster2,
+H_point = pz.Cluster(site_types=["1"],
+                  species=[H_adsorbed],
+                  cluster_energy=-0.619,
+                  label="H_point")
+
+COOH_point = pz.Cluster(site_types=["1"],
+                     species=[COOH_adsorbed],
+                     cluster_energy=-1.487,
+                     label="COOH_point")
+
+CO_pair_1NN = pz.Cluster(site_types=["1", "1"],
+                      neighboring=[(1, 2)],
+                      species=[CO_adsorbed, CO_adsorbed],
+                      cluster_energy=0.560,
+                      label="CO_pair_1NN")
+
+OH_H_1NN = pz.Cluster(site_types=["1", "1"],
+                   neighboring=[(1, 2)],
+                   species=[OH_adsorbed, H_adsorbed],
+                   cluster_energy=0.021,
+                   label="OH_H_1NN")
+
+O_H_1NN = pz.Cluster(site_types=["1", "1"],
+                  neighboring=[(1, 2)],
+                  species=[O_adsorbed, H_adsorbed],
+                  cluster_energy=0.198,
+                  label="O_H_1NN")
+
+CO_OH_1NN = pz.Cluster(site_types=["1", "1"],
+                    neighboring=[(1, 2)],
+                    species=[CO_adsorbed, OH_adsorbed],
+                    cluster_energy=0.066,
+                    label="CO_OH_1NN")
+
+CO_O_1NN = pz.Cluster(site_types=["1", "1"],
+                   neighboring=[(1, 2)],
+                   species=[CO_adsorbed, O_adsorbed],
+                   cluster_energy=0.423,
+                   label="CO_O_1NN")
+
+#---------------------------------------------
+# Cluster expansion:
+#---------------------------------------------
+myClusterExpansion = pz.ClusterExpansion()
+myClusterExpansion.extend( [CO_point, H2O_point] )
+myClusterExpansion.append( OH_point )
+myClusterExpansion.extend( [O_point, H_point, COOH_point] )
+myClusterExpansion.extend( [CO_pair_1NN, OH_H_1NN, O_H_1NN, CO_OH_1NN, CO_O_1NN] )
+
+#print(myClusterExpansion)
+
+#---------------------------------------------
+# Elementary Reactions
+#---------------------------------------------
+
+CO_adsorption = pz.ElementaryReaction(site_types=["1"],
+                                   initial=[s0,CO_gas],
+                                   final=[CO_adsorbed],
                                    reversible=True,
                                    pre_expon=2.226e+007,
                                    pe_ratio=2.137e-006,
-                                   activation_energy=0.0)
+                                   activation_energy=0.0,
+                                   label="CO_adsorption")
 
-# H2_dissoc_adsorp:
-
-myCluster3 = Cluster(site_types=["1", "1"],
-                     neighboring=[(1, 2)],
-                     species=[s0, s0],
-                     gas_species=[H2_gas],
-                     cluster_energy=0.0)
-
-myCluster4 = Cluster(site_types=["1", "1"],
-                     neighboring=[(1, 2)],
-                     species=[H_adsorbed, H_adsorbed],
-                     cluster_energy=0.0)
-
-H2_dissoc_adsorp = ElementaryReaction(site_types=["1", "1"],
-                                      initial=myCluster3,
-                                      final=myCluster4,
+H2_dissoc_adsorp = pz.ElementaryReaction(site_types=["1", "1"],
+                                      initial=[s0, s0, H2_gas],
+                                      final=[H_adsorbed, H_adsorbed],
                                       neighboring=[(1, 2)],
                                       reversible=True,
                                       pre_expon=8.299e+007,
                                       pe_ratio=7.966e-006,
-                                      activation_energy=0.0)
-# H2O_adsoroption:
+                                      activation_energy=0.0,
+                                      label="H2_dissoc_adsorp")
 
-myCluster5 = Cluster(site_types=["1"],
-                     species=[s0],
-                     gas_species=[H2O_gas])
-
-myCluster6 = Cluster(site_types=["1"],
-                     species=[H2O_adsorbed],
-                     cluster_energy=-0.362)
-
-H2O_adsorption = ElementaryReaction(site_types=["1"],
-                                    initial=myCluster5,
-                                    final=myCluster6,
+H2O_adsorption = pz.ElementaryReaction(site_types=["1"],
+                                    initial=[s0, H2O_gas],
+                                    final=[H2O_adsorbed],
                                     reversible=True,
                                     pre_expon=2.776e+002,
                                     pe_ratio=2.665e-006,
-                                    activation_energy=0.0)
+                                    activation_energy=0.0,
+                                    label="H2O_adsorption")
 
-# H2O_dissociation:
-
-myCluster7 = Cluster(site_types=["1", "1"],
-                     neighboring=[(1, 2)],
-                     species=[H2O_adsorbed, s0],
-                     cluster_energy=0.0)
-
-myCluster8 = Cluster(site_types=["1", "1"],
-                     neighboring=[(1, 2)],
-                     species=[OH_adsorbed, H_adsorbed],
-                     cluster_energy=0.021)
-
-H2O_dissoc_adsorp = ElementaryReaction(site_types=["1", "1"],
-                                       initial=myCluster7,
-                                       final=myCluster8,
+H2O_dissoc_adsorp = pz.ElementaryReaction(site_types=["1", "1"],
+                                       initial=[H2O_adsorbed, s0],
+                                       final=[OH_adsorbed, H_adsorbed],
                                        neighboring=[(1, 2)],
                                        reversible=True,
                                        pre_expon=1.042e+13,
                                        pe_ratio=1.000e+00,
-                                       activation_energy=0.777)
+                                       activation_energy=0.777,
+                                       label="H2O_dissoc_adsorp")
 
-# OH_decomposition:
-
-myCluster9 = Cluster(site_types=["1", "1"],
-                     neighboring=[(1, 2)],
-                     species=[s0, OH_adsorbed],
-                     cluster_energy=0.0)
-
-myCluster10 = Cluster(site_types=["1", "1"],
-                      neighboring=[(1, 2)],
-                      species=[O_adsorbed, H_adsorbed],
-                      cluster_energy=0.0)
-
-OH_decomposition = ElementaryReaction(site_types=["1", "1"],
-                                      initial=myCluster9,
-                                      final=myCluster10,
+OH_decomposition = pz.ElementaryReaction(site_types=["1", "1"],
+                                      initial=[s0, OH_adsorbed],
+                                      final=[O_adsorbed, H_adsorbed],
                                       neighboring=[(1, 2)],
                                       reversible=True,
                                       pre_expon=1.042e+13,
                                       pe_ratio=1.000e+00,
-                                      activation_energy=0.940)
+                                      activation_energy=0.940,
+                                      label="OH_decomposition")
 
-# COOH_formation:
-myCluster11 = Cluster(site_types=["1", "1"],
-                      neighboring=[(1, 2)],
-                      species=[CO_adsorbed, OH_adsorbed],
-                      cluster_energy=0.066)
-
-myCluster12 = Cluster(site_types=["1", "1"],
-                      neighboring=[(1, 2)],
-                      species=[s0, COOH_adsorbed],
-                      cluster_energy=0.0)
-
-COOH_formation = ElementaryReaction(site_types=["1", "1"],
-                                    initial=myCluster11,
-                                    final=myCluster12,
+COOH_formation = pz.ElementaryReaction(site_types=["1", "1"],
+                                    initial=[CO_adsorbed, OH_adsorbed],
+                                    final=[s0, COOH_adsorbed],
                                     neighboring=[(1, 2)],
                                     reversible=True,
                                     pre_expon=1.042e+13,
                                     pe_ratio=1.000e+00,
-                                    activation_energy=0.405)
+                                    activation_energy=0.405,
+                                    label="COOH_formation")
 
-# COOH_decomposition:
-
-myCluster13 = Cluster(site_types=["1", "1"],
-                      neighboring=[(1, 2)],
-                      species=[COOH_adsorbed, s0],
-                      cluster_energy=0.0)
-
-myCluster14 = Cluster(site_types=["1", "1"],
-                      neighboring=[(1, 2)],
-                      species=[s0, H_adsorbed],
-                      gas_species=[CO2_gas],
-                      cluster_energy=0.0)
-
-COOH_decomposition = ElementaryReaction(site_types=["1", "1"],
-                                        initial=myCluster13,
-                                        final=myCluster14,
+COOH_decomposition = pz.ElementaryReaction(site_types=["1", "1"],
+                                        initial=[COOH_adsorbed, s0],
+                                        final=[s0, H_adsorbed, CO2_gas],
                                         neighboring=[(1, 2)],
                                         reversible=False,
                                         pre_expon=1.042e+13,
-                                        activation_energy=0.852)
+                                        activation_energy=0.852,
+                                        label="COOH_decomposition")
 
-# CO_oxidation:
-
-myCluster15 = Cluster(site_types=["1", "1"],
-                      neighboring=[(1, 2)],
-                      species=[CO_adsorbed, O_adsorbed],
-                      cluster_energy=0.423)
-
-myCluster16 = Cluster(site_types=["1", "1"],
-                      neighboring=[(1, 2)],
-                      species=[s0, s0],
-                      gas_species=[CO2_gas],
-                      cluster_energy=0.0)
-
-CO_oxidation = ElementaryReaction(site_types=["1", "1"],
-                                  initial=myCluster15,
-                                  final=myCluster16,
+CO_oxidation = pz.ElementaryReaction(site_types=["1", "1"],
+                                  initial=[CO_adsorbed, O_adsorbed],
+                                  final=[s0, s0, CO2_gas],
                                   neighboring=[(1, 2)],
                                   reversible=False,
                                   pre_expon=1.042e+13,
-                                  activation_energy=0.988)
+                                  activation_energy=0.988,
+                                  label="CO_oxidation")
 
-# Extra:
-myCluster17 = Cluster(site_types=["1", "1"],
-                      species=[CO_adsorbed, CO_adsorbed],
-                      cluster_energy=0.560)
-myCluster18 = Cluster(site_types=["1"],
-                      species=[COOH_adsorbed],
-                      cluster_energy=-1.487)
-
-
+#---------------------------------------------
 # Build-up mechanism:
+#---------------------------------------------
+mech = pz.Mechanism([CO_adsorption, H2_dissoc_adsorp, H2O_adsorption,
+                     H2O_dissoc_adsorp, OH_decomposition, COOH_formation,
+                     COOH_decomposition, CO_oxidation])
 
-myMechanism1 = Mechanism()
-myMechanism1.append(CO_adsorption)
-myMechanism1.append(H2_dissoc_adsorp)
-myMechanism1.append(H2O_adsorption)
-myMechanism1.append(H2O_dissoc_adsorp)
-myMechanism1.append(OH_decomposition)
-myMechanism1.append(COOH_formation)
-myMechanism1.append(COOH_decomposition)
-myMechanism1.append(CO_oxidation)
-#print(myMechanism1)
+#print(mech.adsorbed_species())
+#print(mech.gas_species())
 
+#---------------------------------------------
 # Settings:
+#---------------------------------------------
+sett = pz.Settings()
+
+sett.molar_fraction.CO = 1.e-5
+sett.molar_fraction.H2O = 0.950
+
 sett.random_seed = 123278
 sett.temperature = 500.0
-sett.pressure = 10
-sett.KMCEngine.name = 'ZacRos'
-sett.KMCEngine.path = '/home/aguirre/bin/'
-sett.KMCOutput.path = '/home/aguirre/Develop/pyZacros/examples/CO_tutorial/output'
-sett.AbinitioEngine.name = 'AMS'
-sett.AbinitioEngine.path = 'Programs'
+sett.pressure = 10.0
 sett.snapshots = ('time', 5.e-4)
 sett.process_statistics = ('time', 5.e-4)
 sett.species_numbers = ('time', 5.e-4)
@@ -249,7 +211,8 @@ sett.event_report = 'off'
 sett.max_steps = 'infinity'
 sett.max_time = 250.0
 sett.wall_time = 30
-myJob = KMCJob(settings=sett, lattice=myLattice, mechanism=myMechanism1)
-#print(myJob)
+
+myJob = pz.KMCJob( settings=sett, lattice=latt, mechanism=mech, cluster_expansion=myClusterExpansion )
+
+print(myJob)
 myJob.run()
-##

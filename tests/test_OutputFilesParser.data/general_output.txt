@@ -1,0 +1,156 @@
++---------------------------------------------------+
+|  ZACROS 2.0                                       |
+|  GRAPH-THEORETICAL KMC SIMULATION CODE            |
+|                                                   |
+|  Multiscale Computational Catalysis and           |
+|  Materials Science Research Group                 |
+|                                                   |
+|  Michail Stamatakis, Ph.D.                        |
+|  Chemical Engineering Department                  |
+|  University College London                        |
++---------------------------------------------------+
+
+Threading information:
+~~~~~~~~~~~~~~~~~~~~~~
+     NO THREADS
+
+Simulation setup:
+~~~~~~~~~~~~~~~~~
+
+    Random sequence with seed: 123278
+
+    Temperature: 500.00000000000000
+
+    Pressure: 10.000000000000000
+
+    Number of gas species: 4
+
+    Gas species names: CO H2 H2O CO2 
+
+    Gas species energies: 0.0000000000000000 0.0000000000000000 0.0000000000000000 -0.61499999999999999 
+
+    Gas species molecular weights: 27.994900000000001 2.0156000000000001 18.010500000000000 43.989800000000002 
+
+    Gas species molar fractions: 1.0000000000000001E-005 0.0000000000000000 0.94999999999999996 0.0000000000000000 
+
+    Number of surface species: 6
+
+    Surface species names: CO* H* H2O* OH* O* COOH* 
+
+    Surface species dentation:  1  1  1  1  1  1
+
+    Snapshots will be reported in file history_output.txt every 5.0000000000000001E-004 time units
+
+    Process statistics will be reported in file procstat_output.txt every 5.0000000000000001E-004 time units
+
+    Species numbers will be reported in file specnum_output.txt every 5.0000000000000001E-004 time units
+
+    Event reporting turned off
+
+    Maximum number of steps: 9223372036854775807 (maximum allowed value)
+
+    Max simulated time: 250.00000000000000              
+
+    Allowed walltime in seconds: 30
+
+Finished reading simulation input.
+
+Lattice setup:
+~~~~~~~~~~~~~~
+
+    Using one of the default lattice structures.
+
+    Unit cell area: 1.7320508075688772
+
+    Lattice cell: 8 x 10
+
+    Surface area: 138.56406460551017
+
+    Number of lattice sites: 160
+
+    Number of site types: 1
+
+    Site type names not defined, automatic strings assigned.
+    Site type names and number of sites of that type:
+      StTp1 (160)
+
+    Maximum coordination number: 6
+
+    Lattice structure written to lattice_output.txt
+
+Finished reading lattice input.
+
+Energetics setup:
+~~~~~~~~~~~~~~~~~
+
+    Number of clusters: 11
+
+    Maximum number of sites involved in a cluster: 2
+
+    Clusters:
+
+        1. CO_point:     Mult = 1      ECI = -2.0770000000000000       Entities:  CO* 
+        2. H2O_point:    Mult = 1      ECI = -0.36199999999999999      Entities:  H2O* 
+        3. OH_point:     Mult = 1      ECI = 0.82999999999999996       Entities:  OH* 
+        4. O_point:      Mult = 1      ECI = 1.2980000000000000        Entities:  O* 
+        5. H_point:      Mult = 1      ECI = -0.61899999999999999      Entities:  H* 
+        6. COOH_point:   Mult = 1      ECI = -1.4870000000000001       Entities:  COOH* 
+        7. CO_pair_1NN:  Mult = 1      ECI = 0.56000000000000005       Entities:  CO* CO*
+        8. OH_H_1NN:     Mult = 1      ECI = 2.1000000000000001E-002   Entities:  OH* H*
+        9. O_H_1NN:      Mult = 1      ECI = 0.19800000000000001       Entities:  O* H*
+       10. CO_OH_1NN:    Mult = 1      ECI = 6.6000000000000003E-002   Entities:  CO* OH*
+       11. CO_O_1NN:     Mult = 1      ECI = 0.42299999999999999       Entities:  CO* O*
+
+Finished reading energetics input.
+
+Mechanism setup:
+~~~~~~~~~~~~~~~~
+
+    Number of elementary steps: 14
+
+    Maximum number of sites involved in a step: 2
+
+    Reaction network:
+
+        1. CO_adsorption_fwd:        A(Tini) =  2.2260E+03   Ea =  0.00    k(Tini) =  2.2260E+03  Reaction: CO  +  *(StTp1)  ->  CO*(StTp1)
+        2. CO_adsorption_rev:        A(Tini) =  1.0416E+13                                        Reaction: CO*(StTp1)  ->  CO  +  *(StTp1)
+        3. H2_dissoc_adsorp_fwd:     A(Tini) =  0.0000E+00   Ea =  0.00    k(Tini) =  0.0000E+00  Reaction: H2  +  *(StTp1)  +  *(StTp1)  ->  H*(StTp1)  +  H*(StTp1)
+        4. H2_dissoc_adsorp_rev:     A(Tini) =  1.0418E+13                                        Reaction: H*(StTp1)  +  H*(StTp1)  ->  H2  +  *(StTp1)  +  *(StTp1)
+        5. H2O_adsorption_fwd:       A(Tini) =  2.6372E+03   Ea =  0.00    k(Tini) =  2.6372E+03  Reaction: H2O  +  *(StTp1)  ->  H2O*(StTp1)
+        6. H2O_adsorption_rev:       A(Tini) =  1.0417E+08                                        Reaction: H2O*(StTp1)  ->  H2O  +  *(StTp1)
+        7. H2O_dissoc_adsorp_fwd:    A(Tini) =  1.0420E+13   Ea =  0.78    k(Tini) =  1.5348E+05  Reaction: H2O*(StTp1)  +  *(StTp1)  ->  OH*(StTp1)  +  H*(StTp1)
+        8. H2O_dissoc_adsorp_rev:    A(Tini) =  1.0420E+13                                        Reaction: OH*(StTp1)  +  H*(StTp1)  ->  H2O*(StTp1)  +  *(StTp1)
+        9. OH_decomposition_fwd:     A(Tini) =  1.0420E+13   Ea =  0.94    k(Tini) =  3.4922E+03  Reaction: *(StTp1)  +  OH*(StTp1)  ->  O*(StTp1)  +  H*(StTp1)
+       10. OH_decomposition_rev:     A(Tini) =  1.0420E+13                                        Reaction: O*(StTp1)  +  H*(StTp1)  ->  *(StTp1)  +  OH*(StTp1)
+       11. COOH_formation_fwd:       A(Tini) =  1.0420E+13   Ea =  0.41    k(Tini) =  8.6229E+08  Reaction: CO*(StTp1)  +  OH*(StTp1)  ->  *(StTp1)  +  COOH*(StTp1)
+       12. COOH_formation_rev:       A(Tini) =  1.0420E+13                                        Reaction: *(StTp1)  +  COOH*(StTp1)  ->  CO*(StTp1)  +  OH*(StTp1)
+       13. COOH_decomposition:       A(Tini) =  1.0420E+13   Ea =  0.85    k(Tini) =  2.6921E+04  Reaction: COOH*(StTp1)  +  *(StTp1)  ->  CO2  +  *(StTp1)  +  H*(StTp1)
+       14. CO_oxidation:             A(Tini) =  1.0420E+13   Ea =  0.99    k(Tini) =  1.1462E+03  Reaction: CO*(StTp1)  +  O*(StTp1)  ->  CO2  +  *(StTp1)  +  *(StTp1)
+Finished reading mechanism input.
+
+Commencing simulation:
+~~~~~~~~~~~~~~~~~~~~~~
+
+Simulation stopped:
+~~~~~~~~~~~~~~~~~~~
+ Current KMC time: 0.405344278
+ Events occurred:  413723
+ Event frequency:  1020670.62
+
+Performance facts:
+~~~~~~~~~~~~~~~~~~
+
+Elapsed CPU time:         29.9331284 seconds
+Elapsed clock time:       30.0000858 seconds
+Setup clock time:         4.28054146E-02 seconds
+Simulation clock time:    29.9572811 seconds
+
+Clock time per KMC event: 7.25124919E-05 seconds
+Clock time per KMC time:  74.0113678 seconds/KMCTimeUnits
+
+Events per clock hour:    49646616
+KMC Dt per clock hour:    48.6411743 KMCTimeUnits
+
+Restart information successfully written in file restart.inf.
+
+> Normal termination <

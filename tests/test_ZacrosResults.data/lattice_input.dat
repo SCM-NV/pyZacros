@@ -1,0 +1,3 @@
+lattice default_choice
+  rectangular_periodic 1.0 20 20
+end_lattice

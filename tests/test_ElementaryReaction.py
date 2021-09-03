@@ -2,11 +2,8 @@
 # -*- coding: utf-8 -*-
 """Tests of the pyZacros classes."""
 
-from pyzacros.classes.Species import Species
-from pyzacros.classes.SpeciesList import SpeciesList
-from pyzacros.classes.Cluster import Cluster
-from pyzacros.classes.ElementaryReaction import ElementaryReaction
-from pyzacros.utils.compareReports import *
+import pyzacros as pz
+from pyzacros.utils.compareReports import compare
 
 
 def test_ElementaryReaction():
@@ -15,26 +12,14 @@ def test_ElementaryReaction():
     print( ">>> Testing ElementaryReaction class" )
     print( "---------------------------------------------------" )
 
-    s0 = Species( "*", 1 )      # Empty adsorption site
-    s1 = Species( "H*", 1 )  # H adsorbed with dentation 1
-    s2 = Species( "H2*", 1 ) # H2 adsorbed with dentation 1
+    s0 = pz.Species( "*", 1 )      # Empty adsorption site
+    s1 = pz.Species( "H*", 1 )  # H adsorbed with dentation 1
+    s2 = pz.Species( "H2*", 1 ) # H2 adsorbed with dentation 1
 
-    myCluster1 = Cluster( site_types=( "f", "f" ),
-                            neighboring=[ (1,2) ],
-                            species=SpeciesList( [s1, s1] ),
-                            multiplicity=2,
-                            cluster_energy=0.1 )
-
-    myCluster2 = Cluster( site_types=( "f", "f" ),
-                            neighboring=[ (1,2) ],
-                            species=SpeciesList( [s2, s0] ),
-                            multiplicity=2,
-                            cluster_energy=0.1 )
-
-    myReaction1 = ElementaryReaction( site_types=( "f", "f" ),
+    myReaction1 = pz.ElementaryReaction( site_types=( "f", "f" ),
                                         neighboring=[ (1,2) ],
-                                        initial=myCluster1,
-                                        final=myCluster2,
+                                        initial=[s1, s1],
+                                        final=[s2, s0],
                                         reversible=True,
                                         pre_expon=1e+13,
                                         pe_ratio=0.676,
@@ -44,7 +29,7 @@ def test_ElementaryReaction():
 
     output = str(myReaction1)
     expectedOutput = """\
-reversible_step H2*-f,*-f:(1,2)<-->H*-f,H*-f:(1,2)
+reversible_step H2*-f,*-f<-->H*-f,H*-f;(1,2)
   sites 2
   neighboring 1-2
   initial
@@ -61,19 +46,12 @@ end_reversible_step\
 """
     assert( compare( output, expectedOutput, 1e-3 ) )
 
-    s3 = Species( "H2", gas_energy=0.0 ) # H2(gas)
+    s3 = pz.Species( "H2", gas_energy=0.0 ) # H2(gas)
 
-    myCluster3 = Cluster( site_types=( "f", "f" ),
-                            neighboring=[ (1,2) ],
-                            species=SpeciesList( [ s0, s0 ] ),
-                            gas_species=SpeciesList( [ s3 ] ),
-                            multiplicity=2,
-                            cluster_energy=0.1 )
-
-    myReaction2 = ElementaryReaction( site_types=( "f", "f" ),
+    myReaction2 = pz.ElementaryReaction( site_types=( "f", "f" ),
                                         neighboring=[ (1,2) ],
-                                        initial=myCluster1,
-                                        final=myCluster3,
+                                        initial=[ s1, s1 ],
+                                        final=[ s0, s0, s3 ],
                                         reversible=False,
                                         pre_expon=1e+13,
                                         pe_ratio=0.676,
@@ -83,7 +61,7 @@ end_reversible_step\
 
     output = str(myReaction2)
     expectedOutput = """\
-step H*-f,H*-f:(1,2)-->*-f,*-f:H2:(1,2)
+step H*-f,H*-f-->*-f,*-f:H2;(1,2)
   gas_reacs_prods H2 1
   sites 2
   neighboring 1-2
