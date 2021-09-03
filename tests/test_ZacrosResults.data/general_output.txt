@@ -1,0 +1,136 @@
++---------------------------------------------------+
+|  ZACROS 2.0                                       |
+|  GRAPH-THEORETICAL KMC SIMULATION CODE            |
+|                                                   |
+|  Multiscale Computational Catalysis and           |
+|  Materials Science Research Group                 |
+|                                                   |
+|  Michail Stamatakis, Ph.D.                        |
+|  Chemical Engineering Department                  |
+|  University College London                        |
++---------------------------------------------------+
+
+Threading information:
+~~~~~~~~~~~~~~~~~~~~~~
+     NO THREADS
+
+Simulation setup:
+~~~~~~~~~~~~~~~~~
+
+    Random sequence with seed: 953129
+
+    Temperature: 500.00000000000000
+
+    Pressure: 1.0000000000000000
+
+    Number of gas species: 3
+
+    Gas species names: CO O2 CO2 
+
+    Gas species energies: 0.0000000000000000 0.0000000000000000 -2.3370000000000002 
+
+    Gas species molecular weights: 27.994900000000001 31.989799999999999 43.989800000000002 
+
+    Gas species molar fractions: 0.45000000000000001 0.55000000000000004 0.0000000000000000 
+
+    Number of surface species: 2
+
+    Surface species names: CO* O* 
+
+    Surface species dentation:  1  1
+
+    Snapshots will be reported in file history_output.txt every 0.10000000000000001 time units
+
+    Process statistics will be reported in file procstat_output.txt every 0.10000000000000001 time units
+
+    Species numbers will be reported in file specnum_output.txt every 0.10000000000000001 time units
+
+    Event reporting turned off
+
+    Maximum number of steps: 9223372036854775807 (maximum allowed value)
+
+    Max simulated time: 1.0000000000000000              
+
+    Allowed walltime in seconds: 3600
+
+Finished reading simulation input.
+
+Lattice setup:
+~~~~~~~~~~~~~~
+
+    Using one of the default lattice structures.
+
+    Unit cell area: 1.0000000000000000
+
+    Lattice cell: 20 x 20
+
+    Surface area: 400.00000000000000
+
+    Number of lattice sites: 400
+
+    Number of site types: 1
+
+    Site type names not defined, automatic strings assigned.
+    Site type names and number of sites of that type:
+      StTp1 (400)
+
+    Maximum coordination number: 4
+
+    Lattice structure written to lattice_output.txt
+
+Finished reading lattice input.
+
+Energetics setup:
+~~~~~~~~~~~~~~~~~
+
+    Number of clusters: 2
+
+    Maximum number of sites involved in a cluster: 1
+
+    Clusters:
+
+        1. CO*-1:  Mult = 1      ECI = -1.3000000000000000       Entities:  CO*
+        2. O*-1:   Mult = 1      ECI = -2.2999999999999998       Entities:  O*
+
+Finished reading energetics input.
+
+Mechanism setup:
+~~~~~~~~~~~~~~~~
+
+    Number of elementary steps: 3
+
+    Maximum number of sites involved in a step: 2
+
+    Reaction network:
+
+        1. CO_adsorption:    A(Tini) =  4.5000E+00   Ea =  0.00    k(Tini) =  4.5000E+00  Reaction: CO  +  *(StTp1)  ->  CO*(StTp1)
+        2. O2_adsorption:    A(Tini) =  1.3750E+00   Ea =  0.00    k(Tini) =  1.3750E+00  Reaction: O2  +  *(StTp1)  +  *(StTp1)  ->  O*(StTp1)  +  O*(StTp1)
+        3. CO_oxidation:     A(Tini) =  1.0000E+20   Ea =  0.00    k(Tini) =  1.0000E+20  Reaction: CO*(StTp1)  +  O*(StTp1)  ->  CO2  +  *(StTp1)  +  *(StTp1)
+Finished reading mechanism input.
+
+Commencing simulation:
+~~~~~~~~~~~~~~~~~~~~~~
+
+Simulation stopped:
+~~~~~~~~~~~~~~~~~~~
+ Current KMC time: 1.00000942
+ Events occurred:  2223
+ Event frequency:  2222.97925
+
+Performance facts:
+~~~~~~~~~~~~~~~~~~
+
+Elapsed CPU time:         6.86800033E-02 seconds
+Elapsed clock time:       9.09826607E-02 seconds
+Setup clock time:         2.33424511E-02 seconds
+Simulation clock time:    6.76402077E-02 seconds
+
+Clock time per KMC event: 4.09278728E-05 seconds
+Clock time per KMC time:  9.09818038E-02 seconds/KMCTimeUnits
+
+Events per clock hour:    87959616
+KMC Dt per clock hour:    39568.3516 KMCTimeUnits
+
+Restart information successfully written in file restart.inf.
+
+> Normal termination <

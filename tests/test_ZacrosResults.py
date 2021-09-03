@@ -2,13 +2,21 @@
 # -*- coding: utf-8 -*-
 """Tests of the pyZacros classes."""
 
+import os
+import time
+
 import scm.plams
 
 import pyzacros as pz
 from pyzacros.utils.compareReports import compare
 
+RUNDIR=None
+
 def test_ZacrosJob_run():
     """Test of the ZacrosResults class."""
+    global RUNDIR
+    RUNDIR = os.getcwd()
+
     print( "---------------------------------------------------" )
     print( ">>> Testing ZacrosResults class" )
     print( "---------------------------------------------------" )
@@ -31,7 +39,7 @@ def test_ZacrosJob_run():
     #---------------------------------------------
     # Lattice setup:
     #---------------------------------------------
-    myLattice = pz.Lattice(lattice_type=pz.Lattice.RECTANGULAR, lattice_constant=1.0, repeat_cell=[50,50])
+    myLattice = pz.Lattice(lattice_type=pz.Lattice.RECTANGULAR, lattice_constant=1.0, repeat_cell=[20,20])
 
     #---------------------------------------------
     # Clusters:
@@ -47,7 +55,8 @@ def test_ZacrosJob_run():
                                     initial=[s0,CO_gas],
                                     final=[CO_ads],
                                     reversible=False,
-                                    pre_expon=10.0)
+                                    pre_expon=10.0,
+                                    label="CO_adsorption")
 
     # O2_adsorption:
     O2_adsorption = pz.ElementaryReaction(site_types=["1", "1"],
@@ -55,7 +64,8 @@ def test_ZacrosJob_run():
                                         final=[O_ads,O_ads],
                                         neighboring=[(1, 2)],
                                         reversible=False,
-                                        pre_expon=2.5)
+                                        pre_expon=2.5,
+                                        label="O2_adsorption")
 
     # CO_oxidation:
     CO_oxidation = pz.ElementaryReaction(site_types=["1", "1"],
@@ -63,7 +73,8 @@ def test_ZacrosJob_run():
                                     final=[s0, s0, CO2_gas],
                                     neighboring=[(1, 2)],
                                     reversible=False,
-                                    pre_expon=1.0e+20)
+                                    pre_expon=1.0e+20,
+                                    label="CO_oxidation")
 
     # Settings:
     sett = pz.Settings()
@@ -72,13 +83,12 @@ def test_ZacrosJob_run():
     sett.random_seed = 953129
     sett.temperature = 500.0
     sett.pressure = 1.0
-    sett.snapshots = ('time', 5.e-1)
-    sett.process_statistics = ('time', 1.e-2)
-    sett.species_numbers = ('time', 1.e-2)
+    sett.snapshots = ('time', 0.1)
+    sett.process_statistics = ('time', 0.1)
+    sett.species_numbers = ('time', 0.1)
     sett.event_report = 'off'
     sett.max_steps = 'infinity'
-    #sett.max_time = 25.0
-    sett.max_time = 2.0
+    sett.max_time = 1.0
     sett.wall_time = 3600
 
     job = pz.ZacrosJob( settings=sett,
@@ -86,28 +96,42 @@ def test_ZacrosJob_run():
                         mechanism=[CO_adsorption, O2_adsorption, CO_oxidation],
                         cluster_expansion=[CO_point, O_point] )
 
-    return # << zacros is not installed on GitHub
+    #-----------------------
+    # Plotting the lattice
+    #-----------------------
+    job.lattice.plot( pause=2, close=True)
 
     results = job.run()
 
-    if( not job.ok() ): raise Exception( "Zacros calculation FAILED!" )
+    if( not job.ok() ):
+        print( "Warning: The calculation FAILED likely because Zacros executable is not available!" )
+        print( "         For testing purposes, now we load precalculated results.")
 
-    assert( results.get_reactions() == \
+        job = scm.plams.load( RUNDIR+"/tests/test_ZacrosResults.data/plamsjob.dill" )
+        results = job.results
+
+    reactions = results.get_reaction_network()
+
+    assert( list(reactions.keys()) == ['CO_adsorption', 'O2_adsorption', 'CO_oxidation'] )
+
+    assert( list(reactions.values()) == \
             ['CO + *(StTp1) -> CO*(StTp1)',
              'O2 + *(StTp1) + *(StTp1) -> O*(StTp1) + O*(StTp1)',
              'CO*(StTp1) + O*(StTp1) -> CO2 + *(StTp1) + *(StTp1)'] )
 
-    assert( list(results.provided_quantities().keys()) == \
+    provided_quantities = results.provided_quantities()
+
+    assert( list(provided_quantities.keys()) == \
             ['Entry', 'Nevents', 'Time', 'Temperature', 'Energy', 'CO*', 'O*', 'CO', 'O2', 'CO2'] )
 
-    assert( results.provided_quantities()["Time"][0:5] == [0.0, 0.01, 0.02, 0.03, 0.04] )
+    assert( provided_quantities["Time"][0:5] == [0.0, 0.1, 0.2, 0.30000000000000004, 0.4] )
 
-    assert( results.provided_quantities()["Energy"][0:5] == \
-            [0.0, -596.8000000000003, -942.9999999999928, -1293.2999999999856, -1488.2999999999815] )
+    assert( provided_quantities["Energy"][0:5] == \
+            [0.0, -362.40000000000106, -435.4000000000014, -481.8000000000016, -531.5000000000013] )
 
-    assert( results.provided_quantities()["CO*"][0:5] == [0, 84, 115, 135, 147] )
+    assert( provided_quantities["CO*"][0:5] == [0, 24, 20, 15, 9] )
 
-    assert( results.provided_quantities()["CO2"][0:5] == [0, 24, 89, 162, 228] )
+    assert( provided_quantities["CO2"][0:5] == [0, 100, 202, 309, 398] )
 
     assert( results.gas_species_names() == [ "CO", "O2", "CO2" ] )
 
@@ -115,9 +139,41 @@ def test_ZacrosJob_run():
 
     assert( results.site_type_names() == [ "StTp1" ] )
 
-    results.addlayer_configurations()
+    lattice_states = results.lattice_states()
+    lattice_states[3].plot( pause=2, close=True )
 
-    #results.addlayer_configuration # [ latticeState0, latticeState1, ... ]
+    try:
+        import matplotlib.pyplot as plt
+
+        #-----------------------------------------------
+        # Plotting the lattice states as an animation
+        #-----------------------------------------------
+        plt.rcParams["figure.autolayout"] = True
+        fig, ax = plt.subplots()
+        for i,ls in enumerate(results.lattice_states()):
+            ax.cla()
+            ls.plot( show=True, pause=0.5, ax=ax )
+        plt.pause(2)
+        plt.close("all")
+
+        #------------------------------------------------------
+        # Plotting the Molecule Numbers as a function of time
+        #------------------------------------------------------
+        x_len = abs(max(provided_quantities["Time"])-min(provided_quantities["Time"]))
+        y_len = abs(max(provided_quantities["CO*"])-min(provided_quantities["CO*"]))
+
+        fig,ax = plt.subplots()
+        ax.set_xlabel('t (s)')
+        ax.set_ylabel('Molecule Numbers')
+        ax.step(provided_quantities["Time"], provided_quantities["CO*"], color='r', label="CO*")
+        ax.step(provided_quantities["Time"],  provided_quantities["O*"], color='b', label="O*")
+        ax.legend(loc='best')
+        plt.pause(2)
+        plt.close("all")
+
+    except ImportError as e:
+        pass
+
     #results.forward_rates
     #results.reverse_rates
     #results.net_forward_rates

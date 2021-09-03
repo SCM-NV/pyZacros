@@ -1,0 +1,21 @@
+energetics
+
+cluster CO*-1
+  sites 1
+  lattice_state
+    1 CO* 1
+  site_types 1
+  graph_multiplicity 1
+  cluster_eng -1.3000
+end_cluster
+
+cluster O*-1
+  sites 1
+  lattice_state
+    1 O* 1
+  site_types 1
+  graph_multiplicity 1
+  cluster_eng -2.3000
+end_cluster
+
+end_energetics

@@ -57,7 +57,8 @@ class Lattice:
               "neighboring_structure" in kwargs ):
             self.__origin = Lattice.__FROM_UNIT_CELL
             self.__cell_vectors_unit_cell = None
-            self.__site_type_names_unit_cell = None
+            self.__repeat_cell_unit_cell = None
+            self.__site_types_unit_cell = None
             self.__site_coordinates_unit_cell = None
             self.__neighboring_structure_unit_cell = None
 
@@ -76,6 +77,15 @@ class Lattice:
         # From YAML file
         elif( "path" in kwargs ):
             self.fromYAMLfile( kwargs["path"] )
+
+        else:
+            msg  = "\nError: The constructor for Lattice with the parameters:"+str(kwargs)+" is not implemented!\n"
+            msg += "       Available options:\n"
+            msg += "       - Lattice( lattice_type, lattice_constant, repeat_cell )\n"
+            msg += "       - Lattice( cell_vectors, repeat_cell, site_types, site_coordinates, neighboring_structure )\n"
+            msg += "       - Lattice( site_types, site_coordinates, nearest_neighbors, cell_vectors=None )\n"
+            msg += "       - Lattice( path )\n"
+            raise Exception(msg)
 
 
     def fromDefaultLattices(self, lattice_type, lattice_constant, repeat_cell):
@@ -126,6 +136,7 @@ class Lattice:
                                     [(1,0), Lattice.EAST] ]
 
             self.fromUnitCellDefined(cell_vectors, repeat_cell, site_types, site_coordinates, neighboring_structure)
+
 
     def fromUnitCellDefined(self, cell_vectors, repeat_cell, site_types, site_coordinates, neighboring_structure):
         """
@@ -253,7 +264,7 @@ class Lattice:
         raise Exception("Error: The constructor Lattice.fromYAMLfile has not been implemented yet!")
 
 
-    def plot(self, pause=-1):
+    def plot(self, pause=-1, show=True, color=None, ax=None, close=False):
         """
         Uses matplotlib to visualize the lattice
         """
@@ -264,7 +275,8 @@ class Lattice:
         except ImportError as e:
             return  # module doesn't exist, deal with it.
 
-        fig,ax = plt.subplots()
+        if( ax is None ):
+            fig,ax = plt.subplots()
 
         if( self.cell_vectors is not None ):
             v1 = self.cell_vectors[0]
@@ -272,7 +284,8 @@ class Lattice:
             xvalues = [0.0,v1[0],  v1[0]+v2[0],   v2[0],  0.0]
             yvalues = [0.0,v1[1],  v1[1]+v2[1],   v2[1],  0.0]
 
-            ax.plot(xvalues, yvalues, color='k', linestyle='dashed', linewidth=1, zorder=3)
+            lcolor = color if color is not None else 'k'
+            ax.plot(xvalues, yvalues, color=lcolor, linestyle='dashed', linewidth=1, zorder=3)
 
             x_len = abs(v2[0]-v1[0])
             ax.set_xlim( [ 0.0-0.1*x_len, v1[0]+v2[0]+0.1*x_len ] )
@@ -291,7 +304,8 @@ class Lattice:
             xvalues = [0.0,v1[0],  v1[0]+v2[0],   v2[0],  0.0]
             yvalues = [0.0,v1[1],  v1[1]+v2[1],   v2[1],  0.0]
 
-            ax.plot(xvalues, yvalues, color='k', linestyle='solid', linewidth=3, zorder=3)
+            lcolor = color if color is not None else 'k'
+            ax.plot(xvalues, yvalues, color=lcolor, linestyle='solid', linewidth=3, zorder=3)
 
         #ax.set_xlabel('x ($\AA$)')
         #ax.set_ylabel('y ($\AA$)')
@@ -307,7 +321,8 @@ class Lattice:
             xvalues = [ x for (x,y),st in zip(self.site_coordinates,self.site_types) if st==st_i ]
             yvalues = [ y for (x,y),st in zip(self.site_coordinates,self.site_types) if st==st_i ]
 
-            ax.scatter(xvalues, yvalues, color=colors[i], marker=markers[i], s=100, zorder=2, label=st_i)
+            lcolor = color if color is not None else colors[i]
+            ax.scatter(xvalues, yvalues, color=lcolor, marker=markers[i], s=100, zorder=2, label=st_i)
 
         for i,ineigh in enumerate(self.nearest_neighbors):
             if( ineigh is None ): continue
@@ -319,18 +334,23 @@ class Lattice:
                 norm = math.sqrt( (xvalues[0]-xvalues[1])**2 + (yvalues[0]-yvalues[1])**2 )
 
                 if( self.cell_vectors is not None ):
-                    if( norm > np.linalg.norm(2.0*np.array(v1)) ): continue
-                    if( norm > np.linalg.norm(2.0*np.array(v2)) ): continue
+                    if( norm > np.linalg.norm(1.5*np.array(v1)) ): continue
+                    if( norm > np.linalg.norm(1.5*np.array(v2)) ): continue
 
-                ax.plot(xvalues, yvalues, color='k', linestyle='solid', linewidth=0.5, zorder=1)
+                lcolor = color if color is not None else 'k'
+                ax.plot(xvalues, yvalues, color=lcolor, linestyle='solid', linewidth=0.5, zorder=1)
 
-        plt.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+        ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
         plt.tight_layout()
 
-        if( pause == -1 ):
-            plt.show()
-        else:
-            plt.pause( pause )
+        if( show ):
+            if( pause == -1 ):
+                plt.show()
+            else:
+                plt.pause( pause )
+
+                if( close ):
+                    plt.close("all")
 
 
     def __str__(self):
@@ -438,3 +458,16 @@ class Lattice:
         return len(self.site_types)
 
 
+    def set_repeat_cell( self, repeat_cell ):
+        """
+        Set the parameter repeat_cell and update all internal information
+        """
+        if( self.__origin == Lattice.__FROM_DEFAULT ):
+            self.fromDefaultLattices( self.__lattice_type_default, self.__lattice_constant_default, repeat_cell )
+
+        elif( self.__origin == Lattice.__FROM_UNIT_CELL ):
+            self.fromUnitCellDefined( self.__cell_vectors_unit_cell, repeat_cell, self.__site_types_unit_cell,
+                                                self.__site_coordinates_unit_cell, self.__neighboring_structure_unit_cell )
+
+        elif( self.__origin == Lattice.__FROM_EXPLICIT ):
+            pass

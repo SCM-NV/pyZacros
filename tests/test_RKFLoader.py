@@ -6,16 +6,15 @@ import os
 import sys
 import shutil
 
+import scm.plams
+
 import pyzacros as pz
 from pyzacros.utils.compareReports import compare
-
 
 RUNDIR=None
 
 def buildEnergyLandscape():
     """Generates of the energy landscape for the O-Pt111 system"""
-    import scm.plams
-
     scm.plams.init()
 
     molecule = scm.plams.Molecule( "tests/O-Pt111.xyz" )
@@ -49,12 +48,12 @@ def buildEnergyLandscape():
     job = scm.plams.AMSJob(molecule=molecule, settings=settings, name="PESExploration")
     results = job.run()
 
-    if( job.ok() ):
-        dirpath = os.path.dirname( results.rkfpath() )
-        shutil.rmtree( RUNDIR+"/tests/test_RKFLoader.data/PESExploration", ignore_errors=True )
-        shutil.copytree( dirpath, RUNDIR+"/tests/test_RKFLoader.data/PESExploration" )
-    else:
-        raise Exception( "Energy landscape calculation FAILED!" )
+    if( not job.ok() ):
+        print( "Warning: The EnergyLandscape calculation FAILED likely because AMS executable is not available!" )
+        print( "         For testing purposes, now we load precalculated results.")
+
+        job = scm.plams.load( RUNDIR+"/tests/test_RKFLoader.data/PESExploration/PESExploration.dill" )
+        results = job.results
 
     scm.plams.finish()
 
@@ -63,8 +62,6 @@ def buildEnergyLandscape():
 
 def deriveBindingSites():
     """Derives the binding sites from the previously calculated energy landscape"""
-    import scm.plams
-
     scm.plams.init()
 
     molecule = scm.plams.Molecule( "tests/O-Pt111.xyz" )
@@ -94,12 +91,12 @@ def deriveBindingSites():
     job = scm.plams.AMSJob(molecule=molecule, settings=settings, name="BindingSites")
     results = job.run()
 
-    if( job.ok() ):
-        dirpath = os.path.dirname( results.rkfpath() )
-        shutil.rmtree( RUNDIR+"/tests/test_RKFLoader.data/BindingSites", ignore_errors=True )
-        shutil.copytree( dirpath, RUNDIR+"/tests/test_RKFLoader.data/BindingSites" )
-    else:
-        raise Exception( "Binding sites calculation FAILED!" )
+    if( not job.ok() ):
+        print( "Warning: The BindingSites calculation FAILED likely because AMS executable is not available!" )
+        print( "         For testing purposes, now we load precalculated results.")
+
+        job = scm.plams.load( RUNDIR+"/tests/test_RKFLoader.data/BindingSites/BindingSites.dill" )
+        results = job.results
 
     scm.plams.finish()
 
@@ -107,41 +104,22 @@ def deriveBindingSites():
 
 
 def test_RKFLoader():
+    """Test of the Mechanism class loaded from AMS."""
     global RUNDIR
     RUNDIR = os.getcwd()
 
-    """Test of the Mechanism class loaded from AMS."""
     print( "---------------------------------------------------" )
     print( ">>> Testing RKFLoader class" )
     print( "---------------------------------------------------" )
 
-    # Tries to use PLAMS from AMS
-    AMSHOME = os.getenv("AMSHOME")
-    if( AMSHOME is not None ):
-        if( AMSHOME+"/scripting" not in sys.path ):
-            sys.path.append( AMSHOME+"/scripting" )
+    resultsEnergyLandscape = buildEnergyLandscape()
+    resultsBindingSites = deriveBindingSites()
 
-        # If AMS is available. It runs the calculations to generate
-        # both the energy landscape and binding sites. Results are
-        # saved in the directory tests/test_RKFLoader.data
-        #results = buildEnergyLandscape()
-        #results = deriveBindingSites()
-
-    # If AMS is not available, it tries to load the package from PYTHONPATH
-    try:
-        import scm.plams
-    except ImportError:
-        raise Exception( "Package scm.plams is required!" )
-
-    # Results are loaded from tests/test_RKFLoader.data
-    scm.plams.init()
-    job = scm.plams.AMSJob.load_external( path="tests/test_RKFLoader.data/BindingSites" )
-    scm.plams.finish()
-
-    myRKFLoader = pz.RKFLoader( job.results )
+    myRKFLoader = pz.RKFLoader( resultsBindingSites )
 
     output  = str( myRKFLoader.mechanism )+"\n"
-    #myRKFLoader.lattice.repeat_cell = [2,2]   # <<< FIXME. I modified "repeat_cell 1 1" in the expectedOutput
+    myRKFLoader.lattice.set_repeat_cell( [2,2] )
+    myRKFLoader.lattice.plot( pause=2 )
     output += str( myRKFLoader.lattice )
 
     print(output)
@@ -169,7 +147,7 @@ lattice periodic_cell
 cell_vectors
   8.31557575  0.00000000
   4.15778787  7.20149984
-repeat_cell 1 1
+repeat_cell 2 2
 n_site_types 2
 site_type_names A B
 n_cell_sites 18

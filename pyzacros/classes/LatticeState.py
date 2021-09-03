@@ -12,11 +12,12 @@ class LatticeState:
     LatticeState class that represents a state for a Zacros simulation.
     """
 
-    def __init__(self, lattice, surface_species, initial=True):
+    def __init__(self, lattice, surface_species, initial=True, add_info=None):
         """
         Creates a new LatticeState object.
         """
         self.lattice = lattice
+        self.add_info = add_info
 
         if( type(surface_species) != SpeciesList and type(surface_species) != list ):
             msg  = "### ERROR ### LatticeState.__init__.\n"
@@ -145,3 +146,47 @@ class LatticeState:
         Fill all the sites
         """
         self.fillSitesRandom( site_name, species, coverage=1.0 )
+
+
+    def plot(self, pause=-1, show=True, ax=None, close=False):
+        """
+        Uses matplotlib to visualize the lattice state
+        """
+        try:
+            import matplotlib.pyplot as plt
+        except ImportError as e:
+            return  # module doesn't exist, deal with it.
+
+        if( ax is None ):
+            fig,ax = plt.subplots()
+
+        #markers = ['o', '.', ',', 'x', '+', 'v', '^', '<', '>', 's', 'd']
+        markers = ['o', 's', 'v', '^']
+        colors = ['r', 'g', 'b', 'm']
+
+        symbols = [sp if sp is None else sp.symbol for sp in self.__adsorbed_on_site]
+
+        items = list(filter(None.__ne__, set(self.__adsorbed_on_site)))
+
+        ax.set_title("t = {} s".format(self.add_info.get("time")))
+        self.lattice.plot( show=False, ax=ax, color='0.5' )
+
+        for i,sym_i in enumerate([item.symbol for item in items]):
+
+            if( all([sym is None for sym in symbols]) ): continue
+
+            xvalues = [ x for (x,y),sym in zip(self.lattice.site_coordinates,symbols) if sym==sym_i ]
+            yvalues = [ y for (x,y),sym in zip(self.lattice.site_coordinates,symbols) if sym==sym_i ]
+
+            ax.scatter(xvalues, yvalues, color=colors[i], marker=markers[i], s=100, zorder=4, label=sym_i)
+
+        ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+
+        if( show ):
+            if( pause == -1 ):
+                plt.show()
+            else:
+                plt.pause( pause )
+
+                if( close ):
+                    plt.close("all")

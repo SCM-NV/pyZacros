@@ -28,18 +28,18 @@ class ZacrosResults( scm.plams.Results ):
         'out': 'std.out'}
 
 
-    def get_reactions(self):
+    def get_reaction_network(self):
         """
         Return the reactions from the 'general_output.txt' file.
         """
         lines = self.get_file_chunk(self._filenames['general'], begin="Reaction network:", end="Finished reading mechanism input.")
 
-        reactions = []
+        reaction_network = {}
         for line in lines:
             if( not line.strip() ): continue
-            reactions.append( line[line.find("Reaction:")+len("Reaction:"):].strip().replace('  ',' ') )
+            reaction_network[ line.split()[1].replace(':','') ] = line[line.find("Reaction:")+len("Reaction:"):].strip().replace('  ',' ')
 
-        return reactions
+        return reaction_network
 
 
     def provided_quantities(self):
@@ -119,11 +119,11 @@ class ZacrosResults( scm.plams.Results ):
         return len(lines)
 
 
-    def addlayer_configurations(self):
+    def lattice_states(self):
         """
         Return the configurations from the 'history_output.txt' file.
         """
-        lattice_states = []
+        output = []
 
         number_of_configurations = self.number_of_configurations()
         number_of_lattice_sites = self.number_of_lattice_sites()
@@ -174,21 +174,23 @@ class ZacrosResults( scm.plams.Results ):
                     temperature = float(tokens[4])
                     energy = float(tokens[5])
 
-                    lattice_state = LatticeState( self.job.lattice, surface_species )
+                    add_info = {"number_of_events":number_of_events, "time":time,
+                                "temperature":temperature, "energy":energy}
+                    lattice_state = LatticeState( self.job.lattice, surface_species, add_info=add_info )
                 else:
                     site_number = int(tokens[0])-1 # Zacros uses arrays indexed from 1
                     adsorbate_number = int(tokens[1])
                     species_number = int(tokens[2])-1 # Zacros uses arrays indexed from 1
                     dentation = int(tokens[3])
 
-                    if( species_number >= 0 ): # In zacros 0 means empty site
+                    if( species_number > -1 ): # In zacros -1 means empty site (0 for Zacros)
                         lattice_state.fillSite( site_number, surface_species[species_number] )
 
                     pos += 1
 
-            lattice_states.append( lattice_state )
+            output.append( lattice_state )
 
-        return lattice_states
+        return output
 
         #id
         #nevents
