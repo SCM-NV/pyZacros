@@ -3,6 +3,7 @@ This example reproduces the Zacros example described in:
 https://zacros.org/tutorials/4-tutorial-1-ziff-gulari-barshad-model-in-zacros
 """
 
+import scm.plams
 import pyzacros as pz
 
 #---------------------------------------------
@@ -21,8 +22,7 @@ O_ads = pz.Species("O*", 1)
 #---------------------------------------------
 # Lattice setup:
 #---------------------------------------------
-myLattice = pz.Lattice(lattice_type="default_choice",
-                    default_lattice=["rectangular_periodic", 1.0, 50, 50])
+myLattice = pz.Lattice( lattice_type=pz.Lattice.RECTANGULAR, lattice_constant=1.0, repeat_cell=[50,50] )
 
 #---------------------------------------------
 # Clusters:
@@ -59,6 +59,8 @@ CO_oxidation = pz.ElementaryReaction(site_types=["1", "1"],
                                   pre_expon=1.0e+20,
                                   activation_energy=0.0)
 
+scm.plams.init()
+
 # Settings:
 sett = pz.Settings()
 sett.molar_fraction.CO = 0.45
@@ -74,10 +76,12 @@ sett.max_steps = 'infinity'
 sett.max_time = 25.0
 sett.wall_time = 3600
 
-myJob = pz.KMCJob( settings=sett,
+myJob = pz.ZacrosJob( settings=sett,
                     lattice=myLattice,
                     mechanism=[CO_adsorption, O2_adsorption, CO_oxidation],
                     cluster_expansion=[CO_point, O_point] )
 
 print(myJob)
-myJob.run()
+results = myJob.run()
+
+scm.plams.finish()

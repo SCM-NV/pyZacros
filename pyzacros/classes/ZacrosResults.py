@@ -202,3 +202,49 @@ class ZacrosResults( scm.plams.Results ):
         #species_number
         #dentation
         #ngas_molecules
+
+
+    def get_process_statistics(self):
+        """
+        Return the configurations from the 'history_output.txt' file.
+        """
+        output = []
+
+
+    def get_TOFs(self, npoints=None):
+        """
+        Return the TOF calculated with the last ```npoints```
+        """
+        values = {}
+        errors = {}
+
+        try:
+            import math
+            import scipy.optimize
+        except ImportError as e:
+            return output # module doesn't exist, deal with it.
+
+        def line(x, a, b):
+            return a * x + b
+
+        gas_species_names = self.gas_species_names()
+        provided_quantities = self.provided_quantities()
+
+        if( npoints is None ):
+            tVec = provided_quantities["Time"]
+        else:
+            tVec = provided_quantities["Time"][-npoints:]
+
+        for sn in gas_species_names:
+
+            if( npoints is None ):
+                nMolsVec = provided_quantities[sn]
+            else:
+                nMolsVec = provided_quantities[sn][-npoints:]
+
+            popt,pcov = scipy.optimize.curve_fit(line, tVec, nMolsVec)
+
+            values[sn] = popt[0]
+            errors[sn] = math.sqrt(pcov[0,0])
+
+        return values,errors

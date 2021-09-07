@@ -105,7 +105,7 @@ class ZacrosJob( scm.plams.SingleJob ):
         so we don't use this function. Instead, we made the equivalent function for
         every input file. See below.
         """
-        pass
+        return self.get_simulation_input()
 
 
     def get_simulation_input(self):
@@ -182,7 +182,7 @@ class ZacrosJob( scm.plams.SingleJob ):
         molar_frac_list = get_molar_fractions(self.settings, gasSpecies)
 
         if( len(molar_frac_list)>0 ):
-            output += "gas_molar_fracs   " + ''.join(["%10s"%str(elem) for elem in molar_frac_list]) + "\n\n"
+            output += "gas_molar_fracs   " + ''.join([" %9s"%str(elem) for elem in molar_frac_list]) + "\n\n"
         output += str(self.mechanism.species())+"\n\n"
 
         output += print_optional_sett(self,opt_sett='snapshots')
