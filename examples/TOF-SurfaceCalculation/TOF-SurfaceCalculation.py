@@ -1,3 +1,7 @@
+"""
+Based on the Zacros example:
+https://zacros.org/tutorials/4-tutorial-1-ziff-gulari-barshad-model-in-zacros
+"""
 import multiprocessing
 import numpy
 
@@ -7,12 +11,12 @@ import pyzacros as pz
 #---------------------------------------------
 # Species:
 #---------------------------------------------
-# - Gas-species:
+# Gas-species:
 CO_gas = pz.Species("CO")
 O2_gas = pz.Species("O2")
 CO2_gas = pz.Species("CO2", gas_energy=-2.337)
 
-# -) Surface species:
+# Surface species:
 s0 = pz.Species("*", 1)      # Empty adsorption site
 CO_ads = pz.Species("CO*", 1)
 O_ads = pz.Species("O*", 1)
@@ -119,7 +123,7 @@ x = []
 y = []
 z = []
 
-# Only print the results of the succesful caluclations:
+# Only print the results of the succesful calculations:
 #for result in [r for r in results if r.ok()]:
 for result in results:
     xCO,xO2 = [ float(s.replace('CO_','').replace('O2_','')) for s in result.job.name.split('-') ]
@@ -139,10 +143,16 @@ for i in range(len(x)):
 #---------------------------------------------
 # Plotting the results
 #---------------------------------------------
-#import matplotlib.pyplot as plt
+try:
+    import matplotlib.pyplot as plt
+except ImportError as e:
+    print('Consider to install matlibplot to visualize the results!')
+    exit(0)
 
-#ax = plt.axes(projection='3d')
-#ax.plot_trisurf(x, y, z, cmap=plt.cm.jet, antialiased=True);
-
-#plt.show()
+ax = plt.axes(projection='3d')
+ax.set_xlabel('x CO')
+ax.set_ylabel('x O2')
+ax.set_zlabel('TOF CO2')
+ax.plot_trisurf(x, y, z, cmap=plt.cm.jet, antialiased=True);
+plt.show()
 
