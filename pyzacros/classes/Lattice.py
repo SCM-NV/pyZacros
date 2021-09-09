@@ -310,8 +310,8 @@ class Lattice:
         #ax.set_xlabel('x ($\AA$)')
         #ax.set_ylabel('y ($\AA$)')
 
-        ax.set_xlabel('x (angs.)')
-        ax.set_ylabel('y (angs.)')
+        ax.set_xlabel('x (ang.)')
+        ax.set_ylabel('y (ang.)')
 
         #markers = ['o', '.', ',', 'x', '+', 'v', '^', '<', '>', 's', 'd']
         markers = ['o', 's', 'v', '^']

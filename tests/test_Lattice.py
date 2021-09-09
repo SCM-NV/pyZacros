@@ -18,7 +18,7 @@ def test_Lattice():
     myLattice = pz.Lattice( lattice_type=pz.Lattice.HEXAGONAL, lattice_constant=1.0, repeat_cell=[8,10] )
 
     print(myLattice)
-    myLattice.plot( pause=2 )
+    myLattice.plot( pause=2, close=True )
 
     output = str(myLattice)
     expectedOutput = """\
@@ -57,7 +57,7 @@ end_lattice\
                                                     [(5,5), pz.Lattice.SOUTHEAST] ] )
 
     print(myLattice)
-    myLattice.plot( pause=2 )
+    myLattice.plot( pause=2, close=True )
 
     output = str(myLattice)
     expectedOutput = """\
@@ -136,7 +136,7 @@ end_lattice\
                                                [12, 13]] )
 
     print(myLattice)
-    myLattice.plot( pause=2 )
+    myLattice.plot( pause=2, close=True )
 
     output = str(myLattice)
     expectedOutput = """\

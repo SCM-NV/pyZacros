@@ -44,6 +44,7 @@ class ZacrosJob( scm.plams.SingleJob ):
                        simulation in Zacros is initialized with an empty
                        lattice.
         """
+
         def check_molar_fraction(settings=Settings, species_list=SpeciesList):
             """
             Check if molar_fraction labels are compatible with Species labels.
@@ -101,11 +102,13 @@ class ZacrosJob( scm.plams.SingleJob ):
 
     def get_input(self):
         """
-        It should generate the Zagros input file. But Zagros has several input files,
-        so we don't use this function. Instead, we made the equivalent function for
-        every input file. See below.
+        It should generate the Zacros input file. But Zacros has several
+        input files. So, we discourage using this function.
+        On the other side, this function is also used as a hash to
+        represent the job univocally. Because of that, we just return
+        its string representation which contains all input files concatenated.
         """
-        return self.get_simulation_input()
+        return str(self)
 
 
     def get_simulation_input(self):
@@ -264,7 +267,8 @@ class ZacrosJob( scm.plams.SingleJob ):
     def _get_ready(self):
         """
         Create inputs and runscript files in the job folder.
-        Filenames correspond to entries in the `_filenames` attribute"""
+        Filenames correspond to entries in the `_filenames` attribute
+        """
         simulation = os.path.join(self.path, self._filename('simulation'))
         lattice = os.path.join(self.path, self._filename('lattice'))
         energetics = os.path.join(self.path, self._filename('energetics'))

@@ -68,6 +68,8 @@ mechanism = [CO_adsorption, O2_adsorption, CO_oxidation]
 #---------------------------------------------
 # Calculation Settings
 #---------------------------------------------
+scm.plams.init()
+
 # Run as many job simultaneously as there are cpu on the system:
 maxjobs = multiprocessing.cpu_count()
 print('Running up to {} jobs in parallel simultaneously'.format(maxjobs))
@@ -96,7 +98,6 @@ sett.wall_time = 3600
 #---------------------------------------------
 # Running the calculations
 #---------------------------------------------
-scm.plams.init()
 
 results = []
 for xCO in numpy.arange(0.0,1.0,0.05):
@@ -114,8 +115,6 @@ for xCO in numpy.arange(0.0,1.0,0.05):
 
         results.append(job.run())
 
-scm.plams.finish()
-
 #---------------------------------------------
 # Getting the results
 #---------------------------------------------
@@ -132,6 +131,8 @@ for result in results:
     x.append( xCO )
     y.append( xO2 )
     z.append( TOFs["CO2"] )
+
+scm.plams.finish()
 
 print("--------------------------------------")
 print("%8s"%"xCO", "%8s"%"xO2", "%18s"%"TOFs[CO2]")
