@@ -188,4 +188,7 @@ end_mechanism\
 """
     assert( compare( output, expectedOutput, 1e-3 ) )
 
+    #myJob = pz.ZacrosJob.load_external( path='test_ZacrosJob.data' )
+    ##print(myJob)
+
 test_ZacrosJob()
