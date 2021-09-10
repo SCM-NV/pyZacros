@@ -1,0 +1,19 @@
+random_seed             10
+temperature         273.15
+pressure           1.01325
+
+n_gas_species    0
+
+n_surf_species    1
+surf_specs_names         O1*
+surf_specs_dent            1
+
+snapshots                 on event
+process_statistics        on event
+species_numbers           on event
+event_report      off
+max_steps         5000
+max_time          250.0
+wall_time         10
+
+finish

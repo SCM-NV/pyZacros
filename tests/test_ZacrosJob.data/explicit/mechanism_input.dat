@@ -1,0 +1,46 @@
+mechanism
+
+reversible_step CO_adsorption
+   gas_reacs_prods CO -1
+   sites 1
+   initial # (entity_number, species, dentate)
+      1   *   1
+   final
+      1 CO*   1
+   site_types br44
+   pre_expon  2.226e+007
+   pe_ratio   2.137e-006
+   activ_eng  0.00
+end_reversible_step
+
+reversible_step CO_diffusion
+  sites 2
+  neighboring 1-2
+  initial # (entity_number, species, dentate)
+    1 CO*   1
+    2   *   1
+  final
+    1   *   1
+    2 CO*   1
+  site_types br42 br44
+  pre_expon  1.58e+9
+  pe_ratio   0.696
+  activ_eng  0.7971
+end_reversible_step
+
+reversible_step CO_diffusion
+  sites 2
+  neighboring 1-2
+  initial # (entity_number, species, dentate)
+    1 CO*   1
+    2   *   1
+  final
+    1   *   1
+    2 CO*   1
+  site_types br44 cn2
+  pre_expon  1.58e+9
+  pe_ratio   0.696
+  activ_eng  0.7971
+end_reversible_step
+
+end_mechanism

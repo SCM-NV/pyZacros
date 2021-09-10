@@ -44,13 +44,11 @@ loader = pz.RKFLoader( results )
 
 #loader.replace( site_name='A', 'fcc' )
 #loader.replace( site_name='B', 'hcp' )
-loader.lattice.repeat_cell = [10,10]
+loader.lattice.set_repeat_cell( (10,10) )
 
-print(loader.mechanism)
-
-initialState = pz.LatticeState( loader.lattice, mechanism=loader.mechanism )
-#initialState.fillSites( site_name='fcc', species='O1*', coverage=0.5 )
-initialState.fillSites( site_name='A', species='O1*', coverage=0.5 )
+initialState = pz.LatticeState( loader.lattice, surface_species=loader.mechanism.surface_species() )
+#initialState.fill_sites( site_name='fcc', species='O1*', coverage=0.5 )
+initialState.fill_sites_random( site_name='A', species='O1*', coverage=0.5 )
 
 settings = pz.Settings()
 settings.random_seed = 10
@@ -64,8 +62,8 @@ settings.max_steps = 5000
 #settings.max_time = 250.0
 #settings.wall_time = 30
 
-job = pz.KMCJob( lattice=loader.lattice, mechanism=loader.mechanism,
-                cluster_expansion=loader.clusterExpansion,
-                initialState=initialState, settings=settings, name='ZACROS' )
+job = pz.ZacrosJob( lattice=loader.lattice, mechanism=loader.mechanism,
+                    cluster_expansion=loader.clusterExpansion,
+                    initialState=initialState, settings=settings )
 results = job.run()
 

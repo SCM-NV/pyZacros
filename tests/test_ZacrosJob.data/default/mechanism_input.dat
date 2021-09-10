@@ -1,0 +1,120 @@
+mechanism
+
+reversible_step CO_adsorption
+  gas_reacs_prods CO -1
+  sites 1
+  initial
+    1 * 1
+  final
+    1 CO* 1
+  site_types 1
+  pre_expon 2.226e+07
+  pe_ratio 0.000
+  activ_eng 0.000
+end_reversible_step
+
+reversible_step H2_dissoc_adsorp
+  gas_reacs_prods H2 -1
+  sites 2
+  neighboring 1-2
+  initial
+    1 * 1
+    2 * 1
+  final
+    1 H* 1
+    2 H* 1
+  site_types 1 1
+  pre_expon 8.299e+07
+  pe_ratio 0.000
+  activ_eng 0.000
+end_reversible_step
+
+reversible_step H2O_adsorption
+  gas_reacs_prods H2O -1
+  sites 1
+  initial
+    1 * 1
+  final
+    1 H2O* 1
+  site_types 1
+  pre_expon 2.776e+02
+  pe_ratio 0.000
+  activ_eng 0.000
+end_reversible_step
+
+reversible_step H2O_dissoc_adsorp
+  sites 2
+  neighboring 1-2
+  initial
+    1 H2O* 1
+    2 * 1
+  final
+    1 OH* 1
+    2 H* 1
+  site_types 1 1
+  pre_expon 1.042e+13
+  pe_ratio 1.000
+  activ_eng 0.777
+end_reversible_step
+
+reversible_step OH_decomposition
+  sites 2
+  neighboring 1-2
+  initial
+    1 * 1
+    2 OH* 1
+  final
+    1 O* 1
+    2 H* 1
+  site_types 1 1
+  pre_expon 1.042e+13
+  pe_ratio 1.000
+  activ_eng 0.940
+end_reversible_step
+
+reversible_step COOH_formation
+  sites 2
+  neighboring 1-2
+  initial
+    1 CO* 1
+    2 OH* 1
+  final
+    1 * 1
+    2 COOH* 1
+  site_types 1 1
+  pre_expon 1.042e+13
+  pe_ratio 1.000
+  activ_eng 0.405
+end_reversible_step
+
+step COOH_decomposition
+  gas_reacs_prods CO2 1
+  sites 2
+  neighboring 1-2
+  initial
+    1 COOH* 1
+    2 * 1
+  final
+    1 * 1
+    2 H* 1
+  site_types 1 1
+  pre_expon 1.042e+13
+  activ_eng 0.852
+end_step
+
+step CO_oxidation
+  gas_reacs_prods CO2 1
+  sites 2
+  neighboring 1-2
+  initial
+    1 CO* 1
+    2 O* 1
+  final
+    1 * 1
+    2 * 1
+  site_types 1 1
+  pre_expon 1.042e+13
+  activ_eng 0.988
+end_step
+
+end_mechanism

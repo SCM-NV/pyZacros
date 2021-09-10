@@ -359,6 +359,17 @@ class ZacrosJob( scm.plams.SingleJob ):
 
             if( len(tokens)<2 ): continue
 
+            def process_scheme( sv ):
+                if( sv[1]=="event" ):
+                    if( len(sv)<3 ):
+                        return sv[1],1
+                    else:
+                        return sv[1],int(sv[2])
+                elif( sv[1]=="time" ):
+                    return sv[1],float(sv[2])
+                else:
+                    raise Exception( "Error: Keyword "+str(sv)+" in file "+ZacrosJob._filenames['simulation']+" is not supported!" )
+
             # Specific conversion rules
             cases = {
                 "random_seed" : lambda sv: sett.setdefault("random_seed", int(sv[0])),
@@ -375,15 +386,14 @@ class ZacrosJob( scm.plams.SingleJob ):
                 "surf_specs_names" : lambda sv: sett.setdefault("surf_specs_names", sv),
                 "surf_specs_dent" : lambda sv: sett.setdefault("surf_specs_dent", [int(a) for a in sv]),
 
-                "snapshots" : lambda sv: sett.setdefault("snapshots", ( sv[1],float(sv[2]) ) ),
-                "process_statistics" : lambda sv: sett.setdefault("process_statistics", ( sv[1],float(sv[2]) )),
-                "species_numbers" : lambda sv: sett.setdefault("species_numbers", ( sv[1],float(sv[2]) )),
+                "snapshots" : lambda sv: sett.setdefault("snapshots", process_scheme(sv) ),
+                "process_statistics" : lambda sv: sett.setdefault("process_statistics", process_scheme(sv) ),
+                "species_numbers" : lambda sv: sett.setdefault("species_numbers", process_scheme(sv) ),
                 "event_report" : lambda sv: sett.setdefault("event_report", sv),
                 "max_steps" : lambda sv: sett.setdefault("max_steps", sv[0] if sv[0]=='infinity' else int(sv[0])),
                 "max_time" : lambda sv: sett.setdefault("max_time", float(sv[0])),
                 "wall_time" : lambda sv: sett.setdefault("wall_time", int(sv[0]))
             }
-
             value = cases.get( tokens[0], lambda sv: None )( tokens[1:] )
 
             if( value is None ):
@@ -403,12 +413,7 @@ class ZacrosJob( scm.plams.SingleJob ):
 
         with open( path+"/"+ZacrosJob._filenames['lattice'], "r" ) as inp:
             file_content = inp.readlines()
-        file_content = [line for line in file_content if line.strip()] # Removes empty lines
-
-        print("---")
-        for line in file_content:
-            print(line[:-1])
-        print("---")
+        file_content = [line.split("#")[0] for line in file_content if line.split("#")[0].strip()] # Removes empty lines and comments
 
         nline = 0
         while( nline < len(file_content) ):
@@ -438,9 +443,104 @@ class ZacrosJob( scm.plams.SingleJob ):
                 lattice = Lattice( lattice_type=lattice_type, lattice_constant=lattice_constant, repeat_cell=repeat_cell )
 
             if( tokens[0] == "lattice" and tokens[1] == "periodic_cell" ):
-                raise Exception("Error: Lattice periodic_cell is not implemented yet!")
+                nline += 1
+
+                parameters = {}
+
+                while( nline < len(file_content) ):
+                    tokens = file_content[nline].split()
+
+                    cases = {
+                        "repeat_cell" : lambda sv: parameters.setdefault("repeat_cell", (int(sv[0]),int(sv[1])) ),
+                        "n_site_types" : lambda sv: parameters.setdefault("n_site_types", int(sv[0])),
+                        "site_type_names" : lambda sv: parameters.setdefault("site_type_names", sv),
+                        "n_cell_sites" : lambda sv: parameters.setdefault("n_cell_sites", int(sv[0])),
+                        "site_types" : lambda sv: parameters.setdefault("site_types", sv),
+                    }
+                    cases.get( tokens[0], lambda sv: None )( tokens[1:] )
+
+                    if( tokens[0] == "cell_vectors" ):
+                        parameters["cell_vectors"] = 2*[None]
+                        for n in [0,1]:
+                            nline += 1
+                            tokens = file_content[nline].split()
+                            parameters["cell_vectors"][n] = [ float(tokens[i]) for i in [0,1] ]
+
+                    elif( tokens[0] == "site_coordinates" ):
+                        # WARNING. Here, I'm assuming that n_cell_sites is defined before site_coordinates
+                        parameters["site_coordinates"] = parameters["n_cell_sites"]*[None]
+
+                        for n in range(parameters["n_cell_sites"]):
+                            nline += 1
+                            tokens = file_content[nline].split()
+                            parameters["site_coordinates"][n] = [ float(tokens[i]) for i in [0,1] ]
+
+                    elif( tokens[0] == "neighboring_structure" ):
+                        parameters["neighboring_structure"] = []
+
+                        while( nline < len(file_content) ):
+                            nline += 1
+                            tokens = file_content[nline].split()
+
+                            if( tokens[0] == "end_neighboring_structure" ):
+                                break
+
+                            cases = {
+                                "self" : Lattice.SELF,
+                                "north" : Lattice.NORTH,
+                                "northeast" : Lattice.NORTHEAST,
+                                "east" : Lattice.EAST,
+                                "southeast" : Lattice.SOUTHEAST
+                            }
+                            value = cases.get( tokens[1] )
+
+                            if( value is None ):
+                                raise Exception( "Error: Keyword "+tokens[1]+" in file "+ZacrosJob._filenames['lattice']+" is not supported!" )
+
+                            parameters["neighboring_structure"].append( [ tuple( int(a)-1 for a in tokens[0].split("-") ), value ] )
+
+                    nline += 1
+
+                lattice = Lattice( **parameters )
+
             if( tokens[0] == "lattice" and tokens[1] == "explicit" ):
-                raise Exception("Error: Lattice periodic_cell is not implemented yet!")
+                nline += 1
+
+                parameters = {}
+
+                while( nline < len(file_content) ):
+                    tokens = file_content[nline].split()
+
+                    cases = {
+                        "n_sites" : lambda sv: parameters.setdefault("n_sites", int(sv[0])),
+                        "max_coord" : lambda sv: parameters.setdefault("max_coord", int(sv[0])),
+                        "n_site_types" : lambda sv: parameters.setdefault("n_site_types", int(sv[0])),
+                        "site_type_names" : lambda sv: parameters.setdefault("site_type_names", sv)
+                    }
+                    cases.get( tokens[0], lambda sv: None )( tokens[1:] )
+
+                    if( tokens[0] == "lattice_structure" ):
+                        parameters["site_types"] = []
+                        parameters["site_coordinates"] = []
+                        parameters["nearest_neighbors"] = []
+
+                        while( nline < len(file_content) ):
+                            nline += 1
+                            tokens = file_content[nline].split()
+
+                            if( tokens[0] == "end_lattice_structure" ):
+                                break
+
+                            if( len(tokens) < 5 ):
+                                raise Exception( "Error: Format inconsistent in section lattice_structure!" )
+
+                            parameters["site_coordinates"].append( [ float(tokens[1]), float(tokens[2]) ] )
+                            parameters["site_types"].append( tokens[3] )
+                            parameters["nearest_neighbors"].append( [ int(tokens[i])-1 for i in range(5,len(tokens)) ] )
+
+                    nline += 1
+
+                lattice = Lattice( **parameters )
 
             nline += 1
 
@@ -493,11 +593,7 @@ class ZacrosJob( scm.plams.SingleJob ):
 
         sett = ZacrosJob.__recreate_simulation_input( path )
         lattice = ZacrosJob.__recreate_lattice_input( path )
-        print(">")
-        print(">")
-        #print(sett)
         print(lattice)
-        exit(0)
 
         #job = cls( name=jobname )
         #job.path = path

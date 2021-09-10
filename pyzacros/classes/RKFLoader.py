@@ -288,9 +288,8 @@ class RKFLoader:
 
             neighboring_structure[i] = [first,second]
 
-        self.lattice = Lattice(
-                            cell_vectors=latticeVectors,
-                            repeat_cell=[1, 1], # Default value.
-                            site_types=labels,
-                            site_coordinates=coordsFrac,
-                            neighboring_structure=neighboring_structure)
+        self.lattice = Lattice( cell_vectors=[ [v[0],v[1]] for v in latticeVectors[0:2] ], # We omit the z-axis
+                                repeat_cell=(1,1), # Default value.
+                                site_types=labels,
+                                site_coordinates=coordsFrac,
+                                neighboring_structure=neighboring_structure)

@@ -184,7 +184,7 @@ class ZacrosResults( scm.plams.Results ):
                     dentation = int(tokens[3])
 
                     if( species_number > -1 ): # In zacros -1 means empty site (0 for Zacros)
-                        lattice_state.fillSite( site_number, surface_species[species_number] )
+                        lattice_state.fill_site( site_number, surface_species[species_number] )
 
                     pos += 1
 

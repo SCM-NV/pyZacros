@@ -1,5 +1,6 @@
 """Test script that will reproduce CO_tutorial inputs."""
 
+import scm.plams
 import pyzacros as pz
 
 #---------------------------------------------
@@ -24,8 +25,7 @@ COOH_adsorbed = pz.Species("COOH*", 1)
 #---------------------------------------------
 # Lattice setup:
 #---------------------------------------------
-latt = pz.Lattice(lattice_type="default_choice",
-                        default_lattice=["hexagonal_periodic", 1.0, 8, 10])
+latt = pz.Lattice( lattice_type=pz.Lattice.HEXAGONAL, lattice_constant=1.0, repeat_cell=[8,10] )
 
 #print(latt)
 
@@ -196,6 +196,8 @@ mech = pz.Mechanism([CO_adsorption, H2_dissoc_adsorp, H2O_adsorption,
 #---------------------------------------------
 # Settings:
 #---------------------------------------------
+scm.plams.init()
+
 sett = pz.Settings()
 
 sett.molar_fraction.CO = 1.e-5
@@ -212,7 +214,9 @@ sett.max_steps = 'infinity'
 sett.max_time = 250.0
 sett.wall_time = 30
 
-myJob = pz.KMCJob( settings=sett, lattice=latt, mechanism=mech, cluster_expansion=myClusterExpansion )
+job = pz.ZacrosJob( settings=sett, lattice=latt, mechanism=mech, cluster_expansion=myClusterExpansion )
 
-print(myJob)
-myJob.run()
+print(job)
+job.run()
+
+scm.plams.finish()

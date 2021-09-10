@@ -188,7 +188,11 @@ end_mechanism\
 """
     assert( compare( output, expectedOutput, 1e-3 ) )
 
-    #myJob = pz.ZacrosJob.load_external( path='test_ZacrosJob.data' )
-    ##print(myJob)
+    #myJob = pz.ZacrosJob.load_external( path='test_ZacrosJob.data/default' )
+    #print(myJob)
+    #myJob = pz.ZacrosJob.load_external( path='test_ZacrosJob.data/periodic_cell' )
+    #print(myJob)
+    #myJob = pz.ZacrosJob.load_external( path='test_ZacrosJob.data/explicit' )
+    #print(myJob)
 
 test_ZacrosJob()

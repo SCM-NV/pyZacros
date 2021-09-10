@@ -1,0 +1,39 @@
+energetics
+
+cluster CO*-br42
+  sites 1
+  lattice_state
+    1 CO*  1
+  site_types br42
+  graph_multiplicity 1
+  cluster_eng -2.005
+end_cluster
+
+cluster CO*-br44
+  sites 1
+  lattice_state
+    1 CO*  1
+  site_types br44
+  graph_multiplicity 1
+  cluster_eng -2.005
+end_cluster
+
+cluster CO*-cn2
+  sites 1
+  lattice_state
+    1 CO*  1
+  site_types cn2
+  graph_multiplicity 1
+  cluster_eng -2.005
+end_cluster
+
+cluster CO*-cn4
+  sites 1
+  lattice_state
+    1 CO*  1
+  site_types cn4
+  graph_multiplicity 1
+  cluster_eng -2.005
+end_cluster
+
+end_energetics
