@@ -6,9 +6,11 @@ import stat
 import scm.plams
 
 from .ZacrosResults import *
+from .Species import *
 from .SpeciesList import *
 from .Lattice import *
 from .ClusterExpansion import *
+from .ElementaryReaction import *
 from .Mechanism import *
 from .Settings import *
 
@@ -389,7 +391,7 @@ class ZacrosJob( scm.plams.SingleJob ):
                 "snapshots" : lambda sv: sett.setdefault("snapshots", process_scheme(sv) ),
                 "process_statistics" : lambda sv: sett.setdefault("process_statistics", process_scheme(sv) ),
                 "species_numbers" : lambda sv: sett.setdefault("species_numbers", process_scheme(sv) ),
-                "event_report" : lambda sv: sett.setdefault("event_report", sv),
+                "event_report" : lambda sv: sett.setdefault("event_report", sv[0]),
                 "max_steps" : lambda sv: sett.setdefault("max_steps", sv[0] if sv[0]=='infinity' else int(sv[0])),
                 "max_time" : lambda sv: sett.setdefault("max_time", float(sv[0])),
                 "wall_time" : lambda sv: sett.setdefault("wall_time", int(sv[0]))
@@ -548,24 +550,254 @@ class ZacrosJob( scm.plams.SingleJob ):
 
 
     @staticmethod
-    def __recreate_energetics_input():
+    def __recreate_energetics_input( path, gas_species, surface_species ):
         """
         Recreates the energetics input for the corresponding job based on file 'energetics_input.dat' present in the job folder.
         This method is used by |load_external|.
         Returns a list of |Cluster| objects.
         """
         cluster_expansion = []
+
+        with open( path+"/"+ZacrosJob._filenames['energetics'], "r" ) as inp:
+            file_content = inp.readlines()
+        file_content = [line.split("#")[0] for line in file_content if line.split("#")[0].strip()] # Removes empty lines and comments
+
+        nline = 0
+        while( nline < len(file_content) ):
+            tokens = file_content[nline].split()
+
+            if( tokens[0].lower() == "cluster" ):
+                parameters = {}
+
+                parameters["label"] = tokens[1]
+
+                nline += 1
+
+                while( nline < len(file_content) ):
+                    tokens = file_content[nline].split()
+
+                    if( tokens[0] == "end_cluster" ):
+                        break
+
+                    def process_neighboring( sv ):
+                        output = []
+                        for pair in sv:
+                            a,b = pair.split("-")
+                            output.append( (int(a),int(b)) )
+                        return output
+
+                    cases = {
+                        "sites" : lambda sv: parameters.setdefault("sites", int(sv[0])),
+                        "site_types" : lambda sv: parameters.setdefault("site_types", sv),
+                        "graph_multiplicity" : lambda sv: parameters.setdefault("multiplicity", int(sv[0])),
+                        "cluster_eng" : lambda sv: parameters.setdefault("cluster_energy", float(sv[0])),
+                        "neighboring" : lambda sv: parameters.setdefault("neighboring", process_neighboring(sv))
+                    }
+                    cases.get( tokens[0], lambda sv: None )( tokens[1:] )
+
+                    if( tokens[0] == "lattice_state" ):
+                        parameters["lattice_state"] = []
+
+                        isites = 0
+                        while( nline < len(file_content) ):
+                            nline += 1
+                            tokens = file_content[nline].split()
+
+                            if( isites == parameters["sites"] ):
+                                break
+
+                            if( len(tokens) < 3 ):
+                                raise Exception( "Error: Format inconsistent in section lattice_state!" )
+
+                            if( tokens[0]+tokens[1]+tokens[2] != "&&&" ):
+                                entity_number = int(tokens[0])
+                                species_name = tokens[1]
+                                dentate_number = int(tokens[2])
+
+                                parameters["lattice_state"].append( [ entity_number, species_name, dentate_number ] )
+
+                            isites += 1
+                    else:
+                        nline += 1
+
+                print(parameters)
+                #cluster = Cluster( site_types=[ labels[j] for j in connectedSites ],
+                                           #neighboring=neighboring,
+                                           #species=SpeciesList( [ Species(f+"*",1) for f in speciesNames ] ),
+                                           #multiplicity=2,
+                                           #cluster_energy=state2Energy[idReactant] )
+
+                #cluster_expansion.append( cluster )
+
+            nline += 1
+
         return cluster_expansion
 
 
     @staticmethod
-    def __recreate_mechanism_input():
+    def __recreate_mechanism_input( path, gas_species, surface_species ):
         """
         Recreates the mechanism input for the corresponding job based on file 'mechanism_input.dat' present in the job folder.
         This method is used by |load_external|.
-        Returns a list of |ElementaryReaction| objects.
+        Returns a |Mechanism| object.
         """
-        mechanism = []
+        mechanism = Mechanism()
+
+        with open( path+"/"+ZacrosJob._filenames['mechanism'], "r" ) as inp:
+            file_content = inp.readlines()
+        file_content = [line.split("#")[0] for line in file_content if line.split("#")[0].strip()] # Removes empty lines and comments
+
+        nline = 0
+        while( nline < len(file_content) ):
+            tokens = file_content[nline].split()
+
+            if( tokens[0].lower() == "reversible_step" or tokens[0].lower() == "step" ):
+                parameters = {}
+
+                parameters["label"] = tokens[1]
+
+                if( tokens[0].lower() == "reversible_step" ):
+                    parameters["reversible"] = True
+                elif( tokens[0].lower() == "step" ):
+                    parameters["reversible"] = False
+
+                nline += 1
+
+                while( nline < len(file_content) ):
+                    tokens = file_content[nline].split()
+
+                    if( tokens[0] == "end_reversible_step" or tokens[0] == "end_step" ):
+                        break
+
+                    def process_gas_reacs_prods( sv ):
+                        output = []
+                        for i in range(len(sv)-1):
+                            output.append( (sv[i],int(sv[i+1])) )
+                        return output
+
+                    def process_neighboring( sv ):
+                        output = []
+                        for pair in sv:
+                            a,b = pair.split("-")
+                            output.append( (int(a),int(b)) )
+                        return output
+
+                    cases = {
+                        "gas_reacs_prods" : lambda sv: parameters.setdefault("gas_reacs_prods", process_gas_reacs_prods(sv) ),
+                        "sites" : lambda sv: parameters.setdefault("sites", int(sv[0])),
+                        "neighboring" : lambda sv: parameters.setdefault("neighboring", process_neighboring(sv)),
+                        "site_types" : lambda sv: parameters.setdefault("site_types", sv),
+                        "pre_expon" : lambda sv: parameters.setdefault("pre_expon", float(sv[0])),
+                        "pe_ratio" : lambda sv: parameters.setdefault("pe_ratio", float(sv[0])),
+                        "activ_eng" : lambda sv: parameters.setdefault("activation_energy", float(sv[0])),
+                    }
+                    cases.get( tokens[0], lambda sv: None )( tokens[1:] )
+
+                    if( tokens[0] == "initial" ):
+                        parameters["initial"] = []
+
+                        isites = 0
+                        while( nline < len(file_content) ):
+                            nline += 1
+                            tokens = file_content[nline].split()
+
+                            if( isites == parameters["sites"] ):
+                                break
+
+                            if( len(tokens) < 3 ):
+                                raise Exception( "Error: Format inconsistent in section lattice_state!" )
+
+                            if( tokens[0]+tokens[1]+tokens[2] != "&&&" ):
+                                entity_number = int(tokens[0])
+                                species_name = tokens[1]
+                                dentate_number = int(tokens[2])
+
+                                loc_id = None
+                                for i,sp in enumerate(surface_species):
+                                    if( sp.symbol == species_name and sp.denticity == dentate_number ):
+                                        loc_id = i
+                                        break
+
+                                if( loc_id is None ):
+                                    raise Exception( "Error: Species "+species_name+" not found!" )
+
+                                parameters["initial"].append( surface_species[loc_id] )
+
+                            if( "gas_reacs_prods" in parameters ):
+                                for spn,k in parameters["gas_reacs_prods"]:
+                                    if( k == -1 ):
+
+                                        loc_id = None
+                                        for i,sp in enumerate(gas_species):
+                                            if( spn == sp.symbol ):
+                                                loc_id = i
+                                                break
+
+                                        if( loc_id is None ):
+                                            raise Exception( "Error: Gas species "+species_name+" not found!" )
+
+                                        parameters["initial"].append( gas_species[loc_id] )
+
+                            isites += 1
+
+                    if( tokens[0] == "final" ):
+                        parameters["final"] = []
+
+                        isites = 0
+                        while( nline < len(file_content) ):
+                            nline += 1
+                            tokens = file_content[nline].split()
+
+                            if( isites == parameters["sites"] ):
+                                break
+
+                            if( len(tokens) < 3 ):
+                                raise Exception( "Error: Format inconsistent in section lattice_state!" )
+
+                            if( tokens[0]+tokens[1]+tokens[2] != "&&&" ):
+                                entity_number = int(tokens[0])
+                                species_name = tokens[1]
+                                dentate_number = int(tokens[2])
+
+                                loc_id = None
+                                for i,sp in enumerate(surface_species):
+                                    if( sp.symbol == species_name and sp.denticity == dentate_number ):
+                                        loc_id = i
+                                        break
+
+                                if( loc_id is None ):
+                                    raise Exception( "Error: Species "+species_name+" not found!" )
+
+                                parameters["final"].append( surface_species[loc_id] )
+
+                            if( "gas_reacs_prods" in parameters ):
+                                for spn,k in parameters["gas_reacs_prods"]:
+                                    if( k == 1 ):
+
+                                        loc_id = None
+                                        for i,sp in enumerate(gas_species):
+                                            if( spn == sp.symbol ):
+                                                loc_id = i
+                                                break
+
+                                        if( loc_id is None ):
+                                            raise Exception( "Error: Gas species "+species_name+" not found!" )
+
+                                        parameters["final"].append( gas_species[loc_id] )
+
+                            isites += 1
+                    else:
+                        nline += 1
+
+                del parameters["sites"]
+                if( "gas_reacs_prods" in parameters ): del parameters["gas_reacs_prods"]
+
+                rxn = ElementaryReaction( **parameters )
+
+                mechanism.append( rxn )
+
+            nline += 1
+
         return mechanism
 
 
@@ -592,10 +824,25 @@ class ZacrosJob( scm.plams.SingleJob ):
         jobname = os.path.basename(path)
 
         sett = ZacrosJob.__recreate_simulation_input( path )
+        print(sett)
+
+        gas_species = SpeciesList()
+        for i in range(len(sett["gas_specs_names"])):
+            gas_species.append( Species( symbol=sett["gas_specs_names"][i], gas_energy=sett["gas_energies"][i], kind=Species.GAS ) )
+
+        surface_species = SpeciesList()
+        surface_species.append( Species( "*", 1 ) )      # Empty adsorption site
+        for i in range(len(sett["surf_specs_names"])):
+            surface_species.append( Species( symbol=sett["surf_specs_names"][i], denticity=sett["surf_specs_dent"][i], kind=Species.SURFACE ) )
+
         lattice = ZacrosJob.__recreate_lattice_input( path )
-        print(lattice)
+        #cluster_expansion = ZacrosJob.__recreate_energetics_input( path, gas_species, surface_species )
+        #print(cluster_expansion)
+        mechanism = ZacrosJob.__recreate_mechanism_input( path, gas_species, surface_species )
+        print(mechanism)
 
         #job = cls( name=jobname )
+
         #job.path = path
         ##job.status = 'copied'
         ##job.results.collect()

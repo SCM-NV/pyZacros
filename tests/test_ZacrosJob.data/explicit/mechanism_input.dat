@@ -13,7 +13,7 @@ reversible_step CO_adsorption
    activ_eng  0.00
 end_reversible_step
 
-reversible_step CO_diffusion
+reversible_step CO_diffusionA
   sites 2
   neighboring 1-2
   initial # (entity_number, species, dentate)
@@ -28,7 +28,7 @@ reversible_step CO_diffusion
   activ_eng  0.7971
 end_reversible_step
 
-reversible_step CO_diffusion
+reversible_step CO_diffusionB
   sites 2
   neighboring 1-2
   initial # (entity_number, species, dentate)
