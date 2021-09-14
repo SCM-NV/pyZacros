@@ -115,7 +115,7 @@ energetics_input.dat
 ---------------------------------------------------------------------
 energetics
 
-cluster H*-f,H*-f:(1,2)
+cluster H*_0-f,H*_1-f:(1,2)
   sites 2
   neighboring 1-2
   lattice_state
@@ -126,7 +126,7 @@ cluster H*-f,H*-f:(1,2)
   cluster_eng 0.1000
 end_cluster
 
-cluster H2*-f,*-f:(1,2)
+cluster H2*_0-f,*_1-f:(1,2)
   sites 2
   neighboring 1-2
   lattice_state
@@ -137,7 +137,7 @@ cluster H2*-f,*-f:(1,2)
   cluster_eng 0.1000
 end_cluster
 
-cluster *-f,*-f:(1,2)
+cluster *_0-f,*_1-f:(1,2)
   sites 2
   neighboring 1-2
   lattice_state
