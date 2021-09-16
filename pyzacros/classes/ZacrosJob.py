@@ -402,6 +402,12 @@ class ZacrosJob( scm.plams.SingleJob ):
             if( value is None ):
                 raise Exception( "Error: Keyword "+tokens[0]+" in file "+ZacrosJob._filenames['simulation']+" is not supported!" )
 
+        # Special case molar_fractions
+        sett["molar_fraction"] = {}
+        for i,spn in enumerate(sett["gas_specs_names"]):
+            sett["molar_fraction"][spn] = sett["gas_molar_fracs"][i]
+        del sett["gas_molar_fracs"]
+
         return sett
 
 
@@ -803,8 +809,6 @@ class ZacrosJob( scm.plams.SingleJob ):
                 del parameters["sites"]
                 if( "gas_reacs_prods" in parameters ): del parameters["gas_reacs_prods"]
 
-                print(parameters)
-
                 rxn = ElementaryReaction( **parameters )
 
                 mechanism.append( rxn )
@@ -837,7 +841,6 @@ class ZacrosJob( scm.plams.SingleJob ):
         jobname = os.path.basename(path)
 
         sett = ZacrosJob.__recreate_simulation_input( path )
-        print(sett)
 
         gas_species = SpeciesList()
         for i in range(len(sett["gas_specs_names"])):
@@ -851,17 +854,8 @@ class ZacrosJob( scm.plams.SingleJob ):
         lattice = ZacrosJob.__recreate_lattice_input( path )
         cluster_expansion = ZacrosJob.__recreate_energetics_input( path, gas_species, surface_species )
         mechanism = ZacrosJob.__recreate_mechanism_input( path, gas_species, surface_species )
-        print(mechanism)
+        initialState= None #TODO
 
-        #job = cls( name=jobname )
-
-        #job.path = path
-        ##job.status = 'copied'
-        ##job.results.collect()
-
-        #job.settings  = settings or job.results.recreate_settings() or config.job.copy()
-        #job.molecule  = molecule or job.results.recreate_molecule()
-
-        #job = super(ZacrosJob, cls).load_external( path, settings, molecule, finalize)
-        #return job
+        job = cls( settings=sett, lattice=lattice, mechanism=mechanism, cluster_expansion=cluster_expansion, initialState=initialState, name=jobname )
+        return job
 
