@@ -84,7 +84,7 @@ class Species:
     GAS = 1
 
     def __init__(self, symbol, denticity = FROM_SYMBOL,
-                 gas_energy = None, kind = FROM_SYMBOL ):
+                 gas_energy = None, kind = FROM_SYMBOL, mass = FROM_SYMBOL ):
         """
         Creates a new Species object.
 
@@ -128,14 +128,17 @@ class Species:
 
         self.__composition = chemparse.parse_formula( symbol.replace("*","") )
 
-        if( not all( [ key.upper() in Species.__ATOMIC_MASS.keys() for key in self.__composition.keys() ] ) ):
-            msg  = "### ERROR ### Species.__init__.\n"
-            msg += "Wrong format for species symbol\n"
-            raise NameError(msg)
+        if( mass == Species.FROM_SYMBOL ):
+            if( not all( [ key.upper() in Species.__ATOMIC_MASS.keys() for key in self.__composition.keys() ] ) ):
+                msg  = "### ERROR ### Species.__init__.\n"
+                msg += "Wrong format for species symbol\n"
+                raise NameError(msg)
 
-        self.__mass = 0.0
-        for s,n in self.__composition.items():
-            self.__mass += n*Species.__ATOMIC_MASS[s.upper()]
+            self.__mass = 0.0
+            for s,n in self.__composition.items():
+                self.__mass += n*Species.__ATOMIC_MASS[s.upper()]
+        else:
+            self.__mass = mass
 
 
     def __eq__( self, other ):

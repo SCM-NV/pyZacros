@@ -27,24 +27,15 @@ class Cluster:
         self.multiplicity = multiplicity              # e.g. 2
         self.cluster_energy = cluster_energy          # Units eV
 
+        if( len(site_types) > len(species) ):
+            msg  = "### ERROR ### Cluster.__init__.\n"
+            msg += "Inconsistent dimensions for species or site_types\n"
+            raise NameError(msg)
+
         self.sites = len(site_types)
 
         self.entity_number = entity_number
-        if( entity_number is None ):
-            self.entity_number = self.sites*[ None ]
-
-            id_map = {}
-            for i in range(self.sites):
-                if( i==0 ):
-                    id_map[ self.species[i] ] = i
-                else:
-                    if( self.species[i] not in id_map ):
-                        id_map[ self.species[i] ] = max( id_map.values() ) + 1
-                    else:
-                        if( self.species[0:i+1].count(self.species[i]) > self.species[i].denticity ):
-                            id_map[ self.species[i] ] = max( id_map.values() ) + 1
-
-                self.entity_number[i] = id_map[ self.species[i] ]
+        if( entity_number is None ): self.entity_number = SpeciesList.default_entity_numbers( self.sites, self.species )
 
         #TODO Make a way to check denticity consistency
         #if( sum([s.denticity for s in self.species]) != self.sites ):

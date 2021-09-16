@@ -9,6 +9,7 @@ from .ZacrosResults import *
 from .Species import *
 from .SpeciesList import *
 from .Lattice import *
+from .Cluster import *
 from .ClusterExpansion import *
 from .ElementaryReaction import *
 from .Mechanism import *
@@ -610,7 +611,7 @@ class ZacrosJob( scm.plams.SingleJob ):
                                 raise Exception( "Error: Format inconsistent in section lattice_state!" )
 
                             if( tokens[0]+tokens[1]+tokens[2] != "&&&" ):
-                                entity_number = int(tokens[0])
+                                entity_number = int(tokens[0])-1
                                 species_name = tokens[1]
                                 dentate_number = int(tokens[2])
 
@@ -620,14 +621,24 @@ class ZacrosJob( scm.plams.SingleJob ):
                     else:
                         nline += 1
 
-                print(parameters)
-                #cluster = Cluster( site_types=[ labels[j] for j in connectedSites ],
-                                           #neighboring=neighboring,
-                                           #species=SpeciesList( [ Species(f+"*",1) for f in speciesNames ] ),
-                                           #multiplicity=2,
-                                           #cluster_energy=state2Energy[idReactant] )
+                parameters["species"] = []
+                parameters["entity_number"] = []
+                for entity_number,species_name,dentate_number in parameters["lattice_state"]:
+                    loc_id = -1
+                    for i,sp in enumerate(surface_species):
+                        if( sp.symbol == species_name and sp.denticity == dentate_number ):
+                            loc_id = i
+                            break
 
-                #cluster_expansion.append( cluster )
+                    if( loc_id == -1 ):
+                        raise Exception( "Error: Species "+species_name+" was not defined in the simulation_input.txt file!" )
+
+                    parameters["species"].append( surface_species[loc_id] )
+                    parameters["entity_number"].append( entity_number )
+
+                del parameters["sites"]
+                del parameters["lattice_state"]
+                cluster_expansion.append( Cluster( **parameters ) )
 
             nline += 1
 
@@ -705,7 +716,7 @@ class ZacrosJob( scm.plams.SingleJob ):
                                 break
 
                             if( len(tokens) < 3 ):
-                                raise Exception( "Error: Format inconsistent in section lattice_state!" )
+                                raise Exception( "Error: Format inconsistent in section reversible_step/step!" )
 
                             if( tokens[0]+tokens[1]+tokens[2] != "&&&" ):
                                 entity_number = int(tokens[0])
@@ -723,22 +734,22 @@ class ZacrosJob( scm.plams.SingleJob ):
 
                                 parameters["initial"].append( surface_species[loc_id] )
 
-                            if( "gas_reacs_prods" in parameters ):
-                                for spn,k in parameters["gas_reacs_prods"]:
-                                    if( k == -1 ):
-
-                                        loc_id = None
-                                        for i,sp in enumerate(gas_species):
-                                            if( spn == sp.symbol ):
-                                                loc_id = i
-                                                break
-
-                                        if( loc_id is None ):
-                                            raise Exception( "Error: Gas species "+species_name+" not found!" )
-
-                                        parameters["initial"].append( gas_species[loc_id] )
-
                             isites += 1
+
+                        if( "gas_reacs_prods" in parameters ):
+                            for spn,k in parameters["gas_reacs_prods"]:
+                                if( k == -1 ):
+
+                                    loc_id = None
+                                    for i,sp in enumerate(gas_species):
+                                        if( spn == sp.symbol ):
+                                            loc_id = i
+                                            break
+
+                                    if( loc_id is None ):
+                                        raise Exception( "Error: Gas species "+species_name+" not found!" )
+
+                                    parameters["initial"].append( gas_species[loc_id] )
 
                     if( tokens[0] == "final" ):
                         parameters["final"] = []
@@ -770,27 +781,29 @@ class ZacrosJob( scm.plams.SingleJob ):
 
                                 parameters["final"].append( surface_species[loc_id] )
 
-                            if( "gas_reacs_prods" in parameters ):
-                                for spn,k in parameters["gas_reacs_prods"]:
-                                    if( k == 1 ):
-
-                                        loc_id = None
-                                        for i,sp in enumerate(gas_species):
-                                            if( spn == sp.symbol ):
-                                                loc_id = i
-                                                break
-
-                                        if( loc_id is None ):
-                                            raise Exception( "Error: Gas species "+species_name+" not found!" )
-
-                                        parameters["final"].append( gas_species[loc_id] )
-
                             isites += 1
+
+                        if( "gas_reacs_prods" in parameters ):
+                            for spn,k in parameters["gas_reacs_prods"]:
+                                if( k == 1 ):
+
+                                    loc_id = None
+                                    for i,sp in enumerate(gas_species):
+                                        if( spn == sp.symbol ):
+                                            loc_id = i
+                                            break
+
+                                    if( loc_id is None ):
+                                        raise Exception( "Error: Gas species "+species_name+" not found!" )
+
+                                    parameters["final"].append( gas_species[loc_id] )
                     else:
                         nline += 1
 
                 del parameters["sites"]
                 if( "gas_reacs_prods" in parameters ): del parameters["gas_reacs_prods"]
+
+                print(parameters)
 
                 rxn = ElementaryReaction( **parameters )
 
@@ -836,8 +849,7 @@ class ZacrosJob( scm.plams.SingleJob ):
             surface_species.append( Species( symbol=sett["surf_specs_names"][i], denticity=sett["surf_specs_dent"][i], kind=Species.SURFACE ) )
 
         lattice = ZacrosJob.__recreate_lattice_input( path )
-        #cluster_expansion = ZacrosJob.__recreate_energetics_input( path, gas_species, surface_species )
-        #print(cluster_expansion)
+        cluster_expansion = ZacrosJob.__recreate_energetics_input( path, gas_species, surface_species )
         mechanism = ZacrosJob.__recreate_mechanism_input( path, gas_species, surface_species )
         print(mechanism)
 
