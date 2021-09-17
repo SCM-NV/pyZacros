@@ -170,5 +170,3 @@ end_lattice\
     #myLattice = pz.Lattice(path_to_slab_yaml="./pyzacros/slabs/pd111.yaml")
     #output2 = str(myLattice)
     #assert( compare( output2, expectedOutput, 1e-3 ) )
-
-test_Lattice()

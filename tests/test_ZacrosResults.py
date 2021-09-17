@@ -159,5 +159,3 @@ def test_ZacrosJob_run():
     results.plot_process_statistics( process_statistics[10], key="number_of_events", pause=2, close=True )
 
     scm.plams.finish()
-
-test_ZacrosJob_run()

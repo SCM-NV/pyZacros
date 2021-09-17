@@ -77,5 +77,3 @@ step H*_0-f,H*_1-f-->*_0-f,*_1-f:H2;(1,2)
 end_step\
 """
     assert( compare( output, expectedOutput, 1e-3 ) )
-
-test_ElementaryReaction()

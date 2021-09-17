@@ -111,5 +111,3 @@ cluster my_weird_cluster
 end_cluster\
 """
     assert( compare( output, expectedOutput, 1e-3 ) )
-
-test_Cluster()

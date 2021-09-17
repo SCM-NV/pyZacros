@@ -112,7 +112,7 @@ class Cluster:
         """
         Returns the label of the cluster
         """
-        if( self.label is None ):
+        if( self.__label is None ):
             self.__updateLabel()
 
         return self.__label

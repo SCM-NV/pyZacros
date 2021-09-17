@@ -75,7 +75,6 @@ def test_ZacrosJob():
 
     myJob = pz.ZacrosJob( myLattice, myMechanism, myClusterExpansion, settings=sett )
     print(myJob)
-
     output = str(myJob)
     with open( "tests/test_ZacrosJob_expected_output.txt", "r" ) as inp:
         expectedOutput = inp.read()
@@ -83,15 +82,21 @@ def test_ZacrosJob():
 
     myJob = pz.ZacrosJob.load_external( path='tests/test_ZacrosJob.data/default' )
     print(myJob)
-
     output = str(myJob)
     with open( "tests/test_ZacrosJob_expected_output_default.txt", "r" ) as inp:
         expectedOutput = inp.read()
     assert( compare( output, expectedOutput, 1e-3 ) )
 
-    #myJob = pz.ZacrosJob.load_external( path='tests/test_ZacrosJob.data/periodic_cell' )
-    #print(myJob)
-    #myJob = pz.ZacrosJob.load_external( path='tests/test_ZacrosJob.data/explicit' )
-    #print(myJob)
+    myJob = pz.ZacrosJob.load_external( path='tests/test_ZacrosJob.data/periodic_cell' )
+    print(myJob)
+    output = str(myJob)
+    with open( "tests/test_ZacrosJob_expected_output_periodic_cell.txt", "r" ) as inp:
+        expectedOutput = inp.read()
+    assert( compare( output, expectedOutput, 1e-3 ) )
 
-test_ZacrosJob()
+    myJob = pz.ZacrosJob.load_external( path='tests/test_ZacrosJob.data/explicit' )
+    print(myJob)
+    output = str(myJob)
+    with open( "tests/test_ZacrosJob_expected_output_explicit.txt", "r" ) as inp:
+        expectedOutput = inp.read()
+    assert( compare( output, expectedOutput, 1e-3 ) )

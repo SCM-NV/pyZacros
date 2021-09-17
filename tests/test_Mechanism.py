@@ -60,7 +60,7 @@ reversible_step H2*_0-f,*_1-f<-->H*_0-f,H*_1-f;(1,2)
   activ_eng 0.2
 end_reversible_step
 
-reversible_step H2*_0-f,H2*_0-f<-->H2*_0-f,*_0-f;(1,2)
+reversible_step H2*_0-f,H2*_0-f<-->H2*_0-f,*_1-f;(1,2)
   sites 2
   neighboring 1-2
   initial
@@ -77,5 +77,3 @@ end_reversible_step
 end_mechanism\
 """
     assert( compare( output, expectedOutput, 1e-3 ) )
-
-test_Mechanism()

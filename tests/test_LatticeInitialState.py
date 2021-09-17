@@ -81,5 +81,3 @@ initial_state
 end_initial_state\
 """
     assert(output == expectedOutput)
-
-test_InitialState()

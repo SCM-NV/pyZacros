@@ -402,11 +402,12 @@ class ZacrosJob( scm.plams.SingleJob ):
             if( value is None ):
                 raise Exception( "Error: Keyword "+tokens[0]+" in file "+ZacrosJob._filenames['simulation']+" is not supported!" )
 
-        # Special case molar_fractions
-        sett["molar_fraction"] = {}
-        for i,spn in enumerate(sett["gas_specs_names"]):
-            sett["molar_fraction"][spn] = sett["gas_molar_fracs"][i]
-        del sett["gas_molar_fracs"]
+        if( sett.get("gas_molar_fracs") is not None ):
+            # Special case molar_fractions
+            sett["molar_fraction"] = {}
+            for i,spn in enumerate(sett["gas_specs_names"]):
+                sett["molar_fraction"][spn] = sett["gas_molar_fracs"][i]
+            del sett["gas_molar_fracs"]
 
         return sett
 
@@ -576,6 +577,9 @@ class ZacrosJob( scm.plams.SingleJob ):
             if( tokens[0].lower() == "cluster" ):
                 parameters = {}
 
+                if( len(tokens) < 2 ):
+                    raise Exception( "Error: Format inconsistent in section cluster. Label not found!" )
+
                 parameters["label"] = tokens[1]
 
                 nline += 1
@@ -671,8 +675,10 @@ class ZacrosJob( scm.plams.SingleJob ):
             if( tokens[0].lower() == "reversible_step" or tokens[0].lower() == "step" ):
                 parameters = {}
 
-                parameters["label"] = tokens[1]
+                if( len(tokens) < 2 ):
+                    raise Exception( "Error: Format inconsistent in section reversible_step/step. Label not found!" )
 
+                parameters["label"] = tokens[1]
                 if( tokens[0].lower() == "reversible_step" ):
                     parameters["reversible"] = True
                 elif( tokens[0].lower() == "step" ):
@@ -825,6 +831,7 @@ class ZacrosJob( scm.plams.SingleJob ):
         This method is used by |load_external|.
         Returns a |LatticeState| object
         """
+        raise Exception( "Error: __recreate_initial_state_input function is not implmented yet!" )
         lattice_state = LatticeState()
         return lattice_state
 

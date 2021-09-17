@@ -126,7 +126,7 @@ class ElementaryReaction:
         if( len(self.initial.gas_species()) > 0 ):
             initialLabel += ":" + SpeciesList(self.initial.gas_species()).label()
 
-        finalLabel = ElementaryReaction.__getSpeciesListFullName( self.__final_adsorbed, self.initial_entity_number, self.site_types )
+        finalLabel = ElementaryReaction.__getSpeciesListFullName( self.__final_adsorbed, self.final_entity_number, self.site_types )
 
         if( len(self.final.gas_species()) > 0 ):
             finalLabel += ":" + SpeciesList(self.final.gas_species()).label()
@@ -157,7 +157,7 @@ class ElementaryReaction:
         """
         Returns the label of the cluster
         """
-        if( self.label is None ):
+        if( self.__label is None ):
             self.__updateLabel()
 
         return self.__label

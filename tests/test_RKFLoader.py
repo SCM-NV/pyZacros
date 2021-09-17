@@ -203,5 +203,3 @@ end_neighboring_structure
 end_lattice\
 """
     assert( compare( output, expectedOutput, 1e-3 ) )
-
-test_RKFLoader()

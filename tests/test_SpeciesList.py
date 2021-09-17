@@ -47,6 +47,3 @@ surf_specs_names         H2*       O2*
 surf_specs_dent            1         1\
 """
     assert( compare( output, expectedOutput, 1e-3 ) )
-
-
-test_SpeciesList()
