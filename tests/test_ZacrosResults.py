@@ -97,10 +97,8 @@ def test_ZacrosJob_run():
                         cluster_expansion=[CO_point, O_point] )
 
     #-----------------------
-    # Plotting the lattice
+    # Running the job
     #-----------------------
-    job.lattice.plot( pause=2, close=True)
-
     results = job.run()
 
     if( not job.ok() ):
@@ -110,6 +108,9 @@ def test_ZacrosJob_run():
         job = scm.plams.load( RUNDIR+"/tests/test_ZacrosResults.data/plamsjob.dill" )
         results = job.results
 
+    #-----------------------
+    # Analyzing the results
+    #-----------------------
     reactions = results.get_reaction_network()
 
     assert( list(reactions.keys()) == ['CO_adsorption', 'O2_adsorption', 'CO_oxidation'] )
@@ -142,63 +143,19 @@ def test_ZacrosJob_run():
     lattice_states = results.lattice_states()
     lattice_states[3].plot( pause=2, close=True )
 
-    try:
-        import matplotlib.pyplot as plt
+    results.plot_lattice_states( pause=2, close=True )
 
-        #-----------------------------------------------
-        # Plotting the lattice states as an animation
-        #-----------------------------------------------
-        plt.rcParams["figure.autolayout"] = True
-        fig, ax = plt.subplots()
-        for i,ls in enumerate(results.lattice_states()):
-            ax.cla()
-            ls.plot( show=True, pause=0.5, ax=ax )
-        plt.pause(2)
-        plt.close("all")
+    results.plot_molecule_numbers( results.gas_species_names(), pause=2, close=True )
 
-        #------------------------------------------------------
-        # Plotting the Molecule Numbers as a function of time
-        #------------------------------------------------------
-        x_len = abs(max(provided_quantities["Time"])-min(provided_quantities["Time"]))
-        y_len = abs(max(provided_quantities["CO*"])-min(provided_quantities["CO*"]))
+    process_statistics = results.get_process_statistics()
 
-        fig,ax = plt.subplots()
-        ax.set_xlabel('t (s)')
-        ax.set_ylabel('Molecule Numbers')
-        ax.step(provided_quantities["Time"], provided_quantities["CO*"], color='r', label="CO*")
-        ax.step(provided_quantities["Time"],  provided_quantities["O*"], color='b', label="O*")
-        ax.legend(loc='best')
-        plt.pause(2)
-        plt.close("all")
+    assert( process_statistics[1]["time"] == 0.1 )
+    assert( process_statistics[10]["occurence_frequency"] ==
+           {'CO_adsorption': 837.0000000000001, 'O2_adsorption': 550.0000000000001, 'CO_oxidation': 835.0000000000001} )
+    assert( process_statistics[10]["number_of_events"] ==
+           {'CO_adsorption': 837, 'O2_adsorption': 550, 'CO_oxidation': 835} )
 
-    except ImportError as e:
-        pass
-
-    #results.forward_rates
-    #results.reverse_rates
-    #results.net_forward_rates
-    #results.net_reverse_rates
-    #results.single_occurence_threshold
-    #results.nevents
-    #Results.normalize(results.nevents, norm_factor=2500)
-    #Results.normalize(results.nevents, norm_factor_by_site_type="StTp1")
-    #results.temperature
-    #results.energy
-    #Results.normalize(results.energy,norm_factor=2500)
-    #Results.normalize(results.energy, norm_factor_by_site_type="StTp1")
-    #results.surface_species  # Dict {"O*":[10,35,...],"CO*":[1,4,...]}
-    #results.gas_species # Dict
-    #results.
-
-    #results.configuration["time"] # [0.0, 0.5, 1.0, ...]
-    #results.configuration["lattice_state"] # [ latticeState0, latticeState1, ... ]
-
-    ##output = str(myJob)
-    ##expectedOutput = """\
-##\
-##"""
-    ##assert( compare( output, expectedOutput, 1e-3 ) )
+    results.plot_process_statistics( process_statistics[10], key="occurence_frequency", log_scale=True, pause=2, close=True )
+    results.plot_process_statistics( process_statistics[10], key="number_of_events", pause=2, close=True )
 
     scm.plams.finish()
-
-test_ZacrosJob_run()

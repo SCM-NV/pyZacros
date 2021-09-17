@@ -29,7 +29,7 @@ def test_ElementaryReaction():
 
     output = str(myReaction1)
     expectedOutput = """\
-reversible_step H2*-f,*-f<-->H*-f,H*-f;(1,2)
+reversible_step H2*_0-f,*_1-f<-->H*_0-f,H*_1-f;(1,2)
   sites 2
   neighboring 1-2
   initial
@@ -61,7 +61,7 @@ end_reversible_step\
 
     output = str(myReaction2)
     expectedOutput = """\
-step H*-f,H*-f-->*-f,*-f:H2;(1,2)
+step H*_0-f,H*_1-f-->*_0-f,*_1-f:H2;(1,2)
   gas_reacs_prods H2 1
   sites 2
   neighboring 1-2

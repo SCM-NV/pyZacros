@@ -141,7 +141,7 @@ class Lattice:
     def fromUnitCellDefined(self, cell_vectors, repeat_cell, site_types, site_coordinates, neighboring_structure):
         """
         :parm cell_vectors: Define the unit vectors. e.g. [[0.123, 0.000],[1.234,1.234]]
-        :parm repeat_cell: The number of repetitions of the unit cell in the directions of unit vectors. e.g. [(10,10)]
+        :parm repeat_cell: The number of repetitions of the unit cell in the directions of unit vectors. e.g. (10,10)
         :parm site_types: The names of the different site types. e.g. [ "cn2", "br42", "cn2" ]
         :parm site_coordinates: Pairs of real numbers specifying the “fractional coordinates” of each site
                                 in the unit cell. e.g. [ (0.123,0.894), (0.456,0.123) ]
@@ -310,8 +310,8 @@ class Lattice:
         #ax.set_xlabel('x ($\AA$)')
         #ax.set_ylabel('y ($\AA$)')
 
-        ax.set_xlabel('x (angs.)')
-        ax.set_ylabel('y (angs.)')
+        ax.set_xlabel('x (ang.)')
+        ax.set_ylabel('y (ang.)')
 
         #markers = ['o', '.', ',', 'x', '+', 'v', '^', '<', '>', 's', 'd']
         markers = ['o', 's', 'v', '^']

@@ -9,6 +9,8 @@ class ElementaryReaction:
                  site_types: list,
                  initial: SpeciesList,
                  final: SpeciesList,
+                 initial_entity_number: list = None,
+                 final_entity_number: list = None,
                  neighboring: list = None,
                  reversible: bool = True,
                  pre_expon: float = 0.0,
@@ -35,28 +37,43 @@ class ElementaryReaction:
             raise NameError(msg)
 
         self.site_types = site_types   # e.g. [ "f", "f" ]
+        self.sites = len(self.site_types)
         self.neighboring = neighboring # e.g. [ (1,2) ]
+
         self.initial = initial
         if( type(initial) == list ): self.initial = SpeciesList(initial)
+        self.__initial_gas = SpeciesList( [sp for sp in self.initial if sp.is_gas()] )
+        self.__initial_adsorbed = SpeciesList( [sp for sp in self.initial if sp.is_adsorbed()] )
+
+        self.initial_entity_number = initial_entity_number
+        if( initial_entity_number is None ):
+            self.initial_entity_number = SpeciesList.default_entity_numbers( self.sites, self.__initial_adsorbed )
+
         self.final = final
         if( type(final) == list ): self.final = SpeciesList(final)
+        self.__final_gas = SpeciesList( [sp for sp in self.final if sp.is_gas()] )
+        self.__final_adsorbed = SpeciesList( [sp for sp in self.final if sp.is_adsorbed()] )
+
+        if( final_entity_number is None ):
+            self.final_entity_number = SpeciesList.default_entity_numbers( self.sites, self.__final_adsorbed )
+
         self.reversible = reversible
         self.pre_expon = pre_expon
         self.pe_ratio = pe_ratio
         self.activation_energy = activation_energy     # e.g. 0.200
 
-        self.sites = len(site_types)
 
-        if( self.sites != sum([s.denticity for s in self.initial])
-           or self.sites != sum([s.denticity for s in self.final]) ):
-            msg  = "### ERROR ### ElementaryReaction.__init__.\n"
-            msg += "              Inconsistent dimensions for sites, initial or final\n"
-            raise NameError(msg)
+        #if( self.sites != sum([s.denticity for s in self.initial])
+           #or self.sites != sum([s.denticity for s in self.final]) ):
+            #msg  = "### ERROR ### ElementaryReaction.__init__.\n"
+            #msg += "              Inconsistent dimensions for sites, initial or final\n"
+            #raise NameError(msg)
 
-        if( abs( self.initial.mass() - self.final.mass() ) > 1e-6 ):
+        if( abs( self.initial.mass( self.initial_entity_number ) - self.final.mass( self.final_entity_number ) ) > 1e-6 ):
             msg  = "### ERROR ### ElementaryReaction.__init__.\n"
             msg += "              The mass is not conserved during the reaction\n"
-            msg += "              mass(initial)="+str(self.initial.mass())+",mass(final)="+str(self.final.mass())
+            msg += "              initial:mass("+str([sp.symbol for sp in self.initial])+")="+str(self.initial.mass(self.initial_entity_number))
+            msg += ", final:mass("+str([sp.symbol for sp in self.final])+")="+str(self.final.mass(self.final_entity_number))
             raise NameError(msg)
 
         self.__userLabel = label
@@ -82,15 +99,14 @@ class ElementaryReaction:
 
 
     @staticmethod
-    def __getSpeciesListFullName( species, site_types ):
+    def __getSpeciesListFullName( species, entity_number, site_types ):
         label = ""
 
         for i in range(len(species)):
-            label += species[i].symbol+"-"
-            for j in range(species[i].denticity):
-                label += site_types[i]
-                if(j != species[i].denticity-1):
-                    label += "-"
+            label += species[i].symbol
+            label += "_"+str(entity_number[i])
+            label += "-"
+            label += site_types[i]
             if(i != len(species)-1):
                 label += ","
 
@@ -105,12 +121,12 @@ class ElementaryReaction:
             self.__label = self.__userLabel
             return
 
-        initialLabel = ElementaryReaction.__getSpeciesListFullName( self.initial.adsorbed_species(), self.site_types )
+        initialLabel = ElementaryReaction.__getSpeciesListFullName( self.__initial_adsorbed, self.initial_entity_number, self.site_types )
 
         if( len(self.initial.gas_species()) > 0 ):
             initialLabel += ":" + SpeciesList(self.initial.gas_species()).label()
 
-        finalLabel = ElementaryReaction.__getSpeciesListFullName( self.final.adsorbed_species(), self.site_types )
+        finalLabel = ElementaryReaction.__getSpeciesListFullName( self.__final_adsorbed, self.final_entity_number, self.site_types )
 
         if( len(self.final.gas_species()) > 0 ):
             finalLabel += ":" + SpeciesList(self.final.gas_species()).label()
@@ -141,7 +157,7 @@ class ElementaryReaction:
         """
         Returns the label of the cluster
         """
-        if( self.label is None ):
+        if( self.__label is None ):
             self.__updateLabel()
 
         return self.__label
@@ -194,14 +210,12 @@ class ElementaryReaction:
                 output += "\n"
 
             output += "  initial"+"\n"
-            for i in range(len(self.initial)):
-                for j in range(self.initial[i].denticity):
-                    output += "    "+str(i+1)+" "+self.initial[i].symbol+" "+str(j+1)+"\n"
+            for i in range(self.sites):
+                output += "    "+str(self.initial_entity_number[i]+1)+" "+self.initial[i].symbol+" "+str(self.initial[i].denticity)+"\n"
 
             output += "  final"+"\n"
-            for i in range(len(self.final)):
-                for j in range(self.final[i].denticity):
-                    output += "    "+str(i+1)+" "+self.final[i].symbol+" "+str(j+1)+"\n"
+            for i in range(self.sites):
+                output += "    "+str(self.final_entity_number[i]+1)+" "+self.final[i].symbol+" "+str(self.final[i].denticity)+"\n"
 
             output += "  site_types "
             for i in range(len(self.site_types)):

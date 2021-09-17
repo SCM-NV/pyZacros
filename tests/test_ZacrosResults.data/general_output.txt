@@ -89,8 +89,8 @@ Energetics setup:
 
     Clusters:
 
-        1. CO*-1:  Mult = 1      ECI = -1.3000000000000000       Entities:  CO*
-        2. O*-1:   Mult = 1      ECI = -2.2999999999999998       Entities:  O*
+        1. CO*_0-1:  Mult = 1      ECI = -1.3000000000000000       Entities:  CO*
+        2. O*_0-1:   Mult = 1      ECI = -2.2999999999999998       Entities:  O*
 
 Finished reading energetics input.
 
@@ -120,16 +120,16 @@ Simulation stopped:
 Performance facts:
 ~~~~~~~~~~~~~~~~~~
 
-Elapsed CPU time:         6.86800033E-02 seconds
-Elapsed clock time:       9.09826607E-02 seconds
-Setup clock time:         2.33424511E-02 seconds
-Simulation clock time:    6.76402077E-02 seconds
+Elapsed CPU time:         2.06860006E-02 seconds
+Elapsed clock time:       2.72420812E-02 seconds
+Setup clock time:         6.71791518E-03 seconds
+Simulation clock time:    2.05241665E-02 seconds
 
-Clock time per KMC event: 4.09278728E-05 seconds
-Clock time per KMC time:  9.09818038E-02 seconds/KMCTimeUnits
+Clock time per KMC event: 1.22546471E-05 seconds
+Clock time per KMC time:  2.72418242E-02 seconds/KMCTimeUnits
 
-Events per clock hour:    87959616
-KMC Dt per clock hour:    39568.3516 KMCTimeUnits
+Events per clock hour:    293766112
+KMC Dt per clock hour:    132149.734 KMCTimeUnits
 
 Restart information successfully written in file restart.inf.
 

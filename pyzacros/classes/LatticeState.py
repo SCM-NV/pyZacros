@@ -85,7 +85,7 @@ class LatticeState:
                 self.__speciesNumbers[sp.symbol] += 1
 
 
-    def fillSite( self, site_number, species ):
+    def fill_site( self, site_number, species ):
         """
         Fill the site_number state with the species species
         """
@@ -102,7 +102,7 @@ class LatticeState:
         self.__updateSpeciesNumbers()
 
 
-    def fillSitesRandom( self, site_name, species, coverage ):
+    def fill_sites_random( self, site_name, species, coverage ):
         """
         Fill the sites
         """
@@ -116,12 +116,12 @@ class LatticeState:
             lSpecies = species
 
         else:
-            msg  = "### ERROR ### LatticeState.fillSitesRandom.\n"
+            msg  = "### ERROR ### LatticeState.fill_sites_random.\n"
             msg += "              Inconsistent type for species. It should be type str or Species\n"
             raise NameError(msg)
 
         if( lSpecies.denticity > 1 ):
-            msg  = "### ERROR ### LatticeState.fillSitesRandom.\n"
+            msg  = "### ERROR ### LatticeState.fill_sites_random.\n"
             msg += "              Species with denticity > 1 are not yet supported\n"
             raise NameError(msg)
 
@@ -141,11 +141,11 @@ class LatticeState:
         self.__updateSpeciesNumbers()
 
 
-    def fillAllSites( self, site_name, species ):
+    def fill_all_sites( self, site_name, species ):
         """
         Fill all the sites
         """
-        self.fillSitesRandom( site_name, species, coverage=1.0 )
+        self.fill_sites_random( site_name, species, coverage=1.0 )
 
 
     def plot(self, pause=-1, show=True, ax=None, close=False):

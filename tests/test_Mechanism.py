@@ -28,7 +28,7 @@ def test_Mechanism():
 
     myReaction2 = pz.ElementaryReaction( site_types=( "f", "f" ),
                                         neighboring=[ (1,2) ],
-                                        initial=[ s3 ],
+                                        initial=[ s3, s3 ],
                                         final=[ s2, s0 ],
                                         reversible=True,
                                         pre_expon=1e+13,
@@ -45,7 +45,7 @@ def test_Mechanism():
 
     expectedOutput = """\
 mechanism
-reversible_step H2*-f,*-f<-->H*-f,H*-f;(1,2)
+reversible_step H2*_0-f,*_1-f<-->H*_0-f,H*_1-f;(1,2)
   sites 2
   neighboring 1-2
   initial
@@ -60,11 +60,11 @@ reversible_step H2*-f,*-f<-->H*-f,H*-f;(1,2)
   activ_eng 0.2
 end_reversible_step
 
-reversible_step H2*-f-f<-->H2*-f,*-f;(1,2)
+reversible_step H2*_0-f,H2*_0-f<-->H2*_0-f,*_1-f;(1,2)
   sites 2
   neighboring 1-2
   initial
-    1 H2* 1
+    1 H2* 2
     1 H2* 2
   final
     1 H2* 1

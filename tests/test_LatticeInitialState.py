@@ -18,17 +18,17 @@ def test_InitialState():
     s1 = pz.Species( "H*", 1 )  # H adsorbed with dentation 1
     s2 = pz.Species( "H2*", 1 ) # H2 adsorbed with dentation 1
 
-    myReaction = pz.ElementaryReaction( site_types=( "f", "f" ),
-                                        neighboring=[ (1,2) ],
-                                        initial=[ s1, s1 ],
-                                        final=[ s2, s0 ],
-                                        reversible=True,
-                                        pre_expon=1e+13,
-                                        pe_ratio=0.676,
-                                        activation_energy = 0.2 )
+    reaction = pz.ElementaryReaction( site_types=( "f", "f" ),
+                                      neighboring=[ (1,2) ],
+                                      initial=[ s1, s1 ],
+                                      final=[ s2, s0 ],
+                                      reversible=True,
+                                      pre_expon=1e+13,
+                                      pe_ratio=0.676,
+                                      activation_energy = 0.2 )
 
-    myMechanism = pz.Mechanism()
-    myMechanism.append( myReaction )
+    mechanism = pz.Mechanism()
+    mechanism.append( reaction )
 
     myLattice = pz.Lattice(cell_vectors=[[2.814, 0.000],[1.407, 2.437]],
                            repeat_cell=[3, 3],
@@ -47,10 +47,10 @@ def test_InitialState():
     myInitialState = pz.LatticeState( myLattice, [s0,s1,s2] )
 
     random.seed(10)
-    myInitialState.fillSitesRandom( site_name="fcc", species="H*", coverage=0.5 )
-    myInitialState.fillSitesRandom( site_name="fcc", species=s2, coverage=0.5 )
-    myInitialState.fillSitesRandom( site_name="hcp", species="H*", coverage=1.0 )
-    myInitialState.fillSite( 0, s2 )
+    myInitialState.fill_sites_random( site_name="fcc", species="H*", coverage=0.5 )
+    myInitialState.fill_sites_random( site_name="fcc", species=s2, coverage=0.5 )
+    myInitialState.fill_sites_random( site_name="hcp", species="H*", coverage=1.0 )
+    myInitialState.fill_site( 0, s2 )
 
     print( myInitialState )
 
@@ -81,5 +81,3 @@ initial_state
 end_initial_state\
 """
     assert(output == expectedOutput)
-
-test_InitialState()

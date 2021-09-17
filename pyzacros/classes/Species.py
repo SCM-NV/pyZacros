@@ -79,12 +79,12 @@ class Species:
         "U":238.0508
     }
 
-    FROM_SYMBOL = 0
-    SURFACE = 1
-    GAS = 2
+    FROM_SYMBOL = -1
+    SURFACE = 0
+    GAS = 1
 
-    def __init__(self, symbol: str, denticity: int = 0,
-                 gas_energy: float = 0.0, kind: int = FROM_SYMBOL ):
+    def __init__(self, symbol, denticity = FROM_SYMBOL,
+                 gas_energy = None, kind = FROM_SYMBOL, mass = FROM_SYMBOL ):
         """
         Creates a new Species object.
 
@@ -95,42 +95,50 @@ class Species:
         :parm gas_energy: float, Species' gas energy e.g. 0.0
         """
         self.symbol = symbol
-        self.denticity = denticity
         self.gas_energy = gas_energy
 
+        self.denticity = denticity
+        if( denticity == Species.FROM_SYMBOL ):
+            self.denticity = symbol.count("*")
+
+        self.kind = kind
         if( kind == Species.FROM_SYMBOL ):
-            if(len(self.symbol) > 1 and self.symbol.find("*") != -1 and denticity == 0):
+            if(len(self.symbol) > 1 and self.symbol.find("*") != -1 and self.denticity == 0):
                 msg = "### ERROR ### Species.__init__.\n"
                 msg += "Inconsistent symbol and denticity\n"
                 raise NameError(msg)
 
-            if(self.symbol.find("*") == -1 and denticity != 0):
+            if(self.symbol.find("*") == -1 and self.denticity != 0):
                 msg  = "### ERROR ### Species.__init__.\n"
                 msg += "Denticity given for a gas species\n"
                 msg += "Did you forget to add * in the species label?\n"
                 raise NameError(msg)
 
+            self.kind = Species.GAS
             if( self.symbol.find("*") != -1 ):
                 self.kind = Species.SURFACE
-            else:
-                self.kind = Species.GAS
-        else:
-            self.kind = kind
 
-        # If specie is gas the energy is undefined
-        if( denticity > 0 ):
-            self.gas_energy = None
+        if( self.kind != Species.GAS and self.gas_energy is not None ):
+            msg  = "### ERROR ### Species.__init__.\n"
+            msg += "Parameter gas_energy cannot be associated with a surface species\n"
+            raise NameError(msg)
+
+        if( self.kind == Species.GAS and self.gas_energy is None ):
+            self.gas_energy = 0.0
 
         self.__composition = chemparse.parse_formula( symbol.replace("*","") )
 
-        if( not all( [ key.upper() in Species.__ATOMIC_MASS.keys() for key in self.__composition.keys() ] ) ):
-            msg  = "### ERROR ### Species.__init__.\n"
-            msg += "Wrong format for species symbol\n"
-            raise NameError(msg)
+        if( mass == Species.FROM_SYMBOL ):
+            if( not all( [ key.upper() in Species.__ATOMIC_MASS.keys() for key in self.__composition.keys() ] ) ):
+                msg  = "### ERROR ### Species.__init__.\n"
+                msg += "Wrong format for species symbol\n"
+                raise NameError(msg)
 
-        self.__mass = 0.0
-        for s,n in self.__composition.items():
-            self.__mass += n*Species.__ATOMIC_MASS[s.upper()]
+            self.__mass = 0.0
+            for s,n in self.__composition.items():
+                self.__mass += n*Species.__ATOMIC_MASS[s.upper()]
+        else:
+            self.__mass = mass
 
 
     def __eq__( self, other ):

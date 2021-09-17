@@ -122,12 +122,18 @@ class SpeciesList(UserList):
         return self.adsorbed_species()
 
 
-    def mass( self ) -> float:
+    def mass( self, entity_numbers ) -> float:
         """
         Returns the total mass as the sum of the all species based on the most common isotope in Da
         """
         mass = 0.0
-        for sp in self:
+        mapped_entity = {}
+        for i,sp in enumerate(self.adsorbed_species()):
+            if( entity_numbers[i] not in mapped_entity ):
+                mass += sp.mass()
+            mapped_entity[ entity_numbers[i] ] = 1
+
+        for i,sp in enumerate(self.gas_species()):
             mass += sp.mass()
 
         return mass
@@ -152,3 +158,25 @@ class SpeciesList(UserList):
             self.__updateLabel()
 
         return self.__label
+
+    @staticmethod
+    def default_entity_numbers( nsites, species ):
+        """
+        Calculates the entity numbers assuming that ...
+        """
+        entity_number = nsites*[ None ]
+
+        id_map = {}
+        for i in range(nsites):
+            if( i==0 ):
+                id_map[ species[i] ] = i
+            else:
+                if( species[i] not in id_map ):
+                    id_map[ species[i] ] = max( id_map.values() ) + 1
+                else:
+                    if( species[0:i+1].count(species[i]) > species[i].denticity ):
+                        id_map[ species[i] ] = max( id_map.values() ) + 1
+
+            entity_number[i] = id_map[ species[i] ]
+
+        return entity_number

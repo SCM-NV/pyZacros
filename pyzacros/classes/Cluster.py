@@ -7,6 +7,7 @@ class Cluster:
 
     def __init__(self, site_types: list,
                  species: SpeciesList,
+                 entity_number: list = None,
                  neighboring: list = None,
                  multiplicity: int = 1,
                  cluster_energy: float = 0.000,
@@ -21,17 +22,26 @@ class Cluster:
         :parm cluster_energy: float
         """
         self.site_types = site_types                  # e.g. [ "f", "f" ]
-        self.neighboring = neighboring                # e.g. [ (1,2) ]
         self.species = species                        # e.g. [ Species("H*",1), Species("H*",1) ]
+        self.neighboring = neighboring                # e.g. [ (1,2) ]
         self.multiplicity = multiplicity              # e.g. 2
         self.cluster_energy = cluster_energy          # Units eV
 
-        self.sites = len(site_types)
-
-        if( sum([s.denticity for s in self.species]) != self.sites ):
+        if( len(site_types) > len(species) ):
             msg  = "### ERROR ### Cluster.__init__.\n"
             msg += "Inconsistent dimensions for species or site_types\n"
             raise NameError(msg)
+
+        self.sites = len(site_types)
+
+        self.entity_number = entity_number
+        if( entity_number is None ): self.entity_number = SpeciesList.default_entity_numbers( self.sites, self.species )
+
+        #TODO Make a way to check denticity consistency
+        #if( sum([s.denticity for s in self.species]) != self.sites ):
+            #msg  = "### ERROR ### Cluster.__init__.\n"
+            #msg += "Inconsistent dimensions for species or site_types\n"
+            #raise NameError(msg)
 
         self.__userLabel = label
         self.__label = None
@@ -77,11 +87,10 @@ class Cluster:
 
         self.__label = ""
         for i in range(len(self.species)):
-            self.__label += self.species[i].symbol+"-"
-            for j in range(self.species[i].denticity):
-                self.__label += self.site_types[i]
-                if(j != self.species[i].denticity-1):
-                    self.__label += "-"
+            self.__label += self.species[i].symbol
+            self.__label += "_"+str(self.entity_number[i])
+            self.__label += "-"
+            self.__label += self.site_types[i]
             if(i != len(self.species)-1):
                 self.__label += ","
 
@@ -103,7 +112,7 @@ class Cluster:
         """
         Returns the label of the cluster
         """
-        if( self.label is None ):
+        if( self.__label is None ):
             self.__updateLabel()
 
         return self.__label
@@ -127,9 +136,8 @@ class Cluster:
                 output += "\n"
 
             output += "  lattice_state"+"\n"
-            for i in range(len(self.species)):
-                for j in range(self.species[i].denticity):
-                    output += "    "+str(i+1)+" "+self.species[i].symbol+" "+str(j+1)+"\n"
+            for i in range(self.sites):
+                output += "    "+str(self.entity_number[i]+1)+" "+self.species[i].symbol+" "+str(self.species[i].denticity)+"\n"
 
             output += "  site_types "
             for i in range(len(self.site_types)):

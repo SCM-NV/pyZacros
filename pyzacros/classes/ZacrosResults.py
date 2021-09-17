@@ -166,7 +166,7 @@ class ZacrosResults( scm.plams.Results ):
                 tokens = line.split()
 
                 if( nline==0 ):
-                    assert tokens[0]=="configuration"
+                    assert tokens[0] == "configuration"
 
                     configuration_number = int(tokens[1])
                     number_of_events = int(tokens[2])
@@ -184,7 +184,7 @@ class ZacrosResults( scm.plams.Results ):
                     dentation = int(tokens[3])
 
                     if( species_number > -1 ): # In zacros -1 means empty site (0 for Zacros)
-                        lattice_state.fillSite( site_number, surface_species[species_number] )
+                        lattice_state.fill_site( site_number, surface_species[species_number] )
 
                     pos += 1
 
@@ -204,11 +204,196 @@ class ZacrosResults( scm.plams.Results ):
         #ngas_molecules
 
 
+    def plot_lattice_states(self, pause=-1, show=True, ax=None, close=False):
+        """
+        Plots the lattice states as an animation
+        """
+        try:
+            import matplotlib.pyplot as plt
+        except ImportError as e:
+            return # module doesn't exist, deal with it.
+
+        if( ax is None ):
+            fig,ax = plt.subplots()
+
+        plt.rcParams["figure.autolayout"] = True
+        for i,ls in enumerate(self.lattice_states()):
+            ax.cla()
+            ls.plot( show=True, pause=0.5, ax=ax )
+
+        if( show ):
+            if( pause == -1 ):
+                plt.show()
+            else:
+                plt.pause( pause )
+
+                if( close ):
+                    plt.close("all")
+
+
+    def plot_molecule_numbers(self, species_name, pause=-1, show=True, ax=None, close=False):
+        """
+        Plots the Molecule Numbers as a function of time
+        """
+        try:
+            import matplotlib.pyplot as plt
+        except ImportError as e:
+            return # module doesn't exist, deal with it.
+
+        if( ax is None ):
+            fig,ax = plt.subplots()
+
+        provided_quantities = self.provided_quantities()
+
+        COLORS = ['r', 'g', 'b', 'm']
+
+        ax.set_xlabel('t (s)')
+        ax.set_ylabel('Molecule Numbers')
+
+        for i,spn in enumerate(species_name):
+            ax.step(provided_quantities["Time"], provided_quantities[spn], where='post', color=COLORS[i], label=spn)
+
+        ax.legend(loc='best')
+
+        if( show ):
+            if( pause == -1 ):
+                plt.show()
+            else:
+                plt.pause( pause )
+
+                if( close ):
+                    plt.close("all")
+
+
     def get_process_statistics(self):
         """
-        Return the configurations from the 'history_output.txt' file.
+        Return the statistics from the 'specnum_output.txt' file.
         """
         output = []
+
+        lines = self.grep_file(self._filenames['procstat'], pattern='Overall')
+        elementary_steps_names = lines[0][ lines[0].find('Overall')+len("Overall"): ].split()
+
+        lines = self.grep_file(self._filenames['procstat'], pattern='configuration')
+        number_of_configurations = len(lines)
+
+        for nconf in range(number_of_configurations):
+            lines = self.grep_file(self._filenames['procstat'], pattern='configuration', options="-A2 -m"+str(nconf+1))
+            lines = lines[-2-1:] # Equivalent to tail -n $number_of_lattice_sites+1
+
+            procstat_state = {}
+            pos = 0
+            for nline,line in enumerate(lines):
+                tokens = line.split()
+
+                if( nline==0 ):
+                    assert tokens[0] == "configuration"
+
+                    configuration_number = int(tokens[1])
+                    total_number_of_events = int(tokens[2])
+                    time = float(tokens[3])
+
+                    procstat_state["configuration_number"] = configuration_number
+                    procstat_state["total_number_of_events"] = total_number_of_events
+                    procstat_state["time"] = time
+
+                elif( nline==1 ):
+                    assert len(tokens)-1 == len(elementary_steps_names)
+
+                    average_waiting_time = {}
+                    for i,k in enumerate(elementary_steps_names):
+                        average_waiting_time[k] = float(tokens[i+1])
+
+                    procstat_state["average_waiting_time"] = average_waiting_time
+
+                elif( nline==2 ):
+                    assert len(tokens)-1 == len(elementary_steps_names)
+
+                    number_of_events = {}
+                    occurence_frequency = {}
+                    for i,k in enumerate(elementary_steps_names):
+                        number_of_events[k] = int(tokens[i+1])
+
+                        if( procstat_state["time"] > 0.0 ):
+                            occurence_frequency[k] = number_of_events[k]/procstat_state["time"]
+                        else:
+                            occurence_frequency[k] = 0.0
+
+                    procstat_state["number_of_events"] = number_of_events
+                    procstat_state["occurence_frequency"] = occurence_frequency
+
+                else:
+                    raise( "Error: Wrong format in file specnum_output.txt" )
+
+                pos += 1
+
+            output.append( procstat_state )
+
+
+        return output
+
+
+    def plot_process_statistics(self, data, key, log_scale=False, pause=-1, show=True, ax=None, close=False):
+        """
+        Plots data as a histogram
+        """
+        try:
+            import matplotlib.pyplot as plt
+        except ImportError as e:
+            return # module doesn't exist, deal with it.
+
+        if( ax is None ):
+            fig,ax = plt.subplots()
+
+        plt.rcParams["figure.autolayout"] = True
+
+        provided_quantities = self.provided_quantities()
+
+        ax.set_title('t $\in$ [0.000,{:.3f}] s'.format(data["time"]))
+        ax.set_xlabel(key)
+
+        keys = list(data[key].keys())
+        y_pos = len(keys)*[None]
+        j = 0
+        for i in range(len(keys)):
+            if( i==0 ):
+                y_pos[i] = j
+            else:
+                if( keys[i].replace('_fwd','').replace('_rev','') != keys[i-1].replace('_fwd','').replace('_rev','') ):
+                    j += 1
+
+                y_pos[i] = j
+
+        COLORS = ['r', 'b', 'g', 'm']
+        color = len(y_pos)*[COLORS[0]]
+
+        j = 0
+        for i in range(1,len(y_pos)):
+            if( y_pos[i] == y_pos[i-1] ):
+                y_pos[i] += 0.15
+                y_pos[i-1] -= 0.15
+                color[i] = COLORS[j]
+                color[i-1] = COLORS[j+1]
+
+        ax.barh(y_pos, data[key].values(), align='center', height=0.25, color=color)
+
+        if( log_scale ):
+            ax.set_xlim((1e0,1.2*max(data[key].values())))
+            plt.xscale("log")
+
+        ax.invert_yaxis()  # labels read top-to-bottom
+        ax.set_yticks(y_pos)
+        ax.set_yticklabels(keys)
+        plt.tight_layout()
+
+        if( show ):
+            if( pause == -1 ):
+                plt.show()
+            else:
+                plt.pause( pause )
+
+                if( close ):
+                    plt.close("all")
 
 
     def get_TOFs(self, npoints=None):
@@ -222,7 +407,7 @@ class ZacrosResults( scm.plams.Results ):
             import math
             import scipy.optimize
         except ImportError as e:
-            return output # module doesn't exist, deal with it.
+            return values,errors # module doesn't exist, deal with it.
 
         def line(x, a, b):
             return a * x + b
