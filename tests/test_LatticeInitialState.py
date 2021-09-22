@@ -16,21 +16,9 @@ def test_InitialState():
 
     s0 = pz.Species( "*", 1 )   # Empty adsorption site
     s1 = pz.Species( "H*", 1 )  # H adsorbed with dentation 1
-    s2 = pz.Species( "H2*", 1 ) # H2 adsorbed with dentation 1
+    s2 = pz.Species( "H2**", 2 ) # H2 adsorbed with dentation 1
 
-    reaction = pz.ElementaryReaction( site_types=( "f", "f" ),
-                                      neighboring=[ (1,2) ],
-                                      initial=[ s1, s1 ],
-                                      final=[ s2, s0 ],
-                                      reversible=True,
-                                      pre_expon=1e+13,
-                                      pe_ratio=0.676,
-                                      activation_energy = 0.2 )
-
-    mechanism = pz.Mechanism()
-    mechanism.append( reaction )
-
-    myLattice = pz.Lattice(cell_vectors=[[2.814, 0.000],[1.407, 2.437]],
+    lattice = pz.Lattice(cell_vectors=[[2.814, 0.000],[1.407, 2.437]],
                            repeat_cell=[3, 3],
                            site_types=["fcc", "hcp"],
                            site_coordinates=[[0.33333,0.33333],[0.66667,0.66667]],
@@ -44,39 +32,37 @@ def test_InitialState():
                                                   [(1,1), pz.Lattice.EAST],
                                                   [(1,1), pz.Lattice.SOUTHEAST]])
 
-    myInitialState = pz.LatticeState( myLattice, [s0,s1,s2] )
+    lattice.plot( show_sites_ids=True, pause=2, close=True )
+    initialState = pz.LatticeState( lattice, [s0,s1,s2] )
 
     random.seed(10)
-    myInitialState.fill_sites_random( site_name="fcc", species="H*", coverage=0.5 )
-    myInitialState.fill_sites_random( site_name="fcc", species=s2, coverage=0.5 )
-    myInitialState.fill_sites_random( site_name="hcp", species="H*", coverage=1.0 )
-    myInitialState.fill_site( 0, s2 )
+    initialState.fill_sites_random( site_name="fcc", species="H*", coverage=0.5 )
+    initialState.fill_sites_random( site_name=("fcc","hcp"), species=s2, coverage=0.5 )
+    initialState.fill_site( (0,1), s2 )
+    initialState.fill_sites_random( site_name="hcp", species="H*", coverage=1.0 )
+    initialState.plot( pause=2, show_sites_ids=True, close=True )
 
-    print( myInitialState )
+    print( initialState )
 
-    output = str(myInitialState)
+    output = str(initialState)
 
     expectedOutput = """\
 initial_state
-  # species * H* H2*
+  # species * H* H2**
   # species_numbers
-  #   - H2*  3
-  #   - H*  13
-  seed_on_sites H2* 1
-  seed_on_sites H* 2
+  #   - H2**  8
+  #   - H*  8
+  seed_on_sites H2** 1 2
   seed_on_sites H* 3
   seed_on_sites H* 4
   seed_on_sites H* 5
   seed_on_sites H* 6
-  seed_on_sites H* 8
+  seed_on_sites H2** 8 14
+  seed_on_sites H2** 9 13
   seed_on_sites H* 10
   seed_on_sites H* 11
-  seed_on_sites H* 12
-  seed_on_sites H2* 13
-  seed_on_sites H* 14
+  seed_on_sites H2** 12 16
   seed_on_sites H* 15
-  seed_on_sites H* 16
-  seed_on_sites H2* 17
   seed_on_sites H* 18
 end_initial_state\
 """

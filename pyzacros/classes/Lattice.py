@@ -212,10 +212,10 @@ class Lattice:
         :parm nearest_neighbors: Defines the neighboring structure. e.g. [ (2,6), (2,4,7,8) ]
         :parm cell_vectors: Define the unit vectors. Optional
         """
-        self.cell_vectors = cell_vectors
         self.site_types = site_types
         self.site_coordinates = site_coordinates
         self.nearest_neighbors = nearest_neighbors
+        self.cell_vectors = cell_vectors
 
 
     def fromYAMLfile(self, path):
@@ -264,7 +264,7 @@ class Lattice:
         raise Exception("Error: The constructor Lattice.fromYAMLfile has not been implemented yet!")
 
 
-    def plot(self, pause=-1, show=True, color=None, ax=None, close=False):
+    def plot(self, pause=-1, show=True, color=None, ax=None, close=False, show_sites_ids=False):
         """
         Uses matplotlib to visualize the lattice
         """
@@ -323,6 +323,11 @@ class Lattice:
 
             lcolor = color if color is not None else colors[i]
             ax.scatter(xvalues, yvalues, color=lcolor, marker=markers[i], s=100, zorder=2, label=st_i)
+
+            if( show_sites_ids ):
+                for i,(x,y) in enumerate(self.site_coordinates):
+                    plt.annotate(str(i), (x,y), ha='center', va='center', zorder=100)
+
 
         for i,ineigh in enumerate(self.nearest_neighbors):
             if( ineigh is None ): continue
