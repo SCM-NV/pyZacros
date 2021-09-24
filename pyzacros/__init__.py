@@ -21,4 +21,4 @@ def __autoimport(path, folders):
     return ret
 
 
-__all__ = __autoimport(__path__[0], ['classes','utils'])
+__all__ = __autoimport(__path__[0], ['core','utils'])
