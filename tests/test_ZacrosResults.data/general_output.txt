@@ -120,16 +120,16 @@ Simulation stopped:
 Performance facts:
 ~~~~~~~~~~~~~~~~~~
 
-Elapsed CPU time:         2.06860006E-02 seconds
-Elapsed clock time:       2.72420812E-02 seconds
-Setup clock time:         6.71791518E-03 seconds
-Simulation clock time:    2.05241665E-02 seconds
+Elapsed CPU time:         5.08119985E-02 seconds
+Elapsed clock time:       6.74486756E-02 seconds
+Setup clock time:         1.73744094E-02 seconds
+Simulation clock time:    5.00742681E-02 seconds
 
-Clock time per KMC event: 1.22546471E-05 seconds
-Clock time per KMC time:  2.72418242E-02 seconds/KMCTimeUnits
+Clock time per KMC event: 3.03412853E-05 seconds
+Clock time per KMC time:  6.74480423E-02 seconds/KMCTimeUnits
 
-Events per clock hour:    293766112
-KMC Dt per clock hour:    132149.734 KMCTimeUnits
+Events per clock hour:    118650216
+KMC Dt per clock hour:    53374.4180 KMCTimeUnits
 
 Restart information successfully written in file restart.inf.
 
