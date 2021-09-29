@@ -48,7 +48,7 @@ cluster H2**_0-f,H2**_0-f:(1,2)
   sites 2
   neighboring 1-2
   lattice_state
-    1 H2** 2
+    1 H2** 1
     1 H2** 2
   site_types f f
   graph_multiplicity 2
@@ -73,7 +73,7 @@ cluster my_weird_cluster
   sites 5
   neighboring 1-2 2-3 3-4 4-1 3-5
   lattice_state
-    1 CO2** 2
+    1 CO2** 1
     2 * 1
     1 CO2** 2
     3 H*  1
@@ -100,7 +100,7 @@ cluster my_weird_cluster
   sites 5
   neighboring 1-2 2-3 3-4 4-1 3-5
   lattice_state
-    1 CO2** 2
+    1 CO2** 1
     2 * 1
     1 CO2** 2
     3 H*  1
