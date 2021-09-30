@@ -64,7 +64,7 @@ reversible_step H2*_0-f,H2*_0-f<-->H2*_0-f,*_1-f;(1,2)
   sites 2
   neighboring 1-2
   initial
-    1 H2* 2
+    1 H2* 1
     1 H2* 2
   final
     1 H2* 1
