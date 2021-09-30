@@ -633,10 +633,18 @@ class ZacrosJob( scm.plams.SingleJob ):
 
                 parameters["species"] = []
                 parameters["entity_number"] = []
+                site_identate = {}
                 for entity_number,species_name,dentate_number in parameters["lattice_state"]:
+                    if( entity_number not in site_identate ):
+                        site_identate[ entity_number ] = 0
+                    else:
+                        site_identate[ entity_number ] = site_identate[ entity_number ] + 1
+
+                    #TODO Find a way to check consistency of dentate_number
+
                     loc_id = -1
                     for i,sp in enumerate(surface_species):
-                        if( sp.symbol == species_name and sp.denticity == dentate_number ):
+                        if( sp.symbol == species_name and site_identate[ entity_number ]+1 == dentate_number ):
                             loc_id = i
                             break
 

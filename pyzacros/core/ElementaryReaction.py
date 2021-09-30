@@ -210,12 +210,34 @@ class ElementaryReaction:
                 output += "\n"
 
             output += "  initial"+"\n"
+            site_identate = {}
             for i in range(self.sites):
-                output += "    "+str(self.initial_entity_number[i]+1)+" "+self.initial[i].symbol+" "+str(self.initial[i].denticity)+"\n"
+                if( self.initial_entity_number[i] not in site_identate ):
+                    site_identate[ self.initial_entity_number[i] ] = 0
+                else:
+                    site_identate[ self.initial_entity_number[i] ] = site_identate[ self.initial_entity_number[i] ] + 1
+
+                if( site_identate[ self.initial_entity_number[i] ] >= self.initial[i].denticity ):
+                    msg  = "### ERROR ### ElementaryReaction.__str__.\n"
+                    msg += "Inconsistent of denticity value for "+self.initial[i].symbol+"\n"
+                    raise NameError(msg)
+
+                output += "    "+str(self.initial_entity_number[i]+1)+" "+self.initial[i].symbol+" "+str(site_identate[self.initial_entity_number[i]]+1)+"\n"
 
             output += "  final"+"\n"
+            site_identate = {}
             for i in range(self.sites):
-                output += "    "+str(self.final_entity_number[i]+1)+" "+self.final[i].symbol+" "+str(self.final[i].denticity)+"\n"
+                if( self.final_entity_number[i] not in site_identate ):
+                    site_identate[ self.final_entity_number[i] ] = 0
+                else:
+                    site_identate[ self.final_entity_number[i] ] = site_identate[ self.final_entity_number[i] ] + 1
+
+                if( site_identate[ self.final_entity_number[i] ] >= self.final[i].denticity ):
+                    msg  = "### ERROR ### ElementaryReaction.__str__.\n"
+                    msg += "Inconsistent of denticity value for "+self.final[i].symbol+"\n"
+                    raise NameError(msg)
+
+                output += "    "+str(self.final_entity_number[i]+1)+" "+self.final[i].symbol+" "+str(site_identate[self.final_entity_number[i]]+1)+"\n"
 
             output += "  site_types "
             for i in range(len(self.site_types)):

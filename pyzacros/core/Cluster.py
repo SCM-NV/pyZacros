@@ -135,9 +135,20 @@ class Cluster:
                         output += " "
                 output += "\n"
 
+            site_identate = {}
             output += "  lattice_state"+"\n"
             for i in range(self.sites):
-                output += "    "+str(self.entity_number[i]+1)+" "+self.species[i].symbol+" "+str(self.species[i].denticity)+"\n"
+                if( self.entity_number[i] not in site_identate ):
+                    site_identate[ self.entity_number[i] ] = 0
+                else:
+                    site_identate[ self.entity_number[i] ] = site_identate[ self.entity_number[i] ] + 1
+
+                if( site_identate[ self.entity_number[i] ] >= self.species[i].denticity ):
+                    msg  = "### ERROR ### Cluster.__str__.\n"
+                    msg += "Inconsistent of denticity value for "+self.species[i].symbol+"\n"
+                    raise NameError(msg)
+
+                output += "    "+str(self.entity_number[i]+1)+" "+self.species[i].symbol+" "+str(site_identate[self.entity_number[i]]+1)+"\n"
 
             output += "  site_types "
             for i in range(len(self.site_types)):
