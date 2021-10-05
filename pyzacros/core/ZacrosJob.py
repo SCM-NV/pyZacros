@@ -129,7 +129,7 @@ class ZacrosJob( scm.plams.SingleJob ):
             if 'time' in str(dictionary[opt_sett]):
                 output = "%-20s"%opt_sett + "      " + "on time       " + str(float(dictionary[opt_sett][1])) + "\n"
             if 'event' in str(dictionary[opt_sett]):
-                output = "%-20s"%opt_sett + "      " + "on event\n"
+                output = "%-20s"%opt_sett + "      " + "on event       " + str(float(dictionary[opt_sett][1])) + "\n"
             # because the order, it will overwrite time:
             if 'logtime' in str(dictionary[opt_sett]):
                 output = "%-20s"%opt_sett + "      " + "on logtime      " + str(float(dictionary[opt_sett][1])) + "      " + \
@@ -687,6 +687,7 @@ class ZacrosJob( scm.plams.SingleJob ):
                     raise Exception( "Error: Format inconsistent in section reversible_step/step. Label not found!" )
 
                 parameters["label"] = tokens[1]
+
                 if( tokens[0].lower() == "reversible_step" ):
                     parameters["reversible"] = True
                 elif( tokens[0].lower() == "step" ):
@@ -727,6 +728,8 @@ class ZacrosJob( scm.plams.SingleJob ):
                     if( tokens[0] == "initial" ):
                         parameters["initial"] = []
 
+                        site_identate = {}
+
                         isites = 0
                         while( nline < len(file_content) ):
                             nline += 1
@@ -745,12 +748,18 @@ class ZacrosJob( scm.plams.SingleJob ):
 
                                 loc_id = None
                                 for i,sp in enumerate(surface_species):
-                                    if( sp.symbol == species_name and sp.denticity == dentate_number ):
+                                    if( entity_number not in site_identate ):
+                                        site_identate[ entity_number ] = 0
+
+                                    #TODO Find a way to check consistency of dentate_number
+
+                                    if( sp.symbol == species_name and site_identate[ entity_number ]+1 == dentate_number ):
+                                        site_identate[ entity_number ] = site_identate[ entity_number ] + 1
                                         loc_id = i
                                         break
 
                                 if( loc_id is None ):
-                                    raise Exception( "Error: Species "+species_name+" not found!" )
+                                    raise Exception( "Error: Species "+species_name+" not found! See mechanism initial: "+parameters["label"] )
 
                                 parameters["initial"].append( surface_species[loc_id] )
 
@@ -774,6 +783,8 @@ class ZacrosJob( scm.plams.SingleJob ):
                     if( tokens[0] == "final" ):
                         parameters["final"] = []
 
+                        site_identate = {}
+
                         isites = 0
                         while( nline < len(file_content) ):
                             nline += 1
@@ -792,12 +803,18 @@ class ZacrosJob( scm.plams.SingleJob ):
 
                                 loc_id = None
                                 for i,sp in enumerate(surface_species):
-                                    if( sp.symbol == species_name and sp.denticity == dentate_number ):
+                                    if( entity_number not in site_identate ):
+                                        site_identate[ entity_number ] = 0
+
+                                    #TODO Find a way to check consistency of dentate_number
+
+                                    if( sp.symbol == species_name and site_identate[ entity_number ]+1 == dentate_number ):
+                                        site_identate[ entity_number ] = site_identate[ entity_number ] + 1
                                         loc_id = i
                                         break
 
                                 if( loc_id is None ):
-                                    raise Exception( "Error: Species "+species_name+" not found!" )
+                                    raise Exception( "Error: Species "+species_name+" not found! See mechanism final: "+parameters["label"] )
 
                                 parameters["final"].append( surface_species[loc_id] )
 
@@ -872,5 +889,13 @@ class ZacrosJob( scm.plams.SingleJob ):
         initialState= None #TODO
 
         job = cls( settings=sett, lattice=lattice, mechanism=mechanism, cluster_expansion=cluster_expansion, initialState=initialState, name=jobname )
+
+        job.path = path
+        job.status = 'copied'
+        job.results.collect()
+
+        if finalize:
+            job._finalize()
+
         return job
 
