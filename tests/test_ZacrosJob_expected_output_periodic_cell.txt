@@ -11,9 +11,9 @@ n_surf_species    1
 surf_specs_names         O1*
 surf_specs_dent            1
 
-snapshots                 on event
-process_statistics        on event
-species_numbers           on event
+snapshots                 on event       1.0
+process_statistics        on event       1.0
+species_numbers           on event       1.0
 event_report      off
 max_steps         5000
 max_time          250.0
