@@ -129,7 +129,7 @@ class ZacrosJob( scm.plams.SingleJob ):
             if 'time' in str(dictionary[opt_sett]):
                 output = "%-20s"%opt_sett + "      " + "on time       " + str(float(dictionary[opt_sett][1])) + "\n"
             if 'event' in str(dictionary[opt_sett]):
-                output = "%-20s"%opt_sett + "      " + "on event       " + str(float(dictionary[opt_sett][1])) + "\n"
+                output = "%-20s"%opt_sett + "      " + "on event       " + str(int(dictionary[opt_sett][1])) + "\n"
             # because the order, it will overwrite time:
             if 'logtime' in str(dictionary[opt_sett]):
                 output = "%-20s"%opt_sett + "      " + "on logtime      " + str(float(dictionary[opt_sett][1])) + "      " + \
