@@ -12,7 +12,7 @@ from pyzacros.utils.compareReports import compare
 
 RUNDIR=None
 
-def test_ZacrosJob_run():
+def test_ZacrosResults():
     """Test of the ZacrosResults class."""
     global RUNDIR
     RUNDIR = os.getcwd()

@@ -28,6 +28,15 @@ class ZacrosResults( scm.plams.Results ):
         'out': 'std.out'}
 
 
+    def get_zacros_version(self):
+        """
+        Return the zacros's version from the 'general_output.txt' file.
+        """
+        lines = self.grep_file(self._filenames['general'], pattern='ZACROS')
+        zversion = lines[0].split()[2]
+        return float(zversion)
+
+
     def get_reaction_network(self):
         """
         Return the reactions from the 'general_output.txt' file.
@@ -36,7 +45,7 @@ class ZacrosResults( scm.plams.Results ):
 
         reaction_network = {}
         for line in lines:
-            if( not line.strip() ): continue
+            if( not line.strip() or line.find("A(Tini)") == -1 ): continue
             reaction_network[ line.split()[1].replace(':','') ] = line[line.find("Reaction:")+len("Reaction:"):].strip().replace('  ',' ')
 
         return reaction_network
@@ -75,8 +84,17 @@ class ZacrosResults( scm.plams.Results ):
         """
         Return the number of lattice sites from the 'general_output.txt' file.
         """
-        lines = self.grep_file(self._filenames['general'], pattern='Number of lattice sites:')
-        nsites = lines[0][ lines[0].find('Number of lattice sites:')+len("Number of lattice sites:"): ]
+        zversion = self.get_zacros_version()
+
+        if( zversion >= 2.0 and zversion < 3.0 ):
+            lines = self.grep_file(self._filenames['general'], pattern='Number of lattice sites:')
+            nsites = lines[0][ lines[0].find('Number of lattice sites:')+len("Number of lattice sites:"): ]
+        elif( zversion >= 3.0 ):
+            lines = self.grep_file(self._filenames['general'], pattern='Total number of lattice sites:')
+            nsites = lines[0][ lines[0].find('Total number of lattice sites:')+len("Total number of lattice sites:"): ]
+        else:
+            raise Exception( "Error: Zacros version "+str(zversion)+" not supported!" )
+
         return int(nsites)
 
 
@@ -100,8 +118,16 @@ class ZacrosResults( scm.plams.Results ):
         """
         Return the site types from the 'general_output.txt' file.
         """
-        lines = self.get_file_chunk(self._filenames['general'], begin="Site type names and number of sites of that type:",
-                                        end='Maximum coordination number:')
+        zversion = self.get_zacros_version()
+
+        if( zversion >= 2.0 and zversion < 3.0 ):
+            lines = self.get_file_chunk(self._filenames['general'], begin="Site type names and number of sites of that type:",
+                                            end='Maximum coordination number:')
+        elif( zversion >= 3.0 ):
+            lines = self.get_file_chunk(self._filenames['general'], begin="Site type names and total number of sites of that type:",
+                                            end='Maximum coordination number:')
+        else:
+            raise Exception( "Error: Zacros version "+str(zversion)+" not supported!" )
 
         site_types = []
         for line in lines:
