@@ -25,6 +25,8 @@ setup(
     author_email='p.lopez@esciencecenter.nl',
     url='https://github.com/NLeSC/pyZacros',
     packages=packages,
+    package_dir      = {'scm.pyzacros': '.'},
+    package_data={'scm.pyzacros' : ['lattice_db/*', 'examples/*']},
     include_package_data=True,
     license="LGPLv3",
     zip_safe=False,
