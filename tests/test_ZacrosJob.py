@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 """Tests of the pyZacros classes."""
 
-import pyzacros as pz
-from pyzacros.utils.compareReports import compare
+import scm.pyzacros as pz
+from scm.pyzacros.utils.compareReports import compare
 
 
 def test_ZacrosJob():
