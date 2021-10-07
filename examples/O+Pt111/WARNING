@@ -1,0 +1,2 @@
+Thu Oct  7, 2021
+This example works successfully with Zacros2 but fails with Zacros3. There is a bug in Zacros3 that doesn't allow to set the "number of gas species" equal to zero. The bug is already reported, and the Zacros team is working to fix it.
