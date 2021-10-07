@@ -10,7 +10,7 @@ packages = ['scm.pyzacros'] + ['scm.pyzacros.'+i for i in find_packages('.')]
 
 # To update the package version number, edit pyZacros/__version__.py
 version = {}
-with open(os.path.join(here, 'pyzacros', '__version__.py')) as f:
+with open(os.path.join(here, '__version__.py')) as f:
     exec(f.read(), version)
 
 with open('README.rst') as readme_file:
