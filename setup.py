@@ -7,7 +7,6 @@ here = os.path.abspath(os.path.dirname(__file__))
 
 packages = ['scm.pyzacros'] + ['scm.pyzacros.'+i for i in find_packages('.')]
 
-
 # To update the package version number, edit pyZacros/__version__.py
 version = {}
 with open(os.path.join(here, '__version__.py')) as f:
@@ -25,7 +24,7 @@ setup(
     author_email='p.lopez@esciencecenter.nl',
     url='https://github.com/NLeSC/pyZacros',
     packages=packages,
-    package_dir      = {'scm.pyzacros': '.'},
+    package_dir = {'scm.pyzacros': '.'},
     package_data={'scm.pyzacros' : ['lattice_db/*', 'examples/*']},
     include_package_data=True,
     license="LGPLv3",
