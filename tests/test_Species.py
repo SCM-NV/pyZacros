@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Tests of the pyZacros classes."""
 
-import pyzacros as pz
+import scm.pyzacros as pz
 
 
 def test_Species():
