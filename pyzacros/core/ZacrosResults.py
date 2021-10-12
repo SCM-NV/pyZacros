@@ -24,6 +24,7 @@ class ZacrosResults( scm.plams.Results ):
         'lattice': 'lattice_output.txt',
         'procstat': 'procstat_output.txt',
         'specnum': 'specnum_output.txt',
+        'restart': 'restart.inf',
         'err': 'std.err',
         'out': 'std.out'}
 
@@ -217,17 +218,6 @@ class ZacrosResults( scm.plams.Results ):
             output.append( lattice_state )
 
         return output
-
-        #id
-        #nevents
-        #time
-        #temperature
-        #energy
-        #site_number
-        #entity_id
-        #species_number
-        #dentation
-        #ngas_molecules
 
 
     def plot_lattice_states(self, pause=-1, show=True, ax=None, close=False):

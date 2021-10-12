@@ -2,6 +2,7 @@
 
 import os
 import stat
+import shutil
 
 import scm.plams
 
@@ -34,7 +35,7 @@ class ZacrosJob( scm.plams.SingleJob ):
         'out': 'std.out'}
 
 
-    def __init__(self, lattice, mechanism, cluster_expansion, initialState= None, **kwargs):
+    def __init__(self, lattice, mechanism, cluster_expansion, initialState=None, **kwargs):
         """
         Create a new ZacrosJob object.
 
@@ -301,6 +302,14 @@ class ZacrosJob( scm.plams.SingleJob ):
 
         with open(runfile, 'w') as run:
             run.write(self.get_runscript())
+
+        if( self.depend is not None and len(self.depend) > 0 ):
+            if( len(self.depend) > 1 ):
+                print("Warning: Multiple dependencies for this job. Only the first one will be used for to recreate the restart.inf file.")
+
+            restart_file_old = os.path.join(self.depend[0].path, ZacrosResults._filenames['restart'])
+            restart_file_new = os.path.join(self.path, ZacrosResults._filenames['restart'])
+            shutil.copy( restart_file_old, restart_file_new )
 
         os.chmod(runfile, os.stat(runfile).st_mode | stat.S_IEXEC)
 
