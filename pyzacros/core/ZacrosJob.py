@@ -305,7 +305,7 @@ class ZacrosJob( scm.plams.SingleJob ):
 
         if( self.depend is not None and len(self.depend) > 0 ):
             if( len(self.depend) > 1 ):
-                print("Warning: Multiple dependencies for this job. Only the first one will be used for to recreate the restart.inf file.")
+                print("Warning: This job contains multiple dependencies. Only the first dependency will be used to recreate the restart.inf file.")
 
             restart_file_old = os.path.join(self.depend[0].path, ZacrosResults._filenames['restart'])
             restart_file_new = os.path.join(self.path, ZacrosResults._filenames['restart'])
