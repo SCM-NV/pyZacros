@@ -30,12 +30,13 @@ class ZacrosJob( scm.plams.SingleJob ):
         'energetics': 'energetics_input.dat',
         'mechanism': 'mechanism_input.dat',
         'state': 'state_input.dat',
+        'restart': 'restart.inf',
         'run': 'slurm.run',
         'err': 'std.err',
         'out': 'std.out'}
 
 
-    def __init__(self, lattice, mechanism, cluster_expansion, initialState=None, **kwargs):
+    def __init__(self, lattice, mechanism, cluster_expansion, initial_state=None, **kwargs):
         """
         Create a new ZacrosJob object.
 
@@ -45,7 +46,7 @@ class ZacrosJob( scm.plams.SingleJob ):
                         calculation.
         :parm lattice: Lattice containing the lattice to be used during the
                        calculation.
-        :parm initialState: Initial state of the system. By default a KMC
+        :parm initial_state: Initial state of the system. By default a KMC
                        simulation in Zacros is initialized with an empty
                        lattice.
         """
@@ -90,7 +91,16 @@ class ZacrosJob( scm.plams.SingleJob ):
         if( type(mechanism) == list ): self.mechanism = Mechanism(mechanism)
         self.cluster_expansion = cluster_expansion
         if( type(cluster_expansion) == list ): self.cluster_expansion = ClusterExpansion(cluster_expansion)
-        self.initialState = initialState
+        self.initial_state = initial_state
+
+        self.restart_file_content = None
+        if( self.depend is not None and len(self.depend) > 0 ):
+            if( len(self.depend) > 1 ):
+                print("Warning: This job contains multiple dependencies. Only the last dependency will be used to recreate the restart.inf file.")
+
+            restart = os.path.join(self.depend[-1].path, ZacrosJob._filenames['restart'])
+            with open(restart, "r") as depFile:
+                self.restart_file_content = depFile.readlines()
 
         check_molar_fraction(self.settings, self.mechanism.gas_species())
 
@@ -231,8 +241,19 @@ class ZacrosJob( scm.plams.SingleJob ):
         Returns a string with the content of the state_input.dat file
         """
         output = ""
-        if( self.initialState is not None ):
-            output = str(self.initialState)
+        if( self.initial_state is not None ):
+            output = str(self.initial_state)
+        return output
+
+
+    def get_restart_input(self):
+        """
+        Returns a string with the content of the restart.inf file
+        """
+        output = ""
+        if( self.restart_file_content is not None ):
+            for line in self.restart_file_content:
+                output += line
         return output
 
 
@@ -279,6 +300,7 @@ class ZacrosJob( scm.plams.SingleJob ):
         energetics = os.path.join(self.path, ZacrosJob._filenames['energetics'])
         mechanism = os.path.join(self.path, ZacrosJob._filenames['mechanism'])
         state = os.path.join(self.path, ZacrosJob._filenames['state'])
+        restart = os.path.join(self.path, ZacrosJob._filenames['restart'])
 
         runfile = os.path.join(self.path, ZacrosJob._filenames['run'])
         #err = os.path.join(self.path, ZacrosJob._filenames['err'])
@@ -296,23 +318,18 @@ class ZacrosJob( scm.plams.SingleJob ):
         with open(mechanism, "w") as inp:
             inp.write(self.get_mechanism_input())
 
-        if self.initialState is not None:
+        if self.initial_state is not None:
             with open(state, "w") as inp:
                 inp.write(self.get_initial_state_input())
+
+        if( self.restart_file_content is not None ):
+            with open(restart, 'w') as inp:
+                inp.write(self.get_restart_input())
 
         with open(runfile, 'w') as run:
             run.write(self.get_runscript())
 
-        if( self.depend is not None and len(self.depend) > 0 ):
-            if( len(self.depend) > 1 ):
-                print("Warning: This job contains multiple dependencies. Only the first dependency will be used to recreate the restart.inf file.")
-
-            restart_file_old = os.path.join(self.depend[0].path, ZacrosResults._filenames['restart'])
-            restart_file_new = os.path.join(self.path, ZacrosResults._filenames['restart'])
-            shutil.copy( restart_file_old, restart_file_new )
-
         os.chmod(runfile, os.stat(runfile).st_mode | stat.S_IEXEC)
-
 
     def __str__(self):
         """
@@ -343,12 +360,20 @@ class ZacrosJob( scm.plams.SingleJob ):
         output += "---------------------------------------------------------------------"+"\n"
         output += self.get_mechanism_input()
 
-        if(self.initialState is not None):
+        if( self.initial_state is not None ):
             output += "\n"
             output += "---------------------------------------------------------------------"+"\n"
             output += ZacrosJob._filenames['state']+"\n"
             output += "---------------------------------------------------------------------"+"\n"
             output += self.get_initial_state_input()
+
+        if( self.restart_file_content is not None ):
+            output += "\n"
+            output += "---------------------------------------------------------------------"+"\n"
+            output += ZacrosJob._filenames['restart']+"\n"
+            output += "---------------------------------------------------------------------"+"\n"
+            for line in self.restart_file_content:
+                output += line
 
         return output
 
@@ -895,9 +920,9 @@ class ZacrosJob( scm.plams.SingleJob ):
         lattice = ZacrosJob.__recreate_lattice_input( path )
         cluster_expansion = ZacrosJob.__recreate_energetics_input( path, gas_species, surface_species )
         mechanism = ZacrosJob.__recreate_mechanism_input( path, gas_species, surface_species )
-        initialState= None #TODO
+        initial_state= None #TODO
 
-        job = cls( settings=sett, lattice=lattice, mechanism=mechanism, cluster_expansion=cluster_expansion, initialState=initialState, name=jobname )
+        job = cls( settings=sett, lattice=lattice, mechanism=mechanism, cluster_expansion=cluster_expansion, initial_state=initial_state, name=jobname )
 
         job.path = path
         job.status = 'copied'

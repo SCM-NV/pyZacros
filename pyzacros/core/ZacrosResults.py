@@ -33,8 +33,12 @@ class ZacrosResults( scm.plams.Results ):
         """
         Return the zacros's version from the 'general_output.txt' file.
         """
-        lines = self.grep_file(self._filenames['general'], pattern='ZACROS')
-        zversion = lines[0].split()[2]
+        if( self.job.restart_file_content is None ):
+            lines = self.grep_file(self._filenames['general'], pattern='ZACROS')
+            zversion = lines[0].split()[2]
+        else:
+            lines = self.grep_file(self._filenames['restart'], pattern='Version')
+            zversion = float(lines[0].split()[1])/1e5
         return float(zversion)
 
 
@@ -56,14 +60,20 @@ class ZacrosResults( scm.plams.Results ):
         """
         Return the provided quantities from the 'specnum_output.txt' file in a form of a dictionary.
         """
-        lines = self.awk_file(self._filenames['specnum'],script='(NR==1){print $0}')
-        names = lines[0].split()
+        if( self.job.restart_file_content is None ):
+            lines = self.awk_file(self._filenames['specnum'],script='(NR==1){print $0}')
+            names = lines[0].split()
+        else:
+            names = list(self.job.depend[0].results.provided_quantities().keys())
 
         quantities = {}
         for name in names:
             quantities[name] = []
 
-        lines = self.awk_file(self._filenames['specnum'],script='(NR>1){print $0}')
+        if( self.job.restart_file_content is None ):
+            lines = self.awk_file(self._filenames['specnum'],script='(NR>1){print $0}')
+        else:
+            lines = self.awk_file(self._filenames['specnum'],script='{print $0}')
 
         for line in lines:
             for i,token in enumerate(line.split()):
@@ -87,14 +97,18 @@ class ZacrosResults( scm.plams.Results ):
         """
         zversion = self.get_zacros_version()
 
-        if( zversion >= 2.0 and zversion < 3.0 ):
-            lines = self.grep_file(self._filenames['general'], pattern='Number of lattice sites:')
-            nsites = lines[0][ lines[0].find('Number of lattice sites:')+len("Number of lattice sites:"): ]
-        elif( zversion >= 3.0 ):
-            lines = self.grep_file(self._filenames['general'], pattern='Total number of lattice sites:')
-            nsites = lines[0][ lines[0].find('Total number of lattice sites:')+len("Total number of lattice sites:"): ]
+        if( self.job.restart_file_content is not None ):
+            lines = self.grep_file(self._filenames['restart'], pattern='Lattice setup information', options="-A1")
+            nsites = lines[1].split()[0]
         else:
-            raise Exception( "Error: Zacros version "+str(zversion)+" not supported!" )
+            if( zversion >= 2.0 and zversion < 3.0 ):
+                lines = self.grep_file(self._filenames['general'], pattern='Number of lattice sites:')
+                nsites = lines[0][ lines[0].find('Number of lattice sites:')+len("Number of lattice sites:"): ]
+            elif( zversion >= 3.0 ):
+                lines = self.grep_file(self._filenames['general'], pattern='Total number of lattice sites:')
+                nsites = lines[0][ lines[0].find('Total number of lattice sites:')+len("Total number of lattice sites:"): ]
+            else:
+                raise Exception( "Error: Zacros version "+str(zversion)+" not supported!" )
 
         return int(nsites)
 
