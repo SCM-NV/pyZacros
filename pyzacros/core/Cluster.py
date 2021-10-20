@@ -159,7 +159,7 @@ class Cluster:
 
             output += "  graph_multiplicity "+str(self.multiplicity)+"\n"
 
-        output += "  cluster_eng "+("%.4f"%self.cluster_energy)+"\n"
+        output += "  cluster_eng "+("%12.5e"%self.cluster_energy)+"\n"
         output += "end_cluster"
 
         return output

@@ -33,7 +33,7 @@ class ZacrosResults( scm.plams.Results ):
         """
         Return the zacros's version from the 'general_output.txt' file.
         """
-        if( self.job.restart_file_content is None ):
+        if( self.job.restart is None ):
             lines = self.grep_file(self._filenames['general'], pattern='ZACROS')
             zversion = lines[0].split()[2]
         else:
@@ -60,17 +60,17 @@ class ZacrosResults( scm.plams.Results ):
         """
         Return the provided quantities from the 'specnum_output.txt' file in a form of a dictionary.
         """
-        if( self.job.restart_file_content is None ):
+        if( self.job.restart is None ):
             lines = self.awk_file(self._filenames['specnum'],script='(NR==1){print $0}')
             names = lines[0].split()
         else:
-            names = list(self.job.depend[0].results.provided_quantities().keys())
+            names = list(self.job.restart.results.provided_quantities().keys())
 
         quantities = {}
         for name in names:
             quantities[name] = []
 
-        if( self.job.restart_file_content is None ):
+        if( self.job.restart is None ):
             lines = self.awk_file(self._filenames['specnum'],script='(NR>1){print $0}')
         else:
             lines = self.awk_file(self._filenames['specnum'],script='{print $0}')
@@ -97,7 +97,7 @@ class ZacrosResults( scm.plams.Results ):
         """
         zversion = self.get_zacros_version()
 
-        if( self.job.restart_file_content is not None ):
+        if( self.job.restart is not None ):
             lines = self.grep_file(self._filenames['restart'], pattern='Lattice setup information', options="-A1")
             nsites = lines[1].split()[0]
         else:
@@ -405,7 +405,7 @@ class ZacrosResults( scm.plams.Results ):
                 color[i] = COLORS[j]
                 color[i-1] = COLORS[j+1]
 
-        ax.barh(y_pos, data[key].values(), align='center', height=0.25, color=color)
+        ax.barh(y_pos, list(data[key].values()), align='center', height=0.25, color=color)
 
         if( log_scale ):
             ax.set_xlim((1e0,1.2*max(data[key].values())))

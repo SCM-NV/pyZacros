@@ -36,7 +36,7 @@ class ZacrosJob( scm.plams.SingleJob ):
         'out': 'std.out'}
 
 
-    def __init__(self, lattice, mechanism, cluster_expansion, initial_state=None, **kwargs):
+    def __init__(self, lattice, mechanism, cluster_expansion, initial_state=None, restart=None, **kwargs):
         """
         Create a new ZacrosJob object.
 
@@ -94,12 +94,12 @@ class ZacrosJob( scm.plams.SingleJob ):
         self.initial_state = initial_state
 
         self.restart_file_content = None
-        if( self.depend is not None and len(self.depend) > 0 ):
-            if( len(self.depend) > 1 ):
-                print("Warning: This job contains multiple dependencies. Only the last dependency will be used to recreate the restart.inf file.")
+        self.restart = None
 
-            restart = os.path.join(self.depend[-1].path, ZacrosJob._filenames['restart'])
-            with open(restart, "r") as depFile:
+        if( restart is not None ):
+            self.restart = restart
+            restart_file = os.path.join(restart.path, ZacrosJob._filenames['restart'])
+            with open(restart_file, "r") as depFile:
                 self.restart_file_content = depFile.readlines()
 
         check_molar_fraction(self.settings, self.mechanism.gas_species())
@@ -131,23 +131,7 @@ class ZacrosJob( scm.plams.SingleJob ):
         Return a string with the content of simulation_input.dat.
         """
 
-        def print_optional_sett(self, opt_sett):
-            """
-            Give back the printing of an time/event/logtime setting.
-            """
-            dictionary = self.settings.as_dict()
-
-            if 'time' in str(dictionary[opt_sett]):
-                output = "%-20s"%opt_sett + "      " + "on time       " + str(float(dictionary[opt_sett][1])) + "\n"
-            if 'event' in str(dictionary[opt_sett]):
-                output = "%-20s"%opt_sett + "      " + "on event       " + str(int(dictionary[opt_sett][1])) + "\n"
-            # because the order, it will overwrite time:
-            if 'logtime' in str(dictionary[opt_sett]):
-                output = "%-20s"%opt_sett + "      " + "on logtime      " + str(float(dictionary[opt_sett][1])) + "      " + \
-                        str(float(dictionary[opt_sett][2])) + "\n"
-            return output
-
-        def get_molar_fractions(settings=Settings,species_list=SpeciesList):
+        def get_molar_fractions( settings, species_list ):
             """
             Get molar fractions using the correct order of list_gas_species.
 
@@ -200,18 +184,39 @@ class ZacrosJob( scm.plams.SingleJob ):
         molar_frac_list = get_molar_fractions(self.settings, gasSpecies)
 
         if( len(molar_frac_list)>0 ):
-            output += "gas_molar_fracs   " + ''.join([" %9s"%str(elem) for elem in molar_frac_list]) + "\n\n"
+            output += "gas_molar_fracs   " + ''.join([" %12.5e"%elem for elem in molar_frac_list]) + "\n\n"
         output += str(self.mechanism.species())+"\n\n"
 
-        output += print_optional_sett(self,opt_sett='snapshots')
-        output += print_optional_sett(self,opt_sett='process_statistics')
-        output += print_optional_sett(self,opt_sett='species_numbers')
+        for option in ['snapshots', 'process_statistics', 'species_numbers']:
+            if( option in self.settings ):
+                pair = self.settings[option]
 
-        output += "event_report      " + str(self.settings.get(('event_report')))+"\n"
-        output += "max_steps         " + str(self.settings.get(('max_steps')))+"\n"
-        output += "max_time          " + str(self.settings.get(('max_time')))+"\n"
-        output += "wall_time         " + str(self.settings.get(('wall_time')))+"\n"
-        output += "\nfinish"
+                if( len(pair) != 2 ):
+                    msg  = "### ERROR ### keyword "+option+" in settings."
+                    msg += "              Its value should be a pair (key,value)."
+                    msg += "              Possible options for key:  'event', 'elemevent', 'time',       'logtime', 'realtime'"
+                    msg += "              Possible options for value:  <int>,       <int>, <real>, (<real>,<real>),     <real>"
+                    raise NameError(msg)
+
+                key,value = pair
+
+                if( key == 'logtime' ):
+                    if( len(value) != 2 ):
+                        msg  = "### ERROR ### keyword '"+option+" on "+key+"' in settings."
+                        msg += "              Its value should be a pair of reals (<real>,<real>)."
+                        raise NameError(msg)
+
+                    output += "%-20s"%option + "      " + "on "+ key + "       " + str(float(value[1])) + "  " + str(float(value[2])) + "\n"
+                else:
+                    output += "%-20s"%option + "      " + "on "+ key + "       " + str(float(value)) + "\n"
+
+        if( 'event_report' in self.settings ): output += "event_report      " + str(self.settings.get(('event_report')))+"\n"
+        if( 'max_steps' in self.settings ): output += "max_steps         " + str(self.settings.get(('max_steps')))+"\n"
+        if( 'max_time' in self.settings ): output += "max_time          " + str(self.settings.get(('max_time')))+"\n"
+        if( 'wall_time' in self.settings ): output += "wall_time         " + str(self.settings.get(('wall_time')))+"\n"
+
+        output += "\n"
+        output += "finish"
         return output
 
 
@@ -282,6 +287,14 @@ class ZacrosJob( scm.plams.SingleJob ):
         ret += '\n'
         #ret += path
         ret += self._command
+
+        if( self.restart_file_content is not None and 'restart' in self.settings ):
+            if( 'max_time' in self.settings['restart'] ):
+                ret += ' --max_time='+str(self.settings.restart.max_time)
+            if( 'max_steps' in self.settings['restart'] ):
+                ret += ' --max_steps='+str(self.settings.restart.max_steps)
+            if( 'wall_time' in self.settings['restart'] ):
+                ret += ' --wall_time='+str(self.settings.restart.wall_time)
 
         if s.stdout_redirect:
             ret += ' >"{}"'.format(ZacrosJob._filenames['out'])
