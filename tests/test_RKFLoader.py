@@ -1,7 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-"""Tests of the pyZacros classes."""
-
 import os
 import sys
 import shutil
