@@ -96,6 +96,11 @@ def test_ZacrosJob_restart():
                         cluster_expansion=cluster_expansion )
 
     job0.run()
+
+    if( not job0.ok() ):
+        print( "Warning: Zacros is not available! So let's skip this test." )
+        return
+
     data = job0.results.provided_quantities()
     for time,nCO2 in zip(data['Time'],data['CO2']):
         output += "%5.1f"%time + "%8d"%nCO2 + "\n"
