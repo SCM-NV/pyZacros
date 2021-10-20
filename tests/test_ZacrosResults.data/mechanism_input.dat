@@ -8,8 +8,8 @@ step CO_adsorption
   final
     1 CO* 1
   site_types 1
-  pre_expon 1.000e+01
-  activ_eng 0.000
+  pre_expon  1.00000e+01
+  activ_eng  0.00000e+00
 end_step
 
 step O2_adsorption
@@ -23,8 +23,8 @@ step O2_adsorption
     1 O* 1
     2 O* 1
   site_types 1 1
-  pre_expon 2.500e+00
-  activ_eng 0.000
+  pre_expon  2.50000e+00
+  activ_eng  0.00000e+00
 end_step
 
 step CO_oxidation
@@ -38,8 +38,8 @@ step CO_oxidation
     1 * 1
     2 * 1
   site_types 1 1
-  pre_expon 1.000e+20
-  activ_eng 0.000
+  pre_expon  1.00000e+20
+  activ_eng  0.00000e+00
 end_step
 
 end_mechanism

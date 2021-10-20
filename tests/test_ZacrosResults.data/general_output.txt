@@ -1,5 +1,5 @@
 +---------------------------------------------------+
-|  ZACROS 2.0                                       |
+|  ZACROS 3.01                                      |
 |  GRAPH-THEORETICAL KMC SIMULATION CODE            |
 |                                                   |
 |  Multiscale Computational Catalysis and           |
@@ -10,9 +10,10 @@
 |  University College London                        |
 +---------------------------------------------------+
 
-Threading information:
-~~~~~~~~~~~~~~~~~~~~~~
-     NO THREADS
+Threading/multiprocessing information:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    Serial run (no parallelism).
 
 Simulation setup:
 ~~~~~~~~~~~~~~~~~
@@ -53,30 +54,35 @@ Simulation setup:
 
     Allowed walltime in seconds: 3600
 
+    The default Mersenne Twister 19937 random number generator will be used for this simulation.
+
+    Initializing the random number generator took 5.5559999999999998E-006 seconds
+
+    The default first reaction method will be used for propagating the KMC state, with a binary heap for the event-queue
+
 Finished reading simulation input.
 
 Lattice setup:
 ~~~~~~~~~~~~~~
 
-    Using one of the default lattice structures.
+    Parsing one of the default lattice structures.
 
     Unit cell area: 1.0000000000000000
 
-    Lattice cell: 20 x 20
+    Unit cell tiling: 20 x 20
 
-    Surface area: 400.00000000000000
+    Lattice surface area: 400.00000000000000
 
-    Number of lattice sites: 400
+    Number of lattice sites per cell: 1
+
+    Total number of lattice sites: 400
 
     Number of site types: 1
 
-    Site type names not defined, automatic strings assigned.
-    Site type names and number of sites of that type:
+    Site type names and total number of sites of that type:
       StTp1 (400)
 
     Maximum coordination number: 4
-
-    Lattice structure written to lattice_output.txt
 
 Finished reading lattice input.
 
@@ -92,6 +98,8 @@ Energetics setup:
         1. CO*_0-1:  Mult = 1      ECI = -1.3000000000000000       Entities:  CO*
         2. O*_0-1:   Mult = 1      ECI = -2.2999999999999998       Entities:  O*
 
+    This cluster expansion involves only single body patterns.
+
 Finished reading energetics input.
 
 Mechanism setup:
@@ -103,10 +111,62 @@ Mechanism setup:
 
     Reaction network:
 
-        1. CO_adsorption:    A(Tini) =  4.5000E+00   Ea =  0.00    k(Tini) =  4.5000E+00  Reaction: CO  +  *(StTp1)  ->  CO*(StTp1)
-        2. O2_adsorption:    A(Tini) =  1.3750E+00   Ea =  0.00    k(Tini) =  1.3750E+00  Reaction: O2  +  *(StTp1)  +  *(StTp1)  ->  O*(StTp1)  +  O*(StTp1)
-        3. CO_oxidation:     A(Tini) =  1.0000E+20   Ea =  0.00    k(Tini) =  1.0000E+20  Reaction: CO*(StTp1)  +  O*(StTp1)  ->  CO2  +  *(StTp1)  +  *(StTp1)
+        1. CO_adsorption:    A(Tini) =  4.5000E+00    Ea       =  0.00    k(Tini) =  4.5000E+00    Reaction: CO  +  *(StTp1)  ->  CO*(StTp1)
+        2. O2_adsorption:    A(Tini) =  1.3750E+00    Ea       =  0.00    k(Tini) =  1.3750E+00    Reaction: O2  +  *(StTp1)  +  *(StTp1)  ->  O*(StTp1)  +  O*(StTp1)
+        3. CO_oxidation:     A(Tini) =  1.0000E+20    Ea       =  0.00    k(Tini) =  1.0000E+20    Reaction: CO*(StTp1)  +  O*(StTp1)  ->  CO2  +  *(StTp1)  +  *(StTp1)
+
+    This mechanism contains up to two-site events involving only monodentate species.
+
+***************
+
+Warning code 4008 from mechanism_parser_module: this mechanism contains irreversible steps. DANGER: IRREVERSIBLE STEPS VIOLATE MICROSCOPIC REVERSIBILITY!
+Moreover, for such steps, Zacros treats the Bronsted-Evans-Polanyi relation as a purely mathematical relation and does not take any action if [activation energy] < max([reaction energy],0). 
+Use irreversible steps in mechanism_input.dat with caution, if you really know what you are doing!
+
+More information: 
+The following steps are irreversible:
+    1 : CO_adsorption
+    2 : O2_adsorption
+    3 : CO_oxidation
+
+***************
+
+***************
+
+Warning code 4009 from mechanism_parser_module: a cached activation energy for an irreversible event is out of the physically meaningful range: [activation energy] >= max(0,[reaction energy]). Check your Bronsted-Evans-Polanyi relation parameters (activation energy at zero coverage and proximity factor) or define the step as reversible, so that appropriate filtering is applied automatically.
+
+More information: 
+Activation energy out of physically meaningful bounds for elementary step 3: CO_oxidation.
+Ea = 0.0000000000000000, DErxn = 1.2629999999999995.
+
+***************
+
 Finished reading mechanism input.
+
+Preparing simulation:
+~~~~~~~~~~~~~~~~~~~~~
+
+    Constructing requested lattice structure.
+
+        Lattice structure written to lattice_output.txt
+
+    Pre-allocating KMC-simulation-handling datastructures... done!
+
+    Pre-allocating lattice-handling datastructures... done!
+
+    Pre-allocating event-rate-handling datastructures... done!
+
+    Initializing lattice state.
+
+        All lattice sites are vacant.
+
+    Initializing energetics.
+
+        Total adlayer energy: 0.0000000000000000
+
+    Initializing lattice events.
+
+        2000 lattice events found and stored in binary heap.
 
 Commencing simulation:
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -120,16 +180,44 @@ Simulation stopped:
 Performance facts:
 ~~~~~~~~~~~~~~~~~~
 
-Elapsed CPU time:         5.08119985E-02 seconds
-Elapsed clock time:       6.74486756E-02 seconds
-Setup clock time:         1.73744094E-02 seconds
-Simulation clock time:    5.00742681E-02 seconds
+Elapsed CPU time:         2.09280010E-02 seconds
+Elapsed clock time:       3.64174433E-02 seconds
+Setup clock time:         1.57018658E-02 seconds
+Simulation clock time:    2.07155775E-02 seconds
 
-Clock time per KMC event: 3.03412853E-05 seconds
-Clock time per KMC time:  6.74480423E-02 seconds/KMCTimeUnits
+Clock time per KMC event: 1.63821151E-05 seconds
+Clock time per KMC time:  3.64171006E-02 seconds/KMCTimeUnits
 
-Events per clock hour:    118650216
-KMC Dt per clock hour:    53374.4180 KMCTimeUnits
+Events per clock hour:    219751840
+KMC Dt per clock hour:    98854.6562 KMCTimeUnits
+
+Execution queue statistics:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Number of insertions:                12387
+Number of removals:                  12013
+Number of updates:                       0
+
+Memory usage statistics:
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Used capacity of process queue:                    2000
+       ...out of max-allocated:                   20000  (  10.00% utilization )
+
+Used capacity of process-participation list:          9
+       ...out of max-allocated:                     200  (   4.50% utilization )
+
+Used capacity of cluster list:                      289
+       ...out of max-allocated:                   20000  (   1.44% utilization )
+
+Used capacity of cluster-participation list:          1
+       ...out of max-allocated:                      60  (   1.67% utilization )
+
+Summary of warnings:
+~~~~~~~~~~~~~~~~~~~~
+
+Warning 4008 from mechanism_parser_module was triggered 1 time.                                                                                                   
+Warning 4009 from mechanism_parser_module was triggered 1 time.                                                                                                   
 
 Restart information successfully written in file restart.inf.
 
