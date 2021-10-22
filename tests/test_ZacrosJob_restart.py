@@ -25,7 +25,7 @@ def test_ZacrosJob_restart():
     #---------------------------------------------
     # Lattice setup:
     #---------------------------------------------
-    lattice = pz.Lattice( lattice_type=pz.Lattice.RECTANGULAR, lattice_constant=1.0, repeat_cell=[50,50] )
+    lattice = pz.Lattice( lattice_type=pz.Lattice.RECTANGULAR, lattice_constant=1.0, repeat_cell=[20,20] )
 
     #---------------------------------------------
     # Clusters:
@@ -132,53 +132,81 @@ def test_ZacrosJob_restart():
     for time,nCO2 in zip(data['Time'],data['CO2']):
         output += "%5.1f"%time + "%8d"%nCO2 + "\n"
 
-    scm.plams.finish()
-
     print( output )
 
     expectedOutput = """\
   0.0       0
-  0.1     650
-  0.2    1364
-  0.3    1913
-  0.4    2408
-  0.5    2891
-  0.6    3377
-  0.7    3812
-  0.8    4216
-  0.9    4597
-  1.0    4999
-  1.1    5416
-  1.2    5823
-  1.3    6167
-  1.4    6547
-  1.5    6928
-  1.6    7298
-  1.7    7651
-  1.8    8009
-  1.9    8374
+  0.1     100
+  0.2     202
+  0.3     309
+  0.4     398
+  0.5     478
+  0.6     566
+  0.7     642
+  0.8     714
+  0.9     765
+  1.0     835
+  1.1     898
+  1.2     956
+  1.3    1005
+  1.4    1047
+  1.5    1089
+  1.6    1124
+  1.7    1167
+  1.8    1199
+  1.9    1224
 --
   0.0       0
-  0.1     650
-  0.2    1364
-  0.3    1913
-  0.4    2408
-  0.5    2891
-  0.6    3377
-  0.7    3812
-  0.8    4216
-  0.9    4597
-  1.0    4999
+  0.1     100
+  0.2     202
+  0.3     309
+  0.4     398
+  0.5     478
+  0.6     566
+  0.7     642
+  0.8     714
+  0.9     765
+  1.0     835
 --
-  1.1    5416
-  1.2    5823
-  1.3    6167
-  1.4    6547
-  1.5    6928
-  1.6    7298
-  1.7    7651
-  1.8    8009
-  1.9    8374\
+  0.0       0
+  0.1     100
+  0.2     202
+  0.3     309
+  0.4     398
+  0.5     478
+  0.6     566
+  0.7     642
+  0.8     714
+  0.9     765
+  1.0     835
+  1.1     898
+  1.2     956
+  1.3    1005
+  1.4    1047
+  1.5    1089
+  1.6    1124
+  1.7    1167
+  1.8    1199
+  1.9    1224\
 """
 
     assert( compare( output, expectedOutput, 1e-3 ) )
+
+    lattice_states0 = job0.results.lattice_states()
+    lattice_states2 = job2.results.lattice_states()
+
+    assert len(lattice_states0) == len(lattice_states2)
+
+    job0.results.plot_lattice_states( pause=2, close=True )
+    job2.results.plot_lattice_states( pause=2, close=True )
+
+    process_statistics0 = job0.results.get_process_statistics()
+    process_statistics1 = job1.results.get_process_statistics()
+    process_statistics2 = job2.results.get_process_statistics()
+
+    assert len(process_statistics0) == len(process_statistics2)
+
+    job0.results.plot_process_statistics( process_statistics0[19], key="occurence_frequency", log_scale=True, pause=2, close=True )
+    job2.results.plot_process_statistics( process_statistics2[19], key="occurence_frequency", log_scale=True, pause=2, close=True )
+
+    scm.plams.finish()

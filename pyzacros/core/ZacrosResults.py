@@ -60,15 +60,17 @@ class ZacrosResults( scm.plams.Results ):
         """
         Return the provided quantities from the 'specnum_output.txt' file in a form of a dictionary.
         """
+        quantities = None
         if( self.job.restart is None ):
             lines = self.awk_file(self._filenames['specnum'],script='(NR==1){print $0}')
             names = lines[0].split()
-        else:
-            names = list(self.job.restart.results.provided_quantities().keys())
 
-        quantities = {}
-        for name in names:
-            quantities[name] = []
+            quantities = {}
+            for name in names:
+                quantities[name] = []
+        else:
+            quantities = self.job.restart.results.provided_quantities()
+            names = list(quantities.keys())
 
         if( self.job.restart is None ):
             lines = self.awk_file(self._filenames['specnum'],script='(NR>1){print $0}')
@@ -98,8 +100,7 @@ class ZacrosResults( scm.plams.Results ):
         zversion = self.get_zacros_version()
 
         if( self.job.restart is not None ):
-            lines = self.grep_file(self._filenames['restart'], pattern='Lattice setup information', options="-A1")
-            nsites = lines[1].split()[0]
+            nsites = self.job.restart.results.number_of_lattice_sites()
         else:
             if( zversion >= 2.0 and zversion < 3.0 ):
                 lines = self.grep_file(self._filenames['general'], pattern='Number of lattice sites:')
@@ -110,7 +111,9 @@ class ZacrosResults( scm.plams.Results ):
             else:
                 raise Exception( "Error: Zacros version "+str(zversion)+" not supported!" )
 
-        return int(nsites)
+            nsites = int(nsites)
+
+        return nsites
 
 
     def gas_species_names(self):
@@ -152,12 +155,43 @@ class ZacrosResults( scm.plams.Results ):
         return site_types
 
 
-    def number_of_configurations(self):
+    def number_of_snapshots(self):
         """
         Return the number of configurations from the 'history_output.txt' file.
         """
         lines = self.grep_file(self._filenames['history'], pattern='configuration')
-        return len(lines)
+        nconf = len(lines)
+
+        if( self.job.restart is not None ):
+            nconf = self.job.restart.results.number_of_snapshots() + nconf
+
+        return nconf
+
+
+    def number_of_process_statistics(self):
+        """
+        Return the number of process statistics from the 'procstat_output.txt' file.
+        """
+        lines = self.grep_file(self._filenames['procstat'], pattern='configuration')
+        nconf = len(lines)
+
+        if( self.job.restart is not None ):
+            nconf = self.job.restart.results.number_of_process_statistics() + nconf
+
+        return nconf
+
+
+    def elementary_steps_names(self):
+        """
+        Return the names of elementary steps from the 'procstat_output.txt' file.
+        """
+        if( self.job.restart is None ):
+            lines = self.grep_file(self._filenames['procstat'], pattern='Overall')
+            names = lines[0][ lines[0].find('Overall')+len("Overall"): ].split()
+        else:
+            names = self.job.restart.results.elementary_steps_names()
+
+        return names
 
 
     def lattice_states(self):
@@ -166,24 +200,34 @@ class ZacrosResults( scm.plams.Results ):
         """
         output = []
 
-        number_of_configurations = self.number_of_configurations()
         number_of_lattice_sites = self.number_of_lattice_sites()
+        prev_number_of_snapshots = 0
+        number_of_snapshots = self.number_of_snapshots()
 
-        lines = self.grep_file(self._filenames['history'], pattern='Gas_Species:')
-        gas_species_names = lines[0][ lines[0].find('Gas_Species:')+len("Gas_Species:"): ].split()
+        if( self.job.restart is None ):
 
-        gas_species = len(gas_species_names)*[None]
-        for i,sname in enumerate(gas_species_names):
-            for sp in self.job.mechanism.gas_species():
-                if( sname == sp.symbol ):
-                    gas_species[i] = sp
-        gas_species = SpeciesList( gas_species )
+            # In the following lines, I just check the consistency of the gas species and
+            # surface species between the general and history files.
+            lines = self.grep_file(self._filenames['history'], pattern='Gas_Species:')
+            gas_species_names = lines[0][ lines[0].find('Gas_Species:')+len("Gas_Species:"): ].split()
 
-        assert gas_species_names == self.gas_species_names(), "Warning: Inconsistent gas species between "+ \
-            self._filenames['history']+" and "+self._filenames['general']
+            assert gas_species_names == self.gas_species_names(), "Warning: Inconsistent gas species between "+ \
+                self._filenames['history']+" and "+self._filenames['general']
 
-        lines = self.grep_file(self._filenames['history'], pattern='Surface_Species:')
-        surface_species_names = lines[0][ lines[0].find('Surface_Species:')+len("Surface_Species:"): ].split()
+            lines = self.grep_file(self._filenames['history'], pattern='Surface_Species:')
+            surface_species_names = lines[0][ lines[0].find('Surface_Species:')+len("Surface_Species:"): ].split()
+
+            assert surface_species_names == self.surface_species_names(), "Warning: Inconsistent surface species between "+ \
+                self._filenames['history']+" and "+self._filenames['general']
+        else:
+
+            prev_number_of_snapshots = self.job.restart.results.number_of_snapshots()
+
+            # Here, I assume as granted the consistency of the gas species and surface species
+            # between the general and history files, which was checked in the 'restart' job.
+            surface_species_names = self.job.restart.results.surface_species_names()
+
+            output = self.job.restart.results.lattice_states()
 
         surface_species = len(surface_species_names)*[None]
         for i,sname in enumerate(surface_species_names):
@@ -192,12 +236,7 @@ class ZacrosResults( scm.plams.Results ):
                     surface_species[i] = sp
         surface_species = SpeciesList( surface_species )
 
-        assert surface_species_names == self.surface_species_names(), "Warning: Inconsistent surface species between "+ \
-            self._filenames['history']+" and "+self._filenames['general']
-
-        lines = self.get_file_chunk(self._filenames['history'], begin="configuration", end="Finished reading mechanism input.")
-
-        for nconf in range(number_of_configurations):
+        for nconf in range(number_of_snapshots-prev_number_of_snapshots):
             lines = self.grep_file(self._filenames['history'], pattern='configuration', options="-A"+str(number_of_lattice_sites)+" -m"+str(nconf+1))
             lines = lines[-number_of_lattice_sites-1:] # Equivalent to tail -n $number_of_lattice_sites+1
 
@@ -301,13 +340,18 @@ class ZacrosResults( scm.plams.Results ):
         """
         output = []
 
-        lines = self.grep_file(self._filenames['procstat'], pattern='Overall')
-        elementary_steps_names = lines[0][ lines[0].find('Overall')+len("Overall"): ].split()
+        prev_number_of_process_statistics = 0
+        number_of_process_statistics = self.number_of_process_statistics()
 
-        lines = self.grep_file(self._filenames['procstat'], pattern='configuration')
-        number_of_configurations = len(lines)
+        if( self.job.restart is None ):
+            lines = self.grep_file(self._filenames['procstat'], pattern='Overall')
+            elementary_steps_names = lines[0][ lines[0].find('Overall')+len("Overall"): ].split()
+        else:
+            prev_number_of_process_statistics = self.job.restart.results.number_of_process_statistics()
+            elementary_steps_names = self.job.restart.results.elementary_steps_names()
+            output = self.job.restart.results.get_process_statistics()
 
-        for nconf in range(number_of_configurations):
+        for nconf in range(number_of_process_statistics-prev_number_of_process_statistics):
             lines = self.grep_file(self._filenames['procstat'], pattern='configuration', options="-A2 -m"+str(nconf+1))
             lines = lines[-2-1:] # Equivalent to tail -n $number_of_lattice_sites+1
 
