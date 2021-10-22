@@ -170,3 +170,29 @@ class Cluster:
         Returns the mass of the cluster in Da
         """
         return self.__mass
+
+
+    def gas_species(self) -> SpeciesList:
+        """Returns the gas species."""
+        species = []
+
+        for sp in self.species:
+            if( sp.kind == Species.GAS ):
+                species.append( sp )
+
+        species = SpeciesList( species )
+        species.remove_duplicates()
+        return species
+
+
+    def surface_species(self) -> SpeciesList:
+        """Returns the surface species."""
+        species = []
+
+        for sp in self.species:
+            if( sp.kind == Species.SURFACE ):
+                species.append( sp )
+
+        species = SpeciesList( species )
+        species.remove_duplicates()
+        return species

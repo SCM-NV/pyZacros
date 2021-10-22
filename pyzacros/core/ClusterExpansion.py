@@ -63,7 +63,7 @@ class ClusterExpansion(UserList):
         species = []
 
         for cl in self:
-            species.extend( cl.gas_species )
+            species.extend( cl.gas_species() )
 
         species = SpeciesList( species )
         species.remove_duplicates()
@@ -75,7 +75,7 @@ class ClusterExpansion(UserList):
         species = []
 
         for cl in self:
-            species.extend( cl.species )
+            species.extend( cl.surface_species() )
 
         species = SpeciesList( species )
         species.remove_duplicates()

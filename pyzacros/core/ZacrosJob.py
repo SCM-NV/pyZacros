@@ -175,6 +175,8 @@ class ZacrosJob( scm.plams.SingleJob ):
         output += "pressure        " + "%10s"%self.settings.get('pressure')+"\n\n"
 
         gasSpecies = self.mechanism.gas_species()
+        gasSpecies.extend( self.cluster_expansion.gas_species() )
+        gasSpecies.remove_duplicates()
 
         if( len(gasSpecies) == 0 ):
             output += "n_gas_species    "+str(len(gasSpecies))+"\n\n"
@@ -183,9 +185,13 @@ class ZacrosJob( scm.plams.SingleJob ):
 
         molar_frac_list = get_molar_fractions(self.settings, gasSpecies)
 
+        surfaceSpecies = self.mechanism.species()
+        surfaceSpecies.extend( self.cluster_expansion.surface_species() )
+        surfaceSpecies.remove_duplicates()
+
         if( len(molar_frac_list)>0 ):
             output += "gas_molar_fracs   " + ''.join([" %12.5e"%elem for elem in molar_frac_list]) + "\n\n"
-        output += str(self.mechanism.species())+"\n\n"
+        output += str(surfaceSpecies)+"\n\n"
 
         for option in ['snapshots', 'process_statistics', 'species_numbers']:
             if( option in self.settings ):
