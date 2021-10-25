@@ -1,3 +1,0 @@
-Quick installation
-==================
-Hello world!
