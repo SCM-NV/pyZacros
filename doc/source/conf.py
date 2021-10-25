@@ -4,10 +4,6 @@
 
 from datetime import date
 
-from docutils.parsers.rst.directives.admonitions import Important,Danger,Attention
-from sphinx.locale import admonitionlabels
-
-
 # ==================================================================================
 # If we build from the userdoc, we should use the configuration from global_conf.py,
 # otherwise we should define a fall-back config for the stand-alone doc.
@@ -39,10 +35,7 @@ else:
 
 extensions += [
     'sphinx.ext.autodoc',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.mathjax',
-    'sphinx.ext.todo',
-    'sphinx.ext.autosectionlabel']
+]
 
 
 # Avoid duplicate names by prefixing the document's name.
