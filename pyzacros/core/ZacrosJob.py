@@ -2,6 +2,7 @@
 
 import os
 import stat
+import shutil
 
 import scm.plams
 
@@ -29,12 +30,13 @@ class ZacrosJob( scm.plams.SingleJob ):
         'energetics': 'energetics_input.dat',
         'mechanism': 'mechanism_input.dat',
         'state': 'state_input.dat',
+        'restart': 'restart.inf',
         'run': 'slurm.run',
         'err': 'std.err',
         'out': 'std.out'}
 
 
-    def __init__(self, lattice, mechanism, cluster_expansion, initialState= None, **kwargs):
+    def __init__(self, lattice, mechanism, cluster_expansion, initial_state=None, restart=None, **kwargs):
         """
         Create a new ZacrosJob object.
 
@@ -44,7 +46,7 @@ class ZacrosJob( scm.plams.SingleJob ):
                         calculation.
         :parm lattice: Lattice containing the lattice to be used during the
                        calculation.
-        :parm initialState: Initial state of the system. By default a KMC
+        :parm initial_state: Initial state of the system. By default a KMC
                        simulation in Zacros is initialized with an empty
                        lattice.
         """
@@ -89,7 +91,16 @@ class ZacrosJob( scm.plams.SingleJob ):
         if( type(mechanism) == list ): self.mechanism = Mechanism(mechanism)
         self.cluster_expansion = cluster_expansion
         if( type(cluster_expansion) == list ): self.cluster_expansion = ClusterExpansion(cluster_expansion)
-        self.initialState = initialState
+        self.initial_state = initial_state
+
+        self.restart_file_content = None
+        self.restart = None
+
+        if( restart is not None ):
+            self.restart = restart
+            restart_file = os.path.join(restart.path, ZacrosJob._filenames['restart'])
+            with open(restart_file, "r") as depFile:
+                self.restart_file_content = depFile.readlines()
 
         check_molar_fraction(self.settings, self.mechanism.gas_species())
 
@@ -120,23 +131,7 @@ class ZacrosJob( scm.plams.SingleJob ):
         Return a string with the content of simulation_input.dat.
         """
 
-        def print_optional_sett(self, opt_sett):
-            """
-            Give back the printing of an time/event/logtime setting.
-            """
-            dictionary = self.settings.as_dict()
-
-            if 'time' in str(dictionary[opt_sett]):
-                output = "%-20s"%opt_sett + "      " + "on time       " + str(float(dictionary[opt_sett][1])) + "\n"
-            if 'event' in str(dictionary[opt_sett]):
-                output = "%-20s"%opt_sett + "      " + "on event\n"
-            # because the order, it will overwrite time:
-            if 'logtime' in str(dictionary[opt_sett]):
-                output = "%-20s"%opt_sett + "      " + "on logtime      " + str(float(dictionary[opt_sett][1])) + "      " + \
-                        str(float(dictionary[opt_sett][2])) + "\n"
-            return output
-
-        def get_molar_fractions(settings=Settings,species_list=SpeciesList):
+        def get_molar_fractions( settings, species_list ):
             """
             Get molar fractions using the correct order of list_gas_species.
 
@@ -180,6 +175,8 @@ class ZacrosJob( scm.plams.SingleJob ):
         output += "pressure        " + "%10s"%self.settings.get('pressure')+"\n\n"
 
         gasSpecies = self.mechanism.gas_species()
+        gasSpecies.extend( self.cluster_expansion.gas_species() )
+        gasSpecies.remove_duplicates()
 
         if( len(gasSpecies) == 0 ):
             output += "n_gas_species    "+str(len(gasSpecies))+"\n\n"
@@ -188,19 +185,44 @@ class ZacrosJob( scm.plams.SingleJob ):
 
         molar_frac_list = get_molar_fractions(self.settings, gasSpecies)
 
+        surfaceSpecies = self.mechanism.species()
+        surfaceSpecies.extend( self.cluster_expansion.surface_species() )
+        surfaceSpecies.remove_duplicates()
+
         if( len(molar_frac_list)>0 ):
-            output += "gas_molar_fracs   " + ''.join([" %9s"%str(elem) for elem in molar_frac_list]) + "\n\n"
-        output += str(self.mechanism.species())+"\n\n"
+            output += "gas_molar_fracs   " + ''.join([" %12.5e"%elem for elem in molar_frac_list]) + "\n\n"
+        output += str(surfaceSpecies)+"\n\n"
 
-        output += print_optional_sett(self,opt_sett='snapshots')
-        output += print_optional_sett(self,opt_sett='process_statistics')
-        output += print_optional_sett(self,opt_sett='species_numbers')
+        for option in ['snapshots', 'process_statistics', 'species_numbers']:
+            if( option in self.settings ):
+                pair = self.settings[option]
 
-        output += "event_report      " + str(self.settings.get(('event_report')))+"\n"
-        output += "max_steps         " + str(self.settings.get(('max_steps')))+"\n"
-        output += "max_time          " + str(self.settings.get(('max_time')))+"\n"
-        output += "wall_time         " + str(self.settings.get(('wall_time')))+"\n"
-        output += "\nfinish"
+                if( len(pair) != 2 ):
+                    msg  = "### ERROR ### keyword "+option+" in settings."
+                    msg += "              Its value should be a pair (key,value)."
+                    msg += "              Possible options for key:  'event', 'elemevent', 'time',       'logtime', 'realtime'"
+                    msg += "              Possible options for value:  <int>,       <int>, <real>, (<real>,<real>),     <real>"
+                    raise NameError(msg)
+
+                key,value = pair
+
+                if( key == 'logtime' ):
+                    if( len(value) != 2 ):
+                        msg  = "### ERROR ### keyword '"+option+" on "+key+"' in settings."
+                        msg += "              Its value should be a pair of reals (<real>,<real>)."
+                        raise NameError(msg)
+
+                    output += "%-20s"%option + "      " + "on "+ key + "       " + str(float(value[1])) + "  " + str(float(value[2])) + "\n"
+                else:
+                    output += "%-20s"%option + "      " + "on "+ key + "       " + str(float(value)) + "\n"
+
+        if( 'event_report' in self.settings ): output += "event_report      " + str(self.settings.get(('event_report')))+"\n"
+        if( 'max_steps' in self.settings ): output += "max_steps         " + str(self.settings.get(('max_steps')))+"\n"
+        if( 'max_time' in self.settings ): output += "max_time          " + str(self.settings.get(('max_time')))+"\n"
+        if( 'wall_time' in self.settings ): output += "wall_time         " + str(self.settings.get(('wall_time')))+"\n"
+
+        output += "\n"
+        output += "finish"
         return output
 
 
@@ -230,8 +252,19 @@ class ZacrosJob( scm.plams.SingleJob ):
         Returns a string with the content of the state_input.dat file
         """
         output = ""
-        if( self.initialState is not None ):
-            output = str(self.initialState)
+        if( self.initial_state is not None ):
+            output = str(self.initial_state)
+        return output
+
+
+    def get_restart_input(self):
+        """
+        Returns a string with the content of the restart.inf file
+        """
+        output = ""
+        if( self.restart_file_content is not None ):
+            for line in self.restart_file_content:
+                output += line
         return output
 
 
@@ -261,6 +294,14 @@ class ZacrosJob( scm.plams.SingleJob ):
         #ret += path
         ret += self._command
 
+        if( self.restart_file_content is not None and 'restart' in self.settings ):
+            if( 'max_time' in self.settings['restart'] ):
+                ret += ' --max_time='+str(self.settings.restart.max_time)
+            if( 'max_steps' in self.settings['restart'] ):
+                ret += ' --max_steps='+str(self.settings.restart.max_steps)
+            if( 'wall_time' in self.settings['restart'] ):
+                ret += ' --wall_time='+str(self.settings.restart.wall_time)
+
         if s.stdout_redirect:
             ret += ' >"{}"'.format(ZacrosJob._filenames['out'])
         ret += '\n'
@@ -278,6 +319,7 @@ class ZacrosJob( scm.plams.SingleJob ):
         energetics = os.path.join(self.path, ZacrosJob._filenames['energetics'])
         mechanism = os.path.join(self.path, ZacrosJob._filenames['mechanism'])
         state = os.path.join(self.path, ZacrosJob._filenames['state'])
+        restart = os.path.join(self.path, ZacrosJob._filenames['restart'])
 
         runfile = os.path.join(self.path, ZacrosJob._filenames['run'])
         #err = os.path.join(self.path, ZacrosJob._filenames['err'])
@@ -295,15 +337,18 @@ class ZacrosJob( scm.plams.SingleJob ):
         with open(mechanism, "w") as inp:
             inp.write(self.get_mechanism_input())
 
-        if self.initialState is not None:
+        if self.initial_state is not None:
             with open(state, "w") as inp:
                 inp.write(self.get_initial_state_input())
+
+        if( self.restart_file_content is not None ):
+            with open(restart, 'w') as inp:
+                inp.write(self.get_restart_input())
 
         with open(runfile, 'w') as run:
             run.write(self.get_runscript())
 
         os.chmod(runfile, os.stat(runfile).st_mode | stat.S_IEXEC)
-
 
     def __str__(self):
         """
@@ -334,12 +379,20 @@ class ZacrosJob( scm.plams.SingleJob ):
         output += "---------------------------------------------------------------------"+"\n"
         output += self.get_mechanism_input()
 
-        if(self.initialState is not None):
+        if( self.initial_state is not None ):
             output += "\n"
             output += "---------------------------------------------------------------------"+"\n"
             output += ZacrosJob._filenames['state']+"\n"
             output += "---------------------------------------------------------------------"+"\n"
             output += self.get_initial_state_input()
+
+        if( self.restart_file_content is not None ):
+            output += "\n"
+            output += "---------------------------------------------------------------------"+"\n"
+            output += ZacrosJob._filenames['restart']+"\n"
+            output += "---------------------------------------------------------------------"+"\n"
+            for line in self.restart_file_content:
+                output += line
 
         return output
 
@@ -687,6 +740,7 @@ class ZacrosJob( scm.plams.SingleJob ):
                     raise Exception( "Error: Format inconsistent in section reversible_step/step. Label not found!" )
 
                 parameters["label"] = tokens[1]
+
                 if( tokens[0].lower() == "reversible_step" ):
                     parameters["reversible"] = True
                 elif( tokens[0].lower() == "step" ):
@@ -727,6 +781,8 @@ class ZacrosJob( scm.plams.SingleJob ):
                     if( tokens[0] == "initial" ):
                         parameters["initial"] = []
 
+                        site_identate = {}
+
                         isites = 0
                         while( nline < len(file_content) ):
                             nline += 1
@@ -745,12 +801,18 @@ class ZacrosJob( scm.plams.SingleJob ):
 
                                 loc_id = None
                                 for i,sp in enumerate(surface_species):
-                                    if( sp.symbol == species_name and sp.denticity == dentate_number ):
+                                    if( entity_number not in site_identate ):
+                                        site_identate[ entity_number ] = 0
+
+                                    #TODO Find a way to check consistency of dentate_number
+
+                                    if( sp.symbol == species_name and site_identate[ entity_number ]+1 == dentate_number ):
+                                        site_identate[ entity_number ] = site_identate[ entity_number ] + 1
                                         loc_id = i
                                         break
 
                                 if( loc_id is None ):
-                                    raise Exception( "Error: Species "+species_name+" not found!" )
+                                    raise Exception( "Error: Species "+species_name+" not found! See mechanism initial: "+parameters["label"] )
 
                                 parameters["initial"].append( surface_species[loc_id] )
 
@@ -774,6 +836,8 @@ class ZacrosJob( scm.plams.SingleJob ):
                     if( tokens[0] == "final" ):
                         parameters["final"] = []
 
+                        site_identate = {}
+
                         isites = 0
                         while( nline < len(file_content) ):
                             nline += 1
@@ -792,12 +856,18 @@ class ZacrosJob( scm.plams.SingleJob ):
 
                                 loc_id = None
                                 for i,sp in enumerate(surface_species):
-                                    if( sp.symbol == species_name and sp.denticity == dentate_number ):
+                                    if( entity_number not in site_identate ):
+                                        site_identate[ entity_number ] = 0
+
+                                    #TODO Find a way to check consistency of dentate_number
+
+                                    if( sp.symbol == species_name and site_identate[ entity_number ]+1 == dentate_number ):
+                                        site_identate[ entity_number ] = site_identate[ entity_number ] + 1
                                         loc_id = i
                                         break
 
                                 if( loc_id is None ):
-                                    raise Exception( "Error: Species "+species_name+" not found!" )
+                                    raise Exception( "Error: Species "+species_name+" not found! See mechanism final: "+parameters["label"] )
 
                                 parameters["final"].append( surface_species[loc_id] )
 
@@ -869,8 +939,16 @@ class ZacrosJob( scm.plams.SingleJob ):
         lattice = ZacrosJob.__recreate_lattice_input( path )
         cluster_expansion = ZacrosJob.__recreate_energetics_input( path, gas_species, surface_species )
         mechanism = ZacrosJob.__recreate_mechanism_input( path, gas_species, surface_species )
-        initialState= None #TODO
+        initial_state= None #TODO
 
-        job = cls( settings=sett, lattice=lattice, mechanism=mechanism, cluster_expansion=cluster_expansion, initialState=initialState, name=jobname )
+        job = cls( settings=sett, lattice=lattice, mechanism=mechanism, cluster_expansion=cluster_expansion, initial_state=initial_state, name=jobname )
+
+        job.path = path
+        job.status = 'copied'
+        job.results.collect()
+
+        if finalize:
+            job._finalize()
+
         return job
 

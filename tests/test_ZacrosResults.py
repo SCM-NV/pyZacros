@@ -1,7 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-"""Tests of the pyZacros classes."""
-
 import os
 import time
 
@@ -12,7 +8,7 @@ from pyzacros.utils.compareReports import compare
 
 RUNDIR=None
 
-def test_ZacrosJob_run():
+def test_ZacrosResults():
     """Test of the ZacrosResults class."""
     global RUNDIR
     RUNDIR = os.getcwd()

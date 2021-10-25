@@ -58,17 +58,17 @@ class SpeciesList(UserList):
 
             output += "gas_specs_names   "
             for i in gasSpecies:
-                output += "%10s"%self[i].symbol
+                output += " %12s"%self[i].symbol
             output += "\n"
 
             output += "gas_energies      "
             for i in gasSpecies:
-                output += "%10s"%self[i].gas_energy
+                output += " %12.5e"%self[i].gas_energy
             output += "\n"
 
             output += "gas_molec_weights "
             for i in gasSpecies:
-                output += "%10s"%self[i].mass()
+                output += " %12.5e"%self[i].mass()
             output += "\n"
 
         effAdsorbedSpecies = -1

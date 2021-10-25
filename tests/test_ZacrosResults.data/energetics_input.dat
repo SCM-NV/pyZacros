@@ -6,7 +6,7 @@ cluster CO*_0-1
     1 CO* 1
   site_types 1
   graph_multiplicity 1
-  cluster_eng -1.3000
+  cluster_eng -1.30000e+00
 end_cluster
 
 cluster O*_0-1
@@ -15,7 +15,7 @@ cluster O*_0-1
     1 O* 1
   site_types 1
   graph_multiplicity 1
-  cluster_eng -2.3000
+  cluster_eng -2.30000e+00
 end_cluster
 
 end_energetics
