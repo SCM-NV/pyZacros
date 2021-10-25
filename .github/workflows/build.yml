@@ -26,6 +26,8 @@ jobs:
       - name: Build
         run: |
           pip install -e .
+          pip install -e .[doc, test]
       - name: Test
         run: |
           pytest tests 
+
