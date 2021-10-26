@@ -1,4 +1,0 @@
-#!/bin/bash
-
-export PYZACROSHOME="`dirname ${BASH_SOURCE[0]}`"
-export PYTHONPATH=$PYZACROSHOME:$PYTHONPATH
