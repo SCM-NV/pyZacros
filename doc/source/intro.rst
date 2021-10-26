@@ -1,4 +1,6 @@
 Intro
 -----
 
-Hello. This is page.
+Hello. This is a test page for now...
+
+.. autoclass:: pyzacros.Lattice

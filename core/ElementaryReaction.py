@@ -54,6 +54,7 @@ class ElementaryReaction:
         self.__final_gas = SpeciesList( [sp for sp in self.final if sp.is_gas()] )
         self.__final_adsorbed = SpeciesList( [sp for sp in self.final if sp.is_adsorbed()] )
 
+        self.final_entity_number = final_entity_number
         if( final_entity_number is None ):
             self.final_entity_number = SpeciesList.default_entity_numbers( self.sites, self.__final_adsorbed )
 
