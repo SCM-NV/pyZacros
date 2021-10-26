@@ -25,8 +25,8 @@ jobs:
       - run: conda install python=${{ matrix.python-version }}
       - name: Build
         run: |
-          pip install -e .
-          pip install -e .[doc, test]
+          pip install -e .[test,doc] 
+          pip install -e .          
       - name: Test
         run: |
           pytest tests 
