@@ -647,7 +647,7 @@ class ZacrosJob( scm.plams.SingleJob ):
                         output = []
                         for pair in sv:
                             a,b = pair.split("-")
-                            output.append( (int(a),int(b)) )
+                            output.append( (int(a)-1,int(b)-1) )
                         return output
 
                     cases = {
@@ -764,7 +764,7 @@ class ZacrosJob( scm.plams.SingleJob ):
                         output = []
                         for pair in sv:
                             a,b = pair.split("-")
-                            output.append( (int(a),int(b)) )
+                            output.append( (int(a)-1,int(b)-1) )
                         return output
 
                     cases = {

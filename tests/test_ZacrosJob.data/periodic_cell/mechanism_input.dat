@@ -1,6 +1,6 @@
 mechanism
 
-reversible_step O1*-B,*-A<-->*-B,O1*-A;(1,2)
+reversible_step O1*-B,*-A<-->*-B,O1*-A;(0,1)
   sites 2
   neighboring 2-1
   initial

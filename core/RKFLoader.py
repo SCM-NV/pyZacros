@@ -204,7 +204,7 @@ class RKFLoader:
                             and ( (bs1 in fromSites and bs2 in toSites)
                                 or (bs1 in toSites and bs2 in fromSites) ) ):
                             #neighboring.append( (bs1,bs2) )
-                            neighboring.append( (i+1,j+1) )
+                            neighboring.append( (i,j) )
                             connectedSites[bs1] = 1
                             connectedSites[bs2] = 1
 

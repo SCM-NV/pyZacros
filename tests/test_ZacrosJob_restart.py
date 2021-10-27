@@ -50,7 +50,7 @@ def test_ZacrosJob_restart():
     O2_adsorption = pz.ElementaryReaction(site_types=["1", "1"],
                                         initial=[s0,s0,O2_gas],
                                         final=[O_ads,O_ads],
-                                        neighboring=[(1, 2)],
+                                        neighboring=[(0, 1)],
                                         reversible=False,
                                         pre_expon=2.5,
                                         activation_energy=0.0)
@@ -59,7 +59,7 @@ def test_ZacrosJob_restart():
     CO_oxidation = pz.ElementaryReaction(site_types=["1", "1"],
                                     initial=[CO_ads, O_ads],
                                     final=[s0, s0, CO2_gas],
-                                    neighboring=[(1, 2)],
+                                    neighboring=[(0, 1)],
                                     reversible=False,
                                     pre_expon=1.0e+20,
                                     activation_energy=0.0)

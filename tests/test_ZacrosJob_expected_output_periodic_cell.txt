@@ -86,7 +86,7 @@ energetics_input.dat
 ---------------------------------------------------------------------
 energetics
 
-cluster *-B,O1*-A:(1,2)
+cluster *-B,O1*-A:(0,1)
   sites 2
   neighboring 2-1
   lattice_state
@@ -97,7 +97,7 @@ cluster *-B,O1*-A:(1,2)
   cluster_eng -197.8632
 end_cluster
 
-cluster O1*-B,*-A:(1,2)
+cluster O1*-B,*-A:(0,1)
   sites 2
   neighboring 2-1
   lattice_state
@@ -114,7 +114,7 @@ mechanism_input.dat
 ---------------------------------------------------------------------
 mechanism
 
-reversible_step O1*-B,*-A<-->*-B,O1*-A;(1,2)
+reversible_step O1*-B,*-A<-->*-B,O1*-A;(0,1)
   sites 2
   neighboring 2-1
   initial

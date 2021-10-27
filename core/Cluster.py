@@ -23,7 +23,7 @@ class Cluster:
         """
         self.site_types = site_types                  # e.g. [ "f", "f" ]
         self.species = species                        # e.g. [ Species("H*",1), Species("H*",1) ]
-        self.neighboring = neighboring                # e.g. [ (1,2) ]
+        self.neighboring = neighboring                # e.g. [ (0,1) ]
         self.multiplicity = multiplicity              # e.g. 2
         self.cluster_energy = cluster_energy          # Units eV
 
@@ -130,7 +130,7 @@ class Cluster:
             if self.neighboring is not None:
                 output += "  neighboring "
                 for i in range(len(self.neighboring)):
-                    output += str(self.neighboring[i][0])+"-"+str(self.neighboring[i][1])
+                    output += str(self.neighboring[i][0]+1)+"-"+str(self.neighboring[i][1]+1)
                     if( i != len(self.neighboring)-1 ):
                         output += " "
                 output += "\n"

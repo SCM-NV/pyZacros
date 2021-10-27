@@ -16,19 +16,19 @@ def test_ZacrosJob():
     myLattice = pz.Lattice(lattice_type=pz.Lattice.HEXAGONAL, lattice_constant=1.0, repeat_cell=[8,10])
 
     myCluster1 = pz.Cluster( site_types=( "f", "f" ),
-                            neighboring=[ (1,2) ],
+                            neighboring=[ (0,1) ],
                             species=[ s1, s1 ],
                             multiplicity=2,
                             cluster_energy=0.1 )
 
     myCluster2 = pz.Cluster( site_types=( "f", "f" ),
-                            neighboring=[ (1,2) ],
+                            neighboring=[ (0,1) ],
                             species=[ s2, s0 ],
                             multiplicity=2,
                             cluster_energy=0.1 )
 
     myCluster3 = pz.Cluster( site_types=( "f", "f" ),
-                            neighboring=[ (1,2) ],
+                            neighboring=[ (0,1) ],
                             species=[ s0, s0 ],
                             multiplicity=2,
                             cluster_energy=0.1 )
@@ -36,22 +36,22 @@ def test_ZacrosJob():
     myClusterExpansion = pz.ClusterExpansion( [myCluster1, myCluster2, myCluster3] )
 
     myReaction1 = pz.ElementaryReaction( site_types=( "f", "f" ),
-                                        neighboring=[ (1,2) ],
+                                        neighboring=[ (0,1) ],
                                         initial=[ s1, s1 ],
                                         final=[ s2, s0 ],
                                         reversible=True,
                                         pre_expon=1e+13,
                                         pe_ratio=0.676,
-                                        activation_energy = 0.2 )
+                                        activation_energy=0.2 )
 
     myReaction2 = pz.ElementaryReaction( site_types=( "f", "f" ),
-                                        neighboring=[ (1,2) ],
+                                        neighboring=[ (0,1) ],
                                         initial=[ s2, s0 ],
                                         final=[ s0, s0, s3 ],
                                         reversible=False,
                                         pre_expon=1e+13,
                                         pe_ratio=0.676,
-                                        activation_energy = 0.2 )
+                                        activation_energy=0.2 )
 
     myMechanism = pz.Mechanism()
     myMechanism.append( myReaction1 )

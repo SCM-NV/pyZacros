@@ -38,7 +38,7 @@ class ElementaryReaction:
 
         self.site_types = site_types   # e.g. [ "f", "f" ]
         self.sites = len(self.site_types)
-        self.neighboring = neighboring # e.g. [ (1,2) ]
+        self.neighboring = neighboring # e.g. [ (0,1) ]
 
         self.initial = initial
         if( type(initial) == list ): self.initial = SpeciesList(initial)
@@ -204,8 +204,7 @@ class ElementaryReaction:
             if self.neighboring is not None:
                 output += "  neighboring "
                 for i in range(len(self.neighboring)):
-                    output += str(self.neighboring[i][0]) + \
-                             "-"+str(self.neighboring[i][1])
+                    output += str(self.neighboring[i][0]+1) + "-" + str(self.neighboring[i][1]+1)
                     if(i != len(self.neighboring)-1):
                         output += " "
                 output += "\n"
