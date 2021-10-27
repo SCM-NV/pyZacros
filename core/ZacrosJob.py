@@ -213,6 +213,8 @@ class ZacrosJob( scm.plams.SingleJob ):
                         raise NameError(msg)
 
                     output += "%-20s"%option + "      " + "on "+ key + "       " + str(float(value[1])) + "  " + str(float(value[2])) + "\n"
+                elif( key == 'event' or key == 'elemevent' ):
+                    output += "%-20s"%option + "      " + "on "+ key + "       " + str(int(value)) + "\n"
                 else:
                     output += "%-20s"%option + "      " + "on "+ key + "       " + str(float(value)) + "\n"
 
