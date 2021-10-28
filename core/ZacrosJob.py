@@ -22,7 +22,7 @@ class ZacrosJob( scm.plams.SingleJob ):
     """
     A class representing a single computational job with Zacros
     """
-    _command = 'zacros.x'
+    _command = '"$AMSBIN"/zacros' if 'AMSBIN' in os.environ else 'zacros.x'
     _result_type = ZacrosResults
     _filenames = {
         'simulation': 'simulation_input.dat',
