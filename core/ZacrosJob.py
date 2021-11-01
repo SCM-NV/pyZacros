@@ -170,7 +170,8 @@ class ZacrosJob( scm.plams.SingleJob ):
                         list_of_molar_fractions.append(molar_tmp[j])
             return list_of_molar_fractions
 
-        output  = "random_seed     " + "%10s"%self.settings.get('random_seed')+"\n"
+        output  = ""
+        if( 'random_seed' in self.settings ): output += "random_seed     " + "%10s"%self.settings.get('random_seed')+"\n"
         output += "temperature     " + "%10s"%self.settings.get('temperature')+"\n"
         output += "pressure        " + "%10s"%self.settings.get('pressure')+"\n\n"
 
