@@ -58,7 +58,7 @@ def test_ZacrosResults():
     O2_adsorption = pz.ElementaryReaction(site_types=["1", "1"],
                                         initial=[s0,s0,O2_gas],
                                         final=[O_ads,O_ads],
-                                        neighboring=[(1, 2)],
+                                        neighboring=[(0, 1)],
                                         reversible=False,
                                         pre_expon=2.5,
                                         label="O2_adsorption")
@@ -67,7 +67,7 @@ def test_ZacrosResults():
     CO_oxidation = pz.ElementaryReaction(site_types=["1", "1"],
                                     initial=[CO_ads, O_ads],
                                     final=[s0, s0, CO2_gas],
-                                    neighboring=[(1, 2)],
+                                    neighboring=[(0, 1)],
                                     reversible=False,
                                     pre_expon=1.0e+20,
                                     label="CO_oxidation")
@@ -97,7 +97,7 @@ def test_ZacrosResults():
     #-----------------------
     results = job.run()
 
-    if( not job.ok() ):
+    if( not job.ok() and "AMSBIN" not in os.environ ):
         print( "Warning: The calculation FAILED likely because Zacros executable is not available!" )
         print( "         For testing purposes, now we load precalculated results.")
 

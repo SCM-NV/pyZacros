@@ -44,7 +44,7 @@ def buildEnergyLandscape():
     job = scm.plams.AMSJob(molecule=molecule, settings=settings, name="PESExploration")
     results = job.run()
 
-    if( not job.ok() ):
+    if( not job.ok() and "AMSBIN" not in os.environ ):
         print( "Warning: The EnergyLandscape calculation FAILED likely because AMS executable is not available!" )
         print( "         For testing purposes, now we load precalculated results.")
 
@@ -87,7 +87,7 @@ def deriveBindingSites():
     job = scm.plams.AMSJob(molecule=molecule, settings=settings, name="BindingSites")
     results = job.run()
 
-    if( not job.ok() ):
+    if( not job.ok() and "AMSBIN" not in os.environ ):
         print( "Warning: The BindingSites calculation FAILED likely because AMS executable is not available!" )
         print( "         For testing purposes, now we load precalculated results.")
 
