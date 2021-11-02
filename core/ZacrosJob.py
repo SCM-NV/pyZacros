@@ -923,7 +923,7 @@ class ZacrosJob( scm.plams.SingleJob ):
         Load an external job from *path*.
         """
         if( not os.path.isdir(path) ):
-            raise FileError('Path {} does not exist, cannot load from it.'.format(path))
+            raise FileNotFoundError('Path {} does not exist, cannot load from it.'.format(path))
 
         path = os.path.abspath(path)
         jobname = os.path.basename(path)

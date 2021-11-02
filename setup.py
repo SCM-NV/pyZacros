@@ -25,7 +25,7 @@ setup(
     url='https://github.com/SCM-NV/pyZacros',
     packages=packages,
     package_dir = {'pyzacros': '.'},
-    package_data={'pyzacros' : ['examples/*']},
+    package_data={'pyzacros' : ['examples/*', 'tests/*']},
     include_package_data=True,
     license="LGPLv3",
     zip_safe=False,
