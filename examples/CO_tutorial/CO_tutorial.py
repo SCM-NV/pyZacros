@@ -32,65 +32,54 @@ latt = pz.Lattice( lattice_type=pz.Lattice.HEXAGONAL, lattice_constant=1.0, repe
 #---------------------------------------------
 # Clusters:
 #---------------------------------------------
-CO_point = pz.Cluster(site_types=["1"],
-                   species=[CO_adsorbed],
-                   cluster_energy=-2.077,
-                   label="CO_point")
+CO_point = pz.Cluster( species=[CO_adsorbed],
+                       cluster_energy=-2.077,
+                       label="CO_point")
 
-H2O_point = pz.Cluster(site_types=["1"],
-                    species=[H2O_adsorbed],
-                    cluster_energy=-0.362,
-                    label="H2O_point")
+H2O_point = pz.Cluster(species=[H2O_adsorbed],
+                       cluster_energy=-0.362,
+                       label="H2O_point")
 
-OH_point = pz.Cluster(site_types=["1"],
-                   species=[OH_adsorbed],
-                   cluster_energy=0.830,
-                   label="OH_point")
+OH_point = pz.Cluster(species=[OH_adsorbed],
+                      cluster_energy=0.830,
+                      label="OH_point")
 
-O_point = pz.Cluster(site_types=["1"],
-                  species=[O_adsorbed],
-                  cluster_energy=1.298,
-                  label="O_point")
+O_point = pz.Cluster(species=[O_adsorbed],
+                     cluster_energy=1.298,
+                     label="O_point")
 
-H_point = pz.Cluster(site_types=["1"],
-                  species=[H_adsorbed],
-                  cluster_energy=-0.619,
-                  label="H_point")
+H_point = pz.Cluster(species=[H_adsorbed],
+                     cluster_energy=-0.619,
+                     label="H_point")
 
-COOH_point = pz.Cluster(site_types=["1"],
-                     species=[COOH_adsorbed],
-                     cluster_energy=-1.487,
-                     label="COOH_point")
+COOH_point = pz.Cluster(species=[COOH_adsorbed],
+                        cluster_energy=-1.487,
+                        label="COOH_point")
 
-CO_pair_1NN = pz.Cluster(site_types=["1", "1"],
-                      neighboring=[(1, 2)],
-                      species=[CO_adsorbed, CO_adsorbed],
-                      cluster_energy=0.560,
-                      label="CO_pair_1NN")
+CO_pair_1NN = pz.Cluster(species=[CO_adsorbed, CO_adsorbed],
+                         neighboring=[(0, 1)],
+                         cluster_energy=0.560,
+                         label="CO_pair_1NN")
 
-OH_H_1NN = pz.Cluster(site_types=["1", "1"],
-                   neighboring=[(1, 2)],
-                   species=[OH_adsorbed, H_adsorbed],
-                   cluster_energy=0.021,
-                   label="OH_H_1NN")
+OH_H_1NN = pz.Cluster(species=[OH_adsorbed, H_adsorbed],
+                      neighboring=[(0, 1)],
+                      cluster_energy=0.021,
+                      label="OH_H_1NN")
 
-O_H_1NN = pz.Cluster(site_types=["1", "1"],
-                  neighboring=[(1, 2)],
-                  species=[O_adsorbed, H_adsorbed],
-                  cluster_energy=0.198,
-                  label="O_H_1NN")
+O_H_1NN = pz.Cluster(species=[O_adsorbed, H_adsorbed],
+                     neighboring=[(0, 1)],
+                     cluster_energy=0.198,
+                     label="O_H_1NN")
 
-CO_OH_1NN = pz.Cluster(site_types=["1", "1"],
-                    neighboring=[(1, 2)],
-                    species=[CO_adsorbed, OH_adsorbed],
-                    cluster_energy=0.066,
-                    label="CO_OH_1NN")
+CO_OH_1NN = pz.Cluster(species=[CO_adsorbed, OH_adsorbed],
+                       neighboring=[(0, 1)],
+                       cluster_energy=0.066,
+                       label="CO_OH_1NN")
 
-CO_O_1NN = pz.Cluster(site_types=["1", "1"],
-                   neighboring=[(1, 2)],
-                   species=[CO_adsorbed, O_adsorbed],
-                   cluster_energy=0.423,
-                   label="CO_O_1NN")
+CO_O_1NN = pz.Cluster(species=[CO_adsorbed, O_adsorbed],
+                      neighboring=[(0, 1)],
+                      cluster_energy=0.423,
+                      label="CO_O_1NN")
 
 #---------------------------------------------
 # Cluster expansion:
@@ -107,81 +96,73 @@ myClusterExpansion.extend( [CO_pair_1NN, OH_H_1NN, O_H_1NN, CO_OH_1NN, CO_O_1NN]
 # Elementary Reactions
 #---------------------------------------------
 
-CO_adsorption = pz.ElementaryReaction(site_types=["1"],
-                                   initial=[s0,CO_gas],
-                                   final=[CO_adsorbed],
-                                   reversible=True,
-                                   pre_expon=2.226e+007,
-                                   pe_ratio=2.137e-006,
-                                   activation_energy=0.0,
-                                   label="CO_adsorption")
-
-H2_dissoc_adsorp = pz.ElementaryReaction(site_types=["1", "1"],
-                                      initial=[s0, s0, H2_gas],
-                                      final=[H_adsorbed, H_adsorbed],
-                                      neighboring=[(1, 2)],
+CO_adsorption = pz.ElementaryReaction(initial=[s0,CO_gas],
+                                      final=[CO_adsorbed],
                                       reversible=True,
-                                      pre_expon=8.299e+007,
-                                      pe_ratio=7.966e-006,
+                                      pre_expon=2.226e+007,
+                                      pe_ratio=2.137e-006,
                                       activation_energy=0.0,
-                                      label="H2_dissoc_adsorp")
+                                      label="CO_adsorption")
 
-H2O_adsorption = pz.ElementaryReaction(site_types=["1"],
-                                    initial=[s0, H2O_gas],
-                                    final=[H2O_adsorbed],
-                                    reversible=True,
-                                    pre_expon=2.776e+002,
-                                    pe_ratio=2.665e-006,
-                                    activation_energy=0.0,
-                                    label="H2O_adsorption")
+H2_dissoc_adsorp = pz.ElementaryReaction(initial=[s0, s0, H2_gas],
+                                         final=[H_adsorbed, H_adsorbed],
+                                         neighboring=[(0, 1)],
+                                         reversible=True,
+                                         pre_expon=8.299e+007,
+                                         pe_ratio=7.966e-006,
+                                         activation_energy=0.0,
+                                         label="H2_dissoc_adsorp")
 
-H2O_dissoc_adsorp = pz.ElementaryReaction(site_types=["1", "1"],
-                                       initial=[H2O_adsorbed, s0],
-                                       final=[OH_adsorbed, H_adsorbed],
-                                       neighboring=[(1, 2)],
+H2O_adsorption = pz.ElementaryReaction(initial=[s0, H2O_gas],
+                                       final=[H2O_adsorbed],
+                                       reversible=True,
+                                       pre_expon=2.776e+002,
+                                       pe_ratio=2.665e-006,
+                                       activation_energy=0.0,
+                                       label="H2O_adsorption")
+
+H2O_dissoc_adsorp = pz.ElementaryReaction(initial=[H2O_adsorbed, s0],
+                                          final=[OH_adsorbed, H_adsorbed],
+                                          neighboring=[(0, 1)],
+                                          reversible=True,
+                                          pre_expon=1.042e+13,
+                                          pe_ratio=1.000e+00,
+                                          activation_energy=0.777,
+                                          label="H2O_dissoc_adsorp")
+
+OH_decomposition = pz.ElementaryReaction(initial=[s0, OH_adsorbed],
+                                         final=[O_adsorbed, H_adsorbed],
+                                         neighboring=[(0, 1)],
+                                         reversible=True,
+                                         pre_expon=1.042e+13,
+                                         pe_ratio=1.000e+00,
+                                         activation_energy=0.940,
+                                         label="OH_decomposition")
+
+COOH_formation = pz.ElementaryReaction(initial=[CO_adsorbed, OH_adsorbed],
+                                       final=[s0, COOH_adsorbed],
+                                       neighboring=[(0, 1)],
                                        reversible=True,
                                        pre_expon=1.042e+13,
                                        pe_ratio=1.000e+00,
-                                       activation_energy=0.777,
-                                       label="H2O_dissoc_adsorp")
+                                       activation_energy=0.405,
+                                       label="COOH_formation")
 
-OH_decomposition = pz.ElementaryReaction(site_types=["1", "1"],
-                                      initial=[s0, OH_adsorbed],
-                                      final=[O_adsorbed, H_adsorbed],
-                                      neighboring=[(1, 2)],
-                                      reversible=True,
-                                      pre_expon=1.042e+13,
-                                      pe_ratio=1.000e+00,
-                                      activation_energy=0.940,
-                                      label="OH_decomposition")
+COOH_decomposition = pz.ElementaryReaction(initial=[COOH_adsorbed, s0],
+                                           final=[s0, H_adsorbed, CO2_gas],
+                                           neighboring=[(0, 1)],
+                                           reversible=False,
+                                           pre_expon=1.042e+13,
+                                           activation_energy=0.852,
+                                           label="COOH_decomposition")
 
-COOH_formation = pz.ElementaryReaction(site_types=["1", "1"],
-                                    initial=[CO_adsorbed, OH_adsorbed],
-                                    final=[s0, COOH_adsorbed],
-                                    neighboring=[(1, 2)],
-                                    reversible=True,
-                                    pre_expon=1.042e+13,
-                                    pe_ratio=1.000e+00,
-                                    activation_energy=0.405,
-                                    label="COOH_formation")
-
-COOH_decomposition = pz.ElementaryReaction(site_types=["1", "1"],
-                                        initial=[COOH_adsorbed, s0],
-                                        final=[s0, H_adsorbed, CO2_gas],
-                                        neighboring=[(1, 2)],
-                                        reversible=False,
-                                        pre_expon=1.042e+13,
-                                        activation_energy=0.852,
-                                        label="COOH_decomposition")
-
-CO_oxidation = pz.ElementaryReaction(site_types=["1", "1"],
-                                  initial=[CO_adsorbed, O_adsorbed],
-                                  final=[s0, s0, CO2_gas],
-                                  neighboring=[(1, 2)],
-                                  reversible=False,
-                                  pre_expon=1.042e+13,
-                                  activation_energy=0.988,
-                                  label="CO_oxidation")
+CO_oxidation = pz.ElementaryReaction(initial=[CO_adsorbed, O_adsorbed],
+                                     final=[s0, s0, CO2_gas],
+                                     neighboring=[(0, 1)],
+                                     reversible=False,
+                                     pre_expon=1.042e+13,
+                                     activation_energy=0.988,
+                                     label="CO_oxidation")
 
 #---------------------------------------------
 # Build-up mechanism:

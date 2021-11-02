@@ -30,8 +30,8 @@ def test_ZacrosJob_restart():
     #---------------------------------------------
     # Clusters:
     #---------------------------------------------
-    CO_point = pz.Cluster(site_types=["1"], species=[CO_ads], cluster_energy=-1.3)
-    O_point = pz.Cluster(site_types=["1"], species=[O_ads], cluster_energy=-2.3)
+    CO_point = pz.Cluster(species=[CO_ads], cluster_energy=-1.3)
+    O_point = pz.Cluster(species=[O_ads], cluster_energy=-2.3)
 
     cluster_expansion = [CO_point, O_point]
 
@@ -39,30 +39,27 @@ def test_ZacrosJob_restart():
     # Elementary Reactions
     #---------------------------------------------
     # CO_adsorption:
-    CO_adsorption = pz.ElementaryReaction(site_types=["1"],
-                                    initial=[s0,CO_gas],
-                                    final=[CO_ads],
-                                    reversible=False,
-                                    pre_expon=10.0,
-                                    activation_energy=0.0)
+    CO_adsorption = pz.ElementaryReaction( initial=[s0,CO_gas],
+                                           final=[CO_ads],
+                                           reversible=False,
+                                           pre_expon=10.0,
+                                           label="CO_adsorption")
 
     # O2_adsorption:
-    O2_adsorption = pz.ElementaryReaction(site_types=["1", "1"],
-                                        initial=[s0,s0,O2_gas],
-                                        final=[O_ads,O_ads],
-                                        neighboring=[(0, 1)],
-                                        reversible=False,
-                                        pre_expon=2.5,
-                                        activation_energy=0.0)
+    O2_adsorption = pz.ElementaryReaction( initial=[s0,s0,O2_gas],
+                                           final=[O_ads,O_ads],
+                                           neighboring=[(0, 1)],
+                                           reversible=False,
+                                           pre_expon=2.5,
+                                           label="O2_adsorption")
 
     # CO_oxidation:
-    CO_oxidation = pz.ElementaryReaction(site_types=["1", "1"],
-                                    initial=[CO_ads, O_ads],
-                                    final=[s0, s0, CO2_gas],
-                                    neighboring=[(0, 1)],
-                                    reversible=False,
-                                    pre_expon=1.0e+20,
-                                    activation_energy=0.0)
+    CO_oxidation = pz.ElementaryReaction( initial=[CO_ads, O_ads],
+                                          final=[s0, s0, CO2_gas],
+                                          neighboring=[(0, 1)],
+                                          reversible=False,
+                                          pre_expon=1.0e+20,
+                                          label="CO_oxidation")
 
     mechanism = [CO_adsorption, O2_adsorption, CO_oxidation]
 

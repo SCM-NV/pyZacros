@@ -6,17 +6,17 @@ __all__ = ['ElementaryReaction']
 class ElementaryReaction:
 
     def __init__(self,
-                 site_types: list,
-                 initial: SpeciesList,
-                 final: SpeciesList,
-                 initial_entity_number: list = None,
-                 final_entity_number: list = None,
-                 neighboring: list = None,
-                 reversible: bool = True,
-                 pre_expon: float = 0.0,
-                 pe_ratio: float = 0.0,
-                 activation_energy: float = 0.0,
-                 label: str = None):
+                 initial,
+                 final,
+                 site_types = None,
+                 initial_entity_number = None,
+                 final_entity_number = None,
+                 neighboring = None,
+                 reversible = True,
+                 pre_expon = 0.0,
+                 pe_ratio = 0.0,
+                 activation_energy = 0.0,
+                 label = None):
         """
         Creates a new ElementaryReaction object
 
@@ -36,8 +36,24 @@ class ElementaryReaction:
             msg += "              Inconsistent type for initial or final\n"
             raise NameError(msg)
 
-        self.site_types = site_types   # e.g. [ "f", "f" ]
-        self.sites = len(self.site_types)
+        sites_initial = len([ sp for sp in initial if sp.is_adsorbed() ])
+        sites_final = len([ sp for sp in final if sp.is_adsorbed() ])
+        if( sites_initial != sites_final ):
+            msg  = "### ERROR ### ElementaryReaction.__init__.\n"
+            msg += "              Inconsistent number of surface sites between initial and final\n"
+            raise NameError(msg)
+        self.sites = sites_initial
+
+        if( site_types is not None ):
+            if( not ( all([ type(st)==int for st in site_types ]) or all([ type(st)==str for st in site_types ]) ) ):
+                msg  = "### ERROR ### ElementaryReaction.__init__.\n"
+                msg += "              Inconsistent type for site_types. It should be a list of int or str\n"
+                raise NameError(msg)
+
+            self.site_types = site_types   # e.g. [ "f", "f" ], [ 0, 0 ]
+        else:
+            self.site_types = self.sites*[ 0 ]
+
         self.neighboring = neighboring # e.g. [ (0,1) ]
 
         self.initial = initial
@@ -107,7 +123,7 @@ class ElementaryReaction:
             label += species[i].symbol
             label += "_"+str(entity_number[i])
             label += "-"
-            label += site_types[i]
+            label += str(site_types[i])
             if(i != len(species)-1):
                 label += ","
 
@@ -241,7 +257,12 @@ class ElementaryReaction:
 
             output += "  site_types "
             for i in range(len(self.site_types)):
-                output += str(self.site_types[i])
+
+                if( type(self.site_types[i]) == int ):
+                    output += str(self.site_types[i]+1)
+                elif( type(self.site_types[i]) == str ):
+                    output += self.site_types[i]
+
                 if(i != len(self.site_types)-1):
                     output += " "
             output += "\n"

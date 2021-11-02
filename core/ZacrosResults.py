@@ -312,6 +312,7 @@ class ZacrosResults( scm.plams.Results ):
         if( ax is None ):
             fig,ax = plt.subplots()
 
+        plt.rcParams["figure.autolayout"] = True
         provided_quantities = self.provided_quantities()
 
         COLORS = ['r', 'g', 'b', 'm']

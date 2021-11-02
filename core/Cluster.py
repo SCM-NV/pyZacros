@@ -5,13 +5,13 @@ __all__ = ['Cluster']
 
 class Cluster:
 
-    def __init__(self, site_types: list,
-                 species: SpeciesList,
-                 entity_number: list = None,
-                 neighboring: list = None,
-                 multiplicity: int = 1,
-                 cluster_energy: float = 0.000,
-                 label: str = None):
+    def __init__(self, species,
+                 site_types = None,
+                 entity_number = None,
+                 neighboring = None,
+                 multiplicity = 1,
+                 cluster_energy = 0.000,
+                 label = None):
         """
         Creates a new Cluster object
 
@@ -21,18 +21,22 @@ class Cluster:
         :parm multiplicity: int
         :parm cluster_energy: float
         """
-        self.site_types = site_types                  # e.g. [ "f", "f" ]
         self.species = species                        # e.g. [ Species("H*",1), Species("H*",1) ]
+        self.sites = len([ sp for sp in species if sp.is_adsorbed() ])
+
+        if( site_types is not None ):
+            if( not ( all([ type(st)==int for st in site_types ]) or all([ type(st)==str for st in site_types ]) ) ):
+                msg  = "### ERROR ### ElementaryReaction.__init__.\n"
+                msg += "              Inconsistent type for site_types. It should be a list of int or str\n"
+                raise NameError(msg)
+
+            self.site_types = site_types              # e.g. [ "f", "f" ], [ 0, 0 ]
+        else:
+            self.site_types = self.sites*[ 0 ]
+
         self.neighboring = neighboring                # e.g. [ (0,1) ]
         self.multiplicity = multiplicity              # e.g. 2
         self.cluster_energy = cluster_energy          # Units eV
-
-        if( len(site_types) > len(species) ):
-            msg  = "### ERROR ### Cluster.__init__.\n"
-            msg += "Inconsistent dimensions for species or site_types\n"
-            raise NameError(msg)
-
-        self.sites = len(site_types)
 
         self.entity_number = entity_number
         if( entity_number is None ): self.entity_number = SpeciesList.default_entity_numbers( self.sites, self.species )
@@ -90,7 +94,7 @@ class Cluster:
             self.__label += self.species[i].symbol
             self.__label += "_"+str(self.entity_number[i])
             self.__label += "-"
-            self.__label += self.site_types[i]
+            self.__label += str(self.site_types[i])
             if(i != len(self.species)-1):
                 self.__label += ","
 
@@ -152,7 +156,12 @@ class Cluster:
 
             output += "  site_types "
             for i in range(len(self.site_types)):
-                output += str(self.site_types[i])
+
+                if( type(self.site_types[i]) == int ):
+                    output += str(self.site_types[i]+1)
+                elif( type(self.site_types[i]) == str ):
+                    output += self.site_types[i]
+
                 if( i != len(self.site_types)-1 ):
                     output += " "
             output += "\n"
