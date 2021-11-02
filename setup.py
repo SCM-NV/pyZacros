@@ -18,25 +18,25 @@ with open('README.rst') as readme_file:
 setup(
     name='pyzacros',
     version=version['__version__'],
-    description="A Python library to handle KMC codes.",
+    description="Python Library for Automating Zacros Simulations",
     long_description=readme + '\n\n',
     author="Pablo Lopez-Tarifa",
     author_email='p.lopez@esciencecenter.nl',
-    url='https://github.com/NLeSC/pyZacros',
+    url='https://github.com/SCM-NV/pyZacros',
     packages=packages,
     package_dir = {'pyzacros': '.'},
-    package_data={'pyzacros' : ['lattice_db/*', 'examples/*']},
+    package_data={'pyzacros' : ['examples/*']},
     include_package_data=True,
     license="LGPLv3",
     zip_safe=False,
     keywords='pyZacros',
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',        
+        'Programming Language :: Python :: 3.6',
     ],
 
     install_requires=[
@@ -44,7 +44,7 @@ setup(
         'plams@git+https://github.com/SCM-NV/PLAMS@master'],
 
     extras_require={
-        'test': ['coverage', 'pycodestyle', 'pytest>=3.9', 'pytest-cov'],
+        'test': ['coverage', 'pytest>=3.9', 'pytest-cov'],
         'doc': ['sphinx', 'sphinx_rtd_theme', 'nbsphinx']
     }
 )
