@@ -153,5 +153,5 @@ subfolder of the working folder (``plamsjob``). All the files created by each Za
 Further reading
 --------------------
 
-You can find full [pyZacros documentation](https://www.scm.com/doc/pyzacros/index.html) hosted on our website, together with some [tutorials](https://www.scm.com/doc/Tutorials/Scripting/Scripting.html).
+You can find full `pyZacros documentation <https://www.scm.com/doc/pyzacros/index.html>`_ hosted on our website, together with some `tutorials <https://www.scm.com/doc/Tutorials/Scripting/Scripting.html>`_.
 
