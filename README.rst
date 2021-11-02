@@ -55,7 +55,6 @@ The ZGB model includes (see the script below):
    an O adatom and a CO adsorbate. (Lines 24-31)
 
 .. code-block:: python
-   :linenos:
 
    import scm.plams
    import scm.pyzacros as pz
@@ -139,7 +138,6 @@ Then, you should see the plot of the number of molecules of each kind as a funct
 During the execution the following information is written to the standard output:
 
 .. code-block:: none
-   :linenos:
    
    [02.11|12:07:12] PLAMS working folder: /home/user/plams_workdir
    [02.11|12:07:12] JOB plamsjob STARTED
