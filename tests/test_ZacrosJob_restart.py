@@ -1,3 +1,5 @@
+import os
+
 import scm.plams
 import pyzacros as pz
 from pyzacros.utils.compareReports import compare
@@ -94,7 +96,7 @@ def test_ZacrosJob_restart():
 
     job0.run()
 
-    if( not job0.ok() ):
+    if( not job0.ok() and "AMSBIN" not in os.environ ):
         print( "Warning: Zacros is not available! So let's skip this test." )
         return
 
