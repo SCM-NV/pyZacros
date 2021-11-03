@@ -92,10 +92,14 @@ def test_ZacrosResults():
     #-----------------------
     # Running the job
     #-----------------------
-    results = job.run()
+    try:
+        results = job.run()
 
-    if( not job.ok() and "AMSBIN" not in os.environ ):
-        print( "Warning: The calculation FAILED likely because Zacros executable is not available!" )
+        if( not job.ok() ):
+            raise "Error: The Zacros calculation FAILED!"
+
+    except pz.ZacrosExecutableNotFoundError:
+        print( "Warning: The calculation FAILED because the zacros executable is not available!" )
         print( "         For testing purposes, now we load precalculated results.")
 
         job = scm.plams.load( RUNDIR+"/tests/test_ZacrosResults.data/plamsjob.dill" )

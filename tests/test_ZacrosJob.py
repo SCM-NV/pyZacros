@@ -68,10 +68,16 @@ def test_ZacrosJob():
     with open( "tests/test_ZacrosJob_expected_output.txt", "r" ) as inp:
         expectedOutput = inp.read()
     assert( compare( output, expectedOutput, 1e-3 ) )
-    myJob.run()
 
-    if( not myJob.ok() ):
-        raise "Error: The calculation FAILED!"
+    try:
+        myJob.run()
+
+        if( not myJob.ok() ):
+           raise "Error: The Zacros calculation FAILED!"
+
+    except pz.ZacrosExecutableNotFoundError:
+        print( "Warning: The calculation FAILED because the zacros executable is not available!" )
+        print( "         For testing purposes, we just omit this step.")
 
     myJob = pz.ZacrosJob.load_external( path='tests/test_ZacrosJob.data/default' )
     print(myJob)

@@ -16,7 +16,17 @@ from .ElementaryReaction import *
 from .Mechanism import *
 from .Settings import *
 
-__all__ = ['ZacrosJob']
+__all__ = ['ZacrosJob', 'ZacrosExecutableNotFoundError']
+
+class ZacrosExecutableNotFoundError( Exception ):
+    """Exception raised if zacros executable is not found in path
+
+    Attributes:
+        command -- zacros command
+    """
+    def __init__(self, command):
+        super().__init__( "Zacros executable ("+command+") not found in $PATH" )
+
 
 class ZacrosJob( scm.plams.SingleJob ):
     """
@@ -294,7 +304,8 @@ class ZacrosJob( scm.plams.SingleJob ):
 
         ``name`` is taken from the class attribute ``_command``. ``-n`` flag is added if ``settings.runscript.nproc`` exists. ``[>jobname.out]`` is used based on ``settings.runscript.stdout_redirect``.
         """
-        #path = find_path_to_engine(self.settings)
+        path = shutil.which(self._command)
+        if( path is None ): raise ZacrosExecutableNotFoundError( self._command )
 
         s = self.settings.runscript
 
@@ -303,8 +314,7 @@ class ZacrosJob( scm.plams.SingleJob ):
             ret += '\n'
             ret += 'export OMP_NUM_THREADS='+str(s.nproc)
         ret += '\n'
-        #ret += path
-        ret += self._command
+        ret += path
 
         if( self.restart_file_content is not None and 'restart' in self.settings ):
             if( 'max_time' in self.settings['restart'] ):

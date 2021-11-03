@@ -94,10 +94,15 @@ def test_ZacrosJob_restart():
                         mechanism=mechanism,
                         cluster_expansion=cluster_expansion )
 
-    job0.run()
+    try:
+        job0.run()
 
-    if( not job0.ok() and "AMSBIN" not in os.environ ):
-        print( "Warning: Zacros is not available! So let's skip this test." )
+        if( not job0.ok() ):
+            raise "Error: The Zacros calculation FAILED!"
+
+    except pz.ZacrosExecutableNotFoundError:
+        print( "Warning: The calculation FAILED because the zacros executable is not available!" )
+        print( "         So let's skip this test." )
         return
 
     data = job0.results.provided_quantities()
