@@ -99,3 +99,13 @@ class Mechanism(UserList):
         """Returns the adsorbed species."""
         return self.surface_species()
 
+
+    def site_types_set( self ):
+        """
+        Returns the set of the sites types
+        """
+        site_types = set()
+        for erxn in self:
+            site_types.update( erxn.site_types_set() )
+
+        return site_types

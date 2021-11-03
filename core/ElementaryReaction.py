@@ -278,3 +278,10 @@ class ElementaryReaction:
 
         return output
 
+
+    def site_types_set( self ):
+        """
+        Returns the set of the sites types
+        """
+        return set(self.site_types)
+

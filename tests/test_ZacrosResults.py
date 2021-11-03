@@ -17,8 +17,6 @@ def test_ZacrosResults():
     print( ">>> Testing ZacrosResults class" )
     print( "---------------------------------------------------" )
 
-    scm.plams.init()
-
     #---------------------------------------------
     # Species:
     #---------------------------------------------
@@ -68,6 +66,8 @@ def test_ZacrosResults():
                                           reversible=False,
                                           pre_expon=1.0e+20,
                                           label="CO_oxidation")
+
+    scm.plams.init()
 
     # Settings:
     sett = pz.Settings()

@@ -87,10 +87,29 @@ class ZacrosJob( scm.plams.SingleJob ):
         scm.plams.SingleJob.__init__(self, molecule=None, **kwargs)
 
         self.lattice = lattice
+
         self.mechanism = mechanism
         if( type(mechanism) == list ): self.mechanism = Mechanism(mechanism)
+
+        #if( set(map(type, self.mechanism.site_types_set())) == {int} )
+
+        if( not self.mechanism.site_types_set().issubset( self.lattice.site_types_set() ) ):
+            msg  = "\n### ERROR ### ZacrosJob.__init__.\n"
+            msg += "              Inconsistent site types found between lattice and mechanism.\n"
+            msg += "              lattice="+str(self.lattice.site_types_set())+"\n"
+            msg += "              mechanism="+str(self.mechanism.site_types_set())+"\n"
+            raise NameError(msg)
+
         self.cluster_expansion = cluster_expansion
         if( type(cluster_expansion) == list ): self.cluster_expansion = ClusterExpansion(cluster_expansion)
+
+        if( not self.cluster_expansion.site_types_set().issubset( self.lattice.site_types_set() ) ):
+            msg  = "\n### ERROR ### ZacrosJob.__init__.\n"
+            msg += "              Inconsistent site types found between lattice and cluster_expansion.\n"
+            msg += "              lattice="+str(self.lattice.site_types_set())+"\n"
+            msg += "              cluster_expansion="+str(self.cluster_expansion.site_types_set())+"\n"
+            raise NameError(msg)
+
         self.initial_state = initial_state
 
         self.restart_file_content = None
@@ -103,16 +122,6 @@ class ZacrosJob( scm.plams.SingleJob ):
                 self.restart_file_content = depFile.readlines()
 
         check_molar_fraction(self.settings, self.mechanism.gas_species())
-
-        defaults = Settings({'snapshots': ('time', 0.0005),
-                             'process_statistics': ('time', 0.0005),
-                             'species_numbers': ('time', 0.0005),
-                             'event_report': 'off',
-                             'max_steps': 'infinity',
-                             'max_time': 250.0,
-                             'wall_time': 10})
-
-        self.settings += defaults
 
 
     def get_input(self):
@@ -653,9 +662,18 @@ class ZacrosJob( scm.plams.SingleJob ):
                             output.append( (int(a)-1,int(b)-1) )
                         return output
 
+                    def process_site_types( sv ):
+                        output = []
+                        for i in range(len(sv)):
+                            if( sv[i].isdigit() ):
+                              output.append( int(sv[i])-1 )
+                            else:
+                              output.append( sv[i] )
+                        return output
+
                     cases = {
                         "sites" : lambda sv: parameters.setdefault("sites", int(sv[0])),
-                        "site_types" : lambda sv: parameters.setdefault("site_types", sv),
+                        "site_types" : lambda sv: parameters.setdefault("site_types", process_site_types(sv)),
                         "graph_multiplicity" : lambda sv: parameters.setdefault("multiplicity", int(sv[0])),
                         "cluster_eng" : lambda sv: parameters.setdefault("cluster_energy", float(sv[0])),
                         "neighboring" : lambda sv: parameters.setdefault("neighboring", process_neighboring(sv))
@@ -770,11 +788,20 @@ class ZacrosJob( scm.plams.SingleJob ):
                             output.append( (int(a)-1,int(b)-1) )
                         return output
 
+                    def process_site_types( sv ):
+                        output = []
+                        for i in range(len(sv)):
+                            if( sv[i].isdigit() ):
+                              output.append( int(sv[i])-1 )
+                            else:
+                              output.append( sv[i] )
+                        return output
+
                     cases = {
                         "gas_reacs_prods" : lambda sv: parameters.setdefault("gas_reacs_prods", process_gas_reacs_prods(sv) ),
                         "sites" : lambda sv: parameters.setdefault("sites", int(sv[0])),
                         "neighboring" : lambda sv: parameters.setdefault("neighboring", process_neighboring(sv)),
-                        "site_types" : lambda sv: parameters.setdefault("site_types", sv),
+                        "site_types" : lambda sv: parameters.setdefault("site_types", process_site_types(sv)),
                         "pre_expon" : lambda sv: parameters.setdefault("pre_expon", float(sv[0])),
                         "pe_ratio" : lambda sv: parameters.setdefault("pe_ratio", float(sv[0])),
                         "activ_eng" : lambda sv: parameters.setdefault("activation_energy", float(sv[0])),

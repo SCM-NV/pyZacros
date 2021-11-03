@@ -463,6 +463,16 @@ class Lattice:
         return len(self.site_types)
 
 
+    def site_types_set( self ):
+        """
+        Returns the set of the sites types
+        """
+        if( self.__origin == Lattice.__FROM_DEFAULT ):
+            return set([0])
+        else:
+            return set(self.site_types)
+
+
     def set_repeat_cell( self, repeat_cell ):
         """
         Set the parameter repeat_cell and update all internal information

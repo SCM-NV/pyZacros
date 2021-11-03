@@ -205,3 +205,11 @@ class Cluster:
         species = SpeciesList( species )
         species.remove_duplicates()
         return species
+
+
+    def site_types_set( self ):
+        """
+        Returns the set of the sites types
+        """
+        return set(self.site_types)
+

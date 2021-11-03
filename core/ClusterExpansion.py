@@ -80,3 +80,14 @@ class ClusterExpansion(UserList):
         species = SpeciesList( species )
         species.remove_duplicates()
         return species
+
+
+    def site_types_set( self ):
+        """
+        Returns the set of the sites types
+        """
+        site_types = set()
+        for cl in self:
+            site_types.update( cl.site_types_set() )
+
+        return site_types
