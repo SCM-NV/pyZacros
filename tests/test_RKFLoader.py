@@ -11,7 +11,6 @@ RUNDIR=None
 
 def buildEnergyLandscape():
     """Generates of the energy landscape for the O-Pt111 system"""
-    scm.plams.init()
 
     molecule = scm.plams.Molecule( "tests/O-Pt111.xyz" )
 
@@ -51,14 +50,11 @@ def buildEnergyLandscape():
         job = scm.plams.load( RUNDIR+"/tests/test_RKFLoader.data/PESExploration/PESExploration.dill" )
         results = job.results
 
-    scm.plams.finish()
-
     return results
 
 
-def deriveBindingSites():
+def deriveBindingSites(resultsEnergyLandscape):
     """Derives the binding sites from the previously calculated energy landscape"""
-    scm.plams.init()
 
     molecule = scm.plams.Molecule( "tests/O-Pt111.xyz" )
 
@@ -74,7 +70,7 @@ def deriveBindingSites():
     settings.input.ams.Constraints.FixedRegion = "surface"
 
     settings.input.ams.PESExploration.Job = "BindingSites"
-    settings.input.ams.PESExploration.LoadEnergyLandscape.Path = RUNDIR+"/tests/test_RKFLoader.data/PESExploration/ams.rkf"
+    settings.input.ams.PESExploration.LoadEnergyLandscape.Path = resultsEnergyLandscape.job.path
     settings.input.ams.PESExploration.StatesAlignment.ReferenceRegion = "surface"
     settings.input.ams.PESExploration.StructureComparison.DistanceDifference = 0.1
     settings.input.ams.PESExploration.StructureComparison.NeighborCutoff = 3.5
@@ -94,8 +90,6 @@ def deriveBindingSites():
         job = scm.plams.load( RUNDIR+"/tests/test_RKFLoader.data/BindingSites/BindingSites.dill" )
         results = job.results
 
-    scm.plams.finish()
-
     return results
 
 
@@ -108,8 +102,12 @@ def test_RKFLoader():
     print( ">>> Testing RKFLoader class" )
     print( "---------------------------------------------------" )
 
+    scm.plams.init(folder='test_RKFLoader')
+
     resultsEnergyLandscape = buildEnergyLandscape()
-    resultsBindingSites = deriveBindingSites()
+    resultsBindingSites = deriveBindingSites(resultsEnergyLandscape)
+
+    scm.plams.finish()
 
     myRKFLoader = pz.RKFLoader( resultsBindingSites )
 

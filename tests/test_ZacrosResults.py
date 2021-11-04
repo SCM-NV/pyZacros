@@ -65,7 +65,7 @@ def test_ZacrosResults():
                                           pre_expon=1.0e+20,
                                           label="CO_oxidation")
 
-    scm.plams.init()
+    scm.plams.init(folder='test_ZacrosResults')
 
     # Settings:
     sett = pz.Settings()
@@ -94,7 +94,7 @@ def test_ZacrosResults():
         results = job.run()
 
         if( not job.ok() ):
-            raise "Error: The Zacros calculation FAILED!"
+            raise scm.plams.JobError("Error: The Zacros calculation FAILED!")
 
     except pz.ZacrosExecutableNotFoundError:
         print( "Warning: The calculation FAILED because the zacros executable is not available!" )

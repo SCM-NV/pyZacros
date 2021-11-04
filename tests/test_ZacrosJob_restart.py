@@ -68,7 +68,7 @@ def test_ZacrosJob_restart():
     #---------------------------------------------
     # Calculation Settings
     #---------------------------------------------
-    scm.plams.init()
+    scm.plams.init(folder='test_ZacrosJob_restart')
 
     # Settings:
     sett = pz.Settings()
@@ -98,7 +98,7 @@ def test_ZacrosJob_restart():
         job0.run()
 
         if( not job0.ok() ):
-            raise "Error: The Zacros calculation FAILED!"
+            raise scm.plams.JobError("Error: The Zacros calculation FAILED!")
 
     except pz.ZacrosExecutableNotFoundError:
         print( "Warning: The calculation FAILED because the zacros executable is not available!" )

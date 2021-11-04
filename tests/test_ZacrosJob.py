@@ -54,7 +54,7 @@ def test_ZacrosJob():
     myMechanism.append( myReaction1 )
     myMechanism.append( myReaction2 )
 
-    scm.plams.init()
+    scm.plams.init(folder='test_ZacrosJob')
 
     sett = pz.Settings()
     sett.random_seed = 10
@@ -73,7 +73,7 @@ def test_ZacrosJob():
         myJob.run()
 
         if( not myJob.ok() ):
-           raise "Error: The Zacros calculation FAILED!"
+            raise scm.plams.JobError("Error: The Zacros calculation FAILED!")
 
     except pz.ZacrosExecutableNotFoundError:
         print( "Warning: The calculation FAILED because the zacros executable is not available!" )
