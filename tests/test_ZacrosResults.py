@@ -6,11 +6,9 @@ import scm.plams
 import pyzacros as pz
 from pyzacros.utils.compareReports import compare
 
-RUNDIR=None
 
 def test_ZacrosResults():
     """Test of the ZacrosResults class."""
-    global RUNDIR
     RUNDIR = os.getcwd()
 
     print( "---------------------------------------------------" )
