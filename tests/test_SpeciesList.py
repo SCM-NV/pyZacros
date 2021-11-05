@@ -8,18 +8,14 @@ def test_SpeciesList():
     print( ">>> Testing SpeciesList class" )
     print( "---------------------------------------------------" )
 
-    # Adsorbed specie
+    # Adsorbed species
     asp1 = pz.Species( "H2*", denticity=1 )
     asp2 = pz.Species( "O2*", denticity=1 )
+    fas = pz.Species( "*" ) # Free adsorption site
 
-    # Gas specie
+    # Gas species
     gs1 = pz.Species( "H2", gas_energy=0.0 )
-
-    # Gas specie
     gs2 = pz.Species( "O2", gas_energy=0.0 )
-
-    # Free adsorption site
-    fas = pz.Species( "*" )
 
     #mySpeciesList = pz.SpeciesList()
     #mySpeciesList.append( asp1 )

@@ -285,7 +285,7 @@ class LatticeState:
         self.fill_sites_random( site_name, species, coverage=1.0 )
 
 
-    def plot(self, pause=-1, show=True, ax=None, close=False, show_sites_ids=False):
+    def plot(self, pause=-1, show=True, ax=None, close=False, show_sites_ids=False, file_name=None):
         """
         Uses matplotlib to visualize the lattice state
         """
@@ -337,7 +337,8 @@ class LatticeState:
 
                     imarkers.append( site_types.index(site_type) )
 
-            ax.scatter(xvalues, yvalues, color=colors[i], marker=markers[imarkers[i]], s=100, zorder=4, label=sym_i)
+            if( len(xvalues)>0 ):
+                ax.scatter(xvalues, yvalues, color=colors[i], marker=markers[imarkers[i]], s=100, zorder=4, label=sym_i)
 
         #-------------------------------------------------
         # Plots the links for species with denticity > 1
@@ -356,6 +357,9 @@ class LatticeState:
                                     color=colors[items.index(sp)], linestyle='solid', linewidth=5, zorder=4)
 
         ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+
+        if( file_name is not None ):
+            plt.savefig( file_name )
 
         if( show ):
             if( pause == -1 ):

@@ -138,7 +138,7 @@ def test_ZacrosResults():
     lattice_states = results.lattice_states()
     lattice_states[3].plot( pause=2, close=True )
 
-    results.plot_lattice_states( pause=2, close=True )
+    results.plot_lattice_states( lattice_states, pause=2, close=True )
 
     results.plot_molecule_numbers( results.gas_species_names(), pause=2, close=True )
 

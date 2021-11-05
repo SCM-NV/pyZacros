@@ -273,34 +273,42 @@ class ZacrosResults( scm.plams.Results ):
         return output
 
 
-    def plot_lattice_states(self, pause=-1, show=True, ax=None, close=False):
+    def plot_lattice_states(self, data, pause=-1, show=True, ax=None, close=False, time_perframe=0.5, file_name=None):
         """
         Plots the lattice states as an animation
         """
-        try:
-            import matplotlib.pyplot as plt
-        except ImportError as e:
-            return # module doesn't exist, deal with it.
+        if( type(data) == LatticeState ):
+            data.plot( show=True, pause=pause, ax=ax, file_name=file_name )
+        if( type(data) == list ):
+            try:
+                import matplotlib.pyplot as plt
+            except ImportError as e:
+                return # module doesn't exist, deal with it.
 
-        if( ax is None ):
-            fig,ax = plt.subplots()
+            if( ax is None ):
+                fig,ax = plt.subplots()
 
-        plt.rcParams["figure.autolayout"] = True
-        for i,ls in enumerate(self.lattice_states()):
-            ax.cla()
-            ls.plot( show=True, pause=0.5, ax=ax )
+            plt.rcParams["figure.autolayout"] = True
+            for i,ls in enumerate(data):
+                ifile_name = None
+                if( file_name is not None ):
+                    prefix,ext = os.path.splitext(file_name)
+                    ifile_name = prefix+"-"+"%05d"%i+ext
 
-        if( show ):
-            if( pause == -1 ):
-                plt.show()
-            else:
-                plt.pause( pause )
+                ax.cla()
+                ls.plot( show=True, pause=time_perframe, ax=ax, file_name=ifile_name )
 
-                if( close ):
-                    plt.close("all")
+            if( show ):
+                if( pause == -1 ):
+                    plt.show()
+                else:
+                    plt.pause( pause )
+
+                    if( close ):
+                        plt.close("all")
 
 
-    def plot_molecule_numbers(self, species_name, pause=-1, show=True, ax=None, close=False):
+    def plot_molecule_numbers(self, species_name, pause=-1, show=True, ax=None, close=False, file_name=None):
         """
         Plots the Molecule Numbers as a function of time
         """
@@ -324,6 +332,9 @@ class ZacrosResults( scm.plams.Results ):
             ax.step(provided_quantities["Time"], provided_quantities[spn], where='post', color=COLORS[i], label=spn)
 
         ax.legend(loc='best')
+
+        if( file_name is not None ):
+            plt.savefig( file_name )
 
         if( show ):
             if( pause == -1 ):
@@ -408,7 +419,7 @@ class ZacrosResults( scm.plams.Results ):
         return output
 
 
-    def plot_process_statistics(self, data, key, log_scale=False, pause=-1, show=True, ax=None, close=False):
+    def __plot_process_statistics(self, data, key, log_scale=False, pause=-1, show=True, ax=None, close=False, xmax=None, file_name=None):
         """
         Plots data as a histogram
         """
@@ -428,6 +439,11 @@ class ZacrosResults( scm.plams.Results ):
         ax.set_xlabel(key)
 
         keys = list(data[key].keys())
+        idkeys_sorted = sorted(enumerate(keys), key=lambda x: x[1])
+
+        keys = [ k for i,k in idkeys_sorted ]
+        data_sorted = [ list(data[key].values())[i] for i,k in idkeys_sorted ]
+
         y_pos = len(keys)*[None]
         j = 0
         for i in range(len(keys)):
@@ -450,16 +466,25 @@ class ZacrosResults( scm.plams.Results ):
                 color[i] = COLORS[j]
                 color[i-1] = COLORS[j+1]
 
-        ax.barh(y_pos, list(data[key].values()), align='center', height=0.25, color=color)
+        ax.barh(y_pos, data_sorted, align='center', height=0.25, color=color)
+
+        maxval = max(data_sorted)
+        if( xmax is not None ):
+            maxval = xmax
 
         if( log_scale ):
-            ax.set_xlim((1e0,1.2*max(data[key].values())))
+            ax.set_xlim((1e0,1.2*maxval))
             plt.xscale("log")
+        else:
+            ax.set_xlim((0,1.05*maxval))
 
         ax.invert_yaxis()  # labels read top-to-bottom
         ax.set_yticks(y_pos)
         ax.set_yticklabels(keys)
         plt.tight_layout()
+
+        if( file_name is not None ):
+            plt.savefig( file_name )
 
         if( show ):
             if( pause == -1 ):
@@ -469,6 +494,46 @@ class ZacrosResults( scm.plams.Results ):
 
                 if( close ):
                     plt.close("all")
+
+
+    def plot_process_statistics(self, data, key, log_scale=False, pause=-1, show=True, ax=None, close=False, file_name=None):
+        """
+        Plots data as a histogram
+        """
+        if( type(data) == dict ):
+            self.__plot_process_statistics( data, key, log_scale=log_scale, pause=pause, show=show,
+                                            close=close, file_name=file_name )
+        if( type(data) == list ):
+            try:
+                import matplotlib.pyplot as plt
+            except ImportError as e:
+                return # module doesn't exist, deal with it.
+
+            if( ax is None ):
+                fig,ax = plt.subplots()
+
+            maxval = -1e8
+            for idata in data:
+                if( max(idata[key].values()) > maxval ):
+                    maxval = max(idata[key].values())
+
+            for i,idata in enumerate(data):
+                if( file_name is not None ):
+                    prefix,ext = os.path.splitext(file_name)
+                    ifile_name = prefix+"-"+"%05d"%i+ext
+
+                ax.cla()
+                self.__plot_process_statistics( idata, key, log_scale=log_scale, pause=0.5, show=show, ax=ax,
+                                                close=False, xmax=maxval, file_name=ifile_name )
+
+            if( show ):
+                if( pause == -1 ):
+                    plt.show()
+                else:
+                    plt.pause( pause )
+
+                    if( close ):
+                        plt.close("all")
 
 
     def get_TOFs(self, npoints=None):

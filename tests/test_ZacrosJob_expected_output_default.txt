@@ -5,6 +5,14 @@ random_seed         123278
 temperature          500.0
 pressure              10.0
 
+snapshots                 on time       0.0005
+process_statistics        on time       0.0005
+species_numbers           on time       0.0005
+event_report      off
+max_steps         infinity
+max_time          250.0
+wall_time         30
+
 n_gas_species    4
 gas_specs_names           CO        H2       H2O       CO2
 gas_energies             0.0       0.0       0.0    -0.615
@@ -14,14 +22,6 @@ gas_molar_fracs        1e-05       0.0      0.95       0.0
 n_surf_species    6
 surf_specs_names         CO*        H*      H2O*       OH*        O*     COOH*
 surf_specs_dent            1         1         1         1         1         1
-
-snapshots                 on time       0.0005
-process_statistics        on time       0.0005
-species_numbers           on time       0.0005
-event_report      off
-max_steps         infinity
-max_time          250.0
-wall_time         30
 
 finish
 ---------------------------------------------------------------------

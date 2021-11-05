@@ -189,10 +189,7 @@ class ZacrosJob( scm.plams.SingleJob ):
                         list_of_molar_fractions.append(molar_tmp[j])
             return list_of_molar_fractions
 
-        output  = ""
-        if( 'random_seed' in self.settings ): output += "random_seed     " + "%10s"%self.settings.get('random_seed')+"\n"
-        output += "temperature     " + "%10s"%self.settings.get('temperature')+"\n"
-        output += "pressure        " + "%10s"%self.settings.get('pressure')+"\n\n"
+        output  = str(self.settings)+"\n"
 
         gasSpecies = self.mechanism.gas_species()
         gasSpecies.extend( self.cluster_expansion.gas_species() )
@@ -211,37 +208,7 @@ class ZacrosJob( scm.plams.SingleJob ):
 
         if( len(molar_frac_list)>0 ):
             output += "gas_molar_fracs   " + ''.join([" %12.5e"%elem for elem in molar_frac_list]) + "\n\n"
-        output += str(surfaceSpecies)+"\n\n"
-
-        for option in ['snapshots', 'process_statistics', 'species_numbers']:
-            if( option in self.settings ):
-                pair = self.settings[option]
-
-                if( len(pair) != 2 ):
-                    msg  = "### ERROR ### keyword "+option+" in settings."
-                    msg += "              Its value should be a pair (key,value)."
-                    msg += "              Possible options for key:  'event', 'elemevent', 'time',       'logtime', 'realtime'"
-                    msg += "              Possible options for value:  <int>,       <int>, <real>, (<real>,<real>),     <real>"
-                    raise NameError(msg)
-
-                key,value = pair
-
-                if( key == 'logtime' ):
-                    if( len(value) != 2 ):
-                        msg  = "### ERROR ### keyword '"+option+" on "+key+"' in settings."
-                        msg += "              Its value should be a pair of reals (<real>,<real>)."
-                        raise NameError(msg)
-
-                    output += "%-20s"%option + "      " + "on "+ key + "       " + str(float(value[1])) + "  " + str(float(value[2])) + "\n"
-                elif( key == 'event' or key == 'elemevent' ):
-                    output += "%-20s"%option + "      " + "on "+ key + "       " + str(int(value)) + "\n"
-                else:
-                    output += "%-20s"%option + "      " + "on "+ key + "       " + str(float(value)) + "\n"
-
-        if( 'event_report' in self.settings ): output += "event_report      " + str(self.settings.get(('event_report')))+"\n"
-        if( 'max_steps' in self.settings ): output += "max_steps         " + str(self.settings.get(('max_steps')))+"\n"
-        if( 'max_time' in self.settings ): output += "max_time          " + str(self.settings.get(('max_time')))+"\n"
-        if( 'wall_time' in self.settings ): output += "wall_time         " + str(self.settings.get(('wall_time')))+"\n"
+        output += str(surfaceSpecies)+"\n"
 
         output += "\n"
         output += "finish"

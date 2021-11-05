@@ -1,6 +1,7 @@
 import os
 
 import scm.plams
+
 import pyzacros as pz
 from pyzacros.utils.compareReports import compare
 
@@ -201,8 +202,8 @@ def test_ZacrosJob_restart():
 
     assert len(lattice_states0) == len(lattice_states2)
 
-    job0.results.plot_lattice_states( pause=2, close=True )
-    job2.results.plot_lattice_states( pause=2, close=True )
+    job0.results.plot_lattice_states( lattice_states0[19], pause=2, close=True )
+    job2.results.plot_lattice_states( lattice_states0[19], pause=2, close=True )
 
     process_statistics0 = job0.results.get_process_statistics()
     process_statistics1 = job1.results.get_process_statistics()

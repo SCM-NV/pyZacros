@@ -106,7 +106,7 @@ class SpeciesList(UserList):
         return SpeciesList( output )
 
 
-    def adsorbed_species(self) -> list:
+    def surface_species(self) -> list:
         """Returns the adsorbed species."""
         output = []
 
@@ -117,18 +117,13 @@ class SpeciesList(UserList):
         return SpeciesList( output )
 
 
-    def species(self) -> list:
-        """Returns the adsorbed species."""
-        return self.adsorbed_species()
-
-
     def mass( self, entity_numbers ) -> float:
         """
         Returns the total mass as the sum of the all species based on the most common isotope in Da
         """
         mass = 0.0
         mapped_entity = {}
-        for i,sp in enumerate(self.adsorbed_species()):
+        for i,sp in enumerate(self.surface_species()):
             if( entity_numbers[i] not in mapped_entity ):
                 mass += sp.mass()
             mapped_entity[ entity_numbers[i] ] = 1
@@ -158,6 +153,7 @@ class SpeciesList(UserList):
             self.__updateLabel()
 
         return self.__label
+
 
     @staticmethod
     def default_entity_numbers( nsites, species ):
