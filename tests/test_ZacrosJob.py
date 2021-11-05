@@ -65,7 +65,7 @@ def test_ZacrosJob():
     myJob = pz.ZacrosJob( myLattice, myMechanism, myClusterExpansion, settings=sett )
     print(myJob)
     output = str(myJob)
-    with open( "tests/test_ZacrosJob_expected_output.txt", "r" ) as inp:
+    with open( "tests/test_ZacrosJob_expected_input.txt", "r" ) as inp:
         expectedOutput = inp.read()
     assert( compare( output, expectedOutput, 1e-3 ) )
 
@@ -79,24 +79,24 @@ def test_ZacrosJob():
         print( "Warning: The calculation FAILED because the zacros executable is not available!" )
         print( "         For testing purposes, we just omit this step.")
 
-    myJob = pz.ZacrosJob.load_external( path='tests/test_ZacrosJob.data/default' )
+    myJob = pz.ZacrosJob.load_external( path='tests/test_ZacrosJob.idata/default' )
     print(myJob)
     output = str(myJob)
-    with open( "tests/test_ZacrosJob_expected_output_default.txt", "r" ) as inp:
+    with open( "tests/test_ZacrosJob_expected_input_default.txt", "r" ) as inp:
         expectedOutput = inp.read()
     assert( compare( output, expectedOutput, 1e-3 ) )
 
-    myJob = pz.ZacrosJob.load_external( path='tests/test_ZacrosJob.data/periodic_cell' )
+    myJob = pz.ZacrosJob.load_external( path='tests/test_ZacrosJob.idata/periodic_cell' )
     print(myJob)
     output = str(myJob)
-    with open( "tests/test_ZacrosJob_expected_output_periodic_cell.txt", "r" ) as inp:
+    with open( "tests/test_ZacrosJob_expected_input_periodic_cell.txt", "r" ) as inp:
         expectedOutput = inp.read()
     assert( compare( output, expectedOutput, 1e-3 ) )
 
-    myJob = pz.ZacrosJob.load_external( path='tests/test_ZacrosJob.data/explicit' )
+    myJob = pz.ZacrosJob.load_external( path='tests/test_ZacrosJob.idata/explicit' )
     print(myJob)
     output = str(myJob)
-    with open( "tests/test_ZacrosJob_expected_output_explicit.txt", "r" ) as inp:
+    with open( "tests/test_ZacrosJob_expected_input_explicit.txt", "r" ) as inp:
         expectedOutput = inp.read()
     assert( compare( output, expectedOutput, 1e-3 ) )
 
