@@ -198,6 +198,9 @@ sett.wall_time = 30
 job = pz.ZacrosJob( settings=sett, lattice=latt, mechanism=mech, cluster_expansion=myClusterExpansion )
 
 print(job)
-job.run()
+results = job.run()
+
+if( job.ok() ):
+   results.plot_molecule_numbers( ["CO*", "H*", "H2O*", "COOH*"] )
 
 scm.plams.finish()

@@ -121,7 +121,11 @@ class ZacrosResults( scm.plams.Results ):
         Return the gas species names from the 'general_output.txt' file.
         """
         lines = self.grep_file(self._filenames['general'], pattern='Gas species names:')
-        return lines[0][ lines[0].find('Gas species names:')+len("Gas species names:"): ].split()
+
+        if( len(lines) != 0 ):
+            return lines[0][ lines[0].find('Gas species names:')+len("Gas species names:"): ].split()
+        else:
+            return []
 
 
     def surface_species_names(self):
@@ -129,7 +133,11 @@ class ZacrosResults( scm.plams.Results ):
         Return the surface species names from the 'general_output.txt' file.
         """
         lines = self.grep_file(self._filenames['general'], pattern='Surface species names:')
-        return lines[0][ lines[0].find('Surface species names:')+len("Surface species names:"): ].split()
+
+        if( len(lines) != 0 ):
+            return lines[0][ lines[0].find('Surface species names:')+len("Surface species names:"): ].split()
+        else:
+            return []
 
 
     def site_type_names(self):

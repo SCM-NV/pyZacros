@@ -96,21 +96,35 @@ sett.wall_time = 3600
 # Running the calculations
 #---------------------------------------------
 
+# Set composition space
+conditions = []
+dx = 0.1
+for x_CO in numpy.arange(0.0,1.0+dx,dx):
+   for x_O2 in numpy.arange(0.0,1.0+dx,dx):
+      if( x_CO+x_O2>1.0 ): continue
+
+      conditions.append( [ x_CO, x_O2 ] )
+
+# Some additional points to make the final figure nicer
+dx = 0.05
+for a in numpy.arange(dx,1.0,2*dx):
+   if( 2.0*a>1.0 ): continue
+   conditions.append( [ a, a ] )
+
 results = []
-for xCO in numpy.arange(0.0,1.0,0.05):
-    for xO2 in numpy.arange(0.0,1.0,0.05):
-        if( xCO+xO2>1.0 ): continue
 
-        sett.molar_fraction.CO = xCO
-        sett.molar_fraction.O2 = xO2
+# Loop over the conditions to run the jobs
+for i,(x_CO,x_O2) in enumerate(conditions):
+   sett.molar_fraction.CO = x_CO
+   sett.molar_fraction.O2 = x_O2
 
-        job = pz.ZacrosJob( settings=sett,
-                            lattice=lattice,
-                            mechanism=mechanism,
-                            cluster_expansion=cluster_expansion,
-                            name="CO_{:>.2f}-O2_{:>.2f}".format(xCO,xO2) )
+   job = pz.ZacrosJob( settings=sett,
+                        lattice=lattice,
+                        mechanism=mechanism,
+                        cluster_expansion=cluster_expansion,
+                        name="CO_{:>.2f}-O2_{:>.2f}".format(x_CO,x_O2) )
 
-        results.append(job.run())
+   results.append(job.run())
 
 #---------------------------------------------
 # Getting the results
@@ -147,10 +161,11 @@ except ImportError as e:
     print('Consider to install matlibplot to visualize the results!')
     exit(0)
 
-ax = plt.axes(projection='3d')
+fig = plt.figure()
+ax = plt.axes( projection='3d' )
 ax.set_xlabel('x CO')
 ax.set_ylabel('x O2')
 ax.set_zlabel('TOF CO2')
-ax.plot_trisurf(x, y, z, cmap=plt.cm.jet, antialiased=True);
-plt.show()
+ax.plot_trisurf(x, y, z, cmap=plt.get_cmap('hot'), antialiased=True);
 
+plt.show()

@@ -38,8 +38,6 @@ settings.input.ReaxFF.Charges.Solver = "direct"
 job = scm.plams.AMSJob(molecule=molecule, settings=settings, name="PESExploration")
 results = job.run()
 
-scm.plams.finish()
-
 loader = pz.RKFLoader( results )
 
 #loader.replace( site_name='A', 'fcc' )
@@ -54,7 +52,7 @@ settings = pz.Settings()
 settings.random_seed = 10
 settings.temperature = 273.15
 settings.pressure = 1.01325
-settings.snapshots = ('event', 1)
+settings.snapshots = ('event', 250)
 settings.process_statistics = ('event', 1)
 settings.species_numbers = ('event', 1)
 settings.event_report = 'off'
@@ -64,6 +62,10 @@ settings.max_steps = 5000
 
 job = pz.ZacrosJob( lattice=loader.lattice, mechanism=loader.mechanism,
                     cluster_expansion=loader.clusterExpansion,
-                    initialState=initialState, settings=settings )
+                    initial_state=initialState, settings=settings )
 results = job.run()
 
+if( job.ok() ):
+   results.plot_lattice_states( results.lattice_states(), file_name="lattice_states.png" )
+
+scm.plams.finish()

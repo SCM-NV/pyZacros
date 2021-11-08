@@ -339,6 +339,9 @@ class LatticeState:
 
             if( len(xvalues)>0 ):
                 ax.scatter(xvalues, yvalues, color=colors[i], marker=markers[imarkers[i]], s=100, zorder=4, label=sym_i)
+                #ax.scatter(xvalues, yvalues, color=colors[i], marker=markers[imarkers[i]], s=100/5, zorder=4, label=sym_i)
+                #ax.scatter(xvalues, yvalues, color=colors[i], marker=markers[imarkers[i]],
+                           #s=100/math.sqrt(len(self.lattice.site_coordinates)), zorder=4, label=sym_i)
 
         #-------------------------------------------------
         # Plots the links for species with denticity > 1

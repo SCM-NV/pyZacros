@@ -73,12 +73,15 @@ sett.max_steps = 'infinity'
 sett.max_time = 25.0
 sett.wall_time = 3600
 
-myJob = pz.ZacrosJob( settings=sett,
+job = pz.ZacrosJob( settings=sett,
                     lattice=lattice,
                     mechanism=[CO_adsorption, O2_adsorption, CO_oxidation],
                     cluster_expansion=[CO_point, O_point] )
 
-print(myJob)
-results = myJob.run()
+print(job)
+results = job.run()
+
+if( job.ok() ):
+   results.plot_lattice_states( results.lattice_states() )
 
 scm.plams.finish()
