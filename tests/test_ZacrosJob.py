@@ -61,6 +61,7 @@ def test_ZacrosJob():
     sett.temperature = 380.0
     sett.pressure = 2.00
     sett.max_steps = 1
+    sett.molar_fraction.H2 = 1.0
 
     myJob = pz.ZacrosJob( myLattice, myMechanism, myClusterExpansion, settings=sett )
     print(myJob)

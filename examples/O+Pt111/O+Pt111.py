@@ -66,6 +66,6 @@ job = pz.ZacrosJob( lattice=loader.lattice, mechanism=loader.mechanism,
 results = job.run()
 
 if( job.ok() ):
-   results.plot_lattice_states( results.lattice_states(), file_name="lattice_states.png" )
+   results.plot_lattice_states( results.lattice_states() )
 
 scm.plams.finish()
