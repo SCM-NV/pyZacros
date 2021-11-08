@@ -7,11 +7,11 @@ pressure               2.0
 
 max_steps         1
 
-n_gas_species   1
-gas_specs_names           H2
-gas_energies             0.0
-gas_molec_weights     2.0156
-gas_molar_fracs          1.0
+n_gas_species    1
+gas_specs_names              H2
+gas_energies        0.00000e+00
+gas_molec_weights   2.01560e+00
+gas_molar_fracs     1.00000e+00
 
 n_surf_species    2
 surf_specs_names          H*       H2*
@@ -22,7 +22,7 @@ finish
 lattice_input.dat
 ---------------------------------------------------------------------
 lattice default_choice
-hexagonal_periodic 1.0 8 10
+  hexagonal_periodic 1.0 8 10
 end_lattice
 ---------------------------------------------------------------------
 energetics_input.dat
@@ -37,7 +37,7 @@ cluster H*_0-0,H*_1-0:(0,1)
     2 H* 1
   site_types 1 1
   graph_multiplicity 2
-  cluster_eng 0.1000
+  cluster_eng  1.00000e-01
 end_cluster
 
 cluster H2*_0-0,*_1-0:(0,1)
@@ -48,7 +48,7 @@ cluster H2*_0-0,*_1-0:(0,1)
     2 * 1
   site_types 1 1
   graph_multiplicity 2
-  cluster_eng 0.1000
+  cluster_eng  1.00000e-01
 end_cluster
 
 cluster *_0-0,*_1-0:(0,1)
@@ -59,7 +59,7 @@ cluster *_0-0,*_1-0:(0,1)
     2 * 1
   site_types 1 1
   graph_multiplicity 2
-  cluster_eng 0.1000
+  cluster_eng  1.00000e-01
 end_cluster
 
 end_energetics
@@ -78,12 +78,12 @@ reversible_step H2*_0-0,*_1-0<-->H*_0-0,H*_1-0;(0,1)
     1 H2* 1
     2 * 1
   site_types 1 1
-  pre_expon 1.000000e+13
-  pe_ratio 0.676
-  activ_eng 0.2
+  pre_expon  2.50000e+00
+  pe_ratio  1.00000e+00
+  activ_eng  2.00000e-01
 end_reversible_step
 
-step H2*_0-0,*_1-0-->*_0-0,*_1-0:H2;(0,1)
+reversible_step H2*_0-0,*_1-0<-->*_0-0,*_1-0:H2;(0,1)
   gas_reacs_prods H2 1
   sites 2
   neighboring 1-2
@@ -94,8 +94,9 @@ step H2*_0-0,*_1-0-->*_0-0,*_1-0:H2;(0,1)
     1 * 1
     2 * 1
   site_types 1 1
-  pre_expon 1.000000e+13
-  activ_eng 0.2
-end_step
+  pre_expon  1.00000e+01
+  pe_ratio  7.00000e-01
+  activ_eng  2.00000e-01
+end_reversible_step
 
 end_mechanism

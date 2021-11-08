@@ -11,19 +11,19 @@ def test_ZacrosJob():
     print( "---------------------------------------------------" )
 
     s0 = pz.Species( "*", 1 )   # Empty adsorption site
-    s1 = pz.Species( "H*", 1 )  # H adsorbed with dentation 1
-    s2 = pz.Species( "H2*", 1 ) # H2 adsorbed with dentation 1
-    s3 = pz.Species( "H2", gas_energy=0.0 ) # H2(gas)
+    H_ads = pz.Species( "H*", 1 )  # H adsorbed with dentation 1
+    H2_ads = pz.Species( "H2*", 1 ) # H2 adsorbed with dentation 1
+    H2_gas = pz.Species( "H2", gas_energy=0.0 ) # H2(gas)
 
     myLattice = pz.Lattice(lattice_type=pz.Lattice.HEXAGONAL, lattice_constant=1.0, repeat_cell=[8,10])
 
     myCluster1 = pz.Cluster( neighboring=[ (0,1) ],
-                             species=[ s1, s1 ],
+                             species=[ H_ads, H_ads ],
                              multiplicity=2,
                              cluster_energy=0.1 )
 
     myCluster2 = pz.Cluster( neighboring=[ (0,1) ],
-                             species=[ s2, s0 ],
+                             species=[ H2_ads, s0 ],
                              multiplicity=2,
                              cluster_energy=0.1 )
 
@@ -34,25 +34,23 @@ def test_ZacrosJob():
 
     myClusterExpansion = pz.ClusterExpansion( [myCluster1, myCluster2, myCluster3] )
 
-    myReaction1 = pz.ElementaryReaction( neighboring=[ (0,1) ],
-                                         initial=[ s1, s1 ],
-                                         final=[ s2, s0 ],
-                                         reversible=True,
-                                         pre_expon=1e+13,
-                                         pe_ratio=0.676,
-                                         activation_energy=0.2 )
+    reaction1 = pz.ElementaryReaction( neighboring=[ (0,1) ],
+                                       initial=[ H_ads, H_ads ],
+                                       final=[ H2_ads, s0 ],
+                                       pre_expon=2.5,
+                                       pe_ratio=1.0,
+                                       activation_energy=0.2 )
 
-    myReaction2 = pz.ElementaryReaction( neighboring=[ (0,1) ],
-                                         initial=[ s2, s0 ],
-                                         final=[ s0, s0, s3 ],
-                                         reversible=False,
-                                         pre_expon=1e+13,
-                                         pe_ratio=0.676,
-                                         activation_energy=0.2 )
+    reaction2 = pz.ElementaryReaction( neighboring=[ (0,1) ],
+                                       initial=[ H2_ads, s0 ],
+                                       final=[ s0, s0, H2_gas ],
+                                       pre_expon=10.0,
+                                       pe_ratio=0.7,
+                                       activation_energy=0.2 )
 
     myMechanism = pz.Mechanism()
-    myMechanism.append( myReaction1 )
-    myMechanism.append( myReaction2 )
+    myMechanism.append( reaction1 )
+    myMechanism.append( reaction2 )
 
     scm.plams.init(folder='test_ZacrosJob')
 
