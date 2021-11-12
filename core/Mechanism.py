@@ -4,7 +4,12 @@ from .SpeciesList import *
 
 __all__ = ['Mechanism']
 
-class Mechanism(UserList):
+class Mechanism( UserList ):
+    """
+    Creates a new Mechanism object
+
+    *   ``data`` --
+    """
 
     def __init__( self, data=[] ):
         super(Mechanism, self).__init__( data )
@@ -44,7 +49,7 @@ class Mechanism(UserList):
         super(Mechanism, self).insert(i, item)
 
 
-    def __str__( self ) -> str:
+    def __str__( self ):
         """
         Translates the object to a string
         """
@@ -59,7 +64,7 @@ class Mechanism(UserList):
         return output
 
 
-    def surface_species( self ) -> SpeciesList:
+    def surface_species( self ):
         """
         Returns the surface species list.
         """
@@ -77,7 +82,7 @@ class Mechanism(UserList):
         return species
 
 
-    def gas_species( self ) -> SpeciesList:
+    def gas_species( self ):
         """
         Returns the gas species list.
         """
@@ -95,7 +100,7 @@ class Mechanism(UserList):
         return species
 
 
-    def species(self) -> SpeciesList:
+    def species(self):
         """Returns the adsorbed species."""
         return self.surface_species()
 

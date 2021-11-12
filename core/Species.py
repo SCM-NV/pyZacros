@@ -5,6 +5,12 @@ __all__ = ['Species']
 class Species:
     """
     Species class that represents a chemical species
+
+    *   ``symbol`` -- Species' symbol. If symbol contains the
+        character '*', it is considered an adsorbed species. Otherwise
+        it si considered a gas species. e.g. H2*
+    *   ``denticity`` -- Species' denticity e.g. 2
+    *   ``gas_energy`` -- Species' gas energy e.g. 0.0
     """
 
     # Mass of the most common isotope in Da
@@ -87,12 +93,6 @@ class Species:
                  gas_energy = None, kind = FROM_SYMBOL, mass = FROM_SYMBOL ):
         """
         Creates a new Species object.
-
-        :parm symbol: str. Species' symbol. If symbol contains the
-          character '*', it is considered an adsorbed species. Otherwise
-          it si considered a gas species. e.g. H2*
-        :parm denticity: int, Species' denticity e.g. 2
-        :parm gas_energy: float, Species' gas energy e.g. 0.0
         """
         self.symbol = symbol
         self.gas_energy = gas_energy
@@ -144,6 +144,8 @@ class Species:
     def __eq__( self, other ):
         """
         Returns True if both objects have the same symbol. Otherwise returns False
+
+        *   ``other`` --
         """
         if( self.symbol == other.symbol ):
             return True
@@ -158,7 +160,7 @@ class Species:
         return hash(self.symbol)
 
 
-    def __str__( self ) -> str:
+    def __str__( self ):
         """
         Translates the object to a string
         """
@@ -166,28 +168,28 @@ class Species:
         return output
 
 
-    def is_adsorbed( self ) -> bool:
+    def is_adsorbed( self ):
         """
         Returns True if the name of the species has the character '*'
         """
         return ( self.kind == Species.SURFACE )
 
 
-    def is_gas( self ) -> bool:
+    def is_gas( self ):
         """
         Returns True if the name of the species has no the character '*'
         """
         return ( self.kind == Species.GAS )
 
 
-    def composition( self ) -> dict:
+    def composition( self ):
         """
         Returns a dictionary containing the number of atoms of each kind
         """
         return self.__composition
 
 
-    def mass( self ) -> float:
+    def mass( self ):
         """
         Returns the mass of the species based on the most common isotope in Da
         """

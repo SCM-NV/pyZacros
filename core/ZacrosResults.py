@@ -18,6 +18,7 @@ class ZacrosResults( scm.plams.Results ):
     """
     A Class for handling Zacros Results.
     """
+
     _filenames = {
         'general': 'general_output.txt',
         'history': 'history_output.txt',
@@ -58,7 +59,39 @@ class ZacrosResults( scm.plams.Results ):
 
     def provided_quantities(self):
         """
-        Return the provided quantities from the 'specnum_output.txt' file in a form of a dictionary.
+        Return the provided quantities from the ``specnum_output.txt`` file in a form of a dictionary.
+        Below is shown an example of the ``specnum_output.txt`` for a zacros calculation.
+
+        .. code-block:: none
+
+            Entry   Nevents        Time   Temperature       Energy   O*  CO*     O2     CO   CO2
+                1         0   0.000E+00   5.00000E+02   -4.089E+01   11   12      0      0     0
+                2        88   1.000E-01   5.00000E+02   -7.269E+01   22   17    -21    -36    31
+                3       176   2.000E-01   5.00000E+02   -9.139E+01   29   19    -41    -71    64
+                4       247   3.000E-01   5.00000E+02   -1.041E+02   34   20    -57    -99    91
+
+                5       292   4.000E-01   5.00000E+02   -1.156E+02   39   20    -68   -116   108
+                6       353   5.000E-01   5.00000E+02   -1.235E+02   43   19    -82   -139   132
+                7       394   5.999E-01   5.00000E+02   -1.116E+02   35   24    -86   -160   148
+                8       462   6.999E-01   5.00000E+02   -1.253E+02   37   31    -99   -191   172
+                9       547   7.999E-01   5.00000E+02   -1.155E+02   35   27   -116   -223   208
+
+        For this example, this function will return:
+
+        .. code-block:: python
+
+            {
+               "Entry":[1, 2, 3, 4],
+               "Nevents":[0, 88, 176, 247],
+               "Time":[0.000E+00, 1.000E-01, 2.000E-01, 3.000E-01],
+               "Temperature":[5.00000E+02, 5.00000E+02, 5.00000E+02, 5.00000E+02],
+               "Energy":[-4.089E+01, -7.269E+01, -9.139E+01, -1.041E+02],
+               "O*":[11, 22, 29, 34],
+               "CO*":[12, 17, 19, 20],
+               "O2":[0, -21, -41, -57],
+               "CO":[0, -36, -71, -99],
+               "CO2":[0, 31, 64, 91]
+            }
         """
         quantities = None
         if( self.job.restart is None ):
@@ -283,7 +316,15 @@ class ZacrosResults( scm.plams.Results ):
 
     def plot_lattice_states(self, data, pause=-1, show=True, ax=None, close=False, time_perframe=0.5, file_name=None):
         """
-        Plots the lattice states as an animation
+        Uses matplotlib to visualize the lattice states as an animation
+
+        *   ``data`` --
+        *   ``pause`` --
+        *   ``show`` --
+        *   ``ax`` --
+        *   ``close`` --
+        *   ``time_perframe`` --
+        *   ``file_name`` --
         """
         if( type(data) == LatticeState ):
             data.plot( show=True, pause=pause, ax=ax, file_name=file_name )
@@ -318,7 +359,14 @@ class ZacrosResults( scm.plams.Results ):
 
     def plot_molecule_numbers(self, species_name, pause=-1, show=True, ax=None, close=False, file_name=None):
         """
-        Plots the Molecule Numbers as a function of time
+        Uses matplotlib to visualize the Molecule Numbers an animation
+
+        *   ``species_name`` --
+        *   ``pause`` --
+        *   ``show`` --
+        *   ``ax`` --
+        *   ``close`` --
+        *   ``file_name`` --
         """
         try:
             import matplotlib.pyplot as plt
@@ -506,7 +554,16 @@ class ZacrosResults( scm.plams.Results ):
 
     def plot_process_statistics(self, data, key, log_scale=False, pause=-1, show=True, ax=None, close=False, file_name=None):
         """
-        Plots data as a histogram
+        Uses matplotlib to visualize the process statistics an animation
+
+        *   ``data`` --
+        *   ``key`` --
+        *   ``log_scale`` --
+        *   ``pause`` --
+        *   ``show`` --
+        *   ``ax`` --
+        *   ``close`` --
+        *   ``file_name`` --
         """
         if( type(data) == dict ):
             self.__plot_process_statistics( data, key, log_scale=log_scale, pause=pause, show=show,
@@ -547,6 +604,8 @@ class ZacrosResults( scm.plams.Results ):
     def get_TOFs(self, npoints=None):
         """
         Return the TOF calculated with the last ```npoints```
+
+        *   ``npoints`` --
         """
         values = {}
         errors = {}

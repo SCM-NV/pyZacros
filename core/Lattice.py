@@ -8,7 +8,122 @@ __all__ = ['Lattice']
 
 class Lattice:
     """
-    Lattice class defining the surface slab.
+    Lattice class that defines the lattice structure on which species can bind, diffuse and react.
+    As in Zacros' original input files, there are three different ways of specifying a lattice structure.
+    Below we describe these three ways with the corresponding parameters as well with examples of use.
+
+    **Default Lattices:**
+
+        * ``lattice_type`` -- Define the lattice to use. Possible options are:
+
+          - ``Lattice.TRIANGULAR``: Specifies a lattice with coordination number 3. The unit cell contains 4 sites.
+          - ``Lattice.RECTANGULAR``: Specifies a lattice with coordination number 4. The unit cell contains 1 site.
+          - ``Lattice.HEXAGONAL``: Specifies a lattice with coordination number 6. The unit cell contains 2 sites.
+
+        * ``lattice_constant`` -- Defines the lattice constant (in angstrom).
+        * ``repeat_cell`` -- The number of repetitions of the unit cell in the directions of unit vectors.
+
+        Example:
+
+        .. code:: python
+
+            lattice = pz.Lattice( lattice_type=pz.Lattice.HEXAGONAL, lattice_constant=1.0,
+                                  repeat_cell=[4,5] )
+
+        .. image:: ../../images/lattice_default.png
+           :align: center
+
+    **Unit-Cell-Defined Periodic Lattices:**
+
+        * ``cell_vectors`` -- Define the unit vectors. *e.g.* ``[[0.123, 0.000],[1.234,1.234]]``
+        * ``repeat_cell`` -- The number of repetitions of the unit cell in the directions of unit vectors. *e.g.* ``(10,10)``
+        * ``site_types`` -- The names of the different site types. *e.g.* ``[ "cn2", "br42", "cn2" ]``
+        * ``site_coordinates`` -- Pairs of real numbers specifying the “fractional coordinates” of each site
+          in the unit cell. *e.g.* ``[ (0.123,0.894), (0.456,0.123) ]``
+        * ``neighboring_structure`` -- Defines a neighboring structure block. *e.g.*
+          ``[ ((0,0),Lattice.NORTH), ((0,1),Lattice.NORTHEAST) ]``
+
+        Example:
+
+        .. code:: python
+
+            lattice = pz.Lattice( cell_vectors=[[2.77185866, 0.00000000],[1.38592933, 2.40050002]],
+                                  repeat_cell=[2, 2],
+                                  site_types=["b", "h", "b", "b", "f", "t"],
+                                  site_coordinates=[[0.00001, 0.49999],
+                                                    [0.33333, 0.33333],
+                                                    [0.49999, 0.00001],
+                                                    [0.49999, 0.49999],
+                                                    [0.66667, 0.66667],
+                                                    [0.99999, 0.00001]],
+                                  neighboring_structure=[ [(0,1), pz.Lattice.SELF],
+                                                          [(1,2), pz.Lattice.SELF],
+                                                          [(1,3), pz.Lattice.SELF],
+                                                          [(3,4), pz.Lattice.SELF],
+                                                          [(4,2), pz.Lattice.NORTH],
+                                                          [(4,0), pz.Lattice.EAST],
+                                                          [(5,5), pz.Lattice.NORTH],
+                                                          [(5,5), pz.Lattice.EAST],
+                                                          [(5,4), pz.Lattice.SELF],
+                                                          [(5,1), pz.Lattice.SELF],
+                                                          [(5,1), pz.Lattice.EAST],
+                                                          [(5,4), pz.Lattice.SOUTHEAST],
+                                                          [(5,1), pz.Lattice.SOUTHEAST],
+                                                          [(4,5), pz.Lattice.NORTH],
+                                                          [(5,5), pz.Lattice.SOUTHEAST] ] )
+
+        .. image:: ../../images/lattice_unit_cell.png
+           :align: center
+
+    **Explicitly Defined Custom Lattices:**
+
+        * ``site_types`` -- The names of the different site types. *e.g.* ``[ "cn2", "br42" ]``
+        * ``site_coordinates`` -- Pairs of real numbers specifying the “fractional coordinates” of each site
+          in the unit cell. *e.g.* ``[ (0.123,0.894), (0.456,0.123) ]``
+        * ``nearest_neighbors`` -- Defines the neighboring structure. *e.g.* ``[ (2,6), (2,4,7,8) ]``
+        * ``cell_vectors`` -- Define the unit vectors. Optional
+
+        Example:
+
+        .. code:: python
+
+            lattice = pz.Lattice( site_types=["cn2", "br42", "cn4", "br42", "cn2", "br42",
+                                              "br44", "br44", "br42", "cn4", "br44", "cn4",
+                                              "br42", "br42", "cn2"],
+                                  site_coordinates=[[0.0000e+0, 0.0000e+0],
+                                                    [1.4425e+0, 0.0000e+0],
+                                                    [2.8850e+0, 0.0000e+0],
+                                                    [4.3275e+0, 0.0000e+0],
+                                                    [5.7700e+0, 0.0000e+0],
+                                                    [7.2125e-1, 1.2492e+0],
+                                                    [2.1637e+0, 1.2492e+0],
+                                                    [3.6062e+0, 1.2492e+0],
+                                                    [5.0487e+0, 1.2492e+0],
+                                                    [1.4425e+0, 2.4985e+0],
+                                                    [2.8850e+0, 2.4985e+0],
+                                                    [4.3275e+0, 2.4985e+0],
+                                                    [2.1637e+0, 3.7477e+0],
+                                                    [3.6062e+0, 3.7477e+0],
+                                                    [2.8850e+0, 4.9970e+0]],
+                                  nearest_neighbors=[[ 1,  5],
+                                                     [ 0,  2],
+                                                     [ 1,  3,  6, 7],
+                                                     [ 2,  4],
+                                                     [ 3,  8],
+                                                     [ 0,  9],
+                                                     [ 2,  9],
+                                                     [ 2, 11],
+                                                     [ 4, 11],
+                                                     [ 5,  6, 10, 12],
+                                                     [ 9, 11],
+                                                     [ 7,  8, 10, 13],
+                                                     [ 9, 14],
+                                                     [11, 14],
+                                                     [12, 13]] )
+
+        .. image:: ../../images/lattice_custom.png
+           :align: center
+
     """
 
     # Origin
@@ -47,7 +162,7 @@ class Lattice:
             self.__lattice_constant_default = None
             self.__repeat_cell_default = None
 
-            self.fromDefaultLattices( kwargs["lattice_type"], kwargs["lattice_constant"], kwargs["repeat_cell"] )
+            self.__fromDefaultLattices( kwargs["lattice_type"], kwargs["lattice_constant"], kwargs["repeat_cell"] )
 
         # Unit-Cell-Defined Periodic Lattices
         elif( "cell_vectors" in kwargs and
@@ -62,7 +177,7 @@ class Lattice:
             self.__site_coordinates_unit_cell = None
             self.__neighboring_structure_unit_cell = None
 
-            self.fromUnitCellDefined( kwargs["cell_vectors"], kwargs["repeat_cell"], kwargs["site_types"],
+            self.__fromUnitCellDefined( kwargs["cell_vectors"], kwargs["repeat_cell"], kwargs["site_types"],
                                                 kwargs["site_coordinates"], kwargs["neighboring_structure"] )
 
         # Explicitly Defined Custom Lattices
@@ -71,12 +186,12 @@ class Lattice:
               "nearest_neighbors" in kwargs ):
             self.__origin = Lattice.__FROM_EXPLICIT
 
-            self.fromExplicitlyDefined( kwargs["site_types"], kwargs["site_coordinates"],
+            self.__fromExplicitlyDefined( kwargs["site_types"], kwargs["site_coordinates"],
                                                   kwargs["nearest_neighbors"], cell_vectors=kwargs.get("cell_vectors") )
 
-        # From YAML file
-        elif( "path" in kwargs ):
-            self.fromYAMLfile( kwargs["path"] )
+        ## From YAML file
+        #elif( "path" in kwargs ):
+            #self.__fromYAMLfile( kwargs["path"] )
 
         else:
             msg  = "\nError: The constructor for Lattice with the parameters:"+str(kwargs)+" is not implemented!\n"
@@ -88,12 +203,9 @@ class Lattice:
             raise Exception(msg)
 
 
-    def fromDefaultLattices(self, lattice_type, lattice_constant, repeat_cell):
+    def __fromDefaultLattices(self, lattice_type, lattice_constant, repeat_cell):
         """
-        :parm lattice_type: Define the lattice to use. Possible options are:
-                            Lattice.TRIANGULAR, Lattice.RECTANGULAR, or Lattice.HEXAGONAL
-        :parm lattice_constant: Defines the lattice constant
-        :parm repeat_cell: The number of repetitions of the unit cell in the directions of unit vectors.
+        Creates a default Lattice
         """
         self.__lattice_type_default = lattice_type
         self.__lattice_constant_default = lattice_constant
@@ -111,7 +223,7 @@ class Lattice:
                                     [(2,3), Lattice.EAST],
                                     [(3,0), Lattice.NORTH] ]
 
-            self.fromUnitCellDefined(cell_vectors, repeat_cell, site_types, site_coordinates, neighboring_structure)
+            self.__fromUnitCellDefined(cell_vectors, repeat_cell, site_types, site_coordinates, neighboring_structure)
 
         elif( self.__lattice_type_default == Lattice.RECTANGULAR ):
 
@@ -121,7 +233,7 @@ class Lattice:
             neighboring_structure=[ [(0,0), Lattice.NORTH],
                                     [(0,0), Lattice.EAST] ]
 
-            self.fromUnitCellDefined(cell_vectors, repeat_cell, site_types, site_coordinates, neighboring_structure)
+            self.__fromUnitCellDefined(cell_vectors, repeat_cell, site_types, site_coordinates, neighboring_structure)
 
         elif( self.__lattice_type_default == Lattice.HEXAGONAL ):
 
@@ -135,17 +247,12 @@ class Lattice:
                                     [(1,0), Lattice.NORTHEAST],
                                     [(1,0), Lattice.EAST] ]
 
-            self.fromUnitCellDefined(cell_vectors, repeat_cell, site_types, site_coordinates, neighboring_structure)
+            self.__fromUnitCellDefined(cell_vectors, repeat_cell, site_types, site_coordinates, neighboring_structure)
 
 
-    def fromUnitCellDefined(self, cell_vectors, repeat_cell, site_types, site_coordinates, neighboring_structure):
+    def __fromUnitCellDefined(self, cell_vectors, repeat_cell, site_types, site_coordinates, neighboring_structure):
         """
-        :parm cell_vectors: Define the unit vectors. e.g. [[0.123, 0.000],[1.234,1.234]]
-        :parm repeat_cell: The number of repetitions of the unit cell in the directions of unit vectors. e.g. (10,10)
-        :parm site_types: The names of the different site types. e.g. [ "cn2", "br42", "cn2" ]
-        :parm site_coordinates: Pairs of real numbers specifying the “fractional coordinates” of each site
-                                in the unit cell. e.g. [ (0.123,0.894), (0.456,0.123) ]
-        :parm neighboring_structure: Defines a neighboring structure block. e.g. [ ((0,0),Lattice.NORTH), ((0,1),Lattice.NORTHEAST) ]
+        Creates a Unit-Cell-Defined periodic Lattice
         """
         assert( len(site_types) == len(site_coordinates) )
 
@@ -204,13 +311,9 @@ class Lattice:
                             self.nearest_neighbors[id_site].add( id_2_shifted )
 
 
-    def fromExplicitlyDefined(self, site_types, site_coordinates, nearest_neighbors, cell_vectors=None):
+    def __fromExplicitlyDefined(self, site_types, site_coordinates, nearest_neighbors, cell_vectors=None):
         """
-        :parm site_types: The names of the different site types. e.g. [ "cn2", "br42" ]
-        :parm site_coordinates: Pairs of real numbers specifying the “fractional coordinates” of each site
-                                in the unit cell. e.g. [ (0.123,0.894), (0.456,0.123) ]
-        :parm nearest_neighbors: Defines the neighboring structure. e.g. [ (2,6), (2,4,7,8) ]
-        :parm cell_vectors: Define the unit vectors. Optional
+        Creates a explicitly defined custom Lattice
         """
         self.site_types = site_types
         self.site_coordinates = site_coordinates
@@ -218,7 +321,7 @@ class Lattice:
         self.cell_vectors = cell_vectors
 
 
-    def fromYAMLfile(self, path):
+    #def __fromYAMLfile(self, path):
         """
         :parm path_to_slab_yaml: Path to .yml or .yaml kmc slab file.
         """
@@ -261,12 +364,19 @@ class Lattice:
                         #msg += str(i) + " argument is missed.\n"
                         #raise NameError(msg)
 
-        raise Exception("Error: The constructor Lattice.fromYAMLfile has not been implemented yet!")
+        #raise Exception("Error: The constructor Lattice.__fromYAMLfile has not been implemented yet!")
 
 
     def plot(self, pause=-1, show=True, color=None, ax=None, close=False, show_sites_ids=False):
         """
         Uses matplotlib to visualize the lattice
+
+        *   ``pause`` --
+        *   ``show`` --
+        *   ``color`` --
+        *   ``ax`` --
+        *   ``close`` --
+        *   ``show_sites_ids`` --
         """
         try:
             import math
@@ -476,12 +586,14 @@ class Lattice:
     def set_repeat_cell( self, repeat_cell ):
         """
         Set the parameter repeat_cell and update all internal information
+
+        *   ``repeat_cell`` --
         """
         if( self.__origin == Lattice.__FROM_DEFAULT ):
-            self.fromDefaultLattices( self.__lattice_type_default, self.__lattice_constant_default, repeat_cell )
+            self.__fromDefaultLattices( self.__lattice_type_default, self.__lattice_constant_default, repeat_cell )
 
         elif( self.__origin == Lattice.__FROM_UNIT_CELL ):
-            self.fromUnitCellDefined( self.__cell_vectors_unit_cell, repeat_cell, self.__site_types_unit_cell,
+            self.__fromUnitCellDefined( self.__cell_vectors_unit_cell, repeat_cell, self.__site_types_unit_cell,
                                                 self.__site_coordinates_unit_cell, self.__neighboring_structure_unit_cell )
 
         elif( self.__origin == Lattice.__FROM_EXPLICIT ):

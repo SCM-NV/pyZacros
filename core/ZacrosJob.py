@@ -30,8 +30,17 @@ class ZacrosExecutableNotFoundError( Exception ):
 
 class ZacrosJob( scm.plams.SingleJob ):
     """
-    A class representing a single computational job with Zacros
+    Create a new ZacrosJob object.
+
+    *   ``lattice`` -- Lattice containing the lattice to be used during the calculation.
+    *   ``mechanism`` -- Mechanism containing the mechanisms involed in the calculation.
+    *   ``cluster_expansion`` --
+    *   ``initial_state`` -- Initial state of the system. By default a KMC simulation
+    *   ``restart`` --
+    *   ``settings`` -- Settings containing the parameters of the Zacros calculation.
+        in Zacros is initialized with an empty lattice.
     """
+
     _command = os.environ["AMSBIN"]+'/zacros' if 'AMSBIN' in os.environ else 'zacros.x'
     _result_type = ZacrosResults
     _filenames = {
@@ -47,19 +56,6 @@ class ZacrosJob( scm.plams.SingleJob ):
 
 
     def __init__(self, lattice, mechanism, cluster_expansion, initial_state=None, restart=None, **kwargs):
-        """
-        Create a new ZacrosJob object.
-
-        :parm settings: Settings containing the parameters of the Zacros
-                        calculation.
-        :parm mechanism: Mechanism containing the mechanisms involed in the
-                        calculation.
-        :parm lattice: Lattice containing the lattice to be used during the
-                       calculation.
-        :parm initial_state: Initial state of the system. By default a KMC
-                       simulation in Zacros is initialized with an empty
-                       lattice.
-        """
 
         def check_molar_fraction(settings=Settings, species_list=SpeciesList):
             """
@@ -925,6 +921,11 @@ class ZacrosJob( scm.plams.SingleJob ):
     def load_external(cls, path, settings=None, molecule=None, finalize=False):
         """
         Load an external job from *path*.
+
+        *   ``path`` --
+        *   ``settings`` --
+        *   ``molecule`` --
+        *   ``finalize`` --
         """
         if( not os.path.isdir(path) ):
             raise FileNotFoundError('Path {} does not exist, cannot load from it.'.format(path))

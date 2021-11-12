@@ -4,9 +4,14 @@ from .SpeciesList import *
 
 __all__ = ['ClusterExpansion']
 
-class ClusterExpansion(UserList):
+class ClusterExpansion( UserList ):
+    """
+    Creates a new ClusterExpansion object
 
-    def __init__( self, data=[] ):
+    *   ``data`` --
+    """
+
+    def __init__(self, data=[]):
         super(ClusterExpansion, self).__init__( data )
 
         # Duplicates are automatically removed.
@@ -28,6 +33,8 @@ class ClusterExpansion(UserList):
     def extend(self, other):
         """
         Extend sequence by appending elements from the iterable
+
+        *   ``other`` --
         """
         for item in other:
             self.append( item )
@@ -36,6 +43,9 @@ class ClusterExpansion(UserList):
     def insert(self, i, item):
         """
         Insert value before index
+
+        *   ``i`` --
+        *   ``item`` --
         """
         for erxn in self:
             if( erxn.label() == item.label() ):
@@ -44,7 +54,7 @@ class ClusterExpansion(UserList):
         super(ClusterExpansion, self).insert(i, item)
 
 
-    def __str__( self ) -> str:
+    def __str__(self):
         """
         Translates the object to a string
         """
@@ -58,7 +68,7 @@ class ClusterExpansion(UserList):
         return output
 
 
-    def gas_species(self) -> SpeciesList:
+    def gas_species(self):
         """Returns the gas species."""
         species = []
 
@@ -70,7 +80,7 @@ class ClusterExpansion(UserList):
         return species
 
 
-    def surface_species(self) -> SpeciesList:
+    def surface_species(self):
         """Returns the surface species."""
         species = []
 

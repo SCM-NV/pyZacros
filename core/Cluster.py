@@ -4,6 +4,15 @@ from .SpeciesList import SpeciesList
 __all__ = ['Cluster']
 
 class Cluster:
+    """
+    Creates a new Cluster object
+
+    *   ``site_types`` --
+    *   ``neighboring`` --
+    *   ``species`` --
+    *   ``multiplicity`` --
+    *   ``cluster_energy`` --
+    """
 
     def __init__(self, species,
                  site_types = None,
@@ -14,12 +23,6 @@ class Cluster:
                  label = None):
         """
         Creates a new Cluster object
-
-        :parm site_types: list
-        :parm neighboring: list
-        :parm species: list
-        :parm multiplicity: int
-        :parm cluster_energy: float
         """
         self.species = species                        # e.g. [ Species("H*",1), Species("H*",1) ]
         self.sites = len([ sp for sp in species if sp.is_adsorbed() ])
@@ -57,16 +60,18 @@ class Cluster:
             self.__mass += item.mass()
 
 
-    def __len__( self ) -> int:
+    def __len__(self):
         """
         Returns the number of species inside the cluster
         """
         return len(self.species)
 
 
-    def __eq__( self, other ):
+    def __eq__(self, other):
         """
         Returns True if both objects have the same label. Otherwise returns False
+
+        *   ``other`` --
         """
         if( self.__label == other.__label ):
             return True
@@ -81,7 +86,7 @@ class Cluster:
         return hash(self.__label)
 
 
-    def __updateLabel( self ):
+    def __updateLabel(self):
         """
         Updates the attribute 'label'
         """
@@ -112,7 +117,7 @@ class Cluster:
                     self.__label += ","
 
 
-    def label( self ) -> str:
+    def label(self):
         """
         Returns the label of the cluster
         """
@@ -122,7 +127,7 @@ class Cluster:
         return self.__label
 
 
-    def __str__( self ) -> str:
+    def __str__(self):
         """
         Translates the object to a string
         """
@@ -174,14 +179,14 @@ class Cluster:
         return output
 
 
-    def mass( self ) -> float:
+    def mass(self):
         """
         Returns the mass of the cluster in Da
         """
         return self.__mass
 
 
-    def gas_species(self) -> SpeciesList:
+    def gas_species(self):
         """Returns the gas species."""
         species = []
 
@@ -194,7 +199,7 @@ class Cluster:
         return species
 
 
-    def surface_species(self) -> SpeciesList:
+    def surface_species(self):
         """Returns the surface species."""
         species = []
 
@@ -207,7 +212,7 @@ class Cluster:
         return species
 
 
-    def site_types_set( self ):
+    def site_types_set(self):
         """
         Returns the set of the sites types
         """

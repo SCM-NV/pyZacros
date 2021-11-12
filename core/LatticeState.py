@@ -10,6 +10,11 @@ __all__ = ['LatticeState']
 class LatticeState:
     """
     LatticeState class that represents a state for a Zacros simulation.
+
+    *   ``lattice`` --
+    *   ``surface_species`` --
+    *   ``initial`` --
+    *   ``add_info`` --
     """
 
     def __init__(self, lattice, surface_species, initial=True, add_info=None):
@@ -40,7 +45,7 @@ class LatticeState:
         self.__speciesNumbers = {}
 
 
-    def __str__( self ) -> str:
+    def __str__(self):
         """
         Translates the object to a string
         """
@@ -74,14 +79,21 @@ class LatticeState:
         return output
 
 
-    def empty( self ):
+    def empty(self):
         """
         Returns true if the state is empty
         """
         return ( len(self.__adsorbed_on_site) == self.__adsorbed_on_site.count(None) )
 
 
-    def __updateSpeciesNumbers( self ):
+    def number_of_filled_sites(self):
+        """
+        Returns number of filled sites on the lattice
+        """
+        return len(self.__adsorbed_on_site)
+
+
+    def __updateSpeciesNumbers(self):
         self.__speciesNumbers = {}
         for sp in self.__adsorbed_on_site:
             if( sp is None ): continue
@@ -92,9 +104,12 @@ class LatticeState:
                 self.__speciesNumbers[sp.symbol] += 1
 
 
-    def fill_site( self, site_number, species ):
+    def fill_site(self, site_number, species):
         """
-        Fill the site_number state with the species species
+        Fills the ``site_number`` site with the species ``species``
+
+        *   ``site_number`` --
+        *   ``species`` --
         """
         lSpecies = None
         if( isinstance(species, str) ):
@@ -160,9 +175,14 @@ class LatticeState:
         self.__updateSpeciesNumbers()
 
 
-    def fill_sites_random( self, site_name, species, coverage ):
+    def fill_sites_random(self, site_name, species, coverage):
         """
-        Fill the sites
+        Fills the named sites ``site_name`` randomly with the species ``species`` by keeping a
+        coverage given by ``coverage``. Coverage is defined relative to the available empty sites.
+
+        *   ``site_name`` --
+        *   ``species`` --
+        *   ``coverage`` --
         """
         lSpecies = None
         if( isinstance(species, str) ):
@@ -280,7 +300,10 @@ class LatticeState:
 
     def fill_all_sites( self, site_name, species ):
         """
-        Fill all the sites
+        Fills all available named sites ``site_name`` with the species ``species``.
+
+        *   ``site_name`` --
+        *   ``species`` --
         """
         self.fill_sites_random( site_name, species, coverage=1.0 )
 
@@ -288,6 +311,13 @@ class LatticeState:
     def plot(self, pause=-1, show=True, ax=None, close=False, show_sites_ids=False, file_name=None):
         """
         Uses matplotlib to visualize the lattice state
+
+        *   ``pause`` --
+        *   ``show`` --
+        *   ``ax`` --
+        *   ``close`` --
+        *   ``show_sites_ids`` --
+        *   ``file_name`` --
         """
         try:
             import matplotlib.pyplot as plt

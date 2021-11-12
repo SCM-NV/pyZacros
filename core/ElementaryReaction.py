@@ -4,6 +4,18 @@ from .SpeciesList import SpeciesList
 __all__ = ['ElementaryReaction']
 
 class ElementaryReaction:
+    """
+    Creates a new ElementaryReaction object
+
+    *   ``site_types`` --
+    *   ``neighboring`` --
+    *   ``initial`` -- SpeciesList. Gas species have to be at the end of the list
+    *   ``final`` -- SpeciesList. Gas species have to be at the end of the list
+    *   ``reversible`` --
+    *   ``pre_expon`` --
+    *   ``pe_ratio`` --
+    *   ``activation_energy`` --
+    """
 
     def __init__(self,
                  initial,
@@ -17,18 +29,6 @@ class ElementaryReaction:
                  pe_ratio = 0.0,
                  activation_energy = 0.0,
                  label = None):
-        """
-        Creates a new ElementaryReaction object
-
-        :parm site_types: list
-        :parm neighboring: list
-        :parm initial: SpeciesList. Gas species have to be at the end of the list
-        :parm final: SpeciesList. Gas species have to be at the end of the list
-        :parm reversible: bool
-        :parm pre_expon: float
-        :parm pe_ratio: float
-        :parm activation_energy: float
-        """
 
         if( ( type(initial) != SpeciesList and type(initial) != list )
             or ( type(final) != SpeciesList and type(final) != list ) ):
@@ -98,9 +98,11 @@ class ElementaryReaction:
         self.__updateLabel()
 
 
-    def __eq__( self, other ):
+    def __eq__(self, other):
         """
         Returns True if both objects have the same label. Otherwise returns False
+
+        *   ``other`` --
         """
         if( self.__label == other.__label ):
             return True
@@ -130,7 +132,7 @@ class ElementaryReaction:
         return label
 
 
-    def __updateLabel( self ):
+    def __updateLabel(self):
         """
         Updates the attribute 'label'
         """
@@ -170,7 +172,7 @@ class ElementaryReaction:
                     self.__label += ","
 
 
-    def label( self ) -> str:
+    def label(self):
         """
         Returns the label of the cluster
         """
@@ -180,7 +182,7 @@ class ElementaryReaction:
         return self.__label
 
 
-    def __str__( self ) -> str:
+    def __str__(self):
         """
         Translates the object to a string
         """
@@ -279,7 +281,7 @@ class ElementaryReaction:
         return output
 
 
-    def site_types_set( self ):
+    def site_types_set(self):
         """
         Returns the set of the sites types
         """

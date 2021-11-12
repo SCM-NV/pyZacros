@@ -6,24 +6,15 @@ from .Species import *
 __all__ = ['SpeciesList']
 
 class SpeciesList(UserList):
+    """
+    Creates a new SpeciesList object
+
+    *   ``data`` --
+    """
 
     def __init__( self, data=[] ):
         super(SpeciesList, self).__init__( data )
         self.__label = None
-        self.__updateLabel()
-
-
-    def remove_duplicates(self):
-        """
-        Remove duplicates
-        """
-        copy_self = copy.deepcopy(self.data)
-
-        self.data = []
-        for sp in copy_self:
-            if( sp not in self.data ):
-                self.data.append( sp )
-
         self.__updateLabel()
 
 
@@ -34,7 +25,7 @@ class SpeciesList(UserList):
         return hash(self.__label)
 
 
-    def __str__( self ) -> str:
+    def __str__( self ):
         """
         Translates the object to a string
         """
@@ -95,7 +86,7 @@ class SpeciesList(UserList):
         return output
 
 
-    def gas_species(self) -> list:
+    def gas_species(self):
         """Returns the gas species."""
         output = []
 
@@ -106,7 +97,7 @@ class SpeciesList(UserList):
         return SpeciesList( output )
 
 
-    def surface_species(self) -> list:
+    def surface_species(self):
         """Returns the adsorbed species."""
         output = []
 
@@ -117,9 +108,11 @@ class SpeciesList(UserList):
         return SpeciesList( output )
 
 
-    def mass( self, entity_numbers ) -> float:
+    def mass( self, entity_numbers ):
         """
         Returns the total mass as the sum of the all species based on the most common isotope in Da
+
+        *   ``entity_numbers`` --
         """
         mass = 0.0
         mapped_entity = {}
@@ -145,7 +138,7 @@ class SpeciesList(UserList):
                 self.__label += ","
 
 
-    def label( self ) -> str:
+    def label( self ):
         """
         Returns the label of the cluster
         """
@@ -155,10 +148,27 @@ class SpeciesList(UserList):
         return self.__label
 
 
+    def remove_duplicates(self):
+        """
+        Remove duplicates
+        """
+        copy_self = copy.deepcopy(self.data)
+
+        self.data = []
+        for sp in copy_self:
+            if( sp not in self.data ):
+                self.data.append( sp )
+
+        self.__updateLabel()
+
+
     @staticmethod
     def default_entity_numbers( nsites, species ):
         """
         Calculates the entity numbers assuming that ...
+
+        *   ``nsites`` --
+        *   ``species`` --
         """
         entity_number = nsites*[ None ]
 

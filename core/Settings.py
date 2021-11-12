@@ -7,8 +7,13 @@ import scm.plams
 __all__ = ['Settings']
 
 class Settings( scm.plams.Settings ):
+    """
+    Creates a new Settings object
+    """
+
     def __init__(self, *args, **kwargs):
         dict.__init__(self, *args, **kwargs)
+
 
     def __str__( self ):
         """
