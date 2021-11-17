@@ -46,11 +46,11 @@ Simple example
 --------------
 
 Here we show a simple pyZacros script that reproduces the Zacros tutorial
-`Ziff-Gulari-Barshad (ZGB) Model in Zacros <https://zacros.org/tutorials/4-tutorial-1-ziff-gulari-barshad-model-in-zacros>`_. 
+`Ziff-Gulari-Barshad (ZGB) Model in Zacros <https://zacros.org/tutorials/4-tutorial-1-ziff-gulari-barshad-model-in-zacros>`_.
 
 The ZGB model includes (see the script below):
 
-1. Three gas species: CO, O2, and CO2. (Lines 5-7)
+1. Three gas species: CO, O\ :sub:`2`, and CO\ :sub:`2`. (Lines 5-7)
 2. Three surface species: \*, CO\*, O\*. (Lines 10-12)
 3. A rectangular lattice with a single site type. (Lines 15-16)
 4. Two clusters are included in the cluster-expansion Hamiltonian approach for the energetics. The CO* and O* individual
@@ -63,38 +63,38 @@ The ZGB model includes (see the script below):
 
    import scm.plams
    import scm.pyzacros as pz
-   
+
    # Gas species:
    CO_g = pz.Species("CO")
    O2_g = pz.Species("O2")
    CO2_g = pz.Species("CO2", gas_energy=-2.337)
-   
+
    # Surface species:
    s0 = pz.Species("*", 1)      # Empty adsorption site
    CO_s = pz.Species("CO*", 1)
    O_s = pz.Species("O*", 1)
-   
+
    # Lattice setup:
    lattice = pz.Lattice( lattice_type=pz.Lattice.RECTANGULAR,
                          lattice_constant=1.0, repeat_cell=[10,10] )
    lattice.plot()
-   
+
    # Clusters:
    CO_p = pz.Cluster( species=[CO_s], cluster_energy=-1.3 )
    O_p = pz.Cluster( species=[O_s], cluster_energy=-2.3 )
-   
+
    # Elementary Reactions
    CO_ads = pz.ElementaryReaction( initial=[s0, CO_g], final=[CO_s],
                                    reversible=False, pre_expon=10.0, activation_energy=0.0 )
-   
+
    O2_ads = pz.ElementaryReaction( initial=[s0, s0, O2_g], final=[O_s, O_s], neighboring=[(0, 1)],
                                    reversible=False, pre_expon=2.5, activation_energy=0.0 )
-   
+
    CO_oxi = pz.ElementaryReaction( initial=[CO_s, O_s], final=[s0, s0, CO2_g], neighboring=[(0, 1)],
                                    reversible=False, pre_expon=1.0e+20, activation_energy=0.0)
-   
+
    scm.plams.init()
-   
+
    # Settings:
    sett = pz.Settings()
    sett.temperature = 500.0
@@ -103,20 +103,20 @@ The ZGB model includes (see the script below):
    sett.process_statistics = ('time', 1.e-2)
    sett.species_numbers = ('time', 1.e-2)
    sett.max_time = 25.0
-   
+
    sett.molar_fraction.CO = 0.45
    sett.molar_fraction.O2 = 0.55
-   
+
    myJob = pz.ZacrosJob( settings=sett, lattice=lattice,
                          mechanism=[CO_ads, O2_ads, CO_oxi],
                          cluster_expansion=[CO_p, O_p] )
-   
+
    results = myJob.run()
-   
+
    print( "nCO2 = ", results.provided_quantities()["CO2"][-10:] )
    results.plot_molecule_numbers( results.gas_species_names() )
    results.plot_molecule_numbers( results.surface_species_names() )
-   
+
    scm.plams.finish()
 
 
@@ -136,15 +136,15 @@ Then, you should see the plot of the number of molecules of each kind as a funct
 
 .. image:: ../images/ZGB-mol_gas_nums.png
    :scale: 55 %
-   
+
 .. image:: ../images/ZGB-mol_surf_nums.png
    :scale: 55 %
-   
+
 During the execution the following information is written to the standard output:
 
 .. code-block:: none
    :linenos:
-   
+
    [02.11|12:07:12] PLAMS working folder: /home/user/plams_workdir
    [02.11|12:07:12] JOB plamsjob STARTED
    [02.11|12:07:12] JOB plamsjob RUNNING
@@ -152,6 +152,6 @@ During the execution the following information is written to the standard output
    [02.11|12:07:12] JOB plamsjob SUCCESSFUL
    nCO2 = [2825, 2827, 2828, 2829, 2829, 2830, 2830, 2832, 2832, 2834]
    [02.11|12:07:40] PLAMS run finished. Goodbye
-   
+
 It indicates that pyZacros created a uniquely named working folder (``plams_workdir``) and then ran the Zacros calculation in a separate
 subfolder of the working folder (``plamsjob``). All the files created by each Zacros run are saved in the corresponding subfolder for future reference. However, notice that you can access the results directly from the python script. To illustrate this, see line 54 of the script that produces line 6 in the standard output, which prints the number of CO2 molecules produced in the last ten-time steps of the simulation.

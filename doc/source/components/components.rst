@@ -35,12 +35,27 @@ Thus, every system in Zacros needs at least the definition of a set of clusters 
 (`Lattice <lattice.html>`_), and possibly an initial state configuration
 (`LatticeState <latticestate.html>`_).
 
+.. _use_case_model_zgb:
+
+In the following sections, you can find the API specifications of each particular component, an explanation of its
+role in the whole environment, and one example of usage. In particular, we will explain the different components
+using as a use case the following example, which is known as the
+`Ziff-Gulari-Barshad (ZGB) Model <https://zacros.org/tutorials/4-tutorial-1-ziff-gulari-barshad-model-in-zacros>`_:
+
 .. image:: ../../images/reaction_example.png
    :scale: 60 %
    :align: center
 
-In the following sections, you can find the API specifications of a particular component, an explanation of its role
-in the whole environment, and examples of usage:
+The ZGB model includes:
+
+* Three gas species (CO, O\ :sub:`2`, and CO\ :sub:`2`), and three surface species (\*, CO\*, O\*).
+* A lattice with a single site type.
+* Two clusters: The CO* and O* individual adsorbates.
+* Three irreversible events:
+
+  1) Non-dissociative adsorption of CO
+  2) Dissociative adsorption of O\ :sub:`2`
+  3) Fast reaction between an O adatom and a CO adsorbate to produce CO\ :sub:`2`
 
 .. toctree::
     :maxdepth: 1

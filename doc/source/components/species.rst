@@ -1,12 +1,12 @@
 Species / Species List
 ----------------------
 
-For an explanation purpose let us assume that ``/home/user/xyz`` contains three files: ``ammonia.xyz``, ``ethanol.xyz``, ``water.xyz``.
-When you run this script the standard output will look something like:
+For our example (see :ref:`link title <use_case_model_zgb>`), we need to create
+three gas species (CO, O\ :sub:`2`, and CO\ :sub:`2`), and three surface species (\*, CO\*, O\*).
 
 .. code-block:: python
   :linenos:
-  
+
   # Gas species
   CO_g = pz.Species("CO")
   O2_g = pz.Species("O2")
@@ -15,12 +15,10 @@ When you run this script the standard output will look something like:
   # Surface species
   s0 = pz.Species("*")   # Empty adsorption site
   CO_s = pz.Species("CO*")
-  O_s = pz.Species("O*")
+  O_s = pz.Species("O*", denticity=1)
 
   spl = pz.SpeciesList([CO_g,O2_g,CO2_g,s0,CO_s])
   spl.append( O_s )
-
-  print(spl)
 
   print(spl)
 
