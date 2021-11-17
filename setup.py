@@ -12,7 +12,7 @@ version = {}
 with open(os.path.join(here, '__version__.py')) as f:
     exec(f.read(), version)
 
-with open('README.rst') as readme_file:
+with open('README.md') as readme_file:
     readme = readme_file.read()
 
 def package_files( directory ):
