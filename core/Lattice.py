@@ -272,9 +272,9 @@ class Lattice:
         self.nearest_neighbors = nsites*[None]
 
         def getcellnumber(i, j):
-            iwrap = i%repeat_cell[0]
-            jwrap = j%repeat_cell[1]
-            return iwrap*repeat_cell[1] + jwrap
+            if( i < 0 or j < 0 or i >= repeat_cell[0] or j >= repeat_cell[1] ):
+                return None 
+            return i*repeat_cell[1] + j
 
         v1 = cell_vectors[0]
         v2 = cell_vectors[1]
@@ -303,12 +303,23 @@ class Lattice:
 
                         if( id_1 == k ):
                             id_cell_2 = getcellnumber(i+lDisp[0],j+lDisp[1])
-                            id_2_shifted = ncellsites*id_cell_2 + id_2
+                            if( id_cell_2 is not None ):
+                                id_2_shifted = ncellsites*id_cell_2 + id_2
 
-                            if( self.nearest_neighbors[id_site] is None ):
-                                self.nearest_neighbors[id_site] = set()
+                                if( self.nearest_neighbors[id_site] is None ):
+                                    self.nearest_neighbors[id_site] = set()
 
-                            self.nearest_neighbors[id_site].add( id_2_shifted )
+                                self.nearest_neighbors[id_site].add( id_2_shifted )
+                        if( id_2 == k ):
+                            id_cell_1 = getcellnumber(i-lDisp[0],j-lDisp[1])
+                            if( id_cell_1 is not None ):
+                                id_1_shifted = ncellsites*id_cell_1 + id_1
+
+                                if ( self.nearest_neighbors[id_site] is None ):
+                                    self.nearest_neighbors[id_site] = set()
+
+                                self.nearest_neighbors[id_site].add( id_1_shifted )
+
 
 
     def __fromExplicitlyDefined(self, site_types, site_coordinates, nearest_neighbors, cell_vectors=None):
