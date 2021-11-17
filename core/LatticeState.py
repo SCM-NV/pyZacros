@@ -199,22 +199,41 @@ class LatticeState:
             msg += "             Inconsistent amount of site_name with species denticity\n"
             raise NameError(msg)
 
+        neighboring_order = []
         if ( lSpecies.denticity > 1 ):
             if ( neighboring == None ):
-                neighboring = [[x,x+1] for x in range(lSpecies.denticity)]
-            neighboring = [[min(x),max(x)] for x in neighboring]
-
+                neighboring = [[x-1,x] for x in range(1,lSpecies.denticity)]
+                neighboring_order = range(lSpecies.denticity)
+            else:
+                connected = [0]
+                to_check = [0]
+                # We need to check if the sites are neighboring, and generate an ordering to generate the subgraphs from the site_names
+                # E.g. when denticity == 3 and neighboring=[[0,2],[1,2]], it should generate as site_name[0], site_name[2], site_name[1]
+                while ( to_check and len(connected) < lSpecies.denticity ):
+                    new_check = []
+                    for site in to_check:
+                        neighbor_pairs = list(filter(lambda x: site in x,neighboring))
+                        neighbors = [x[0] if x[1] == site else x[1] for x in neighbor_pairs] 
+                        new_check.extend(list(filter(lambda x: x not in connected and x not in to_check,neighbors)))
+                    to_check = list(set(new_check))
+                    connected.extend(to_check)
+                if( len(connected) != lSpecies.denticity ):
+                    msg = "### ERROR ### LatticeState.fill_sites_random.\n"
+                    msg += "             neighboring sites not connected.\n"
+                    raise NameError(msg)
+                neighboring_order = connected
+                neighboring = [[x[0],x[1]] if connected.index(x[0]) < connected.index(x[1]) else [x[1],x[0]] for x in neighboring]
+                
         total_available_conf = []
 
-        # Find all empty sites with the first site_name
         empty_sites = list(filter(lambda x: self.__adsorbed_on_site[x] is None and self.lattice.site_types[x] == site_name[0],range(self.lattice.number_of_sites()))) 
         for site_number_i in empty_sites:
             available_conf = [[site_number_i]]
-            for identicity in range(1,lSpecies.denticity):
+            for identicity in neighboring_order[1:]:
                 new_conf = []
                 neighbors = list(filter(lambda x: x[1] == identicity, neighboring))
                 for conf in available_conf:
-                    nearest_neighbors = [self.lattice.nearest_neighbors[conf[x[0]]] for x in neighbors]
+                    nearest_neighbors = [self.lattice.nearest_neighbors[conf[neighboring_order.index(x[0])]] for x in neighbors]
                     if (not nearest_neighbors):
                         continue
                     nearest_neighbors = set.intersection(*map(set,nearest_neighbors))
@@ -243,7 +262,6 @@ class LatticeState:
                 filled_sites[ site ] = True
             available_conf.append( conf )
 
-        #print("available conf: " + str(available_conf))
         fvalues = list(filter(lambda x: x is not None,self.__entity_number))
         entity_number = max(fvalues)+1 if len(fvalues)>0 else 0
         for conf in available_conf:
@@ -254,9 +272,7 @@ class LatticeState:
 
         self.__updateSpeciesNumbers()
 
-        #print(self.__speciesNumbers)
         if (lSpecies.symbol not in self.__speciesNumbers):
-            print("Warning!")
             return 0.0
         actual_coverage = self.__speciesNumbers[lSpecies.symbol]/len(target_sites)
         return actual_coverage
