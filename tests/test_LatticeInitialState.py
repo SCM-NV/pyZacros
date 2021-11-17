@@ -47,18 +47,19 @@ initial_state
   # species * H* H2**
   # species_numbers
   #   - H2**  8
-  #   - H*  8
+  #   - H*  9
   seed_on_sites H2** 1 2
   seed_on_sites H* 3
-  seed_on_sites H* 4
+  seed_on_sites H2** 4 9
   seed_on_sites H* 5
   seed_on_sites H* 6
-  seed_on_sites H2** 8 14
-  seed_on_sites H2** 9 13
+  seed_on_sites H2** 8 13
   seed_on_sites H* 10
   seed_on_sites H* 11
-  seed_on_sites H2** 12 16
+  seed_on_sites H* 12
+  seed_on_sites H* 14
   seed_on_sites H* 15
+  seed_on_sites H2** 16 17
   seed_on_sites H* 18
 end_initial_state\
 """

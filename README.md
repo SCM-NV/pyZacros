@@ -1,3 +1,5 @@
+![Python application](https://github.com/SCM-NV/pyZacros/workflows/Build/badge.svg?branch=master)
+
 What is pyZacros
 ----------------
 
