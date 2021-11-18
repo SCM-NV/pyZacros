@@ -61,9 +61,9 @@ The ZGB model includes:
     :maxdepth: 1
 
     species
+    lattice
     cluster
     mechanism
-    lattice
     latticestate
     settings
     zacrosjob

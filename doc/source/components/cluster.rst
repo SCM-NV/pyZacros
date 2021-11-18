@@ -1,8 +1,15 @@
 Cluster / Cluster Expansion
 ---------------------------
 
-For an explanation purpose let us assume that ``/home/user/xyz`` contains three files: ``ammonia.xyz``, ``ethanol.xyz``, ``water.xyz``.
-When you run this script the standard output will look something like:
+In a Zacros simulation, clusters  (also
+referred to as patterns) are used as the base of a cluster expansion Hamiltonian for
+calculating the energy of a given lattice configuration. The energy is calculated based
+on the number of times that each cluster/pattern is found on the catalytic surface during
+the simulation. A cluster consists of a collection of binding sites, their connectivity,
+the surface species bonded to those sites, and the energetic contribution thereof.
+
+For our example (see :ref:`use case system <use_case_model_zgb>`), the following lines create the
+two needed clusters; the CO* and O* individual adsorbates:
 
 .. code-block:: python
   :linenos:
@@ -10,14 +17,40 @@ When you run this script the standard output will look something like:
    # Clusters
    CO_p = pz.Cluster( species=[CO_s], cluster_energy=-1.3 )
    O_p = pz.Cluster( species=[O_s], cluster_energy=-2.3 )
+   print(CO_p)
 
+which produce the following output:
+
+.. code-block:: python
+
+   cluster CO*_0-0
+     sites 1
+     lattice_state
+       1 CO* 1
+     site_types 1
+     graph_multiplicity 1
+     cluster_eng -1.30000e+00
+   end_cluster
+
+Please consult Zacros' user guide for more details about the specific meaning of the keywords used in the previous lines.
+
+Notice that the function ``print()`` in line 4 shows the cluster ``CO_p`` as it is going to be used in the Zacros input files.
+
+    .. note::
+
+        pyZacros lists are always numbered from 0 to be consistent with the Python language. However, notice that Zacros input files require all elements should be numbered from 1; pyZacros takes care internally of this transformation.
+
+The ``ClusterExpansion`` object is formally a list of clusters and as such inherits all properties of Python lists.
+The following lines illustrate an example:
+
+.. code-block:: python
+  :linenos:
+
+   # Cluster Expansion
    ce = pz.ClusterExpansion([CO_p, O_p])
-
    print(ce)
 
-
-For an explanation purpose let us assume that ``/home/user/xyz`` contains three files: ``ammonia.xyz``, ``ethanol.xyz``, ``water.xyz``.
-When you run this script the standard output will look something like:
+which produce the following output:
 
 .. code-block:: none
 
