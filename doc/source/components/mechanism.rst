@@ -1,8 +1,19 @@
 Elementary Reaction / Mechanism
 -------------------------------
 
-For an explanation purpose let us assume that ``/home/user/xyz`` contains three files: ``ammonia.xyz``, ``ethanol.xyz``, ``water.xyz``.
-When you run this script the standard output will look something like:
+``ElementaryReaction`` class allows to define reversible and/or irreversible elementary steps for adsorption
+of molecules on surface sites, desorption from there, diffusion from one site to a neighboring site, or reactions
+between adsorbed particles and gas species. ``ElementaryReaction`` class has a one-to-one relation with the
+sections ``steps`` and ``reversible_step`` in Zacros' input files.
+
+For our example (see :ref:`use case system <use_case_model_zgb>`), we need to create
+three irreversible events:
+
+  1. Non-dissociative adsorption of CO: CO(g) + * 🠒 CO*
+  2. Dissociative adsorption of O\ :sub:`2`
+  3. Fast reaction between an O adatom and a CO adsorbate to produce CO\ :sub:`2`
+
+This can be achieved by using the lines 1-10 of following code:
 
 .. code-block:: python
   :linenos:
