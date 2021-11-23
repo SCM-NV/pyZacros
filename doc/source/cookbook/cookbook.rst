@@ -1,3 +1,7 @@
+.. |br| raw:: html
+
+      <br>
+
 Examples
 ========
 
@@ -10,22 +14,31 @@ In order to run the examples, the ``AMSBIN`` environment variable should be prop
 Simple examples
 ---------------
 
-.. toctree::
- 
-   He2DissociationCurve
-   WaterOptimization
-   ManyJobsInParallel
-   BasisSetBenchmark
-   ExcitationsWorkflow
-   ChargeTransferIntegralsADF
-   LoadingOldJobs
+.. |example1| image:: ../../images/example_O+Pt111.png
+   :scale: 35 %
+
+.. |example2| image:: ../../images/example_CO-tutorial.png
+   :scale: 35 %
+
+.. |example3| image:: ../../images/example_ZGB.gif
+   :scale: 35 %
+
+.. csv-table::
+   :header: |example1|, |example2|, |example3|
+
+   "O+Pt(111)", "CO tutorial", "Ziff Gulari Barshad"
 
 Advanced examples
 -----------------
 
-.. toctree::
+.. |example4| image:: ../../images/example_ZGB-TOF.png
+   :scale: 35 %
 
-    gammascan
+.. |example5| image:: ../../images/example_ZGB-TOF-SS.png
+   :scale: 35 %
 
-.. _recipes:
+.. csv-table::
+   :header: |example4|, |example5|
+
+   "Ziff Gulari Barshad |br| + turnover frequency (TOF)", "Ziff Gulari Barshad |br| + TOF + SS"
 

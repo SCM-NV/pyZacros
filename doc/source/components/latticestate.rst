@@ -1,8 +1,20 @@
 LatticeState
 ------------
 
-For an explanation purpose let us assume that ``/home/user/xyz`` contains three files: ``ammonia.xyz``, ``ethanol.xyz``, ``water.xyz``.
-When you run this script the standard output will look something like:
+A significant result from a KMC simulation is how the different sites in the lattice are populated as a function of time.
+During a Zacros simulation, Zacros takes snapshots of the lattice state and writes them in the file ``history_output.txt``.
+Parallelly pyZacros stores each snapshot as a ``LatticeState`` object (see ZacrosResults) for further analysis and/or use
+on the python side. Another important application of LatticeState objects is that they can be used as initial states, either
+as objects from a previous simulation or built from scratch.
+
+For our example (see :ref:`use case system <use_case_model_zgb>`), we will use the ``LatticeState`` class to build a
+lattice state from scratch, and use it as the initial state.
+
+.. note::
+
+    pyZacros (as Zacros does), by default, will start with an empty lattice if not stated otherwise.
+
+We are going to make the initial state as a randomly populated lattice by ``CO*`` and ``O*`` with a given coverage:
 
 .. code-block:: python
   :linenos:
@@ -16,8 +28,8 @@ When you run this script the standard output will look something like:
 
    ist.plot()
 
-For an explanation purpose let us assume that ``/home/user/xyz`` contains three files: ``ammonia.xyz``, ``ethanol.xyz``, ``water.xyz``.
-When you run this script the standard output will look something like:
+Similarly to the other classes, the function ``print()`` (see line 6) allows taking a look at the Zacros code that
+will be internally generated, which for this example is the following:
 
 .. code-block:: none
 
@@ -51,9 +63,17 @@ When you run this script the standard output will look something like:
         seed_on_sites CO* 115
       end_initial_state
 
+Please consult Zacros' user guide for more details about the specific meaning of the keywords used in the previous lines.
+
+Finally, to visualize the lattice you can make use of the function ``plot()`` (see line 8). The result is as follows:
+
 .. image:: ../../images/lattice_initial_state.png
    :scale: 100 %
    :align: center
+
+.. note::
+
+    To visualize the previous figure, be sure you have `matplotlib <https://matplotlib.org/>`_ installed.
 
 API
 ~~~
