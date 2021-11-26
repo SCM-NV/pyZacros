@@ -16,29 +16,34 @@ Simple examples
 
 .. |example1| image:: ../../images/example_O+Pt111.png
    :scale: 35 %
+   :target: o_pt111.html
 
 .. |example2| image:: ../../images/example_CO-tutorial.png
    :scale: 35 %
+   :target: co_tutorial.html
 
 .. |example3| image:: ../../images/example_ZGB.gif
    :scale: 35 %
+   :target: zgb.html
 
 .. csv-table::
    :header: |example1|, |example2|, |example3|
 
-   "O+Pt(111)", "CO tutorial", "Ziff Gulari Barshad"
+   "KMC lattice from first |br| principles. O+Pt(111)", "Water-gas shift reaction on Pt(111)", "Ziff-Gulari-Barshad (ZGB) model"
 
 Advanced examples
 -----------------
 
-.. |example4| image:: ../../images/example_ZGB-TOF.png
+.. |example4| image:: ../../images/example_ZGB-PhaseTransitions.png
    :scale: 35 %
+   :target: zgb_pts.html
 
-.. |example5| image:: ../../images/example_ZGB-TOF-SS.png
+.. |example5| image:: ../../images/example_ZGB-SteadyState.png
    :scale: 35 %
+   :target: zgb_ss.html
 
 .. csv-table::
    :header: |example4|, |example5|
 
-   "Ziff Gulari Barshad |br| + turnover frequency (TOF)", "Ziff Gulari Barshad |br| + TOF + SS"
+   "Phase Transitions in the ZGB model.", "Phase Transitions in the ZGB model. |br| Steady-State Operation."
 

@@ -4,17 +4,17 @@ https://zacros.org/tutorials/4-tutorial-1-ziff-gulari-barshad-model-in-zacros
 """
 
 import scm.plams
-import pyzacros as pz
+import scm.pyzacros as pz
 
 #---------------------------------------------
 # Species:
 #---------------------------------------------
-# - Gas-species:
+# Gas-species:
 CO_gas = pz.Species("CO")
 O2_gas = pz.Species("O2")
 CO2_gas = pz.Species("CO2", gas_energy=-2.337)
 
-# -) Surface species:
+# Surface species:
 s0 = pz.Species("*", 1)      # Empty adsorption site
 CO_ads = pz.Species("CO*", 1)
 O_ads = pz.Species("O*", 1)
@@ -29,6 +29,8 @@ lattice = pz.Lattice( lattice_type=pz.Lattice.RECTANGULAR, lattice_constant=1.0,
 #---------------------------------------------
 CO_point = pz.Cluster(species=[CO_ads], cluster_energy=-1.3)
 O_point = pz.Cluster(species=[O_ads], cluster_energy=-2.3)
+
+cluster_expansion = [CO_point, O_point]
 
 #---------------------------------------------
 # Elementary Reactions
@@ -56,6 +58,11 @@ CO_oxidation = pz.ElementaryReaction(initial=[CO_ads, O_ads],
                                      pre_expon=1.0e+20,
                                      activation_energy=0.0)
 
+mechanism = [CO_adsorption, O2_adsorption, CO_oxidation]
+
+#---------------------------------------------
+# Calculation Settings
+#---------------------------------------------
 scm.plams.init()
 
 # Settings:
@@ -68,10 +75,7 @@ sett.pressure = 1.0
 sett.snapshots = ('time', 5.e-1)
 sett.process_statistics = ('time', 1.e-2)
 sett.species_numbers = ('time', 1.e-2)
-sett.event_report = 'off'
-sett.max_steps = 'infinity'
 sett.max_time = 25.0
-sett.wall_time = 3600
 
 job = pz.ZacrosJob( settings=sett,
                     lattice=lattice,

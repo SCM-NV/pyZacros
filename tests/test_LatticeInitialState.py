@@ -47,8 +47,9 @@ def test_InitialState():
 initial_state
   # species * H* H2**
   # species_numbers
-  #   - H2**  8
+  #   - *  0
   #   - H*  9
+  #   - H2**  8
   seed_on_sites H2** 1 2
   seed_on_sites H* 3
   seed_on_sites H2** 4 9

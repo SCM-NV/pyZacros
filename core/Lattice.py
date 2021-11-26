@@ -273,7 +273,7 @@ class Lattice:
 
         def getcellnumber(i, j):
             if( i < 0 or j < 0 or i >= repeat_cell[0] or j >= repeat_cell[1] ):
-                return None 
+                return None
             return i*repeat_cell[1] + j
 
         v1 = cell_vectors[0]
@@ -443,7 +443,8 @@ class Lattice:
             yvalues = [ y for (x,y),st in zip(self.site_coordinates,self.site_types) if st==st_i ]
 
             lcolor = color if color is not None else colors[i]
-            ax.scatter(xvalues, yvalues, color=lcolor, marker=markers[i], s=100, zorder=2, label=st_i)
+            ax.scatter(xvalues, yvalues, color=lcolor, marker=markers[i],
+                       s=440/math.sqrt(len(self.site_coordinates)), zorder=2, label=st_i)
 
             if( show_sites_ids ):
                 for i,(x,y) in enumerate(self.site_coordinates):
@@ -464,7 +465,8 @@ class Lattice:
                     if( norm > np.linalg.norm(1.5*np.array(v2)) ): continue
 
                 lcolor = color if color is not None else 'k'
-                ax.plot(xvalues, yvalues, color=lcolor, linestyle='solid', linewidth=0.5, zorder=1)
+                ax.plot(xvalues, yvalues, color=lcolor, linestyle='solid',
+                        linewidth=1.5/math.sqrt(len(self.site_coordinates)), zorder=1)
 
         ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
         plt.tight_layout()

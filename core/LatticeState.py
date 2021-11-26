@@ -42,7 +42,10 @@ class LatticeState:
 
         self.__adsorbed_on_site = lattice.number_of_sites()*[ None ]
         self.__entity_number = lattice.number_of_sites()*[ None ]
+
         self.__speciesNumbers = {}
+        for sp in self.surface_species:
+            self.__speciesNumbers[sp] = 0
 
 
     def __str__(self):
@@ -59,7 +62,7 @@ class LatticeState:
         if( len(self.__speciesNumbers) > 0 ):
             output += "  # species_numbers\n"
             for sp,nsites in self.__speciesNumbers.items():
-                output += "  #   - "+sp+"  "+str(nsites)+"\n"
+                output += "  #   - "+sp.symbol+"  "+str(nsites)+"\n"
 
         processed_entity_number = {}
         for id_site,sp in enumerate(self.__adsorbed_on_site):
@@ -94,14 +97,16 @@ class LatticeState:
 
 
     def __updateSpeciesNumbers(self):
-        self.__speciesNumbers = {}
+        for sp in self.surface_species:
+            self.__speciesNumbers[sp] = 0
+
         for sp in self.__adsorbed_on_site:
             if( sp is None ): continue
 
-            if( sp.symbol not in self.__speciesNumbers ):
-                self.__speciesNumbers[sp.symbol] = 1
+            if( sp not in self.__speciesNumbers ):
+                self.__speciesNumbers[sp] = 1
             else:
-                self.__speciesNumbers[sp.symbol] += 1
+                self.__speciesNumbers[sp] += 1
 
 
     def fill_site(self, site_number, species):
@@ -121,7 +126,7 @@ class LatticeState:
             lSpecies = species
 
         if( isinstance(site_number,int) ):
-            site_number = [site_number] 
+            site_number = [site_number]
 
         if( not ( isinstance(site_number,list) or isinstance(site_number,tuple) ) ):
             msg  = "### ERROR ### LatticeState.fill_site.\n"
@@ -157,7 +162,7 @@ class LatticeState:
 
         fvalues = list(filter(lambda x: x is not None,self.__entity_number))
         entity_number = max(fvalues)+1 if len(fvalues)>0 else 0
-            
+
         for site in site_number:
             self.__adsorbed_on_site[site] = lSpecies
             self.__entity_number[site] = entity_number
@@ -213,7 +218,7 @@ class LatticeState:
                     new_check = []
                     for site in to_check:
                         neighbor_pairs = list(filter(lambda x: site in x,neighboring))
-                        neighbors = [x[0] if x[1] == site else x[1] for x in neighbor_pairs] 
+                        neighbors = [x[0] if x[1] == site else x[1] for x in neighbor_pairs]
                         new_check.extend(list(filter(lambda x: x not in connected and x not in to_check,neighbors)))
                     to_check = list(set(new_check))
                     connected.extend(to_check)
@@ -223,10 +228,10 @@ class LatticeState:
                     raise NameError(msg)
                 neighboring_order = connected
                 neighboring = [[x[0],x[1]] if connected.index(x[0]) < connected.index(x[1]) else [x[1],x[0]] for x in neighboring]
-                
+
         total_available_conf = []
 
-        empty_sites = list(filter(lambda x: self.__adsorbed_on_site[x] is None and self.lattice.site_types[x] == site_name[0],range(self.lattice.number_of_sites()))) 
+        empty_sites = list(filter(lambda x: self.__adsorbed_on_site[x] is None and self.lattice.site_types[x] == site_name[0],range(self.lattice.number_of_sites())))
         for site_number_i in empty_sites:
             available_conf = [[site_number_i]]
             for identicity in neighboring_order[1:]:
@@ -237,15 +242,15 @@ class LatticeState:
                     if (not nearest_neighbors):
                         continue
                     nearest_neighbors = set.intersection(*map(set,nearest_neighbors))
-                    new_conf.extend([conf + [x] for x in list(filter(lambda x: 
-                                    self.__adsorbed_on_site[x] is None and 
-                                    x not in conf and 
+                    new_conf.extend([conf + [x] for x in list(filter(lambda x:
+                                    self.__adsorbed_on_site[x] is None and
+                                    x not in conf and
                                     self.lattice.site_types[x] == site_name[identicity],
                                     nearest_neighbors))])
                 available_conf = new_conf
-            total_available_conf.extend(available_conf) 
+            total_available_conf.extend(available_conf)
 
-        target_sites = set([item for sublist in total_available_conf for item in sublist]) 
+        target_sites = set([item for sublist in total_available_conf for item in sublist])
         n_sites_to_fill = round(len(target_sites)*coverage)
         random.shuffle( total_available_conf )
 
@@ -272,9 +277,9 @@ class LatticeState:
 
         self.__updateSpeciesNumbers()
 
-        if (lSpecies.symbol not in self.__speciesNumbers):
+        if (lSpecies not in self.__speciesNumbers):
             return 0.0
-        actual_coverage = self.__speciesNumbers[lSpecies.symbol]/len(target_sites)
+        actual_coverage = self.__speciesNumbers[lSpecies]/len(target_sites)
         return actual_coverage
 
 
@@ -286,6 +291,16 @@ class LatticeState:
         *   ``species`` --
         """
         self.fill_sites_random( site_name, species, coverage=1.0 )
+
+
+    def coverage_fractions(self):
+        """
+        Returns a dictionary with the coverage fractions
+        """
+        fractions = {}
+        for sp,nsites in self.__speciesNumbers.items():
+            fractions[sp.symbol] = float(nsites)/self.lattice.number_of_sites()
+        return fractions
 
 
     def plot(self, pause=-1, show=True, ax=None, close=False, show_sites_ids=False, file_name=None):
@@ -321,7 +336,7 @@ class LatticeState:
         #--------------------------------
         # Plots the lattice
         #--------------------------------
-        self.lattice.plot( show=False, ax=ax, color='0.5', show_sites_ids=show_sites_ids )
+        self.lattice.plot( show=False, ax=ax, color='0.8', show_sites_ids=show_sites_ids )
 
         #--------------------------------
         # Plots the species
@@ -348,10 +363,10 @@ class LatticeState:
                     imarkers.append( site_types.index(site_type) )
 
             if( len(xvalues)>0 ):
-                ax.scatter(xvalues, yvalues, color=colors[i], marker=markers[imarkers[i]], s=100, zorder=4, label=sym_i)
+                #ax.scatter(xvalues, yvalues, color=colors[i], marker=markers[imarkers[i]], s=100, zorder=4, label=sym_i)
                 #ax.scatter(xvalues, yvalues, color=colors[i], marker=markers[imarkers[i]], s=100/5, zorder=4, label=sym_i)
-                #ax.scatter(xvalues, yvalues, color=colors[i], marker=markers[imarkers[i]],
-                           #s=100/math.sqrt(len(self.lattice.site_coordinates)), zorder=4, label=sym_i)
+                ax.scatter(xvalues, yvalues, color=colors[i], marker=markers[imarkers[i]],
+                           s=450/math.sqrt(len(self.lattice.site_coordinates)), zorder=4, label=sym_i)
 
         #-------------------------------------------------
         # Plots the links for species with denticity > 1

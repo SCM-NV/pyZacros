@@ -9,5 +9,5 @@ Python Library for Automating Zacros Simulations
     intro
     started
     components/components
-    cookbook/cookbook
+    examples/examples
     citations
