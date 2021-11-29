@@ -121,14 +121,14 @@ def test_RKFLoader():
     expectedOutput = """\
 mechanism
 
-reversible_step O1*_0-B,*_1-A<-->*_0-B,O1*_1-A;(0,1)
+reversible_step O*_0-B,*_1-A<-->*_0-B,O*_1-A;(0,1)
   sites 2
   neighboring 2-1
   initial
     1 * 1
-    2 O1* 1
+    2 O* 1
   final
-    1 O1* 1
+    1 O* 1
     2 * 1
   site_types B A
   pre_expon 1.71991e+13
