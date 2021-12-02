@@ -255,7 +255,7 @@ class ZacrosJob( scm.plams.SingleJob ):
 
     def check(self):
         """
-        Look for the normal termination signal in output. Note, that does not mean your calculation was successful!
+        Look for the normal termination signal in the output. Note, that it does not mean your calculation was successful!
         """
         lines = self.results.grep_file(self.results._filenames['general'], pattern='> Normal termination <')
         return len(lines) > 0
@@ -273,9 +273,8 @@ class ZacrosJob( scm.plams.SingleJob ):
         s = self.settings.runscript
 
         ret = '#!/bin/bash\n'
-        if 'nproc' in s:
-            ret += '\n'
-            ret += 'export OMP_NUM_THREADS='+str(s.nproc)
+        ret += '\n'
+        ret += 'export OMP_NUM_THREADS='+str(s.get('nproc',1))
         ret += '\n'
         ret += path
 

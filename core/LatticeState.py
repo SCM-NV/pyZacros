@@ -96,7 +96,7 @@ class LatticeState:
         return len(self.__adsorbed_on_site)
 
 
-    def __updateSpeciesNumbers(self):
+    def _updateSpeciesNumbers(self):
         for sp in self.surface_species:
             self.__speciesNumbers[sp] = 0
 
@@ -109,12 +109,13 @@ class LatticeState:
                 self.__speciesNumbers[sp] += 1
 
 
-    def fill_site(self, site_number, species):
+    def fill_site(self, site_number, species, update_species_numbers=True):
         """
         Fills the ``site_number`` site with the species ``species``
 
         *   ``site_number`` --
         *   ``species`` --
+        *   ``update_species_numbers`` --
         """
         lSpecies = None
         if( isinstance(species, str) ):
@@ -139,7 +140,6 @@ class LatticeState:
             msg += "              Inconsistent values for species denticity and dimensions of site_number\n"
             msg += "              site_number should have the `denticity` number of elements\n"
             raise NameError(msg)
-
 
         if( any([self.__adsorbed_on_site[site] is not None for site in site_number]) ):
             msg  = "### ERROR ### LatticeState.fill_site.\n"
@@ -167,7 +167,8 @@ class LatticeState:
             self.__adsorbed_on_site[site] = lSpecies
             self.__entity_number[site] = entity_number
 
-        self.__updateSpeciesNumbers()
+        if( update_species_numbers ):
+            self._updateSpeciesNumbers()
 
 
     def fill_sites_random(self, site_name, species, coverage, neighboring=None):
@@ -275,7 +276,7 @@ class LatticeState:
                 self.__entity_number[site_number] = entity_number
             entity_number += 1
 
-        self.__updateSpeciesNumbers()
+        self._updateSpeciesNumbers()
 
         if (lSpecies not in self.__speciesNumbers):
             return 0.0
@@ -298,8 +299,12 @@ class LatticeState:
         Returns a dictionary with the coverage fractions
         """
         fractions = {}
+        for sp in self.surface_species:
+            fractions[sp.symbol] = 0.0
+
         for sp,nsites in self.__speciesNumbers.items():
             fractions[sp.symbol] = float(nsites)/self.lattice.number_of_sites()
+
         return fractions
 
 

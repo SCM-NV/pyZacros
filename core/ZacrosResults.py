@@ -30,6 +30,12 @@ class ZacrosResults( scm.plams.Results ):
         'out': 'std.out'}
 
 
+    def ok(self):
+        """Check if the execution of the associated :attr:`job` was successful or not.
+        See :meth:`Job.ok<scm.plams.core.basejob.Job.ok>` for more information."""
+        return self.job.ok()
+
+
     def get_zacros_version(self):
         """
         Return the zacros's version from the 'general_output.txt' file.
@@ -153,25 +159,34 @@ class ZacrosResults( scm.plams.Results ):
         """
         Return the gas species names from the 'general_output.txt' file.
         """
+        output = []
+
         lines = self.grep_file(self._filenames['general'], pattern='Gas species names:')
 
         if( len(lines) != 0 ):
-            return lines[0][ lines[0].find('Gas species names:')+len("Gas species names:"): ].split()
-        else:
-            return []
+            output = lines[0][ lines[0].find('Gas species names:')+len("Gas species names:"): ].split()
+
+        if( self.job.restart is not None ):
+            output.extend( self.job.restart.results.gas_species_names() )
+
+        return output
 
 
     def surface_species_names(self):
         """
         Return the surface species names from the 'general_output.txt' file.
         """
+        output = []
+
         lines = self.grep_file(self._filenames['general'], pattern='Surface species names:')
 
         if( len(lines) != 0 ):
             return lines[0][ lines[0].find('Surface species names:')+len("Surface species names:"): ].split()
-        else:
-            return []
 
+        if( self.job.restart is not None ):
+            output.extend( self.job.restart.results.surface_species_names() )
+
+        return output
 
     def site_type_names(self):
         """
@@ -242,46 +257,38 @@ class ZacrosResults( scm.plams.Results ):
         output = []
 
         number_of_lattice_sites = self.number_of_lattice_sites()
-        prev_number_of_snapshots = 0
-        number_of_snapshots = self.number_of_snapshots()
+        gas_species_names = self.gas_species_names()
+        surface_species_names = self.surface_species_names()
 
-        if( self.job.restart is None ):
+        total_number_of_snapshots = self.number_of_snapshots()
 
-            # In the following lines, I just check the consistency of the gas species and
-            # surface species between the general and history files.
-            lines = self.grep_file(self._filenames['history'], pattern='Gas_Species:')
-            gas_species_names = lines[0][ lines[0].find('Gas_Species:')+len("Gas_Species:"): ].split()
+        prev_total_number_of_snapshots = 0
+        number_of_snapshots_to_load = total_number_of_snapshots
 
-            assert gas_species_names == self.gas_species_names(), "Warning: Inconsistent gas species between "+ \
-                self._filenames['history']+" and "+self._filenames['general']
+        llast = number_of_snapshots_to_load
+        if( last is not None ): llast = last
 
-            lines = self.grep_file(self._filenames['history'], pattern='Surface_Species:')
-            surface_species_names = lines[0][ lines[0].find('Surface_Species:')+len("Surface_Species:"): ].split()
+        if( self.job.restart is not None ):
+            prev_total_number_of_snapshots = self.job.restart.results.number_of_snapshots()
+            number_of_snapshots_to_load = total_number_of_snapshots-prev_total_number_of_snapshots
 
-            assert surface_species_names == self.surface_species_names(), "Warning: Inconsistent surface species between "+ \
-                self._filenames['history']+" and "+self._filenames['general']
-        else:
-
-            prev_number_of_snapshots = self.job.restart.results.number_of_snapshots()
-
-            # Here, I assume as granted the consistency of the gas species and surface species
-            # between the general and history files, which was checked in the 'restart' job.
-            surface_species_names = self.job.restart.results.surface_species_names()
-
-            output = self.job.restart.results.lattice_states()
+        if( number_of_snapshots_to_load-llast < 0 ):
+            if( self.job.restart is not None ):
+                output = self.job.restart.results.lattice_states( last=abs(number_of_snapshots_to_load-llast) )
+            else:
+                raise Exception("### ERROR ### Trying to load more snapshots ("+str(llast)+") than available ("+str(total_number_of_snapshots)+")")
 
         surface_species = len(surface_species_names)*[None]
         for i,sname in enumerate(surface_species_names):
             for sp in self.job.mechanism.surface_species():
                 if( sname == sp.symbol ):
                     surface_species[i] = sp
+
+            if( surface_species[i] is None ):
+                for sp in self.job.cluster_expansion.surface_species():
+                    if( sname == sp.symbol ):
+                        surface_species[i] = sp
         surface_species = SpeciesList( surface_species )
-
-        number_of_snapshots_to_load = number_of_snapshots-prev_number_of_snapshots
-
-        llast = number_of_snapshots_to_load
-        if( last is not None ): llast= last
-        if( llast < 0 ): llast = 0
 
         for nconf in range(number_of_snapshots_to_load-llast,number_of_snapshots_to_load):
             lines = self.grep_file(self._filenames['history'], pattern='configuration', options="-A"+str(number_of_lattice_sites)+" -m"+str(nconf+1))
@@ -309,8 +316,11 @@ class ZacrosResults( scm.plams.Results ):
                     species_number = int(tokens[2])-1 # Zacros uses arrays indexed from 1
                     dentation = int(tokens[3])
 
-                    if( species_number > -1 ): # In zacros -1 means empty site (0 for Zacros)
-                        lattice_state.fill_site( site_number, surface_species[species_number] )
+                    if( species_number > -1 ): # In pyzacros -1 means empty site (0 for Zacros)
+                        lattice_state.fill_site( site_number, surface_species[species_number], update_species_numbers=False )
+
+            if( lattice_state is not None ):
+                lattice_state._updateSpeciesNumbers()
 
             output.append( lattice_state )
 
