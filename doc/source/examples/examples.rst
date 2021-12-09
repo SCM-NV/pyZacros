@@ -35,15 +35,19 @@ Advanced examples
 -----------------
 
 .. |example4| image:: ../../images/example_ZGB-PhaseTransitions.png
-   :scale: 35 %
+   :scale: 32 %
    :target: zgb_pts.html
 
-.. |example5| image:: ../../images/example_ZGB-SteadyState.png
-   :scale: 35 %
+.. |example5| image:: ../../images/example_ZGB-PhaseTransitions.png
+   :scale: 32 %
    :target: zgb_ss.html
 
-.. csv-table::
-   :header: |example4|, |example5|
+.. |example6| image:: ../../images/example_ZGB-PhaseTransitions.png
+   :scale: 32 %
+   :target: zgb_ss_pc.html
 
-   "Phase Transitions in the ZGB model.", "Phase Transitions in the ZGB model. |br| Steady-State Operation."
+.. csv-table::
+   :header: |example4|, |example5|, |example5|
+
+   "ZGB model |br| + Phase Transitions. |br| |br| |br|", "ZGB model |br| + Phase Transitions |br| + Steady-State Operation.  |br| |br|", "ZGB model |br| + Phase Transitions |br| + Steady-State Operation |br| + Parameter Continuation."
 

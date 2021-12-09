@@ -80,4 +80,4 @@ API
 
 .. currentmodule:: scm.pyzacros.core.LatticeState
 .. autoclass:: LatticeState
-   :exclude-members: __init__, __str__, __weakref__
+   :exclude-members: __init__, __str__, __weakref__, _updateSpeciesNumbers

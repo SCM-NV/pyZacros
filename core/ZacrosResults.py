@@ -3,6 +3,9 @@
 import os
 import stat
 
+import numpy
+import scipy
+import scipy.stats
 import scm.plams
 
 from .Lattice import *
@@ -290,7 +293,7 @@ class ZacrosResults( scm.plams.Results ):
                         surface_species[i] = sp
         surface_species = SpeciesList( surface_species )
 
-        for nconf in range(number_of_snapshots_to_load-llast,number_of_snapshots_to_load):
+        for nconf in range(max(0,number_of_snapshots_to_load-llast),number_of_snapshots_to_load):
             lines = self.grep_file(self._filenames['history'], pattern='configuration', options="-A"+str(number_of_lattice_sites)+" -m"+str(nconf+1))
             lines = lines[-number_of_lattice_sites-1:] # Equivalent to tail -n $number_of_lattice_sites+1
 
@@ -377,7 +380,8 @@ class ZacrosResults( scm.plams.Results ):
                         plt.close("all")
 
 
-    def plot_molecule_numbers(self, species_name, pause=-1, show=True, ax=None, close=False, file_name=None):
+    def plot_molecule_numbers(self, species_name, pause=-1, show=True, ax=None, close=False,
+                                file_name=None, normalize_per_site=False, derivative=False):
         """
         Uses matplotlib to visualize the Molecule Numbers an animation
 
@@ -402,10 +406,28 @@ class ZacrosResults( scm.plams.Results ):
         COLORS = ['r', 'g', 'b', 'm']
 
         ax.set_xlabel('t (s)')
-        ax.set_ylabel('Molecule Numbers')
+
+        if( normalize_per_site ):
+            if( derivative ):
+                ax.set_ylabel('Derivative of the Molecule Numbers per Site')
+            else:
+                ax.set_ylabel('Molecule Numbers per Site')
+        else:
+            if( derivative ):
+                ax.set_ylabel('Derivative of the Molecule Numbers')
+            else:
+                ax.set_ylabel('Molecule Numbers per Site')
 
         for i,spn in enumerate(species_name):
-            ax.step(provided_quantities["Time"], provided_quantities[spn], where='post', color=COLORS[i], label=spn)
+            if( normalize_per_site ):
+                data = numpy.array(provided_quantities[spn])/self.number_of_lattice_sites()
+            else:
+                data = numpy.array(provided_quantities[spn])
+
+            if( derivative ):
+                data = numpy.gradient(data)
+
+            ax.step( provided_quantities["Time"], data, where='post', color=COLORS[i], label=spn)
 
         ax.legend(loc='best')
 
@@ -621,42 +643,77 @@ class ZacrosResults( scm.plams.Results ):
                         plt.close("all")
 
 
-    def get_TOFs(self, npoints=None):
-        """
-        Return the TOF (mol/sec/site) calculated with the last ```npoints```
+    #--------------------------------------------------------------
+    # Function to compute the rate of production
+    # Original author: Mauro Bracconi (mauro.bracconi@polimi.it)
+    # Evaluation of the steady state is inspired by this publication:
+    #   Hashemi et al., J.Chem. Phys. 144, 074104 (2016)
+    #--------------------------------------------------------------
+    @staticmethod
+    def __compute_rate( t_vect, spec, n_sites, n_batch=20, confidence=0.99 ):
 
-        *   ``npoints`` --
+        def time_search(t,tvec):
+            ind_geq = 0
+            while tvec[ind_geq] < t:
+                ind_geq += 1
+
+            ind_leq = len( tvec ) - 1
+            while ind_leq>0 and tvec[ind_leq] > t:
+                ind_leq -= 1
+            low_frac = 1.0
+            if not (ind_geq == ind_leq):
+                low_frac = (tvec[ind_geq] - t) / (tvec[ind_geq] - tvec[ind_leq])
+            return [ (ind_leq,ind_geq), (low_frac,1-low_frac)]
+
+        t_vect = numpy.array(t_vect)
+        prod_mol = numpy.array(spec)/n_sites
+
+        n_batch = min( len(t_vect), int(len(t_vect)/n_batch) )
+        dt_batch = t_vect[-1]/n_batch
+        bin_edge = numpy.linspace(0,t_vect[-1],n_batch+1)
+
+        rate = numpy.zeros( n_batch )
+
+        for i in range(n_batch):
+            idb_s = time_search( bin_edge[i], t_vect )
+            idb_e = time_search( bin_edge[i+1], t_vect )
+
+            pp_s = idb_s[1][0] * prod_mol[idb_s[0][0]] + idb_s[1][1] * prod_mol[idb_s[0][1]]
+            pp_e = idb_e[1][0] * prod_mol[idb_e[0][0]] + idb_e[1][1] * prod_mol[idb_e[0][1]]
+            rate[i] = (pp_e-pp_s)/dt_batch
+
+        rate = rate[1:]
+        rate_av, se = numpy.mean(rate), scipy.stats.sem(rate)
+
+        rate_CI = se * scipy.stats.t._ppf((1+confidence)/2.0, n_batch - 1)
+
+        if ( rate_CI/(rate_av+1e-8)<1.0-confidence ):
+            return ( rate_av,rate_CI,rate_CI/(rate_av+1e-8), True )
+        else:
+            return ( rate_av,rate_CI,rate_CI/(rate_av+1e-8), False )
+
+
+    def get_TOFs(self, nbatch=20, confidence=0.99):
+        """
+        Returns the TOF (mol/sec/site) calculated by the batch method
+
+        *   ``nbatch`` --
+        *   ``confidence`` --
         """
         values = {}
         errors = {}
+        converged = {}
 
-        try:
-            import math
-            import scipy.optimize
-        except ImportError as e:
-            return values,errors # module doesn't exist, deal with it.
-
-        def line(x, a, b):
-            return a * x + b
-
-        gas_species_names = self.gas_species_names()
         provided_quantities = self.provided_quantities()
 
-        if( npoints is None ):
-            tVec = provided_quantities["Time"]
-        else:
-            tVec = provided_quantities["Time"][-npoints:]
+        for sn in self.gas_species_names():
 
-        for sn in gas_species_names:
+            nMolsVec = provided_quantities[sn]
 
-            if( npoints is None ):
-                nMolsVec = provided_quantities[sn]
-            else:
-                nMolsVec = provided_quantities[sn][-npoints:]
+            aver,ci,ratio,conv = ZacrosResults.__compute_rate( provided_quantities["Time"], provided_quantities[sn],
+                                                                self.number_of_lattice_sites(), nbatch, confidence )
+            values[sn] = aver
+            errors[sn] = ci
+            converged[sn] = conv
 
-            popt,pcov = scipy.optimize.curve_fit(line, tVec, nMolsVec)
-
-            values[sn] = popt[0]/self.number_of_lattice_sites()
-            errors[sn] = math.sqrt(pcov[0,0])
-
-        return values,errors
+        return values,errors,converged

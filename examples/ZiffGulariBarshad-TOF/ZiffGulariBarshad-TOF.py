@@ -6,7 +6,7 @@ import multiprocessing
 import numpy
 
 import scm.plams
-import pyzacros as pz
+import scm.pyzacros as pz
 
 #---------------------------------------------
 # Species:
@@ -137,7 +137,7 @@ z = []
 #for result in [r for r in results if r.ok()]:
 for result in results:
     xCO,xO2 = [ float(s.replace('CO_','').replace('O2_','')) for s in result.job.name.split('-') ]
-    TOFs,_ = result.get_TOFs( npoints=1000 )
+    TOFs,_,_ = result.get_TOFs()
 
     x.append( xCO )
     y.append( xO2 )

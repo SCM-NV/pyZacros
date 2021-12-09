@@ -1,7 +1,7 @@
 """Test script that will reproduce CO_tutorial inputs."""
 
 import scm.plams
-import pyzacros as pz
+import scm.pyzacros as pz
 
 #---------------------------------------------
 # Species:
@@ -177,7 +177,7 @@ mech = pz.Mechanism([CO_adsorption, H2_dissoc_adsorp, H2O_adsorption,
 #---------------------------------------------
 # Settings:
 #---------------------------------------------
-scm.plams.init()
+scm.pyzacros.init()
 
 sett = pz.Settings()
 
@@ -203,4 +203,4 @@ results = job.run()
 if( job.ok() ):
    results.plot_molecule_numbers( ["CO*", "H*", "H2O*", "COOH*"] )
 
-scm.plams.finish()
+scm.pyzacros.finish()
