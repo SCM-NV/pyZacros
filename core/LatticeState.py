@@ -42,6 +42,7 @@ class LatticeState:
 
         self.__adsorbed_on_site = lattice.number_of_sites()*[ None ]
         self.__entity_number = lattice.number_of_sites()*[ None ]
+        self.__next_entity_number = 0
 
         self.__speciesNumbers = {}
         for sp in self.surface_species:
@@ -94,6 +95,11 @@ class LatticeState:
         Returns number of filled sites on the lattice
         """
         return len(self.__adsorbed_on_site)
+
+    def _next_entity_number(self):
+        entity = self.__next_entity_number
+        self.__next_entity_number += 1
+        return entity
 
 
     def _updateSpeciesNumbers(self):
@@ -160,8 +166,7 @@ class LatticeState:
              msg += "              sites are not neighboring\n"
              raise NameError(msg)
 
-        fvalues = list(filter(lambda x: x is not None,self.__entity_number))
-        entity_number = max(fvalues)+1 if len(fvalues)>0 else 0
+        entity_number = self._next_entity_number()
 
         for site in site_number:
             self.__adsorbed_on_site[site] = lSpecies
@@ -268,13 +273,12 @@ class LatticeState:
                 filled_sites[ site ] = True
             available_conf.append( conf )
 
-        fvalues = list(filter(lambda x: x is not None,self.__entity_number))
-        entity_number = max(fvalues)+1 if len(fvalues)>0 else 0
+        entity_number = self._next_entity_number()
         for conf in available_conf:
             for site_number in conf:
                 self.__adsorbed_on_site[site_number] = lSpecies
                 self.__entity_number[site_number] = entity_number
-            entity_number += 1
+            entity_number = self._next_entity_number()
 
         self._updateSpeciesNumbers()
 

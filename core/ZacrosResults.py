@@ -461,9 +461,9 @@ class ZacrosResults( scm.plams.Results ):
             elementary_steps_names = self.job.restart.results.elementary_steps_names()
             output = self.job.restart.results.get_process_statistics()
 
+        all_lines = self.grep_file(self._filenames['procstat'], pattern='configuration', options="-A2")
         for nconf in range(number_of_process_statistics-prev_number_of_process_statistics):
-            lines = self.grep_file(self._filenames['procstat'], pattern='configuration', options="-A2 -m"+str(nconf+1))
-            lines = lines[-2-1:] # Equivalent to tail -n $number_of_lattice_sites+1
+            lines = all_lines[nconf*3:(nconf+1)*3]
 
             procstat_state = {}
             pos = 0
