@@ -8,7 +8,20 @@ __all__ = ['Settings']
 
 class Settings( scm.plams.Settings ):
     """
-    Creates a new Settings object
+    Automatic multi-level dictionary. Subclass of the PLAMS class `scm.plams.Settings <../../plams/components/settings.html>`_. This dictionary can contain any kind of information stored in key-value pairs. Be aware that no check of the rightness of the key/values is done at this level. This object is used just as a container. The verification of the physical meaning of the key-value pairs is done at the ZacrosJob class. The following is an example of use adapted to zacros:
+
+    .. code:: python
+
+        sett = pz.Settings()
+        sett.random_seed = 953129
+        sett.temperature = 500.0
+        sett.pressure = 1.0
+        sett.snapshots = ('time', 0.1)
+        sett.process_statistics = ('time', 0.1)
+        sett.species_numbers = ('time', 0.1)
+        sett.event_report = 'off'
+        sett.max_steps = 'infinity'
+        sett.max_time = 1.0
     """
 
     def __init__(self, *args, **kwargs):

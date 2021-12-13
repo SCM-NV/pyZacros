@@ -120,7 +120,6 @@ The ZGB model includes (see the script below):
    scm.plams.finish()
 
 
-
 Don't worry if something in the above code is incomprehensible or confusing.
 Everything you need to know to understand how pyZacros works and how to write your own scripts is explained
 in next chapters of this documentation.

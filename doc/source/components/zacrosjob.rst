@@ -1,8 +1,8 @@
 ZacrosJob
 ---------
 
-For an explanation purpose let us assume that ``/home/user/xyz`` contains three files: ``ammonia.xyz``, ``ethanol.xyz``, ``water.xyz``.
-When you run this script the standard output will look something like:
+The Settings class provides a general-purpose data container for various kinds of information that need to be stored and processed by the pyZacros and PLAMS environment. It is formally identical that the Settings class in PLAMS. Please, see all details here `PLAMS.Job <../../plams/components/jobs.html>`_.
+
 
 .. code-block:: python
   :linenos:
