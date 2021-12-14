@@ -1,3 +1,5 @@
+.. _index:
+
 ================================================
 Python Library for Automating Zacros Simulations
 ================================================
@@ -7,7 +9,6 @@ Python Library for Automating Zacros Simulations
     :maxdepth: 2
 
     intro
-    started
     components/components
     examples/examples
     citations

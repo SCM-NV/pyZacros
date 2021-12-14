@@ -1,3 +1,5 @@
+.. _reactions_and_mechanism:
+
 Elementary Reaction / Mechanism
 -------------------------------
 
@@ -9,9 +11,9 @@ sections ``steps`` and ``reversible_step`` in Zacros' input files.
 For our example (see :ref:`use case system <use_case_model_zgb>`), we need to create
 three irreversible events:
 
-  1. Non-dissociative adsorption of CO: ``CO(g) + * 🠒 CO*``
-  2. Dissociative adsorption of O\ :sub:`2`: ``O2(g) + * + * 🠒 O* + O*``
-  3. Fast reaction between an O adatom and a CO adsorbate to produce CO\ :sub:`2`: ``O* + CO* 🠒 * + * + CO2(g)``
+1. Non-dissociative adsorption of CO: ``CO(g) + * 🠒 CO*``
+2. Dissociative adsorption of O\ :sub:`2`: ``O2(g) + * + * 🠒 O* + O*``
+3. Fast reaction between an O adatom and a CO adsorbate to produce CO\ :sub:`2`: ``O* + CO* 🠒 * + * + CO2(g)``
 
 This can be achieved by using the lines 1-10 of following code:
 

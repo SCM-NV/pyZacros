@@ -385,8 +385,8 @@ class ZacrosJob( scm.plams.SingleJob ):
     def __recreate_simulation_input( path ):
         """
         Recreates the simulation input for the corresponding job based on file 'simulation_input.dat' present in the job folder.
-        This method is used by |load_external|.
-        Returns a |Settings| object.
+        This method is used by :func:~scm.pyzacros.ZacrosJob.load_external.
+        Returns a :func:~scm.pyzacros.Settings object.
         """
         sett = Settings()
 
@@ -453,8 +453,8 @@ class ZacrosJob( scm.plams.SingleJob ):
     def __recreate_lattice_input( path ):
         """
         Recreates the lattice input for the corresponding job based on file 'lattice_input.dat' present in the job folder.
-        This method is used by |load_external|.
-        Returns a |Lattice| object.
+        This method is used by :func:~scm.pyzacros.ZacrosJob.load_external.
+        Returns a :func:~scm.pyzacros.Lattice object.
         """
         lattice = None
 
@@ -598,8 +598,8 @@ class ZacrosJob( scm.plams.SingleJob ):
     def __recreate_energetics_input( path, gas_species, surface_species ):
         """
         Recreates the energetics input for the corresponding job based on file 'energetics_input.dat' present in the job folder.
-        This method is used by |load_external|.
-        Returns a list of |Cluster| objects.
+        This method is used by :func:~scm.pyzacros.ZacrosJob.load_external.
+        Returns a list of :func:~scm.pyzacros.Cluster objects.
         """
         cluster_expansion = []
 
@@ -713,8 +713,8 @@ class ZacrosJob( scm.plams.SingleJob ):
     def __recreate_mechanism_input( path, gas_species, surface_species ):
         """
         Recreates the mechanism input for the corresponding job based on file 'mechanism_input.dat' present in the job folder.
-        This method is used by |load_external|.
-        Returns a |Mechanism| object.
+        This method is used by :func:~scm.pyzacros.ZacrosJob.load_external.
+        Returns a :func:~scm.pyzacros.Mechanism object.
         """
         mechanism = Mechanism()
 
@@ -908,8 +908,8 @@ class ZacrosJob( scm.plams.SingleJob ):
     def __recreate_initial_state_input( lattice ):
         """
         Recreates the initial state input for the corresponding job based on file 'initial_state_input.dat' present in the job folder.
-        This method is used by |load_external|.
-        Returns a |LatticeState| object
+        This method is used by :func:~scm.pyzacros.ZacrosJob.load_external.
+        Returns a :func:~scm.pyzacros.LatticeState object
         """
         raise Exception( "Error: __recreate_initial_state_input function is not implmented yet!" )
         lattice_state = LatticeState()

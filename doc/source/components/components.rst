@@ -7,9 +7,9 @@ Components overview
 
     In this documentation, we assume you are familiarized with both projects PLAMS and Zacros. If not, first, please
     take a look at our comprehensive documentation about PLAMS on this
-    link: `https://www.scm.com/doc/plams <https://www.scm.com/doc/plams/index.html>`_,
+    link: `PLAMS Documentation <../../plams/index.html>`_,
     and the documentation about Zacros on its official web page:
-    `https://zacros.org <https://zacros.org>`_
+    `Zacros Website <https://zacros.org>`_
 
 This chapter contains a description of all components (classes) that can be used within pyZacros scripts.
 The image below shows all classes available in pyZacros.
@@ -19,13 +19,13 @@ The image below shows all classes available in pyZacros.
    :align: center
 
 The classes represented in gray boxes are extensions of PLAMS. Settings, ZacrosJob, and ZacrosResults are subclasses
-of the PLAMS classes `Settings <https://www.scm.com/doc/plams/components/settings.html>`_,
-`SingleJob <https://www.scm.com/doc/plams/components/jobs.html#scm.plams.core.basejob.SingleJob>`_,
-and `Results <https://www.scm.com/doc/plams/components/results.html>`_ respectively. Thus, these classes
+of the PLAMS classes `Settings <../../plams/components/settings.html>`_,
+`SingleJob <../../plams/components/jobs.html#scm.plams.core.basejob.SingleJob>`_,
+and `Results <../../plams/components/results.html>`_ respectively. Thus, these classes
 inherit from PLAMS the robust way of managing the inputs file preparation, job execution, file management,
-and output file processing. In a nutshell, the class `Settings <settings.html>`_ is used for establishing the parameters of the
-calculation. The `ZacrosJob <zacrosjob.html>`_ class is the primary piece of computational work, and it takes care of running jobs.
-Finally, the `ZacrosResults <zacrosresults.html>`_ class takes care of the job results after the execution is finished; it gathers
+and output file processing. In a nutshell, the class :ref:`Settings <settings>` is used for establishing the parameters of the
+calculation. The :ref:`ZacrosJob <zacrosjob>` class is the primary piece of computational work, and it takes care of running jobs.
+Finally, the :ref:`ZacrosResults <zacrosresults>` class takes care of the job results after the execution is finished; it gathers
 information about output files, helps to manage them, and extracts data of interest from them.
 
 On the other side, the rest of the classes are specifically designed to define a system in Zacros. The Zacros

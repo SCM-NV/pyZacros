@@ -1,3 +1,5 @@
+.. _cluster_and_clusterexpansion:
+
 Cluster / Cluster Expansion
 ---------------------------
 
@@ -37,9 +39,10 @@ Notice that the function ``print()`` in line 4 shows the cluster ``CO_p`` as it 
 The label ``CO*_0-0`` is automatically generated except if the user specifies it by the parameter ``label`` in the constructor.
 This label is used as a unique identifier to avoid duplicates.
 
-    .. note::
+.. note::
 
-        pyZacros lists are always numbered from 0 to be consistent with the Python language. However, notice that Zacros input files require all elements should be numbered from 1; pyZacros takes care internally of this transformation.
+   pyZacros lists are always numbered from 0 to be consistent with the Python language. However, notice that Zacros
+   input files require all elements should be numbered from 1; pyZacros takes care internally of this transformation.
 
 The ``ClusterExpansion`` object is formally a list of clusters and as such inherits all properties of Python lists.
 The following lines illustrate an example:

@@ -63,7 +63,7 @@ described along the :ref:`Components overview section<components_overview>`. Thu
 
   mechanism = [CO_adsorption, O2_adsorption, CO_oxidation]
 
-The second part corresponds to the calculations settings (see :ref:`code <_code_settings>`). It starts with the line ``scm.pyzacros.init()``, which initializes the pyZacros and PLAMS environment. Then, in lines 3 to 7, we configure the parallel execution of the calculations. These lines mean running as many zacros jobs simultaneously as many CPUs are on the system. In particular, line 6 establishes that only one processor will be used for each zacros instance. Lines 9 to 18 are fundamentally the same used in the :ref:`use case system <use_case_model_zgb>` described along the :ref:`Components overview section<components_overview>`. Thus, please refer to this section for details.
+The second part corresponds to the calculations settings (see :ref:`code <code_settings>`). It starts with the line ``scm.pyzacros.init()``, which initializes the pyZacros and PLAMS environment. Then, in lines 3 to 7, we configure the parallel execution of the calculations. These lines mean running as many zacros jobs simultaneously as many CPUs are on the system. In particular, line 6 establishes that only one processor will be used for each zacros instance. Lines 9 to 18 are fundamentally the same used in the :ref:`use case system <use_case_model_zgb>` described along the :ref:`Components overview section<components_overview>`. Thus, please refer to this section for details.
 
 .. _code_settings:
 .. code-block:: python

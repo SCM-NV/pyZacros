@@ -14,6 +14,13 @@ In order to run the examples, the ``AMSBIN`` environment variable should be prop
 Simple examples
 ---------------
 
+.. toctree::
+   :hidden:
+
+   o_pt111
+   co_tutorial
+   zgb
+
 .. |example1| image:: ../../images/example_O+Pt111.png
    :scale: 35 %
    :target: o_pt111.html
@@ -33,6 +40,13 @@ Simple examples
 
 Advanced examples
 -----------------
+
+.. toctree::
+   :hidden:
+
+   zgb_pts
+   zgb_ss
+   zgb_ss_pc
 
 .. |example4| image:: ../../images/example_ZGB-PhaseTransitions.png
    :scale: 32 %

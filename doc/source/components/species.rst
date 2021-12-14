@@ -1,3 +1,5 @@
+.. _species_and_specieslist:
+
 Species / Species List
 ----------------------
 
