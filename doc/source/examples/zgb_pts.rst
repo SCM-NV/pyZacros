@@ -89,7 +89,7 @@ The second part corresponds to the calculations settings (see :ref:`code <code_s
   sett.species_numbers = ('time', 0.01)
   sett.max_time = 10.0
 
-The next block executes the zacros calculations  (see :ref:`code <code_run>`). Lines 1-2 define the grid of partial pressures of CO to study. In this case, from 0.2 up to 0.8. Line 4 defines the results list, initially empty. From lines 5 up to 14, we have the loop that submits one zacros calculation for each value of CO partial pressure. First, we establish the composition in the settings object by selecting the partial pressure of CO and O\ :sub:`2` (``sett.molar_fraction.CO`` and ``sett.molar_fraction.O2`` respectively. Notice that we assumed that the gas phase is composed only of CO and O\ :sub:`2`. Thus, x\ :sub:`CO`+x\ :sub:`O_2`=1). Lines 9 to 12 initialize the ZacrosJob, and line 14 collects the corresponding results into the ``results`` list. ``job.run()`` will return a ``ZacrosResults`` object. The full loop will execute all jobs in groups of ``maxjobs`` jobs.
+The next block executes the zacros calculations  (see :ref:`code <code_run>`). Lines 1-2 define the grid of partial pressures of CO to study. In this case, from 0.2 up to 0.8. Line 4 defines the results list, initially empty. From lines 5 up to 14, we have the loop that submits one zacros calculation for each value of CO partial pressure. First, we establish the composition in the settings object by selecting the partial pressure of CO and O\ :sub:`2` (``sett.molar_fraction.CO`` and ``sett.molar_fraction.O2`` respectively. Notice that we assumed that the gas phase is composed only of CO and O\ :sub:`2`. Thus, x\ :sub:`CO` +x\ :sub:`O_2` =1). Lines 9 to 12 initialize the ZacrosJob, and line 14 collects the corresponding results into the ``results`` list. ``job.run()`` will return a ``ZacrosResults`` object. The full loop will execute all jobs in groups of ``maxjobs`` jobs.
 
 .. _code_run:
 .. code-block:: python
@@ -292,7 +292,7 @@ pyZacros also offers some predefined plot functions that use matplotlib as well.
   :caption: **Code: Visualizing coverage results**
   :linenos:
 
-  # Lattice states for x_CO=0.54 and CO=0.55
+  # Lattice states for x_CO=0.54 and x_CO=0.55
   results[33].last_lattice_state().plot()
   results[34].last_lattice_state().plot()
 
@@ -321,7 +321,7 @@ pyZacros also offers the function ``plot_molecule_numbers()`` to visualize the m
   :caption: **Code: Visualizing Molecule Numbers and Its First Derivative**
   :linenos:
 
-  # Molecule numbers for x_CO=0.54 and CO=0.55
+  # Molecule numbers for x_CO=0.54 and x_CO=0.55
   results[33].plot_molecule_numbers( ["CO2"], normalize_per_site=True )
   results[34].plot_molecule_numbers( ["CO2"], normalize_per_site=True )
 
@@ -347,8 +347,28 @@ pyZacros also offers the function ``plot_molecule_numbers()`` to visualize the m
 .. csv-table:: **Molecule Numbers and Its First Derivative**
    :header: |molnum1| |br| |dmolnum1|, |molnum2| |br| |dmolnum2|
 
-   "A view of the catalyst surface at |br| partial pressure of CO = 0.54", "A view of the catalyst surface at |br| partial pressure of CO = 0.55"
+   "CO\ :sub:`2` production for CO = 0.54. Steady-state", "CO\ :sub:`2` for CO = 0.55. Non-steady-state"
 
-From the figures above, it is clear that we have reached a steady-state for x\ :sub:`CO` =0.54 we have reached a steady state. Notice that the first derivative is approximately constant at 0.027 mol/s/site within a tolerance of 0.05. mol/s/site. Contrary, this is not the case of x\ :sub:`CO` =0.55, where the first derivative is continuously going down.
+From the figures above, it is clear that we have reached a steady-state for x\ :sub:`CO` =0.54. Notice that the first derivative is approximately constant at 2.7 mol/s/site within a tolerance of 5 mol/s/site. Contrary, this is not the case of x\ :sub:`CO` =0.55, where the first derivative continuously decreases.
 
 In the next example, we will modify the script presented here to reach a steady-state configuration for every composition.
+
+As a final note, you can use the following script to visualize the results without running the full calculation:
+
+.. code-block:: python
+  :caption: **Code: Visualizing the Results**
+  :linenos:
+
+  import scm.pyzacros as pz
+
+  # xCO=0.54
+  job = pz.ZacrosJob.load_external( path="plams_workdir/plamsjob.034" )
+  job.results.last_lattice_state().plot()
+  job.results.plot_molecule_numbers( ["CO2"], normalize_per_site=True )
+  job.results.plot_molecule_numbers( ["CO2"], normalize_per_site=True, derivative=True )
+
+  # xCO=0.55
+  job = pz.ZacrosJob.load_external( path="plams_workdir/plamsjob.035" )
+  job.results.last_lattice_state().plot()
+  job.results.plot_molecule_numbers( ["CO2"], normalize_per_site=True )
+  job.results.plot_molecule_numbers( ["CO2"], normalize_per_site=True, derivative=True )

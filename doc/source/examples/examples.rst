@@ -52,7 +52,7 @@ Advanced examples
    :scale: 32 %
    :target: zgb_pts.html
 
-.. |example5| image:: ../../images/example_ZGB-PhaseTransitions.png
+.. |example5| image:: ../../images/example_ZGB-PhaseTransitions-SS.png
    :scale: 32 %
    :target: zgb_ss.html
 

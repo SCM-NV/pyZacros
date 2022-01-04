@@ -917,7 +917,7 @@ class ZacrosJob( scm.plams.SingleJob ):
 
 
     @classmethod
-    def load_external(cls, path, settings=None, molecule=None, finalize=False):
+    def load_external(cls, path, settings=None, molecule=None, finalize=False, restart=None):
         """
         Load an external job from *path*.
 
@@ -956,6 +956,8 @@ class ZacrosJob( scm.plams.SingleJob ):
 
         if finalize:
             job._finalize()
+
+        job.restart = restart
 
         return job
 

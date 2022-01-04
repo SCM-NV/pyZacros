@@ -45,7 +45,12 @@ class ZacrosResults( scm.plams.Results ):
         """
         if( self.job.restart is None ):
             lines = self.grep_file(self._filenames['general'], pattern='ZACROS')
-            zversion = lines[0].split()[2]
+
+            if( len(lines) > 0 ):
+                zversion = lines[0].split()[2]
+            else:
+                lines = self.grep_file(self._filenames['restart'], pattern='Version')
+                zversion = float(lines[0].split()[1])/1e5
         else:
             lines = self.grep_file(self._filenames['restart'], pattern='Version')
             zversion = float(lines[0].split()[1])/1e5
@@ -418,16 +423,17 @@ class ZacrosResults( scm.plams.Results ):
             else:
                 ax.set_ylabel('Molecule Numbers per Site')
 
+        x = provided_quantities["Time"]
         for i,spn in enumerate(species_name):
             if( normalize_per_site ):
-                data = numpy.array(provided_quantities[spn])/self.number_of_lattice_sites()
+                y = numpy.array(provided_quantities[spn])/self.number_of_lattice_sites()
             else:
-                data = numpy.array(provided_quantities[spn])
+                y = numpy.array(provided_quantities[spn])
 
             if( derivative ):
-                data = numpy.gradient(data)
+                y = numpy.gradient(y, x)
 
-            ax.step( provided_quantities["Time"], data, where='post', color=COLORS[i], label=spn)
+            ax.step( x, y, where='post', color=COLORS[i], label=spn)
 
         ax.legend(loc='best')
 

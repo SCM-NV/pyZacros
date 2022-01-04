@@ -85,7 +85,7 @@ sett.max_time = 10.0
 #---------------------------------------------
 
 dx = 0.01
-x_CO = numpy.arange(0.2,0.8+dx,dx)
+x_CO = numpy.arange(0.2,0.8,dx)
 results = []
 
 # Loop over the conditions to run the jobs

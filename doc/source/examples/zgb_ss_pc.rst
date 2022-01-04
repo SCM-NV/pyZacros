@@ -1,2 +1,2 @@
-Phase Transitions in the ZGB model & Steady-State Operation.
+Phase Transitions in the ZGB model & Parameter Continuation.
 ------------------------------------------------------------
