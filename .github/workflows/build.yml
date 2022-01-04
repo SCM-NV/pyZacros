@@ -26,6 +26,7 @@ jobs:
       - name: Build
         run: |
           pip3 install -e .[test,doc] 
+          pip install certifi --ignore-installed
           python setup.py install
       - name: Test
         run: |
