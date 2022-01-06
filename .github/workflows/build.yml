@@ -25,8 +25,7 @@ jobs:
       - run: conda install python=${{ matrix.python-version }}
       - name: Build
         run: |
-          pip3 install -e .[test,doc] 
-          pip install certifi --ignore-installed
+          pip3 install --ignore-installed -e .[test,doc]           
           python setup.py install
       - name: Test
         run: |
