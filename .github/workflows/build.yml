@@ -22,11 +22,10 @@ jobs:
          conda-channels: anaconda, conda-forge
       - run: conda --version
       - run: python --version
-      - run: conda install python=${{ matrix.python-version }}
+      - run: conda install python=${{ matrix.python-version }} "certifi=2021.5.30"
       - name: Build
         run: |
-          pip3 install -e .[test,doc] 
-          pip install certifi --ignore-installed
+          pip3 install -e .[test,doc]           
           python setup.py install
       - name: Test
         run: |
