@@ -22,17 +22,13 @@ jobs:
          conda-channels: anaconda, conda-forge
       - run: conda --version
       - run: python --version
-      - run: conda install python=${{ matrix.python-version }}
+      - run: conda install python=${{ matrix.python-version }} "certifi=2021.5.30"
       - name: Build
         run: |
-          pip3 install -e .[test,doc] 
+          pip3 install -e .[test,doc]           
           python setup.py install
       - name: Test
         run: |
-          pytest --cache-clear --cov=. tests/ | tee pytest-coverage.txt
-      - name: pytest-coverage-commentator
-        uses: coroo/pytest-coverage-commentator@v1.0.2
-        with:
-          pytest-coverage: pytest-coverage.txt
+          pytest tests
           
 
