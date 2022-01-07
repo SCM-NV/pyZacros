@@ -63,5 +63,5 @@ Advanced examples
 .. csv-table::
    :header: |example4|, |example5|, |example5|
 
-   "ZGB model |br| + Phase Transitions. |br| |br| |br|", "ZGB model |br| + Phase Transitions |br| + Steady-State Operation.  |br| |br|", "ZGB model |br| + Phase Transitions |br| + Steady-State Operation |br| + Parameter Continuation."
+   "ZGB model |br| + Phase Transitions. |br| |br| |br|", "ZGB model |br| + Phase Transitions |br| + Stationary Simulation.  |br| |br|", "ZGB model |br| + Phase Transitions |br| + Stationary Simulation |br| + Parameter Continuation."
 

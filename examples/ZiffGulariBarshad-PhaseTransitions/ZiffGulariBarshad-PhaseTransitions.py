@@ -61,7 +61,7 @@ mechanism = [CO_adsorption, O2_adsorption, CO_oxidation]
 #---------------------------------------------
 # Calculation Settings
 #---------------------------------------------
-scm.plams.init()
+scm.pyzacros.init()
 
 # Run as many job simultaneously as there are cpu on the system
 maxjobs = multiprocessing.cpu_count()
@@ -77,7 +77,7 @@ sett.random_seed = 953129
 sett.temperature = 500.0
 sett.pressure = 1.0
 sett.snapshots = ('time', 0.5)
-sett.species_numbers = ('time', 0.01)
+sett.species_numbers = ('time', 0.1)
 sett.max_time = 10.0
 
 #---------------------------------------------
@@ -121,7 +121,7 @@ for i,x in enumerate(x_CO):
       cf_CO.append( acf["CO*"] )
       TOF_CO2.append( TOFs["CO2"] )
 
-scm.plams.finish()
+scm.pyzacros.finish()
 
 print("----------------------------------------------")
 print("%4s"%"cond", "%8s"%"x_CO", "%10s"%"acf_O", "%10s"%"acf_CO", "%10s"%"TOF_CO2")
@@ -133,6 +133,11 @@ for i,x in enumerate(x_CO):
 #---------------------------------------------
 # Plotting the results
 #---------------------------------------------
+try:
+    import matplotlib.pyplot as plt
+except ImportError as e:
+    print('Consider to install matplotlib to visualize the results!')
+    exit(0)
 
 # Coverage and TOF plot
 fig = plt.figure()
