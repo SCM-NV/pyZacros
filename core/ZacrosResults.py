@@ -298,12 +298,15 @@ class ZacrosResults( scm.plams.Results ):
                         surface_species[i] = sp
         surface_species = SpeciesList( surface_species )
 
+        lines = self.grep_file(self._filenames['history'], pattern='configuration', options="-A"+str(number_of_lattice_sites))
+        lines = [line for line in lines if line != "--"]
         for nconf in range(max(0,number_of_snapshots_to_load-llast),number_of_snapshots_to_load):
-            lines = self.grep_file(self._filenames['history'], pattern='configuration', options="-A"+str(number_of_lattice_sites)+" -m"+str(nconf+1))
-            lines = lines[-number_of_lattice_sites-1:] # Equivalent to tail -n $number_of_lattice_sites+1
+            start = nconf*(number_of_lattice_sites+1)
+            end = (nconf+1)*(number_of_lattice_sites+1)
+            conf_lines = lines[start:end]
 
             lattice_state = None
-            for nline,line in enumerate(lines):
+            for nline,line in enumerate(conf_lines):
                 tokens = line.split()
 
                 if( nline==0 ):
@@ -468,6 +471,7 @@ class ZacrosResults( scm.plams.Results ):
             output = self.job.restart.results.get_process_statistics()
 
         all_lines = self.grep_file(self._filenames['procstat'], pattern='configuration', options="-A2")
+        all_lines = [line for line in all_lines if line != "--"]
         for nconf in range(number_of_process_statistics-prev_number_of_process_statistics):
             lines = all_lines[nconf*3:(nconf+1)*3]
 
