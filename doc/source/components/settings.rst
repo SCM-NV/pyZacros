@@ -44,7 +44,7 @@ in the Zacros input files. The previous lines produce the following output:
   max_time          1.0
 
 Notice that the CO and O\ :sub:`2` molar fractions (keywords ``sett.molar_fraction.CO`` and ``sett.molar_fraction.O2``) are not printed out in the previous configuration block. This is because information about species involved in the mechanism and clusters is needed to generate the corresponding block in the ``simulation_input.dat`` zacros file. This information is going to print out from the
-`ZacrosJob <../components/zacrosjob.html>`_ object.
+:ref:`ZacrosJob <_zacrosjob>` object.
 Please consult Zacros' user guide for more details about the specific meaning of the keywords used above.
 
 API
