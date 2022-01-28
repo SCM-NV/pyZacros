@@ -5,7 +5,7 @@
 Phase Transitions in the ZGB model: Stationary Simulation.
 ----------------------------------------------------------
 
-.. _code_plot_coverage:
+.. _code_plot_coverage_zbg_ss:
 .. code-block:: python
   :caption: **Code: Visualizing coverage results**
   :linenos:
@@ -27,7 +27,7 @@ Phase Transitions in the ZGB model: Stationary Simulation.
    "A view of the catalyst surface at |br| partial pressure of CO = 0.54. Steady-state.", "A view of the catalyst surface at |br| partial pressure of CO = 0.55. Non-steady-state."
 
 
-.. _code_plot_mol_num:
+.. _code_plot_mol_num_zgb_ss:
 .. code-block:: python
   :caption: **Code: Visualizing Molecule Numbers and Its First Derivative**
   :linenos:
@@ -54,7 +54,7 @@ Phase Transitions in the ZGB model: Stationary Simulation.
    :scale: 60 %
 
 
-.. _figure_mol_numbers:
+.. _figure_mol_numbers_zgb_ss:
 .. csv-table:: **Molecule Numbers and Its First Derivative**
    :header: |molnum1| |br| |dmolnum1|, |molnum2| |br| |dmolnum2|
 
