@@ -39,6 +39,8 @@ class RKFLoader:
         self.clusterExpansion = ClusterExpansion()
         self.mechanism = Mechanism()
 
+        rkf_skeleton = results.get_rkf_skeleton()
+
         nLatticeVectors = results.readrkf("Molecule", "nLatticeVectors")
         latticeVectors = results.readrkf("Molecule", "LatticeVectors")
         latticeVectors = [ [latticeVectors[3*i+j]/angs for j in range(nLatticeVectors) ] for i in range(nLatticeVectors) ]
@@ -56,6 +58,38 @@ class RKFLoader:
         # Fix ids from Fortran to python
         reactants = [ max(0,idState-1) for idState in reactants ]
         products = [ max(0,idState-1) for idState in products ]
+
+        nFragments = 0
+        if( "nFragments" in rkf_skeleton["EnergyLandscape"] ):
+            nFragments = results.readrkf("EnergyLandscape", "nFragments")
+            fragmentsEnergies = results.readrkf("EnergyLandscape", "fragmentsEnergies")
+            fragmentsRegions = results.readrkf("EnergyLandscape", "fragmentsRegions").split("\0")
+            fragmentsFileNames = results.readrkf("EnergyLandscape", "fragmentsFileNames").replace(".rkf","").split("\0")
+
+        nFStates = 0
+        if( "nFStates" in rkf_skeleton["EnergyLandscape"] ):
+            nFStates = results.readrkf("EnergyLandscape", "nFStates")
+
+            fStatesEnergy = nFStates*[ None ]
+            fStatesNFragments = nFStates*[ None ]
+            fStatesComposition = nFStates*[ None ]
+            fStatesNConnections = nFStates*[ None ]
+            fStatesConnections = nFStates*[ None ]
+            fStatesAdsorptionPrefactors = nFStates*[ None ]
+            fStatesDesorptionPrefactors = nFStates*[ None ]
+
+            for i in range(nFStates):
+                fStatesEnergy[i] = results.readrkf("EnergyLandscape", "fStatesEnergy("+str(i+1)+")")
+                fStatesNFragments[i] = results.readrkf("EnergyLandscape", "fStatesNFragments("+str(i+1)+")")
+                fStatesComposition[i] = results.readrkf("EnergyLandscape", "fStatesComposition("+str(i+1)+")")
+                fStatesNConnections[i] = results.readrkf("EnergyLandscape", "fStatesNConnections("+str(i+1)+")")
+                fStatesConnections[i] = results.readrkf("EnergyLandscape", "fStatesConnections("+str(i+1)+")")
+                fStatesAdsorptionPrefactors[i] = results.readrkf("EnergyLandscape", "fStatesAdsorptionPrefactors("+str(i+1)+")")
+                fStatesDesorptionPrefactors[i] = results.readrkf("EnergyLandscape", "fStatesDesorptionPrefactors("+str(i+1)+")")
+
+                # Fix ids from Fortran to python
+                fStatesComposition[i] = [ max(0,idFragment-1) for idFragment in fStatesComposition[i] ]
+                fStatesConnections[i] = [ max(0,idState-1) for idState in fStatesConnections[i] ]
 
         nSites = results.readrkf("BindingSites", "nSites")
         referenceRegion = results.readrkf("BindingSites", "ReferenceRegionLabel").strip()
@@ -121,7 +155,7 @@ class RKFLoader:
         state2BindingSites = nStates*[ None ]
         attachedMolecule = {}   # attachedMolecule[idState][idSite]
 
-        # Loop over the binding sites to load the binding sites for local minima
+        # Loop over the binding sites to load the binding sites for each local minima
         for idSite in range(nSites):
 
             # Loop over the parent states of each binding site
@@ -181,7 +215,6 @@ class RKFLoader:
         # two Clusters from reactants and products.
 
         # Loop over the TSs to find the species
-        state2Species = nStates*[ None ]
         for idState in range(nStates):
             if( isTS[idState] ):
                 idTS = idState
@@ -224,7 +257,6 @@ class RKFLoader:
                                            cluster_energy=state2Energy[idReactant] )
 
                 speciesReactant = SpeciesList( [ Species(f+"*",1) for f in speciesNames ] )
-                #--------------------------------------------------------------------
 
                 #--------------------------------------------------------------------
                 # Product
@@ -240,7 +272,6 @@ class RKFLoader:
                                           cluster_energy=state2Energy[idReactant] )
 
                 speciesProduct = SpeciesList( [ Species(f+"*",1) for f in speciesNames ] )
-                #--------------------------------------------------------------------
 
                 #--------------------------------------------------------------------
                 # Reaction
@@ -256,6 +287,78 @@ class RKFLoader:
                                                activation_energy=activationEnergy )
 
                 self.clusterExpansion.extend( [clusterReactant, clusterProduct] )
+                self.mechanism.append( reaction )
+
+        # Loop over the Fragmented states to find the species and reactions
+        for idFState in range(nFStates):
+            energy = fStatesNFragments[idFState]
+            nFragments = fStatesNFragments[idFState]
+            composition = fStatesComposition[idFState]
+
+            # Loop over the associated connected states
+            for idState in fStatesConnections[idFState]:
+                prefactorAdsorption = fStatesAdsorptionPrefactors[idFState][idState]
+                prefactorDesorption = fStatesDesorptionPrefactors[idFState][idState]
+
+                # Filters the connection specifically for this state
+                neighboring = []
+                connectedSites = {}
+                for i,bs1 in enumerate(state2BindingSites[idState]):
+                    # Each binding sites in the molecule automatically contributes
+                    connectedSites[bs1] = 1
+
+                    # Check binding sites connected in the same molecule
+                    for j,bs2 in enumerate(state2BindingSites[idState]):
+                        if( bs1 < bs2
+                            and ( (bs1 in fromSites and bs2 in toSites)
+                                or (bs1 in toSites and bs2 in fromSites) ) ):
+                            #neighboring.append( (bs1,bs2) )
+                            neighboring.append( (i,j) )
+                            connectedSites[bs1] = 1
+                            connectedSites[bs2] = 1
+
+                connectedSites = list( connectedSites.keys() )
+
+                #--------------------------------------------------------------------
+                # State
+                speciesNames = len(connectedSites)*[ "" ]
+                for i,bs in enumerate(connectedSites):
+                    if( bs in attachedMolecule[idState].keys() ):
+                        speciesNames[i] = attachedMolecule[idState][bs]
+
+                #clusterState = Cluster( site_types=[ labels[j] for j in connectedSites ],
+                                        #neighboring=neighboring,
+                                        #species=SpeciesList( [ Species(f+"*",1) for f in speciesNames ] ),
+                                        #multiplicity=1,
+                                        #cluster_energy=state2Energy[idState] )
+
+                speciesState = SpeciesList( [ Species(f+"*",1) for f in speciesNames ] )
+
+                #--------------------------------------------------------------------
+                # Fragmented State
+                speciesNames = [ "*" for f in speciesNames ]
+                for idFragment in composition:
+                    if( fragmentsRegions[idFragment] == "active" ):
+                        mol = results.get_molecule("Molecule", file=fragmentsFileNames[idFragment])
+                        speciesNames.append( mol.get_formula() )
+
+                speciesFState = SpeciesList( [ Species(f) for f in speciesNames ] )
+
+                #--------------------------------------------------------------------
+                # Reaction
+                activationEnergy = 0.0 #TODO Here we are assuming that there is no a TS between the fragmented state and the state.
+
+                # X_gas <--> X*
+                reaction = ElementaryReaction( site_types=tuple([ labels[j] for j in connectedSites ]),
+                                               neighboring=neighboring,
+                                               initial=speciesFState,
+                                               final=speciesState,
+                                               reversible=True,
+                                               pre_expon=prefactorAdsorption,
+                                               pe_ratio=prefactorAdsorption/prefactorDesorption,
+                                               activation_energy=activationEnergy )
+
+                #self.clusterExpansion.extend( [clusterState] )
                 self.mechanism.append( reaction )
 
         #--------------------------------------------------------------------

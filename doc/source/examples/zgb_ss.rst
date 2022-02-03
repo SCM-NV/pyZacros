@@ -5,6 +5,11 @@
 Phase Transitions in the ZGB model: Stationary Simulation.
 ----------------------------------------------------------
 
+The definition of the system is the same as in the previous example (see :ref:`code <code_def_sys>`).
+
+Regarding the calculation Settings, we change the value of ``sett.max_time`` from ``10`` s to ``20`` s with the aim to reduce
+the computational cost (see :ref:`code <code_settings>`).
+
 .. _code_plot_coverage:
 .. code-block:: python
   :caption: **Code: Visualizing coverage results**

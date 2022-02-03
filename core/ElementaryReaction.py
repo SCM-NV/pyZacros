@@ -163,8 +163,8 @@ class ElementaryReaction:
 
         # For neighboring nodes are sorted
         if self.neighboring is not None:
-            self.__label += ";"
             for i in range(len(self.neighboring)):
+                if(i==0): self.__label += ";"
                 lNeighboring = list(self.neighboring[i])
                 lNeighboring.sort()
                 self.__label += str(tuple(lNeighboring)).replace(" ", "")
@@ -219,7 +219,7 @@ class ElementaryReaction:
 
         if(self.sites != 0):
             output += "  sites " + str(self.sites)+"\n"
-            if self.neighboring is not None:
+            if self.neighboring is not None and len(self.neighboring) > 0:
                 output += "  neighboring "
                 for i in range(len(self.neighboring)):
                     output += str(self.neighboring[i][0]+1) + "-" + str(self.neighboring[i][1]+1)

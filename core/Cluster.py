@@ -136,7 +136,7 @@ class Cluster:
         if( self.sites != 0 ):
             output += "  sites " + str(self.sites)+"\n"
 
-            if self.neighboring is not None:
+            if self.neighboring is not None and len(self.neighboring) > 0:
                 output += "  neighboring "
                 for i in range(len(self.neighboring)):
                     output += str(self.neighboring[i][0]+1)+"-"+str(self.neighboring[i][1]+1)
