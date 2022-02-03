@@ -287,7 +287,7 @@ The first transition at x\ :sub:`CO` =0.32 is continuous, and therefore it is of
 
 pyZacros also offers some predefined plot functions that use matplotlib as well. For example, it is possible to see a typical reactive state configuration (x\ :sub:`CO` =0.54) and one in the process of being poisoned by CO (x\ :sub:`CO` =0.55). Just get the last lattice state with the ``last_lattice_state()`` function and visualize it with ``plot()``. See the code and figures below. The state at x\ :sub:`CO` =0.54 is a prototypical steady-state, contrary to the one at x\ :sub:`CO` =0.55, which is otherwise a good example where we can see the two phases coexisting.
 
-.. _code_plot_coverage:
+.. _code_plot_coverage_zbg_pts:
 .. code-block:: python
   :caption: **Code: Visualizing coverage results**
   :linenos:
@@ -316,7 +316,7 @@ In the previous paragraph, we introduced the concept of steady-state. However, l
 
 pyZacros also offers the function ``plot_molecule_numbers()`` to visualize the molecule numbers and its first derivative as a function of time. See code and figures below:
 
-.. _code_plot_mol_num:
+.. _code_plot_mol_num_zgb_pts:
 .. code-block:: python
   :caption: **Code: Visualizing Molecule Numbers and Its First Derivative**
   :linenos:
@@ -343,7 +343,7 @@ pyZacros also offers the function ``plot_molecule_numbers()`` to visualize the m
    :scale: 60 %
 
 
-.. _figure_mol_numbers:
+.. _figure_mol_numbers_zgb_pts:
 .. csv-table:: **Molecule Numbers and Its First Derivative**
    :header: |molnum1| |br| |dmolnum1|, |molnum2| |br| |dmolnum2|
 

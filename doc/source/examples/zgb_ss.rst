@@ -10,7 +10,7 @@ The definition of the system is the same as in the previous example (see :ref:`c
 Regarding the calculation Settings, we change the value of ``sett.max_time`` from ``10`` s to ``20`` s with the aim to reduce
 the computational cost (see :ref:`code <code_settings>`).
 
-.. _code_plot_coverage:
+.. _code_plot_coverage_zbg_ss:
 .. code-block:: python
   :caption: **Code: Visualizing coverage results**
   :linenos:
@@ -32,7 +32,7 @@ the computational cost (see :ref:`code <code_settings>`).
    "A view of the catalyst surface at |br| partial pressure of CO = 0.54. Steady-state.", "A view of the catalyst surface at |br| partial pressure of CO = 0.55. Non-steady-state."
 
 
-.. _code_plot_mol_num:
+.. _code_plot_mol_num_zgb_ss:
 .. code-block:: python
   :caption: **Code: Visualizing Molecule Numbers and Its First Derivative**
   :linenos:
@@ -59,7 +59,7 @@ the computational cost (see :ref:`code <code_settings>`).
    :scale: 60 %
 
 
-.. _figure_mol_numbers:
+.. _figure_mol_numbers_zgb_ss:
 .. csv-table:: **Molecule Numbers and Its First Derivative**
    :header: |molnum1| |br| |dmolnum1|, |molnum2| |br| |dmolnum2|
 
