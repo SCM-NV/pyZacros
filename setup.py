@@ -53,7 +53,7 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     install_requires=[
-        'pyaml', 'chemparse', 'scipy==1.5.4',
+        'pyaml', 'chemparse', 'scipy<=1.5.4', 'numpy<=1.19.5',
         'plams@git+https://github.com/SCM-NV/PLAMS@master'],
     extras_require={
         'test': ['coverage', 'pytest>=3.9', 'pytest-cov'],
