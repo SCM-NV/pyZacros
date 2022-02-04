@@ -25,7 +25,7 @@ jobs:
       - run: conda install python=${{ matrix.python-version }} "certifi=2021.5.30"
       - name: Build
         run: |
-          pip3 install -e .[test,doc]           
+          pip3 install .[test,doc]
           python setup.py install
       - name: Test
         run: |
