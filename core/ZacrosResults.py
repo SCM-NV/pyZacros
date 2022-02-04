@@ -358,7 +358,7 @@ class ZacrosResults( scm.plams.Results ):
         *   ``file_name`` --
         """
         if( type(data) == LatticeState ):
-            data.plot( show=True, pause=pause, ax=ax, file_name=file_name )
+            data.plot( show=show, pause=pause, ax=ax, file_name=file_name )
         if( type(data) == list ):
             try:
                 import matplotlib.pyplot as plt
@@ -376,7 +376,7 @@ class ZacrosResults( scm.plams.Results ):
                     ifile_name = prefix+"-"+"%05d"%i+ext
 
                 ax.cla()
-                ls.plot( show=True, pause=time_perframe, ax=ax, file_name=ifile_name )
+                ls.plot( show=show, pause=time_perframe, ax=ax, file_name=ifile_name )
 
             if( show ):
                 if( pause == -1 ):
@@ -424,7 +424,7 @@ class ZacrosResults( scm.plams.Results ):
             if( derivative ):
                 ax.set_ylabel('Derivative of the Molecule Numbers')
             else:
-                ax.set_ylabel('Molecule Numbers per Site')
+                ax.set_ylabel('Molecule Numbers')
 
         x = provided_quantities["Time"]
         for i,spn in enumerate(species_name):
@@ -543,7 +543,7 @@ class ZacrosResults( scm.plams.Results ):
 
         provided_quantities = self.provided_quantities()
 
-        ax.set_title('t $\in$ [0.000,{:.3f}] s'.format(data["time"]))
+        ax.set_title('t $\in$ [0.0,{:.3g}] s'.format(data["time"]))
         ax.set_xlabel(key)
 
         keys = list(data[key].keys())

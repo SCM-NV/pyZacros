@@ -101,3 +101,16 @@ class ClusterExpansion( UserList ):
             site_types.update( cl.site_types_set() )
 
         return site_types
+
+
+    def replace_site_types_names( self, site_types_old, site_types_new ):
+        """
+        Replaces the site types names
+
+        *   ``site_types_old`` -- List of strings containing the old site_types to be replaced
+        *   ``site_types_new`` -- List of strings containing the new site_types which would replace old site_types_old.
+        """
+        assert( len(site_types_old) == len(site_types_new) )
+
+        for cl in self:
+            cl.replace_site_types_names( site_types_old, site_types_new )

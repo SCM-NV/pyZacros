@@ -41,23 +41,26 @@ class Settings( scm.plams.Settings ):
         for option in ['snapshots', 'process_statistics', 'species_numbers']:
             if( option in self ):
                     pair = self[option]
-
-                    if( len(pair) != 2 ):
-                        msg  = "### ERROR ### keyword "+option+" in settings."
-                        msg += "              Its value should be a pair (key,value)."
-                        msg += "              Possible options for key:  'event', 'elemevent', 'time',       'logtime', 'realtime'"
-                        msg += "              Possible options for value:  <int>,       <int>, <real>, (<real>,<real>),     <real>"
+                    if( len(pair) == 2 ):
+                        key,value = pair
+                    elif( len(pair) == 3 ):
+                        key,value = pair[0],(pair[1],pair[2])
+                    else:
+                        msg  = "### ERROR ### keyword "+option+" in settings.\n"
+                        msg += "              Its value should be a pair (key,value[,value1]).\n"
+                        msg += "              Possible options for key:  'event', 'elemevent', 'time',       'logtime', 'realtime'\n"
+                        msg += "              Possible options for value:  <int>,       <int>, <real>, (<real>,<real>),     <real>\n"
+                        msg += "              Given value: "+str(pair)+"\n"
                         raise NameError(msg)
-
-                    key,value = pair
 
                     if( key == 'logtime' ):
                         if( len(value) != 2 ):
-                            msg  = "### ERROR ### keyword '"+option+" on "+key+"' in settings."
-                            msg += "              Its value should be a pair of reals (<real>,<real>)."
+                            msg  = "### ERROR ### keyword '"+option+" on "+key+"' in settings.\n"
+                            msg += "              Its value should be a pair of reals (<real>,<real>).\n"
+                            msg += "              Given value: "+str(value)+"\n"
                             raise NameError(msg)
 
-                        output += "%-20s"%option + "      " + "on "+ key + "       " + str(float(value[1])) + "  " + str(float(value[2])) + "\n"
+                        output += "%-20s"%option + "      " + "on "+ key + "       " + str(float(value[0])) + "  " + str(float(value[1])) + "\n"
                     elif( key == 'event' or key == 'elemevent' ):
                         output += "%-20s"%option + "      " + "on "+ key + "       " + str(int(value)) + "\n"
                     else:

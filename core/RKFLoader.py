@@ -19,6 +19,7 @@ class RKFLoader:
 
         :parm results
         """
+        self.clusterExpansio = None
         self.mechanism = None
         self.lattice = None
 
@@ -106,6 +107,8 @@ class RKFLoader:
         nParentStates = results.readrkf("BindingSites", "nParentStates")
         parentStatesRaw = results.readrkf("BindingSites", "ParentStates")
         parentAtomsRaw = results.readrkf("BindingSites", "ParentAtoms")
+
+        energyReference = 0.0 if nFStates==0 else min(fStatesEnergy)/eV
 
         # Fix ids from Fortran to python
         fromSites = [ max(0,idSite-1) for idSite in fromSites ]
@@ -254,7 +257,7 @@ class RKFLoader:
                                            neighboring=neighboring,
                                            species=SpeciesList( [ Species(f+"*",1) for f in speciesNames ] ),
                                            multiplicity=2,
-                                           cluster_energy=state2Energy[idReactant] )
+                                           cluster_energy=state2Energy[idReactant]-energyReference )
 
                 speciesReactant = SpeciesList( [ Species(f+"*",1) for f in speciesNames ] )
 
@@ -269,7 +272,7 @@ class RKFLoader:
                                           neighboring=neighboring,
                                           species=SpeciesList( [ Species(f+"*",1) for f in speciesNames ] ),
                                           multiplicity=2,
-                                          cluster_energy=state2Energy[idReactant] )
+                                          cluster_energy=state2Energy[idReactant]-energyReference )
 
                 speciesProduct = SpeciesList( [ Species(f+"*",1) for f in speciesNames ] )
 
@@ -277,7 +280,7 @@ class RKFLoader:
                 # Reaction
                 activationEnergy = state2Energy[idTS]-state2Energy[idReactant]
 
-                reaction = ElementaryReaction( site_types=tuple([ labels[j] for j in connectedSites ]),
+                reaction = ElementaryReaction( site_types=[ labels[j] for j in connectedSites ],
                                                neighboring=neighboring,
                                                initial=speciesReactant,
                                                final=speciesProduct,
@@ -291,7 +294,7 @@ class RKFLoader:
 
         # Loop over the Fragmented states to find the species and reactions
         for idFState in range(nFStates):
-            energy = fStatesNFragments[idFState]
+            energy = fStatesEnergy[idFState]
             nFragments = fStatesNFragments[idFState]
             composition = fStatesComposition[idFState]
 
@@ -330,7 +333,7 @@ class RKFLoader:
                                         #neighboring=neighboring,
                                         #species=SpeciesList( [ Species(f+"*",1) for f in speciesNames ] ),
                                         #multiplicity=1,
-                                        #cluster_energy=state2Energy[idState] )
+                                        #cluster_energy=state2Energy[idState]-energyReference )
 
                 speciesState = SpeciesList( [ Species(f+"*",1) for f in speciesNames ] )
 
@@ -349,7 +352,7 @@ class RKFLoader:
                 activationEnergy = 0.0 #TODO Here we are assuming that there is no a TS between the fragmented state and the state.
 
                 # X_gas <--> X*
-                reaction = ElementaryReaction( site_types=tuple([ labels[j] for j in connectedSites ]),
+                reaction = ElementaryReaction( site_types=[ labels[j] for j in connectedSites ],
                                                neighboring=neighboring,
                                                initial=speciesFState,
                                                final=speciesState,
@@ -396,3 +399,17 @@ class RKFLoader:
                                 site_types=labels,
                                 site_coordinates=coordsFrac,
                                 neighboring_structure=neighboring_structure)
+
+
+    def replace_site_types_names( self, site_types_old, site_types_new ):
+        """
+        Replaces the site types names
+
+        *   ``site_types_old`` -- List of strings containing the old site_types to be replaced
+        *   ``site_types_new`` -- List of strings containing the new site_types which would replace old site_types_old.
+        """
+        assert( len(site_types_old) == len(site_types_new) )
+
+        self.lattice.replace_site_types_names( site_types_old, site_types_new )
+        self.mechanism.replace_site_types_names( site_types_old, site_types_new )
+        self.clusterExpansion.replace_site_types_names( site_types_old, site_types_new )

@@ -25,7 +25,7 @@ class LatticeState:
         self.add_info = add_info
 
         if( type(surface_species) != SpeciesList and type(surface_species) != list ):
-            msg  = "### ERROR ### LatticeState.__init__.\n"
+            msg  = "\n### ERROR ### LatticeState.__init__.\n"
             msg += "              Inconsistent type for surface_species\n"
             raise NameError(msg)
 
@@ -34,7 +34,7 @@ class LatticeState:
             self.surface_species = SpeciesList(surface_species)
 
         if( len( self.surface_species.gas_species() ) > 0 ):
-            msg  = "### ERROR ### LatticeState.__init__.\n"
+            msg  = "\n### ERROR ### LatticeState.__init__.\n"
             msg += "              LatticeState doesn't accept gas surface_species\n"
             raise NameError(msg)
 
@@ -136,19 +136,19 @@ class LatticeState:
             site_number = [site_number]
 
         if( not ( isinstance(site_number,list) or isinstance(site_number,tuple) ) ):
-            msg  = "### ERROR ### LatticeState.fill_site.\n"
+            msg  = "\n### ERROR ### LatticeState.fill_site.\n"
             msg += "              Inconsistent values for species denticity and dimensions of site_number\n"
             msg += "              denticity>1 but site_number is not an instance of list or tuple\n"
             raise NameError(msg)
 
         if( len(site_number) != lSpecies.denticity ):
-            msg  = "### ERROR ### LatticeState.fill_site.\n"
+            msg  = "\n### ERROR ### LatticeState.fill_site.\n"
             msg += "              Inconsistent values for species denticity and dimensions of site_number\n"
             msg += "              site_number should have the `denticity` number of elements\n"
             raise NameError(msg)
 
         if( any([self.__adsorbed_on_site[site] is not None for site in site_number]) ):
-            msg  = "### ERROR ### LatticeState.fill_site.\n"
+            msg  = "\n### ERROR ### LatticeState.fill_site.\n"
             msg += "              site is already filled\n"
             raise NameError(msg)
 
@@ -162,7 +162,7 @@ class LatticeState:
             connected.extend(to_check)
 
         if( len(connected) != lSpecies.denticity ):
-             msg  = "### ERROR ### LatticeState.fill_site.\n"
+             msg  = "\n### ERROR ### LatticeState.fill_site.\n"
              msg += "              sites are not neighboring\n"
              raise NameError(msg)
 
@@ -198,7 +198,7 @@ class LatticeState:
             lSpecies = species
 
         else:
-            msg  = "### ERROR ### LatticeState.fill_sites_random.\n"
+            msg  = "\n### ERROR ### LatticeState.fill_sites_random.\n"
             msg += "              Inconsistent type for species. It should be type str or Species\n"
             raise NameError(msg)
 
@@ -206,7 +206,7 @@ class LatticeState:
             site_name = [site_name]
 
         if ( lSpecies.denticity != len(site_name) ):
-            msg = "### ERROR ### LatticeState.fill_sites_random.\n"
+            msg = "\n### ERROR ### LatticeState.fill_sites_random.\n"
             msg += "             Inconsistent amount of site_name with species denticity\n"
             raise NameError(msg)
 
@@ -229,7 +229,7 @@ class LatticeState:
                     to_check = list(set(new_check))
                     connected.extend(to_check)
                 if( len(connected) != lSpecies.denticity ):
-                    msg = "### ERROR ### LatticeState.fill_sites_random.\n"
+                    msg = "\n### ERROR ### LatticeState.fill_sites_random.\n"
                     msg += "             neighboring sites not connected.\n"
                     raise NameError(msg)
                 neighboring_order = connected
@@ -257,6 +257,12 @@ class LatticeState:
             total_available_conf.extend(available_conf)
 
         target_sites = set([item for sublist in total_available_conf for item in sublist])
+
+        if( len(target_sites) == 0 ):
+            msg  = "\n### ERROR ### LatticeState.fill_sites_random.\n"
+            msg += "              site_name="+str(site_name)+" not found\n"
+            raise NameError(msg)
+
         n_sites_to_fill = round(len(target_sites)*coverage)
         random.shuffle( total_available_conf )
 
@@ -340,7 +346,7 @@ class LatticeState:
         items = list(filter(None.__ne__, set(self.__adsorbed_on_site)))
 
         if( self.add_info is not None ):
-            ax.set_title("t = {:.3f} s".format(self.add_info.get("time")))
+            ax.set_title("t = {:.3g} s".format(self.add_info.get("time")))
 
         #--------------------------------
         # Plots the lattice

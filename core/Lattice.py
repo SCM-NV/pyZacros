@@ -611,3 +611,22 @@ class Lattice:
 
         elif( self.__origin == Lattice.__FROM_EXPLICIT ):
             pass
+
+
+    def replace_site_types_names( self, site_types_old, site_types_new ):
+        """
+        Replaces the site types names
+
+        *   ``site_types_old`` -- List of strings containing the old site_types to be replaced
+        *   ``site_types_new`` -- List of strings containing the new site_types which would replace old site_types_old.
+        """
+        assert( len(site_types_old) == len(site_types_new) )
+
+        for i in range(len(site_types_old)):
+            for j in range(len(self.site_types)):
+                if( self.site_types[j] == site_types_old[i] ):
+                    self.site_types[j] = site_types_new[i]
+
+            for j in range(len(self.__site_types_unit_cell)):
+                if( self.__site_types_unit_cell[j] == site_types_old[i] ):
+                    self.__site_types_unit_cell[j] = site_types_new[i]

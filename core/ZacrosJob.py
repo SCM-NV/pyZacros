@@ -405,7 +405,13 @@ class ZacrosJob( scm.plams.SingleJob ):
                         return sv[1],1
                     else:
                         return sv[1],int(sv[2])
+                elif( sv[1]=="elemevent" ):
+                    return sv[1],int(sv[2])
                 elif( sv[1]=="time" ):
+                    return sv[1],float(sv[2])
+                elif( sv[1]=="logtime" ):
+                    return sv[1],float(sv[2]),float(sv[3])
+                elif( sv[1]=="realtime" ):
                     return sv[1],float(sv[2])
                 else:
                     raise Exception( "Error: Keyword "+str(sv)+" in file "+ZacrosJob._filenames['simulation']+" is not supported!" )

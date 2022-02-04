@@ -287,3 +287,19 @@ class ElementaryReaction:
         """
         return set(self.site_types)
 
+
+    def replace_site_types_names( self, site_types_old, site_types_new ):
+        """
+        Replaces the site types names
+
+        *   ``site_types_old`` -- List of strings containing the old site_types to be replaced
+        *   ``site_types_new`` -- List of strings containing the new site_types which would replace old site_types_old.
+        """
+        assert( len(site_types_old) == len(site_types_new) )
+
+        for i in range(len(site_types_old)):
+            for j in range(len(self.site_types)):
+                if( self.site_types[j] == site_types_old[i] ):
+                    self.site_types[j] = site_types_new[i]
+
+        self.__updateLabel()
