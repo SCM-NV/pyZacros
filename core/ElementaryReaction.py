@@ -270,10 +270,10 @@ class ElementaryReaction:
             output += "\n"
 
         output += "  pre_expon "+("%12.5e"%self.pre_expon)+"\n"
-        if self.reversible is True:
+        if self.reversible:
             output += "  pe_ratio "+("%12.5e"%self.pe_ratio)+"\n"
         output += "  activ_eng "+("%12.5e"%self.activation_energy)+"\n"
-        if self.reversible is True:
+        if self.reversible:
             output += "end_reversible_step"
         else:
             output += "end_step"
