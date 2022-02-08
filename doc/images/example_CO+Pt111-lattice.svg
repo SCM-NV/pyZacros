@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="svg2"
+   width="940.84784"
+   height="403.79999"
+   viewBox="0 0 940.84784 403.79999"
+   sodipodi:docname="example_CO+Pt111-lattice.svg"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+  <metadata
+     id="metadata8">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs6" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1015"
+     id="namedview4"
+     showgrid="false"
+     inkscape:zoom="0.97656246"
+     inkscape:cx="427.80548"
+     inkscape:cy="168.5224"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2"
+     fit-margin-top="10"
+     fit-margin-left="10"
+     fit-margin-bottom="10"
+     fit-margin-right="10"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     borderlayer="true"
+     scale-x="1.1" />
+  <image
+     sodipodi:absref="example_CO+Pt111-lattice0.png"
+     xlink:href="example_CO+Pt111-lattice0.png"
+     y="-32.999542"
+     x="321.44778"
+     id="image10"
+     preserveAspectRatio="none"
+     height="460.79999"
+     width="614.40002" />
+  <image
+     sodipodi:absref="example_CO+Pt111-lattice1.png"
+     xlink:href="example_CO+Pt111-lattice1.png"
+     width="252.48"
+     height="168.96001"
+     preserveAspectRatio="none"
+     id="image855"
+     x="27.910782"
+     y="30.124599" />
+  <rect
+     style="opacity:0.997;fill:none;fill-opacity:1;stroke:#ffa700;stroke-width:3.59500003;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     id="rect858"
+     width="264.59326"
+     height="169.86053"
+     x="15.7975"
+     y="29.224062" />
+  <rect
+     style="opacity:0.997;fill:none;fill-opacity:1;stroke:#ffa700;stroke-width:3.59500003;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     id="rect858-3"
+     width="58.642384"
+     height="37.646561"
+     x="390.44467"
+     y="282.7713" />
+  <path
+     style="fill:none;stroke:#ffa700;stroke-width:3.59500003;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 15.7975,199.0845 390.44469,320.41786"
+     id="path875"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cc" />
+  <path
+     style="fill:none;stroke:#ffa700;stroke-width:3.59500003;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="M 280.39075,29.224021 449.08707,282.7713"
+     id="path877"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cc" />
+</svg>

@@ -1,0 +1,42 @@
+38
+
+C        5.08349688       2.95549819       9.52500529         region=adsorbate
+O        5.08420252       2.95701878      10.74456106         region=adsorbate
+Pt       9.24070201       6.95527267       1.31036083         region=surface
+Pt       9.24070201       2.15427277       1.31036083         region=surface
+Pt      10.62663130       4.55477272       1.31036083         region=surface
+Pt      12.01256059       6.95527267       1.31036083         region=surface
+Pt       3.69698485       2.15427277       8.10000000         region=surface
+Pt       5.08291414       4.55477272       8.10000000         region=surface
+Pt       6.46884343       6.95527267       8.10000000         region=surface
+Pt       6.46884343       2.15427277       8.10000000         region=surface
+Pt       7.85477272       4.55477272       8.10000000         region=surface
+Pt       9.24070201       6.95527267       8.10000000         region=surface
+Pt       9.24070201       2.15427277       8.10000000         region=surface
+Pt      10.62663130       4.55477272       8.10000000         region=surface
+Pt      12.01256059       6.95527267       8.10000000         region=surface
+Pt       5.08291414       2.95443942       5.83678694         region=surface
+Pt       6.46884343       5.35493937       5.83678694         region=surface
+Pt       7.85477272       7.75543932       5.83678694         region=surface
+Pt       7.85477272       2.95443942       5.83678694         region=surface
+Pt       9.24070201       5.35493937       5.83678694         region=surface
+Pt      10.62663130       7.75543932       5.83678694         region=surface
+Pt      10.62663130       2.95443942       5.83678694         region=surface
+Pt      12.01256059       5.35493937       5.83678694         region=surface
+Pt      13.39848987       7.75543932       5.83678694         region=surface
+Pt       2.31105556       1.35410612       3.57357389         region=surface
+Pt       3.69698485       3.75460607       3.57357389         region=surface
+Pt       5.08291414       6.15510602       3.57357389         region=surface
+Pt       5.08291414       1.35410612       3.57357389         region=surface
+Pt       6.46884343       3.75460607       3.57357389         region=surface
+Pt       7.85477272       6.15510602       3.57357389         region=surface
+Pt       7.85477272       1.35410612       3.57357389         region=surface
+Pt       9.24070201       3.75460607       3.57357389         region=surface
+Pt      10.62663130       6.15510602       3.57357389         region=surface
+Pt       3.69698485       2.15427277       1.31036083         region=surface
+Pt       5.08291414       4.55477272       1.31036083         region=surface
+Pt       6.46884343       6.95527267       1.31036083         region=surface
+Pt       6.46884343       2.15427277       1.31036083         region=surface
+Pt       7.85477272       4.55477272       1.31036083         region=surface
+VEC1       8.31557575       0.00000000       0.00000000
+VEC2       4.15778787       7.20149984       0.00000000

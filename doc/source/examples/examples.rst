@@ -17,26 +17,22 @@ Simple examples
 .. toctree::
    :hidden:
 
-   o_pt111
+   COPt111
    co_tutorial
    zgb
 
-.. |example1| image:: ../../images/example_O+Pt111.png
-   :scale: 35 %
-   :target: o_pt111.html
-
-.. |example2| image:: ../../images/example_CO-tutorial.png
+.. |example1| image:: ../../images/example_CO-tutorial.png
    :scale: 35 %
    :target: co_tutorial.html
 
-.. |example3| image:: ../../images/example_ZGB.gif
+.. |example2| image:: ../../images/example_ZGB.gif
    :scale: 35 %
    :target: zgb.html
 
 .. csv-table::
-   :header: |example1|, |example2|, |example3|
+   :header: |example1|, |example2|
 
-   "KMC lattice from first |br| principles. O+Pt(111)", "Water-gas shift reaction on Pt(111)", "Ziff-Gulari-Barshad (ZGB) model"
+   "Water-gas shift reaction on Pt(111)", "Ziff-Gulari-Barshad (ZGB) model"
 
 Advanced examples
 -----------------
@@ -47,6 +43,10 @@ Advanced examples
    zgb_pts
    zgb_ss
    zgb_ss_pc
+
+.. |example3| image:: ../../images/example_CO+Pt111-main.png
+   :scale: 47 %
+   :target: COPt111.html
 
 .. |example4| image:: ../../images/example_ZGB-PhaseTransitions.png
    :scale: 32 %
@@ -61,7 +61,13 @@ Advanced examples
    :target: zgb_ss_pc.html
 
 .. csv-table::
-   :header: |example4|, |example5|, |example5|
+   :header: |example3|, |example4|
 
-   "ZGB model |br| + Phase Transitions. |br| |br| |br|", "ZGB model |br| + Phase Transitions |br| + Stationary Simulation.  |br| |br|", "ZGB model |br| + Phase Transitions |br| + Stationary Simulation |br| + Parameter Continuation."
+   "Poisoning of Pt(111) by CO: |br| From atomistic to mesoscopic |br| modeling.", "ZGB model |br| + Phase Transitions. |br| |br|"
+
+
+.. csv-table::
+   :header: |example5|, |example5|
+
+   "ZGB model |br| + Phase Transitions |br| + Stationary Simulation.  |br| |br|", "ZGB model |br| + Phase Transitions |br| + Stationary Simulation |br| + Parameter Continuation."
 
