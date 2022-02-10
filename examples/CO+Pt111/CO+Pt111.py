@@ -74,6 +74,6 @@ results_pz = job.run()
 
 if( job.ok() ):
     results_pz.plot_lattice_states( results_pz.lattice_states() )
-    results_pz.plot_molecule_numbers( ["CO*"], file_name )
+    results_pz.plot_molecule_numbers( ["CO*"] )
 
 scm.plams.finish()
