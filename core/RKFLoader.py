@@ -253,10 +253,25 @@ class RKFLoader:
                     if( bs in attachedMolecule[idReactant].keys() ):
                         speciesNames[i] = attachedMolecule[idTS][bs]
 
-                clusterReactant = Cluster( site_types=[ labels[j] for j in connectedSites ],
-                                           neighboring=neighboring,
-                                           species=SpeciesList( [ Species(f+"*",1) for f in speciesNames ] ),
-                                           multiplicity=2,
+                site_types = [ labels[j] for j in connectedSites ]
+                species = SpeciesList( [ Species(f+"*",1) for f in speciesNames ] )
+
+                # This section remove the empty adsorption sites which are not needed for clusters
+                site_types_cluster = []
+                neighboring_cluster = []
+                species_cluster = []
+                for i in range(len(site_types)):
+                    if( not len(speciesNames[i]) == 0 ):
+                        site_types_cluster.append( site_types[i] )
+                        species_cluster.append( species[i] )
+                        for pair in neighboring:
+                            if( i not in pair ):
+                                neighboring_cluster.append(pair)
+
+                clusterReactant = Cluster( site_types=site_types_cluster,
+                                           neighboring=neighboring_cluster,
+                                           species=species_cluster,
+                                           multiplicity=1,
                                            cluster_energy=state2Energy[idReactant]-energyReference )
 
                 speciesReactant = SpeciesList( [ Species(f+"*",1) for f in speciesNames ] )
@@ -268,10 +283,25 @@ class RKFLoader:
                     if( bs in attachedMolecule[idProduct].keys() ):
                         speciesNames[i] = attachedMolecule[idTS][bs]
 
-                clusterProduct = Cluster( site_types=[ labels[j] for j in connectedSites ],
-                                          neighboring=neighboring,
-                                          species=SpeciesList( [ Species(f+"*",1) for f in speciesNames ] ),
-                                          multiplicity=2,
+                site_types = [ labels[j] for j in connectedSites ]
+                species = SpeciesList( [ Species(f+"*",1) for f in speciesNames ] )
+
+                # This section remove the empty adsorption sites which are not needed for clusters
+                site_types_cluster = []
+                neighboring_cluster = []
+                species_cluster = []
+                for i in range(len(site_types)):
+                    if( not len(speciesNames[i]) == 0 ):
+                        site_types_cluster.append( site_types[i] )
+                        species_cluster.append( species[i] )
+                        for pair in neighboring:
+                            if( i not in pair ):
+                                neighboring_cluster.append(pair)
+
+                clusterProduct = Cluster( site_types=site_types_cluster,
+                                          neighboring=neighboring_cluster,
+                                          species=species_cluster,
+                                          multiplicity=1,
                                           cluster_energy=state2Energy[idReactant]-energyReference )
 
                 speciesProduct = SpeciesList( [ Species(f+"*",1) for f in speciesNames ] )
@@ -329,11 +359,11 @@ class RKFLoader:
                     if( bs in attachedMolecule[idState].keys() ):
                         speciesNames[i] = attachedMolecule[idState][bs]
 
-                #clusterState = Cluster( site_types=[ labels[j] for j in connectedSites ],
-                                        #neighboring=neighboring,
-                                        #species=SpeciesList( [ Species(f+"*",1) for f in speciesNames ] ),
-                                        #multiplicity=1,
-                                        #cluster_energy=state2Energy[idState]-energyReference )
+                clusterState = Cluster( site_types=[ labels[j] for j in connectedSites ],
+                                        neighboring=neighboring,
+                                        species=SpeciesList( [ Species(f+"*",1) for f in speciesNames ] ),
+                                        multiplicity=1,
+                                        cluster_energy=state2Energy[idState]-energyReference )
 
                 speciesState = SpeciesList( [ Species(f+"*",1) for f in speciesNames ] )
 
@@ -361,7 +391,7 @@ class RKFLoader:
                                                pe_ratio=prefactorAdsorption/prefactorDesorption,
                                                activation_energy=activationEnergy )
 
-                #self.clusterExpansion.extend( [clusterState] )
+                self.clusterExpansion.extend( [clusterState] )
                 self.mechanism.append( reaction )
 
         #--------------------------------------------------------------------

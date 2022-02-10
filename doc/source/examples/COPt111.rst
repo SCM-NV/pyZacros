@@ -28,7 +28,7 @@ To make this example reproducible, we provide the geometry in ``XYZ`` format. Se
    "Link to download: :download:`CO_ads+Pt111.xyz <CO_ads+Pt111.xyz>`"
 
 .. Note::
-  If you prepare the initial geometry yourself, keep in mind that you can start from a different geometry, and the final results should be identical. The only requirements are to select a local minimum and create the corresponding regions.
+  If you prepare the initial geometry yourself, keep in mind that you can start from a different geometry, and the final results should be identical. The only requirements are to select a local minimum, create the corresponding regions (``adsorbate`` and ``surface``), and orient the Pt surface to maximize the number of symmetry operations. In the geometry we provide above, the Pt surface is oriented such that it belongs to the P-3m1 (164) symmetry space group.
 
 Now, you can download the complete example script from this link :download:`CO+Pt111.py <CO+Pt111.py>`. Hereafter, we briefly explain the different sections of the code.
 
@@ -46,7 +46,7 @@ The script starts as follows:
 
 Firstly we load the required python libraries: PLAMS and pyZacros (lines 1-2). Then, we create a PLAMS molecule using the XYZ geometry file we provided above (line 4). Take note that the molecule automatically includes the information about regions that are described in the XYZ file. Finally, we start the PLAM environment (line 6).
 
-It is convenient to divide our script into four parts for clarity. In the first part (:ref:`getting_energy_landscape`), we will obtain the symmetry's irreducible energy landscape for this system, which will indirectly allow us to define the associated reaction mechanisms and the cluster expansion Hamiltonian. In the second part (:ref:`getting_kmc_lattice`), we will get the KMC lattice, which requires applying all symmetry operators of the Pt surface. In the third part (:ref:`generating_pyzacros_objects`), we will use this information to create the corresponding pyZacros to finally, in the fourth part (:ref:`running_pyzacros_simulation`), run the KMC simulation itself.
+It is convenient to divide our script into four sections for clarity. In the first one (:ref:`getting_energy_landscape`), we will obtain the symmetry's irreducible energy landscape for this system, which will indirectly allow us to define the associated reaction mechanisms and the cluster expansion Hamiltonian. In the second one (:ref:`getting_kmc_lattice`), we will get the KMC lattice, which requires applying all symmetry operators of the Pt surface. In the third one (:ref:`generating_pyzacros_objects`), we will use this information to create the corresponding pyZacros to finally, in the fourth one (:ref:`running_pyzacros_simulation`), run the KMC simulation itself.
 
 .. _getting_energy_landscape:
 
@@ -92,13 +92,22 @@ This code basically setup a PESExploration calculation using AMS and run it. We 
 
 Lines 8-10 select the engine to use. Here we chose the reactive force field (ReaxFF) method in combination with the parameterization 'CHONSFPtClNi.ff,' which has been specially designed to study the surface oxidation of Pt(111).
 
-Lines 12-28 specify the PESExploration task settings. The results of this calculation are the set of critical points that compose the energy landscape, what we call the energy landscape for short. Here we fix the position of the platinum surface atoms (line 13), use the ProcesSearch method to find the escape mechanisms from the different states (line 15), distributed in 10 expeditions with 4 explorers each (lines 17-18), and allow transition states within a 2 eV energy window (line 19). Any newfound local minimum is used as the origin of a new expedition (line 19). For the final set of local minima found, a geometry optimization of the corresponding independent fragments (CO and Pt surface) is carried out to consider the gas-phase configurations into the energy landscape (line 20). The two fragments are defined as 1) the atoms belonging to the reference region and 2) the rest, equivalently to the adsorbate atoms. Additionally, all obtained states will be aligned with respect to this reference (line 21).
+Lines 12-28 specify the PESExploration task settings. The results of this calculation are the set of critical points that compose the energy landscape, what we call the energy landscape for short. Here we fix the position of the platinum surface atoms (line 13), use the ProcesSearch method to find the escape mechanisms from the different states (line 15), distributed in 10 expeditions with 4 explorers each (lines 17-18), and allow transition states within a 2 eV energy window (line 19). Any newfound local minimum is used as the origin of a new expedition (line 20). For the final set of local minima found, a geometry optimization of the corresponding independent fragments (CO and Pt surface) is carried out to consider the gas-phase configurations into the energy landscape (line 21). The two fragments are defined as 1) the atoms belonging to the reference region; the Pt surface, and 2) the rest, equivalently to the adsorbate atoms. Additionally, all obtained states will be aligned with respect to this reference (line 22).
 
-For the structure comparison, we establish that the structures are the same if their interatomic distances are less than 0.1 A in neighborhoods of 2.5 A and energy differences are less than 0.05 eV (lines 25-27). Additionally, we verify that molecules are irreducible by the symmetry operations of the Pt surface (line 28).
+For the structure comparison, we establish that the structures are considered the same if their interatomic distances are less than 0.1 A in neighborhoods of 2.5 A and energy differences are less than 0.05 eV (lines 23-25). Additionally, we verify that molecules are irreducible by the symmetry operations of the Pt surface (line 26).
+
+For illustration purposes, we require the calculation of the binding sites (line 27), where their labels are set based on the number of the neighbor atoms within a distance of 3.8 A (line 28). A lower value for NeighborCutoff may conduct to make fcc and hcp sites indistinguishable, i.e. they will get assigned the same label.
+
+Finally, we create the AMSJob calculation, which requires both the initial molecule and the settings object as input parameters(line 30), and we run it (line 31). This calculation should take only a few minutes. Once this calculation is finished, we print out the obtained energy landscape (lines 33-34). If everything went well, at this point, you should get something like this in the standard output:
 
 .. code-block:: none
   :linenos:
 
+  [05.02|08:15:06] PLAMS working folder: /home/user/pyzacros/examples/CO+Pt111/plams_workdir
+  [05.02|08:15:06] JOB CO_ads+Pt111 STARTED
+  [05.02|08:15:06] JOB CO_ads+Pt111 RUNNING
+  [05.02|08:15:51] JOB CO_ads+Pt111 FINISHED
+  [05.02|08:15:51] JOB CO_ads+Pt111 SUCCESSFUL
   All stationary points:
   ======================
   State 1: COPt36 local minimum @ -7.65164210 Hartree (found 1 times, results on State-1_MIN)
@@ -122,6 +131,8 @@ For the structure comparison, we establish that the structures are the same if t
     +- State 3: COPt36 local minimum @ -7.62381952 Hartree (found 1 times, results on State-3_MIN)
        Prefactors: 8.051E+06:2.446E+15
 
+From this output information, we can see that the calculation took less than a minute (lines 1-5) and that the obtained energy landscape contains three local minima (lines 8-10), two transition states (lines 11-18), and one fragmented state (lines 21-27). Notice there is more information available there, like absolute energies, the connections between local minima and transition states, and preexponential factors. To get a more amicable and interactive visualization of the energy landscape, you can use our amsmovie tool by executing the following command:
+
 .. code-block:: none
 
    $ amsmovie plams_workdir/CO_ads+Pt111/ams.rkf
@@ -130,6 +141,10 @@ For the structure comparison, we establish that the structures are the same if t
    :scale: 80 %
    :align: center
 
+.. Note::
+  AMS currently only supports non-activated exothermic adsorption (X\ :sub:`gas` + * ⟷ X*) and surface reactions (X*+Y* ⟷ Z*) processes.
+
+To visualize the binding sites you can use our tool amsinput as follows:
 
 .. code-block:: none
 
@@ -139,12 +154,14 @@ For the structure comparison, we establish that the structures are the same if t
    :scale: 60 %
    :align: center
 
+Note that AMS detected three binding sites, labeled as A, B, and C. In literature, they are commonly labeled as fcc, bridge, and hcp, respectively; we will fix that later. What is important is that they were detected automatically without any preconceived idea of the system!
 
 .. _getting_kmc_lattice:
 
 Getting the KMC Lattice
 =======================
 
+In the previous section, we obtained both the energy landscape and the associated binding sites but the irreducible symmetry representation. On the other hand, in this section, we are interested in generating all symmetry-related images based on the previous results. That's the aim of the next part of the script, which is as follows:
 
 .. code-block:: python
   :linenos:
@@ -154,7 +171,6 @@ Getting the KMC Lattice
   sett_bs.input.ams.PESExploration.LoadEnergyLandscape.Path= '../CO_ads+Pt111'
   sett_bs.input.ams.PESExploration.NumExpeditions = 1
   sett_ads.input.ams.PESExploration.NumExplorers = 1
-  sett_bs.input.ams.PESExploration.DynamicSeedStates = False
   sett_bs.input.ams.PESExploration.GenerateSymmetryImages = True
   sett_bs.input.ams.PESExploration.CalculateFragments = False
   sett_bs.input.ams.PESExploration.StructureComparison.CheckSymmetry = False
@@ -163,45 +179,78 @@ Getting the KMC Lattice
   results_bs = job.run()
 
 
+Here, we start from the settings object of the previous calculation (line 36) and load its energy landscape information (line 37). We selected both the number of expeditions and the number of explorers to 1 because we are not interested in running a new exploration process of the energy landscape. Instead, we want to generate the symmetry-related images activated by using the option ``PESExploration%GenerateSymmetryImages`` (line 40) and deactivating the option ``PESExploration.StructureComparison.CheckSymmetry`` (line 42). We deactivated ``PESExploration%CalculateFragments`` to save a bit of computational time (line 41). Then, we create the AMSJob calculation, using the same initial molecule and the new settings object (line 44), and run it (line 45). This calculation creates the images by applying the symmetry operators from the surface to the adsorbent's atoms and optimizing the new geometry afterward. Transition states are optimized using the dimer method. If everything went well, at this point, you should get something like this in the standard output:
+
+.. code-block:: none
+  :linenos:
+
+  [05.02|08:15:51] JOB CO_bs+Pt111 STARTED
+  [05.02|08:15:51] JOB CO_bs+Pt111 RUNNING
+  [05.02|08:16:16] JOB CO_bs+Pt111 FINISHED
+  [05.02|08:16:16] JOB CO_bs+Pt111 SUCCESSFUL
+
+Notice that the calculation took less than a minute (lines 1-4). To visualize the binding sites you can use again amsinput:
+
 .. code-block:: none
 
-   $ amsmovie plams_workdir/CO_bs+Pt111/ams.rkf
+   $ amsinput plams_workdir/CO_bs+Pt111/ams.rkf
 
 
 .. image:: ../../images/example_CO+Pt111-bs.png
    :scale: 60 %
    :align: center
 
+Now we have the full KMC lattice corresponding to the 3x3 Pt(111) surface with all the right links in the borders satisfying the periodic boundary conditions.
 
 .. _generating_pyzacros_objects:
 
 Generating the pyZacros objects
 ===============================
 
-.. code-block:: python
-  :linenos:
-  :lineno-start: 48
-
-  loader_ads = scm.pyzacros.RKFLoader( results_ads )
-  loader_bs = scm.pyzacros.RKFLoader( results_bs )
-
-  loader_ads.replace_site_types_names( ['A','B','C'], ['fcc','br','hcp'] )
-  loader_bs.replace_site_types_names( ['A','B','C'], ['fcc','br','hcp'] )
-  loader_bs.lattice.set_repeat_cell( (10,10) )
-
-
-The following figure is a schematic representation of reaction processes as defined in AMS and pyZacros. The pyZacros' RKFLoader class translates from one to the other. Red crosses represent the binding sites. A and B are the attached atoms to the binding sites (parent atoms), and R is the remainder of the adsorbed molecule.
+In the previous sections, we obtained the irreducible-symmetry energy landscape and the complete lattice of binding sites. These results have to be post-processed to generate the cluster expansion Hamiltonian, the reaction mechanism, and the KMC lattice in the pyZacros/Zacros scheme. pyZacros offers a way to do this through the class ``RKFLoader``. This class receives a Results object in the constructor and makes available the expected objects already translated into the pyZacros scheme, namely: mechanism, clusterExpansion, and lattice. The following figure is a schematic representation of reaction processes as defined in AMS and pyZacros, and how the RKFLoader class translates them from one to the other:
 
 .. image:: ../../images/example_CO+Pt111-rfkloader.png
    :scale: 60 %
    :align: center
 
+In this figure, red crosses represent the binding sites. A and B are the atoms attached to the binding sites (parent atoms), and R is the remainder of the adsorbed molecule. Remember that AMS currently only supports non-activated exothermic adsorption (X\ :sub:`gas` + * ⟷ X*) and surface reactions (X*+Y* ⟷ Z*) processes.
+
+The following section of the script shows how to use the RKFLoader object and access the corresponding translated objects in pyZacros. It also shows the way to replace the binding sites' labels for the appropriated ones (fcc, be, and hcp):
+
 .. code-block:: python
   :linenos:
+  :lineno-start: 47
+
+  loader_ads = scm.pyzacros.RKFLoader( results_ads )
+  loader_ads.replace_site_types_names( ['A','B','C'], ['fcc','br','hcp'] )
+  loader_bs = scm.pyzacros.RKFLoader( results_bs )
+  loader_bs.replace_site_types_names( ['A','B','C'], ['fcc','br','hcp'] )
 
   print(loader_ads.clusterExpansion)
   print(loader_ads.mechanism)
+  print(loader_bs.lattice)
   loader_bs.lattice.plot()
+
+Additionally, line 51 should print out the cluster expansion in the zacros format as follows:
+
+.. code-block:: none
+
+  energetics
+
+  cluster CO*-fcc
+    sites 1
+    lattice_state
+      1 CO* 1
+    site_types fcc
+    graph_multiplicity 1
+    cluster_eng -1.98185e+00
+  end_cluster
+
+  ...
+  end_energetics
+
+
+... line 53 the mechanism:
 
 .. code-block:: none
 
@@ -225,34 +274,60 @@ The following figure is a schematic representation of reaction processes as defi
   ...
   end_mechanism
 
+... line 54 the lattice:
 
 .. code-block:: none
 
-  energetics
-
-  cluster CO*_0-fcc,*_1-br:(0,1)
-    sites 2
-    neighboring 1-2
-    lattice_state
-      1 CO* 1
-      2 * 1
-    site_types fcc br
-    graph_multiplicity 2
-    cluster_eng -1.98185e+00
-  end_cluster
-
+  lattice periodic_cell
+    cell_vectors
+      8.31557575    0.00000000
+      4.15778787    7.20149984
+    repeat_cell 1 1
+    n_site_types 3
+    site_type_names br fcc hcp
+    n_cell_sites 45
+    site_types fcc hcp fcc fcc hcp fcc hcp fcc hcp hcp fcc fcc hcp fcc ...
+    site_coordinates
+      0.07278722    0.07705806
+      0.18374454    0.18811093
+      0.07278722    0.41039139
+      0.40612054    0.07705806
   ...
-  end_energetics
+      41-16  self
+      27-7  self
+      37-15  self
+    end_neighboring_structure
+  end_lattice
+
+Please consult Zacros' user guide for more details about the specific meaning of the keywords shown in the previous output blocks.
+
+Finally, line 55 allows visualizing the lattice:
+
+.. image:: ../../images/example_CO+Pt111-lattice_base.png
+   :scale: 60 %
+   :align: center
+
+Keep in mind that the cluster expansion and the mechanism were taken from the symmetry-irreducible energy landscape (see ``loader_ads``) and the lattice from the calculation of the symmetry-generated images (see ``loader_bs``).
+
+Finally, using a larger lattice in the final KMC simulation is convenient for improved statistics. Thus, we increasing the lattice size in 10x10. See lines and figure below:
+
+.. code-block:: python
+  :linenos:
+  :lineno-start: 57
+
+  loader_bs.lattice.set_repeat_cell( (10,10) )
+  loader_bs.lattice.plot()
 
 .. image:: ../../images/example_CO+Pt111-lattice.png
    :scale: 60 %
    :align: center
 
-
 .. _running_pyzacros_simulation:
 
 Running the pyZacros simulation
 ===============================
+
+At this point, we finally have all the ingredients we need for our final KMC simulation. The corresponding section of the code is the following:
 
 .. code-block:: python
   :linenos:
@@ -265,20 +340,34 @@ Running the pyZacros simulation
   settings.molar_fraction.CO = 0.1
 
   dt = 1e-8
+  settings.max_time = 1000*dt
   settings.snapshots = ('logtime', dt, 3.5)
   settings.species_numbers = ('time', dt)
-  settings.event_report = 'off'
-  settings.max_time = 1000*dt
 
   job = scm.pyzacros.ZacrosJob( lattice=loader_bs.lattice, mechanism=loader_ads.mechanism,
-                                  cluster_expansion=loader_ads.clusterExpansion,
-                                  initial_state=initialState, settings=settings )
+                                  cluster_expansion=loader_ads.clusterExpansion, settings=settings )
   results_pz = job.run()
 
 
+Here we use standard conditions of temperature (273.15 K; line 62) and pressure (1 atm; line 63) and a molar fraction of ``0.1`` for the CO in the gas phase. In addition to that, we run the simulation for 10 µs of KMC time (line 67), print snapshots of the lattice state at 0.01, 0.035, 0.123, 0.429, 1.5, and 5.25 µs (line 68 using the ``logtime`` option), and save information about the number of gas and surface species every 0.01 µs (line 69). Notice that by default pyZacros/Zacros will start the simulation with an empty lattice.
+
+Finally, we set up the ZacrosJob calculation and run it! (lines 71-73). Notice that the cluster expansion and the mechanism were taken from the symmetry-irreducible energy landscape (see ``loader_ads``) and the lattice from the calculation of the symmetry-generated images (see ``loader_bs``).
+
+If everything went well, at this point, you should get something like this in the standard output:
+
+.. code-block:: none
+  :linenos:
+
+  [05.02|08:15:51] JOB CO_bs+Pt111 STARTED
+  [05.02|08:15:51] JOB CO_bs+Pt111 RUNNING
+  [05.02|08:16:16] JOB CO_bs+Pt111 FINISHED
+  [05.02|08:16:16] JOB CO_bs+Pt111 SUCCESSFUL
+
+Notice that the calculation took less than a minute. Now we can visualize the results, and close the PALMS environment:
+
 .. code-block:: python
   :linenos:
-  :lineno-start: 77
+  :lineno-start: 75
 
   if( job.ok() ):
       results_pz.plot_lattice_states( results_pz.lattice_states() )
@@ -286,10 +375,20 @@ Running the pyZacros simulation
 
   scm.plams.finish()
 
+The obtained results are the following:
+
+Firstly, the lattice states (line 76):
+
 .. image:: ../../images/example_CO+Pt111-ls.png
    :scale: 60 %
    :align: center
 
+Secondly, the number of CO molecules absorbed as a function of time (line 77):
+
 .. image:: ../../images/example_CO+Pt111-mn.png
    :scale: 60 %
    :align: center
+
+These results show that the Pt surface gets completely poisoned by CO in around 5 µs. Keep in mind that the lattice has in 4500 sites.
+
+As we said initially, we are not interested in an accurate description of the system itself. So, even if this model is far from reality, it helps us illustrate all steps to follow in a fully automated workflow to go from atomistic to mesoscopic modeling.

@@ -97,7 +97,8 @@ class Cluster:
         self.__label = ""
         for i in range(len(self.species)):
             self.__label += self.species[i].symbol
-            self.__label += "_"+str(self.entity_number[i])
+            if( len(self.entity_number)>1 ):
+                self.__label += "_"+str(self.entity_number[i])
             self.__label += "-"
             self.__label += str(self.site_types[i])
             if(i != len(self.species)-1):

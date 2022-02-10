@@ -123,7 +123,8 @@ class ElementaryReaction:
 
         for i in range(len(species)):
             label += species[i].symbol
-            label += "_"+str(entity_number[i])
+            if( len(entity_number) > 1 ):
+                label += "_"+str(entity_number[i])
             label += "-"
             label += str(site_types[i])
             if(i != len(species)-1):
@@ -270,9 +271,12 @@ class ElementaryReaction:
             output += "\n"
 
         output += "  pre_expon "+("%12.5e"%self.pre_expon)+"\n"
+
         if self.reversible:
             output += "  pe_ratio "+("%12.5e"%self.pe_ratio)+"\n"
+
         output += "  activ_eng "+("%12.5e"%self.activation_energy)+"\n"
+
         if self.reversible:
             output += "end_reversible_step"
         else:

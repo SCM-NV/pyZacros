@@ -15,7 +15,7 @@
    width="1253.712"
    height="1305.584"
    viewBox="0 0 1253.712 1305.584"
-   sodipodi:docname="lattice_state.svg"
+   sodipodi:docname="example_CO+Pt111-ls.svg"
    inkscape:version="0.92.3 (2405546, 2018-03-11)">
   <metadata
      id="metadata8">
@@ -25,7 +25,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -44,9 +44,9 @@
      inkscape:window-height="1015"
      id="namedview4"
      showgrid="false"
-     inkscape:zoom="0.48828123"
-     inkscape:cx="1085.2211"
-     inkscape:cy="559.24254"
+     inkscape:zoom="0.34526697"
+     inkscape:cx="1088.0855"
+     inkscape:cy="708.72251"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -104,57 +104,57 @@
        inkscape:locked="false" />
   </sodipodi:namedview>
   <image
-     sodipodi:absref="example_CO+Pt111-ls4.png"
+     sodipodi:absref="/home/aguirre/Develop/pyzacros/doc/images/example_CO+Pt111-ls4.png"
      xlink:href="example_CO+Pt111-ls4.png"
-     width="614.40002"
-     height="460.79999"
-     preserveAspectRatio="none"
+     y="834.784"
+     x="8"
      id="image1566"
-     x="10"
-     y="834.784" />
+     preserveAspectRatio="none"
+     height="460.79999"
+     width="614.40002" />
   <image
-     sodipodi:absref="example_CO+Pt111-ls5.png"
+     sodipodi:absref="/home/aguirre/Develop/pyzacros/doc/images/example_CO+Pt111-ls5.png"
      xlink:href="example_CO+Pt111-ls5.png"
-     width="614.40002"
-     height="460.79999"
-     preserveAspectRatio="none"
+     y="834.784"
+     x="629.31207"
      id="image1577"
-     x="629.31207"
-     y="834.784" />
+     preserveAspectRatio="none"
+     height="460.79999"
+     width="614.40002" />
   <image
-     sodipodi:absref="example_CO+Pt111-ls2.png"
+     sodipodi:absref="/home/aguirre/Develop/pyzacros/doc/images/example_CO+Pt111-ls2.png"
      xlink:href="example_CO+Pt111-ls2.png"
-     width="614.40002"
-     height="460.79999"
-     preserveAspectRatio="none"
+     y="425.98401"
+     x="8"
      id="image1544"
-     x="10"
-     y="425.98401" />
+     preserveAspectRatio="none"
+     height="460.79999"
+     width="614.40002" />
   <image
-     sodipodi:absref="example_CO+Pt111-ls3.png"
+     sodipodi:absref="/home/aguirre/Develop/pyzacros/doc/images/example_CO+Pt111-ls3.png"
      xlink:href="example_CO+Pt111-ls3.png"
-     width="614.40002"
-     height="460.79999"
-     preserveAspectRatio="none"
+     y="425.98401"
+     x="629.31207"
      id="image1555"
-     x="629.31207"
-     y="425.98401" />
+     preserveAspectRatio="none"
+     height="460.79999"
+     width="614.40002" />
   <image
-     sodipodi:absref="example_CO+Pt111-ls0.png"
+     sodipodi:absref="/home/aguirre/Develop/pyzacros/doc/images/example_CO+Pt111-ls0.png"
      xlink:href="example_CO+Pt111-ls0.png"
-     width="614.40002"
-     height="460.79999"
-     preserveAspectRatio="none"
+     y="20"
+     x="8"
      id="image1522"
-     x="10"
-     y="20" />
-  <image
-     sodipodi:absref="example_CO+Pt111-ls1.png"
-     xlink:href="example_CO+Pt111-ls1.png"
-     width="614.40002"
-     height="460.79999"
      preserveAspectRatio="none"
-     id="image1533"
+     height="460.79999"
+     width="614.40002" />
+  <image
+     sodipodi:absref="/home/aguirre/Develop/pyzacros/doc/images/example_CO+Pt111-ls1.png"
+     xlink:href="example_CO+Pt111-ls1.png"
+     y="10"
      x="629.31207"
-     y="10" />
+     id="image1533"
+     preserveAspectRatio="none"
+     height="460.79999"
+     width="614.40002" />
 </svg>

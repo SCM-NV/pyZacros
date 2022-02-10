@@ -17,7 +17,6 @@ Simple examples
 .. toctree::
    :hidden:
 
-   COPt111
    co_tutorial
    zgb
 
@@ -40,6 +39,7 @@ Advanced examples
 .. toctree::
    :hidden:
 
+   COPt111
    zgb_pts
    zgb_ss
    zgb_ss_pc
