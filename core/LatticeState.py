@@ -351,7 +351,7 @@ class LatticeState:
         #--------------------------------
         # Plots the lattice
         #--------------------------------
-        self.lattice.plot( show=False, ax=ax, color='0.8', show_sites_ids=show_sites_ids )
+        self.lattice.plot( show=False, ax=ax, close=False, color='0.8', show_sites_ids=show_sites_ids )
 
         #--------------------------------
         # Plots the species
@@ -410,5 +410,5 @@ class LatticeState:
             else:
                 plt.pause( pause )
 
-                if( close ):
-                    plt.close("all")
+        if( close ):
+            plt.close("all")

@@ -358,7 +358,7 @@ class ZacrosResults( scm.plams.Results ):
         *   ``file_name`` --
         """
         if( type(data) == LatticeState ):
-            data.plot( show=show, pause=pause, ax=ax, file_name=file_name )
+            data.plot( show=show, pause=pause, ax=ax, close=close, file_name=file_name )
         if( type(data) == list ):
             try:
                 import matplotlib.pyplot as plt
@@ -376,7 +376,7 @@ class ZacrosResults( scm.plams.Results ):
                     ifile_name = prefix+"-"+"%05d"%i+ext
 
                 ax.cla()
-                ls.plot( show=show, pause=time_perframe, ax=ax, file_name=ifile_name )
+                ls.plot( show=show, pause=time_perframe, ax=ax, close=False, file_name=ifile_name )
 
             if( show ):
                 if( pause == -1 ):
@@ -384,8 +384,8 @@ class ZacrosResults( scm.plams.Results ):
                 else:
                     plt.pause( pause )
 
-                    if( close ):
-                        plt.close("all")
+            if( close ):
+                plt.close("all")
 
 
     def plot_molecule_numbers(self, species_name, pause=-1, show=True, ax=None, close=False,
@@ -449,8 +449,8 @@ class ZacrosResults( scm.plams.Results ):
             else:
                 plt.pause( pause )
 
-                if( close ):
-                    plt.close("all")
+        if( close ):
+            plt.close("all")
 
 
     def get_process_statistics(self):
@@ -600,8 +600,8 @@ class ZacrosResults( scm.plams.Results ):
             else:
                 plt.pause( pause )
 
-                if( close ):
-                    plt.close("all")
+        if( close ):
+            plt.close("all")
 
 
     def plot_process_statistics(self, data, key, log_scale=False, pause=-1, show=True, ax=None, close=False, file_name=None):
@@ -649,8 +649,8 @@ class ZacrosResults( scm.plams.Results ):
                 else:
                     plt.pause( pause )
 
-                    if( close ):
-                        plt.close("all")
+            if( close ):
+                plt.close("all")
 
 
     #--------------------------------------------------------------
