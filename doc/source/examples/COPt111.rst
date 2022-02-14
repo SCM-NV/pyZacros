@@ -1,6 +1,11 @@
 Poisoning of Pt(111) by CO: From atomistic to mesoscopic modeling
 -----------------------------------------------------------------
 
+.. note::
+  This example script uses computational engines from the Amsterdam Modeling Suite, and you will need a license to run them. Contact license@scm.com for further questions.
+
+  In order to run the example, the ``AMSBIN`` environment variable should be properly set. You can test this by typing ``$AMSBIN/plams -h`` in a terminal: this should print PLAMS' help message. If this is not the case (e.g. you get 'No such file or directory'), you need to set up the environmental variable ``$AMSBIN`` (see the `Linux Quickstart guide <../../Installation/Linux_Quickstart_Guide.html>`__ for details).
+
 This example illustrates a procedure for simulating molecular phenomena on catalytic surfaces, starting from an atomic-level description up to a mesoscopic regime in an automated way and with the lowest human supervision possible. We follow the strategy based on the intercommunication and cooperation of the three packages AMS-driver (hereafter AMS for shorter), EON, and Zacros. The full workflow is carried out in python.
 
 From the technical point of view, EON is combined with AMS at the source code level, and they work together transparently from an AMS user point of view (see PESExploration in the input file). On top of that, we used the PLAMS library to access AMS from python. On the other side, Zacros is coupled through pyZacros that generates the pyZacros objects from the AMS/EON results, run the calculation, and parse the output files to get back the calculation results to the python interface.

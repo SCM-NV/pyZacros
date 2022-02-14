@@ -35,10 +35,10 @@ class ZacrosJob( scm.plams.SingleJob ):
     *   ``lattice`` -- Lattice containing the lattice to be used during the calculation.
     *   ``mechanism`` -- Mechanism containing the mechanisms involed in the calculation.
     *   ``cluster_expansion`` --
-    *   ``initial_state`` -- Initial state of the system. By default a KMC simulation
-    *   ``restart`` --
+    *   ``initial_state`` -- Initial state of the system. By default the simulation will use an empty lattice.
     *   ``settings`` -- Settings containing the parameters of the Zacros calculation.
-        in Zacros is initialized with an empty lattice.
+    *   ``name`` -- A string containing the name of the job. All zacros input and output files are stored in a folder with this name. If not supplied, the default name is ``plamsjob``.
+    *   ``restart`` -- ZacrosJob object from which the calculation will be restarted
     """
 
     _command = os.environ["AMSBIN"]+'/zacros' if 'AMSBIN' in os.environ else 'zacros.x'

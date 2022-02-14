@@ -83,7 +83,6 @@ class ZacrosResults( scm.plams.Results ):
                 2        88   1.000E-01   5.00000E+02   -7.269E+01   22   17    -21    -36    31
                 3       176   2.000E-01   5.00000E+02   -9.139E+01   29   19    -41    -71    64
                 4       247   3.000E-01   5.00000E+02   -1.041E+02   34   20    -57    -99    91
-
                 5       292   4.000E-01   5.00000E+02   -1.156E+02   39   20    -68   -116   108
                 6       353   5.000E-01   5.00000E+02   -1.235E+02   43   19    -82   -139   132
                 7       394   5.999E-01   5.00000E+02   -1.116E+02   35   24    -86   -160   148
@@ -635,6 +634,7 @@ class ZacrosResults( scm.plams.Results ):
                     maxval = max(idata[key].values())
 
             for i,idata in enumerate(data):
+                ifile_name = None
                 if( file_name is not None ):
                     prefix,ext = os.path.splitext(file_name)
                     ifile_name = prefix+"-"+"%05d"%i+ext

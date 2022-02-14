@@ -3,8 +3,9 @@
 ZacrosResults
 -------------
 
-For an explanation purpose let us assume that ``/home/user/xyz`` contains three files: ``ammonia.xyz``, ``ethanol.xyz``, ``water.xyz``.
-When you run this script the standard output will look something like:
+The ``ZacrosResults`` class was designed to take charge of the job folder after executing the ``ZacrosJob``. It gathers the information from the output files and helps extract data of interest from them. Every ZacrosJob instance has an associated ``ZacrosResults`` instance created automatically on job creation and stored in its results attribute. This class extends the `PLAMS Results <../../plams/components/results.html>`_ class.
+
+For our example (see :ref:`use case system <use_case_model_zgb>`), the following lines of code show an example of how to use the ``ZacrosResults`` class:
 
 .. code-block:: python
   :linenos:
@@ -21,8 +22,13 @@ When you run this script the standard output will look something like:
       pstat = results.get_process_statistics()
       results.plot_process_statistics( pstat, key="number_of_events" )
 
-For an explanation purpose let us assume that ``/home/user/xyz`` contains three files: ``ammonia.xyz``, ``ethanol.xyz``, ``water.xyz``.
-When you run this script the standard output will look something like:
+
+Here, the ``ZacrosResults`` object ``results`` is created by calling the method ``run()`` of the corresponding ``ZacrosJob`` job (line 1).
+Afterward, the method ``ok()`` is invoked to assure that the calculation finished appropriately (line 3), and only after that,
+it is good to go to get information from the output files by using the ZacrosResults methods (lines 4-11).
+As an example, the method ``provided quantities()`` returns the content of the zacros output file ``specnum_output.txt`` in the form of a dictionary. Thus, in line 5, we print out the number of CO\ :sub:`2` molecules produced during the simulation. In addition to getting the information from the output files, the ZacrosResults class also offers some methods to plot the results directly, as shown in lines 7-11.
+
+The execution of the block of code shown above produces the following information to the standard output:
 
 .. code-block:: none
 
@@ -31,7 +37,8 @@ When you run this script the standard output will look something like:
    [05.11|10:22:27] JOB plamsjob FINISHED
    [05.11|10:22:27] JOB plamsjob SUCCESSFUL
    nCO2 = [0, 28, 57, 85, 118, 139, 161, 184, 212, 232, 264]
-   [05.11|10:22:27] PLAMS run finished. Goodbye
+
+Notice the line corresponding to the number of CO\ :sub:`2` molecules produced during the simulation. The rest of the functions generate the following figures:
 
 .. code-block:: python
 

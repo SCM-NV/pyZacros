@@ -1,6 +1,6 @@
-"""Test script that will reproduce CO_tutorial inputs."""
+"""Test script that reproduces https://zacros.org/tutorials/10-tutorial-4-dft-energies-to-zacros-input?showall=1."""
 
-import scm.plams
+import scm
 import scm.pyzacros as pz
 
 #---------------------------------------------
@@ -26,8 +26,6 @@ COOH_adsorbed = pz.Species("COOH*", 1)
 # Lattice setup:
 #---------------------------------------------
 latt = pz.Lattice( lattice_type=pz.Lattice.HEXAGONAL, lattice_constant=1.0, repeat_cell=[8,10] )
-
-#print(latt)
 
 #---------------------------------------------
 # Clusters:
@@ -90,8 +88,6 @@ myClusterExpansion.append( OH_point )
 myClusterExpansion.extend( [O_point, H_point, COOH_point] )
 myClusterExpansion.extend( [CO_pair_1NN, OH_H_1NN, O_H_1NN, CO_OH_1NN, CO_O_1NN] )
 
-#print(myClusterExpansion)
-
 #---------------------------------------------
 # Elementary Reactions
 #---------------------------------------------
@@ -116,7 +112,7 @@ H2_dissoc_adsorp = pz.ElementaryReaction(initial=[s0, s0, H2_gas],
 H2O_adsorption = pz.ElementaryReaction(initial=[s0, H2O_gas],
                                        final=[H2O_adsorbed],
                                        reversible=True,
-                                       pre_expon=2.776e+002,
+                                       pre_expon=2.776e+002,  # Scaled-down 1e+5 times for efficiency
                                        pe_ratio=2.665e-006,
                                        activation_energy=0.0,
                                        label="H2O_adsorption")
@@ -170,9 +166,6 @@ CO_oxidation = pz.ElementaryReaction(initial=[CO_adsorbed, O_adsorbed],
 mech = pz.Mechanism([CO_adsorption, H2_dissoc_adsorp, H2O_adsorption,
                      H2O_dissoc_adsorp, OH_decomposition, COOH_formation,
                      COOH_decomposition, CO_oxidation])
-
-#print(mech.adsorbed_species())
-#print(mech.gas_species())
 
 #---------------------------------------------
 # Settings:

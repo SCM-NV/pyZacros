@@ -5,11 +5,7 @@
 Examples
 ========
 
-In this chapter we present example PLAMS scripts covering various applications, from very simple tasks (like running the same calculation for multiple molecules) to more advanced dynamic workflows.
-
-Most of these example scripts use computational engines from the Amsterdam Modeling Suite, and you will need a license to run them. Contact license@scm.com for further questions.
-
-In order to run the examples, the ``AMSBIN`` environment variable should be properly set. You can test this by typing ``$AMSBIN/plams -h`` in a terminal: this should print PLAMS' help message. If this is not the case (e.g. you get 'No such file or directory'), you need to set up the environmental variable ``$AMSBIN`` (see the `Linux Quickstart guide <../../Installation/Linux_Quickstart_Guide.html>`__ for details).
+In this chapter we present example pyZacros scripts covering various applications.
 
 Simple examples
 ---------------
@@ -17,12 +13,12 @@ Simple examples
 .. toctree::
    :hidden:
 
-   co_tutorial
+   WaterGasShiftOnPt111
    zgb
 
-.. |example1| image:: ../../images/example_CO-tutorial.png
+.. |example1| image:: ../../images/example_WaterGasShiftOnPt111.png
    :scale: 35 %
-   :target: co_tutorial.html
+   :target: WaterGasShiftOnPt111.html
 
 .. |example2| image:: ../../images/example_ZGB.gif
    :scale: 35 %
@@ -41,33 +37,16 @@ Advanced examples
 
    COPt111
    zgb_pts
-   zgb_ss
-   zgb_ss_pc
 
 .. |example3| image:: ../../images/example_CO+Pt111-main.png
-   :scale: 47 %
+   :scale: 54 %
    :target: COPt111.html
 
 .. |example4| image:: ../../images/example_ZGB-PhaseTransitions.png
    :scale: 32 %
    :target: zgb_pts.html
 
-.. |example5| image:: ../../images/example_ZGB-PhaseTransitions-SS.png
-   :scale: 32 %
-   :target: zgb_ss.html
-
-.. |example6| image:: ../../images/example_ZGB-PhaseTransitions.png
-   :scale: 32 %
-   :target: zgb_ss_pc.html
-
 .. csv-table::
    :header: |example3|, |example4|
 
-   "Poisoning of Pt(111) by CO: |br| From atomistic to mesoscopic |br| modeling.", "ZGB model |br| + Phase Transitions. |br| |br|"
-
-
-.. csv-table::
-   :header: |example5|, |example5|
-
-   "ZGB model |br| + Phase Transitions |br| + Stationary Simulation.  |br| |br|", "ZGB model |br| + Phase Transitions |br| + Stationary Simulation |br| + Parameter Continuation."
-
+   "Poisoning of Pt(111) by CO: |br| From atomistic to mesoscopic |br| modeling.", "ZGB model + Phase Transitions. |br| |br|"
