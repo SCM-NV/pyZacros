@@ -6,9 +6,9 @@ __all__ = ['ClusterExpansion']
 
 class ClusterExpansion( UserList ):
     """
-    Creates a new ClusterExpansion object
+    Creates a new ClusterExpansion object which is formally a list of Clusters. It implements all python list operations.
 
-    *   ``data`` --
+    *   ``data`` -- List of Clusters to initially include.
     """
 
     def __init__(self, data=[]):
@@ -25,7 +25,7 @@ class ClusterExpansion( UserList ):
 
     def append(self, item):
         """
-        Append item to the end of the sequence
+        Appends a cluster to the end of the sequence. Appends a cluster to the end of the sequence. Notice that duplicate items are not accepted. In case of duplicity, the new cluster is just ignored.
         """
         self.insert( len(self), item )
 
@@ -42,10 +42,10 @@ class ClusterExpansion( UserList ):
 
     def insert(self, i, item):
         """
-        Insert value before index
+        Inserts item to the list at the i-th index.
 
-        *   ``i`` --
-        *   ``item`` --
+        *   ``i`` -- The index where ``item`` needs to be inserted.
+        *   ``item`` --  The cluster to be inserted in the list.
         """
         for erxn in self:
             if( erxn.label() == item.label() ):
@@ -56,7 +56,7 @@ class ClusterExpansion( UserList ):
 
     def __str__(self):
         """
-        Translates the object to a string
+        Translates the object to a string in Zacros input files format.
         """
         output  = "energetics\n\n"
 

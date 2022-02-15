@@ -351,8 +351,6 @@ pyZacros also offers the function ``plot_molecule_numbers()`` to visualize the m
 
 From the figures above, it is clear that we have reached a steady-state for x\ :sub:`CO` =0.54. Notice that the first derivative is approximately constant at 2.7 mol/s/site within a tolerance of 5 mol/s/site. Contrary, this is not the case of x\ :sub:`CO` =0.55, where the first derivative continuously decreases.
 
-In the next example, we will modify the script presented here to reach a steady-state configuration for every composition.
-
 As a final note, you can use the following script to visualize the results without running the full calculation:
 
 .. code-block:: python

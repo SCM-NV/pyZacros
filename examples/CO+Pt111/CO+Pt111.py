@@ -7,7 +7,7 @@ scm.plams.init()
 
 engine_sett = scm.plams.Settings()
 engine_sett.input.ReaxFF.ForceField = 'CHONSFPtClNi.ff'
-engine_sett.input.ReaxFF.Charges = 'Solver=Direct'
+engine_sett.input.ReaxFF.Charges.Solver = 'Direct'
 
 sett_ads = scm.plams.Settings()
 sett_ads.input.ams.Constraints.FixedRegion = 'surface'
@@ -27,21 +27,21 @@ sett_ads.input.ams.PESExploration.StructureComparison.CheckSymmetry = True
 sett_ads.input.ams.PESExploration.BindingSites.Calculate = True
 sett_ads.input.ams.PESExploration.BindingSites.NeighborCutoff = 3.8
 
-job = scm.plams.AMSJob(name='CO_ads+Pt111', molecule=mol, settings=sett_ads+engine_sett)
+job = scm.plams.AMSJob(name='pes_exploration', molecule=mol, settings=sett_ads+engine_sett)
 results_ads = job.run()
 
 energy_landscape = results_ads.get_energy_landscape()
 print(energy_landscape)
 
 sett_bs = sett_ads.copy()
-sett_bs.input.ams.PESExploration.LoadEnergyLandscape.Path= '../CO_ads+Pt111'
+sett_bs.input.ams.PESExploration.LoadEnergyLandscape.Path= '../pes_exploration'
 sett_bs.input.ams.PESExploration.NumExpeditions = 1
 sett_ads.input.ams.PESExploration.NumExplorers = 1
 sett_bs.input.ams.PESExploration.GenerateSymmetryImages = True
 sett_bs.input.ams.PESExploration.CalculateFragments = False
 sett_bs.input.ams.PESExploration.StructureComparison.CheckSymmetry = False
 
-job = scm.plams.AMSJob(name='CO_bs+Pt111', molecule=mol, settings=sett_bs+engine_sett)
+job = scm.plams.AMSJob(name='binding_sites', molecule=mol, settings=sett_bs+engine_sett)
 results_bs = job.run()
 
 loader_ads = scm.pyzacros.RKFLoader( results_ads )
@@ -68,8 +68,10 @@ settings.max_time = 1000*dt
 settings.snapshots = ('logtime', dt, 3.5)
 settings.species_numbers = ('time', dt)
 
-job = scm.pyzacros.ZacrosJob( lattice=loader_bs.lattice, mechanism=loader_ads.mechanism,
-                                cluster_expansion=loader_ads.clusterExpansion, settings=settings )
+job = scm.pyzacros.ZacrosJob( name='zacros_job', lattice=loader_bs.lattice,
+                                mechanism=loader_ads.mechanism,
+                                cluster_expansion=loader_ads.clusterExpansion,
+                                settings=settings )
 results_pz = job.run()
 
 if( job.ok() ):

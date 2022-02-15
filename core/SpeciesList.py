@@ -7,9 +7,9 @@ __all__ = ['SpeciesList']
 
 class SpeciesList(UserList):
     """
-    Creates a new SpeciesList object
+    Creates a new SpeciesList object which is formally a list of Species. It implements all python list operations.
 
-    *   ``data`` --
+    *   ``data`` -- List of Species to initially include.
     """
 
     def __init__( self, data=[] ):
@@ -110,9 +110,9 @@ class SpeciesList(UserList):
 
     def mass( self, entity_numbers ):
         """
-        Returns the total mass as the sum of the all species based on the most common isotope in Da
+        Returns the total mass as the sum of its all species in Da.
 
-        *   ``entity_numbers`` --
+        *   ``entity_numbers`` -- Avoids double counting of the species if they belong to the same entity.
         """
         mass = 0.0
         mapped_entity = {}
@@ -150,7 +150,7 @@ class SpeciesList(UserList):
 
     def remove_duplicates(self):
         """
-        Remove duplicates
+        Removes duplicate species. Two species are considered the same if they have the same symbol.
         """
         copy_self = copy.deepcopy(self.data)
 
@@ -165,7 +165,7 @@ class SpeciesList(UserList):
     @staticmethod
     def default_entity_numbers( nsites, species ):
         """
-        Calculates the entity numbers assuming that ...
+        Calculates the list of entity numbers assuming that species with the same symbol belong to the same entity.
 
         *   ``nsites`` --
         *   ``species`` --

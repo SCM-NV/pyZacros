@@ -75,4 +75,4 @@ API
 
 .. currentmodule:: scm.pyzacros.core.SpeciesList
 .. autoclass:: SpeciesList
-  :exclude-members: __init__, __hash__, __str__, _SpeciesList__updateLabel
+  :exclude-members: __init__, __hash__, __str__, _SpeciesList__updateLabel, default_entity_numbers

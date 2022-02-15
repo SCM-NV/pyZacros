@@ -6,11 +6,11 @@ class Species:
     """
     Species class that represents a chemical species
 
-    *   ``symbol`` -- Species' symbol. If symbol contains the
-        character '*', it is considered an adsorbed species. Otherwise
-        it si considered a gas species. e.g. H2*
-    *   ``denticity`` -- Species' denticity e.g. 2
-    *   ``gas_energy`` -- Species' gas energy e.g. 0.0
+    *   ``symbol`` -- Species' symbol. If symbol contains the character '*', it is considered an adsorbed species. Otherwise it is considered a gas species. e.g. H2*
+    *   ``denticity`` -- Species' denticity e.g. 2. If None, it is set as the number of times that the character '*' is found in the symbol.
+    *   ``gas_energy`` -- Species' gas energy e.g. ``0.0``
+    *   ``kind`` -- It can be ``Species.SURFACE`` (0), or ``Species.GAS`` (1). If None, it is selected from the symbol.
+    *   ``mass`` -- Specifies the mass in Da. If None, it uses the mass of the most abundant isotopes of atoms that compose it.
     """
 
     # Mass of the most common isotope in Da
@@ -155,7 +155,7 @@ class Species:
 
     def __hash__(self):
         """
-        Returns a hash based on the symbol
+        Returns a hash based on the symbol.
         """
         return hash(self.symbol)
 
@@ -170,28 +170,28 @@ class Species:
 
     def is_adsorbed( self ):
         """
-        Returns True if the name of the species has the character '*'
+        Returns True if the name of the species has the character '*'.
         """
         return ( self.kind == Species.SURFACE )
 
 
     def is_gas( self ):
         """
-        Returns True if the name of the species has no the character '*'
+        Returns True if the name of the species has no the character '*'.
         """
         return ( self.kind == Species.GAS )
 
 
     def composition( self ):
         """
-        Returns a dictionary containing the number of atoms of each kind
+        Returns a dictionary containing the number of atoms of each kind.
         """
         return self.__composition
 
 
     def mass( self ):
         """
-        Returns the mass of the species based on the most common isotope in Da
+        Returns the mass of the species in Da.
         """
         return self.__mass
 

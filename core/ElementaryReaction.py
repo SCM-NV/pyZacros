@@ -7,14 +7,17 @@ class ElementaryReaction:
     """
     Creates a new ElementaryReaction object
 
-    *   ``site_types`` --
-    *   ``neighboring`` --
-    *   ``initial`` -- SpeciesList. Gas species have to be at the end of the list
-    *   ``final`` -- SpeciesList. Gas species have to be at the end of the list
-    *   ``reversible`` --
-    *   ``pre_expon`` --
-    *   ``pe_ratio`` --
-    *   ``activation_energy`` --
+    *   ``initial`` -- List of species bound to the sites in the initial state, e.g. ``[ Species("H*",1), Species("H*",1) ]``. Gas species have to be added at the end of the list.
+    *   ``final`` -- Same as ``initial`` but for the final state.
+    *   ``site_types`` -- Specifies the name of the sites in the graph pattern, e.g. ``['fcc','hcp']``. Notice that the order is essential and it should agree with the ``initial`` and ``final`` options.
+    *   ``initial_entity_number`` -- List of the molecular entities ids bound to each site. For example, if a bidentate species is bound to sites 1 and 2 ( ``species=[ Species("H**",2), Species("H**",2) ]`` ), both of these sites will have the same entity numbers, i.e. ``entity_number=[0,0]``. By default, the list of entity numbers is created by assuming that species with the same symbol belong to the same entity.
+    *   ``final_entity_number`` -- Same as ``initial_entity_number`` but for the final state.
+    *   ``neighboring`` -- Specifies the neighboring between sites, if more than one sites appear in the graph pattern, e.g. [ (0,1) ]
+    *   ``reversible`` -- Sets the reaction as a reversible step.
+    *   ``pre_expon`` -- Specifies the pre-exponential in the Arrhenius formula giving the rate constant of that elementary step. Units: 1/s or Hz.
+    *   ``pe_ratio`` -- Sets the ratio of forward over reverse pre-exponential terms if the reaction is reversible.
+    *   ``activation_energy`` -- Sets the activation energy at the zero coverage limit. Units eV.
+    *   ``label`` -- If None, a unique label is generated based on the label of its initial and final states.
     """
 
     def __init__(self,

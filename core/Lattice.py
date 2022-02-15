@@ -380,14 +380,14 @@ class Lattice:
 
     def plot(self, pause=-1, show=True, color=None, ax=None, close=False, show_sites_ids=False):
         """
-        Uses matplotlib to visualize the lattice
+        Uses Matplotlib to visualize the lattice. Be sure that Matplotlib is installed in your system; otherwise, the function does nothing.
 
-        *   ``pause`` --
-        *   ``show`` --
-        *   ``color`` --
-        *   ``ax`` --
-        *   ``close`` --
-        *   ``show_sites_ids`` --
+        *   ``pause`` -- After showing the figure, it will wait ``pause``-seconds before refreshing. This can be used for crude animation.
+        *   ``show`` -- Enables showing the figure on the screen.
+        *   ``color`` -- Uses the same color for both binding sites and connections; e.g. 'k'. See `matplotlib.colors <https://matplotlib.org/stable/api/colors_api.html>`_.
+        *   ``ax`` -- The axes of the plot. It contains most of the figure elements: Axis, Tick, Line2D, Text, Polygon, etc., and sets the coordinate system. See `matplotlib.axes <https://matplotlib.org/stable/api/axes_api.html#id2>`_.
+        *   ``close`` -- Closes the figure window after pause time.
+        *   ``show_sites_ids`` -- Shows the binding sites id on the figure.
         """
         try:
             import math
@@ -483,7 +483,7 @@ class Lattice:
 
     def __str__(self):
         """
-        Translate the object to a string.
+        Translate the object to a string following the Zacros input files format
         """
         output = ""
 
@@ -600,7 +600,7 @@ class Lattice:
         """
         Set the parameter repeat_cell and update all internal information
 
-        *   ``repeat_cell`` --
+        *   ``repeat_cell`` -- The number of repetitions of the unit cell in the directions of unit vectors. *e.g.* ``(10,10)``
         """
         if( self.__origin == Lattice.__FROM_DEFAULT ):
             self.__fromDefaultLattices( self.__lattice_type_default, self.__lattice_constant_default, repeat_cell )

@@ -14,13 +14,13 @@ From the physical/chemical point of view, AMS is used to explore the energy land
 
 The example we show here is a toy model system for the adsorption and diffusion of carbon monoxide on the Pt(111) surface. We are not interested in an accurate description of the system itself. We are interested in studying a simple and computationally cheap design to start with and illustrate all possible issues we can face during the automation process. In particular, we will not consider any lateral interaction energy correction among CO molecules at this stage. The simulation described here basically shows the poisoning process of Pt(111) by CO.
 
-This example shows how to conduct a Kinetic Monte-Carlo simulation of CO interacting with Pt(111) surface, starting from its atomic representation. To that aim, we use a 3x3 Pt(111) surface to avoid artificial lateral interactions between the CO and its periodic images. Here, it is essential to point out that both the absorption-sites and the reaction mechanisms will be automatically obtained from the results of the AMS calculation and translated appropriately to Zacros. There is not any predefined knowledge about the system. The expected mechanisms are sketched in the following figure.
+This example shows how to conduct a Kinetic Monte-Carlo simulation of CO interacting with Pt(111) surface, starting from its atomic representation. To that aim, we use a 3x3 Pt(111) surface to avoid artificial lateral interactions between the CO and its periodic images. Here, it is essential to point out that both the adsorption-sites and the reaction mechanisms will be automatically obtained from the results of the AMS calculation and translated appropriately to Zacros. There is not any predefined knowledge about the system. The expected mechanisms are sketched in the following figure.
 
 .. image:: ../../images/CO+Pt111-sketch.png
    :scale: 60 %
    :align: center
 
-As we said before, the only necessary information from the system is an initial guess for its geometry. We used the AMS GUI for this. Here we do not show details on how to do that, so please referees to our GUI's documentation. In a nutshell, we generated a 3x3 Pt(111) surface, put a CO molecule on top of it, and optimized the geometry by keeping the whole Pt(111) surface frozen. Additionally, we created two regions, namely 'adsorbate' and 'surface.' The former for the CO atoms and the latter for the atoms of the platinum surface.
+As we said before, the only necessary information from the system is an initial guess for its geometry. We used the AMS GUI for this. Here we do not show details on how to do that, so please refers to our GUI's documentation. In a nutshell, we generated a 3x3 Pt(111) surface, put a CO molecule on top of it, and optimized the geometry by keeping the whole Pt(111) surface frozen. Additionally, we created two regions, namely 'adsorbate' and 'surface.' The former for the CO atoms and the latter for the atoms of the platinum surface.
 
 To make this example reproducible, we provide the geometry in ``XYZ`` format. See the figure below.
 
@@ -49,7 +49,7 @@ The script starts as follows:
 
   scm.plams.init()
 
-Firstly we load the required python libraries: PLAMS and pyZacros (lines 1-2). Then, we create a PLAMS molecule using the XYZ geometry file we provided above (line 4). Take note that the molecule automatically includes the information about regions that are described in the XYZ file. Finally, we start the PLAM environment (line 6).
+Firstly we load the required python libraries: PLAMS and pyZacros (lines 1-2). Then, we create a PLAMS molecule using the XYZ geometry file we provided above (line 4). Take note that the molecule automatically includes the information about regions that are described in the XYZ file. Finally, we start the PLAMS environment (line 6).
 
 It is convenient to divide our script into four sections for clarity. In the first one (:ref:`getting_energy_landscape`), we will obtain the symmetry's irreducible energy landscape for this system, which will indirectly allow us to define the associated reaction mechanisms and the cluster expansion Hamiltonian. In the second one (:ref:`getting_kmc_lattice`), we will get the KMC lattice, which requires applying all symmetry operators of the Pt surface. In the third one (:ref:`generating_pyzacros_objects`), we will use this information to create the corresponding pyZacros to finally, in the fourth one (:ref:`running_pyzacros_simulation`), run the KMC simulation itself.
 
@@ -66,7 +66,7 @@ This section aims to get the energy landscape of the system, but by being carefu
 
   engine_sett = scm.plams.Settings()
   engine_sett.input.ReaxFF.ForceField = 'CHONSFPtClNi.ff'
-  engine_sett.input.ReaxFF.Charges = 'Solver=Direct'
+  engine_sett.input.ReaxFF.Charges.Solver = 'Direct'
 
   sett_ads = scm.plams.Settings()
   sett_ads.input.ams.Constraints.FixedRegion = 'surface'
@@ -86,14 +86,14 @@ This section aims to get the energy landscape of the system, but by being carefu
   sett_ads.input.ams.PESExploration.BindingSites.Calculate = True
   sett_ads.input.ams.PESExploration.BindingSites.NeighborCutoff = 3.8
 
-  job = scm.plams.AMSJob(name='CO_ads+Pt111', molecule=mol, settings=sett_ads+engine_sett)
+  job = scm.plams.AMSJob(name='pes_exploration', molecule=mol, settings=sett_ads+engine_sett)
   results_ads = job.run()
 
   energy_landscape = results_ads.get_energy_landscape()
   print(energy_landscape)
 
 
-This code basically setup a PESExploration calculation using AMS and run it. We will describe the most relevant options in this context. For more information, please referees to our AMS user's manual.
+This code basically setup a PESExploration calculation using AMS and run it. We will describe the most relevant options in this context. For more information, please refers to our AMS user's manual.
 
 Lines 8-10 select the engine to use. Here we chose the reactive force field (ReaxFF) method in combination with the parameterization 'CHONSFPtClNi.ff,' which has been specially designed to study the surface oxidation of Pt(111).
 
@@ -109,10 +109,10 @@ Finally, we create the AMSJob calculation, which requires both the initial molec
   :linenos:
 
   [05.02|08:15:06] PLAMS working folder: /home/user/pyzacros/examples/CO+Pt111/plams_workdir
-  [05.02|08:15:06] JOB CO_ads+Pt111 STARTED
-  [05.02|08:15:06] JOB CO_ads+Pt111 RUNNING
-  [05.02|08:15:51] JOB CO_ads+Pt111 FINISHED
-  [05.02|08:15:51] JOB CO_ads+Pt111 SUCCESSFUL
+  [05.02|08:15:06] JOB pes_exploration STARTED
+  [05.02|08:15:06] JOB pes_exploration RUNNING
+  [05.02|08:15:51] JOB pes_exploration FINISHED
+  [05.02|08:15:51] JOB pes_exploration SUCCESSFUL
   All stationary points:
   ======================
   State 1: COPt36 local minimum @ -7.65164210 Hartree (found 1 times, results on State-1_MIN)
@@ -140,7 +140,7 @@ From this output information, we can see that the calculation took less than a m
 
 .. code-block:: none
 
-   $ amsmovie plams_workdir/CO_ads+Pt111/ams.rkf
+   $ amsmovie plams_workdir/pes_exploration/ams.rkf
 
 .. image:: ../../images/example_CO+Pt111-iel.png
    :scale: 80 %
@@ -153,7 +153,7 @@ To visualize the binding sites you can use our tool amsinput as follows:
 
 .. code-block:: none
 
-   $ amsinput plams_workdir/CO_ads+Pt111/ams.rkf
+   $ amsinput plams_workdir/pes_exploration/ams.rkf
 
 .. image:: ../../images/example_CO+Pt111-ibs.png
    :scale: 60 %
@@ -173,14 +173,14 @@ In the previous section, we obtained both the energy landscape and the associate
   :lineno-start: 36
 
   sett_bs = sett_ads.copy()
-  sett_bs.input.ams.PESExploration.LoadEnergyLandscape.Path= '../CO_ads+Pt111'
+  sett_bs.input.ams.PESExploration.LoadEnergyLandscape.Path= '../pes_exploration'
   sett_bs.input.ams.PESExploration.NumExpeditions = 1
   sett_ads.input.ams.PESExploration.NumExplorers = 1
   sett_bs.input.ams.PESExploration.GenerateSymmetryImages = True
   sett_bs.input.ams.PESExploration.CalculateFragments = False
   sett_bs.input.ams.PESExploration.StructureComparison.CheckSymmetry = False
 
-  job = scm.plams.AMSJob(name='CO_bs+Pt111', molecule=mol, settings=sett_bs+engine_sett)
+  job = scm.plams.AMSJob(name='binding_sites', molecule=mol, settings=sett_bs+engine_sett)
   results_bs = job.run()
 
 
@@ -189,16 +189,16 @@ Here, we start from the settings object of the previous calculation (line 36) an
 .. code-block:: none
   :linenos:
 
-  [05.02|08:15:51] JOB CO_bs+Pt111 STARTED
-  [05.02|08:15:51] JOB CO_bs+Pt111 RUNNING
-  [05.02|08:16:16] JOB CO_bs+Pt111 FINISHED
-  [05.02|08:16:16] JOB CO_bs+Pt111 SUCCESSFUL
+  [05.02|08:15:51] JOB binding_sites STARTED
+  [05.02|08:15:51] JOB binding_sites RUNNING
+  [05.02|08:16:16] JOB binding_sites FINISHED
+  [05.02|08:16:16] JOB binding_sites SUCCESSFUL
 
 Notice that the calculation took less than a minute (lines 1-4). To visualize the binding sites you can use again amsinput:
 
 .. code-block:: none
 
-   $ amsinput plams_workdir/CO_bs+Pt111/ams.rkf
+   $ amsinput plams_workdir/binding_sites/ams.rkf
 
 
 .. image:: ../../images/example_CO+Pt111-bs.png
@@ -349,30 +349,32 @@ At this point, we finally have all the ingredients we need for our final KMC sim
   settings.snapshots = ('logtime', dt, 3.5)
   settings.species_numbers = ('time', dt)
 
-  job = scm.pyzacros.ZacrosJob( lattice=loader_bs.lattice, mechanism=loader_ads.mechanism,
-                                  cluster_expansion=loader_ads.clusterExpansion, settings=settings )
+  job = scm.pyzacros.ZacrosJob( name='zacros_job', lattice=loader_bs.lattice,
+                                    mechanism=loader_ads.mechanism,
+                                    cluster_expansion=loader_ads.clusterExpansion,
+                                    settings=settings )
   results_pz = job.run()
 
 
 Here we use standard conditions of temperature (273.15 K; line 62) and pressure (1 atm; line 63) and a molar fraction of ``0.1`` for the CO in the gas phase. In addition to that, we run the simulation for 10 µs of KMC time (line 67), print snapshots of the lattice state at 0.01, 0.035, 0.123, 0.429, 1.5, and 5.25 µs (line 68 using the ``logtime`` option), and save information about the number of gas and surface species every 0.01 µs (line 69). Notice that by default pyZacros/Zacros will start the simulation with an empty lattice.
 
-Finally, we set up the ZacrosJob calculation and run it! (lines 71-73). Notice that the cluster expansion and the mechanism were taken from the symmetry-irreducible energy landscape (see ``loader_ads``) and the lattice from the calculation of the symmetry-generated images (see ``loader_bs``).
+Finally, we set up the ZacrosJob calculation and run it! (lines 71-75). Notice that the cluster expansion and the mechanism were taken from the symmetry-irreducible energy landscape (see ``loader_ads``) and the lattice from the calculation of the symmetry-generated images (see ``loader_bs``).
 
 If everything went well, at this point, you should get something like this in the standard output:
 
 .. code-block:: none
   :linenos:
 
-  [05.02|08:15:51] JOB CO_bs+Pt111 STARTED
-  [05.02|08:15:51] JOB CO_bs+Pt111 RUNNING
-  [05.02|08:16:16] JOB CO_bs+Pt111 FINISHED
-  [05.02|08:16:16] JOB CO_bs+Pt111 SUCCESSFUL
+  [05.02|08:15:51] JOB zacros_job STARTED
+  [05.02|08:15:51] JOB zacros_job RUNNING
+  [05.02|08:16:16] JOB zacros_job FINISHED
+  [05.02|08:16:16] JOB zacros_job SUCCESSFUL
 
-Notice that the calculation took less than a minute. Now we can visualize the results, and close the PALMS environment:
+Notice that the calculation took less than a minute. Now we can visualize the results, and close the PLAMS environment:
 
 .. code-block:: python
   :linenos:
-  :lineno-start: 75
+  :lineno-start: 77
 
   if( job.ok() ):
       results_pz.plot_lattice_states( results_pz.lattice_states() )
@@ -382,13 +384,13 @@ Notice that the calculation took less than a minute. Now we can visualize the re
 
 The obtained results are the following:
 
-Firstly, the lattice states (line 76):
+Firstly, the lattice states (line 78):
 
 .. image:: ../../images/example_CO+Pt111-ls.png
    :scale: 60 %
    :align: center
 
-Secondly, the number of CO molecules absorbed as a function of time (line 77):
+Secondly, the number of CO molecules absorbed as a function of time (line 79):
 
 .. image:: ../../images/example_CO+Pt111-mn.png
    :scale: 60 %
