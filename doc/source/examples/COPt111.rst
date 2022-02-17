@@ -2,7 +2,7 @@ Poisoning of Pt(111) by CO: From atomistic to mesoscopic modeling
 -----------------------------------------------------------------
 
 .. note::
-  This example script uses computational engines from the Amsterdam Modeling Suite, and you will need a license to run them. Contact license@scm.com for further questions.
+  This example script uses computational engines from the Amsterdam Modeling Suite, and you will need a license to run it. Contact license@scm.com for further questions.
 
   In order to run the example, the ``AMSBIN`` environment variable should be properly set. You can test this by typing ``$AMSBIN/plams -h`` in a terminal: this should print PLAMS' help message. If this is not the case (e.g. you get 'No such file or directory'), you need to set up the environmental variable ``$AMSBIN`` (see the `Linux Quickstart guide <../../Installation/Linux_Quickstart_Guide.html>`__ for details).
 
@@ -30,12 +30,12 @@ To make this example reproducible, we provide the geometry in ``XYZ`` format. Se
 .. csv-table::
    :header: |co_pt111_xyz|
 
-   "Link to download: :download:`CO_ads+Pt111.xyz <CO_ads+Pt111.xyz>`"
+   "Link to download: :download:`CO_ads+Pt111.xyz <../../../examples/CO+Pt111/CO_ads+Pt111.xyz>`"
 
 .. Note::
   If you prepare the initial geometry yourself, keep in mind that you can start from a different geometry, and the final results should be identical. The only requirements are to select a local minimum, create the corresponding regions (``adsorbate`` and ``surface``), and orient the Pt surface to maximize the number of symmetry operations. In the geometry we provide above, the Pt surface is oriented such that it belongs to the P-3m1 (164) symmetry space group.
 
-Now, you can download the complete example script from this link :download:`CO+Pt111.py <CO+Pt111.py>`. Hereafter, we briefly explain the different sections of the code.
+Now, you can download the complete example script from this link :download:`CO+Pt111.py <../../../examples/CO+Pt111/CO+Pt111.py>`. Hereafter, we briefly explain the different sections of the code.
 
 The script starts as follows:
 

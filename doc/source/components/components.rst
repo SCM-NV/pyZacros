@@ -41,7 +41,7 @@ Thus, every system in Zacros needs at least the definition of a set of clusters 
 
 In the following sections, you can find the API specifications of each particular component, an explanation of its
 role in the whole environment, and one example of usage. You can download the complete example script from this
-link :download:`intro.py <../examples/intro.py>`. In particular, we will explain the different components
+link :download:`intro.py <../../../examples/intro/intro.py>`. In particular, we will explain the different components
 using as a use case the following example, which is known as the
 `Ziff-Gulari-Barshad (ZGB) Model <https://zacros.org/tutorials/4-tutorial-1-ziff-gulari-barshad-model-in-zacros>`_:
 

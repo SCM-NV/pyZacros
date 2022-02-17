@@ -3,7 +3,7 @@ Water-gas shift reaction on Pt(111).
 
 This tutorial is intended to show how to use pyZacros from a Zacros perspective. Thus, we will literally show how to translate the Zacros input files to a pyZacros script. To do that, we use the system described in the Zacros tutorial `Mapping DFT Energies to Zacros Input as an example <https://zacros.org/tutorials/10-tutorial-4-dft-energies-to-zacros-input?showall=1>`_. All physical/chemical description of the system is described in detail there. This example shows how to include gas species, transition states, as well as stable surface species, and the lateral interactions between them. All information about the energetics is obtained via density functional theory (DFT) calculations. Importantly, lateral interactions are also discussed and included in the example's script. We invited you first to get familiar with the tutorial cited above to quickly appreciate the parallel between the Zacros input files and the pyZacros objects. This will allow you to follow line-by-line the example's python script easily.
 
-You can download the example's python script from this link :download:`WaterGasShiftOnPt111.py <WaterGasShiftOnPt111.py>`.
+You can download the example's python script from this link :download:`WaterGasShiftOnPt111.py <../../../examples/WaterGasShiftOnPt111/WaterGasShiftOnPt111.py>`.
 
 If everything is working well, you should get the following information in the standard output and the figure shown at the end.
 

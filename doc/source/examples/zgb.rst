@@ -3,7 +3,7 @@ The Ziff-Gulari-Barshad (ZGB) model.
 
 This tutorial is intended to show how to use pyZacros from a Zacros perspective. Thus, we will literally show how to translate the Zacros input files to a pyZacros script. To do that, we use the system described in the Zacros tutorial `Ziff-Gulari-Barshad Model in Zacros <https://zacros.org/index.php/tutorials/4-tutorial-1-ziff-gulari-barshad-model-in-zacros?showall=1>`_. All physical/chemical description of the system is described in detail there. We invited you first to get familiar with the tutorial cited above to quickly appreciate the parallel between the Zacros input files and the pyZacros objects. This will allow you to follow line-by-line the example's python script easily.
 
-You can download the example's python script from this link :download:`ZiffGulariBarshad.py <ZiffGulariBarshad.py>`.
+You can download the example's python script from this link :download:`ZiffGulariBarshad.py <../../../examples/ZiffGulariBarshad/ZiffGulariBarshad.py>`.
 
 If everything is working well, you should get the following information in the standard output and the figure shown at the end.
 
