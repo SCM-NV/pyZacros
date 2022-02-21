@@ -83,11 +83,6 @@ class ZacrosResults( scm.plams.Results ):
                 2        88   1.000E-01   5.00000E+02   -7.269E+01   22   17    -21    -36    31
                 3       176   2.000E-01   5.00000E+02   -9.139E+01   29   19    -41    -71    64
                 4       247   3.000E-01   5.00000E+02   -1.041E+02   34   20    -57    -99    91
-                5       292   4.000E-01   5.00000E+02   -1.156E+02   39   20    -68   -116   108
-                6       353   5.000E-01   5.00000E+02   -1.235E+02   43   19    -82   -139   132
-                7       394   5.999E-01   5.00000E+02   -1.116E+02   35   24    -86   -160   148
-                8       462   6.999E-01   5.00000E+02   -1.253E+02   37   31    -99   -191   172
-                9       547   7.999E-01   5.00000E+02   -1.155E+02   35   27   -116   -223   208
 
         For this example, this function will return:
 
@@ -348,13 +343,14 @@ class ZacrosResults( scm.plams.Results ):
         """
         Uses matplotlib to visualize the lattice states as an animation
 
-        *   ``data`` --
-        *   ``pause`` --
-        *   ``show`` --
-        *   ``ax`` --
-        *   ``close`` --
-        *   ``time_perframe`` --
-        *   ``file_name`` --
+        *   ``data`` -- List of LatticeState objects to plot
+        *   ``pause`` -- After showing the figure, it will wait ``pause``-seconds before refreshing.
+        *   ``show`` -- Enables showing the figure on the screen.
+        *   ``ax`` -- The axes of the plot. It contains most of the figure elements: Axis, Tick, Line2D, Text, Polygon, etc., and sets the coordinate system. See `matplotlib.axes <https://matplotlib.org/stable/api/axes_api.html#id2>`_.
+        *   ``close`` -- Closes the figure window after pause time.
+        *   ``time_perframe`` -- Sets the time interval between frames in seconds.
+        *   ``file_name`` -- Saves the figures to the file ``file_name-<id>`` (the corresponding id on the list replaces the ``<id>``). The format is inferred from the extension, and by default, ``.png`` is used.
+
         """
         if( type(data) == LatticeState ):
             data.plot( show=show, pause=pause, ax=ax, close=close, file_name=file_name )
@@ -392,12 +388,14 @@ class ZacrosResults( scm.plams.Results ):
         """
         Uses matplotlib to visualize the Molecule Numbers an animation
 
-        *   ``species_name`` --
-        *   ``pause`` --
-        *   ``show`` --
-        *   ``ax`` --
-        *   ``close`` --
-        *   ``file_name`` --
+        *   ``species_name`` -- List of species names to show, e.g., ``["CO*", "CO2"]``
+        *   ``pause`` -- After showing the figure, it will wait ``pause``-seconds before refreshing. This can be used for crude animation.
+        *   ``show`` -- Enables showing the figure on the screen.
+        *   ``ax`` -- The axes of the plot. It contains most of the figure elements: Axis, Tick, Line2D, Text, Polygon, etc., and sets the coordinate system. See `matplotlib.axes <https://matplotlib.org/stable/api/axes_api.html#id2>`_.
+        *   ``close`` -- Closes the figure window after pause time.
+        *   ``file_name`` -- Saves the figure to the file ``file_name``. The format is inferred from the extension, and by default, ``.png`` is used.
+        *   ``normalize_per_site`` -- Divides the molecule numbers by the total number of sites in the lattice.
+        *   ``derivative`` -- Plots the first derivative.
         """
         try:
             import matplotlib.pyplot as plt
@@ -454,7 +452,67 @@ class ZacrosResults( scm.plams.Results ):
 
     def get_process_statistics(self):
         """
-        Return the statistics from the 'specnum_output.txt' file.
+        Return the statistics from the 'procstat_output.txt' file in a form of a list of dictionaries.
+        Below is shown an example of the ``procstat_output.txt`` for a zacros calculation.
+
+        .. code-block:: none
+
+                Overall        CO_ads  O2_react_ads        CO_oxi
+          configuration     1             0          0.00
+                  0.000         0.000         0.000         0.000
+                      0             0             0             0
+          configuration     2           250          0.01
+                  0.039         0.043         0.044         0.000
+                    250           108           118            24
+
+        For this example, this function will return:
+
+        .. code-block:: python
+
+            [
+              {
+                'configuration_number': 1,
+                'total_number_of_events': 0,
+                'time': 0.0,
+                'average_waiting_time': {
+                                          'CO_ads': 0.0,
+                                          'O2_react_ads': 0.0,
+                                          'CO_oxi': 0.0
+                                        },
+                'number_of_events': {
+                                      'CO_ads': 0,
+                                      'O2_react_ads': 0,
+                                      'CO_oxi': 0
+                                    },
+                'occurence_frequency': {
+                                         'CO_ads': 0.0,
+                                         'O2_react_ads': 0.0,
+                                         'CO_oxi': 0.0
+                                       }
+              },
+              {
+                'configuration_number': 2,
+                'total_number_of_events': 250,
+                'time': 0.01,
+                'average_waiting_time': {
+                                          'CO_ads': 0.043
+                                          'O2_react_ads': 0.044
+                                          'CO_oxi': 0.0
+                                        },
+                'number_of_events': {
+                                      'CO_ads': 108,
+                                      'O2_react_ads': 118,
+                                      'CO_oxi': 24
+                                    },
+                'occurence_frequency': {
+                                         'CO_ads': 10800.0,
+                                         'O2_react_ads': 11800.0,
+                                         'CO_oxi': 2400.0
+                                       }
+              }
+            ]
+
+        The ``occurence_frequency`` is calculated as ``number_of_events``/``time``.
         """
         output = []
 
@@ -607,14 +665,15 @@ class ZacrosResults( scm.plams.Results ):
         """
         Uses matplotlib to visualize the process statistics an animation
 
-        *   ``data`` --
-        *   ``key`` --
-        *   ``log_scale`` --
-        *   ``pause`` --
-        *   ``show`` --
-        *   ``ax`` --
-        *   ``close`` --
-        *   ``file_name`` --
+        *   ``data`` -- List of process statistics to plot. See function :func:`~scm.pyzacros.ZacrosResults.get_process_statistics`.
+        *   ``key`` -- Key to plot, e.g., ``'average_waiting_time'``, ``'average_waiting_time'``. See function :func:`~scm.pyzacros.ZacrosResults.get_process_statistics`.
+        *   ``log_scale`` -- Use log scale for the x axis.
+        *   ``pause`` -- After showing the figure, it will wait ``pause``-seconds before refreshing.
+        *   ``show`` -- Enables showing the figure on the screen.
+        *   ``ax`` -- The axes of the plot. It contains most of the figure elements: Axis, Tick, Line2D, Text, Polygon, etc., and sets the coordinate system. See `matplotlib.axes <https://matplotlib.org/stable/api/axes_api.html#id2>`_.
+        *   ``close`` -- Closes the figure window after pause time.
+        *   ``file_name`` -- Saves the figures to the file ``file_name-<id>`` (the corresponding id on the list replaces the ``<id>``). The format is inferred from the extension, and by default, ``.png`` is used.
+
         """
         if( type(data) == dict ):
             self.__plot_process_statistics( data, key, log_scale=log_scale, pause=pause, show=show,
@@ -695,6 +754,7 @@ class ZacrosResults( scm.plams.Results ):
         rate = rate[1:]
         rate_av, se = numpy.mean(rate), scipy.stats.sem(rate)
 
+        # Mean confidence interval
         rate_CI = se * scipy.stats.t._ppf((1+confidence)/2.0, n_batch - 1)
 
         if ( rate_CI/(rate_av+1e-8)<1.0-confidence ):
@@ -705,10 +765,32 @@ class ZacrosResults( scm.plams.Results ):
 
     def get_TOFs(self, nbatch=20, confidence=0.99):
         """
-        Returns the TOF (mol/sec/site) calculated by the batch method
+        Returns the TOF (mol/sec/site) calculated by the batch-means stopping method. See Hashemi et al., J.Chem. Phys. 144, 074104 (2016)
 
-        *   ``nbatch`` --
-        *   ``confidence`` --
+        *   ``nbatch`` -- Number of batches to use.
+        *   ``confidence`` -- Confidence level to use in the criterion to determine if the steady-state was reached.
+
+        The simulation output is divided into an ensemble of contiguous batches where the TOF is computed.
+        The average value and the standard deviation of the TOF ensemble are evaluated as follows:
+
+        .. math::
+
+           <TOF> = \\frac{1}{n}\\sum_{i=1}^n TOF_i  \\qquad  \\sigma_{TOF}\\sqrt{\\frac{1}{n-1}\\sum_{i=1}^n\\left(TOF_i-<TOF>\\right)}
+
+        where :math:`n = \\text{nbatch}`. Confidence intervals are estimated to assess the steady-state behavior of the simulation:
+
+        .. math::
+
+           <TOF>\\pm t_{n-1,1-\\frac{\\delta}{2}}\\frac{\\sigma_{TOF}}{\\sqrt{n}}
+
+        The function returns True when the steady-state is reached. This happens if the following equation is satisfied:
+
+        .. math::
+
+           t_{n-1,1-\\frac{\\delta}{2}}\\frac{\\sigma_{TOF}}{\\sqrt{n}} \lt \epsilon
+
+        Here the convergence criteria is :math:`\epsilon=1-\\text{confidence}`
+
         """
         values = {}
         errors = {}

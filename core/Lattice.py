@@ -378,7 +378,7 @@ class Lattice:
         #raise Exception("Error: The constructor Lattice.__fromYAMLfile has not been implemented yet!")
 
 
-    def plot(self, pause=-1, show=True, color=None, ax=None, close=False, show_sites_ids=False):
+    def plot(self, pause=-1, show=True, color=None, ax=None, close=False, show_sites_ids=False, file_name=None):
         """
         Uses Matplotlib to visualize the lattice. Be sure that Matplotlib is installed in your system; otherwise, the function does nothing.
 
@@ -388,6 +388,7 @@ class Lattice:
         *   ``ax`` -- The axes of the plot. It contains most of the figure elements: Axis, Tick, Line2D, Text, Polygon, etc., and sets the coordinate system. See `matplotlib.axes <https://matplotlib.org/stable/api/axes_api.html#id2>`_.
         *   ``close`` -- Closes the figure window after pause time.
         *   ``show_sites_ids`` -- Shows the binding sites id on the figure.
+        *   ``file_name`` -- Saves the figure to the file ``file_name``. The format is inferred from the extension, and by default, ``.png`` is used.
         """
         try:
             import math
@@ -470,6 +471,9 @@ class Lattice:
 
         ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
         plt.tight_layout()
+
+        if( file_name is not None ):
+            plt.savefig( file_name )
 
         if( show ):
             if( pause == -1 ):

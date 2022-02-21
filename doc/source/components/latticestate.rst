@@ -14,7 +14,7 @@ lattice state from scratch, and use it as the initial state.
 
 .. note::
 
-    pyZacros (as Zacros does), by default, will start with an empty lattice if not stated otherwise.
+    pyZacros (and Zacros) will start with an empty lattice if not stated otherwise.
 
 We are going to make the initial state as a randomly populated lattice by ``CO*`` and ``O*`` with a given coverage:
 

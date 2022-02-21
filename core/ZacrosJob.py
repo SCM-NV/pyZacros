@@ -34,7 +34,7 @@ class ZacrosJob( scm.plams.SingleJob ):
 
     *   ``lattice`` -- Lattice containing the lattice to be used during the calculation.
     *   ``mechanism`` -- Mechanism containing the mechanisms involed in the calculation.
-    *   ``cluster_expansion`` --
+    *   ``cluster_expansion`` -- ClusterExpansion containing the list of Clusters to use during the simulation.
     *   ``initial_state`` -- Initial state of the system. By default the simulation will use an empty lattice.
     *   ``settings`` -- Settings containing the parameters of the Zacros calculation.
     *   ``name`` -- A string containing the name of the job. All zacros input and output files are stored in a folder with this name. If not supplied, the default name is ``plamsjob``.
@@ -923,14 +923,20 @@ class ZacrosJob( scm.plams.SingleJob ):
 
 
     @classmethod
-    def load_external(cls, path, settings=None, molecule=None, finalize=False, restart=None):
+    def load_external(cls, path, settings=None, finalize=False, restart=None):
         """
-        Load an external job from *path*.
+        Loads an "external job," a Zacros calculation that either was or was not managed by pyZacros. All input and output files produced during the calculation should be placed in one folder, and *path* should be the path to this folder. The name of the folder is used as the job name. Example:
 
-        *   ``path`` --
-        *   ``settings`` --
-        *   ``molecule`` --
-        *   ``finalize`` --
+        .. code-block:: python
+
+           import scm.pyzacros as pz
+           job = pz.ZacrosJob.load_external( path="plams_workdir/plamsjob" )
+           print(job)
+
+        *   ``path`` -- Path to the folder containing input and output files to restore.
+        *   ``settings`` -- The Settings object for the calculation (``self.settings``) is loaded automatically from the path ``path``. However, by using this option ``self.settings`` will be replaced by ``settings``.
+        *   ``finalize`` -- If ``finalize`` is ``False``, the status of the returned job is *copied* and results will be restored too. Otherwise, results will not be restored, so the job will need to be executed again.
+        *   ``restart`` -- Selects the ``ZacrosJob`` to restart from
         """
         if( not os.path.isdir(path) ):
             raise FileNotFoundError('Path {} does not exist, cannot load from it.'.format(path))
