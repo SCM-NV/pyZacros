@@ -16,9 +16,9 @@ class Lattice:
 
     * ``lattice_type`` -- Define the lattice to use. Possible options are:
 
-      - ``Lattice.TRIANGULAR``: Specifies a lattice with coordination number 3. The unit cell is not the primitive cell; it contains 4 sites.
+      - ``Lattice.TRIANGULAR``: Specifies a lattice with coordination number 3. The unit cell is not the primitive cell. The obtained unit cell is a rectangular cell containing 4 sites.
       - ``Lattice.RECTANGULAR``: Specifies a lattice with coordination number 4. The unit cell contains 1 site. The unit cell is the primitive cell.
-      - ``Lattice.HEXAGONAL``: Specifies a lattice with coordination number 6. The unit cell is not the primitive cell; it contains 2 sites.
+      - ``Lattice.HEXAGONAL``: Specifies a lattice with coordination number 6. The unit cell is not the primitive cell. The obtained unit cell is a rectangular cell containing 2 sites.
 
     * ``lattice_constant`` -- Defines the lattice constant (in angstrom).
     * ``repeat_cell`` -- The number of repetitions of the unit cell in the horizontal and vertical.
