@@ -12,7 +12,7 @@ class Settings( scm.plams.Settings ):
 
     .. code:: python
 
-        sett = pz.Settings()
+        sett = Settings()
         sett.random_seed = 953129
         sett.temperature = 500.0
         sett.pressure = 1.0
@@ -46,7 +46,7 @@ class Settings( scm.plams.Settings ):
                     elif( len(pair) == 3 ):
                         key,value = pair[0],(pair[1],pair[2])
                     else:
-                        msg  = "### ERROR ### keyword "+option+" in settings.\n"
+                        msg  = "\n### ERROR ### keyword "+option+" in settings.\n"
                         msg += "              Its value should be a pair (key,value[,value1]).\n"
                         msg += "              Possible options for key:  'event', 'elemevent', 'time',       'logtime', 'realtime'\n"
                         msg += "              Possible options for value:  <int>,       <int>, <real>, (<real>,<real>),     <real>\n"
@@ -55,7 +55,7 @@ class Settings( scm.plams.Settings ):
 
                     if( key == 'logtime' ):
                         if( len(value) != 2 ):
-                            msg  = "### ERROR ### keyword '"+option+" on "+key+"' in settings.\n"
+                            msg  = "\n### ERROR ### keyword '"+option+" on "+key+"' in settings.\n"
                             msg += "              Its value should be a pair of reals (<real>,<real>).\n"
                             msg += "              Given value: "+str(value)+"\n"
                             raise NameError(msg)

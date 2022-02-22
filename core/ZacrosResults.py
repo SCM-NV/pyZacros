@@ -278,7 +278,7 @@ class ZacrosResults( scm.plams.Results ):
             if( self.job.restart is not None ):
                 output = self.job.restart.results.lattice_states( last=abs(number_of_snapshots_to_load-llast) )
             else:
-                raise Exception("### ERROR ### Trying to load more snapshots ("+str(llast)+") than available ("+str(total_number_of_snapshots)+")")
+                raise Exception("\n### ERROR ### Trying to load more snapshots ("+str(llast)+") than available ("+str(total_number_of_snapshots)+")")
 
         surface_species = len(surface_species_names)*[None]
         for i,sname in enumerate(surface_species_names):

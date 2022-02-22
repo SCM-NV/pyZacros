@@ -74,7 +74,7 @@ class ZacrosJob( scm.plams.SingleJob ):
                 # Check if the molar fraction is assigned to a gas species:
                 for key in settings.molar_fraction.keys():
                     if key not in list_of_species:
-                        msg = "### ERROR ### check_molar_fraction_labels.\n"
+                        msg  = "\n### ERROR ### check_molar_fraction_labels.\n"
                         msg += "molar fraction defined for a non-gas species."
                         raise NameError(msg)
 
@@ -930,7 +930,7 @@ class ZacrosJob( scm.plams.SingleJob ):
         .. code-block:: python
 
            import scm.pyzacros as pz
-           job = pz.ZacrosJob.load_external( path="plams_workdir/plamsjob" )
+           job = ZacrosJob.load_external( path="plams_workdir/plamsjob" )
            print(job)
 
         *   ``path`` -- Path to the folder containing input and output files to restore.

@@ -31,7 +31,7 @@ class Cluster:
 
         if( site_types is not None ):
             if( not ( all([ type(st)==int for st in site_types ]) or all([ type(st)==str for st in site_types ]) ) ):
-                msg  = "### ERROR ### ElementaryReaction.__init__.\n"
+                msg  = "\n### ERROR ### ElementaryReaction.__init__.\n"
                 msg += "              Inconsistent type for site_types. It should be a list of int or str\n"
                 raise NameError(msg)
 
@@ -48,7 +48,7 @@ class Cluster:
 
         #TODO Make a way to check denticity consistency
         #if( sum([s.denticity for s in self.species]) != self.sites ):
-            #msg  = "### ERROR ### Cluster.__init__.\n"
+            #msg  = "\n### ERROR ### Cluster.__init__.\n"
             #msg += "Inconsistent dimensions for species or site_types\n"
             #raise NameError(msg)
 
@@ -156,7 +156,7 @@ class Cluster:
                     site_identate[ self.entity_number[i] ] = site_identate[ self.entity_number[i] ] + 1
 
                 if( site_identate[ self.entity_number[i] ] >= self.species[i].denticity ):
-                    msg  = "### ERROR ### Cluster.__str__.\n"
+                    msg  = "\n### ERROR ### Cluster.__str__.\n"
                     msg += "Inconsistent of denticity value for "+self.species[i].symbol+"\n"
                     raise NameError(msg)
 

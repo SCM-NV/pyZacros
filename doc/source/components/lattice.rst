@@ -14,13 +14,13 @@ a coordination number of 3, a lattice constant equal to ``1.0``, and a modest nu
 .. code-block:: python
   :linenos:
 
-   # Lattice setup
-   lat = pz.Lattice( lattice_type=pz.Lattice.TRIANGULAR,
-                     lattice_constant=1.0, repeat_cell=[10,3] )
+  # Lattice setup
+  lat = pz.Lattice( lattice_type=pz.Lattice.TRIANGULAR,
+                    lattice_constant=1.0, repeat_cell=[10,3] )
 
-   print(lat)
+  print(lat)
 
-   lattice.plot()
+  lattice.plot()
 
 The previous lines produce the following output:
 

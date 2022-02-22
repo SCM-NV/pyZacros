@@ -16,19 +16,18 @@ class Lattice:
 
     * ``lattice_type`` -- Define the lattice to use. Possible options are:
 
-      - ``Lattice.TRIANGULAR``: Specifies a lattice with coordination number 3. The unit cell contains 4 sites.
-      - ``Lattice.RECTANGULAR``: Specifies a lattice with coordination number 4. The unit cell contains 1 site.
-      - ``Lattice.HEXAGONAL``: Specifies a lattice with coordination number 6. The unit cell contains 2 sites.
+      - ``Lattice.TRIANGULAR``: Specifies a lattice with coordination number 3. The unit cell is not the primitive cell; it contains 4 sites.
+      - ``Lattice.RECTANGULAR``: Specifies a lattice with coordination number 4. The unit cell contains 1 site. The unit cell is the primitive cell.
+      - ``Lattice.HEXAGONAL``: Specifies a lattice with coordination number 6. The unit cell is not the primitive cell; it contains 2 sites.
 
     * ``lattice_constant`` -- Defines the lattice constant (in angstrom).
-    * ``repeat_cell`` -- The number of repetitions of the unit cell in the directions of unit vectors.
+    * ``repeat_cell`` -- The number of repetitions of the unit cell in the horizontal and vertical.
 
     Example:
 
     .. code:: python
 
-        lattice = pz.Lattice( lattice_type=pz.Lattice.HEXAGONAL, lattice_constant=1.0,
-                              repeat_cell=[4,5] )
+        lattice = Lattice( lattice_type=Lattice.HEXAGONAL, lattice_constant=1.0, repeat_cell=[4,5] )
 
     .. image:: ../../images/lattice_default.png
        :align: center
@@ -47,30 +46,30 @@ class Lattice:
 
     .. code:: python
 
-        lattice = pz.Lattice( cell_vectors=[[2.77185866, 0.00000000],[1.38592933, 2.40050002]],
-                              repeat_cell=[2, 2],
-                              site_types=["b", "h", "b", "b", "f", "t"],
-                              site_coordinates=[[0.00001, 0.49999],
-                                                [0.33333, 0.33333],
-                                                [0.49999, 0.00001],
-                                                [0.49999, 0.49999],
-                                                [0.66667, 0.66667],
-                                                [0.99999, 0.00001]],
-                              neighboring_structure=[ [(0,1), pz.Lattice.SELF],
-                                                      [(1,2), pz.Lattice.SELF],
-                                                      [(1,3), pz.Lattice.SELF],
-                                                      [(3,4), pz.Lattice.SELF],
-                                                      [(4,2), pz.Lattice.NORTH],
-                                                      [(4,0), pz.Lattice.EAST],
-                                                      [(5,5), pz.Lattice.NORTH],
-                                                      [(5,5), pz.Lattice.EAST],
-                                                      [(5,4), pz.Lattice.SELF],
-                                                      [(5,1), pz.Lattice.SELF],
-                                                      [(5,1), pz.Lattice.EAST],
-                                                      [(5,4), pz.Lattice.SOUTHEAST],
-                                                      [(5,1), pz.Lattice.SOUTHEAST],
-                                                      [(4,5), pz.Lattice.NORTH],
-                                                      [(5,5), pz.Lattice.SOUTHEAST] ] )
+        lattice = Lattice( cell_vectors=[[2.77185866, 0.00000000],[1.38592933, 2.40050002]],
+                           repeat_cell=[2, 2],
+                           site_types=["b", "h", "b", "b", "f", "t"],
+                           site_coordinates=[[0.00001, 0.49999],
+                                             [0.33333, 0.33333],
+                                             [0.49999, 0.00001],
+                                             [0.49999, 0.49999],
+                                             [0.66667, 0.66667],
+                                             [0.99999, 0.00001]],
+                           neighboring_structure=[ [(0,1), Lattice.SELF],
+                                                   [(1,2), Lattice.SELF],
+                                                   [(1,3), Lattice.SELF],
+                                                   [(3,4), Lattice.SELF],
+                                                   [(4,2), Lattice.NORTH],
+                                                   [(4,0), Lattice.EAST],
+                                                   [(5,5), Lattice.NORTH],
+                                                   [(5,5), Lattice.EAST],
+                                                   [(5,4), Lattice.SELF],
+                                                   [(5,1), Lattice.SELF],
+                                                   [(5,1), Lattice.EAST],
+                                                   [(5,4), Lattice.SOUTHEAST],
+                                                   [(5,1), Lattice.SOUTHEAST],
+                                                   [(4,5), Lattice.NORTH],
+                                                   [(5,5), Lattice.SOUTHEAST] ] )
 
     .. image:: ../../images/lattice_unit_cell.png
        :align: center
@@ -87,39 +86,39 @@ class Lattice:
 
     .. code:: python
 
-        lattice = pz.Lattice( site_types=["cn2", "br42", "cn4", "br42", "cn2", "br42",
+        lattice = Lattice( site_types=["cn2", "br42", "cn4", "br42", "cn2", "br42",
                                           "br44", "br44", "br42", "cn4", "br44", "cn4",
                                           "br42", "br42", "cn2"],
-                              site_coordinates=[[0.0000e+0, 0.0000e+0],
-                                                [1.4425e+0, 0.0000e+0],
-                                                [2.8850e+0, 0.0000e+0],
-                                                [4.3275e+0, 0.0000e+0],
-                                                [5.7700e+0, 0.0000e+0],
-                                                [7.2125e-1, 1.2492e+0],
-                                                [2.1637e+0, 1.2492e+0],
-                                                [3.6062e+0, 1.2492e+0],
-                                                [5.0487e+0, 1.2492e+0],
-                                                [1.4425e+0, 2.4985e+0],
-                                                [2.8850e+0, 2.4985e+0],
-                                                [4.3275e+0, 2.4985e+0],
-                                                [2.1637e+0, 3.7477e+0],
-                                                [3.6062e+0, 3.7477e+0],
-                                                [2.8850e+0, 4.9970e+0]],
-                              nearest_neighbors=[[ 1,  5],
-                                                 [ 0,  2],
-                                                 [ 1,  3,  6, 7],
-                                                 [ 2,  4],
-                                                 [ 3,  8],
-                                                 [ 0,  9],
-                                                 [ 2,  9],
-                                                 [ 2, 11],
-                                                 [ 4, 11],
-                                                 [ 5,  6, 10, 12],
-                                                 [ 9, 11],
-                                                 [ 7,  8, 10, 13],
-                                                 [ 9, 14],
-                                                 [11, 14],
-                                                 [12, 13]] )
+                           site_coordinates=[[0.0000e+0, 0.0000e+0],
+                                             [1.4425e+0, 0.0000e+0],
+                                             [2.8850e+0, 0.0000e+0],
+                                             [4.3275e+0, 0.0000e+0],
+                                             [5.7700e+0, 0.0000e+0],
+                                             [7.2125e-1, 1.2492e+0],
+                                             [2.1637e+0, 1.2492e+0],
+                                             [3.6062e+0, 1.2492e+0],
+                                             [5.0487e+0, 1.2492e+0],
+                                             [1.4425e+0, 2.4985e+0],
+                                             [2.8850e+0, 2.4985e+0],
+                                             [4.3275e+0, 2.4985e+0],
+                                             [2.1637e+0, 3.7477e+0],
+                                             [3.6062e+0, 3.7477e+0],
+                                             [2.8850e+0, 4.9970e+0]],
+                           nearest_neighbors=[[ 1,  5],
+                                              [ 0,  2],
+                                              [ 1,  3,  6, 7],
+                                              [ 2,  4],
+                                              [ 3,  8],
+                                              [ 0,  9],
+                                              [ 2,  9],
+                                              [ 2, 11],
+                                              [ 4, 11],
+                                              [ 5,  6, 10, 12],
+                                              [ 9, 11],
+                                              [ 7,  8, 10, 13],
+                                              [ 9, 14],
+                                              [11, 14],
+                                              [12, 13]] )
 
     .. image:: ../../images/lattice_custom.png
        :align: center
@@ -407,7 +406,7 @@ class Lattice:
             yvalues = [0.0,v1[1],  v1[1]+v2[1],   v2[1],  0.0]
 
             lcolor = color if color is not None else 'k'
-            ax.plot(xvalues, yvalues, color=lcolor, linestyle='dashed', linewidth=1, zorder=3)
+            ax.plot(xvalues, yvalues, color=lcolor, linestyle='dashed', linewidth=1, zorder=1)
 
             x_len = abs(v2[0]-v1[0])
             ax.set_xlim( [ 0.0-0.1*x_len, v1[0]+v2[0]+0.1*x_len ] )
@@ -427,7 +426,7 @@ class Lattice:
             yvalues = [0.0,v1[1],  v1[1]+v2[1],   v2[1],  0.0]
 
             lcolor = color if color is not None else 'k'
-            ax.plot(xvalues, yvalues, color=lcolor, linestyle='solid', linewidth=3, zorder=3)
+            ax.plot(xvalues, yvalues, color=lcolor, linestyle='solid', linewidth=3, zorder=1)
 
         #ax.set_xlabel('x ($\AA$)')
         #ax.set_ylabel('y ($\AA$)')

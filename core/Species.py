@@ -10,7 +10,7 @@ class Species:
     *   ``denticity`` -- Species' denticity e.g. 2. If None, it is set as the number of times that the character '*' is found in the symbol.
     *   ``gas_energy`` -- Species' gas energy e.g. ``0.0``
     *   ``kind`` -- It can be ``Species.SURFACE`` (0), or ``Species.GAS`` (1). If None, it is selected from the symbol.
-    *   ``mass`` -- Specifies the mass in Da. If None, it uses the mass of the most abundant isotopes of atoms that compose it.
+    *   ``mass`` -- Specifies the mass in Da. If None, the mass is calculated from the symbol interpreted as a chemical formula. The mass of the most abundant isotopes of composing atoms is used for this calculation. For example, if ``symbol='CH4'``, the mass will be ``16.0312`` (``12.0000+4*1.0078``).
     """
 
     # Mass of the most common isotope in Da
@@ -85,12 +85,11 @@ class Species:
         "U":238.0508
     }
 
-    FROM_SYMBOL = -1
     SURFACE = 0
     GAS = 1
 
-    def __init__(self, symbol, denticity = FROM_SYMBOL,
-                 gas_energy = None, kind = FROM_SYMBOL, mass = FROM_SYMBOL ):
+    def __init__(self, symbol, denticity = None,
+                 gas_energy = None, kind = None, mass = None ):
         """
         Creates a new Species object.
         """
@@ -98,18 +97,18 @@ class Species:
         self.gas_energy = gas_energy
 
         self.denticity = denticity
-        if( denticity == Species.FROM_SYMBOL ):
+        if( denticity is None ):
             self.denticity = symbol.count("*")
 
         self.kind = kind
-        if( kind == Species.FROM_SYMBOL ):
+        if( kind is None ):
             if(len(self.symbol) > 1 and self.symbol.find("*") != -1 and self.denticity == 0):
-                msg = "### ERROR ### Species.__init__.\n"
+                msg  = "\n### ERROR ### Species.__init__.\n"
                 msg += "Inconsistent symbol and denticity\n"
                 raise NameError(msg)
 
             if(self.symbol.find("*") == -1 and self.denticity != 0):
-                msg  = "### ERROR ### Species.__init__.\n"
+                msg  = "\n### ERROR ### Species.__init__.\n"
                 msg += "Denticity given for a gas species\n"
                 msg += "Did you forget to add * in the species label?\n"
                 raise NameError(msg)
@@ -119,7 +118,7 @@ class Species:
                 self.kind = Species.SURFACE
 
         if( self.kind != Species.GAS and self.gas_energy is not None ):
-            msg  = "### ERROR ### Species.__init__.\n"
+            msg  = "\n### ERROR ### Species.__init__.\n"
             msg += "Parameter gas_energy cannot be associated with a surface species\n"
             raise NameError(msg)
 
@@ -128,10 +127,10 @@ class Species:
 
         self.__composition = chemparse.parse_formula( symbol.replace("*","") )
 
-        if( mass == Species.FROM_SYMBOL ):
+        if( mass is None ):
             if( not all( [ key.upper() in Species.__ATOMIC_MASS.keys() for key in self.__composition.keys() ] ) ):
-                msg  = "### ERROR ### Species.__init__.\n"
-                msg += "Wrong format for species symbol\n"
+                msg  = "\n### ERROR ### Species.__init__.\n"
+                msg += "Wrong format for species symbol. It should correspond to a chemical formula.\n"
                 raise NameError(msg)
 
             self.__mass = 0.0

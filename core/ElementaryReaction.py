@@ -35,21 +35,21 @@ class ElementaryReaction:
 
         if( ( type(initial) != SpeciesList and type(initial) != list )
             or ( type(final) != SpeciesList and type(final) != list ) ):
-            msg  = "### ERROR ### ElementaryReaction.__init__.\n"
+            msg  = "\n### ERROR ### ElementaryReaction.__init__.\n"
             msg += "              Inconsistent type for initial or final\n"
             raise NameError(msg)
 
         sites_initial = len([ sp for sp in initial if sp.is_adsorbed() ])
         sites_final = len([ sp for sp in final if sp.is_adsorbed() ])
         if( sites_initial != sites_final ):
-            msg  = "### ERROR ### ElementaryReaction.__init__.\n"
+            msg  = "\n### ERROR ### ElementaryReaction.__init__.\n"
             msg += "              Inconsistent number of surface sites between initial and final\n"
             raise NameError(msg)
         self.sites = sites_initial
 
         if( site_types is not None ):
             if( not ( all([ type(st)==int for st in site_types ]) or all([ type(st)==str for st in site_types ]) ) ):
-                msg  = "### ERROR ### ElementaryReaction.__init__.\n"
+                msg  = "\n### ERROR ### ElementaryReaction.__init__.\n"
                 msg += "              Inconsistent type for site_types. It should be a list of int or str\n"
                 raise NameError(msg)
 
@@ -85,12 +85,12 @@ class ElementaryReaction:
 
         #if( self.sites != sum([s.denticity for s in self.initial])
            #or self.sites != sum([s.denticity for s in self.final]) ):
-            #msg  = "### ERROR ### ElementaryReaction.__init__.\n"
+            #msg  = "\n### ERROR ### ElementaryReaction.__init__.\n"
             #msg += "              Inconsistent dimensions for sites, initial or final\n"
             #raise NameError(msg)
 
         if( abs( self.initial.mass( self.initial_entity_number ) - self.final.mass( self.final_entity_number ) ) > 1e-6 ):
-            msg  = "### ERROR ### ElementaryReaction.__init__.\n"
+            msg  = "\n### ERROR ### ElementaryReaction.__init__.\n"
             msg += "              The mass is not conserved during the reaction\n"
             msg += "              initial:mass("+str([sp.symbol for sp in self.initial])+")="+str(self.initial.mass(self.initial_entity_number))
             msg += ", final:mass("+str([sp.symbol for sp in self.final])+")="+str(self.final.mass(self.final_entity_number))
@@ -240,7 +240,7 @@ class ElementaryReaction:
                     site_identate[ self.initial_entity_number[i] ] = site_identate[ self.initial_entity_number[i] ] + 1
 
                 if( site_identate[ self.initial_entity_number[i] ] >= self.initial[i].denticity ):
-                    msg  = "### ERROR ### ElementaryReaction.__str__.\n"
+                    msg  = "\n### ERROR ### ElementaryReaction.__str__.\n"
                     msg += "Inconsistent of denticity value for "+self.initial[i].symbol+"\n"
                     raise NameError(msg)
 
@@ -255,7 +255,7 @@ class ElementaryReaction:
                     site_identate[ self.final_entity_number[i] ] = site_identate[ self.final_entity_number[i] ] + 1
 
                 if( site_identate[ self.final_entity_number[i] ] >= self.final[i].denticity ):
-                    msg  = "### ERROR ### ElementaryReaction.__str__.\n"
+                    msg  = "\n### ERROR ### ElementaryReaction.__str__.\n"
                     msg += "Inconsistent of denticity value for "+self.final[i].symbol+"\n"
                     raise NameError(msg)
 
