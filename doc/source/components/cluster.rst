@@ -16,10 +16,10 @@ two needed clusters; the CO* and O* individual adsorbates:
 .. code-block:: python
   :linenos:
 
-   # Clusters
-   CO_p = pz.Cluster( species=[CO_s], cluster_energy=-1.3 )
-   O_p = pz.Cluster( species=[O_s], cluster_energy=-2.3 )
-   print(CO_p)
+  # Clusters
+  CO_p = pz.Cluster( species=[CO_s], cluster_energy=-1.3 )
+  O_p = pz.Cluster( species=[O_s], cluster_energy=-2.3 )
+  print(CO_p)
 
 which produce the following output:
 
