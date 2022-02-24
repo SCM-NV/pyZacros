@@ -35,7 +35,13 @@ To make this example reproducible, we provide the geometry in ``XYZ`` format. Se
 .. Note::
   If you prepare the initial geometry yourself, keep in mind that you can start from a different geometry, and the final results should be identical. The only requirements are to select a local minimum, create the corresponding regions (``adsorbate`` and ``surface``), and orient the Pt surface to maximize the number of symmetry operations. In the geometry we provide above, the Pt surface is oriented such that it belongs to the P-3m1 (164) symmetry space group.
 
-Now, you can download the complete example script from this link :download:`CO+Pt111.py <../../../examples/CO+Pt111/CO+Pt111.py>`. Hereafter, we briefly explain the different sections of the code.
+Now, you can download the complete example script from this link :download:`CO+Pt111.py <../../../examples/CO+Pt111/CO+Pt111.py>` and execute it with the following command:
+
+.. code-block:: none
+
+   $ amspython CO+Pt111.py
+
+Hereafter, we briefly explain the different sections of the script.
 
 The script starts as follows:
 
@@ -304,7 +310,7 @@ Additionally, line 51 should print out the cluster expansion in the zacros forma
     end_neighboring_structure
   end_lattice
 
-Please consult Zacros' user guide for more details about the specific meaning of the keywords shown in the previous output blocks.
+Please consult Zacros' user guide (``$AMSHOME/scripting/scm/pyzacros/doc/ZacrosManual.pdf``) for more details about the specific meaning of the keywords shown in the previous output blocks.
 
 Finally, line 55 allows visualizing the lattice:
 

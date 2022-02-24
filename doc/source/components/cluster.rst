@@ -34,7 +34,7 @@ which produce the following output:
      cluster_eng -1.30000e+00
    end_cluster
 
-Please consult Zacros' user guide for more details about the specific meaning of the keywords used in the previous lines.
+Please consult Zacros' user guide (``$AMSHOME/scripting/scm/pyzacros/doc/ZacrosManual.pdf``) for more details about the specific meaning of the keywords used in the previous lines.
 Notice that the function ``print()`` in line 4 shows the cluster ``CO_p`` as it is going to be used in the Zacros input files.
 The label ``CO*_0-0`` is automatically generated except if the user specifies it by the parameter ``label`` in the constructor.
 This label is used as a unique identifier to avoid duplicates.

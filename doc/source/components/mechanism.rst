@@ -91,7 +91,7 @@ The execution of the previous lines show the following on the standard output:
 
   end_mechanism
 
-Please consult Zacros' user guide for more details about the specific meaning of the keywords used in the previous lines.
+Please consult Zacros' user guide (``$AMSHOME/scripting/scm/pyzacros/doc/ZacrosManual.pdf``) for more details about the specific meaning of the keywords used in the previous lines.
 
 API
 ~~~

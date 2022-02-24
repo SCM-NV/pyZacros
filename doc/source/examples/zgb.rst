@@ -10,6 +10,7 @@ If everything is working well, you should get the following information in the s
 .. code-block:: none
   :linenos:
 
+  $ amspython ZiffGulariBarshad.py
   [14.02|17:20:01] PLAMS working folder: /home/user/pyzacros/examples/ZiffGulariBarshad/plams_workdir
   ---------------------------------------------------------------------
   simulation_input.dat

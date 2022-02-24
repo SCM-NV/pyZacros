@@ -63,7 +63,7 @@ of the previous script displays the following on the standard output:
   surf_specs_names         CO*        O*
   surf_specs_dent            1         1
 
-Please consult Zacros' user guide for more details about the specific meaning of the keywords used in the previous lines.
+Please consult Zacros' user guide (``$AMSHOME/scripting/scm/pyzacros/doc/ZacrosManual.pdf``) for more details about the specific meaning of the keywords used in the previous lines.
 
 API
 ~~~

@@ -65,7 +65,7 @@ will be internally generated, which for this example is the following:
         seed_on_sites CO* 115
       end_initial_state
 
-Please consult Zacros' user guide for more details about the specific meaning of the keywords used in the previous lines.
+Please consult Zacros' user guide (``$AMSHOME/scripting/scm/pyzacros/doc/ZacrosManual.pdf``) for more details about the specific meaning of the keywords used in the previous lines.
 
 Finally, to visualize the lattice you can make use of the function ``plot()`` (see line 8). The result is as follows:
 

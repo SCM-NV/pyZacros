@@ -9,7 +9,11 @@ This example is inspired in the seminal paper: Kinetic Phase Transitions in an I
 Robert M. Ziff, Erdagon Gulari, and Yoav Barshad in 1986 (`Phys. Rev. Lett. 56, 25 <https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.56.2553>`_).
 This paper is the origin of the ZGB model we have been discussing above. While the model leaves out many important steps of the real system, it exhibits interesting steady-state off-equilibrium behavior and two types of phase transitions, which actually occur in real systems. Please refer to the original paper for more details. In this example, we will analyze the effect of changing the composition of the gas phase, namely partial pressures for O\ :sub:`2` and CO, in the CO\ :sub:`2` Turnover frequency (TOF).
 
-You can download the full example script following this link :download:`ZiffGulariBarshad-PhaseTransitions.py <../../../examples/ZiffGulariBarshad-PhaseTransitions/ZiffGulariBarshad-PhaseTransitions.py>`.
+You can download the full example script following this link :download:`ZiffGulariBarshad-PhaseTransitions.py <../../../examples/ZiffGulariBarshad-PhaseTransitions/ZiffGulariBarshad-PhaseTransitions.py>`  and execute it with the following command:
+
+.. code-block:: none
+
+   $ amspython ZiffGulariBarshad-PhaseTransitions.py
 
 The first part of the script consists of the definition of the system (see :ref:`code <code_def_sys>`). Species, lattice,
 cluster expansion, and mechanisms are defined. This is identical to the :ref:`use case system <use_case_model_zgb>`
