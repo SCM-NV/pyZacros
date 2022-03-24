@@ -1,5 +1,6 @@
 import os
 import sys
+import numpy
 
 from .Species import *
 from .SpeciesList import *
@@ -33,6 +34,8 @@ class RKFLoader:
         :parm results
         """
         import scm.plams
+        import networkx as nx
+        import matplotlib.pyplot as plt
 
         eV = 0.0367493088244753
         angs = 1.88972612456506
@@ -115,6 +118,32 @@ class RKFLoader:
         toSites = [ max(0,idSite-1) for idSite in toSites ]
         parentStatesRaw = [ max(0,i-1) for i in parentStatesRaw ]
 
+        assert( len(fromSites) == len(toSites) )
+
+        latticeGraph = nx.Graph()
+        for i in range(len(fromSites)):
+            latticeGraph.add_edge( fromSites[i], toSites[i] )
+
+        latticeSPaths = dict(nx.all_pairs_shortest_path(latticeGraph))
+
+        def getLatticeRxnSubgraph( bs_from, bs_to ):
+            path = []
+            for bs1 in bs_from:
+                for bs2 in bs_to:
+                    path.extend( latticeSPaths[bs1][bs2] )
+
+            return latticeGraph.subgraph( path )
+
+        #G1 = getLatticeRxnSubgraph( [4, 7], [8, 11] )
+
+        #subax1 = plt.subplot(121)
+        #nx.draw(latticeGraph, with_labels=True, font_weight='bold')
+        #subax2 = plt.subplot(122)
+        #nx.draw(G1, with_labels=True, font_weight='bold')
+        #plt.show()
+
+        #exit(-1)
+
         # It is not neccessary for fix the parentAtomsRaw, because PLAMS
         # uses also 1-based indices for its atoms
         #parentAtomsRaw = [ max(0,i-1) for i in parentAtomsRaw ]
@@ -156,21 +185,22 @@ class RKFLoader:
         #--------------------------------------------------------------------------------------
 
         state2BindingSites = nStates*[ None ]
-        attachedMolecule = {}   # attachedMolecule[idState][idSite]
+        attachedMoleculeData = {}   # attachedMoleculeData[idState][idSite]
 
         # Loop over the binding sites to load the binding sites for each local minima
+        # Notice that the parent-states of the binding sites are always local minima
         for idSite in range(nSites):
 
             # Loop over the parent states of each binding site
             for i,idState in enumerate(parentStates[idSite]):
                 if( state2BindingSites[ idState ] is None ):
                     state2BindingSites[ idState ] = []
-                    attachedMolecule[ idState ] = {}
+                    attachedMoleculeData[ idState ] = {}
 
                 state2BindingSites[ idState ].append( idSite )
 
-                #----------------------------------------------------------------
-                # Finds the attached molecule to the binding site idSite
+                #-------------------------------------------------------------------
+                # This block finds the attached molecule to the binding site idSite
                 attachedAtom = parentAtoms[idSite][i]
 
                 adsorbate = scm.plams.Molecule()
@@ -184,40 +214,113 @@ class RKFLoader:
                 loc = 0
                 for sMol in adsorbateMols:
                     for atom in sMol:
-                        if( all( [ abs(atom.coords[i]-state2Molecule[idState][attachedAtom].coords[i]) < 1e-6 ] ) ):
-                            attachedMolecule[idState][idSite] = sMol.get_formula()
+                        r1 = numpy.array(atom.coords)
+                        r2 = numpy.array(state2Molecule[idState][attachedAtom].coords)
+
+                        if( all( abs(r1-r2) < 1e-6 ) ):
+                            attachedMoleculeData[idState][idSite] = { 'formula':sMol.get_formula(),
+                                                                      'cm':numpy.array(sMol.get_center_of_mass()),
+                                                                      'mol':sMol }
                             loc = 1
                             break
                     if( loc == 1 ):
                         break
-                #----------------------------------------------------------------
+                #-------------------------------------------------------------------
 
         # Loop over the TSs to load their binding sites
+        # Notice that the previous loop didn't include any TS
+        # Here we defined attached molecules to a TS as the union of both the molecules attached to its reactants and products
         for idState in range(nStates):
-            if( isTS[idState] ):
-                idReactant = reactants[idState]
-                idProduct = products[idState]
+            if( not isTS[idState] ): continue
 
-                # Loop over the binding sites of the reactant
-                for i,idSite in enumerate(state2BindingSites[idReactant]):
-                    if( state2BindingSites[ idState ] is None ):
-                        state2BindingSites[ idState ] = []
+            idReactant = reactants[idState]
+            idProduct = products[idState]
 
-                    state2BindingSites[ idState ].append( idSite )
+            # Loop over the binding sites of the reactant
+            for i,idSite in enumerate(state2BindingSites[idReactant]):
+                if( state2BindingSites[ idState ] is None ):
+                    state2BindingSites[ idState ] = []
 
-                # Loop over the binding sites of the products
-                for i,idSite in enumerate(state2BindingSites[idProduct]):
-                    if( state2BindingSites[ idState ] is None ):
-                        state2BindingSites[ idState ] = []
+                state2BindingSites[ idState ].append( idSite )
 
-                    state2BindingSites[ idState ].append( idSite )
+            # Loop over the binding sites of the products
+            for i,idSite in enumerate(state2BindingSites[idProduct]):
+                if( state2BindingSites[ idState ] is None ):
+                    state2BindingSites[ idState ] = []
 
-                attachedMolecule[idState] = { **attachedMolecule[idReactant], **attachedMolecule[idProduct] }
+                state2BindingSites[ idState ].append( idSite )
 
-        # Each TS defines an ElementaryReaction and at the same time it defines
-        # two Clusters from reactants and products.
+            attachedMoleculeData[idState] = { **attachedMoleculeData[idReactant], **attachedMoleculeData[idProduct] }
+
+        def getProperties( idState ):
+
+            speciesNames = len(G1_nodes)*[ "" ]
+            entityNumber = len(G1_nodes)*[ -1 ]
+            for i,bs1 in enumerate(G1_nodes):
+                if( bs1 in attachedMoleculeData[idState].keys() ):
+                    speciesName1 = attachedMoleculeData[idState][bs1]['formula']
+                    centerOfMass1 = attachedMoleculeData[idState][bs1]['cm']
+                    speciesNames[i] = speciesName1
+
+                    for j,bs2 in enumerate(G1_nodes):
+                        if( j<=i ): continue
+
+                        if( bs2 in attachedMoleculeData[idState].keys() ):
+                            speciesName2 = attachedMoleculeData[idState][bs2]['formula']
+                            centerOfMass2 = attachedMoleculeData[idState][bs2]['cm']
+
+                            if( speciesName1 == speciesName2
+                                and numpy.linalg.norm( centerOfMass1-centerOfMass2 ) < 0.5 ):
+                                    entityNumber[i] = max(entityNumber)+1
+                                    entityNumber[j] = entityNumber[i]
+
+                if( entityNumber[i] == -1 ):
+                    entityNumber[i] = max(entityNumber)+1
+
+            denticity = len(speciesNames)*[1]
+            if entityNumber.count(-1) != len(G1_nodes):
+                denticity = [ entityNumber.count(entityNumber[i]) if entityNumber[i] != -1 else 1 for i in range(len(speciesNames)) ]
+            species = SpeciesList( [ Species(f+"*"*denticity[i],denticity[i]) for i,f in enumerate(speciesNames) ] )
+
+            return species,entityNumber
+
+        def getPropertiesForCluster( species, entityNumber ):
+            # This section remove the empty adsorption sites which are not needed for clusters
+            data = {}
+            data['site_types'] = []
+            data['entity_number'] = []
+            data['neighboring'] = []
+            data['species'] = []
+
+            nonEmptySites = []
+            for i,bs in enumerate(G1_nodes):
+                if( len(species[i].symbol.replace('*','')) != 0 ):
+                    nonEmptySites.append(bs)
+
+            path = []
+            for bs1 in nonEmptySites:
+                for bs2 in nonEmptySites:
+                    if( bs1 != bs2 ):
+                        path.extend( G1_shortest_paths[bs1][bs2] )
+
+            G2 = G1.subgraph( path )
+            G2_nodes = list(G2.nodes())
+            G2_edges = [ [G2_nodes.index(pair[0]),G2_nodes.index(pair[1])] for pair in G2.edges() ]
+
+            for bs in G2.nodes():
+                old_id = G1_nodes.index(bs)
+                data['site_types'].append( site_types[old_id] )
+                data['entity_number'].append( entityNumber[old_id] )
+                data['species'].append( species[old_id] )
+
+            data['entity_number'] = [ data['entity_number'][i]-min(data['entity_number']) for i in range(len(data['entity_number'])) ]
+            data['neighboring'] = G2_edges
+
+            return data
 
         # Loop over the TSs to find the species
+        # Each TS defines an ElementaryReaction and at the same time it defines
+        # two Clusters from reactants and products.
         for idState in range(nStates):
             if( isTS[idState] ):
                 idTS = idState
@@ -227,91 +330,53 @@ class RKFLoader:
                 idProduct = products[idTS]
                 prefactorR = prefactorsFromReactant[idTS]
                 prefactorP = prefactorsFromProduct[idTS]
-                #print( "idReactant : ", idReactant )
-                #print( " idProduct : ", idProduct )
 
                 # Filters the connection specifically for this TS
-                neighboring = []
-                connectedSites = {}
-                for i,bs1 in enumerate(state2BindingSites[idTS]):
-                    for j,bs2 in enumerate(state2BindingSites[idTS]):
-                        #if( bs1 < bs2 and (bs1,bs2) in sitesConnections ):
-                        if( bs1 < bs2
-                            and ( (bs1 in fromSites and bs2 in toSites)
-                                or (bs1 in toSites and bs2 in fromSites) ) ):
-                            #neighboring.append( (bs1,bs2) )
-                            neighboring.append( (i,j) )
-                            connectedSites[bs1] = 1
-                            connectedSites[bs2] = 1
+                G1 = getLatticeRxnSubgraph( state2BindingSites[idReactant], state2BindingSites[idProduct] )
+                G1_nodes = sorted(list(G1.nodes()))
+                G1_edges = [ [G1_nodes.index(pair[0]),G1_nodes.index(pair[1])] for pair in G1.edges() ]
+                G1_shortest_paths = dict(nx.all_pairs_shortest_path(G1))
 
-                connectedSites = list( connectedSites.keys() )
+                site_types = [ labels[j] for j in G1_nodes ]
 
                 #--------------------------------------------------------------------
                 # Reactant
-                speciesNames = len(connectedSites)*[ "" ]
-                for i,bs in enumerate(connectedSites):
-                    if( bs in attachedMolecule[idReactant].keys() ):
-                        speciesNames[i] = attachedMolecule[idTS][bs]
+                speciesReactant, entityNumber = getProperties( idReactant )
+                cluster_data = getPropertiesForCluster( speciesReactant, entityNumber )
 
-                site_types = [ labels[j] for j in connectedSites ]
-                species = SpeciesList( [ Species(f+"*",1) for f in speciesNames ] )
-
-                # This section remove the empty adsorption sites which are not needed for clusters
-                site_types_cluster = []
-                neighboring_cluster = []
-                species_cluster = []
-                for i in range(len(site_types)):
-                    if( not len(speciesNames[i]) == 0 ):
-                        site_types_cluster.append( site_types[i] )
-                        species_cluster.append( species[i] )
-                        for pair in neighboring:
-                            if( i not in pair ):
-                                neighboring_cluster.append(pair)
-
-                clusterReactant = Cluster( site_types=site_types_cluster,
-                                           neighboring=neighboring_cluster,
-                                           species=species_cluster,
+                clusterReactant = Cluster( site_types=cluster_data['site_types'],
+                                           entity_number=cluster_data['entity_number'],
+                                           neighboring=cluster_data['neighboring'],
+                                           species=cluster_data['species'],
                                            multiplicity=1,
                                            cluster_energy=state2Energy[idReactant]-energyReference )
 
-                speciesReactant = SpeciesList( [ Species(f+"*",1) for f in speciesNames ] )
+                entityNumberReactant = entityNumber
 
                 #--------------------------------------------------------------------
                 # Product
-                speciesNames = len(connectedSites)*[ "" ]
-                for i,bs in enumerate(connectedSites):
-                    if( bs in attachedMolecule[idProduct].keys() ):
-                        speciesNames[i] = attachedMolecule[idTS][bs]
+                speciesProduct,entityNumber = getProperties( idProduct )
+                cluster_data = getPropertiesForCluster( speciesProduct, entityNumber )
 
-                site_types = [ labels[j] for j in connectedSites ]
-                species = SpeciesList( [ Species(f+"*",1) for f in speciesNames ] )
-
-                # This section remove the empty adsorption sites which are not needed for clusters
-                site_types_cluster = []
-                neighboring_cluster = []
-                species_cluster = []
-                for i in range(len(site_types)):
-                    if( not len(speciesNames[i]) == 0 ):
-                        site_types_cluster.append( site_types[i] )
-                        species_cluster.append( species[i] )
-                        for pair in neighboring:
-                            if( i not in pair ):
-                                neighboring_cluster.append(pair)
-
-                clusterProduct = Cluster( site_types=site_types_cluster,
-                                          neighboring=neighboring_cluster,
-                                          species=species_cluster,
+                clusterProduct = Cluster( site_types=cluster_data['site_types'],
+                                          entity_number=cluster_data['entity_number'],
+                                          neighboring=cluster_data['neighboring'],
+                                          species=cluster_data['species'],
                                           multiplicity=1,
                                           cluster_energy=state2Energy[idReactant]-energyReference )
 
-                speciesProduct = SpeciesList( [ Species(f+"*",1) for f in speciesNames ] )
+                entityNumberProduct = entityNumber
 
                 #--------------------------------------------------------------------
                 # Reaction
+                entityNumberReactant = entityNumberReactant if entityNumberReactant.count(-1) != len(entityNumberReactant) else None
+                entityNumberProduct = entityNumberProduct if entityNumberProduct.count(-1) != len(entityNumberProduct) else None
                 activationEnergy = state2Energy[idTS]-state2Energy[idReactant]
 
-                reaction = ElementaryReaction( site_types=[ labels[j] for j in connectedSites ],
-                                               neighboring=neighboring,
+                reaction = ElementaryReaction( site_types=site_types,
+                                               initial_entity_number=entityNumberReactant,
+                                               final_entity_number=entityNumberProduct,
+                                               neighboring=G1_edges,
                                                initial=speciesReactant,
                                                final=speciesProduct,
                                                reversible=True,
@@ -319,7 +384,7 @@ class RKFLoader:
                                                pe_ratio=prefactorR/prefactorP,
                                                activation_energy=activationEnergy )
 
-                self.clusterExpansion.extend( [clusterReactant, clusterProduct] )
+                #self.clusterExpansion.extend( [clusterReactant, clusterProduct] )
                 self.mechanism.append( reaction )
 
         # Loop over the Fragmented states to find the species and reactions
@@ -329,47 +394,32 @@ class RKFLoader:
             composition = fStatesComposition[idFState]
 
             # Loop over the associated connected states
-            for idState in fStatesConnections[idFState]:
-                prefactorAdsorption = fStatesAdsorptionPrefactors[idFState][idState]
-                prefactorDesorption = fStatesDesorptionPrefactors[idFState][idState]
+            for pos,idState in enumerate(fStatesConnections[idFState]):
+                prefactorAdsorption = fStatesAdsorptionPrefactors[idFState][pos]
+                prefactorDesorption = fStatesDesorptionPrefactors[idFState][pos]
 
-                # Filters the connection specifically for this state
-                neighboring = []
-                connectedSites = {}
-                for i,bs1 in enumerate(state2BindingSites[idState]):
-                    # Each binding sites in the molecule automatically contributes
-                    connectedSites[bs1] = 1
+                G1 = getLatticeRxnSubgraph( state2BindingSites[idState], state2BindingSites[idState] )
+                G1_nodes = sorted(list(G1.nodes()))
+                G1_edges = [ [G1_nodes.index(pair[0]),G1_nodes.index(pair[1])] for pair in G1.edges() ]
+                G1_shortest_paths = dict(nx.all_pairs_shortest_path(G1))
 
-                    # Check binding sites connected in the same molecule
-                    for j,bs2 in enumerate(state2BindingSites[idState]):
-                        if( bs1 < bs2
-                            and ( (bs1 in fromSites and bs2 in toSites)
-                                or (bs1 in toSites and bs2 in fromSites) ) ):
-                            #neighboring.append( (bs1,bs2) )
-                            neighboring.append( (i,j) )
-                            connectedSites[bs1] = 1
-                            connectedSites[bs2] = 1
-
-                connectedSites = list( connectedSites.keys() )
+                site_types = [ labels[j] for j in G1_nodes ]
 
                 #--------------------------------------------------------------------
                 # State
-                speciesNames = len(connectedSites)*[ "" ]
-                for i,bs in enumerate(connectedSites):
-                    if( bs in attachedMolecule[idState].keys() ):
-                        speciesNames[i] = attachedMolecule[idState][bs]
+                speciesState, entityNumber = getProperties( idState )
+                cluster_data = getPropertiesForCluster( speciesState, entityNumber )
 
-                clusterState = Cluster( site_types=[ labels[j] for j in connectedSites ],
-                                        neighboring=neighboring,
-                                        species=SpeciesList( [ Species(f+"*",1) for f in speciesNames ] ),
+                clusterState = Cluster( site_types=cluster_data['site_types'],
+                                        entity_number=cluster_data['entity_number'],
+                                        neighboring=cluster_data['neighboring'],
+                                        species=cluster_data['species'],
                                         multiplicity=1,
                                         cluster_energy=state2Energy[idState]-energyReference )
 
-                speciesState = SpeciesList( [ Species(f+"*",1) for f in speciesNames ] )
-
                 #--------------------------------------------------------------------
                 # Fragmented State
-                speciesNames = [ "*" for f in speciesNames ]
+                speciesNames = [ "*" for f in cluster_data['site_types'] ]
                 for idFragment in composition:
                     if( fragmentsRegions[idFragment] == "active" ):
                         mol = results.get_molecule("Molecule", file=fragmentsFileNames[idFragment])
@@ -382,10 +432,11 @@ class RKFLoader:
                 activationEnergy = 0.0 #TODO Here we are assuming that there is no a TS between the fragmented state and the state.
 
                 # X_gas <--> X*
-                reaction = ElementaryReaction( site_types=[ labels[j] for j in connectedSites ],
-                                               neighboring=neighboring,
+                reaction = ElementaryReaction( site_types=cluster_data['site_types'],
+                                               final_entity_number=cluster_data['entity_number'],
+                                               neighboring=cluster_data['neighboring'],
                                                initial=speciesFState,
-                                               final=speciesState,
+                                               final=cluster_data['species'],
                                                reversible=True,
                                                pre_expon=prefactorAdsorption,
                                                pe_ratio=prefactorAdsorption/prefactorDesorption,
@@ -416,6 +467,10 @@ class RKFLoader:
                 second = Lattice.NORTH
             elif( tuple(ld[0:2]) == (1,0) ):
                 second = Lattice.EAST
+            elif( tuple(ld[0:2]) == (1,1) ):
+                second = Lattice.NORTHEAST
+            else:
+                raise NameError("Unknown case for LD="+str(ld[0:2]))
 
             if( first is None or second is None ): continue
 

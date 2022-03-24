@@ -71,4 +71,6 @@ class Settings( scm.plams.Settings ):
         if( 'max_time' in self ): output += "max_time          " + str(self.get(('max_time')))+"\n"
         if( 'wall_time' in self ): output += "wall_time         " + str(self.get(('wall_time')))+"\n"
 
+        if( 'override_array_bounds' in self ): output += "override_array_bounds         " + str(self.get(('override_array_bounds')))+"\n"
+
         return output

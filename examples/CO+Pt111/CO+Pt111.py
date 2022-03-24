@@ -17,14 +17,14 @@ sett_ads.input.ams.PESExploration.RandomSeed = 100
 sett_ads.input.ams.PESExploration.NumExpeditions = 30
 sett_ads.input.ams.PESExploration.NumExplorers = 4
 sett_ads.input.ams.PESExploration.SaddleSearch.MaxEnergy = 2.0
-sett_ads.input.ams.PESExploration.DynamicSeedStates = True
-sett_ads.input.ams.PESExploration.CalculateFragments = True
+sett_ads.input.ams.PESExploration.DynamicSeedStates = 'T'
+sett_ads.input.ams.PESExploration.CalculateFragments = 'T'
 sett_ads.input.ams.PESExploration.StatesAlignment.ReferenceRegion = 'surface'
 sett_ads.input.ams.PESExploration.StructureComparison.DistanceDifference = 0.1
 sett_ads.input.ams.PESExploration.StructureComparison.NeighborCutoff = 2.5
 sett_ads.input.ams.PESExploration.StructureComparison.EnergyDifference = 0.05
-sett_ads.input.ams.PESExploration.StructureComparison.CheckSymmetry = True
-sett_ads.input.ams.PESExploration.BindingSites.Calculate = True
+sett_ads.input.ams.PESExploration.StructureComparison.CheckSymmetry = 'T'
+sett_ads.input.ams.PESExploration.BindingSites.Calculate = 'T'
 sett_ads.input.ams.PESExploration.BindingSites.NeighborCutoff = 3.8
 
 job = scm.plams.AMSJob(name='pes_exploration', molecule=mol, settings=sett_ads+engine_sett)
@@ -37,9 +37,9 @@ sett_bs = sett_ads.copy()
 sett_bs.input.ams.PESExploration.LoadEnergyLandscape.Path= '../pes_exploration'
 sett_bs.input.ams.PESExploration.NumExpeditions = 1
 sett_ads.input.ams.PESExploration.NumExplorers = 1
-sett_bs.input.ams.PESExploration.GenerateSymmetryImages = True
-sett_bs.input.ams.PESExploration.CalculateFragments = False
-sett_bs.input.ams.PESExploration.StructureComparison.CheckSymmetry = False
+sett_bs.input.ams.PESExploration.GenerateSymmetryImages = 'T'
+sett_bs.input.ams.PESExploration.CalculateFragments = 'F'
+sett_bs.input.ams.PESExploration.StructureComparison.CheckSymmetry = 'F'
 
 job = scm.plams.AMSJob(name='binding_sites', molecule=mol, settings=sett_bs+engine_sett)
 results_bs = job.run()

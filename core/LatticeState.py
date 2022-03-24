@@ -142,11 +142,11 @@ class LatticeState:
             msg += "              denticity>1 but site_number is not an instance of list or tuple\n"
             raise NameError(msg)
 
-        if( len(site_number) != lSpecies.denticity ):
-            msg  = "\n### ERROR ### LatticeState.fill_site.\n"
-            msg += "              Inconsistent values for species denticity and dimensions of site_number\n"
-            msg += "              site_number should have the `denticity` number of elements\n"
-            raise NameError(msg)
+        #if( len(site_number) != lSpecies.denticity ):
+            #msg  = "\n### ERROR ### LatticeState.fill_site.\n"
+            #msg += "              Inconsistent values for species denticity and dimensions of site_number\n"
+            #msg += "              site_number should have the `denticity` number of elements\n"
+            #raise NameError(msg)
 
         if( any([self.__adsorbed_on_site[site] is not None for site in site_number]) ):
             msg  = "\n### ERROR ### LatticeState.fill_site.\n"
@@ -162,10 +162,10 @@ class LatticeState:
             to_check = list(set(new_check))
             connected.extend(to_check)
 
-        if( len(connected) != lSpecies.denticity ):
-             msg  = "\n### ERROR ### LatticeState.fill_site.\n"
-             msg += "              sites are not neighboring\n"
-             raise NameError(msg)
+        #if( len(connected) != lSpecies.denticity ):
+             #msg  = "\n### ERROR ### LatticeState.fill_site.\n"
+             #msg += "              sites are not neighboring\n"
+             #raise NameError(msg)
 
         entity_number = self._next_entity_number()
 

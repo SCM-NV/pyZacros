@@ -438,7 +438,9 @@ class ZacrosJob( scm.plams.SingleJob ):
                 "event_report" : lambda sv: sett.setdefault("event_report", sv[0]),
                 "max_steps" : lambda sv: sett.setdefault("max_steps", sv[0] if sv[0]=='infinity' else int(sv[0])),
                 "max_time" : lambda sv: sett.setdefault("max_time", float(sv[0])),
-                "wall_time" : lambda sv: sett.setdefault("wall_time", int(sv[0]))
+                "wall_time" : lambda sv: sett.setdefault("wall_time", int(sv[0])),
+
+                "override_array_bounds" : lambda sv: sett.setdefault("override_array_bounds", ' '.join(sv))
             }
             value = cases.get( tokens[0], lambda sv: None )( tokens[1:] )
 

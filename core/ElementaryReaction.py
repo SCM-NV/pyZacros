@@ -43,7 +43,9 @@ class ElementaryReaction:
         sites_final = len([ sp for sp in final if sp.is_adsorbed() ])
         if( sites_initial != sites_final ):
             msg  = "\n### ERROR ### ElementaryReaction.__init__.\n"
-            msg += "              Inconsistent number of surface sites between initial and final\n"
+            msg += "Inconsistent number of surface sites between initial and final\n"
+            msg += "sites_initial="+str([ sp.symbol for sp in initial if sp.is_adsorbed() ])+"\n"
+            msg += "sites_final="+str([ sp.symbol for sp in final if sp.is_adsorbed() ])+"\n"
             raise NameError(msg)
         self.sites = sites_initial
 
@@ -82,7 +84,6 @@ class ElementaryReaction:
         self.pe_ratio = pe_ratio
         self.activation_energy = activation_energy     # e.g. 0.200
 
-
         #if( self.sites != sum([s.denticity for s in self.initial])
            #or self.sites != sum([s.denticity for s in self.final]) ):
             #msg  = "\n### ERROR ### ElementaryReaction.__init__.\n"
@@ -93,7 +94,9 @@ class ElementaryReaction:
             msg  = "\n### ERROR ### ElementaryReaction.__init__.\n"
             msg += "              The mass is not conserved during the reaction\n"
             msg += "              initial:mass("+str([sp.symbol for sp in self.initial])+")="+str(self.initial.mass(self.initial_entity_number))
-            msg += ", final:mass("+str([sp.symbol for sp in self.final])+")="+str(self.final.mass(self.final_entity_number))
+            msg += ", final:mass("+str([sp.symbol for sp in self.final])+")="+str(self.final.mass(self.final_entity_number))+"\n"
+            msg += "              initial:entity_number="+str(self.initial_entity_number)
+            msg += ", final:entity_number="+str(self.final_entity_number)+"\n"
             raise NameError(msg)
 
         self.__userLabel = label
@@ -241,7 +244,8 @@ class ElementaryReaction:
 
                 if( site_identate[ self.initial_entity_number[i] ] >= self.initial[i].denticity ):
                     msg  = "\n### ERROR ### ElementaryReaction.__str__.\n"
-                    msg += "Inconsistent of denticity value for "+self.initial[i].symbol+"\n"
+                    msg += "Inconsistent of denticity value for "+self.initial[i].symbol+" (pos="+str(i)+")\n"
+                    msg += "self.initial_entity_number = "+str(self.initial_entity_number)+"\n"
                     raise NameError(msg)
 
                 output += "    "+str(self.initial_entity_number[i]+1)+" "+self.initial[i].symbol+" "+str(site_identate[self.initial_entity_number[i]]+1)+"\n"
@@ -256,7 +260,8 @@ class ElementaryReaction:
 
                 if( site_identate[ self.final_entity_number[i] ] >= self.final[i].denticity ):
                     msg  = "\n### ERROR ### ElementaryReaction.__str__.\n"
-                    msg += "Inconsistent of denticity value for "+self.final[i].symbol+"\n"
+                    msg += "Inconsistent of denticity value for "+self.final[i].symbol+" (pos="+str(i)+")\n"
+                    msg += "self.final_entity_number = "+str(self.final_entity_number)+"\n"
                     raise NameError(msg)
 
                 output += "    "+str(self.final_entity_number[i]+1)+" "+self.final[i].symbol+" "+str(site_identate[self.final_entity_number[i]]+1)+"\n"

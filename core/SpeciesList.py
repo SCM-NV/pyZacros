@@ -32,13 +32,10 @@ class SpeciesList(UserList):
 
         gasSpecies = []
         adsorbedSpecies = []
-        containsEmptySite = False
         for i,sp in enumerate(self):
             if( sp.is_adsorbed() ):
-                adsorbedSpecies.append(i)
-
-                if( sp.symbol == "*" ):
-                    containsEmptySite = True
+                if( sp.symbol != "*" and sp.symbol != "**" and sp.symbol != "***" and sp.symbol != "****" ):
+                    adsorbedSpecies.append(i)
             else:
                 gasSpecies.append(i)
 
@@ -62,25 +59,18 @@ class SpeciesList(UserList):
                 output += " %12.5e"%self[i].mass()
             output += "\n"
 
-        effAdsorbedSpecies = -1
-        if( containsEmptySite ):
-            effAdsorbedSpecies = len(adsorbedSpecies)-1
-        else:
-            effAdsorbedSpecies = len(adsorbedSpecies)
-
-
-        if( effAdsorbedSpecies > 0 ):
-            output += "n_surf_species    "+str(effAdsorbedSpecies)+"\n"
+        if( len(adsorbedSpecies) > 0 ):
+            output += "n_surf_species    "+str(len(adsorbedSpecies))+"\n"
 
             output += "surf_specs_names  "
             for i in adsorbedSpecies:
-                if( self[i].symbol != "*" ):
+                if( self[i].symbol != "*" and self[i].symbol != "**" and self[i].symbol != "***" and self[i].symbol != "****" ):
                     output += "%10s"%self[i].symbol
             output += "\n"
 
             output += "surf_specs_dent   "
             for i in adsorbedSpecies:
-                if( self[i].symbol != "*" ):
+                if( self[i].symbol != "*" and self[i].symbol != "**" and self[i].symbol != "***" and self[i].symbol != "****" ):
                     output += "%10s"%self[i].denticity
 
         return output
