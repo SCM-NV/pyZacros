@@ -35,7 +35,7 @@ class RKFLoader:
         """
         import scm.plams
         import networkx as nx
-        import matplotlib.pyplot as plt
+        #import matplotlib.pyplot as plt
 
         eV = 0.0367493088244753
         angs = 1.88972612456506
