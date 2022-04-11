@@ -1,277 +1,278 @@
-<Nov26-2021> <17:36:30>  AMS 2021.205  RunTime: Nov26-2021 17:36:30  ShM Nodes: 1  Procs: 4
-<Nov26-2021> <17:36:31>  Optimizing input system #1
-<Nov26-2021> <17:36:31>  Calculation on initial geometry ...
-<Nov26-2021> <17:36:31>  Starting inertial relaxation ...
-<Nov26-2021> <17:36:31>  FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
-<Nov26-2021> <17:36:31>  ======================================================================================
-<Nov26-2021> <17:36:31>          0   -----      -7.278613    0.001061    0.000000    0.00000000  0.2500  0.1000
-<Nov26-2021> <17:36:31>          1   E--Ss      -7.278613    0.001058    0.000070    0.00000000  0.2500  0.1000
-<Nov26-2021> <17:36:31>          2   E--Ss      -7.278613    0.001049    0.000139    0.00000000  0.2500  0.1000
-<Nov26-2021> <17:36:31>          3   E--Ss      -7.278613    0.001033    0.000207    0.00000001  0.2500  0.1000
-<Nov26-2021> <17:36:31>          4   E--Ss      -7.278613    0.001012    0.000274    0.00000001  0.2500  0.1000
-<Nov26-2021> <17:36:31>          5   E--Ss      -7.278613    0.000986    0.000340    0.00000001  0.2500  0.1000
-<Nov26-2021> <17:36:31>          6   E--Ss      -7.278613    0.000954    0.000403    0.00000001  0.2500  0.1000
-<Nov26-2021> <17:36:31>          7   E--Ss      -7.278613    0.000914    0.000471    0.00000001  0.2750  0.0990
-<Nov26-2021> <17:36:31>          8   E--Ss      -7.278613    0.000865    0.000541    0.00000001  0.3025  0.0980
-<Nov26-2021> <17:36:31>          9   E--Ss      -7.278614    0.000807    0.000613    0.00000001  0.3328  0.0970
-<Nov26-2021> <17:36:31>         10   E--Ss      -7.278614    0.000737    0.000687    0.00000001  0.3660  0.0961
-<Nov26-2021> <17:36:31>         11   E--Ss      -7.278614    0.000658    0.000758    0.00000001  0.4026  0.0951
-<Nov26-2021> <17:36:31>         12   E--Ss      -7.278614    0.000569    0.000826    0.00000001  0.4429  0.0941
-<Nov26-2021> <17:36:31>         13   E--Ss      -7.278614    0.000471    0.000886    0.00000001  0.4872  0.0932
-<Nov26-2021> <17:36:31>         14   E--Ss      -7.278615    0.000369    0.000930    0.00000001  0.5000  0.0923
-<Nov26-2021> <17:36:31>         15   E--Ss      -7.278615    0.000263    0.000955    0.00000000  0.5000  0.0914
-<Nov26-2021> <17:36:31>         16   E--Ss      -7.278615    0.000151    0.000958    0.00000000  0.5000  0.0904
-<Nov26-2021> <17:36:31>         17   E--Ss      -7.278615    0.000069    0.000929   -0.00000000  0.5000  0.0895
-<Nov26-2021> <17:36:31>  ===> Uphill motion detected. Freezing atoms!
-<Nov26-2021> <17:36:31>         18   E--Ss      -7.278615    0.000069    0.000005    0.00000000  0.2500  0.1000
-<Nov26-2021> <17:36:31>         19   E--Ss      -7.278615    0.000067    0.000009    0.00000000  0.2500  0.1000
-<Nov26-2021> <17:36:31>         20   E--Ss      -7.278615    0.000066    0.000013    0.00000000  0.2500  0.1000
-<Nov26-2021> <17:36:31>         21   E--Ss      -7.278615    0.000063    0.000018    0.00000000  0.2500  0.1000
-<Nov26-2021> <17:36:31>         22   E--Ss      -7.278615    0.000060    0.000022    0.00000000  0.2500  0.1000
-<Nov26-2021> <17:36:31>         23   E--Ss      -7.278615    0.000056    0.000025    0.00000000  0.2500  0.1000
-<Nov26-2021> <17:36:31>         24   E--Ss      -7.278615    0.000051    0.000029    0.00000000  0.2750  0.0990
-<Nov26-2021> <17:36:31>         25   E--Ss      -7.278615    0.000046    0.000033    0.00000000  0.3025  0.0980
-<Nov26-2021> <17:36:31>         26   E--Ss      -7.278615    0.000040    0.000037    0.00000000  0.3328  0.0970
-<Nov26-2021> <17:36:31>         27   E--Ss      -7.278615    0.000034    0.000040    0.00000000  0.3660  0.0961
-<Nov26-2021> <17:36:31>         28   E--Ss      -7.278615    0.000029    0.000042    0.00000000  0.4026  0.0951
-<Nov26-2021> <17:36:31>         29   E--Ss      -7.278615    0.000027    0.000044    0.00000000  0.4429  0.0941
-<Nov26-2021> <17:36:31>         30   E--Ss      -7.278615    0.000027    0.000045    0.00000000  0.4872  0.0932
-<Nov26-2021> <17:36:31>         31   E--Ss      -7.278615    0.000027    0.000044    0.00000000  0.5000  0.0923
-<Nov26-2021> <17:36:31>         32   E--Ss      -7.278615    0.000026    0.000043    0.00000000  0.5000  0.0914
-<Nov26-2021> <17:36:31>         33   E--Ss      -7.278615    0.000022    0.000041    0.00000000  0.5000  0.0904
-<Nov26-2021> <17:36:31>         34   E--Ss      -7.278615    0.000017    0.000039    0.00000000  0.5000  0.0895
-<Nov26-2021> <17:36:31>         35   E--Ss      -7.278615    0.000011    0.000037   -0.00000000  0.5000  0.0886
-<Nov26-2021> <17:36:31>  ===> Uphill motion detected. Freezing atoms!
-<Nov26-2021> <17:36:31>         36   E--Ss      -7.278615    0.000011    0.000001    0.00000000  0.2500  0.1000
-<Nov26-2021> <17:36:31>         37   E--Ss      -7.278615    0.000011    0.000001    0.00000000  0.2500  0.1000
-<Nov26-2021> <17:36:31>         38   E--Ss      -7.278615    0.000011    0.000002    0.00000000  0.2500  0.1000
-<Nov26-2021> <17:36:31>         39   E--Ss      -7.278615    0.000010    0.000003    0.00000000  0.2500  0.1000
-<Nov26-2021> <17:36:31>         40   E--Ss      -7.278615    0.000010    0.000004    0.00000000  0.2500  0.1000
-<Nov26-2021> <17:36:31>         41   E--Ss      -7.278615    0.000009    0.000004    0.00000000  0.2500  0.1000
-<Nov26-2021> <17:36:31>         42   E--Ss      -7.278615    0.000008    0.000005    0.00000000  0.2750  0.0990
-<Nov26-2021> <17:36:31>         43   E--Ss      -7.278615    0.000007    0.000005    0.00000000  0.3025  0.0980
-<Nov26-2021> <17:36:31>         44   E--Ss      -7.278615    0.000006    0.000006    0.00000000  0.3328  0.0970
-<Nov26-2021> <17:36:31>         45   E--Ss      -7.278615    0.000005    0.000007    0.00000000  0.3660  0.0961
-<Nov26-2021> <17:36:31>         46   E--Ss      -7.278615    0.000005    0.000007    0.00000000  0.4026  0.0951
-<Nov26-2021> <17:36:31>         47   E--Ss      -7.278615    0.000004    0.000007    0.00000000  0.4429  0.0941
-<Nov26-2021> <17:36:31>         48   E--Ss      -7.278615    0.000004    0.000007    0.00000000  0.4872  0.0932
-<Nov26-2021> <17:36:31>         49   E--Ss      -7.278615    0.000005    0.000007    0.00000000  0.5000  0.0923
-<Nov26-2021> <17:36:31>         50   E--Ss      -7.278615    0.000005    0.000007    0.00000000  0.5000  0.0914
-<Nov26-2021> <17:36:31>         51   E--Ss      -7.278615    0.000004    0.000006    0.00000000  0.5000  0.0904
-<Nov26-2021> <17:36:31>         52   EG-Ss      -7.278615    0.000003    0.000006    0.00000000  0.5000  0.0895
-<Nov26-2021> <17:36:31>         53   EGgSs      -7.278615    0.000002    0.000006   -0.00000000  0.5000  0.0886
-<Nov26-2021> <17:36:31>  Geometry optimization converged
-<Nov26-2021> <17:36:31>  Optimization of input system #1 converged.
-<Nov26-2021> <17:36:31>  Optimized input systems added to database: 1
-<Nov26-2021> <17:36:31>  Seed for expedition 1: state #1
-<Nov26-2021> <17:36:31>  Starting expedition 1/50
-<Nov26-2021> <17:36:31>      Parallel evaluation by 4 processes with dynamic scheduling
-<Nov26-2021> <17:36:31>      PES explorer: 3/5
-<Nov26-2021> <17:36:32>  Expedition 1 discovered: 3 minima, 3 transition states
-<Nov26-2021> <17:36:32>  Seed for expedition 2: state #2
-<Nov26-2021> <17:36:32>  Starting expedition 2/50
-<Nov26-2021> <17:36:32>      PES explorer: 3/5
-<Nov26-2021> <17:36:32>      PES explorer: 5/5
-<Nov26-2021> <17:36:32>  Expedition 2 discovered: 2 minima, 2 transition states
-<Nov26-2021> <17:36:32>  Seed for expedition 3: state #4
-<Nov26-2021> <17:36:32>  Starting expedition 3/50
-<Nov26-2021> <17:36:32>      PES explorer: 4/5
-<Nov26-2021> <17:36:33>  Expedition 3 discovered: 2 minima, 2 transition states
-<Nov26-2021> <17:36:33>  Seed for expedition 4: state #6
-<Nov26-2021> <17:36:33>  Starting expedition 4/50
-<Nov26-2021> <17:36:33>      PES explorer: 4/5
-<Nov26-2021> <17:36:34>  Expedition 4 discovered: 1 minima, 1 transition states
-<Nov26-2021> <17:36:34>  Seed for expedition 5: state #8
-<Nov26-2021> <17:36:34>  Starting expedition 5/50
-<Nov26-2021> <17:36:34>      PES explorer: 2/5
-<Nov26-2021> <17:36:34>  Expedition 5 discovered: 2 minima, 2 transition states
-<Nov26-2021> <17:36:34>  Seed for expedition 6: state #10
-<Nov26-2021> <17:36:34>  Starting expedition 6/50
-<Nov26-2021> <17:36:34>      PES explorer: 3/5
-<Nov26-2021> <17:36:35>  Expedition 6 discovered: 1 minima, 1 transition states
-<Nov26-2021> <17:36:35>  Seed for expedition 7: state #12
-<Nov26-2021> <17:36:35>  Starting expedition 7/50
-<Nov26-2021> <17:36:35>      PES explorer: 2/5
-<Nov26-2021> <17:36:36>  Expedition 7 discovered: 1 minima, 2 transition states
-<Nov26-2021> <17:36:36>  Seed for expedition 8: state #14
-<Nov26-2021> <17:36:36>  Starting expedition 8/50
-<Nov26-2021> <17:36:36>      PES explorer: 4/5
-<Nov26-2021> <17:36:38>  Expedition 8 discovered: 1 minima, 2 transition states
-<Nov26-2021> <17:36:38>  Seed for expedition 9: state #16
-<Nov26-2021> <17:36:38>  Starting expedition 9/50
-<Nov26-2021> <17:36:38>      PES explorer: 4/5
-<Nov26-2021> <17:36:39>  Expedition 9 discovered: 0 minima, 2 transition states
-<Nov26-2021> <17:36:39>  Seed for expedition 10: state #18
-<Nov26-2021> <17:36:39>  Starting expedition 10/50
-<Nov26-2021> <17:36:39>      PES explorer: 4/5
-<Nov26-2021> <17:36:40>  Expedition 10 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:36:40>  Seed for expedition 11: state #20
-<Nov26-2021> <17:36:40>  Starting expedition 11/50
-<Nov26-2021> <17:36:40>      PES explorer: 1/5
-<Nov26-2021> <17:36:40>      PES explorer: 5/5
-<Nov26-2021> <17:36:41>  Expedition 11 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:36:41>  Seed for expedition 12: state #22
-<Nov26-2021> <17:36:41>  Starting expedition 12/50
-<Nov26-2021> <17:36:41>      PES explorer: 1/5
-<Nov26-2021> <17:36:42>  Expedition 12 discovered: 1 minima, 1 transition states
-<Nov26-2021> <17:36:42>  Seed for expedition 13: state #24
-<Nov26-2021> <17:36:42>  Starting expedition 13/50
-<Nov26-2021> <17:36:42>      PES explorer: 3/5
-<Nov26-2021> <17:36:43>      PES explorer: 5/5
-<Nov26-2021> <17:36:44>  Expedition 13 discovered: 1 minima, 2 transition states
-<Nov26-2021> <17:36:44>  Seed for expedition 14: state #27
-<Nov26-2021> <17:36:44>  Starting expedition 14/50
-<Nov26-2021> <17:36:44>      PES explorer: 2/5
-<Nov26-2021> <17:36:46>  Expedition 14 discovered: 1 minima, 1 transition states
-<Nov26-2021> <17:36:46>  Seed for expedition 15: state #32
-<Nov26-2021> <17:36:46>  Starting expedition 15/50
-<Nov26-2021> <17:36:46>      PES explorer: 1/5
-<Nov26-2021> <17:36:47>  Expedition 15 discovered: 0 minima, 1 transition states
-<Nov26-2021> <17:36:47>  Seed for expedition 16: state #34
-<Nov26-2021> <17:36:47>  Starting expedition 16/50
-<Nov26-2021> <17:36:47>      PES explorer: 4/5
-<Nov26-2021> <17:36:48>  Expedition 16 discovered: 0 minima, 1 transition states
-<Nov26-2021> <17:36:48>  Seed for expedition 17: state #37
-<Nov26-2021> <17:36:48>  Starting expedition 17/50
-<Nov26-2021> <17:36:48>      PES explorer: 4/5
-<Nov26-2021> <17:36:48>      PES explorer: 5/5
-<Nov26-2021> <17:36:49>  Expedition 17 discovered: 1 minima, 2 transition states
-<Nov26-2021> <17:36:49>  Seed for expedition 18: state #41
-<Nov26-2021> <17:36:49>  Starting expedition 18/50
-<Nov26-2021> <17:36:49>      PES explorer: 3/5
-<Nov26-2021> <17:36:51>  Expedition 18 discovered: 0 minima, 1 transition states
-<Nov26-2021> <17:36:51>  Seed for expedition 19: state #1
-<Nov26-2021> <17:36:51>  Starting expedition 19/50
-<Nov26-2021> <17:36:51>      PES explorer: 2/5
-<Nov26-2021> <17:36:52>  Expedition 19 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:36:52>  Seed for expedition 20: state #2
-<Nov26-2021> <17:36:52>  Starting expedition 20/50
-<Nov26-2021> <17:36:52>      PES explorer: 2/5
-<Nov26-2021> <17:36:53>  Expedition 20 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:36:53>  Seed for expedition 21: state #4
-<Nov26-2021> <17:36:53>  Starting expedition 21/50
-<Nov26-2021> <17:36:53>      PES explorer: 1/5
-<Nov26-2021> <17:36:54>      PES explorer: 5/5
-<Nov26-2021> <17:36:55>  Expedition 21 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:36:55>  Seed for expedition 22: state #6
-<Nov26-2021> <17:36:55>  Starting expedition 22/50
-<Nov26-2021> <17:36:55>      PES explorer: 2/5
-<Nov26-2021> <17:36:55>      PES explorer: 5/5
-<Nov26-2021> <17:36:56>  Expedition 22 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:36:56>  Seed for expedition 23: state #8
-<Nov26-2021> <17:36:56>  Starting expedition 23/50
-<Nov26-2021> <17:36:56>      PES explorer: 4/5
-<Nov26-2021> <17:36:57>  Expedition 23 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:36:57>  Seed for expedition 24: state #10
-<Nov26-2021> <17:36:57>  Starting expedition 24/50
-<Nov26-2021> <17:36:57>      PES explorer: 2/5
-<Nov26-2021> <17:36:59>  Expedition 24 discovered: 0 minima, 1 transition states
-<Nov26-2021> <17:36:59>  Seed for expedition 25: state #12
-<Nov26-2021> <17:36:59>  Starting expedition 25/50
-<Nov26-2021> <17:36:59>      PES explorer: 2/5
-<Nov26-2021> <17:36:59>      PES explorer: 5/5
-<Nov26-2021> <17:37:00>  Expedition 25 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:00>  Seed for expedition 26: state #14
-<Nov26-2021> <17:37:00>  Starting expedition 26/50
-<Nov26-2021> <17:37:00>      PES explorer: 4/5
-<Nov26-2021> <17:37:01>  Expedition 26 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:01>  Seed for expedition 27: state #16
-<Nov26-2021> <17:37:01>  Starting expedition 27/50
-<Nov26-2021> <17:37:01>      PES explorer: 3/5
-<Nov26-2021> <17:37:02>  Expedition 27 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:02>  Seed for expedition 28: state #18
-<Nov26-2021> <17:37:02>  Starting expedition 28/50
-<Nov26-2021> <17:37:02>      PES explorer: 1/5
-<Nov26-2021> <17:37:03>  Expedition 28 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:03>  Seed for expedition 29: state #20
-<Nov26-2021> <17:37:03>  Starting expedition 29/50
-<Nov26-2021> <17:37:03>      PES explorer: 4/5
-<Nov26-2021> <17:37:04>  Expedition 29 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:04>  Seed for expedition 30: state #22
-<Nov26-2021> <17:37:04>  Starting expedition 30/50
-<Nov26-2021> <17:37:04>      PES explorer: 3/5
-<Nov26-2021> <17:37:05>  Expedition 30 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:05>  Seed for expedition 31: state #24
-<Nov26-2021> <17:37:05>  Starting expedition 31/50
-<Nov26-2021> <17:37:05>      PES explorer: 3/5
-<Nov26-2021> <17:37:06>  Expedition 31 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:06>  Seed for expedition 32: state #27
-<Nov26-2021> <17:37:06>  Starting expedition 32/50
-<Nov26-2021> <17:37:06>      PES explorer: 4/5
-<Nov26-2021> <17:37:07>  Expedition 32 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:07>  Seed for expedition 33: state #32
-<Nov26-2021> <17:37:07>  Starting expedition 33/50
-<Nov26-2021> <17:37:07>      PES explorer: 3/5
-<Nov26-2021> <17:37:08>  Expedition 33 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:08>  Seed for expedition 34: state #34
-<Nov26-2021> <17:37:08>  Starting expedition 34/50
-<Nov26-2021> <17:37:08>      PES explorer: 4/5
-<Nov26-2021> <17:37:09>  Expedition 34 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:09>  Seed for expedition 35: state #37
-<Nov26-2021> <17:37:09>  Starting expedition 35/50
-<Nov26-2021> <17:37:09>      PES explorer: 3/5
-<Nov26-2021> <17:37:11>  Expedition 35 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:11>  Seed for expedition 36: state #41
-<Nov26-2021> <17:37:11>  Starting expedition 36/50
-<Nov26-2021> <17:37:11>      PES explorer: 2/5
-<Nov26-2021> <17:37:11>      PES explorer: 5/5
-<Nov26-2021> <17:37:13>  Expedition 36 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:13>  Seed for expedition 37: state #1
-<Nov26-2021> <17:37:13>  Starting expedition 37/50
-<Nov26-2021> <17:37:13>      PES explorer: 3/5
-<Nov26-2021> <17:37:14>  Expedition 37 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:14>  Seed for expedition 38: state #2
-<Nov26-2021> <17:37:14>  Starting expedition 38/50
-<Nov26-2021> <17:37:14>      PES explorer: 4/5
-<Nov26-2021> <17:37:16>  Expedition 38 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:16>  Seed for expedition 39: state #4
-<Nov26-2021> <17:37:16>  Starting expedition 39/50
-<Nov26-2021> <17:37:16>      PES explorer: 4/5
-<Nov26-2021> <17:37:17>  Expedition 39 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:17>  Seed for expedition 40: state #6
-<Nov26-2021> <17:37:17>  Starting expedition 40/50
-<Nov26-2021> <17:37:17>      PES explorer: 2/5
-<Nov26-2021> <17:37:18>  Expedition 40 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:18>  Seed for expedition 41: state #8
-<Nov26-2021> <17:37:18>  Starting expedition 41/50
-<Nov26-2021> <17:37:18>      PES explorer: 3/5
-<Nov26-2021> <17:37:18>      PES explorer: 5/5
-<Nov26-2021> <17:37:19>  Expedition 41 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:19>  Seed for expedition 42: state #10
-<Nov26-2021> <17:37:19>  Starting expedition 42/50
-<Nov26-2021> <17:37:19>      PES explorer: 4/5
-<Nov26-2021> <17:37:30>  Expedition 42 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:30>  Seed for expedition 43: state #12
-<Nov26-2021> <17:37:30>  Starting expedition 43/50
-<Nov26-2021> <17:37:30>      PES explorer: 4/5
-<Nov26-2021> <17:37:32>  Expedition 43 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:32>  Seed for expedition 44: state #14
-<Nov26-2021> <17:37:32>  Starting expedition 44/50
-<Nov26-2021> <17:37:32>      PES explorer: 3/5
-<Nov26-2021> <17:37:33>  Expedition 44 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:33>  Seed for expedition 45: state #16
-<Nov26-2021> <17:37:33>  Starting expedition 45/50
-<Nov26-2021> <17:37:33>      PES explorer: 4/5
-<Nov26-2021> <17:37:35>  Expedition 45 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:35>  Seed for expedition 46: state #18
-<Nov26-2021> <17:37:35>  Starting expedition 46/50
-<Nov26-2021> <17:37:35>      PES explorer: 2/5
-<Nov26-2021> <17:37:36>      PES explorer: 5/5
-<Nov26-2021> <17:37:37>  Expedition 46 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:37>  Seed for expedition 47: state #20
-<Nov26-2021> <17:37:37>  Starting expedition 47/50
-<Nov26-2021> <17:37:37>      PES explorer: 4/5
-<Nov26-2021> <17:37:39>  Expedition 47 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:39>  Seed for expedition 48: state #22
-<Nov26-2021> <17:37:39>  Starting expedition 48/50
-<Nov26-2021> <17:37:39>      PES explorer: 2/5
-<Nov26-2021> <17:37:40>  Expedition 48 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:40>  Seed for expedition 49: state #24
-<Nov26-2021> <17:37:40>  Starting expedition 49/50
-<Nov26-2021> <17:37:40>      PES explorer: 2/5
-<Nov26-2021> <17:37:42>  Expedition 49 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:42>  Seed for expedition 50: state #27
-<Nov26-2021> <17:37:42>  Starting expedition 50/50
-<Nov26-2021> <17:37:42>      PES explorer: 3/5
-<Nov26-2021> <17:37:43>  Expedition 50 discovered: 0 minima, 0 transition states
-<Nov26-2021> <17:37:43>  NORMAL TERMINATION
+<Apr11-2022> <11:36:12>  AMS 2022.202  RunTime: Apr11-2022 11:36:12  ShM Nodes: 1  Procs: 4
+<Apr11-2022> <11:36:12>  Optimizing input system #1
+<Apr11-2022> <11:36:12>  Calculation on initial geometry ...
+<Apr11-2022> <11:36:12>  Starting inertial relaxation ...
+<Apr11-2022> <11:36:12>  FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<Apr11-2022> <11:36:12>  ======================================================================================
+<Apr11-2022> <11:36:12>          0   -----      -7.278613    0.001061    0.000000    0.00000000  0.2500  0.1000
+<Apr11-2022> <11:36:12>          1   E--Ss      -7.278613    0.001058    0.000070    0.00000000  0.2500  0.1000
+<Apr11-2022> <11:36:12>          2   E--Ss      -7.278613    0.001049    0.000139    0.00000000  0.2500  0.1000
+<Apr11-2022> <11:36:12>          3   E--Ss      -7.278613    0.001033    0.000207    0.00000001  0.2500  0.1000
+<Apr11-2022> <11:36:12>          4   E--Ss      -7.278613    0.001012    0.000274    0.00000001  0.2500  0.1000
+<Apr11-2022> <11:36:12>          5   E--Ss      -7.278613    0.000986    0.000340    0.00000001  0.2500  0.1000
+<Apr11-2022> <11:36:12>          6   E--Ss      -7.278613    0.000954    0.000403    0.00000001  0.2500  0.1000
+<Apr11-2022> <11:36:12>          7   E--Ss      -7.278613    0.000914    0.000471    0.00000001  0.2750  0.0990
+<Apr11-2022> <11:36:12>          8   E--Ss      -7.278613    0.000865    0.000541    0.00000001  0.3025  0.0980
+<Apr11-2022> <11:36:12>          9   E--Ss      -7.278614    0.000807    0.000613    0.00000001  0.3328  0.0970
+<Apr11-2022> <11:36:12>         10   E--Ss      -7.278614    0.000737    0.000687    0.00000001  0.3660  0.0961
+<Apr11-2022> <11:36:12>         11   E--Ss      -7.278614    0.000658    0.000758    0.00000001  0.4026  0.0951
+<Apr11-2022> <11:36:12>         12   E--Ss      -7.278614    0.000569    0.000826    0.00000001  0.4429  0.0941
+<Apr11-2022> <11:36:12>         13   E--Ss      -7.278614    0.000471    0.000886    0.00000001  0.4872  0.0932
+<Apr11-2022> <11:36:12>         14   E--Ss      -7.278615    0.000369    0.000930    0.00000001  0.5000  0.0923
+<Apr11-2022> <11:36:12>         15   E--Ss      -7.278615    0.000263    0.000955    0.00000000  0.5000  0.0914
+<Apr11-2022> <11:36:12>         16   E--Ss      -7.278615    0.000151    0.000958    0.00000000  0.5000  0.0904
+<Apr11-2022> <11:36:12>         17   E--Ss      -7.278615    0.000069    0.000929   -0.00000000  0.5000  0.0895
+<Apr11-2022> <11:36:12>  ===> Uphill motion detected. Freezing atoms!
+<Apr11-2022> <11:36:12>         18   E--Ss      -7.278615    0.000069    0.000005    0.00000000  0.2500  0.1000
+<Apr11-2022> <11:36:13>         19   E--Ss      -7.278615    0.000067    0.000009    0.00000000  0.2500  0.1000
+<Apr11-2022> <11:36:13>         20   E--Ss      -7.278615    0.000066    0.000013    0.00000000  0.2500  0.1000
+<Apr11-2022> <11:36:13>         21   E--Ss      -7.278615    0.000063    0.000018    0.00000000  0.2500  0.1000
+<Apr11-2022> <11:36:13>         22   E--Ss      -7.278615    0.000060    0.000022    0.00000000  0.2500  0.1000
+<Apr11-2022> <11:36:13>         23   E--Ss      -7.278615    0.000056    0.000025    0.00000000  0.2500  0.1000
+<Apr11-2022> <11:36:13>         24   E--Ss      -7.278615    0.000051    0.000029    0.00000000  0.2750  0.0990
+<Apr11-2022> <11:36:13>         25   E--Ss      -7.278615    0.000046    0.000033    0.00000000  0.3025  0.0980
+<Apr11-2022> <11:36:13>         26   E--Ss      -7.278615    0.000040    0.000037    0.00000000  0.3328  0.0970
+<Apr11-2022> <11:36:13>         27   E--Ss      -7.278615    0.000034    0.000040    0.00000000  0.3660  0.0961
+<Apr11-2022> <11:36:13>         28   E--Ss      -7.278615    0.000029    0.000042    0.00000000  0.4026  0.0951
+<Apr11-2022> <11:36:13>         29   E--Ss      -7.278615    0.000027    0.000044    0.00000000  0.4429  0.0941
+<Apr11-2022> <11:36:13>         30   E--Ss      -7.278615    0.000027    0.000045    0.00000000  0.4872  0.0932
+<Apr11-2022> <11:36:13>         31   E--Ss      -7.278615    0.000027    0.000044    0.00000000  0.5000  0.0923
+<Apr11-2022> <11:36:13>         32   E--Ss      -7.278615    0.000026    0.000043    0.00000000  0.5000  0.0914
+<Apr11-2022> <11:36:13>         33   E--Ss      -7.278615    0.000022    0.000041    0.00000000  0.5000  0.0904
+<Apr11-2022> <11:36:13>         34   E--Ss      -7.278615    0.000017    0.000039    0.00000000  0.5000  0.0895
+<Apr11-2022> <11:36:13>         35   E--Ss      -7.278615    0.000011    0.000037   -0.00000000  0.5000  0.0886
+<Apr11-2022> <11:36:13>  ===> Uphill motion detected. Freezing atoms!
+<Apr11-2022> <11:36:13>         36   E--Ss      -7.278615    0.000011    0.000001    0.00000000  0.2500  0.1000
+<Apr11-2022> <11:36:13>         37   E--Ss      -7.278615    0.000011    0.000001    0.00000000  0.2500  0.1000
+<Apr11-2022> <11:36:13>         38   E--Ss      -7.278615    0.000011    0.000002    0.00000000  0.2500  0.1000
+<Apr11-2022> <11:36:13>         39   E--Ss      -7.278615    0.000010    0.000003    0.00000000  0.2500  0.1000
+<Apr11-2022> <11:36:13>         40   E--Ss      -7.278615    0.000010    0.000004    0.00000000  0.2500  0.1000
+<Apr11-2022> <11:36:13>         41   E--Ss      -7.278615    0.000009    0.000004    0.00000000  0.2500  0.1000
+<Apr11-2022> <11:36:13>         42   E--Ss      -7.278615    0.000008    0.000005    0.00000000  0.2750  0.0990
+<Apr11-2022> <11:36:13>         43   E--Ss      -7.278615    0.000007    0.000005    0.00000000  0.3025  0.0980
+<Apr11-2022> <11:36:13>         44   E--Ss      -7.278615    0.000006    0.000006    0.00000000  0.3328  0.0970
+<Apr11-2022> <11:36:13>         45   E--Ss      -7.278615    0.000005    0.000007    0.00000000  0.3660  0.0961
+<Apr11-2022> <11:36:13>         46   E--Ss      -7.278615    0.000005    0.000007    0.00000000  0.4026  0.0951
+<Apr11-2022> <11:36:13>         47   E--Ss      -7.278615    0.000004    0.000007    0.00000000  0.4429  0.0941
+<Apr11-2022> <11:36:13>         48   E--Ss      -7.278615    0.000004    0.000007    0.00000000  0.4872  0.0932
+<Apr11-2022> <11:36:13>         49   E--Ss      -7.278615    0.000005    0.000007    0.00000000  0.5000  0.0923
+<Apr11-2022> <11:36:13>         50   E--Ss      -7.278615    0.000005    0.000007    0.00000000  0.5000  0.0914
+<Apr11-2022> <11:36:13>         51   E--Ss      -7.278615    0.000004    0.000006    0.00000000  0.5000  0.0904
+<Apr11-2022> <11:36:13>         52   EG-Ss      -7.278615    0.000003    0.000006    0.00000000  0.5000  0.0895
+<Apr11-2022> <11:36:13>         53   EGgSs      -7.278615    0.000002    0.000006   -0.00000000  0.5000  0.0886
+<Apr11-2022> <11:36:13>  Geometry optimization converged
+<Apr11-2022> <11:36:13>  Optimization of input system #1 converged.
+<Apr11-2022> <11:36:13>  Optimized input systems added to database: 1
+<Apr11-2022> <11:36:13>  Seed for expedition 1: state #1
+<Apr11-2022> <11:36:13>  Starting expedition 1/50
+<Apr11-2022> <11:36:13>      Parallel evaluation by 4 processes with dynamic scheduling
+<Apr11-2022> <11:36:13>      PES explorer: 4/5
+<Apr11-2022> <11:36:13>      PES explorer: 5/5
+<Apr11-2022> <11:36:14>  Expedition 1 discovered: 3 minima, 3 transition states
+<Apr11-2022> <11:36:14>  Seed for expedition 2: state #2
+<Apr11-2022> <11:36:14>  Starting expedition 2/50
+<Apr11-2022> <11:36:14>      PES explorer: 1/5
+<Apr11-2022> <11:36:15>  Expedition 2 discovered: 2 minima, 2 transition states
+<Apr11-2022> <11:36:15>  Seed for expedition 3: state #4
+<Apr11-2022> <11:36:15>  Starting expedition 3/50
+<Apr11-2022> <11:36:15>      PES explorer: 4/5
+<Apr11-2022> <11:36:16>  Expedition 3 discovered: 2 minima, 2 transition states
+<Apr11-2022> <11:36:16>  Seed for expedition 4: state #6
+<Apr11-2022> <11:36:16>  Starting expedition 4/50
+<Apr11-2022> <11:36:16>      PES explorer: 4/5
+<Apr11-2022> <11:36:17>  Expedition 4 discovered: 1 minima, 1 transition states
+<Apr11-2022> <11:36:17>  Seed for expedition 5: state #8
+<Apr11-2022> <11:36:17>  Starting expedition 5/50
+<Apr11-2022> <11:36:17>      PES explorer: 1/5
+<Apr11-2022> <11:36:18>  Expedition 5 discovered: 2 minima, 2 transition states
+<Apr11-2022> <11:36:18>  Seed for expedition 6: state #10
+<Apr11-2022> <11:36:18>  Starting expedition 6/50
+<Apr11-2022> <11:36:18>      PES explorer: 4/5
+<Apr11-2022> <11:36:20>  Expedition 6 discovered: 1 minima, 1 transition states
+<Apr11-2022> <11:36:20>  Seed for expedition 7: state #12
+<Apr11-2022> <11:36:20>  Starting expedition 7/50
+<Apr11-2022> <11:36:20>      PES explorer: 1/5
+<Apr11-2022> <11:36:22>  Expedition 7 discovered: 1 minima, 2 transition states
+<Apr11-2022> <11:36:22>  Seed for expedition 8: state #14
+<Apr11-2022> <11:36:22>  Starting expedition 8/50
+<Apr11-2022> <11:36:22>      PES explorer: 3/5
+<Apr11-2022> <11:36:23>      PES explorer: 5/5
+<Apr11-2022> <11:36:24>  Expedition 8 discovered: 1 minima, 2 transition states
+<Apr11-2022> <11:36:24>  Seed for expedition 9: state #16
+<Apr11-2022> <11:36:24>  Starting expedition 9/50
+<Apr11-2022> <11:36:24>      PES explorer: 3/5
+<Apr11-2022> <11:36:26>  Expedition 9 discovered: 0 minima, 2 transition states
+<Apr11-2022> <11:36:26>  Seed for expedition 10: state #18
+<Apr11-2022> <11:36:26>  Starting expedition 10/50
+<Apr11-2022> <11:36:26>      PES explorer: 2/5
+<Apr11-2022> <11:36:27>  Expedition 10 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:36:27>  Seed for expedition 11: state #20
+<Apr11-2022> <11:36:27>  Starting expedition 11/50
+<Apr11-2022> <11:36:27>      PES explorer: 1/5
+<Apr11-2022> <11:36:27>      PES explorer: 5/5
+<Apr11-2022> <11:36:28>  Expedition 11 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:36:28>  Seed for expedition 12: state #22
+<Apr11-2022> <11:36:28>  Starting expedition 12/50
+<Apr11-2022> <11:36:28>      PES explorer: 1/5
+<Apr11-2022> <11:36:30>  Expedition 12 discovered: 1 minima, 1 transition states
+<Apr11-2022> <11:36:30>  Seed for expedition 13: state #24
+<Apr11-2022> <11:36:30>  Starting expedition 13/50
+<Apr11-2022> <11:36:30>      PES explorer: 4/5
+<Apr11-2022> <11:36:32>  Expedition 13 discovered: 1 minima, 2 transition states
+<Apr11-2022> <11:36:32>  Seed for expedition 14: state #27
+<Apr11-2022> <11:36:32>  Starting expedition 14/50
+<Apr11-2022> <11:36:32>      PES explorer: 2/5
+<Apr11-2022> <11:36:34>  Expedition 14 discovered: 1 minima, 1 transition states
+<Apr11-2022> <11:36:34>  Seed for expedition 15: state #32
+<Apr11-2022> <11:36:34>  Starting expedition 15/50
+<Apr11-2022> <11:36:34>      PES explorer: 3/5
+<Apr11-2022> <11:36:36>  Expedition 15 discovered: 0 minima, 1 transition states
+<Apr11-2022> <11:36:36>  Seed for expedition 16: state #34
+<Apr11-2022> <11:36:36>  Starting expedition 16/50
+<Apr11-2022> <11:36:36>      PES explorer: 4/5
+<Apr11-2022> <11:36:37>  Expedition 16 discovered: 0 minima, 1 transition states
+<Apr11-2022> <11:36:37>  Seed for expedition 17: state #37
+<Apr11-2022> <11:36:37>  Starting expedition 17/50
+<Apr11-2022> <11:36:37>      PES explorer: 3/5
+<Apr11-2022> <11:36:39>  Expedition 17 discovered: 1 minima, 2 transition states
+<Apr11-2022> <11:36:39>  Seed for expedition 18: state #41
+<Apr11-2022> <11:36:39>  Starting expedition 18/50
+<Apr11-2022> <11:36:39>      PES explorer: 4/5
+<Apr11-2022> <11:36:39>      PES explorer: 5/5
+<Apr11-2022> <11:36:40>  Expedition 18 discovered: 0 minima, 1 transition states
+<Apr11-2022> <11:36:40>  Seed for expedition 19: state #1
+<Apr11-2022> <11:36:40>  Starting expedition 19/50
+<Apr11-2022> <11:36:40>      PES explorer: 3/5
+<Apr11-2022> <11:36:41>  Expedition 19 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:36:41>  Seed for expedition 20: state #2
+<Apr11-2022> <11:36:41>  Starting expedition 20/50
+<Apr11-2022> <11:36:41>      PES explorer: 2/5
+<Apr11-2022> <11:36:43>  Expedition 20 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:36:43>  Seed for expedition 21: state #4
+<Apr11-2022> <11:36:43>  Starting expedition 21/50
+<Apr11-2022> <11:36:43>      PES explorer: 4/5
+<Apr11-2022> <11:36:45>  Expedition 21 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:36:45>  Seed for expedition 22: state #6
+<Apr11-2022> <11:36:45>  Starting expedition 22/50
+<Apr11-2022> <11:36:45>      PES explorer: 1/5
+<Apr11-2022> <11:36:47>  Expedition 22 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:36:47>  Seed for expedition 23: state #8
+<Apr11-2022> <11:36:47>  Starting expedition 23/50
+<Apr11-2022> <11:36:47>      PES explorer: 4/5
+<Apr11-2022> <11:36:48>  Expedition 23 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:36:48>  Seed for expedition 24: state #10
+<Apr11-2022> <11:36:48>  Starting expedition 24/50
+<Apr11-2022> <11:36:48>      PES explorer: 4/5
+<Apr11-2022> <11:36:49>      PES explorer: 5/5
+<Apr11-2022> <11:36:50>  Expedition 24 discovered: 0 minima, 1 transition states
+<Apr11-2022> <11:36:50>  Seed for expedition 25: state #12
+<Apr11-2022> <11:36:50>  Starting expedition 25/50
+<Apr11-2022> <11:36:50>      PES explorer: 4/5
+<Apr11-2022> <11:36:52>  Expedition 25 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:36:52>  Seed for expedition 26: state #14
+<Apr11-2022> <11:36:52>  Starting expedition 26/50
+<Apr11-2022> <11:36:52>      PES explorer: 4/5
+<Apr11-2022> <11:36:53>  Expedition 26 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:36:53>  Seed for expedition 27: state #16
+<Apr11-2022> <11:36:53>  Starting expedition 27/50
+<Apr11-2022> <11:36:53>      PES explorer: 2/5
+<Apr11-2022> <11:36:53>      PES explorer: 5/5
+<Apr11-2022> <11:36:54>  Expedition 27 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:36:54>  Seed for expedition 28: state #18
+<Apr11-2022> <11:36:54>  Starting expedition 28/50
+<Apr11-2022> <11:36:54>      PES explorer: 4/5
+<Apr11-2022> <11:36:55>  Expedition 28 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:36:55>  Seed for expedition 29: state #20
+<Apr11-2022> <11:36:55>  Starting expedition 29/50
+<Apr11-2022> <11:36:55>      PES explorer: 4/5
+<Apr11-2022> <11:36:57>  Expedition 29 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:36:57>  Seed for expedition 30: state #22
+<Apr11-2022> <11:36:57>  Starting expedition 30/50
+<Apr11-2022> <11:36:57>      PES explorer: 3/5
+<Apr11-2022> <11:36:58>  Expedition 30 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:36:58>  Seed for expedition 31: state #24
+<Apr11-2022> <11:36:58>  Starting expedition 31/50
+<Apr11-2022> <11:36:58>      PES explorer: 3/5
+<Apr11-2022> <11:36:59>  Expedition 31 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:36:59>  Seed for expedition 32: state #27
+<Apr11-2022> <11:36:59>  Starting expedition 32/50
+<Apr11-2022> <11:36:59>      PES explorer: 2/5
+<Apr11-2022> <11:37:00>  Expedition 32 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:37:00>  Seed for expedition 33: state #32
+<Apr11-2022> <11:37:00>  Starting expedition 33/50
+<Apr11-2022> <11:37:00>      PES explorer: 2/5
+<Apr11-2022> <11:37:02>  Expedition 33 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:37:02>  Seed for expedition 34: state #34
+<Apr11-2022> <11:37:02>  Starting expedition 34/50
+<Apr11-2022> <11:37:02>      PES explorer: 2/5
+<Apr11-2022> <11:37:04>  Expedition 34 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:37:04>  Seed for expedition 35: state #37
+<Apr11-2022> <11:37:04>  Starting expedition 35/50
+<Apr11-2022> <11:37:04>      PES explorer: 2/5
+<Apr11-2022> <11:37:04>      PES explorer: 5/5
+<Apr11-2022> <11:37:06>  Expedition 35 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:37:06>  Seed for expedition 36: state #41
+<Apr11-2022> <11:37:06>  Starting expedition 36/50
+<Apr11-2022> <11:37:06>      PES explorer: 2/5
+<Apr11-2022> <11:37:06>      PES explorer: 5/5
+<Apr11-2022> <11:37:07>  Expedition 36 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:37:07>  Seed for expedition 37: state #1
+<Apr11-2022> <11:37:07>  Starting expedition 37/50
+<Apr11-2022> <11:37:07>      PES explorer: 3/5
+<Apr11-2022> <11:37:09>  Expedition 37 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:37:09>  Seed for expedition 38: state #2
+<Apr11-2022> <11:37:09>  Starting expedition 38/50
+<Apr11-2022> <11:37:09>      PES explorer: 2/5
+<Apr11-2022> <11:37:09>      PES explorer: 5/5
+<Apr11-2022> <11:37:10>  Expedition 38 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:37:10>  Seed for expedition 39: state #4
+<Apr11-2022> <11:37:10>  Starting expedition 39/50
+<Apr11-2022> <11:37:10>      PES explorer: 4/5
+<Apr11-2022> <11:37:12>  Expedition 39 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:37:12>  Seed for expedition 40: state #6
+<Apr11-2022> <11:37:12>  Starting expedition 40/50
+<Apr11-2022> <11:37:12>      PES explorer: 3/5
+<Apr11-2022> <11:37:13>  Expedition 40 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:37:13>  Seed for expedition 41: state #8
+<Apr11-2022> <11:37:13>  Starting expedition 41/50
+<Apr11-2022> <11:37:13>      PES explorer: 2/5
+<Apr11-2022> <11:37:14>  Expedition 41 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:37:14>  Seed for expedition 42: state #10
+<Apr11-2022> <11:37:14>  Starting expedition 42/50
+<Apr11-2022> <11:37:14>      PES explorer: 1/5
+<Apr11-2022> <11:37:14>      PES explorer: 5/5
+<Apr11-2022> <11:37:27>  Expedition 42 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:37:27>  Seed for expedition 43: state #12
+<Apr11-2022> <11:37:27>  Starting expedition 43/50
+<Apr11-2022> <11:37:27>      PES explorer: 4/5
+<Apr11-2022> <11:37:29>  Expedition 43 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:37:29>  Seed for expedition 44: state #14
+<Apr11-2022> <11:37:29>  Starting expedition 44/50
+<Apr11-2022> <11:37:29>      PES explorer: 4/5
+<Apr11-2022> <11:37:30>  Expedition 44 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:37:30>  Seed for expedition 45: state #16
+<Apr11-2022> <11:37:30>  Starting expedition 45/50
+<Apr11-2022> <11:37:30>      PES explorer: 4/5
+<Apr11-2022> <11:37:31>  Expedition 45 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:37:31>  Seed for expedition 46: state #18
+<Apr11-2022> <11:37:31>  Starting expedition 46/50
+<Apr11-2022> <11:37:31>      PES explorer: 2/5
+<Apr11-2022> <11:37:33>  Expedition 46 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:37:33>  Seed for expedition 47: state #20
+<Apr11-2022> <11:37:33>  Starting expedition 47/50
+<Apr11-2022> <11:37:33>      PES explorer: 3/5
+<Apr11-2022> <11:37:34>  Expedition 47 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:37:34>  Seed for expedition 48: state #22
+<Apr11-2022> <11:37:34>  Starting expedition 48/50
+<Apr11-2022> <11:37:34>      PES explorer: 4/5
+<Apr11-2022> <11:37:34>      PES explorer: 5/5
+<Apr11-2022> <11:37:35>  Expedition 48 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:37:35>  Seed for expedition 49: state #24
+<Apr11-2022> <11:37:35>  Starting expedition 49/50
+<Apr11-2022> <11:37:35>      PES explorer: 4/5
+<Apr11-2022> <11:37:36>  Expedition 49 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:37:36>  Seed for expedition 50: state #27
+<Apr11-2022> <11:37:36>  Starting expedition 50/50
+<Apr11-2022> <11:37:36>      PES explorer: 3/5
+<Apr11-2022> <11:37:37>  Expedition 50 discovered: 0 minima, 0 transition states
+<Apr11-2022> <11:37:37>  NORMAL TERMINATION

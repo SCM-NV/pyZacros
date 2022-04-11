@@ -5,7 +5,7 @@ End
 PESExploration
   Job BindingSites
   LoadEnergyLandscape
-    Path /home/aguirre/Develop/pyzacros/test_RKFLoader.003/PESExploration
+    Path /home/aguirre/Develop/pyzacros/test_RKFLoader/PESExploration
   End
   StatesAlignment
     ReferenceRegion surface

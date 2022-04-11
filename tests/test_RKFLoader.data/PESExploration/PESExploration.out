@@ -10,14 +10,18 @@
  ==============================================================================
 
 
-May use up to 7489MB of RAM as shared memory on node 0
+May use up to 7486MB of RAM as shared memory on node 0
+Floating license: not using directory 
+Floating license: not using directory 
+Floating license: not using directory 
+Floating license: not using directory 
 
  *******************************************************************************
  *                                                                             *
  *  --------------------------------                                           *
- *   Amsterdam Modeling Suite (AMS)              2021.205                      *
+ *   Amsterdam Modeling Suite (AMS)              2022.202                      *
  *  --------------------------------                                           *
- *                                               r98817 2021-11-22             *
+ *                                               r103190 2022-04-06            *
  *                                                                             *
  *                                                                             *
  *                              =================                              *
@@ -37,23 +41,23 @@ May use up to 7489MB of RAM as shared memory on node 0
  *                                                                             *
  ***********************  x86_64_linux_gnu7 / intelmpi  ************************
  
- Licensed to: Dr. Nestor Aguirre Castiblanco  / SCM / Amsterdam / NETHERLANDS 2021-10-27 16:31:51
+ Licensed to: Dr. Nestor Aguirre Castiblanco  / SCM / Amsterdam / NETHERLANDS 2022-01-24 09:33:25
  SCM User ID: u22021
   
- AMS 2021.205  RunTime: Nov26-2021 17:36:30  ShM Nodes: 1  Procs: 4
+ AMS 2022.202  RunTime: Apr11-2022 11:36:12  ShM Nodes: 1  Procs: 4
 
  AMS jobname: PESExploration
- AMS jobid  : 2080356964
+ AMS jobid  : 885654215
 
- Start   directory: /home/aguirre/Develop/pyzacros/test_RKFLoader.003/PESExploration/
- Results directory: /home/aguirre/Develop/pyzacros/test_RKFLoader.003/PESExploration/
- Scratch directory: /scratch/aguirre/amstmp_PESExploration_kid0.2080356964/
+ Start   directory: /home/aguirre/Develop/pyzacros/test_RKFLoader/PESExploration/
+ Results directory: /home/aguirre/Develop/pyzacros/test_RKFLoader/PESExploration/
+ Scratch directory: /scratch/aguirre/amstmp_PESExploration_kid0.885654215/
 
 
- Communication costs MPI_COMM_WORLD:      0.269 usec per message,   0.0037 usec per 8-byte item
- Communication costs for intra-node:      0.282 usec per message,   0.0037 usec per 8-byte item
+ Communication costs MPI_COMM_WORLD:      0.280 usec per message,   0.0043 usec per 8-byte item
+ Communication costs for intra-node:      0.280 usec per message,   0.0043 usec per 8-byte item
 
- RNG seed: -1457673568 1910334037 -357133663 1586942104 446206626 1522843374 1098693040 -1658149963
+ RNG seed: 476438419 -841811793 -626893841 -1731424793 1992201436 2132972299 871585582 1338160768
  MPI rank    0: Number of processors available to this process:      2
  MPI rank    0: Default max number of OpenMP threads:                2
  MPI rank    0: The OMP_NUM_THREADS environment variable is not set!
@@ -3129,7 +3133,8 @@ Id 1 Energy(hartree)     -7.27861478 Min
 VEC1       8.31557575000000       0.00000000000000       0.00000000000000
 VEC2       4.15778787000000       7.20149984000000       0.00000000000000
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
        *******************************
        *  Automated PES exploration  *
@@ -3150,6 +3155,7 @@ WriteHistory                                 converged
 NumExpeditions                                      50
 NumExplorers                                         5
 DynamicSeedStates                                    T
+GenerateSymmetryImages                               F
 
    ProcessSearch
    -------------
@@ -3159,13 +3165,14 @@ DynamicSeedStates                                    T
    SaddleSearch
    ------------
    MaxIterations                                   400
-   DisplaceMinNorm                             0.00000
    Method                                     min_mode
    MinModeMethod                                 dimer
    MaxEnergy                                   2.00000
    DisplaceMagnitude                           0.10000
    DisplaceRadius                              4.00000
    RemoveRotation                                    F
+   RelaxFromSaddlePoint                              F
+   DisplaceMinNorm                             0.00000
    RandomMode                                        T
    DisplaceRandomWeight                        0.00000
    DisplaceListedAtomWeight                    0.00000
@@ -3304,8 +3311,10 @@ Energy range (a.u.)                           0.000000
 Energy range (eV)                              0.00000
 Energy range (kcal/mol)                         0.0000
 
-> PES explorer-1.3: RUN (seedState=1,rndSeed=102)
-> PES explorer-1.3: END
+> PES explorer-1.4: RUN (seedState=1,rndSeed=103)
+> PES explorer-1.4: END
+> PES explorer-1.5: RUN (seedState=1,rndSeed=104)
+> PES explorer-1.5: END
 
 PES explorer 1.1
 ----------------
@@ -3666,7 +3675,8 @@ Database Updating:
 
         1.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 ========================
 Starting expedition 2/50
@@ -3695,10 +3705,8 @@ Energy range (a.u.)                           0.025765
 Energy range (eV)                              0.70111
 Energy range (kcal/mol)                        16.1679
 
-> PES explorer-2.3: RUN (seedState=2,rndSeed=107)
-> PES explorer-2.3: END
-> PES explorer-2.5: RUN (seedState=2,rndSeed=109)
-> PES explorer-2.5: END
+> PES explorer-2.1: RUN (seedState=2,rndSeed=105)
+> PES explorer-2.1: END
 
 PES explorer 2.1
 ----------------
@@ -4011,7 +4019,8 @@ Database Updating:
         2.5    2  NEW_PROD      10
         2.5    3    NEW_TS      11: 2<-->10
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 ========================
 Starting expedition 3/50
@@ -4389,7 +4398,8 @@ Database Updating:
 
         3.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 ========================
 Starting expedition 4/50
@@ -4736,7 +4746,8 @@ Database Updating:
 
         4.4    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 ========================
 Starting expedition 5/50
@@ -4775,8 +4786,8 @@ Energy range (a.u.)                           0.025782
 Energy range (eV)                              0.70157
 Energy range (kcal/mol)                        16.1786
 
-> PES explorer-5.2: RUN (seedState=8,rndSeed=121)
-> PES explorer-5.2: END
+> PES explorer-5.1: RUN (seedState=8,rndSeed=120)
+> PES explorer-5.1: END
 
 PES explorer 5.1
 ----------------
@@ -5110,7 +5121,8 @@ Database Updating:
         5.5    2  NEW_PROD      20
         5.5    3    NEW_TS      21: 8<-->20
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 ========================
 Starting expedition 6/50
@@ -5153,8 +5165,8 @@ Energy range (a.u.)                           0.025796
 Energy range (eV)                              0.70196
 Energy range (kcal/mol)                        16.1875
 
-> PES explorer-6.3: RUN (seedState=10,rndSeed=127)
-> PES explorer-6.3: END
+> PES explorer-6.4: RUN (seedState=10,rndSeed=128)
+> PES explorer-6.4: END
 
 PES explorer 6.1
 ----------------
@@ -5517,7 +5529,8 @@ Database Updating:
 
         6.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 ========================
 Starting expedition 7/50
@@ -5562,8 +5575,8 @@ Energy range (a.u.)                           0.025799
 Energy range (eV)                              0.70203
 Energy range (kcal/mol)                        16.1893
 
-> PES explorer-7.2: RUN (seedState=12,rndSeed=131)
-> PES explorer-7.2: END
+> PES explorer-7.1: RUN (seedState=12,rndSeed=130)
+> PES explorer-7.1: END
 
 PES explorer 7.1
 ----------------
@@ -5939,7 +5952,8 @@ Database Updating:
 
         7.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 ========================
 Starting expedition 8/50
@@ -5987,8 +6001,10 @@ Energy range (a.u.)                           0.025800
 Energy range (eV)                              0.70205
 Energy range (kcal/mol)                        16.1897
 
-> PES explorer-8.4: RUN (seedState=14,rndSeed=138)
-> PES explorer-8.4: END
+> PES explorer-8.3: RUN (seedState=14,rndSeed=137)
+> PES explorer-8.3: END
+> PES explorer-8.5: RUN (seedState=14,rndSeed=139)
+> PES explorer-8.5: END
 
 PES explorer 8.1
 ----------------
@@ -6347,7 +6363,8 @@ Database Updating:
 
         8.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 ========================
 Starting expedition 9/50
@@ -6398,8 +6415,8 @@ Energy range (a.u.)                           0.025800
 Energy range (eV)                              0.70205
 Energy range (kcal/mol)                        16.1897
 
-> PES explorer-9.4: RUN (seedState=16,rndSeed=143)
-> PES explorer-9.4: END
+> PES explorer-9.3: RUN (seedState=16,rndSeed=142)
+> PES explorer-9.3: END
 
 PES explorer 9.1
 ----------------
@@ -6729,7 +6746,8 @@ Database Updating:
 
         9.4    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 10/50
@@ -6782,8 +6800,8 @@ Energy range (a.u.)                           0.025800
 Energy range (eV)                              0.70205
 Energy range (kcal/mol)                        16.1897
 
-> PES explorer-10.4: RUN (seedState=18,rndSeed=148)
-> PES explorer-10.4: END
+> PES explorer-10.2: RUN (seedState=18,rndSeed=146)
+> PES explorer-10.2: END
 
 PES explorer 10.1
 -----------------
@@ -7054,7 +7072,8 @@ Database Updating:
 
        10.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 11/50
@@ -7409,7 +7428,8 @@ Database Updating:
 
        11.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 12/50
@@ -7802,7 +7822,8 @@ Database Updating:
 
        12.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 13/50
@@ -7857,10 +7878,8 @@ Energy range (a.u.)                           0.025800
 Energy range (eV)                              0.70205
 Energy range (kcal/mol)                        16.1897
 
-> PES explorer-13.3: RUN (seedState=24,rndSeed=162)
-> PES explorer-13.3: END
-> PES explorer-13.5: RUN (seedState=24,rndSeed=164)
-> PES explorer-13.5: END
+> PES explorer-13.4: RUN (seedState=24,rndSeed=163)
+> PES explorer-13.4: END
 
 PES explorer 13.1
 -----------------
@@ -8225,7 +8244,8 @@ Database Updating:
        13.4    2  OLD_PROD      32
        13.4    3    NEW_TS      36: 24<-->32
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 14/50
@@ -8633,7 +8653,8 @@ Database Updating:
 
        14.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 15/50
@@ -8693,8 +8714,8 @@ Energy range (a.u.)                           0.025810
 Energy range (eV)                              0.70233
 Energy range (kcal/mol)                        16.1960
 
-> PES explorer-15.1: RUN (seedState=32,rndSeed=170)
-> PES explorer-15.1: END
+> PES explorer-15.3: RUN (seedState=32,rndSeed=172)
+> PES explorer-15.3: END
 
 PES explorer 15.1
 -----------------
@@ -9052,7 +9073,8 @@ Database Updating:
 
        15.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 16/50
@@ -9412,7 +9434,8 @@ Database Updating:
 
        16.4    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 17/50
@@ -9474,10 +9497,8 @@ Energy range (a.u.)                           0.025810
 Energy range (eV)                              0.70233
 Energy range (kcal/mol)                        16.1960
 
-> PES explorer-17.4: RUN (seedState=37,rndSeed=183)
-> PES explorer-17.4: END
-> PES explorer-17.5: RUN (seedState=37,rndSeed=184)
-> PES explorer-17.5: END
+> PES explorer-17.3: RUN (seedState=37,rndSeed=182)
+> PES explorer-17.3: END
 
 PES explorer 17.1
 -----------------
@@ -9752,7 +9773,8 @@ Database Updating:
 
        17.3    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 18/50
@@ -9817,8 +9839,10 @@ Energy range (a.u.)                           0.025810
 Energy range (eV)                              0.70233
 Energy range (kcal/mol)                        16.1960
 
-> PES explorer-18.3: RUN (seedState=41,rndSeed=187)
-> PES explorer-18.3: END
+> PES explorer-18.4: RUN (seedState=41,rndSeed=188)
+> PES explorer-18.4: END
+> PES explorer-18.5: RUN (seedState=41,rndSeed=189)
+> PES explorer-18.5: END
 
 PES explorer 18.1
 -----------------
@@ -10134,7 +10158,8 @@ Database Updating:
 
        18.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 19/50
@@ -10200,8 +10225,8 @@ Energy range (a.u.)                           0.025810
 Energy range (eV)                              0.70233
 Energy range (kcal/mol)                        16.1960
 
-> PES explorer-19.2: RUN (seedState=1,rndSeed=191)
-> PES explorer-19.2: END
+> PES explorer-19.3: RUN (seedState=1,rndSeed=192)
+> PES explorer-19.3: END
 
 PES explorer 19.1
 -----------------
@@ -10522,7 +10547,8 @@ Database Updating:
 
        19.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 20/50
@@ -10926,7 +10952,8 @@ Database Updating:
 
        20.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 21/50
@@ -10992,10 +11019,8 @@ Energy range (a.u.)                           0.025810
 Energy range (eV)                              0.70233
 Energy range (kcal/mol)                        16.1960
 
-> PES explorer-21.1: RUN (seedState=4,rndSeed=200)
-> PES explorer-21.1: END
-> PES explorer-21.5: RUN (seedState=4,rndSeed=204)
-> PES explorer-21.5: END
+> PES explorer-21.4: RUN (seedState=4,rndSeed=203)
+> PES explorer-21.4: END
 
 PES explorer 21.1
 -----------------
@@ -11325,7 +11350,8 @@ Database Updating:
 
        21.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 22/50
@@ -11391,10 +11417,8 @@ Energy range (a.u.)                           0.025810
 Energy range (eV)                              0.70233
 Energy range (kcal/mol)                        16.1960
 
-> PES explorer-22.2: RUN (seedState=6,rndSeed=206)
-> PES explorer-22.2: END
-> PES explorer-22.5: RUN (seedState=6,rndSeed=209)
-> PES explorer-22.5: END
+> PES explorer-22.1: RUN (seedState=6,rndSeed=205)
+> PES explorer-22.1: END
 
 PES explorer 22.1
 -----------------
@@ -11734,7 +11758,8 @@ Database Updating:
 
        22.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 23/50
@@ -12161,7 +12186,8 @@ Database Updating:
 
        23.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 24/50
@@ -12227,8 +12253,10 @@ Energy range (a.u.)                           0.025810
 Energy range (eV)                              0.70233
 Energy range (kcal/mol)                        16.1960
 
-> PES explorer-24.2: RUN (seedState=10,rndSeed=216)
-> PES explorer-24.2: END
+> PES explorer-24.4: RUN (seedState=10,rndSeed=218)
+> PES explorer-24.4: END
+> PES explorer-24.5: RUN (seedState=10,rndSeed=219)
+> PES explorer-24.5: END
 
 PES explorer 24.1
 -----------------
@@ -12587,7 +12615,8 @@ Database Updating:
 
        24.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 25/50
@@ -12654,10 +12683,8 @@ Energy range (a.u.)                           0.025810
 Energy range (eV)                              0.70233
 Energy range (kcal/mol)                        16.1960
 
-> PES explorer-25.2: RUN (seedState=12,rndSeed=221)
-> PES explorer-25.2: END
-> PES explorer-25.5: RUN (seedState=12,rndSeed=224)
-> PES explorer-25.5: END
+> PES explorer-25.4: RUN (seedState=12,rndSeed=223)
+> PES explorer-25.4: END
 
 PES explorer 25.1
 -----------------
@@ -12979,7 +13006,8 @@ Database Updating:
 
        25.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 26/50
@@ -13362,7 +13390,8 @@ Database Updating:
 
        26.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 27/50
@@ -13429,8 +13458,10 @@ Energy range (a.u.)                           0.025810
 Energy range (eV)                              0.70233
 Energy range (kcal/mol)                        16.1960
 
-> PES explorer-27.3: RUN (seedState=16,rndSeed=232)
-> PES explorer-27.3: END
+> PES explorer-27.2: RUN (seedState=16,rndSeed=231)
+> PES explorer-27.2: END
+> PES explorer-27.5: RUN (seedState=16,rndSeed=234)
+> PES explorer-27.5: END
 
 PES explorer 27.1
 -----------------
@@ -13700,7 +13731,8 @@ Database Updating:
 
        27.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 28/50
@@ -13767,8 +13799,8 @@ Energy range (a.u.)                           0.025810
 Energy range (eV)                              0.70233
 Energy range (kcal/mol)                        16.1960
 
-> PES explorer-28.1: RUN (seedState=18,rndSeed=235)
-> PES explorer-28.1: END
+> PES explorer-28.4: RUN (seedState=18,rndSeed=238)
+> PES explorer-28.4: END
 
 PES explorer 28.1
 -----------------
@@ -14079,7 +14111,8 @@ Database Updating:
 
        28.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 29/50
@@ -14490,7 +14523,8 @@ Database Updating:
 
        29.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 30/50
@@ -14827,7 +14861,8 @@ Database Updating:
 
        30.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 31/50
@@ -15121,7 +15156,8 @@ Database Updating:
 
        31.4    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 32/50
@@ -15188,8 +15224,8 @@ Energy range (a.u.)                           0.025810
 Energy range (eV)                              0.70233
 Energy range (kcal/mol)                        16.1960
 
-> PES explorer-32.4: RUN (seedState=27,rndSeed=258)
-> PES explorer-32.4: END
+> PES explorer-32.2: RUN (seedState=27,rndSeed=256)
+> PES explorer-32.2: END
 
 PES explorer 32.1
 -----------------
@@ -15485,7 +15521,8 @@ Database Updating:
 
        32.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 33/50
@@ -15552,8 +15589,8 @@ Energy range (a.u.)                           0.025810
 Energy range (eV)                              0.70233
 Energy range (kcal/mol)                        16.1960
 
-> PES explorer-33.3: RUN (seedState=32,rndSeed=262)
-> PES explorer-33.3: END
+> PES explorer-33.2: RUN (seedState=32,rndSeed=261)
+> PES explorer-33.2: END
 
 PES explorer 33.1
 -----------------
@@ -15882,7 +15919,8 @@ Database Updating:
 
        33.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 34/50
@@ -15949,8 +15987,8 @@ Energy range (a.u.)                           0.025810
 Energy range (eV)                              0.70233
 Energy range (kcal/mol)                        16.1960
 
-> PES explorer-34.4: RUN (seedState=34,rndSeed=268)
-> PES explorer-34.4: END
+> PES explorer-34.2: RUN (seedState=34,rndSeed=266)
+> PES explorer-34.2: END
 
 PES explorer 34.1
 -----------------
@@ -16310,7 +16348,8 @@ Database Updating:
 
        34.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 35/50
@@ -16377,8 +16416,10 @@ Energy range (a.u.)                           0.025810
 Energy range (eV)                              0.70233
 Energy range (kcal/mol)                        16.1960
 
-> PES explorer-35.3: RUN (seedState=37,rndSeed=272)
-> PES explorer-35.3: END
+> PES explorer-35.2: RUN (seedState=37,rndSeed=271)
+> PES explorer-35.2: END
+> PES explorer-35.5: RUN (seedState=37,rndSeed=274)
+> PES explorer-35.5: END
 
 PES explorer 35.1
 -----------------
@@ -16734,7 +16775,8 @@ Database Updating:
 
        35.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 36/50
@@ -17111,7 +17153,8 @@ Database Updating:
 
        36.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 37/50
@@ -17538,7 +17581,8 @@ Database Updating:
 
        37.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 38/50
@@ -17605,8 +17649,10 @@ Energy range (a.u.)                           0.025810
 Energy range (eV)                              0.70233
 Energy range (kcal/mol)                        16.1960
 
-> PES explorer-38.4: RUN (seedState=2,rndSeed=288)
-> PES explorer-38.4: END
+> PES explorer-38.2: RUN (seedState=2,rndSeed=286)
+> PES explorer-38.2: END
+> PES explorer-38.5: RUN (seedState=2,rndSeed=289)
+> PES explorer-38.5: END
 
 PES explorer 38.1
 -----------------
@@ -17947,7 +17993,8 @@ Database Updating:
 
        38.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 39/50
@@ -18352,7 +18399,8 @@ Database Updating:
 
        39.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 40/50
@@ -18419,8 +18467,8 @@ Energy range (a.u.)                           0.025810
 Energy range (eV)                              0.70233
 Energy range (kcal/mol)                        16.1960
 
-> PES explorer-40.2: RUN (seedState=6,rndSeed=296)
-> PES explorer-40.2: END
+> PES explorer-40.3: RUN (seedState=6,rndSeed=297)
+> PES explorer-40.3: END
 
 PES explorer 40.1
 -----------------
@@ -18712,7 +18760,8 @@ Database Updating:
 
        40.4    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 41/50
@@ -18779,10 +18828,8 @@ Energy range (a.u.)                           0.025810
 Energy range (eV)                              0.70233
 Energy range (kcal/mol)                        16.1960
 
-> PES explorer-41.3: RUN (seedState=8,rndSeed=302)
-> PES explorer-41.3: END
-> PES explorer-41.5: RUN (seedState=8,rndSeed=304)
-> PES explorer-41.5: END
+> PES explorer-41.2: RUN (seedState=8,rndSeed=301)
+> PES explorer-41.2: END
 
 PES explorer 41.1
 -----------------
@@ -19094,7 +19141,8 @@ Database Updating:
 
        41.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 42/50
@@ -19161,8 +19209,10 @@ Energy range (a.u.)                           0.025810
 Energy range (eV)                              0.70233
 Energy range (kcal/mol)                        16.1960
 
-> PES explorer-42.4: RUN (seedState=10,rndSeed=308)
-> PES explorer-42.4: END
+> PES explorer-42.1: RUN (seedState=10,rndSeed=305)
+> PES explorer-42.1: END
+> PES explorer-42.5: RUN (seedState=10,rndSeed=309)
+> PES explorer-42.5: END
 
 PES explorer 42.1
 -----------------
@@ -19834,7 +19884,8 @@ Database Updating:
 
        42.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 43/50
@@ -20263,7 +20314,8 @@ Database Updating:
 
        43.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 44/50
@@ -20330,8 +20382,8 @@ Energy range (a.u.)                           0.025810
 Energy range (eV)                              0.70233
 Energy range (kcal/mol)                        16.1960
 
-> PES explorer-44.3: RUN (seedState=14,rndSeed=317)
-> PES explorer-44.3: END
+> PES explorer-44.4: RUN (seedState=14,rndSeed=318)
+> PES explorer-44.4: END
 
 PES explorer 44.1
 -----------------
@@ -20606,7 +20658,8 @@ Database Updating:
 
        44.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 45/50
@@ -20993,7 +21046,8 @@ Database Updating:
 
        45.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 46/50
@@ -21062,8 +21116,6 @@ Energy range (kcal/mol)                        16.1960
 
 > PES explorer-46.2: RUN (seedState=18,rndSeed=326)
 > PES explorer-46.2: END
-> PES explorer-46.5: RUN (seedState=18,rndSeed=329)
-> PES explorer-46.5: END
 
 PES explorer 46.1
 -----------------
@@ -21391,7 +21443,8 @@ Database Updating:
 
        46.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 47/50
@@ -21458,8 +21511,8 @@ Energy range (a.u.)                           0.025810
 Energy range (eV)                              0.70233
 Energy range (kcal/mol)                        16.1960
 
-> PES explorer-47.4: RUN (seedState=20,rndSeed=333)
-> PES explorer-47.4: END
+> PES explorer-47.3: RUN (seedState=20,rndSeed=332)
+> PES explorer-47.3: END
 
 PES explorer 47.1
 -----------------
@@ -21769,7 +21822,8 @@ Database Updating:
 
        47.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 48/50
@@ -21836,8 +21890,10 @@ Energy range (a.u.)                           0.025810
 Energy range (eV)                              0.70233
 Energy range (kcal/mol)                        16.1960
 
-> PES explorer-48.2: RUN (seedState=22,rndSeed=336)
-> PES explorer-48.2: END
+> PES explorer-48.4: RUN (seedState=22,rndSeed=338)
+> PES explorer-48.4: END
+> PES explorer-48.5: RUN (seedState=22,rndSeed=339)
+> PES explorer-48.5: END
 
 PES explorer 48.1
 -----------------
@@ -22138,7 +22194,8 @@ Database Updating:
 
        48.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 49/50
@@ -22205,8 +22262,8 @@ Energy range (a.u.)                           0.025810
 Energy range (eV)                              0.70233
 Energy range (kcal/mol)                        16.1960
 
-> PES explorer-49.2: RUN (seedState=24,rndSeed=341)
-> PES explorer-49.2: END
+> PES explorer-49.4: RUN (seedState=24,rndSeed=343)
+> PES explorer-49.4: END
 
 PES explorer 49.1
 -----------------
@@ -22471,7 +22528,8 @@ Database Updating:
 
        49.5    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 
 =========================
 Starting expedition 50/50
@@ -22808,7 +22866,18 @@ Database Updating:
 
        50.4    3    OLD_TS   ABORT
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
+
+Explorers 'final status' summary
+================================
+
+  210 times: Success!
+    8 times: Zero mode abort.
+   30 times: Barrier too high.
+    1 times: Too many iterations.
+    1 times: Saddle is not connected to initial state.
+
 ----------------
 Energy Landscape
 ----------------
@@ -22871,20 +22940,11 @@ Energy range (eV)                              0.70233
 Energy range (kcal/mol)                        16.1960
 
 
-Explorers 'final status' summary
-================================
-
-  210 times: Success!
-    8 times: Zero mode abort.
-   30 times: Barrier too high.
-    1 times: Too many iterations.
-    1 times: Saddle is not connected to initial state.
-
-
 > Sorting Energy Landscape by Energy ... DONE
 
  
-Saving database on KF file ... OK 
+Saving database on KF file ... OK
+ 
 ----------------------
 Final Energy Landscape
 ----------------------
@@ -24796,6 +24856,6 @@ VEC2       4.15778787000000       7.20149984000000       0.00000000000000
 
 AMS application finished. Exiting.
 NORMAL TERMINATION
-     Total cpu time:      63.52
-  Total system time:       6.27
- Total elapsed time:      73.60
+     Total cpu time:      76.95
+  Total system time:       7.30
+ Total elapsed time:      85.62
