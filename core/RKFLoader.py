@@ -91,6 +91,11 @@ class RKFLoader:
                 fStatesAdsorptionPrefactors[i] = results.readrkf("EnergyLandscape", "fStatesAdsorptionPrefactors("+str(i+1)+")")
                 fStatesDesorptionPrefactors[i] = results.readrkf("EnergyLandscape", "fStatesDesorptionPrefactors("+str(i+1)+")")
 
+                if type(fStatesComposition[i]) != list: fStatesComposition[i] = [ fStatesComposition[i] ]
+                if type(fStatesConnections[i]) != list: fStatesConnections[i] = [ fStatesConnections[i] ]
+                if type(fStatesAdsorptionPrefactors[i]) != list: fStatesAdsorptionPrefactors[i] = [ fStatesAdsorptionPrefactors[i] ]
+                if type(fStatesDesorptionPrefactors[i]) != list: fStatesDesorptionPrefactors[i] = [ fStatesDesorptionPrefactors[i] ]
+
                 # Fix ids from Fortran to python
                 fStatesComposition[i] = [ max(0,idFragment-1) for idFragment in fStatesComposition[i] ]
                 fStatesConnections[i] = [ max(0,idState-1) for idState in fStatesConnections[i] ]
@@ -324,6 +329,10 @@ class RKFLoader:
         for idState in range(nStates):
             if( isTS[idState] ):
                 idTS = idState
+
+                # We only accept complete TSs
+                if( reactants[idTS] == 0 or products[idTS] == 0 ):
+                    continue
 
                 # Locates the reactant and product
                 idReactant = reactants[idTS]
