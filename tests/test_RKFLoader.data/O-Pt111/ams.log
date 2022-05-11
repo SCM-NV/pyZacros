@@ -1,0 +1,2295 @@
+<May11-2022> <13:47:35>  AMS 2022.203  RunTime: May11-2022 13:47:35  ShM Nodes: 1  Procs: 1
+<May11-2022> <13:47:35>  Loading energy landscape from: ../O_ads-Pt111
+<May11-2022> <13:47:35>  Loaded 3 states for refinement.
+<May11-2022> <13:47:35>  *** Refining state  #1 ***
+<May11-2022> <13:47:35>      Calculation on initial geometry ...
+<May11-2022> <13:47:35>      Starting inertial relaxation ...
+<May11-2022> <13:47:35>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:35>      ======================================================================================
+<May11-2022> <13:47:35>              0   -----      -7.278562    0.000102    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:35>              1   EGgSs      -7.278562    0.000102    0.000007    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:35>      Geometry optimization converged
+<May11-2022> <13:47:35>  Refinement of state #1 converged.
+<May11-2022> <13:47:35>  Frequency calculation on refined state #1:
+<May11-2022> <13:47:35>  Refinement of state #1 (local minimum) successful.
+<May11-2022> <13:47:35>  *** Refining state  #2 ***
+<May11-2022> <13:47:35>      Calculation on initial geometry ...
+<May11-2022> <13:47:35>      Starting inertial relaxation ...
+<May11-2022> <13:47:35>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:35>      ======================================================================================
+<May11-2022> <13:47:35>              0   -----      -7.278562    0.000102    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:35>              1   EGgSs      -7.278562    0.000102    0.000007    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:35>      Geometry optimization converged
+<May11-2022> <13:47:35>  Refinement of state #2 converged.
+<May11-2022> <13:47:35>  Frequency calculation on refined state #2:
+<May11-2022> <13:47:35>  Refinement of state #2 (local minimum) successful.
+<May11-2022> <13:47:35>  *** Refining state  #3 ***
+<May11-2022> <13:47:35>      Calculation on initial geometry ...
+<May11-2022> <13:47:35>      Starting inertial relaxation ...
+<May11-2022> <13:47:35>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:35>      ======================================================================================
+<May11-2022> <13:47:35>              0   -----      -7.278562    0.000102    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:35>              1   EGgSs      -7.278562    0.000102    0.000007    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:35>      Geometry optimization converged
+<May11-2022> <13:47:35>  Refinement of state #3 converged.
+<May11-2022> <13:47:35>  Frequency calculation on refined state #3:
+<May11-2022> <13:47:36>  Refinement of state #3 (local minimum) successful.
+<May11-2022> <13:47:36>  *** Refining state  #4 ***
+<May11-2022> <13:47:36>      Calculation on initial geometry ...
+<May11-2022> <13:47:36>      Starting inertial relaxation ...
+<May11-2022> <13:47:36>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:36>      ======================================================================================
+<May11-2022> <13:47:36>              0   -----      -7.278562    0.000102    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:36>              1   EGgSs      -7.278562    0.000102    0.000007    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:36>      Geometry optimization converged
+<May11-2022> <13:47:36>  Refinement of state #4 converged.
+<May11-2022> <13:47:36>  Frequency calculation on refined state #4:
+<May11-2022> <13:47:36>  Refinement of state #4 (local minimum) successful.
+<May11-2022> <13:47:36>  *** Refining state  #5 ***
+<May11-2022> <13:47:36>      Calculation on initial geometry ...
+<May11-2022> <13:47:36>      Starting inertial relaxation ...
+<May11-2022> <13:47:36>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:36>      ======================================================================================
+<May11-2022> <13:47:36>              0   -----      -7.278562    0.000102    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:36>              1   EGgSs      -7.278562    0.000102    0.000007    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:36>      Geometry optimization converged
+<May11-2022> <13:47:36>  Refinement of state #5 converged.
+<May11-2022> <13:47:36>  Frequency calculation on refined state #5:
+<May11-2022> <13:47:36>  Refinement of state #5 (local minimum) successful.
+<May11-2022> <13:47:36>  *** Refining state  #6 ***
+<May11-2022> <13:47:36>      Calculation on initial geometry ...
+<May11-2022> <13:47:36>      Starting inertial relaxation ...
+<May11-2022> <13:47:36>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:36>      ======================================================================================
+<May11-2022> <13:47:36>              0   -----      -7.278562    0.000102    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:36>              1   EGgSs      -7.278562    0.000102    0.000007    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:36>      Geometry optimization converged
+<May11-2022> <13:47:36>  Refinement of state #6 converged.
+<May11-2022> <13:47:36>  Frequency calculation on refined state #6:
+<May11-2022> <13:47:36>  Refinement of state #6 (local minimum) successful.
+<May11-2022> <13:47:36>  *** Refining state  #7 ***
+<May11-2022> <13:47:36>      Calculation on initial geometry ...
+<May11-2022> <13:47:36>      Starting inertial relaxation ...
+<May11-2022> <13:47:36>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:36>      ======================================================================================
+<May11-2022> <13:47:36>              0   -----      -7.278562    0.000102    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:36>              1   EGgSs      -7.278562    0.000102    0.000007    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:36>      Geometry optimization converged
+<May11-2022> <13:47:36>  Refinement of state #7 converged.
+<May11-2022> <13:47:36>  Frequency calculation on refined state #7:
+<May11-2022> <13:47:36>  Refinement of state #7 (local minimum) successful.
+<May11-2022> <13:47:36>  *** Refining state  #8 ***
+<May11-2022> <13:47:36>      Calculation on initial geometry ...
+<May11-2022> <13:47:36>      Starting inertial relaxation ...
+<May11-2022> <13:47:36>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:36>      ======================================================================================
+<May11-2022> <13:47:36>              0   -----      -7.278562    0.000102    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:36>              1   EGgSs      -7.278562    0.000102    0.000007    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:36>      Geometry optimization converged
+<May11-2022> <13:47:36>  Refinement of state #8 converged.
+<May11-2022> <13:47:36>  Frequency calculation on refined state #8:
+<May11-2022> <13:47:36>  Refinement of state #8 (local minimum) successful.
+<May11-2022> <13:47:36>  *** Refining state  #9 ***
+<May11-2022> <13:47:36>      Calculation on initial geometry ...
+<May11-2022> <13:47:36>      Starting inertial relaxation ...
+<May11-2022> <13:47:36>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:36>      ======================================================================================
+<May11-2022> <13:47:36>              0   -----      -7.278562    0.000102    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:36>              1   EGgSs      -7.278562    0.000102    0.000007    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:36>      Geometry optimization converged
+<May11-2022> <13:47:36>  Refinement of state #9 converged.
+<May11-2022> <13:47:36>  Frequency calculation on refined state #9:
+<May11-2022> <13:47:36>  Refinement of state #9 (local minimum) successful.
+<May11-2022> <13:47:36>  *** Refining state  #10 ***
+<May11-2022> <13:47:36>      Calculation on initial geometry ...
+<May11-2022> <13:47:36>      Starting inertial relaxation ...
+<May11-2022> <13:47:36>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:36>      ======================================================================================
+<May11-2022> <13:47:36>              0   -----      -7.271255    0.000112    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:36>              1   EGgSs      -7.271255    0.000111    0.000007    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:36>      Geometry optimization converged
+<May11-2022> <13:47:36>  Refinement of state #10 converged.
+<May11-2022> <13:47:36>  Frequency calculation on refined state #10:
+<May11-2022> <13:47:36>  Refinement of state #10 (local minimum) successful.
+<May11-2022> <13:47:36>  *** Refining state  #11 ***
+<May11-2022> <13:47:36>      Calculation on initial geometry ...
+<May11-2022> <13:47:36>      Starting inertial relaxation ...
+<May11-2022> <13:47:36>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:36>      ======================================================================================
+<May11-2022> <13:47:36>              0   -----      -7.271255    0.000112    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:36>              1   EGgSs      -7.271255    0.000111    0.000007    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:36>      Geometry optimization converged
+<May11-2022> <13:47:36>  Refinement of state #11 converged.
+<May11-2022> <13:47:36>  Frequency calculation on refined state #11:
+<May11-2022> <13:47:36>  Refinement of state #11 (local minimum) successful.
+<May11-2022> <13:47:36>  *** Refining state  #12 ***
+<May11-2022> <13:47:36>      Calculation on initial geometry ...
+<May11-2022> <13:47:36>      Starting inertial relaxation ...
+<May11-2022> <13:47:36>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:36>      ======================================================================================
+<May11-2022> <13:47:36>              0   -----      -7.271255    0.000112    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:36>              1   EGgSs      -7.271255    0.000111    0.000007    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:36>      Geometry optimization converged
+<May11-2022> <13:47:36>  Refinement of state #12 converged.
+<May11-2022> <13:47:36>  Frequency calculation on refined state #12:
+<May11-2022> <13:47:36>  Refinement of state #12 (local minimum) successful.
+<May11-2022> <13:47:36>  *** Refining state  #13 ***
+<May11-2022> <13:47:36>      Calculation on initial geometry ...
+<May11-2022> <13:47:36>      Starting inertial relaxation ...
+<May11-2022> <13:47:36>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:36>      ======================================================================================
+<May11-2022> <13:47:36>              0   -----      -7.271255    0.000112    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:36>              1   EGgSs      -7.271255    0.000111    0.000007    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:36>      Geometry optimization converged
+<May11-2022> <13:47:36>  Refinement of state #13 converged.
+<May11-2022> <13:47:36>  Frequency calculation on refined state #13:
+<May11-2022> <13:47:36>  Refinement of state #13 (local minimum) successful.
+<May11-2022> <13:47:36>  *** Refining state  #14 ***
+<May11-2022> <13:47:37>      Calculation on initial geometry ...
+<May11-2022> <13:47:37>      Starting inertial relaxation ...
+<May11-2022> <13:47:37>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:37>      ======================================================================================
+<May11-2022> <13:47:37>              0   -----      -7.271255    0.000112    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:37>              1   EGgSs      -7.271255    0.000111    0.000007    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:37>      Geometry optimization converged
+<May11-2022> <13:47:37>  Refinement of state #14 converged.
+<May11-2022> <13:47:37>  Frequency calculation on refined state #14:
+<May11-2022> <13:47:37>  Refinement of state #14 (local minimum) successful.
+<May11-2022> <13:47:37>  *** Refining state  #15 ***
+<May11-2022> <13:47:37>      Calculation on initial geometry ...
+<May11-2022> <13:47:37>      Starting inertial relaxation ...
+<May11-2022> <13:47:37>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:37>      ======================================================================================
+<May11-2022> <13:47:37>              0   -----      -7.271255    0.000112    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:37>              1   EGgSs      -7.271255    0.000111    0.000007    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:37>      Geometry optimization converged
+<May11-2022> <13:47:37>  Refinement of state #15 converged.
+<May11-2022> <13:47:37>  Frequency calculation on refined state #15:
+<May11-2022> <13:47:37>  Refinement of state #15 (local minimum) successful.
+<May11-2022> <13:47:37>  *** Refining state  #16 ***
+<May11-2022> <13:47:37>      Calculation on initial geometry ...
+<May11-2022> <13:47:37>      Starting inertial relaxation ...
+<May11-2022> <13:47:37>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:37>      ======================================================================================
+<May11-2022> <13:47:37>              0   -----      -7.271255    0.000112    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:37>              1   EGgSs      -7.271255    0.000111    0.000007    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:37>      Geometry optimization converged
+<May11-2022> <13:47:37>  Refinement of state #16 converged.
+<May11-2022> <13:47:37>  Frequency calculation on refined state #16:
+<May11-2022> <13:47:37>  Refinement of state #16 (local minimum) successful.
+<May11-2022> <13:47:37>  *** Refining state  #17 ***
+<May11-2022> <13:47:37>      Calculation on initial geometry ...
+<May11-2022> <13:47:37>      Starting inertial relaxation ...
+<May11-2022> <13:47:37>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:37>      ======================================================================================
+<May11-2022> <13:47:37>              0   -----      -7.271255    0.000112    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:37>              1   EGgSs      -7.271255    0.000111    0.000007    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:37>      Geometry optimization converged
+<May11-2022> <13:47:37>  Refinement of state #17 converged.
+<May11-2022> <13:47:37>  Frequency calculation on refined state #17:
+<May11-2022> <13:47:37>  Refinement of state #17 (local minimum) successful.
+<May11-2022> <13:47:37>  *** Refining state  #18 ***
+<May11-2022> <13:47:37>      Calculation on initial geometry ...
+<May11-2022> <13:47:37>      Starting inertial relaxation ...
+<May11-2022> <13:47:37>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:37>      ======================================================================================
+<May11-2022> <13:47:37>              0   -----      -7.271255    0.000112    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:37>              1   EGgSs      -7.271255    0.000111    0.000007    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:37>      Geometry optimization converged
+<May11-2022> <13:47:37>  Refinement of state #18 converged.
+<May11-2022> <13:47:37>  Frequency calculation on refined state #18:
+<May11-2022> <13:47:37>  Refinement of state #18 (local minimum) successful.
+<May11-2022> <13:47:37>  *** Refining state TS #19 ***
+<May11-2022> <13:47:37>      Computing initial Hessian...
+<May11-2022> <13:47:38>      Iteration 1
+<May11-2022> <13:47:38>      current energy                               -7.25282600 Hartree
+<May11-2022> <13:47:38>      energy change                      -7.25282600     0.00037000    F
+<May11-2022> <13:47:38>      constrained gradient max            0.00014781     0.00018375    T
+<May11-2022> <13:47:38>      constrained gradient rms            0.00001236     0.00012250    T
+<May11-2022> <13:47:38>      gradient max                        0.02947162
+<May11-2022> <13:47:38>      gradient rms                        0.00844527
+<May11-2022> <13:47:38>      cart. step max                      0.00098006     0.01000000    T
+<May11-2022> <13:47:38>      cart. step rms                      0.00010177     0.00666667    T
+<May11-2022> <13:47:38>      Iteration 2
+<May11-2022> <13:47:38>      current energy                               -7.25282604 Hartree
+<May11-2022> <13:47:38>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:47:38>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:47:38>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:47:38>      gradient max                        0.02936582
+<May11-2022> <13:47:38>      gradient rms                        0.00844199
+<May11-2022> <13:47:38>      cart. step max                      0.00000036     0.01000000    T
+<May11-2022> <13:47:38>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:47:38>      Geometry optimization converged
+<May11-2022> <13:47:38>  Refinement of state #19 converged.
+<May11-2022> <13:47:38>  Frequency calculation on refined state #19:
+<May11-2022> <13:47:38>  Refinement of state #19 (transition state) successful.
+<May11-2022> <13:47:38>      Calculation on initial geometry ...
+<May11-2022> <13:47:38>      Starting inertial relaxation ...
+<May11-2022> <13:47:38>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:38>      ======================================================================================
+<May11-2022> <13:47:38>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:38>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:38>      Geometry optimization converged
+<May11-2022> <13:47:38>  Refinement of state #19 converged.
+<May11-2022> <13:47:38>  Frequency calculation on refined state #19:
+<May11-2022> <13:47:38>  WARNING: Reactant from refinement of state #19 failed.
+<May11-2022> <13:47:38>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:38>    Expected character: local minimum
+<May11-2022> <13:47:38>    Actual character: transition state
+<May11-2022> <13:47:38>      Calculation on initial geometry ...
+<May11-2022> <13:47:38>      Starting inertial relaxation ...
+<May11-2022> <13:47:38>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:38>      ======================================================================================
+<May11-2022> <13:47:38>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:38>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:38>      Geometry optimization converged
+<May11-2022> <13:47:38>  Refinement of state #19 converged.
+<May11-2022> <13:47:38>  Frequency calculation on refined state #19:
+<May11-2022> <13:47:38>  WARNING: Product from refinement of state #19 failed.
+<May11-2022> <13:47:38>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:38>    Expected character: local minimum
+<May11-2022> <13:47:38>    Actual character: transition state
+<May11-2022> <13:47:38>  *** Refining state TS #20 ***
+<May11-2022> <13:47:38>      Computing initial Hessian...
+<May11-2022> <13:47:39>      Iteration 1
+<May11-2022> <13:47:39>      current energy                               -7.25282599 Hartree
+<May11-2022> <13:47:39>      energy change                      -7.25282599     0.00037000    F
+<May11-2022> <13:47:39>      constrained gradient max            0.00014778     0.00018375    T
+<May11-2022> <13:47:39>      constrained gradient rms            0.00001236     0.00012250    T
+<May11-2022> <13:47:39>      gradient max                        0.02947163
+<May11-2022> <13:47:39>      gradient rms                        0.00844528
+<May11-2022> <13:47:39>      cart. step max                      0.00097981     0.01000000    T
+<May11-2022> <13:47:39>      cart. step rms                      0.00010175     0.00666667    T
+<May11-2022> <13:47:39>      Iteration 2
+<May11-2022> <13:47:39>      current energy                               -7.25282603 Hartree
+<May11-2022> <13:47:39>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:47:39>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:47:39>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:47:39>      gradient max                        0.02936585
+<May11-2022> <13:47:39>      gradient rms                        0.00844200
+<May11-2022> <13:47:39>      cart. step max                      0.00000036     0.01000000    T
+<May11-2022> <13:47:39>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:47:39>      Geometry optimization converged
+<May11-2022> <13:47:39>  Refinement of state #20 converged.
+<May11-2022> <13:47:39>  Frequency calculation on refined state #20:
+<May11-2022> <13:47:39>  Refinement of state #20 (transition state) successful.
+<May11-2022> <13:47:39>      Calculation on initial geometry ...
+<May11-2022> <13:47:39>      Starting inertial relaxation ...
+<May11-2022> <13:47:39>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:39>      ======================================================================================
+<May11-2022> <13:47:39>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:39>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:39>      Geometry optimization converged
+<May11-2022> <13:47:39>  Refinement of state #20 converged.
+<May11-2022> <13:47:39>  Frequency calculation on refined state #20:
+<May11-2022> <13:47:39>  WARNING: Reactant from refinement of state #20 failed.
+<May11-2022> <13:47:39>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:39>    Expected character: local minimum
+<May11-2022> <13:47:39>    Actual character: transition state
+<May11-2022> <13:47:39>      Calculation on initial geometry ...
+<May11-2022> <13:47:39>      Starting inertial relaxation ...
+<May11-2022> <13:47:39>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:39>      ======================================================================================
+<May11-2022> <13:47:39>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:39>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:39>      Geometry optimization converged
+<May11-2022> <13:47:39>  Refinement of state #20 converged.
+<May11-2022> <13:47:39>  Frequency calculation on refined state #20:
+<May11-2022> <13:47:39>  WARNING: Product from refinement of state #20 failed.
+<May11-2022> <13:47:39>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:39>    Expected character: local minimum
+<May11-2022> <13:47:39>    Actual character: transition state
+<May11-2022> <13:47:39>  *** Refining state TS #21 ***
+<May11-2022> <13:47:39>      Computing initial Hessian...
+<May11-2022> <13:47:40>      Iteration 1
+<May11-2022> <13:47:40>      current energy                               -7.25282600 Hartree
+<May11-2022> <13:47:40>      energy change                      -7.25282600     0.00037000    F
+<May11-2022> <13:47:40>      constrained gradient max            0.00014779     0.00018375    T
+<May11-2022> <13:47:40>      constrained gradient rms            0.00001236     0.00012250    T
+<May11-2022> <13:47:40>      gradient max                        0.02947163
+<May11-2022> <13:47:40>      gradient rms                        0.00844528
+<May11-2022> <13:47:40>      cart. step max                      0.00097980     0.01000000    T
+<May11-2022> <13:47:40>      cart. step rms                      0.00010175     0.00666667    T
+<May11-2022> <13:47:40>      Iteration 2
+<May11-2022> <13:47:40>      current energy                               -7.25282604 Hartree
+<May11-2022> <13:47:40>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:47:40>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:47:40>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:47:40>      gradient max                        0.02936583
+<May11-2022> <13:47:40>      gradient rms                        0.00844200
+<May11-2022> <13:47:40>      cart. step max                      0.00000036     0.01000000    T
+<May11-2022> <13:47:40>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:47:40>      Geometry optimization converged
+<May11-2022> <13:47:40>  Refinement of state #21 converged.
+<May11-2022> <13:47:40>  Frequency calculation on refined state #21:
+<May11-2022> <13:47:40>  Refinement of state #21 (transition state) successful.
+<May11-2022> <13:47:40>      Calculation on initial geometry ...
+<May11-2022> <13:47:40>      Starting inertial relaxation ...
+<May11-2022> <13:47:40>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:40>      ======================================================================================
+<May11-2022> <13:47:40>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:40>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:40>      Geometry optimization converged
+<May11-2022> <13:47:40>  Refinement of state #21 converged.
+<May11-2022> <13:47:40>  Frequency calculation on refined state #21:
+<May11-2022> <13:47:40>  WARNING: Reactant from refinement of state #21 failed.
+<May11-2022> <13:47:40>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:40>    Expected character: local minimum
+<May11-2022> <13:47:40>    Actual character: transition state
+<May11-2022> <13:47:40>      Calculation on initial geometry ...
+<May11-2022> <13:47:40>      Starting inertial relaxation ...
+<May11-2022> <13:47:40>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:40>      ======================================================================================
+<May11-2022> <13:47:40>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:40>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:40>      Geometry optimization converged
+<May11-2022> <13:47:40>  Refinement of state #21 converged.
+<May11-2022> <13:47:40>  Frequency calculation on refined state #21:
+<May11-2022> <13:47:40>  WARNING: Product from refinement of state #21 failed.
+<May11-2022> <13:47:40>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:40>    Expected character: local minimum
+<May11-2022> <13:47:40>    Actual character: transition state
+<May11-2022> <13:47:40>  *** Refining state TS #22 ***
+<May11-2022> <13:47:40>      Computing initial Hessian...
+<May11-2022> <13:47:41>      Iteration 1
+<May11-2022> <13:47:41>      current energy                               -7.25282599 Hartree
+<May11-2022> <13:47:41>      energy change                      -7.25282599     0.00037000    F
+<May11-2022> <13:47:41>      constrained gradient max            0.00014780     0.00018375    T
+<May11-2022> <13:47:41>      constrained gradient rms            0.00001236     0.00012250    T
+<May11-2022> <13:47:41>      gradient max                        0.02947162
+<May11-2022> <13:47:41>      gradient rms                        0.00844528
+<May11-2022> <13:47:41>      cart. step max                      0.00097992     0.01000000    T
+<May11-2022> <13:47:41>      cart. step rms                      0.00010176     0.00666667    T
+<May11-2022> <13:47:41>      Iteration 2
+<May11-2022> <13:47:41>      current energy                               -7.25282604 Hartree
+<May11-2022> <13:47:41>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:47:41>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:47:41>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:47:41>      gradient max                        0.02936584
+<May11-2022> <13:47:41>      gradient rms                        0.00844200
+<May11-2022> <13:47:41>      cart. step max                      0.00000036     0.01000000    T
+<May11-2022> <13:47:41>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:47:41>      Geometry optimization converged
+<May11-2022> <13:47:41>  Refinement of state #22 converged.
+<May11-2022> <13:47:41>  Frequency calculation on refined state #22:
+<May11-2022> <13:47:41>  Refinement of state #22 (transition state) successful.
+<May11-2022> <13:47:41>      Calculation on initial geometry ...
+<May11-2022> <13:47:41>      Starting inertial relaxation ...
+<May11-2022> <13:47:41>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:41>      ======================================================================================
+<May11-2022> <13:47:41>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:41>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:41>      Geometry optimization converged
+<May11-2022> <13:47:41>  Refinement of state #22 converged.
+<May11-2022> <13:47:41>  Frequency calculation on refined state #22:
+<May11-2022> <13:47:41>  WARNING: Reactant from refinement of state #22 failed.
+<May11-2022> <13:47:41>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:41>    Expected character: local minimum
+<May11-2022> <13:47:41>    Actual character: transition state
+<May11-2022> <13:47:41>      Calculation on initial geometry ...
+<May11-2022> <13:47:41>      Starting inertial relaxation ...
+<May11-2022> <13:47:41>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:41>      ======================================================================================
+<May11-2022> <13:47:41>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:41>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:41>      Geometry optimization converged
+<May11-2022> <13:47:41>  Refinement of state #22 converged.
+<May11-2022> <13:47:41>  Frequency calculation on refined state #22:
+<May11-2022> <13:47:41>  WARNING: Product from refinement of state #22 failed.
+<May11-2022> <13:47:41>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:41>    Expected character: local minimum
+<May11-2022> <13:47:41>    Actual character: transition state
+<May11-2022> <13:47:41>  *** Refining state TS #23 ***
+<May11-2022> <13:47:41>      Computing initial Hessian...
+<May11-2022> <13:47:42>      Iteration 1
+<May11-2022> <13:47:42>      current energy                               -7.25282600 Hartree
+<May11-2022> <13:47:42>      energy change                      -7.25282600     0.00037000    F
+<May11-2022> <13:47:42>      constrained gradient max            0.00014779     0.00018375    T
+<May11-2022> <13:47:42>      constrained gradient rms            0.00001236     0.00012250    T
+<May11-2022> <13:47:42>      gradient max                        0.02947161
+<May11-2022> <13:47:42>      gradient rms                        0.00844528
+<May11-2022> <13:47:42>      cart. step max                      0.00097985     0.01000000    T
+<May11-2022> <13:47:42>      cart. step rms                      0.00010176     0.00666667    T
+<May11-2022> <13:47:42>      Iteration 2
+<May11-2022> <13:47:42>      current energy                               -7.25282604 Hartree
+<May11-2022> <13:47:42>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:47:42>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:47:42>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:47:42>      gradient max                        0.02936585
+<May11-2022> <13:47:42>      gradient rms                        0.00844200
+<May11-2022> <13:47:42>      cart. step max                      0.00000036     0.01000000    T
+<May11-2022> <13:47:42>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:47:42>      Geometry optimization converged
+<May11-2022> <13:47:42>  Refinement of state #23 converged.
+<May11-2022> <13:47:42>  Frequency calculation on refined state #23:
+<May11-2022> <13:47:42>  Refinement of state #23 (transition state) successful.
+<May11-2022> <13:47:42>      Calculation on initial geometry ...
+<May11-2022> <13:47:42>      Starting inertial relaxation ...
+<May11-2022> <13:47:42>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:42>      ======================================================================================
+<May11-2022> <13:47:42>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:42>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:42>      Geometry optimization converged
+<May11-2022> <13:47:42>  Refinement of state #23 converged.
+<May11-2022> <13:47:42>  Frequency calculation on refined state #23:
+<May11-2022> <13:47:42>  WARNING: Reactant from refinement of state #23 failed.
+<May11-2022> <13:47:42>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:42>    Expected character: local minimum
+<May11-2022> <13:47:42>    Actual character: transition state
+<May11-2022> <13:47:42>      Calculation on initial geometry ...
+<May11-2022> <13:47:42>      Starting inertial relaxation ...
+<May11-2022> <13:47:42>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:42>      ======================================================================================
+<May11-2022> <13:47:42>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:42>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:42>      Geometry optimization converged
+<May11-2022> <13:47:42>  Refinement of state #23 converged.
+<May11-2022> <13:47:42>  Frequency calculation on refined state #23:
+<May11-2022> <13:47:42>  WARNING: Product from refinement of state #23 failed.
+<May11-2022> <13:47:42>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:42>    Expected character: local minimum
+<May11-2022> <13:47:42>    Actual character: transition state
+<May11-2022> <13:47:42>  *** Refining state TS #24 ***
+<May11-2022> <13:47:42>      Computing initial Hessian...
+<May11-2022> <13:47:43>      Iteration 1
+<May11-2022> <13:47:43>      current energy                               -7.25282600 Hartree
+<May11-2022> <13:47:43>      energy change                      -7.25282600     0.00037000    F
+<May11-2022> <13:47:43>      constrained gradient max            0.00014780     0.00018375    T
+<May11-2022> <13:47:43>      constrained gradient rms            0.00001236     0.00012250    T
+<May11-2022> <13:47:43>      gradient max                        0.02947161
+<May11-2022> <13:47:43>      gradient rms                        0.00844527
+<May11-2022> <13:47:43>      cart. step max                      0.00097984     0.01000000    T
+<May11-2022> <13:47:43>      cart. step rms                      0.00010175     0.00666667    T
+<May11-2022> <13:47:43>      Iteration 2
+<May11-2022> <13:47:43>      current energy                               -7.25282605 Hartree
+<May11-2022> <13:47:43>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:47:43>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:47:43>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:47:43>      gradient max                        0.02936582
+<May11-2022> <13:47:43>      gradient rms                        0.00844199
+<May11-2022> <13:47:43>      cart. step max                      0.00000036     0.01000000    T
+<May11-2022> <13:47:43>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:47:43>      Geometry optimization converged
+<May11-2022> <13:47:43>  Refinement of state #24 converged.
+<May11-2022> <13:47:43>  Frequency calculation on refined state #24:
+<May11-2022> <13:47:43>  Refinement of state #24 (transition state) successful.
+<May11-2022> <13:47:43>      Calculation on initial geometry ...
+<May11-2022> <13:47:43>      Starting inertial relaxation ...
+<May11-2022> <13:47:43>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:43>      ======================================================================================
+<May11-2022> <13:47:43>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:43>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:43>      Geometry optimization converged
+<May11-2022> <13:47:43>  Refinement of state #24 converged.
+<May11-2022> <13:47:43>  Frequency calculation on refined state #24:
+<May11-2022> <13:47:43>  WARNING: Reactant from refinement of state #24 failed.
+<May11-2022> <13:47:43>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:43>    Expected character: local minimum
+<May11-2022> <13:47:43>    Actual character: transition state
+<May11-2022> <13:47:43>      Calculation on initial geometry ...
+<May11-2022> <13:47:43>      Starting inertial relaxation ...
+<May11-2022> <13:47:43>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:43>      ======================================================================================
+<May11-2022> <13:47:43>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:43>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:43>      Geometry optimization converged
+<May11-2022> <13:47:43>  Refinement of state #24 converged.
+<May11-2022> <13:47:43>  Frequency calculation on refined state #24:
+<May11-2022> <13:47:43>  WARNING: Product from refinement of state #24 failed.
+<May11-2022> <13:47:43>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:43>    Expected character: local minimum
+<May11-2022> <13:47:43>    Actual character: transition state
+<May11-2022> <13:47:43>  *** Refining state TS #25 ***
+<May11-2022> <13:47:44>      Computing initial Hessian...
+<May11-2022> <13:47:44>      Iteration 1
+<May11-2022> <13:47:44>      current energy                               -7.25282600 Hartree
+<May11-2022> <13:47:44>      energy change                      -7.25282600     0.00037000    F
+<May11-2022> <13:47:44>      constrained gradient max            0.00014781     0.00018375    T
+<May11-2022> <13:47:44>      constrained gradient rms            0.00001236     0.00012250    T
+<May11-2022> <13:47:44>      gradient max                        0.02947160
+<May11-2022> <13:47:44>      gradient rms                        0.00844527
+<May11-2022> <13:47:44>      cart. step max                      0.00097996     0.01000000    T
+<May11-2022> <13:47:44>      cart. step rms                      0.00010176     0.00666667    T
+<May11-2022> <13:47:44>      Iteration 2
+<May11-2022> <13:47:44>      current energy                               -7.25282604 Hartree
+<May11-2022> <13:47:44>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:47:44>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:47:44>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:47:44>      gradient max                        0.02936584
+<May11-2022> <13:47:44>      gradient rms                        0.00844199
+<May11-2022> <13:47:44>      cart. step max                      0.00000036     0.01000000    T
+<May11-2022> <13:47:44>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:47:44>      Geometry optimization converged
+<May11-2022> <13:47:44>  Refinement of state #25 converged.
+<May11-2022> <13:47:44>  Frequency calculation on refined state #25:
+<May11-2022> <13:47:44>  Refinement of state #25 (transition state) successful.
+<May11-2022> <13:47:44>      Calculation on initial geometry ...
+<May11-2022> <13:47:44>      Starting inertial relaxation ...
+<May11-2022> <13:47:44>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:44>      ======================================================================================
+<May11-2022> <13:47:44>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:44>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:44>      Geometry optimization converged
+<May11-2022> <13:47:44>  Refinement of state #25 converged.
+<May11-2022> <13:47:44>  Frequency calculation on refined state #25:
+<May11-2022> <13:47:44>  WARNING: Reactant from refinement of state #25 failed.
+<May11-2022> <13:47:44>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:44>    Expected character: local minimum
+<May11-2022> <13:47:44>    Actual character: transition state
+<May11-2022> <13:47:44>      Calculation on initial geometry ...
+<May11-2022> <13:47:44>      Starting inertial relaxation ...
+<May11-2022> <13:47:44>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:44>      ======================================================================================
+<May11-2022> <13:47:44>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:44>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:44>      Geometry optimization converged
+<May11-2022> <13:47:44>  Refinement of state #25 converged.
+<May11-2022> <13:47:44>  Frequency calculation on refined state #25:
+<May11-2022> <13:47:45>  WARNING: Product from refinement of state #25 failed.
+<May11-2022> <13:47:45>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:45>    Expected character: local minimum
+<May11-2022> <13:47:45>    Actual character: transition state
+<May11-2022> <13:47:45>  *** Refining state TS #26 ***
+<May11-2022> <13:47:45>      Computing initial Hessian...
+<May11-2022> <13:47:45>      Iteration 1
+<May11-2022> <13:47:45>      current energy                               -7.25282599 Hartree
+<May11-2022> <13:47:45>      energy change                      -7.25282599     0.00037000    F
+<May11-2022> <13:47:45>      constrained gradient max            0.00014780     0.00018375    T
+<May11-2022> <13:47:45>      constrained gradient rms            0.00001236     0.00012250    T
+<May11-2022> <13:47:45>      gradient max                        0.02947163
+<May11-2022> <13:47:45>      gradient rms                        0.00844528
+<May11-2022> <13:47:45>      cart. step max                      0.00097995     0.01000000    T
+<May11-2022> <13:47:45>      cart. step rms                      0.00010176     0.00666667    T
+<May11-2022> <13:47:45>      Iteration 2
+<May11-2022> <13:47:45>      current energy                               -7.25282604 Hartree
+<May11-2022> <13:47:45>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:47:45>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:47:45>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:47:45>      gradient max                        0.02936583
+<May11-2022> <13:47:45>      gradient rms                        0.00844200
+<May11-2022> <13:47:45>      cart. step max                      0.00000036     0.01000000    T
+<May11-2022> <13:47:45>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:47:45>      Geometry optimization converged
+<May11-2022> <13:47:45>  Refinement of state #26 converged.
+<May11-2022> <13:47:45>  Frequency calculation on refined state #26:
+<May11-2022> <13:47:45>  Refinement of state #26 (transition state) successful.
+<May11-2022> <13:47:45>      Calculation on initial geometry ...
+<May11-2022> <13:47:45>      Starting inertial relaxation ...
+<May11-2022> <13:47:45>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:45>      ======================================================================================
+<May11-2022> <13:47:45>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:45>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:45>      Geometry optimization converged
+<May11-2022> <13:47:45>  Refinement of state #26 converged.
+<May11-2022> <13:47:45>  Frequency calculation on refined state #26:
+<May11-2022> <13:47:45>  WARNING: Reactant from refinement of state #26 failed.
+<May11-2022> <13:47:45>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:45>    Expected character: local minimum
+<May11-2022> <13:47:45>    Actual character: transition state
+<May11-2022> <13:47:46>      Calculation on initial geometry ...
+<May11-2022> <13:47:46>      Starting inertial relaxation ...
+<May11-2022> <13:47:46>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:46>      ======================================================================================
+<May11-2022> <13:47:46>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:46>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:46>      Geometry optimization converged
+<May11-2022> <13:47:46>  Refinement of state #26 converged.
+<May11-2022> <13:47:46>  Frequency calculation on refined state #26:
+<May11-2022> <13:47:46>  WARNING: Product from refinement of state #26 failed.
+<May11-2022> <13:47:46>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:46>    Expected character: local minimum
+<May11-2022> <13:47:46>    Actual character: transition state
+<May11-2022> <13:47:46>  *** Refining state TS #27 ***
+<May11-2022> <13:47:46>      Computing initial Hessian...
+<May11-2022> <13:47:46>      Iteration 1
+<May11-2022> <13:47:46>      current energy                               -7.25282600 Hartree
+<May11-2022> <13:47:46>      energy change                      -7.25282600     0.00037000    F
+<May11-2022> <13:47:46>      constrained gradient max            0.00014781     0.00018375    T
+<May11-2022> <13:47:46>      constrained gradient rms            0.00001236     0.00012250    T
+<May11-2022> <13:47:46>      gradient max                        0.02947163
+<May11-2022> <13:47:46>      gradient rms                        0.00844527
+<May11-2022> <13:47:46>      cart. step max                      0.00097995     0.01000000    T
+<May11-2022> <13:47:46>      cart. step rms                      0.00010176     0.00666667    T
+<May11-2022> <13:47:46>      Iteration 2
+<May11-2022> <13:47:46>      current energy                               -7.25282604 Hartree
+<May11-2022> <13:47:46>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:47:46>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:47:46>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:47:46>      gradient max                        0.02936582
+<May11-2022> <13:47:46>      gradient rms                        0.00844199
+<May11-2022> <13:47:46>      cart. step max                      0.00000036     0.01000000    T
+<May11-2022> <13:47:46>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:47:46>      Geometry optimization converged
+<May11-2022> <13:47:46>  Refinement of state #27 converged.
+<May11-2022> <13:47:46>  Frequency calculation on refined state #27:
+<May11-2022> <13:47:46>  Refinement of state #27 (transition state) successful.
+<May11-2022> <13:47:46>      Calculation on initial geometry ...
+<May11-2022> <13:47:46>      Starting inertial relaxation ...
+<May11-2022> <13:47:46>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:46>      ======================================================================================
+<May11-2022> <13:47:46>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:46>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:46>      Geometry optimization converged
+<May11-2022> <13:47:46>  Refinement of state #27 converged.
+<May11-2022> <13:47:46>  Frequency calculation on refined state #27:
+<May11-2022> <13:47:47>  WARNING: Reactant from refinement of state #27 failed.
+<May11-2022> <13:47:47>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:47>    Expected character: local minimum
+<May11-2022> <13:47:47>    Actual character: transition state
+<May11-2022> <13:47:47>      Calculation on initial geometry ...
+<May11-2022> <13:47:47>      Starting inertial relaxation ...
+<May11-2022> <13:47:47>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:47>      ======================================================================================
+<May11-2022> <13:47:47>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:47>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:47>      Geometry optimization converged
+<May11-2022> <13:47:47>  Refinement of state #27 converged.
+<May11-2022> <13:47:47>  Frequency calculation on refined state #27:
+<May11-2022> <13:47:47>  WARNING: Product from refinement of state #27 failed.
+<May11-2022> <13:47:47>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:47>    Expected character: local minimum
+<May11-2022> <13:47:47>    Actual character: transition state
+<May11-2022> <13:47:47>  *** Refining state TS #28 ***
+<May11-2022> <13:47:47>      Computing initial Hessian...
+<May11-2022> <13:47:48>      Iteration 1
+<May11-2022> <13:47:48>      current energy                               -7.25282600 Hartree
+<May11-2022> <13:47:48>      energy change                      -7.25282600     0.00037000    F
+<May11-2022> <13:47:48>      constrained gradient max            0.00014785     0.00018375    T
+<May11-2022> <13:47:48>      constrained gradient rms            0.00001237     0.00012250    T
+<May11-2022> <13:47:48>      gradient max                        0.02947163
+<May11-2022> <13:47:48>      gradient rms                        0.00844527
+<May11-2022> <13:47:48>      cart. step max                      0.00098032     0.01000000    T
+<May11-2022> <13:47:48>      cart. step rms                      0.00010179     0.00666667    T
+<May11-2022> <13:47:48>      Iteration 2
+<May11-2022> <13:47:48>      current energy                               -7.25282605 Hartree
+<May11-2022> <13:47:48>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:47:48>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:47:48>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:47:48>      gradient max                        0.02936582
+<May11-2022> <13:47:48>      gradient rms                        0.00844199
+<May11-2022> <13:47:48>      cart. step max                      0.00000036     0.01000000    T
+<May11-2022> <13:47:48>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:47:48>      Geometry optimization converged
+<May11-2022> <13:47:48>  Refinement of state #28 converged.
+<May11-2022> <13:47:48>  Frequency calculation on refined state #28:
+<May11-2022> <13:47:48>  Refinement of state #28 (transition state) successful.
+<May11-2022> <13:47:48>      Calculation on initial geometry ...
+<May11-2022> <13:47:48>      Starting inertial relaxation ...
+<May11-2022> <13:47:48>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:48>      ======================================================================================
+<May11-2022> <13:47:48>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:48>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:48>      Geometry optimization converged
+<May11-2022> <13:47:48>  Refinement of state #28 converged.
+<May11-2022> <13:47:48>  Frequency calculation on refined state #28:
+<May11-2022> <13:47:48>  WARNING: Reactant from refinement of state #28 failed.
+<May11-2022> <13:47:48>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:48>    Expected character: local minimum
+<May11-2022> <13:47:48>    Actual character: transition state
+<May11-2022> <13:47:48>      Calculation on initial geometry ...
+<May11-2022> <13:47:48>      Starting inertial relaxation ...
+<May11-2022> <13:47:48>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:48>      ======================================================================================
+<May11-2022> <13:47:48>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:48>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:48>      Geometry optimization converged
+<May11-2022> <13:47:48>  Refinement of state #28 converged.
+<May11-2022> <13:47:48>  Frequency calculation on refined state #28:
+<May11-2022> <13:47:48>  WARNING: Product from refinement of state #28 failed.
+<May11-2022> <13:47:48>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:48>    Expected character: local minimum
+<May11-2022> <13:47:48>    Actual character: transition state
+<May11-2022> <13:47:48>  *** Refining state TS #29 ***
+<May11-2022> <13:47:48>      Computing initial Hessian...
+<May11-2022> <13:47:49>      Iteration 1
+<May11-2022> <13:47:49>      current energy                               -7.25282599 Hartree
+<May11-2022> <13:47:49>      energy change                      -7.25282599     0.00037000    F
+<May11-2022> <13:47:49>      constrained gradient max            0.00014786     0.00018375    T
+<May11-2022> <13:47:49>      constrained gradient rms            0.00001237     0.00012250    T
+<May11-2022> <13:47:49>      gradient max                        0.02947167
+<May11-2022> <13:47:49>      gradient rms                        0.00844529
+<May11-2022> <13:47:49>      cart. step max                      0.00098038     0.01000000    T
+<May11-2022> <13:47:49>      cart. step rms                      0.00010180     0.00666667    T
+<May11-2022> <13:47:49>      Iteration 2
+<May11-2022> <13:47:49>      current energy                               -7.25282603 Hartree
+<May11-2022> <13:47:49>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:47:49>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:47:49>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:47:49>      gradient max                        0.02936585
+<May11-2022> <13:47:49>      gradient rms                        0.00844200
+<May11-2022> <13:47:49>      cart. step max                      0.00000036     0.01000000    T
+<May11-2022> <13:47:49>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:47:49>      Geometry optimization converged
+<May11-2022> <13:47:49>  Refinement of state #29 converged.
+<May11-2022> <13:47:49>  Frequency calculation on refined state #29:
+<May11-2022> <13:47:49>  Refinement of state #29 (transition state) successful.
+<May11-2022> <13:47:49>      Calculation on initial geometry ...
+<May11-2022> <13:47:49>      Starting inertial relaxation ...
+<May11-2022> <13:47:49>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:49>      ======================================================================================
+<May11-2022> <13:47:49>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:49>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:49>      Geometry optimization converged
+<May11-2022> <13:47:49>  Refinement of state #29 converged.
+<May11-2022> <13:47:49>  Frequency calculation on refined state #29:
+<May11-2022> <13:47:49>  WARNING: Reactant from refinement of state #29 failed.
+<May11-2022> <13:47:49>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:49>    Expected character: local minimum
+<May11-2022> <13:47:49>    Actual character: transition state
+<May11-2022> <13:47:49>      Calculation on initial geometry ...
+<May11-2022> <13:47:49>      Starting inertial relaxation ...
+<May11-2022> <13:47:49>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:49>      ======================================================================================
+<May11-2022> <13:47:49>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:49>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:49>      Geometry optimization converged
+<May11-2022> <13:47:49>  Refinement of state #29 converged.
+<May11-2022> <13:47:49>  Frequency calculation on refined state #29:
+<May11-2022> <13:47:49>  WARNING: Product from refinement of state #29 failed.
+<May11-2022> <13:47:49>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:49>    Expected character: local minimum
+<May11-2022> <13:47:49>    Actual character: transition state
+<May11-2022> <13:47:49>  *** Refining state TS #30 ***
+<May11-2022> <13:47:49>      Computing initial Hessian...
+<May11-2022> <13:47:49>      Iteration 1
+<May11-2022> <13:47:49>      current energy                               -7.25282599 Hartree
+<May11-2022> <13:47:49>      energy change                      -7.25282599     0.00037000    F
+<May11-2022> <13:47:49>      constrained gradient max            0.00014786     0.00018375    T
+<May11-2022> <13:47:49>      constrained gradient rms            0.00001237     0.00012250    T
+<May11-2022> <13:47:49>      gradient max                        0.02947166
+<May11-2022> <13:47:49>      gradient rms                        0.00844528
+<May11-2022> <13:47:49>      cart. step max                      0.00098042     0.01000000    T
+<May11-2022> <13:47:49>      cart. step rms                      0.00010180     0.00666667    T
+<May11-2022> <13:47:49>      Iteration 2
+<May11-2022> <13:47:50>      current energy                               -7.25282603 Hartree
+<May11-2022> <13:47:50>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:47:50>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:47:50>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:47:50>      gradient max                        0.02936582
+<May11-2022> <13:47:50>      gradient rms                        0.00844200
+<May11-2022> <13:47:50>      cart. step max                      0.00000036     0.01000000    T
+<May11-2022> <13:47:50>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:47:50>      Geometry optimization converged
+<May11-2022> <13:47:50>  Refinement of state #30 converged.
+<May11-2022> <13:47:50>  Frequency calculation on refined state #30:
+<May11-2022> <13:47:50>  Refinement of state #30 (transition state) successful.
+<May11-2022> <13:47:50>      Calculation on initial geometry ...
+<May11-2022> <13:47:50>      Starting inertial relaxation ...
+<May11-2022> <13:47:50>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:50>      ======================================================================================
+<May11-2022> <13:47:50>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:50>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:50>      Geometry optimization converged
+<May11-2022> <13:47:50>  Refinement of state #30 converged.
+<May11-2022> <13:47:50>  Frequency calculation on refined state #30:
+<May11-2022> <13:47:50>  WARNING: Reactant from refinement of state #30 failed.
+<May11-2022> <13:47:50>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:50>    Expected character: local minimum
+<May11-2022> <13:47:50>    Actual character: transition state
+<May11-2022> <13:47:50>      Calculation on initial geometry ...
+<May11-2022> <13:47:50>      Starting inertial relaxation ...
+<May11-2022> <13:47:50>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:50>      ======================================================================================
+<May11-2022> <13:47:50>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:50>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:50>      Geometry optimization converged
+<May11-2022> <13:47:50>  Refinement of state #30 converged.
+<May11-2022> <13:47:50>  Frequency calculation on refined state #30:
+<May11-2022> <13:47:50>  WARNING: Product from refinement of state #30 failed.
+<May11-2022> <13:47:50>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:50>    Expected character: local minimum
+<May11-2022> <13:47:50>    Actual character: transition state
+<May11-2022> <13:47:50>  *** Refining state TS #31 ***
+<May11-2022> <13:47:50>      Computing initial Hessian...
+<May11-2022> <13:47:50>      Iteration 1
+<May11-2022> <13:47:50>      current energy                               -7.25282599 Hartree
+<May11-2022> <13:47:50>      energy change                      -7.25282599     0.00037000    F
+<May11-2022> <13:47:50>      constrained gradient max            0.00014786     0.00018375    T
+<May11-2022> <13:47:50>      constrained gradient rms            0.00001237     0.00012250    T
+<May11-2022> <13:47:50>      gradient max                        0.02947165
+<May11-2022> <13:47:50>      gradient rms                        0.00844528
+<May11-2022> <13:47:50>      cart. step max                      0.00098041     0.01000000    T
+<May11-2022> <13:47:50>      cart. step rms                      0.00010180     0.00666667    T
+<May11-2022> <13:47:50>      Iteration 2
+<May11-2022> <13:47:50>      current energy                               -7.25282603 Hartree
+<May11-2022> <13:47:50>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:47:50>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:47:50>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:47:50>      gradient max                        0.02936584
+<May11-2022> <13:47:50>      gradient rms                        0.00844200
+<May11-2022> <13:47:50>      cart. step max                      0.00000036     0.01000000    T
+<May11-2022> <13:47:50>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:47:50>      Geometry optimization converged
+<May11-2022> <13:47:50>  Refinement of state #31 converged.
+<May11-2022> <13:47:50>  Frequency calculation on refined state #31:
+<May11-2022> <13:47:51>  Refinement of state #31 (transition state) successful.
+<May11-2022> <13:47:51>      Calculation on initial geometry ...
+<May11-2022> <13:47:51>      Starting inertial relaxation ...
+<May11-2022> <13:47:51>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:51>      ======================================================================================
+<May11-2022> <13:47:51>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:51>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:51>      Geometry optimization converged
+<May11-2022> <13:47:51>  Refinement of state #31 converged.
+<May11-2022> <13:47:51>  Frequency calculation on refined state #31:
+<May11-2022> <13:47:51>  WARNING: Reactant from refinement of state #31 failed.
+<May11-2022> <13:47:51>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:51>    Expected character: local minimum
+<May11-2022> <13:47:51>    Actual character: transition state
+<May11-2022> <13:47:51>      Calculation on initial geometry ...
+<May11-2022> <13:47:51>      Starting inertial relaxation ...
+<May11-2022> <13:47:51>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:51>      ======================================================================================
+<May11-2022> <13:47:51>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:51>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:51>      Geometry optimization converged
+<May11-2022> <13:47:51>  Refinement of state #31 converged.
+<May11-2022> <13:47:51>  Frequency calculation on refined state #31:
+<May11-2022> <13:47:51>  WARNING: Product from refinement of state #31 failed.
+<May11-2022> <13:47:51>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:51>    Expected character: local minimum
+<May11-2022> <13:47:51>    Actual character: transition state
+<May11-2022> <13:47:51>  *** Refining state TS #32 ***
+<May11-2022> <13:47:51>      Computing initial Hessian...
+<May11-2022> <13:47:52>      Iteration 1
+<May11-2022> <13:47:52>      current energy                               -7.25282600 Hartree
+<May11-2022> <13:47:52>      energy change                      -7.25282600     0.00037000    F
+<May11-2022> <13:47:52>      constrained gradient max            0.00014787     0.00018375    T
+<May11-2022> <13:47:52>      constrained gradient rms            0.00001237     0.00012250    T
+<May11-2022> <13:47:52>      gradient max                        0.02947168
+<May11-2022> <13:47:52>      gradient rms                        0.00844528
+<May11-2022> <13:47:52>      cart. step max                      0.00098042     0.01000000    T
+<May11-2022> <13:47:52>      cart. step rms                      0.00010181     0.00666667    T
+<May11-2022> <13:47:52>      Iteration 2
+<May11-2022> <13:47:52>      current energy                               -7.25282604 Hartree
+<May11-2022> <13:47:52>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:47:52>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:47:52>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:47:52>      gradient max                        0.02936585
+<May11-2022> <13:47:52>      gradient rms                        0.00844200
+<May11-2022> <13:47:52>      cart. step max                      0.00000036     0.01000000    T
+<May11-2022> <13:47:52>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:47:52>      Geometry optimization converged
+<May11-2022> <13:47:52>  Refinement of state #32 converged.
+<May11-2022> <13:47:52>  Frequency calculation on refined state #32:
+<May11-2022> <13:47:52>  Refinement of state #32 (transition state) successful.
+<May11-2022> <13:47:52>      Calculation on initial geometry ...
+<May11-2022> <13:47:52>      Starting inertial relaxation ...
+<May11-2022> <13:47:52>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:52>      ======================================================================================
+<May11-2022> <13:47:52>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:52>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:52>      Geometry optimization converged
+<May11-2022> <13:47:52>  Refinement of state #32 converged.
+<May11-2022> <13:47:52>  Frequency calculation on refined state #32:
+<May11-2022> <13:47:52>  WARNING: Reactant from refinement of state #32 failed.
+<May11-2022> <13:47:52>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:52>    Expected character: local minimum
+<May11-2022> <13:47:52>    Actual character: transition state
+<May11-2022> <13:47:52>      Calculation on initial geometry ...
+<May11-2022> <13:47:52>      Starting inertial relaxation ...
+<May11-2022> <13:47:52>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:52>      ======================================================================================
+<May11-2022> <13:47:52>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:52>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:52>      Geometry optimization converged
+<May11-2022> <13:47:52>  Refinement of state #32 converged.
+<May11-2022> <13:47:52>  Frequency calculation on refined state #32:
+<May11-2022> <13:47:52>  WARNING: Product from refinement of state #32 failed.
+<May11-2022> <13:47:52>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:52>    Expected character: local minimum
+<May11-2022> <13:47:52>    Actual character: transition state
+<May11-2022> <13:47:52>  *** Refining state TS #33 ***
+<May11-2022> <13:47:52>      Computing initial Hessian...
+<May11-2022> <13:47:53>      Iteration 1
+<May11-2022> <13:47:53>      current energy                               -7.25282600 Hartree
+<May11-2022> <13:47:53>      energy change                      -7.25282600     0.00037000    F
+<May11-2022> <13:47:53>      constrained gradient max            0.00014787     0.00018375    T
+<May11-2022> <13:47:53>      constrained gradient rms            0.00001237     0.00012250    T
+<May11-2022> <13:47:53>      gradient max                        0.02947167
+<May11-2022> <13:47:53>      gradient rms                        0.00844528
+<May11-2022> <13:47:53>      cart. step max                      0.00098046     0.01000000    T
+<May11-2022> <13:47:53>      cart. step rms                      0.00010180     0.00666667    T
+<May11-2022> <13:47:53>      Iteration 2
+<May11-2022> <13:47:53>      current energy                               -7.25282604 Hartree
+<May11-2022> <13:47:53>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:47:53>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:47:53>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:47:53>      gradient max                        0.02936582
+<May11-2022> <13:47:53>      gradient rms                        0.00844199
+<May11-2022> <13:47:53>      cart. step max                      0.00000036     0.01000000    T
+<May11-2022> <13:47:53>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:47:53>      Geometry optimization converged
+<May11-2022> <13:47:53>  Refinement of state #33 converged.
+<May11-2022> <13:47:53>  Frequency calculation on refined state #33:
+<May11-2022> <13:47:53>  Refinement of state #33 (transition state) successful.
+<May11-2022> <13:47:53>      Calculation on initial geometry ...
+<May11-2022> <13:47:53>      Starting inertial relaxation ...
+<May11-2022> <13:47:53>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:53>      ======================================================================================
+<May11-2022> <13:47:53>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:53>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:53>      Geometry optimization converged
+<May11-2022> <13:47:53>  Refinement of state #33 converged.
+<May11-2022> <13:47:53>  Frequency calculation on refined state #33:
+<May11-2022> <13:47:53>  WARNING: Reactant from refinement of state #33 failed.
+<May11-2022> <13:47:53>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:53>    Expected character: local minimum
+<May11-2022> <13:47:53>    Actual character: transition state
+<May11-2022> <13:47:53>      Calculation on initial geometry ...
+<May11-2022> <13:47:53>      Starting inertial relaxation ...
+<May11-2022> <13:47:53>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:53>      ======================================================================================
+<May11-2022> <13:47:53>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:53>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:53>      Geometry optimization converged
+<May11-2022> <13:47:53>  Refinement of state #33 converged.
+<May11-2022> <13:47:53>  Frequency calculation on refined state #33:
+<May11-2022> <13:47:53>  WARNING: Product from refinement of state #33 failed.
+<May11-2022> <13:47:53>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:53>    Expected character: local minimum
+<May11-2022> <13:47:53>    Actual character: transition state
+<May11-2022> <13:47:53>  *** Refining state TS #34 ***
+<May11-2022> <13:47:53>      Computing initial Hessian...
+<May11-2022> <13:47:54>      Iteration 1
+<May11-2022> <13:47:54>      current energy                               -7.25282600 Hartree
+<May11-2022> <13:47:54>      energy change                      -7.25282600     0.00037000    F
+<May11-2022> <13:47:54>      constrained gradient max            0.00014787     0.00018375    T
+<May11-2022> <13:47:54>      constrained gradient rms            0.00001237     0.00012250    T
+<May11-2022> <13:47:54>      gradient max                        0.02947166
+<May11-2022> <13:47:54>      gradient rms                        0.00844528
+<May11-2022> <13:47:54>      cart. step max                      0.00098044     0.01000000    T
+<May11-2022> <13:47:54>      cart. step rms                      0.00010180     0.00666667    T
+<May11-2022> <13:47:54>      Iteration 2
+<May11-2022> <13:47:54>      current energy                               -7.25282604 Hartree
+<May11-2022> <13:47:54>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:47:54>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:47:54>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:47:54>      gradient max                        0.02936584
+<May11-2022> <13:47:54>      gradient rms                        0.00844199
+<May11-2022> <13:47:54>      cart. step max                      0.00000036     0.01000000    T
+<May11-2022> <13:47:54>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:47:54>      Geometry optimization converged
+<May11-2022> <13:47:54>  Refinement of state #34 converged.
+<May11-2022> <13:47:54>  Frequency calculation on refined state #34:
+<May11-2022> <13:47:54>  Refinement of state #34 (transition state) successful.
+<May11-2022> <13:47:54>      Calculation on initial geometry ...
+<May11-2022> <13:47:54>      Starting inertial relaxation ...
+<May11-2022> <13:47:54>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:54>      ======================================================================================
+<May11-2022> <13:47:54>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:54>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:54>      Geometry optimization converged
+<May11-2022> <13:47:54>  Refinement of state #34 converged.
+<May11-2022> <13:47:54>  Frequency calculation on refined state #34:
+<May11-2022> <13:47:54>  WARNING: Reactant from refinement of state #34 failed.
+<May11-2022> <13:47:54>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:54>    Expected character: local minimum
+<May11-2022> <13:47:54>    Actual character: transition state
+<May11-2022> <13:47:54>      Calculation on initial geometry ...
+<May11-2022> <13:47:54>      Starting inertial relaxation ...
+<May11-2022> <13:47:54>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:54>      ======================================================================================
+<May11-2022> <13:47:54>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:54>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:54>      Geometry optimization converged
+<May11-2022> <13:47:54>  Refinement of state #34 converged.
+<May11-2022> <13:47:54>  Frequency calculation on refined state #34:
+<May11-2022> <13:47:54>  WARNING: Product from refinement of state #34 failed.
+<May11-2022> <13:47:54>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:54>    Expected character: local minimum
+<May11-2022> <13:47:54>    Actual character: transition state
+<May11-2022> <13:47:54>  *** Refining state TS #35 ***
+<May11-2022> <13:47:54>      Computing initial Hessian...
+<May11-2022> <13:47:55>      Iteration 1
+<May11-2022> <13:47:55>      current energy                               -7.25282600 Hartree
+<May11-2022> <13:47:55>      energy change                      -7.25282600     0.00037000    F
+<May11-2022> <13:47:55>      constrained gradient max            0.00014785     0.00018375    T
+<May11-2022> <13:47:55>      constrained gradient rms            0.00001237     0.00012250    T
+<May11-2022> <13:47:55>      gradient max                        0.02947164
+<May11-2022> <13:47:55>      gradient rms                        0.00844528
+<May11-2022> <13:47:55>      cart. step max                      0.00098029     0.01000000    T
+<May11-2022> <13:47:55>      cart. step rms                      0.00010179     0.00666667    T
+<May11-2022> <13:47:55>      Iteration 2
+<May11-2022> <13:47:55>      current energy                               -7.25282604 Hartree
+<May11-2022> <13:47:55>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:47:55>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:47:55>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:47:55>      gradient max                        0.02936583
+<May11-2022> <13:47:55>      gradient rms                        0.00844199
+<May11-2022> <13:47:55>      cart. step max                      0.00000036     0.01000000    T
+<May11-2022> <13:47:55>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:47:55>      Geometry optimization converged
+<May11-2022> <13:47:55>  Refinement of state #35 converged.
+<May11-2022> <13:47:55>  Frequency calculation on refined state #35:
+<May11-2022> <13:47:55>  Refinement of state #35 (transition state) successful.
+<May11-2022> <13:47:55>      Calculation on initial geometry ...
+<May11-2022> <13:47:55>      Starting inertial relaxation ...
+<May11-2022> <13:47:55>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:55>      ======================================================================================
+<May11-2022> <13:47:55>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:55>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:55>      Geometry optimization converged
+<May11-2022> <13:47:55>  Refinement of state #35 converged.
+<May11-2022> <13:47:55>  Frequency calculation on refined state #35:
+<May11-2022> <13:47:55>  WARNING: Reactant from refinement of state #35 failed.
+<May11-2022> <13:47:55>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:55>    Expected character: local minimum
+<May11-2022> <13:47:55>    Actual character: transition state
+<May11-2022> <13:47:55>      Calculation on initial geometry ...
+<May11-2022> <13:47:55>      Starting inertial relaxation ...
+<May11-2022> <13:47:55>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:55>      ======================================================================================
+<May11-2022> <13:47:55>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:55>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:55>      Geometry optimization converged
+<May11-2022> <13:47:55>  Refinement of state #35 converged.
+<May11-2022> <13:47:55>  Frequency calculation on refined state #35:
+<May11-2022> <13:47:55>  WARNING: Product from refinement of state #35 failed.
+<May11-2022> <13:47:55>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:55>    Expected character: local minimum
+<May11-2022> <13:47:55>    Actual character: transition state
+<May11-2022> <13:47:55>  *** Refining state TS #36 ***
+<May11-2022> <13:47:55>      Computing initial Hessian...
+<May11-2022> <13:47:56>      Iteration 1
+<May11-2022> <13:47:56>      current energy                               -7.25282600 Hartree
+<May11-2022> <13:47:56>      energy change                      -7.25282600     0.00037000    F
+<May11-2022> <13:47:56>      constrained gradient max            0.00014785     0.00018375    T
+<May11-2022> <13:47:56>      constrained gradient rms            0.00001237     0.00012250    T
+<May11-2022> <13:47:56>      gradient max                        0.02947164
+<May11-2022> <13:47:56>      gradient rms                        0.00844527
+<May11-2022> <13:47:56>      cart. step max                      0.00098033     0.01000000    T
+<May11-2022> <13:47:56>      cart. step rms                      0.00010179     0.00666667    T
+<May11-2022> <13:47:56>      Iteration 2
+<May11-2022> <13:47:56>      current energy                               -7.25282604 Hartree
+<May11-2022> <13:47:56>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:47:56>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:47:56>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:47:56>      gradient max                        0.02936580
+<May11-2022> <13:47:56>      gradient rms                        0.00844199
+<May11-2022> <13:47:56>      cart. step max                      0.00000036     0.01000000    T
+<May11-2022> <13:47:56>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:47:56>      Geometry optimization converged
+<May11-2022> <13:47:56>  Refinement of state #36 converged.
+<May11-2022> <13:47:56>  Frequency calculation on refined state #36:
+<May11-2022> <13:47:56>  Refinement of state #36 (transition state) successful.
+<May11-2022> <13:47:56>      Calculation on initial geometry ...
+<May11-2022> <13:47:56>      Starting inertial relaxation ...
+<May11-2022> <13:47:56>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:56>      ======================================================================================
+<May11-2022> <13:47:56>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:56>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:56>      Geometry optimization converged
+<May11-2022> <13:47:56>  Refinement of state #36 converged.
+<May11-2022> <13:47:56>  Frequency calculation on refined state #36:
+<May11-2022> <13:47:56>  WARNING: Reactant from refinement of state #36 failed.
+<May11-2022> <13:47:56>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:56>    Expected character: local minimum
+<May11-2022> <13:47:56>    Actual character: transition state
+<May11-2022> <13:47:56>      Calculation on initial geometry ...
+<May11-2022> <13:47:56>      Starting inertial relaxation ...
+<May11-2022> <13:47:56>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:56>      ======================================================================================
+<May11-2022> <13:47:56>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:56>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:56>      Geometry optimization converged
+<May11-2022> <13:47:56>  Refinement of state #36 converged.
+<May11-2022> <13:47:56>  Frequency calculation on refined state #36:
+<May11-2022> <13:47:56>  WARNING: Product from refinement of state #36 failed.
+<May11-2022> <13:47:56>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:56>    Expected character: local minimum
+<May11-2022> <13:47:56>    Actual character: transition state
+<May11-2022> <13:47:56>  *** Refining state TS #37 ***
+<May11-2022> <13:47:56>      Computing initial Hessian...
+<May11-2022> <13:47:57>      Iteration 1
+<May11-2022> <13:47:57>      current energy                               -7.25282599 Hartree
+<May11-2022> <13:47:57>      energy change                      -7.25282599     0.00037000    F
+<May11-2022> <13:47:57>      constrained gradient max            0.00014786     0.00018375    T
+<May11-2022> <13:47:57>      constrained gradient rms            0.00001237     0.00012250    T
+<May11-2022> <13:47:57>      gradient max                        0.03364803
+<May11-2022> <13:47:57>      gradient rms                        0.00844528
+<May11-2022> <13:47:57>      cart. step max                      0.00086042     0.01000000    T
+<May11-2022> <13:47:57>      cart. step rms                      0.00010180     0.00666667    T
+<May11-2022> <13:47:57>      Iteration 2
+<May11-2022> <13:47:57>      current energy                               -7.25282603 Hartree
+<May11-2022> <13:47:57>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:47:57>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:47:57>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:47:57>      gradient max                        0.03367322
+<May11-2022> <13:47:57>      gradient rms                        0.00844200
+<May11-2022> <13:47:57>      cart. step max                      0.00000042     0.01000000    T
+<May11-2022> <13:47:57>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:47:57>      Geometry optimization converged
+<May11-2022> <13:47:57>  Refinement of state #37 converged.
+<May11-2022> <13:47:57>  Frequency calculation on refined state #37:
+<May11-2022> <13:47:57>  Refinement of state #37 (transition state) successful.
+<May11-2022> <13:47:57>      Calculation on initial geometry ...
+<May11-2022> <13:47:57>      Starting inertial relaxation ...
+<May11-2022> <13:47:57>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:57>      ======================================================================================
+<May11-2022> <13:47:57>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:57>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:57>      Geometry optimization converged
+<May11-2022> <13:47:57>  Refinement of state #37 converged.
+<May11-2022> <13:47:57>  Frequency calculation on refined state #37:
+<May11-2022> <13:47:57>  WARNING: Reactant from refinement of state #37 failed.
+<May11-2022> <13:47:57>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:57>    Expected character: local minimum
+<May11-2022> <13:47:57>    Actual character: transition state
+<May11-2022> <13:47:57>      Calculation on initial geometry ...
+<May11-2022> <13:47:57>      Starting inertial relaxation ...
+<May11-2022> <13:47:57>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:57>      ======================================================================================
+<May11-2022> <13:47:57>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:57>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:57>      Geometry optimization converged
+<May11-2022> <13:47:57>  Refinement of state #37 converged.
+<May11-2022> <13:47:57>  Frequency calculation on refined state #37:
+<May11-2022> <13:47:57>  WARNING: Product from refinement of state #37 failed.
+<May11-2022> <13:47:57>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:57>    Expected character: local minimum
+<May11-2022> <13:47:57>    Actual character: transition state
+<May11-2022> <13:47:57>  *** Refining state TS #38 ***
+<May11-2022> <13:47:57>      Computing initial Hessian...
+<May11-2022> <13:47:58>      Iteration 1
+<May11-2022> <13:47:58>      current energy                               -7.25282600 Hartree
+<May11-2022> <13:47:58>      energy change                      -7.25282600     0.00037000    F
+<May11-2022> <13:47:58>      constrained gradient max            0.00014787     0.00018375    T
+<May11-2022> <13:47:58>      constrained gradient rms            0.00001237     0.00012250    T
+<May11-2022> <13:47:58>      gradient max                        0.03364795
+<May11-2022> <13:47:58>      gradient rms                        0.00844528
+<May11-2022> <13:47:58>      cart. step max                      0.00086045     0.01000000    T
+<May11-2022> <13:47:58>      cart. step rms                      0.00010180     0.00666667    T
+<May11-2022> <13:47:58>      Iteration 2
+<May11-2022> <13:47:58>      current energy                               -7.25282604 Hartree
+<May11-2022> <13:47:58>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:47:58>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:47:58>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:47:58>      gradient max                        0.03367315
+<May11-2022> <13:47:58>      gradient rms                        0.00844199
+<May11-2022> <13:47:58>      cart. step max                      0.00000042     0.01000000    T
+<May11-2022> <13:47:58>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:47:58>      Geometry optimization converged
+<May11-2022> <13:47:58>  Refinement of state #38 converged.
+<May11-2022> <13:47:58>  Frequency calculation on refined state #38:
+<May11-2022> <13:47:58>  Refinement of state #38 (transition state) successful.
+<May11-2022> <13:47:58>      Calculation on initial geometry ...
+<May11-2022> <13:47:58>      Starting inertial relaxation ...
+<May11-2022> <13:47:58>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:58>      ======================================================================================
+<May11-2022> <13:47:58>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:58>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:58>      Geometry optimization converged
+<May11-2022> <13:47:58>  Refinement of state #38 converged.
+<May11-2022> <13:47:58>  Frequency calculation on refined state #38:
+<May11-2022> <13:47:58>  WARNING: Reactant from refinement of state #38 failed.
+<May11-2022> <13:47:58>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:58>    Expected character: local minimum
+<May11-2022> <13:47:58>    Actual character: transition state
+<May11-2022> <13:47:58>      Calculation on initial geometry ...
+<May11-2022> <13:47:58>      Starting inertial relaxation ...
+<May11-2022> <13:47:58>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:58>      ======================================================================================
+<May11-2022> <13:47:58>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:58>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:58>      Geometry optimization converged
+<May11-2022> <13:47:58>  Refinement of state #38 converged.
+<May11-2022> <13:47:58>  Frequency calculation on refined state #38:
+<May11-2022> <13:47:58>  WARNING: Product from refinement of state #38 failed.
+<May11-2022> <13:47:58>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:58>    Expected character: local minimum
+<May11-2022> <13:47:58>    Actual character: transition state
+<May11-2022> <13:47:58>  *** Refining state TS #39 ***
+<May11-2022> <13:47:58>      Computing initial Hessian...
+<May11-2022> <13:47:59>      Iteration 1
+<May11-2022> <13:47:59>      current energy                               -7.25282600 Hartree
+<May11-2022> <13:47:59>      energy change                      -7.25282600     0.00037000    F
+<May11-2022> <13:47:59>      constrained gradient max            0.00014786     0.00018375    T
+<May11-2022> <13:47:59>      constrained gradient rms            0.00001237     0.00012250    T
+<May11-2022> <13:47:59>      gradient max                        0.03364803
+<May11-2022> <13:47:59>      gradient rms                        0.00844527
+<May11-2022> <13:47:59>      cart. step max                      0.00086033     0.01000000    T
+<May11-2022> <13:47:59>      cart. step rms                      0.00010179     0.00666667    T
+<May11-2022> <13:47:59>      Iteration 2
+<May11-2022> <13:47:59>      current energy                               -7.25282605 Hartree
+<May11-2022> <13:47:59>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:47:59>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:47:59>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:47:59>      gradient max                        0.03367322
+<May11-2022> <13:47:59>      gradient rms                        0.00844199
+<May11-2022> <13:47:59>      cart. step max                      0.00000042     0.01000000    T
+<May11-2022> <13:47:59>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:47:59>      Geometry optimization converged
+<May11-2022> <13:47:59>  Refinement of state #39 converged.
+<May11-2022> <13:47:59>  Frequency calculation on refined state #39:
+<May11-2022> <13:47:59>  Refinement of state #39 (transition state) successful.
+<May11-2022> <13:47:59>      Calculation on initial geometry ...
+<May11-2022> <13:47:59>      Starting inertial relaxation ...
+<May11-2022> <13:47:59>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:59>      ======================================================================================
+<May11-2022> <13:47:59>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:59>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:59>      Geometry optimization converged
+<May11-2022> <13:47:59>  Refinement of state #39 converged.
+<May11-2022> <13:47:59>  Frequency calculation on refined state #39:
+<May11-2022> <13:47:59>  WARNING: Reactant from refinement of state #39 failed.
+<May11-2022> <13:47:59>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:59>    Expected character: local minimum
+<May11-2022> <13:47:59>    Actual character: transition state
+<May11-2022> <13:47:59>      Calculation on initial geometry ...
+<May11-2022> <13:47:59>      Starting inertial relaxation ...
+<May11-2022> <13:47:59>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:47:59>      ======================================================================================
+<May11-2022> <13:47:59>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:59>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:47:59>      Geometry optimization converged
+<May11-2022> <13:47:59>  Refinement of state #39 converged.
+<May11-2022> <13:47:59>  Frequency calculation on refined state #39:
+<May11-2022> <13:47:59>  WARNING: Product from refinement of state #39 failed.
+<May11-2022> <13:47:59>    The new state does not have the expected PES point character.
+<May11-2022> <13:47:59>    Expected character: local minimum
+<May11-2022> <13:47:59>    Actual character: transition state
+<May11-2022> <13:47:59>  *** Refining state TS #40 ***
+<May11-2022> <13:47:59>      Computing initial Hessian...
+<May11-2022> <13:48:00>      Iteration 1
+<May11-2022> <13:48:00>      current energy                               -7.25282599 Hartree
+<May11-2022> <13:48:00>      energy change                      -7.25282599     0.00037000    F
+<May11-2022> <13:48:00>      constrained gradient max            0.00014786     0.00018375    T
+<May11-2022> <13:48:00>      constrained gradient rms            0.00001237     0.00012250    T
+<May11-2022> <13:48:00>      gradient max                        0.03364808
+<May11-2022> <13:48:00>      gradient rms                        0.00844528
+<May11-2022> <13:48:00>      cart. step max                      0.00086040     0.01000000    T
+<May11-2022> <13:48:00>      cart. step rms                      0.00010180     0.00666667    T
+<May11-2022> <13:48:00>      Iteration 2
+<May11-2022> <13:48:00>      current energy                               -7.25282604 Hartree
+<May11-2022> <13:48:00>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:48:00>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:48:00>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:48:00>      gradient max                        0.03367328
+<May11-2022> <13:48:00>      gradient rms                        0.00844200
+<May11-2022> <13:48:00>      cart. step max                      0.00000042     0.01000000    T
+<May11-2022> <13:48:00>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:48:00>      Geometry optimization converged
+<May11-2022> <13:48:00>  Refinement of state #40 converged.
+<May11-2022> <13:48:00>  Frequency calculation on refined state #40:
+<May11-2022> <13:48:00>  Refinement of state #40 (transition state) successful.
+<May11-2022> <13:48:00>      Calculation on initial geometry ...
+<May11-2022> <13:48:00>      Starting inertial relaxation ...
+<May11-2022> <13:48:00>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:48:00>      ======================================================================================
+<May11-2022> <13:48:00>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:00>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:00>      Geometry optimization converged
+<May11-2022> <13:48:00>  Refinement of state #40 converged.
+<May11-2022> <13:48:00>  Frequency calculation on refined state #40:
+<May11-2022> <13:48:00>  WARNING: Reactant from refinement of state #40 failed.
+<May11-2022> <13:48:00>    The new state does not have the expected PES point character.
+<May11-2022> <13:48:00>    Expected character: local minimum
+<May11-2022> <13:48:00>    Actual character: transition state
+<May11-2022> <13:48:00>      Calculation on initial geometry ...
+<May11-2022> <13:48:00>      Starting inertial relaxation ...
+<May11-2022> <13:48:00>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:48:00>      ======================================================================================
+<May11-2022> <13:48:00>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:00>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:00>      Geometry optimization converged
+<May11-2022> <13:48:00>  Refinement of state #40 converged.
+<May11-2022> <13:48:00>  Frequency calculation on refined state #40:
+<May11-2022> <13:48:00>  WARNING: Product from refinement of state #40 failed.
+<May11-2022> <13:48:00>    The new state does not have the expected PES point character.
+<May11-2022> <13:48:00>    Expected character: local minimum
+<May11-2022> <13:48:00>    Actual character: transition state
+<May11-2022> <13:48:00>  *** Refining state TS #41 ***
+<May11-2022> <13:48:00>      Computing initial Hessian...
+<May11-2022> <13:48:01>      Iteration 1
+<May11-2022> <13:48:01>      current energy                               -7.25282600 Hartree
+<May11-2022> <13:48:01>      energy change                      -7.25282600     0.00037000    F
+<May11-2022> <13:48:01>      constrained gradient max            0.00014787     0.00018375    T
+<May11-2022> <13:48:01>      constrained gradient rms            0.00001237     0.00012250    T
+<May11-2022> <13:48:01>      gradient max                        0.03364792
+<May11-2022> <13:48:01>      gradient rms                        0.00844528
+<May11-2022> <13:48:01>      cart. step max                      0.00086054     0.01000000    T
+<May11-2022> <13:48:01>      cart. step rms                      0.00010180     0.00666667    T
+<May11-2022> <13:48:01>      Iteration 2
+<May11-2022> <13:48:01>      current energy                               -7.25282604 Hartree
+<May11-2022> <13:48:01>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:48:01>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:48:01>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:48:01>      gradient max                        0.03367312
+<May11-2022> <13:48:01>      gradient rms                        0.00844200
+<May11-2022> <13:48:01>      cart. step max                      0.00000042     0.01000000    T
+<May11-2022> <13:48:01>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:48:01>      Geometry optimization converged
+<May11-2022> <13:48:01>  Refinement of state #41 converged.
+<May11-2022> <13:48:01>  Frequency calculation on refined state #41:
+<May11-2022> <13:48:01>  Refinement of state #41 (transition state) successful.
+<May11-2022> <13:48:01>      Calculation on initial geometry ...
+<May11-2022> <13:48:01>      Starting inertial relaxation ...
+<May11-2022> <13:48:01>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:48:01>      ======================================================================================
+<May11-2022> <13:48:01>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:01>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:01>      Geometry optimization converged
+<May11-2022> <13:48:01>  Refinement of state #41 converged.
+<May11-2022> <13:48:01>  Frequency calculation on refined state #41:
+<May11-2022> <13:48:01>  WARNING: Reactant from refinement of state #41 failed.
+<May11-2022> <13:48:01>    The new state does not have the expected PES point character.
+<May11-2022> <13:48:01>    Expected character: local minimum
+<May11-2022> <13:48:01>    Actual character: transition state
+<May11-2022> <13:48:01>      Calculation on initial geometry ...
+<May11-2022> <13:48:01>      Starting inertial relaxation ...
+<May11-2022> <13:48:01>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:48:01>      ======================================================================================
+<May11-2022> <13:48:01>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:01>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:01>      Geometry optimization converged
+<May11-2022> <13:48:01>  Refinement of state #41 converged.
+<May11-2022> <13:48:01>  Frequency calculation on refined state #41:
+<May11-2022> <13:48:01>  WARNING: Product from refinement of state #41 failed.
+<May11-2022> <13:48:01>    The new state does not have the expected PES point character.
+<May11-2022> <13:48:01>    Expected character: local minimum
+<May11-2022> <13:48:01>    Actual character: transition state
+<May11-2022> <13:48:01>  *** Refining state TS #42 ***
+<May11-2022> <13:48:01>      Computing initial Hessian...
+<May11-2022> <13:48:02>      Iteration 1
+<May11-2022> <13:48:02>      current energy                               -7.25282600 Hartree
+<May11-2022> <13:48:02>      energy change                      -7.25282600     0.00037000    F
+<May11-2022> <13:48:02>      constrained gradient max            0.00014785     0.00018375    T
+<May11-2022> <13:48:02>      constrained gradient rms            0.00001237     0.00012250    T
+<May11-2022> <13:48:02>      gradient max                        0.03364800
+<May11-2022> <13:48:02>      gradient rms                        0.00844528
+<May11-2022> <13:48:02>      cart. step max                      0.00086041     0.01000000    T
+<May11-2022> <13:48:02>      cart. step rms                      0.00010179     0.00666667    T
+<May11-2022> <13:48:02>      Iteration 2
+<May11-2022> <13:48:02>      current energy                               -7.25282604 Hartree
+<May11-2022> <13:48:02>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:48:02>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:48:02>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:48:02>      gradient max                        0.03367319
+<May11-2022> <13:48:02>      gradient rms                        0.00844199
+<May11-2022> <13:48:02>      cart. step max                      0.00000042     0.01000000    T
+<May11-2022> <13:48:02>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:48:02>      Geometry optimization converged
+<May11-2022> <13:48:02>  Refinement of state #42 converged.
+<May11-2022> <13:48:02>  Frequency calculation on refined state #42:
+<May11-2022> <13:48:02>  Refinement of state #42 (transition state) successful.
+<May11-2022> <13:48:02>      Calculation on initial geometry ...
+<May11-2022> <13:48:02>      Starting inertial relaxation ...
+<May11-2022> <13:48:02>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:48:02>      ======================================================================================
+<May11-2022> <13:48:02>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:02>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:02>      Geometry optimization converged
+<May11-2022> <13:48:02>  Refinement of state #42 converged.
+<May11-2022> <13:48:02>  Frequency calculation on refined state #42:
+<May11-2022> <13:48:02>  WARNING: Reactant from refinement of state #42 failed.
+<May11-2022> <13:48:02>    The new state does not have the expected PES point character.
+<May11-2022> <13:48:02>    Expected character: local minimum
+<May11-2022> <13:48:02>    Actual character: transition state
+<May11-2022> <13:48:02>      Calculation on initial geometry ...
+<May11-2022> <13:48:02>      Starting inertial relaxation ...
+<May11-2022> <13:48:02>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:48:02>      ======================================================================================
+<May11-2022> <13:48:02>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:02>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:02>      Geometry optimization converged
+<May11-2022> <13:48:02>  Refinement of state #42 converged.
+<May11-2022> <13:48:02>  Frequency calculation on refined state #42:
+<May11-2022> <13:48:02>  WARNING: Product from refinement of state #42 failed.
+<May11-2022> <13:48:02>    The new state does not have the expected PES point character.
+<May11-2022> <13:48:02>    Expected character: local minimum
+<May11-2022> <13:48:02>    Actual character: transition state
+<May11-2022> <13:48:02>  *** Refining state TS #43 ***
+<May11-2022> <13:48:02>      Computing initial Hessian...
+<May11-2022> <13:48:03>      Iteration 1
+<May11-2022> <13:48:03>      current energy                               -7.25282599 Hartree
+<May11-2022> <13:48:03>      energy change                      -7.25282599     0.00037000    F
+<May11-2022> <13:48:03>      constrained gradient max            0.00014786     0.00018375    T
+<May11-2022> <13:48:03>      constrained gradient rms            0.00001237     0.00012250    T
+<May11-2022> <13:48:03>      gradient max                        0.03364806
+<May11-2022> <13:48:03>      gradient rms                        0.00844529
+<May11-2022> <13:48:03>      cart. step max                      0.00086049     0.01000000    T
+<May11-2022> <13:48:03>      cart. step rms                      0.00010180     0.00666667    T
+<May11-2022> <13:48:03>      Iteration 2
+<May11-2022> <13:48:03>      current energy                               -7.25282603 Hartree
+<May11-2022> <13:48:03>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:48:03>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:48:03>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:48:03>      gradient max                        0.03367325
+<May11-2022> <13:48:03>      gradient rms                        0.00844200
+<May11-2022> <13:48:03>      cart. step max                      0.00000042     0.01000000    T
+<May11-2022> <13:48:03>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:48:03>      Geometry optimization converged
+<May11-2022> <13:48:03>  Refinement of state #43 converged.
+<May11-2022> <13:48:03>  Frequency calculation on refined state #43:
+<May11-2022> <13:48:03>  Refinement of state #43 (transition state) successful.
+<May11-2022> <13:48:03>      Calculation on initial geometry ...
+<May11-2022> <13:48:03>      Starting inertial relaxation ...
+<May11-2022> <13:48:03>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:48:03>      ======================================================================================
+<May11-2022> <13:48:03>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:03>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:03>      Geometry optimization converged
+<May11-2022> <13:48:03>  Refinement of state #43 converged.
+<May11-2022> <13:48:03>  Frequency calculation on refined state #43:
+<May11-2022> <13:48:03>  WARNING: Reactant from refinement of state #43 failed.
+<May11-2022> <13:48:03>    The new state does not have the expected PES point character.
+<May11-2022> <13:48:03>    Expected character: local minimum
+<May11-2022> <13:48:03>    Actual character: transition state
+<May11-2022> <13:48:04>      Calculation on initial geometry ...
+<May11-2022> <13:48:04>      Starting inertial relaxation ...
+<May11-2022> <13:48:04>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:48:04>      ======================================================================================
+<May11-2022> <13:48:04>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:04>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:04>      Geometry optimization converged
+<May11-2022> <13:48:04>  Refinement of state #43 converged.
+<May11-2022> <13:48:04>  Frequency calculation on refined state #43:
+<May11-2022> <13:48:04>  WARNING: Product from refinement of state #43 failed.
+<May11-2022> <13:48:04>    The new state does not have the expected PES point character.
+<May11-2022> <13:48:04>    Expected character: local minimum
+<May11-2022> <13:48:04>    Actual character: transition state
+<May11-2022> <13:48:04>  *** Refining state TS #44 ***
+<May11-2022> <13:48:04>      Computing initial Hessian...
+<May11-2022> <13:48:04>      Iteration 1
+<May11-2022> <13:48:04>      current energy                               -7.25282600 Hartree
+<May11-2022> <13:48:04>      energy change                      -7.25282600     0.00037000    F
+<May11-2022> <13:48:04>      constrained gradient max            0.00014787     0.00018375    T
+<May11-2022> <13:48:04>      constrained gradient rms            0.00001237     0.00012250    T
+<May11-2022> <13:48:04>      gradient max                        0.03364790
+<May11-2022> <13:48:04>      gradient rms                        0.00844528
+<May11-2022> <13:48:04>      cart. step max                      0.00086047     0.01000000    T
+<May11-2022> <13:48:04>      cart. step rms                      0.00010180     0.00666667    T
+<May11-2022> <13:48:05>      Iteration 2
+<May11-2022> <13:48:05>      current energy                               -7.25282604 Hartree
+<May11-2022> <13:48:05>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:48:05>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:48:05>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:48:05>      gradient max                        0.03367309
+<May11-2022> <13:48:05>      gradient rms                        0.00844199
+<May11-2022> <13:48:05>      cart. step max                      0.00000042     0.01000000    T
+<May11-2022> <13:48:05>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:48:05>      Geometry optimization converged
+<May11-2022> <13:48:05>  Refinement of state #44 converged.
+<May11-2022> <13:48:05>  Frequency calculation on refined state #44:
+<May11-2022> <13:48:05>  Refinement of state #44 (transition state) successful.
+<May11-2022> <13:48:05>      Calculation on initial geometry ...
+<May11-2022> <13:48:05>      Starting inertial relaxation ...
+<May11-2022> <13:48:05>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:48:05>      ======================================================================================
+<May11-2022> <13:48:05>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:05>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:05>      Geometry optimization converged
+<May11-2022> <13:48:05>  Refinement of state #44 converged.
+<May11-2022> <13:48:05>  Frequency calculation on refined state #44:
+<May11-2022> <13:48:05>  WARNING: Reactant from refinement of state #44 failed.
+<May11-2022> <13:48:05>    The new state does not have the expected PES point character.
+<May11-2022> <13:48:05>    Expected character: local minimum
+<May11-2022> <13:48:05>    Actual character: transition state
+<May11-2022> <13:48:05>      Calculation on initial geometry ...
+<May11-2022> <13:48:05>      Starting inertial relaxation ...
+<May11-2022> <13:48:05>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:48:05>      ======================================================================================
+<May11-2022> <13:48:05>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:05>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:05>      Geometry optimization converged
+<May11-2022> <13:48:05>  Refinement of state #44 converged.
+<May11-2022> <13:48:05>  Frequency calculation on refined state #44:
+<May11-2022> <13:48:05>  WARNING: Product from refinement of state #44 failed.
+<May11-2022> <13:48:05>    The new state does not have the expected PES point character.
+<May11-2022> <13:48:05>    Expected character: local minimum
+<May11-2022> <13:48:05>    Actual character: transition state
+<May11-2022> <13:48:05>  *** Refining state TS #45 ***
+<May11-2022> <13:48:05>      Computing initial Hessian...
+<May11-2022> <13:48:06>      Iteration 1
+<May11-2022> <13:48:06>      current energy                               -7.25282600 Hartree
+<May11-2022> <13:48:06>      energy change                      -7.25282600     0.00037000    F
+<May11-2022> <13:48:06>      constrained gradient max            0.00014785     0.00018375    T
+<May11-2022> <13:48:06>      constrained gradient rms            0.00001237     0.00012250    T
+<May11-2022> <13:48:06>      gradient max                        0.03364797
+<May11-2022> <13:48:06>      gradient rms                        0.00844527
+<May11-2022> <13:48:06>      cart. step max                      0.00086034     0.01000000    T
+<May11-2022> <13:48:06>      cart. step rms                      0.00010179     0.00666667    T
+<May11-2022> <13:48:06>      Iteration 2
+<May11-2022> <13:48:06>      current energy                               -7.25282604 Hartree
+<May11-2022> <13:48:06>      energy change                      -0.00000004     0.00037000    T
+<May11-2022> <13:48:06>      constrained gradient max            0.00000009     0.00018375    T
+<May11-2022> <13:48:06>      constrained gradient rms            0.00000001     0.00012250    T
+<May11-2022> <13:48:06>      gradient max                        0.03367316
+<May11-2022> <13:48:06>      gradient rms                        0.00844199
+<May11-2022> <13:48:06>      cart. step max                      0.00000042     0.01000000    T
+<May11-2022> <13:48:06>      cart. step rms                      0.00000004     0.00666667    T
+<May11-2022> <13:48:06>      Geometry optimization converged
+<May11-2022> <13:48:06>  Refinement of state #45 converged.
+<May11-2022> <13:48:06>  Frequency calculation on refined state #45:
+<May11-2022> <13:48:06>  Refinement of state #45 (transition state) successful.
+<May11-2022> <13:48:06>      Calculation on initial geometry ...
+<May11-2022> <13:48:06>      Starting inertial relaxation ...
+<May11-2022> <13:48:06>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:48:06>      ======================================================================================
+<May11-2022> <13:48:06>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:06>              1   EGgSs      -7.252826    0.000060    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:06>      Geometry optimization converged
+<May11-2022> <13:48:06>  Refinement of state #45 converged.
+<May11-2022> <13:48:06>  Frequency calculation on refined state #45:
+<May11-2022> <13:48:06>  WARNING: Reactant from refinement of state #45 failed.
+<May11-2022> <13:48:06>    The new state does not have the expected PES point character.
+<May11-2022> <13:48:06>    Expected character: local minimum
+<May11-2022> <13:48:06>    Actual character: transition state
+<May11-2022> <13:48:06>      Calculation on initial geometry ...
+<May11-2022> <13:48:06>      Starting inertial relaxation ...
+<May11-2022> <13:48:06>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:48:06>      ======================================================================================
+<May11-2022> <13:48:06>              0   -----      -7.252826    0.000059    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:06>              1   EGgSs      -7.252826    0.000059    0.000004    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:06>      Geometry optimization converged
+<May11-2022> <13:48:06>  Refinement of state #45 converged.
+<May11-2022> <13:48:06>  Frequency calculation on refined state #45:
+<May11-2022> <13:48:06>  WARNING: Product from refinement of state #45 failed.
+<May11-2022> <13:48:06>    The new state does not have the expected PES point character.
+<May11-2022> <13:48:06>    Expected character: local minimum
+<May11-2022> <13:48:06>    Actual character: transition state
+<May11-2022> <13:48:06>  *** Refining fragment #1 ***
+<May11-2022> <13:48:06>  Refinement of state #46 converged.
+<May11-2022> <13:48:06>  Frequency calculation on refined state #46:
+<May11-2022> <13:48:06>  Refinement of fragment #1 (local minimum) successful.
+<May11-2022> <13:48:06>  *** Refining fragment #2 ***
+<May11-2022> <13:48:06>      Calculation on initial geometry ...
+<May11-2022> <13:48:06>      Starting inertial relaxation ...
+<May11-2022> <13:48:06>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May11-2022> <13:48:06>      ======================================================================================
+<May11-2022> <13:48:06>              0   -----      -7.154286    0.000000    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:06>              1   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.2500  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>              2   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.1250  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>              3   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0625  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>              4   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0312  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>              5   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0156  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>              6   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0078  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>              7   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0039  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>              8   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0020  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>              9   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0010  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             10   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0005  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             11   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0002  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             12   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0001  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             13   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0001  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             14   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             15   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             16   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             17   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             18   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             19   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             20   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             21   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             22   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             23   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             24   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             25   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             26   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             27   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             28   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             29   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             30   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             31   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             32   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             33   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             34   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             35   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             36   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             37   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             38   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             39   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             40   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             41   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             42   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             43   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             44   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             45   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             46   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             47   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             48   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             49   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             50   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             51   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             52   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             53   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             54   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             55   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             56   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             57   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             58   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             59   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             60   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             61   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             62   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             63   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             64   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             65   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             66   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             67   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             68   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             69   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             70   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             71   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             72   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             73   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             74   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             75   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             76   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             77   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             78   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             79   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             80   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             81   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             82   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             83   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             84   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             85   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             86   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             87   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             88   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             89   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             90   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             91   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             92   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             93   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             94   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             95   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             96   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             97   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             98   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>             99   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            100   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            101   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            102   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            103   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            104   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            105   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            106   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            107   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            108   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            109   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            110   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            111   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            112   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            113   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            114   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            115   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            116   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            117   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            118   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            119   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            120   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            121   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            122   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            123   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            124   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            125   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            126   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            127   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            128   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            129   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            130   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            131   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            132   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            133   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            134   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            135   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            136   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            137   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            138   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            139   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            140   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            141   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            142   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            143   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            144   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            145   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            146   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            147   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            148   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            149   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            150   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            151   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            152   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            153   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            154   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            155   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            156   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:06>            157   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:06>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            158   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            159   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            160   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            161   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            162   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            163   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            164   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            165   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            166   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            167   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            168   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            169   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            170   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            171   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            172   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            173   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            174   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            175   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            176   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            177   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            178   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            179   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            180   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            181   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            182   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            183   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            184   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            185   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            186   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            187   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            188   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            189   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            190   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            191   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            192   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            193   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            194   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            195   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            196   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            197   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            198   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            199   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            200   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            201   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            202   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            203   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            204   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            205   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            206   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            207   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            208   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            209   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            210   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            211   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            212   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            213   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            214   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            215   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            216   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            217   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            218   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            219   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            220   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            221   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            222   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            223   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            224   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            225   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            226   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            227   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            228   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            229   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            230   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            231   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            232   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            233   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            234   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            235   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            236   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            237   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            238   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            239   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            240   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            241   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            242   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            243   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            244   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            245   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            246   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            247   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            248   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            249   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            250   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            251   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            252   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            253   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            254   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            255   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            256   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            257   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            258   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            259   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            260   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            261   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            262   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            263   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            264   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            265   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            266   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            267   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            268   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            269   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            270   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            271   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            272   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            273   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            274   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            275   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            276   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            277   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            278   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            279   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            280   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            281   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            282   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            283   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            284   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            285   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            286   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            287   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            288   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            289   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            290   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            291   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            292   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            293   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            294   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            295   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            296   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            297   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            298   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            299   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            300   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            301   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            302   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            303   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            304   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            305   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            306   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            307   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            308   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            309   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            310   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            311   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            312   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            313   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            314   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            315   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            316   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            317   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            318   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            319   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            320   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            321   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            322   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            323   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            324   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            325   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            326   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            327   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            328   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            329   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            330   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            331   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            332   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            333   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            334   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            335   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            336   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            337   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            338   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            339   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            340   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            341   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            342   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            343   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            344   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            345   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            346   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            347   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            348   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            349   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            350   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            351   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            352   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            353   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            354   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            355   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            356   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            357   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            358   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            359   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>            360   -!-S-      -7.154286    0.000000    0.000000    0.00000000  0.0000  0.1000
+<May11-2022> <13:48:07>      ===> Uphill motion detected. Freezing atoms!
+<May11-2022> <13:48:07>      WARNING: Geometry optimization did NOT converge
+<May11-2022> <13:48:07>  NOTE: Refinement of state #46 did not fully converge.
+<May11-2022> <13:48:07>        This may not be a problem: we will check now, if it is converged well enough.
+<May11-2022> <13:48:07>  Frequency calculation on refined state #46:
+<May11-2022> <13:48:07>  Refinement of fragment #2 (local minimum) successful.
+<May11-2022> <13:48:07>  Geometry symmetrized to: C1
+<May11-2022> <13:48:07>  Geometry reoriented with symmetry: ATOM
+<May11-2022> <13:48:07>  Geometry symmetrized to: C1
+<May11-2022> <13:48:07>  Geometry reoriented with symmetry: ATOM
+<May11-2022> <13:48:07>  Geometry symmetrized to: C1
+<May11-2022> <13:48:07>  Geometry reoriented with symmetry: ATOM
+<May11-2022> <13:48:07>  Geometry symmetrized to: C1
+<May11-2022> <13:48:07>  Geometry reoriented with symmetry: ATOM
+<May11-2022> <13:48:08>  NORMAL TERMINATION

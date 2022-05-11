@@ -100,7 +100,7 @@ class Cluster:
         for i in range(len(self.species)):
             self.__label += self.species[i].symbol
             if( len(self.entity_number)>1 ):
-                self.__label += "_"+str(self.entity_number[i])
+                self.__label += "_"+str(self.entity_number[i]+1)
             self.__label += "-"
             self.__label += str(self.site_types[i])
             if(i != len(self.species)-1):
@@ -222,7 +222,7 @@ class Cluster:
         return set(self.site_types)
 
 
-    def replace_site_types_names( self, site_types_old, site_types_new ):
+    def replace_site_types( self, site_types_old, site_types_new ):
         """
         Replaces the site types names
 

@@ -1,6 +1,0 @@
-#!/bin/sh
-
-unset AMS_SWITCH_LOGFILE_AND_STDOUT
-unset SCM_LOGFILE
-AMS_JOBNAME="BindingSites" AMS_RESULTSDIR=. $AMSBIN/ams <"BindingSites.in"
-

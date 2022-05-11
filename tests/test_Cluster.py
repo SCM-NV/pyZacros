@@ -17,7 +17,7 @@ def test_Cluster():
 
     output = str(cluster)
     expectedOutput = """\
-cluster H*_0-f,H*_1-f:(0,1)
+cluster H*_1-f,H*_2-f:(0,1)
   sites 2
   neighboring 1-2
   lattice_state
@@ -40,7 +40,7 @@ end_cluster\
 
     output = str(cluster)
     expectedOutput = """\
-cluster H2**_0-f,H2**_0-f:(0,1)
+cluster H2**_1-f,H2**_1-f:(0,1)
   sites 2
   neighboring 1-2
   lattice_state

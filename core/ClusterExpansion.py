@@ -103,7 +103,7 @@ class ClusterExpansion( UserList ):
         return site_types
 
 
-    def replace_site_types_names( self, site_types_old, site_types_new ):
+    def replace_site_types( self, site_types_old, site_types_new ):
         """
         Replaces the site types names
 
@@ -113,4 +113,4 @@ class ClusterExpansion( UserList ):
         assert( len(site_types_old) == len(site_types_new) )
 
         for cl in self:
-            cl.replace_site_types_names( site_types_old, site_types_new )
+            cl.replace_site_types( site_types_old, site_types_new )

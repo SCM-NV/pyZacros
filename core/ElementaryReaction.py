@@ -130,7 +130,7 @@ class ElementaryReaction:
         for i in range(len(species)):
             label += species[i].symbol
             if( len(entity_number) > 1 ):
-                label += "_"+str(entity_number[i])
+                label += "_"+str(entity_number[i]+1)
             label += "-"
             label += str(site_types[i])
             if(i != len(species)-1):
@@ -300,7 +300,7 @@ class ElementaryReaction:
         return set(self.site_types)
 
 
-    def replace_site_types_names( self, site_types_old, site_types_new ):
+    def replace_site_types( self, site_types_old, site_types_new ):
         """
         Replaces the site types names
 

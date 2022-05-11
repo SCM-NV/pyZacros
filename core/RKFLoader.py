@@ -14,17 +14,18 @@ __all__ = ['RKFLoader']
 
 class RKFLoader:
 
-    def __init__( self, results ):
+    def __init__( self, results=None ):
         """
         Creates a new RKFLoader object
 
         :parm results
         """
-        self.clusterExpansio = None
-        self.mechanism = None
+        self.clusterExpansion = ClusterExpansion()
+        self.mechanism = Mechanism()
         self.lattice = None
 
-        self.__deriveLatticeAndMechanism( results )
+        if( results is not None ):
+            self.__deriveLatticeAndMechanism( results )
 
 
     def __deriveLatticeAndMechanism( self, results ):
@@ -48,7 +49,7 @@ class RKFLoader:
         nLatticeVectors = results.readrkf("Molecule", "nLatticeVectors")
         latticeVectors = results.readrkf("Molecule", "LatticeVectors")
         latticeVectors = [ [latticeVectors[3*i+j]/angs for j in range(nLatticeVectors) ] for i in range(nLatticeVectors) ]
-        regions = results.readrkf("Molecule", "EngineAtomicInfo").split("\0")
+        regions = results.readrkf("InputMolecule", "EngineAtomicInfo").split("\0")
 
         nStates = results.readrkf("EnergyLandscape", "nStates")
         fileNames = results.readrkf("EnergyLandscape", "fileNames").replace(".rkf","").split("\0")
@@ -109,7 +110,9 @@ class RKFLoader:
         coordsFrac = [ [coordsFrac[3*i+j] for j in range(3) ] for i in range(nSites) ]
         nConnections = results.readrkf("BindingSites", "nConnections")
         fromSites = results.readrkf("BindingSites", "FromSites")
+        if type(fromSites) != list: fromSites = [ fromSites ]
         toSites = results.readrkf("BindingSites", "ToSites")
+        if type(toSites) != list: toSites = [ toSites ]
         latticeDisplacements = results.readrkf("BindingSites", "LatticeDisplacements")
         latticeDisplacements = [ [latticeDisplacements[nLatticeVectors*i+j] for j in range(nLatticeVectors) ] for i in range(nConnections) ]
         nParentStates = results.readrkf("BindingSites", "nParentStates")
@@ -302,24 +305,32 @@ class RKFLoader:
                 if( len(species[i].symbol.replace('*','')) != 0 ):
                     nonEmptySites.append(bs)
 
-            path = []
-            for bs1 in nonEmptySites:
-                for bs2 in nonEmptySites:
-                    if( bs1 != bs2 ):
-                        path.extend( G1_shortest_paths[bs1][bs2] )
+            if len(nonEmptySites) > 1:
 
-            G2 = G1.subgraph( path )
-            G2_nodes = list(G2.nodes())
-            G2_edges = [ [G2_nodes.index(pair[0]),G2_nodes.index(pair[1])] for pair in G2.edges() ]
+                path = []
+                for bs1 in nonEmptySites:
+                    for bs2 in nonEmptySites:
+                        if( bs1 != bs2 ):
+                            path.extend( G1_shortest_paths[bs1][bs2] )
 
-            for bs in G2.nodes():
-                old_id = G1_nodes.index(bs)
-                data['site_types'].append( site_types[old_id] )
-                data['entity_number'].append( entityNumber[old_id] )
-                data['species'].append( species[old_id] )
+                G2 = G1.subgraph( path )
+                G2_nodes = list(G2.nodes())
+                G2_edges = [ [G2_nodes.index(pair[0]),G2_nodes.index(pair[1])] for pair in G2.edges() ]
 
-            data['entity_number'] = [ data['entity_number'][i]-min(data['entity_number']) for i in range(len(data['entity_number'])) ]
-            data['neighboring'] = G2_edges
+                for bs in G2.nodes():
+                    old_id = G1_nodes.index(bs)
+                    data['site_types'].append( site_types[old_id] )
+                    data['entity_number'].append( entityNumber[old_id] )
+                    data['species'].append( species[old_id] )
+
+                data['entity_number'] = [ data['entity_number'][i]-min(data['entity_number']) for i in range(len(data['entity_number'])) ]
+                data['neighboring'] = G2_edges
+
+            else:
+                data['site_types'].append( site_types[0] )
+                data['entity_number'].append( entityNumber[0] )
+                data['species'].append( species[0] )
+                data['neighboring'] = []
 
             return data
 
@@ -488,14 +499,16 @@ class RKFLoader:
 
             neighboring_structure[i] = [first,second]
 
-        self.lattice = Lattice( cell_vectors=[ [v[0],v[1]] for v in latticeVectors[0:2] ], # We omit the z-axis
+        # Here we omit the z-axis. In the future, we should make a 2D projection of
+        # the 3D lattice instead. This is necessary to be able to study adsorption on nanoclusters.
+        self.lattice = Lattice( cell_vectors=[ [v[0],v[1]] for v in latticeVectors[0:2] ],
                                 repeat_cell=(1,1), # Default value.
                                 site_types=labels,
                                 site_coordinates=coordsFrac,
                                 neighboring_structure=neighboring_structure)
 
 
-    def replace_site_types_names( self, site_types_old, site_types_new ):
+    def replace_site_types( self, site_types_old, site_types_new ):
         """
         Replaces the site types names
 
@@ -504,6 +517,43 @@ class RKFLoader:
         """
         assert( len(site_types_old) == len(site_types_new) )
 
-        self.lattice.replace_site_types_names( site_types_old, site_types_new )
-        self.mechanism.replace_site_types_names( site_types_old, site_types_new )
-        self.clusterExpansion.replace_site_types_names( site_types_old, site_types_new )
+        self.lattice.replace_site_types( site_types_old, site_types_new )
+        self.mechanism.replace_site_types( site_types_old, site_types_new )
+        self.clusterExpansion.replace_site_types( site_types_old, site_types_new )
+
+
+    @staticmethod
+    def merge( rkf_loaders ):
+        """
+        Merges a list of rkf_loader into a single one
+
+        *   ``rkf_loaders`` -- List of rkf_loader items to merge
+        """
+        final_loader = RKFLoader()
+
+        for loader in rkf_loaders:
+            for cluster in loader.clusterExpansion:
+                final_loader.clusterExpansion.append( cluster )
+
+            for elementaryStep in loader.mechanism:
+                final_loader.mechanism.append( elementaryStep )
+
+            if final_loader.lattice is None:
+                final_loader.lattice = loader.lattice
+            else:
+                final_loader.lattice.extend( loader.lattice )
+
+            #firstTime = False
+            #for lattice in loader.lattice:
+                #if firstTime:
+                    #final_loader.cell_vectors
+
+        #self.cell_vectors = None
+        #self.site_types = None
+        #self.site_coordinates = None
+        #self.nearest_neighbors = None
+
+        return final_loader
+
+
+

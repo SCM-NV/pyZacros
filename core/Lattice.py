@@ -377,6 +377,73 @@ class Lattice:
         #raise Exception("Error: The constructor Lattice.__fromYAMLfile has not been implemented yet!")
 
 
+    def add_site_type( self, site_type, coordinates, precision=0.01 ):
+        """
+        Adds a new site only if this is not already included in the lattice.
+        It returns the id of the site
+
+        *   ``site_type`` -- Site type name, e.g. "StTp1"
+        *   ``coordinates`` -- 2D vector representing the site position, e.g. [0.0, 0.5]
+        *   ``precision`` -- Precision used to determine (based on the coordinates) if the site is already
+                             or not contained on the list of sites. Default: 0.01
+        """
+        locId = None
+        for i,(s,(x,y)) in enumerate(zip(self.site_types,self.site_coordinates)):
+            if( s != site_type and abs(x-coordinates[0]) < precision and abs(x-coordinates[1]) < precision ):
+                raise Exception("### Error ### RKFLoader.add_site_type(). Trying to add a site that already exists with a different label")
+
+            if( abs(x-coordinates[0]) < precision and abs(x-coordinates[1]) < precision ):
+                locId = i
+
+        if locId is None:
+            self.site_types.append( site_type )
+            self.site_coordinates.append( coordinates )
+            self.__origin = Lattice.__FROM_EXPLICIT
+            locId = len(self.site_types)-1
+
+        return locId
+
+
+    def add_nearest_neighbor( self, id_site, id_neighbor ):
+        """
+        Adds a new nearest-neighbor item to the lattice, e.g. (1,3)
+
+        *   ``id_site`` -- Site id, e.g. 1
+        *   ``id_neighbor`` -- id of the new site neighbor, e.g. 3
+        """
+        self.nearest_neighbors[ id_site ].append( id_neighbor )
+        self.__origin = Lattice.__FROM_EXPLICIT
+
+
+    def extend( self, other, precision=0.01, cell_vectors_precision=0.01 ):
+        """
+        Extends the sites and corresponding neighboring information by appending the equivalent items from another lattice.
+
+        *   ``other`` -- Lattice to append
+        *   ``precision`` -- Precision used to determine (based on the coordinates) if the site is already
+                             or not contained on the list of sites. Default: 0.01
+        *   ``cell_vectors_precision`` -- Precision used to determine cell_vectors are the same or not. Default: 0.01
+        """
+        for i in range(len(self.cell_vectors)):
+            for j in range(len(self.cell_vectors[0])):
+                if( self.cell_vectors[i][j] - other.cell_vectors[i][j] > cell_vectors_precision ):
+                    raise Exception("### Error ### RKFLoader.extend(). Lattices not compatible")
+
+        mapping = {}
+        for old_id,(site_type,coordinates,neighbors) in enumerate(zip(other.site_types,other.site_coordinates,other.nearest_neighbors)):
+            new_id = self.add_site_type( site_type, coordinates )
+            mapping[old_id] = new_id
+
+            if( new_id > len(self.nearest_neighbors)-1 ):
+                self.nearest_neighbors.append( set() )
+
+        for old_id,nearest_neighbors in enumerate(other.nearest_neighbors):
+            for id in nearest_neighbors:
+                self.nearest_neighbors[mapping[old_id]].add( mapping[id] )
+
+        self.__origin = Lattice.__FROM_EXPLICIT
+
+
     def plot(self, pause=-1, show=True, color=None, ax=None, close=False, show_sites_ids=False, file_name=None):
         """
         Uses Matplotlib to visualize the lattice. Be sure that Matplotlib is installed in your system; otherwise, the function does nothing.
@@ -521,11 +588,11 @@ class Lattice:
 
             n_cell_sites = len(self.__site_coordinates_unit_cell)
 
-            site_types_names = list(set(self.__site_types_unit_cell))
-            site_types_names.sort()
+            site_types = list(set(self.__site_types_unit_cell))
+            site_types.sort()
 
-            output += "  n_site_types "+str(len(site_types_names))+"\n"
-            output += "  site_type_names "+str(' '.join(str(x) for x in site_types_names))+"\n"
+            output += "  n_site_types "+str(len(site_types))+"\n"
+            output += "  site_type_names "+str(' '.join(str(x) for x in site_types))+"\n"
             output += "  n_cell_sites "+str(n_cell_sites)+"\n"
             output += "  site_types "+str(' '.join(str(x) for x in self.__site_types_unit_cell))+"\n"
 
@@ -556,11 +623,11 @@ class Lattice:
             output += "  n_sites "+str(len(self.site_types))+"\n"
             output += "  max_coord "+str(max([ len(neighbors) for neighbors in self.nearest_neighbors ]))+"\n"
 
-            site_types_names = list(set(self.site_types))
-            site_types_names.sort()
+            site_types = list(set(self.site_types))
+            site_types.sort()
 
-            output += "  n_site_types "+str(len(site_types_names))+"\n"
-            output += "  site_type_names "+str(' '.join(str(x) for x in site_types_names))+"\n"
+            output += "  n_site_types "+str(len(site_types))+"\n"
+            output += "  site_type_names "+str(' '.join(str(x) for x in site_types))+"\n"
 
             output += "  lattice_structure\n"
 
@@ -570,8 +637,8 @@ class Lattice:
                 output += "  "+"%10s"%self.site_types[i]
                 output += "  "+"%4d"%len(self.nearest_neighbors[i])
 
-                for j in range(len(self.nearest_neighbors[i])):
-                    output += "%6d"%(self.nearest_neighbors[i][j]+1)
+                for j in self.nearest_neighbors[i]:
+                    output += "%6d"%(j+1)
 
                 output += "\n"
 
@@ -616,7 +683,7 @@ class Lattice:
             pass
 
 
-    def replace_site_types_names( self, site_types_old, site_types_new ):
+    def replace_site_types( self, site_types_old, site_types_new ):
         """
         Replaces the site types names
 
