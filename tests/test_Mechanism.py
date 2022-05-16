@@ -41,6 +41,7 @@ def test_Mechanism():
 
     expectedOutput = """\
 mechanism
+
 reversible_step H2*_1-f,*_2-f<-->H*_1-f,H*_2-f;(0,1)
   sites 2
   neighboring 1-2
@@ -70,6 +71,7 @@ reversible_step H2*_1-f,H2*_1-f<-->H2*_1-f,*_2-f;(0,1)
   pe_ratio 0.676
   activ_eng 0.2
 end_reversible_step
+
 end_mechanism\
 """
     assert( compare( output, expectedOutput, 1e-3 ) )

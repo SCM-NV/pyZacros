@@ -393,15 +393,18 @@ class RKFLoader:
                 entityNumberProduct = entityNumberProduct if entityNumberProduct.count(-1) != len(entityNumberProduct) else None
                 activationEnergy = state2Energy[idTS]-state2Energy[idReactant]
 
+                pe_ratio = prefactorR/prefactorP
+                reversible = True if pe_ratio > 1e-6 else False
+
                 reaction = ElementaryReaction( site_types=site_types,
                                                initial_entity_number=entityNumberReactant,
                                                final_entity_number=entityNumberProduct,
                                                neighboring=G1_edges,
                                                initial=speciesReactant,
                                                final=speciesProduct,
-                                               reversible=True,
+                                               reversible=reversible,
                                                pre_expon=prefactorR,
-                                               pe_ratio=prefactorR/prefactorP,
+                                               pe_ratio=pe_ratio,
                                                activation_energy=activationEnergy )
 
                 #self.clusterExpansion.extend( [clusterReactant, clusterProduct] )
@@ -452,14 +455,17 @@ class RKFLoader:
                 activationEnergy = 0.0 #TODO Here we are assuming that there is no a TS between the fragmented state and the state.
 
                 # X_gas <--> X*
+                pe_ratio = prefactorAdsorption/prefactorDesorption
+                reversible = True if pe_ratio > 1e-6 else False
+
                 reaction = ElementaryReaction( site_types=cluster_data['site_types'],
                                                final_entity_number=cluster_data['entity_number'],
                                                neighboring=cluster_data['neighboring'],
                                                initial=speciesFState,
                                                final=cluster_data['species'],
-                                               reversible=True,
+                                               reversible=reversible,
                                                pre_expon=prefactorAdsorption,
-                                               pe_ratio=prefactorAdsorption/prefactorDesorption,
+                                               pe_ratio=pe_ratio,
                                                activation_energy=activationEnergy )
 
                 self.clusterExpansion.extend( [clusterState] )
