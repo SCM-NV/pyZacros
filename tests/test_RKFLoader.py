@@ -4,8 +4,8 @@ import shutil
 
 import scm.plams
 
-import scm.pyzacros as pz
-from scm.pyzacros.utils.compareReports import compare
+import pyzacros as pz
+from pyzacros.utils.compareReports import compare
 
 RUNDIR=None
 
