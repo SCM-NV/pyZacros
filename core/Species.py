@@ -88,6 +88,8 @@ class Species:
     SURFACE = 0
     GAS = 1
 
+    UNSPECIFIED = -1
+
     def __init__(self, symbol, denticity = None,
                  gas_energy = None, kind = None, mass = None ):
         """
@@ -146,6 +148,9 @@ class Species:
 
         *   ``other`` --
         """
+        if( type(other) == int and other == Species.UNSPECIFIED ):
+            return False
+
         if( self.symbol == other.symbol ):
             return True
         else:

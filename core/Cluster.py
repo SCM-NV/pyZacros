@@ -27,7 +27,7 @@ class Cluster:
         Creates a new Cluster object
         """
         self.species = species                        # e.g. [ Species("H*",1), Species("H*",1) ]
-        self.sites = len([ sp for sp in species if sp.is_adsorbed() ])
+        self.sites = len([ sp for sp in species if sp == Species.UNSPECIFIED or sp.is_adsorbed() ])
 
         if( site_types is not None ):
             if( not ( all([ type(st)==int for st in site_types ]) or all([ type(st)==str for st in site_types ]) ) ):
@@ -59,7 +59,8 @@ class Cluster:
         self.__mass = 0.0
 
         for item in species:
-            self.__mass += item.mass()
+            if( item != Species.UNSPECIFIED ):
+                self.__mass += item.mass()
 
 
     def __len__(self):
@@ -98,7 +99,11 @@ class Cluster:
 
         self.__label = ""
         for i in range(len(self.species)):
-            self.__label += self.species[i].symbol
+            if( self.species[i] != Species.UNSPECIFIED ):
+                self.__label += self.species[i].symbol
+            else:
+                self.__label += "&"
+
             if( len(self.entity_number)>1 ):
                 self.__label += "_"+str(self.entity_number[i]+1)
             self.__label += "-"
@@ -155,12 +160,15 @@ class Cluster:
                 else:
                     site_identate[ self.entity_number[i] ] = site_identate[ self.entity_number[i] ] + 1
 
-                if( site_identate[ self.entity_number[i] ] >= self.species[i].denticity ):
-                    msg  = "\n### ERROR ### Cluster.__str__.\n"
-                    msg += "Inconsistent of denticity value for "+self.species[i].symbol+"\n"
-                    raise NameError(msg)
+                if( self.species[i] != Species.UNSPECIFIED ):
+                    if( site_identate[ self.entity_number[i] ] >= self.species[i].denticity ):
+                        msg  = "\n### ERROR ### Cluster.__str__.\n"
+                        msg += "Inconsistent of denticity value for "+self.species[i].symbol+"\n"
+                        raise NameError(msg)
 
-                output += "    "+str(self.entity_number[i]+1)+" "+self.species[i].symbol+" "+str(site_identate[self.entity_number[i]]+1)+"\n"
+                    output += "    "+str(self.entity_number[i]+1)+" "+self.species[i].symbol+" "+str(site_identate[self.entity_number[i]]+1)+"\n"
+                else:
+                    output += "    & & &\n"
 
             output += "  site_types "
             for i in range(len(self.site_types)):
@@ -194,7 +202,7 @@ class Cluster:
         species = []
 
         for sp in self.species:
-            if( sp.kind == Species.GAS ):
+            if( sp != Species.UNSPECIFIED and sp.kind == Species.GAS ):
                 species.append( sp )
 
         species = SpeciesList( species )
@@ -207,7 +215,7 @@ class Cluster:
         species = []
 
         for sp in self.species:
-            if( sp.kind == Species.SURFACE ):
+            if( sp != Species.UNSPECIFIED and sp.kind == Species.SURFACE ):
                 species.append( sp )
 
         species = SpeciesList( species )
