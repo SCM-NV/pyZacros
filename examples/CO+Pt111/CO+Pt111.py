@@ -45,9 +45,9 @@ job = scm.plams.AMSJob(name='binding_sites', molecule=mol, settings=sett_bs+engi
 results_bs = job.run()
 
 loader_ads = scm.pyzacros.RKFLoader( results_ads )
-loader_ads.replace_site_types_names( ['A','B','C'], ['fcc','br','hcp'] )
+loader_ads.replace_site_types( ['A','B','C'], ['fcc','br','hcp'] )
 loader_bs = scm.pyzacros.RKFLoader( results_bs )
-loader_bs.replace_site_types_names( ['A','B','C'], ['fcc','br','hcp'] )
+loader_bs.replace_site_types( ['A','B','C'], ['fcc','br','hcp'] )
 
 print(loader_ads.clusterExpansion)
 print(loader_ads.mechanism)

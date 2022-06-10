@@ -35,7 +35,7 @@ def generateAMSResults():
     sett_ads.input.ReaxFF.ForceField = 'CHONSFPtClNi.ff'
     sett_ads.input.ReaxFF.Charges.Solver = 'Direct'
     sett_ads.input.ams.Constraints.FixedRegion = 'surface'
-    sett_ads.input.ams.PESPointCharacter.NegativeFrequenciesTolerance = -30.0
+    sett_ads.input.ams.PESPointCharacter.NegativeEigenvalueTolerance = -0.001
 
     sett_lat = sett_ads.copy()
     sett_lat.input.ams.PESExploration.Job = 'LandscapeRefinement'
