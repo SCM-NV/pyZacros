@@ -60,6 +60,13 @@ class RKFLoader:
         prefactorsFromReactant = results.readrkf("EnergyLandscape", "prefactorsFromReactant")
         prefactorsFromProduct = results.readrkf("EnergyLandscape", "prefactorsFromProduct")
 
+        if type(counts) != list: counts = [ counts ]
+        if type(isTS) != list: isTS = [ isTS ]
+        if type(reactants) != list: reactants = [ reactants ]
+        if type(products) != list: products = [ products ]
+        if type(prefactorsFromReactant) != list: prefactorsFromReactant = [ prefactorsFromReactant ]
+        if type(prefactorsFromProduct) != list: prefactorsFromProduct = [ prefactorsFromProduct ]
+
         # Fix ids from Fortran to python
         reactants = [ max(0,idState-1) for idState in reactants ]
         products = [ max(0,idState-1) for idState in products ]
@@ -110,14 +117,18 @@ class RKFLoader:
         coordsFrac = [ [coordsFrac[3*i+j] for j in range(3) ] for i in range(nSites) ]
         nConnections = results.readrkf("BindingSites", "nConnections")
         fromSites = results.readrkf("BindingSites", "FromSites")
-        if type(fromSites) != list: fromSites = [ fromSites ]
         toSites = results.readrkf("BindingSites", "ToSites")
-        if type(toSites) != list: toSites = [ toSites ]
         latticeDisplacements = results.readrkf("BindingSites", "LatticeDisplacements")
         latticeDisplacements = [ [latticeDisplacements[nLatticeVectors*i+j] for j in range(nLatticeVectors) ] for i in range(nConnections) ]
         nParentStates = results.readrkf("BindingSites", "nParentStates")
         parentStatesRaw = results.readrkf("BindingSites", "ParentStates")
         parentAtomsRaw = results.readrkf("BindingSites", "ParentAtoms")
+
+        if type(fromSites) != list: fromSites = [ fromSites ]
+        if type(toSites) != list: toSites = [ toSites ]
+        if type(nParentStates) != list: nParentStates = [ nParentStates ]
+        if type(parentStatesRaw) != list: parentStatesRaw = [ parentStatesRaw ]
+        if type(parentAtomsRaw) != list: parentAtomsRaw = [ parentAtomsRaw ]
 
         energyReference = 0.0 if nFStates==0 else min(fStatesEnergy)/eV
 
@@ -129,6 +140,8 @@ class RKFLoader:
         assert( len(fromSites) == len(toSites) )
 
         latticeGraph = nx.Graph()
+        for i in range(nSites):
+            latticeGraph.add_node( i )
         for i in range(len(fromSites)):
             latticeGraph.add_edge( fromSites[i], toSites[i] )
 
@@ -136,8 +149,11 @@ class RKFLoader:
 
         def getLatticeRxnSubgraph( bs_from, bs_to ):
             path = []
+
             for bs1 in bs_from:
+                if not bs1 in latticeSPaths: continue
                 for bs2 in bs_to:
+                    if not bs2 in latticeSPaths[bs1]: continue
                     path.extend( latticeSPaths[bs1][bs2] )
 
             return latticeGraph.subgraph( path )
@@ -327,10 +343,11 @@ class RKFLoader:
                 data['neighboring'] = G2_edges
 
             else:
-                data['site_types'].append( site_types[0] )
-                data['entity_number'].append( entityNumber[0] )
-                data['species'].append( species[0] )
-                data['neighboring'] = []
+                if len(site_types)>0 and len(entityNumber)>0 and len(species)>0:
+                    data['site_types'].append( site_types[0] )
+                    data['entity_number'].append( entityNumber[0] )
+                    data['species'].append( species[0] )
+                    data['neighboring'] = []
 
             return data
 
