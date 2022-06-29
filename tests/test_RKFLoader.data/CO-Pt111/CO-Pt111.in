@@ -45,7 +45,7 @@ PESExploration
 End
 
 PESPointCharacter
-  NegativeFrequenciesTolerance -30.0
+  NegativeEigenvalueTolerance -0.001
 End
 
 Task PESExploration

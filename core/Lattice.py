@@ -633,7 +633,7 @@ class Lattice:
 
             for i in range(len(self.site_types)):
                 output += "    "+"%4d"%(i+1)
-                output += "  "+"%.8f"%self.site_coordinates[i][0]+"  "+"%.8f"%self.site_coordinates[i][1]
+                output += "  "+"%15.8f"%self.site_coordinates[i][0]+"  "+"%15.8f"%self.site_coordinates[i][1]
                 output += "  "+"%10s"%self.site_types[i]
                 output += "  "+"%4d"%len(self.nearest_neighbors[i])
 
