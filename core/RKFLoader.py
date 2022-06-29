@@ -351,6 +351,20 @@ class RKFLoader:
 
             return data
 
+
+        def getMultiplicity( data ):
+            mult = 1
+
+            if( len(data['site_types'])==2 and
+                data['site_types'][0] == data['site_types'][1] and
+                data['species'][0].symbol == data['species'][1].symbol and
+                len(data['neighboring'])==1 and
+                data['neighboring'][0] in [[0,1],[1,0]] ):
+                mult = 2
+
+            return mult
+
+
         # Loop over the TSs to find the species
         # Each TS defines an ElementaryReaction and at the same time it defines
         # two Clusters from reactants and products.
@@ -385,7 +399,7 @@ class RKFLoader:
                                            entity_number=cluster_data['entity_number'],
                                            neighboring=cluster_data['neighboring'],
                                            species=cluster_data['species'],
-                                           multiplicity=1,
+                                           multiplicity=getMultiplicity(cluster_data),
                                            cluster_energy=state2Energy[idReactant]-energyReference )
 
                 entityNumberReactant = entityNumber
@@ -399,7 +413,7 @@ class RKFLoader:
                                           entity_number=cluster_data['entity_number'],
                                           neighboring=cluster_data['neighboring'],
                                           species=cluster_data['species'],
-                                          multiplicity=1,
+                                          multiplicity=getMultiplicity(cluster_data),
                                           cluster_energy=state2Energy[idReactant]-energyReference )
 
                 entityNumberProduct = entityNumber
@@ -454,7 +468,7 @@ class RKFLoader:
                                         entity_number=cluster_data['entity_number'],
                                         neighboring=cluster_data['neighboring'],
                                         species=cluster_data['species'],
-                                        multiplicity=1,
+                                        multiplicity=getMultiplicity(cluster_data),
                                         cluster_energy=state2Energy[idState]-energyReference )
 
                 #--------------------------------------------------------------------
