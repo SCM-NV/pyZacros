@@ -20,17 +20,17 @@ def test_ZacrosJob():
     myCluster1 = pz.Cluster( neighboring=[ (0,1) ],
                              species=[ H_ads, H_ads ],
                              multiplicity=2,
-                             cluster_energy=0.1 )
+                             energy=0.1 )
 
     myCluster2 = pz.Cluster( neighboring=[ (0,1) ],
                              species=[ H2_ads, s0 ],
                              multiplicity=2,
-                             cluster_energy=0.1 )
+                             energy=0.1 )
 
     myCluster3 = pz.Cluster( neighboring=[ (0,1) ],
                              species=[ s0, s0 ],
                              multiplicity=2,
-                             cluster_energy=0.1 )
+                             energy=0.1 )
 
     myClusterExpansion = pz.ClusterExpansion( [myCluster1, myCluster2, myCluster3] )
 

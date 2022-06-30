@@ -8,7 +8,8 @@ class Species:
 
     *   ``symbol`` -- Species' symbol. If symbol contains the character '*', it is considered an adsorbed species. Otherwise it is considered a gas species. e.g. H2*
     *   ``denticity`` -- Species' denticity e.g. 2. If None, it is set as the number of times that the character '*' is found in the symbol.
-    *   ``gas_energy`` -- Species' gas energy e.g. ``0.0``
+    *   ``gas_energy`` -- Species' gas energy in eV. e.g. ``0.0``
+    *   ``gas_formation_energy`` -- Species' gas energy within a reference set in eV. By default, it is set equal to energy. e.g. ``0.0``
     *   ``kind`` -- It can be ``Species.SURFACE`` (0), or ``Species.GAS`` (1). If None, it is selected from the symbol.
     *   ``mass`` -- Specifies the mass in Da. If None, the mass is calculated from the symbol interpreted as a chemical formula. The mass of the most abundant isotopes of composing atoms is used for this calculation. For example, if ``symbol='CH4'``, the mass will be ``16.0312`` (``12.0000+4*1.0078``).
     """
@@ -90,13 +91,14 @@ class Species:
 
     UNSPECIFIED = -1
 
-    def __init__(self, symbol, denticity = None,
-                 gas_energy = None, kind = None, mass = None ):
+    def __init__(self, symbol, denticity = None, gas_energy = None,
+                    gas_formation_energy = None, kind = None, mass = None ):
         """
         Creates a new Species object.
         """
         self.symbol = symbol
         self.gas_energy = gas_energy
+        self.gas_formation_energy = gas_formation_energy
 
         self.denticity = denticity
         if( denticity is None ):
@@ -126,6 +128,9 @@ class Species:
 
         if( self.kind == Species.GAS and self.gas_energy is None ):
             self.gas_energy = 0.0
+
+        if gas_formation_energy is None:
+            self.gas_formation_energy = self.gas_energy
 
         self.__composition = chemparse.parse_formula( symbol.replace("*","") )
 
