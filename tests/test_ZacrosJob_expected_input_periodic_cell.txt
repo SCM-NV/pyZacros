@@ -1,0 +1,132 @@
+---------------------------------------------------------------------
+simulation_input.dat
+---------------------------------------------------------------------
+random_seed             10
+temperature         273.15
+pressure           1.01325
+
+snapshots                 on event       1.0
+process_statistics        on event       1.0
+species_numbers           on event       1.0
+event_report      off
+max_steps         5000
+max_time          250.0
+wall_time         10
+
+n_gas_species    0
+
+n_surf_species    1
+surf_specs_names         O1*
+surf_specs_dent            1
+
+finish
+---------------------------------------------------------------------
+lattice_input.dat
+---------------------------------------------------------------------
+lattice periodic_cell
+  cell_vectors
+    8.31557575    0.00000000
+    4.15778787    7.20149984
+  repeat_cell 10 10
+  n_site_types 2
+  site_type_names A B
+  n_cell_sites 18
+  site_types B B B B B B B B B A A A A A A A A A
+  site_coordinates
+    0.22205848    0.22246177
+    0.22200972    0.55583773
+    0.55531538    0.22252471
+    0.22212901    0.88893404
+    0.55532948    0.55584611
+    0.88870969    0.22241706
+    0.55544668    0.88895448
+    0.88871932    0.55587033
+    0.88888304    0.88890248
+    0.11090138    0.11136035
+    0.11092409    0.44482591
+    0.44418595    0.11142545
+    0.11097775    0.77785592
+    0.44418419    0.44478684
+    0.77761180    0.11136661
+    0.44430066    0.77785108
+    0.77755058    0.44476422
+    0.77774006    0.77779688
+  neighboring_structure
+    17-8  self
+    1-10  self
+    6-10  east
+    9-15  north
+    5-17  self
+    11-2  self
+    3-15  self
+    15-6  self
+    7-12  north
+    8-11  east
+    2-14  self
+    3-12  self
+    12-1  self
+    14-5  self
+    6-17  self
+    4-10  north
+    4-16  self
+    9-13  east
+    18-8  self
+    18-7  self
+    5-16  self
+    3-14  self
+    1-11  self
+    9-18  self
+    16-7  self
+    13-2  self
+    13-4  self
+  end_neighboring_structure
+end_lattice
+---------------------------------------------------------------------
+energetics_input.dat
+---------------------------------------------------------------------
+energetics
+
+cluster *-B,O1*-A:(0,1)
+  sites 2
+  neighboring 2-1
+  lattice_state
+    1 * 1
+    2 O1* 1
+  site_types B A
+  graph_multiplicity 2
+  cluster_eng -197.8632
+end_cluster
+
+cluster O1*-B,*-A:(0,1)
+  sites 2
+  neighboring 2-1
+  lattice_state
+    1 O1* 1
+    2 * 1
+  site_types B A
+  graph_multiplicity 2
+  cluster_eng -197.8632
+end_cluster
+
+end_energetics
+---------------------------------------------------------------------
+mechanism_input.dat
+---------------------------------------------------------------------
+mechanism
+
+reversible_step O1*-B,*-A<-->*-B,O1*-A;(0,1)
+  sites 2
+  neighboring 2-1
+  initial
+    1 * 1
+    2 O1* 1
+  final
+    1 O1* 1
+    2 * 1
+  site_types B A
+  pre_expon 1.720e+13
+  pe_ratio 0.896
+  activ_eng 0.501
+end_reversible_step
+
+end_mechanism

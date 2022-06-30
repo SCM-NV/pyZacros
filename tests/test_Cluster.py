@@ -8,7 +8,7 @@ def test_Cluster():
     print( ">>> Testing Cluster class" )
     print( "---------------------------------------------------" )
     cluster = pz.Cluster( site_types=( "f", "f" ),
-                            neighboring=[ (1,2) ],
+                            neighboring=[ (0,1) ],
                             species=pz.SpeciesList( [ pz.Species("H*",1), pz.Species("H*",1) ] ),
                             multiplicity=2,
                             cluster_energy = 0.1 )
@@ -17,7 +17,7 @@ def test_Cluster():
 
     output = str(cluster)
     expectedOutput = """\
-cluster H*_0-f,H*_1-f:(1,2)
+cluster H*_1-f,H*_2-f:(0,1)
   sites 2
   neighboring 1-2
   lattice_state
@@ -31,7 +31,7 @@ end_cluster\
     assert( compare( output, expectedOutput, 1e-3 ) )
 
     cluster = pz.Cluster( site_types=( "f", "f" ),
-                            neighboring=[ (1,2) ],
+                            neighboring=[ (0,1) ],
                             species=[ pz.Species("H2**"), pz.Species("H2**") ],
                             multiplicity=2,
                             cluster_energy = 0.1 )
@@ -40,7 +40,7 @@ end_cluster\
 
     output = str(cluster)
     expectedOutput = """\
-cluster H2**_0-f,H2**_0-f:(1,2)
+cluster H2**_1-f,H2**_1-f:(0,1)
   sites 2
   neighboring 1-2
   lattice_state
@@ -54,7 +54,7 @@ end_cluster\
     assert( compare( output, expectedOutput, 1e-3 ) )
 
     cluster = pz.Cluster( site_types=( "f", "g", "h", "i", "j" ),
-                            neighboring=[ (1,2), (2,3), (3,4), (4,1), (3,5) ],
+                            neighboring=[ (0,1), (1,2), (2,3), (3,0), (2,4) ],
                             species=[ pz.Species("CO2**"), pz.Species("*"), pz.Species("CO2**"), pz.Species("H*",1), pz.Species("*") ],
                             entity_number=[ 0, 1, 0, 2, 3 ],
                             multiplicity=1,
@@ -82,7 +82,7 @@ end_cluster\
     assert( compare( output, expectedOutput, 1e-3 ) )
 
     cluster = pz.Cluster( site_types=( "f", "g", "h", "i", "j" ),
-                            neighboring=[ (1,2), (2,3), (3,4), (4,1), (3,5) ],
+                            neighboring=[ (0,1), (1,2), (2,3), (3,0), (2,4) ],
                             species=[ pz.Species("CO2**"), pz.Species("*"), pz.Species("CO2**"), pz.Species("H*",1), pz.Species("*") ],
                             multiplicity=1,
                             cluster_energy = 0.1,

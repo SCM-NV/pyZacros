@@ -9,94 +9,73 @@ from pyzacros.utils.compareReports import compare
 
 RUNDIR=None
 
-def buildEnergyLandscape():
+def generateAMSResults():
     """Generates of the energy landscape for the O-Pt111 system"""
-    scm.plams.init()
 
-    molecule = scm.plams.Molecule( "tests/O-Pt111.xyz" )
+    sett_ads = scm.plams.Settings()
+    sett_ads.input.ams.Task = "PESExploration"
+    sett_ads.input.ams.PESExploration.Job = 'ProcessSearch'
+    sett_ads.input.ams.PESExploration.RandomSeed = 100
+    sett_ads.input.ams.PESExploration.NumExpeditions = 10
+    sett_ads.input.ams.PESExploration.NumExplorers = 4
+    sett_ads.input.ams.PESExploration.Optimizer.ConvergedForce = 0.005
+    sett_ads.input.ams.PESExploration.SaddleSearch.ZeroModeAbortCurvature = 0.0001
+    sett_ads.input.ams.PESExploration.SaddleSearch.MinEnergyBarrier = 0.02
+    sett_ads.input.ams.PESExploration.SaddleSearch.MaxEnergy = 4.0
+    sett_ads.input.ams.PESExploration.DynamicSeedStates = 'T'
+    sett_ads.input.ams.PESExploration.StructureComparison.DistanceDifference = 0.2
+    sett_ads.input.ams.PESExploration.StructureComparison.NeighborCutoff = 2.4
+    sett_ads.input.ams.PESExploration.StructureComparison.EnergyDifference = 0.05
+    sett_ads.input.ams.PESExploration.CalculateFragments = 'T'
+    sett_ads.input.ams.PESExploration.StructureComparison.CheckSymmetry = 'T'
+    sett_ads.input.ams.PESExploration.BindingSites.Calculate = 'T'
+    sett_ads.input.ams.PESExploration.BindingSites.NeighborCutoff = 3.8
+    sett_ads.input.ams.PESExploration.BindingSites.DistanceDifference = 0.5
+    sett_ads.input.ams.PESExploration.StatesAlignment.ReferenceRegion = 'surface'
+    sett_ads.input.ReaxFF.ForceField = 'CHONSFPtClNi.ff'
+    sett_ads.input.ReaxFF.Charges.Solver = 'Direct'
+    sett_ads.input.ams.Constraints.FixedRegion = 'surface'
+    sett_ads.input.ams.PESPointCharacter.NegativeEigenvalueTolerance = -0.001
 
-    for atom in molecule:
-        if( atom.symbol == "O" ):
-            atom.properties.suffix = "region=adsorbate"
-        else:
-            atom.properties.suffix = "region=surface"
+    sett_lat = sett_ads.copy()
+    sett_lat.input.ams.PESExploration.Job = 'LandscapeRefinement'
+    sett_lat.input.ams.PESExploration.LoadEnergyLandscape.GenerateSymmetryImages = 'T'
+    sett_lat.input.ams.PESExploration.SaddleSearch.RelaxFromSaddlePoint = 'T'
+    sett_lat.input.ams.GeometryOptimization.InitialHessian.Type = 'Calculate'
+    sett_lat.input.ams.PESExploration.StructureComparison.CheckSymmetry = 'F'
 
-    settings = scm.plams.Settings()
-    settings.input.ams.Task = "PESExploration"
+    molO = scm.plams.Molecule( "tests/O-Pt111.xyz" )
+    molCO = scm.plams.Molecule( "tests/CO-Pt111.xyz" )
 
-    settings.input.ams.Constraints.FixedRegion = "surface"
+    jobO_ads = scm.plams.AMSJob(molecule=molO, settings=sett_ads, name="O_ads-Pt111")
+    jobCO_ads = scm.plams.AMSJob(molecule=molCO, settings=sett_ads, name="CO_ads-Pt111")
 
-    settings.input.ams.PESExploration.Job = "ProcessSearch"
-    settings.input.ams.PESExploration.RandomSeed = 100
-    settings.input.ams.PESExploration.NumExpeditions = 50
-    settings.input.ams.PESExploration.NumExplorers = 5
-    settings.input.ams.PESExploration.DynamicSeedStates = True
-    settings.input.ams.PESExploration.Optimizer.ConvergedForce = 0.0001
-    settings.input.ams.PESExploration.SaddleSearch.MaxEnergy = 2.0
-    settings.input.ams.PESExploration.StructureComparison.DistanceDifference = 0.1
-    settings.input.ams.PESExploration.StructureComparison.NeighborCutoff = 10.0
-    settings.input.ams.PESExploration.StructureComparison.EnergyDifference = 0.01
+    sett_lat.input.ams.PESExploration.LoadEnergyLandscape.Path= '../O_ads-Pt111'
+    jobO_lat = scm.plams.AMSJob(molecule=molO, settings=sett_lat, name="O-Pt111", depend=[jobO_ads])
 
-    settings.input.ReaxFF
-    settings.input.ReaxFF.ForceField = "CHONSFPtClNi.ff"
-    settings.input.ReaxFF.Charges.Solver = "direct"
+    sett_lat.input.ams.PESExploration.LoadEnergyLandscape.Path= '../CO_ads-Pt111'
+    jobCO_lat = scm.plams.AMSJob(molecule=molCO, settings=sett_lat, name="CO-Pt111", depend=[jobCO_ads])
 
-    job = scm.plams.AMSJob(molecule=molecule, settings=settings, name="PESExploration")
-    results = job.run()
+    jobs = [ jobO_ads, jobCO_ads, jobO_lat, jobCO_lat ]
 
-    if( not job.ok() ):
-        print( "Warning: The EnergyLandscape calculation FAILED likely because AMS executable is not available!" )
-        print( "         For testing purposes, now we load precalculated results.")
+    for job in jobs:
+        job.run()
 
-        job = scm.plams.load( RUNDIR+"/tests/test_RKFLoader.data/PESExploration/PESExploration.dill" )
-        results = job.results
+    success = True
+    for job in jobs:
+        if not job.ok() and "AMSBIN" not in os.environ:
+            print( "Warning: The calculation FAILED likely because AMS executable is not available!" )
+            print( "         For testing purposes, now we load precalculated results.")
+            success = False
 
-    scm.plams.finish()
+    if success:
+        scm.plams.delete_job( jobO_ads )
+        scm.plams.delete_job( jobCO_ads )
+    else:
+        jobO_lat = scm.plams.load( RUNDIR+"/tests/test_RKFLoader.data/O-Pt111/O-Pt111.dill" )
+        jobCO_lat = scm.plams.load( RUNDIR+"/tests/test_RKFLoader.data/CO-Pt111/CO-Pt111.dill" )
 
-    return results
-
-
-def deriveBindingSites():
-    """Derives the binding sites from the previously calculated energy landscape"""
-    scm.plams.init()
-
-    molecule = scm.plams.Molecule( "tests/O-Pt111.xyz" )
-
-    for atom in molecule:
-        if( atom.symbol == "O" ):
-            atom.properties.suffix = "region=adsorbate"
-        else:
-            atom.properties.suffix = "region=surface"
-
-    settings = scm.plams.Settings()
-    settings.input.ams.Task = "PESExploration"
-
-    settings.input.ams.Constraints.FixedRegion = "surface"
-
-    settings.input.ams.PESExploration.Job = "BindingSites"
-    settings.input.ams.PESExploration.LoadEnergyLandscape.Path = RUNDIR+"/tests/test_RKFLoader.data/PESExploration/ams.rkf"
-    settings.input.ams.PESExploration.StatesAlignment.ReferenceRegion = "surface"
-    settings.input.ams.PESExploration.StructureComparison.DistanceDifference = 0.1
-    settings.input.ams.PESExploration.StructureComparison.NeighborCutoff = 3.5
-    settings.input.ams.PESExploration.StructureComparison.EnergyDifference = 0.1
-
-    settings.input.ReaxFF
-    settings.input.ReaxFF.ForceField = "CHONSFPtClNi.ff"
-    settings.input.ReaxFF.Charges.Solver = "direct"
-
-    job = scm.plams.AMSJob(molecule=molecule, settings=settings, name="BindingSites")
-    results = job.run()
-
-    if( not job.ok() ):
-        print( "Warning: The BindingSites calculation FAILED likely because AMS executable is not available!" )
-        print( "         For testing purposes, now we load precalculated results.")
-
-        job = scm.plams.load( RUNDIR+"/tests/test_RKFLoader.data/BindingSites/BindingSites.dill" )
-        results = job.results
-
-    scm.plams.finish()
-
-    return results
+    return jobO_lat.results,jobCO_lat.results
 
 
 def test_RKFLoader():
@@ -108,94 +87,275 @@ def test_RKFLoader():
     print( ">>> Testing RKFLoader class" )
     print( "---------------------------------------------------" )
 
-    resultsEnergyLandscape = buildEnergyLandscape()
-    resultsBindingSites = deriveBindingSites()
+    scm.plams.init(folder='test_RKFLoader')
 
-    myRKFLoader = pz.RKFLoader( resultsBindingSites )
+    resultsO,resultsCO = generateAMSResults()
 
-    output  = str( myRKFLoader.mechanism )+"\n"
-    myRKFLoader.lattice.set_repeat_cell( [2,2] )
-    myRKFLoader.lattice.plot( pause=2 )
-    output += str( myRKFLoader.lattice )
+    scm.plams.finish()
+
+    loaderO = pz.RKFLoader( resultsO )
+    loaderCO = pz.RKFLoader( resultsCO )
+
+    loader = pz.RKFLoader.merge( [loaderO, loaderCO] )
+    loader.replace_site_types( ['N3333', 'N3334', 'N2222'], ['fcc', 'hcp', 'br'] )
+
+    output  = str( loader.clusterExpansion )+"\n\n"
+    output += str( loader.mechanism )+"\n\n"
+
+    loader.lattice.set_repeat_cell( [2,2] )
+    loader.lattice.plot( pause=2 )
+
+    output += str( loader.lattice )
 
     print(output)
 
     expectedOutput = """\
+energetics
+
+cluster O*-fcc
+  sites 1
+  lattice_state
+    1 O* 1
+  site_types fcc
+  graph_multiplicity 1
+  cluster_eng -3.27305e+00
+end_cluster
+
+cluster O*-hcp
+  sites 1
+  lattice_state
+    1 O* 1
+  site_types hcp
+  graph_multiplicity 1
+  cluster_eng -3.07423e+00
+end_cluster
+
+cluster CO*-fcc
+  sites 1
+  lattice_state
+    1 CO* 1
+  site_types fcc
+  graph_multiplicity 1
+  cluster_eng -1.98377e+00
+end_cluster
+
+cluster CO*-hcp
+  sites 1
+  lattice_state
+    1 CO* 1
+  site_types hcp
+  graph_multiplicity 1
+  cluster_eng -1.98185e+00
+end_cluster
+
+cluster CO*-br
+  sites 1
+  lattice_state
+    1 CO* 1
+  site_types br
+  graph_multiplicity 1
+  cluster_eng -1.22677e+00
+end_cluster
+
+end_energetics
+
 mechanism
 
-reversible_step O1*_0-B,*_1-A<-->*_0-B,O1*_1-A;(1,2)
+reversible_step O*_1-hcp,*_2-fcc<-->*_1-hcp,O*_2-fcc;(0,1)
   sites 2
-  neighboring 2-1
+  neighboring 1-2
   initial
     1 * 1
-    2 O1* 1
+    2 O* 1
   final
-    1 O1* 1
+    1 O* 1
     2 * 1
-  site_types B A
-  pre_expon 1.71991e+13
-  pe_ratio 8.95976e-01
-  activ_eng 5.01496e-01
+  site_types hcp fcc
+  pre_expon  1.92044e+13
+  pe_ratio  1.11482e+00
+  activ_eng  7.00299e-01
 end_reversible_step
 
+reversible_step O*_1-fcc,*_2-hcp<-->*_1-fcc,O*_2-hcp;(0,1)
+  sites 2
+  neighboring 1-2
+  initial
+    1 O* 1
+    2 * 1
+  final
+    1 * 1
+    2 O* 1
+  site_types fcc hcp
+  pre_expon  1.92044e+13
+  pe_ratio  1.11482e+00
+  activ_eng  7.00299e-01
+end_reversible_step
+
+step *-fcc:O-->O*-fcc
+  gas_reacs_prods O -1
+  sites 1
+  initial
+    1 * 1
+  final
+    1 O* 1
+  site_types fcc
+  pre_expon  1.06511e+07
+  activ_eng  0.00000e+00
+end_step
+
+step *-hcp:O-->O*-hcp
+  gas_reacs_prods O -1
+  sites 1
+  initial
+    1 * 1
+  final
+    1 O* 1
+  site_types hcp
+  pre_expon  1.06511e+07
+  activ_eng  0.00000e+00
+end_step
+
+reversible_step CO*_1-hcp,*_2-br<-->*_1-hcp,CO*_2-br;(0,1)
+  sites 2
+  neighboring 1-2
+  initial
+    1 CO* 1
+    2 * 1
+  final
+    1 * 1
+    2 CO* 1
+  site_types hcp br
+  pre_expon  1.57247e+13
+  pe_ratio  7.07192e+00
+  activ_eng  7.89789e-01
+end_reversible_step
+
+reversible_step CO*_1-fcc,*_2-br<-->*_1-fcc,CO*_2-br;(0,1)
+  sites 2
+  neighboring 1-2
+  initial
+    1 CO* 1
+    2 * 1
+  final
+    1 * 1
+    2 CO* 1
+  site_types fcc br
+  pre_expon  1.57044e+13
+  pe_ratio  7.15212e+00
+  activ_eng  7.94878e-01
+end_reversible_step
+
+step *-fcc:CO-->CO*-fcc
+  gas_reacs_prods CO -1
+  sites 1
+  initial
+    1 * 1
+  final
+    1 CO* 1
+  site_types fcc
+  pre_expon  8.05092e+06
+  activ_eng  0.00000e+00
+end_step
+
+step *-hcp:CO-->CO*-hcp
+  gas_reacs_prods CO -1
+  sites 1
+  initial
+    1 * 1
+  final
+    1 CO* 1
+  site_types hcp
+  pre_expon  8.05092e+06
+  activ_eng  0.00000e+00
+end_step
+
+step *-br:CO-->CO*-br
+  gas_reacs_prods CO -1
+  sites 1
+  initial
+    1 * 1
+  final
+    1 CO* 1
+  site_types br
+  pre_expon  8.05092e+06
+  activ_eng  0.00000e+00
+end_step
+
 end_mechanism
-lattice periodic_cell
-cell_vectors
+
+lattice explicit
+  cell_vectors
   8.31557575  0.00000000
   4.15778787  7.20149984
-repeat_cell 2 2
-n_site_types 2
-site_type_names A B
-n_cell_sites 18
-site_types B B B B B B B B B A A A A A A A A A
-site_coordinates
-  0.22205823  0.22246190
-  0.22201007  0.55583761
-  0.55530927  0.22253061
-  0.22212815  0.88893597
-  0.55532993  0.55584592
-  0.88870872  0.22241805
-  0.55544680  0.88895434
-  0.88871779  0.55587041
-  0.88888376  0.88890149
-  0.11090282  0.11135927
-  0.11092394  0.44482539
-  0.44418381  0.11142280
-  0.11097989  0.77785422
-  0.44418388  0.44478701
-  0.77761175  0.11136662
-  0.44429985  0.77785242
-  0.77755045  0.44476403
-  0.77773905  0.77779245
-neighboring_structure
-  17-8 self
-  1-10 self
-  6-10 east
-  9-15 north
-  5-17 self
-  2-11 self
-  3-15 self
-  15-6 self
-  7-12 north
-  8-11 east
-  14-2 self
-  3-12 self
-  12-1 self
-  14-5 self
-  6-17 self
-  4-10 north
-  16-4 self
-  9-13 east
-  8-18 self
-  7-18 self
-  5-16 self
-  3-14 self
-  1-11 self
-  18-9 self
-  7-16 self
-  2-13 self
-  13-4 self
-end_neighboring_structure
+  n_sites 63
+  max_coord 3
+  n_site_types 3
+  site_type_names br fcc hcp
+  lattice_structure
+       1       0.92536450       0.55407768         hcp     1     2
+       2       2.31078110       1.35400928         fcc     3     1     3     4
+       3       2.31129379       2.95457763         hcp     2     2     5
+       4       3.69722308       0.55407768         hcp     2     2     7
+       5       3.69671039       3.75450923         fcc     3     3     6     8
+       6       3.69722308       5.35507757         hcp     2     9     5
+       7       5.08263968       1.35400928         fcc     3    10     4     8
+       8       5.08315237       2.95457763         hcp     3    11     5     7
+       9       5.08263968       6.15500917         fcc     2    12     6
+      10       6.46908166       0.55407768         hcp     2    13     7
+      11       6.46856897       3.75450923         fcc     3    12    14     8
+      12       6.46908166       5.35507757         hcp     3     9    11    15
+      13       7.85449826       1.35400928         fcc     2    10    14
+      14       7.85501095       2.95457763         hcp     3    11    13    16
+      15       7.85449826       6.15500917         fcc     2    17    12
+      16       9.24042755       3.75450923         fcc     2    17    14
+      17       9.24094024       5.35507757         hcp     3    18    15    16
+      18      10.62635684       6.15500917         fcc     1    17
+      19       0.92565822       0.55493308         hcp     1    37
+      20       2.31028062       1.35365870         fcc     3    37    38    39
+      21       2.31158751       2.95543303         hcp     2    38    40
+      22       3.69751680       0.55493308         hcp     2    42    39
+      23       3.69620991       3.75415865         fcc     3    41    43    40
+      24       3.69751680       5.35593297         hcp     2    41    44
+      25       5.08213920       1.35365870         fcc     3    42    45    47
+      26       5.08344609       2.95543303         hcp     3    43    45    48
+      27       5.08213920       6.15465859         fcc     3    49    44    46
+      28       6.46937538       0.55493308         hcp     2    51    47
+      29       6.46806849       3.75415865         fcc     3    50    52    48
+      30       6.46937538       5.35593297         hcp     3    49    50    53
+      31       7.85399778       1.35365870         fcc     3    51    54    56
+      32       7.85530467       2.95543303         hcp     3    57    52    54
+      33       7.85399778       6.15465859         fcc     3    58    53    55
+      34       9.23992707       3.75415865         fcc     3    57    59    60
+      35       9.24123396       5.35593297         hcp     3    58    59    61
+      36      10.62585636       6.15465859         fcc     3    61    62    63
+      37       1.60537481       0.94674127          br     2    19    20
+      38       2.31110785       2.16892643          br     2    20    21
+      39       3.01673678       0.94674127          br     2    20    22
+      40       2.99130410       3.34724122          br     2    21    23
+      41       3.69703714       4.56942638          br     2    23    24
+      42       4.37723339       0.94674127          br     2    25    22
+      43       4.40266607       3.34724122          br     2    26    23
+      44       4.37723339       5.74774116          br     2    27    24
+      45       5.08296643       2.16892643          br     2    25    26
+      46       5.08296643       6.96992632          br     1    27
+      47       5.78859536       0.94674127          br     2    25    28
+      48       5.76316268       3.34724122          br     2    26    29
+      49       5.78859536       5.74774116          br     2    27    30
+      50       6.46889572       4.56942638          br     2    29    30
+      51       7.14909197       0.94674127          br     2    28    31
+      52       7.17452465       3.34724122          br     2    29    32
+      53       7.14909197       5.74774116          br     2    33    30
+      54       7.85482502       2.16892643          br     2    31    32
+      55       7.85482501       6.96992632          br     1    33
+      56       8.56045395       0.94674127          br     1    31
+      57       8.53502126       3.34724122          br     2    34    32
+      58       8.56045394       5.74774116          br     2    33    35
+      59       9.24075431       4.56942638          br     2    34    35
+      60       9.94638324       3.34724122          br     1    34
+      61       9.92095055       5.74774116          br     2    35    36
+      62      10.62668360       6.96992632          br     1    36
+      63      11.33231253       5.74774116          br     1    36
+  end_lattice_structure
 end_lattice\
 """
-    assert( compare( output, expectedOutput, 1e-3 ) )
+    assert( compare( output, expectedOutput, rel_error=0.1 ) )

@@ -6,18 +6,14 @@ import scm.plams
 import pyzacros as pz
 from pyzacros.utils.compareReports import compare
 
-RUNDIR=None
 
 def test_ZacrosResults():
     """Test of the ZacrosResults class."""
-    global RUNDIR
     RUNDIR = os.getcwd()
 
     print( "---------------------------------------------------" )
     print( ">>> Testing ZacrosResults class" )
     print( "---------------------------------------------------" )
-
-    scm.plams.init()
 
     #---------------------------------------------
     # Species:
@@ -40,37 +36,36 @@ def test_ZacrosResults():
     #---------------------------------------------
     # Clusters:
     #---------------------------------------------
-    CO_point = pz.Cluster(site_types=["1"], species=[CO_ads], cluster_energy=-1.3)
-    O_point = pz.Cluster(site_types=["1"], species=[O_ads], cluster_energy=-2.3)
+    CO_point = pz.Cluster(species=[CO_ads], cluster_energy=-1.3)
+    O_point = pz.Cluster(species=[O_ads], cluster_energy=-2.3)
 
     #---------------------------------------------
     # Elementary Reactions
     #---------------------------------------------
     # CO_adsorption:
-    CO_adsorption = pz.ElementaryReaction(site_types=["1"],
-                                    initial=[s0,CO_gas],
-                                    final=[CO_ads],
-                                    reversible=False,
-                                    pre_expon=10.0,
-                                    label="CO_adsorption")
+    CO_adsorption = pz.ElementaryReaction( initial=[s0,CO_gas],
+                                           final=[CO_ads],
+                                           reversible=False,
+                                           pre_expon=10.0,
+                                           label="CO_adsorption")
 
     # O2_adsorption:
-    O2_adsorption = pz.ElementaryReaction(site_types=["1", "1"],
-                                        initial=[s0,s0,O2_gas],
-                                        final=[O_ads,O_ads],
-                                        neighboring=[(1, 2)],
-                                        reversible=False,
-                                        pre_expon=2.5,
-                                        label="O2_adsorption")
+    O2_adsorption = pz.ElementaryReaction( initial=[s0,s0,O2_gas],
+                                           final=[O_ads,O_ads],
+                                           neighboring=[(0, 1)],
+                                           reversible=False,
+                                           pre_expon=2.5,
+                                           label="O2_adsorption")
 
     # CO_oxidation:
-    CO_oxidation = pz.ElementaryReaction(site_types=["1", "1"],
-                                    initial=[CO_ads, O_ads],
-                                    final=[s0, s0, CO2_gas],
-                                    neighboring=[(1, 2)],
-                                    reversible=False,
-                                    pre_expon=1.0e+20,
-                                    label="CO_oxidation")
+    CO_oxidation = pz.ElementaryReaction( initial=[CO_ads, O_ads],
+                                          final=[s0, s0, CO2_gas],
+                                          neighboring=[(0, 1)],
+                                          reversible=False,
+                                          pre_expon=1.0e+20,
+                                          label="CO_oxidation")
+
+    scm.plams.init(folder='test_ZacrosResults')
 
     # Settings:
     sett = pz.Settings()
@@ -95,10 +90,14 @@ def test_ZacrosResults():
     #-----------------------
     # Running the job
     #-----------------------
-    results = job.run()
+    try:
+        results = job.run()
 
-    if( not job.ok() ):
-        print( "Warning: The calculation FAILED likely because Zacros executable is not available!" )
+        if( not job.ok() ):
+            raise scm.plams.JobError("Error: The Zacros calculation FAILED!")
+
+    except pz.ZacrosExecutableNotFoundError:
+        print( "Warning: The calculation FAILED because the zacros executable is not available!" )
         print( "         For testing purposes, now we load precalculated results.")
 
         job = scm.plams.load( RUNDIR+"/tests/test_ZacrosResults.data/plamsjob.dill" )
@@ -139,7 +138,7 @@ def test_ZacrosResults():
     lattice_states = results.lattice_states()
     lattice_states[3].plot( pause=2, close=True )
 
-    results.plot_lattice_states( pause=2, close=True )
+    results.plot_lattice_states( lattice_states, pause=2, close=True )
 
     results.plot_molecule_numbers( results.gas_species_names(), pause=2, close=True )
 

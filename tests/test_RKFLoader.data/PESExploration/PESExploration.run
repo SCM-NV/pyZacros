@@ -1,5 +1,0 @@
-#!/bin/sh
-
-unset AMS_SWITCH_LOGFILE_AND_STDOUT
-AMS_JOBNAME="PESExploration" AMS_RESULTSDIR=. $AMSBIN/ams <"PESExploration.in"
-

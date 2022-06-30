@@ -15,6 +15,7 @@ coverage.xml
 
 docs/_build
 docs/apidocs
+doc/ZacrosManual.pdf
 
 # ide
 .idea
