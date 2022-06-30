@@ -1,3 +1,4 @@
 #!/bin/bash
 
-zacros.x
+export OMP_NUM_THREADS=1
+/home/aguirre/Develop/ams.trunk/bin/zacros

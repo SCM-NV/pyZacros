@@ -13,7 +13,7 @@
 Threading/multiprocessing information:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    Serial run (no parallelism).
+    Shared-memory multiprocessing with 1 OpenMP thread.
 
 Simulation setup:
 ~~~~~~~~~~~~~~~~~
@@ -23,6 +23,20 @@ Simulation setup:
     Temperature: 500.00000000000000
 
     Pressure: 1.0000000000000000
+
+    Snapshots will be reported in file history_output.txt every 0.10000000000000001 time units
+
+    Process statistics will be reported in file procstat_output.txt every 0.10000000000000001 time units
+
+    Species numbers will be reported in file specnum_output.txt every 0.10000000000000001 time units
+
+    Event reporting turned off
+
+    Maximum number of steps: 9223372036854775807 (maximum allowed value)
+
+    Max simulated time: 1.0000000000000000              
+
+    Allowed walltime in seconds: 3600
 
     Number of gas species: 3
 
@@ -40,23 +54,9 @@ Simulation setup:
 
     Surface species dentation:  1  1
 
-    Snapshots will be reported in file history_output.txt every 0.10000000000000001 time units
-
-    Process statistics will be reported in file procstat_output.txt every 0.10000000000000001 time units
-
-    Species numbers will be reported in file specnum_output.txt every 0.10000000000000001 time units
-
-    Event reporting turned off
-
-    Maximum number of steps: 9223372036854775807 (maximum allowed value)
-
-    Max simulated time: 1.0000000000000000              
-
-    Allowed walltime in seconds: 3600
-
     The default Mersenne Twister 19937 random number generator will be used for this simulation.
 
-    Initializing the random number generator took 5.5559999999999998E-006 seconds
+    Initializing the random number generator took 8.1540000000000002E-006 seconds
 
     The default first reaction method will be used for propagating the KMC state, with a binary heap for the event-queue
 
@@ -95,8 +95,8 @@ Energetics setup:
 
     Clusters:
 
-        1. CO*_0-1:  Mult = 1      ECI = -1.3000000000000000       Entities:  CO*
-        2. O*_0-1:   Mult = 1      ECI = -2.2999999999999998       Entities:  O*
+        1. CO*-0:  Mult = 1      ECI = -1.3000000000000000       Entities:  CO*
+        2. O*-0:   Mult = 1      ECI = -2.2999999999999998       Entities:  O*
 
     This cluster expansion involves only single body patterns.
 
@@ -180,16 +180,16 @@ Simulation stopped:
 Performance facts:
 ~~~~~~~~~~~~~~~~~~
 
-Elapsed CPU time:         2.09280010E-02 seconds
-Elapsed clock time:       3.64174433E-02 seconds
-Setup clock time:         1.57018658E-02 seconds
-Simulation clock time:    2.07155775E-02 seconds
+Elapsed CPU time:         1.63850021E-02 seconds
+Elapsed clock time:       2.67160274E-02 seconds
+Setup clock time:         1.06280316E-02 seconds
+Simulation clock time:    1.60879958E-02 seconds
 
-Clock time per KMC event: 1.63821151E-05 seconds
-Clock time per KMC time:  3.64171006E-02 seconds/KMCTimeUnits
+Clock time per KMC event: 1.20180057E-05 seconds
+Clock time per KMC time:  2.67157760E-02 seconds/KMCTimeUnits
 
-Events per clock hour:    219751840
-KMC Dt per clock hour:    98854.6562 KMCTimeUnits
+Events per clock hour:    299550528
+KMC Dt per clock hour:    134751.844 KMCTimeUnits
 
 Execution queue statistics:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
