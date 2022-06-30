@@ -130,7 +130,7 @@ class RKFLoader:
         if type(parentStatesRaw) != list: parentStatesRaw = [ parentStatesRaw ]
         if type(parentAtomsRaw) != list: parentAtomsRaw = [ parentAtomsRaw ]
 
-        energyReference = 0.0 if nFStates==0 else min(fStatesEnergy)/eV
+        formationEnergyReference = 0.0 if nFStates==0 else min(fStatesEnergy)/eV
 
         # Fix ids from Fortran to python
         fromSites = [ max(0,idSite-1) for idSite in fromSites ]
@@ -400,7 +400,8 @@ class RKFLoader:
                                            neighboring=cluster_data['neighboring'],
                                            species=cluster_data['species'],
                                            multiplicity=getMultiplicity(cluster_data),
-                                           cluster_energy=state2Energy[idReactant]-energyReference )
+                                           energy=state2Energy[idReactant],
+                                           formation_energy=state2Energy[idReactant]-formationEnergyReference )
 
                 entityNumberReactant = entityNumber
 
@@ -414,7 +415,8 @@ class RKFLoader:
                                           neighboring=cluster_data['neighboring'],
                                           species=cluster_data['species'],
                                           multiplicity=getMultiplicity(cluster_data),
-                                          cluster_energy=state2Energy[idReactant]-energyReference )
+                                          energy=state2Energy[idReactant],
+                                          formation_energy=state2Energy[idReactant]-formationEnergyReference )
 
                 entityNumberProduct = entityNumber
 
@@ -469,17 +471,18 @@ class RKFLoader:
                                         neighboring=cluster_data['neighboring'],
                                         species=cluster_data['species'],
                                         multiplicity=getMultiplicity(cluster_data),
-                                        cluster_energy=state2Energy[idState]-energyReference )
+                                        energy=state2Energy[idState],
+                                        formation_energy=state2Energy[idState]-formationEnergyReference )
 
                 #--------------------------------------------------------------------
                 # Fragmented State
-                speciesNames = [ "*" for f in cluster_data['site_types'] ]
+                speciesFState = SpeciesList( [ Species("*") for f in cluster_data['site_types'] ] )
                 for idFragment in composition:
                     if( fragmentsRegions[idFragment] == "active" ):
                         mol = results.get_molecule("Molecule", file=fragmentsFileNames[idFragment])
-                        speciesNames.append( mol.get_formula() )
+                        amsResults = results.read_rkf_section("AMSResults", file=fragmentsFileNames[idFragment])
 
-                speciesFState = SpeciesList( [ Species(f) for f in speciesNames ] )
+                        speciesFState.append( Species( mol.get_formula(), gas_energy=amsResults["Energy"]/eV ) )
 
                 #--------------------------------------------------------------------
                 # Reaction
@@ -568,8 +571,14 @@ class RKFLoader:
         """
         final_loader = RKFLoader()
 
+        gas_species = SpeciesList()
+        for loader in rkf_loaders:
+            gas_species.extend( loader.mechanism.gas_species() )
+        #print(gas_species)
+
         for loader in rkf_loaders:
             for cluster in loader.clusterExpansion:
+                #print(cluster.composition())
                 final_loader.clusterExpansion.append( cluster )
 
             for elementaryStep in loader.mechanism:
@@ -580,16 +589,7 @@ class RKFLoader:
             else:
                 final_loader.lattice.extend( loader.lattice )
 
-            #firstTime = False
-            #for lattice in loader.lattice:
-                #if firstTime:
-                    #final_loader.cell_vectors
-
-        #self.cell_vectors = None
-        #self.site_types = None
-        #self.site_coordinates = None
-        #self.nearest_neighbors = None
-
+        #exit(0)
         return final_loader
 
 

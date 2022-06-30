@@ -33,8 +33,8 @@ def test_ZacrosJob_restart():
     #---------------------------------------------
     # Clusters:
     #---------------------------------------------
-    CO_point = pz.Cluster(species=[CO_ads], cluster_energy=-1.3)
-    O_point = pz.Cluster(species=[O_ads], cluster_energy=-2.3)
+    CO_point = pz.Cluster(species=[CO_ads], energy=-1.3)
+    O_point = pz.Cluster(species=[O_ads], energy=-2.3)
 
     cluster_expansion = [CO_point, O_point]
 

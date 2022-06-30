@@ -415,13 +415,13 @@ class Lattice:
         self.__origin = Lattice.__FROM_EXPLICIT
 
 
-    def extend( self, other, precision=0.01, cell_vectors_precision=0.01 ):
+    def extend( self, other, precision=0.1, cell_vectors_precision=0.01 ):
         """
         Extends the sites and corresponding neighboring information by appending the equivalent items from another lattice.
 
         *   ``other`` -- Lattice to append
         *   ``precision`` -- Precision used to determine (based on the coordinates) if the site is already
-                             or not contained on the list of sites. Default: 0.01
+                             or not contained on the list of sites. Default: 0.1
         *   ``cell_vectors_precision`` -- Precision used to determine cell_vectors are the same or not. Default: 0.01
         """
         for i in range(len(self.cell_vectors)):

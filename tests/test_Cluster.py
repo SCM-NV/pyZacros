@@ -11,7 +11,7 @@ def test_Cluster():
                             neighboring=[ (0,1) ],
                             species=pz.SpeciesList( [ pz.Species("H*",1), pz.Species("H*",1) ] ),
                             multiplicity=2,
-                            cluster_energy = 0.1 )
+                            energy=0.1 )
 
     print( cluster )
 
@@ -34,7 +34,7 @@ end_cluster\
                             neighboring=[ (0,1) ],
                             species=[ pz.Species("H2**"), pz.Species("H2**") ],
                             multiplicity=2,
-                            cluster_energy = 0.1 )
+                            energy=0.1 )
 
     print( cluster )
 
@@ -58,7 +58,7 @@ end_cluster\
                             species=[ pz.Species("CO2**"), pz.Species("*"), pz.Species("CO2**"), pz.Species("H*",1), pz.Species("*") ],
                             entity_number=[ 0, 1, 0, 2, 3 ],
                             multiplicity=1,
-                            cluster_energy = 0.1,
+                            energy=0.1,
                             label="my_weird_cluster" )
 
     print( cluster )
@@ -85,7 +85,7 @@ end_cluster\
                             neighboring=[ (0,1), (1,2), (2,3), (3,0), (2,4) ],
                             species=[ pz.Species("CO2**"), pz.Species("*"), pz.Species("CO2**"), pz.Species("H*",1), pz.Species("*") ],
                             multiplicity=1,
-                            cluster_energy = 0.1,
+                            energy=0.1,
                             label="my_weird_cluster" )
 
     print( cluster )
