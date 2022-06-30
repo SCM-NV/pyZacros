@@ -1,6 +1,6 @@
 energetics
 
-cluster CO*_0-1
+cluster CO*-0
   sites 1
   lattice_state
     1 CO* 1
@@ -9,7 +9,7 @@ cluster CO*_0-1
   cluster_eng -1.30000e+00
 end_cluster
 
-cluster O*_0-1
+cluster O*-0
   sites 1
   lattice_state
     1 O* 1
