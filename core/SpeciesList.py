@@ -51,7 +51,7 @@ class SpeciesList(UserList):
 
             output += "gas_energies      "
             for i in gasSpecies:
-                output += " %12.5e"%self[i].gas_formation_energy
+                output += " %12.5e"%self[i].gas_energy
             output += "\n"
 
             output += "gas_molec_weights "

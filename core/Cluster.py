@@ -13,7 +13,6 @@ class Cluster:
     *   ``neighboring`` -- Specifies the neighboring between sites, if more than one sites appear in the graph pattern, e.g. [ (0,1) ]
     *   ``multiplicity`` -- The multiplicity of the pattern, namely the number of times that the exact same pattern will be counted for a given lattice configuration.
     *   ``energy`` -- The energy contribution of the pattern in eV.
-    *   ``formation_energy`` -- The energy required for (or released while) generating that configuration from molecules within a reference set in eV. By default, it is set equal to energy.
     *   ``label`` -- If None, a unique label is generated based on its composition.
     """
 
@@ -23,7 +22,6 @@ class Cluster:
                  neighboring = None,
                  multiplicity = 1,
                  energy = 0.000,
-                 formation_energy = None,
                  label = None):
         """
         Creates a new Cluster object
@@ -43,11 +41,7 @@ class Cluster:
 
         self.neighboring = neighboring                # e.g. [ (0,1) ]
         self.multiplicity = multiplicity              # e.g. 2
-        self.energy = energy
-
-        self.formation_energy = formation_energy
-        if formation_energy is None:
-            self.formation_energy = energy
+        self.energy = energy                          # Units eV
 
         self.entity_number = entity_number
         if( entity_number is None ): self.entity_number = SpeciesList.default_entity_numbers( self.sites, self.species )
@@ -199,7 +193,7 @@ class Cluster:
 
             output += "  graph_multiplicity "+str(self.multiplicity)+"\n"
 
-        output += "  cluster_eng "+("%12.5e"%self.formation_energy)+"\n"
+        output += "  cluster_eng "+("%12.5e"%self.energy)+"\n"
         output += "end_cluster"
 
         return output
