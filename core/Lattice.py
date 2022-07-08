@@ -429,6 +429,9 @@ class Lattice:
                 if( self.cell_vectors[i][j] - other.cell_vectors[i][j] > cell_vectors_precision ):
                     raise Exception("### Error ### RKFLoader.extend(). Lattices not compatible")
 
+        #--------------------------------------------
+        # Merging the general attributes
+        #--------------------------------------------
         mapping = {}
         for old_id,(site_type,coordinates,neighbors) in enumerate(zip(other.site_types,other.site_coordinates,other.nearest_neighbors)):
             new_id = self.add_site_type( site_type, coordinates )
@@ -438,10 +441,19 @@ class Lattice:
                 self.nearest_neighbors.append( set() )
 
         for old_id,nearest_neighbors in enumerate(other.nearest_neighbors):
+            if nearest_neighbors is None: continue
             for id in nearest_neighbors:
                 self.nearest_neighbors[mapping[old_id]].add( mapping[id] )
 
+        #self.__origin = other.__origin
+        #self.__cell_vectors_unit_cell = other.__cell_vectors_unit_cell
+        #self.__repeat_cell_unit_cell = other.__repeat_cell_unit_cell
+        #self.__site_types_unit_cell.extend( other.__site_types_unit_cell )
+        #self.__site_coordinates_unit_cell.extend( other.__site_coordinates_unit_cell )
+        #self.__neighboring_structure_unit_cell.extend( other.__neighboring_structure_unit_cell )
+
         self.__origin = Lattice.__FROM_EXPLICIT
+        #self.__origin = Lattice.__FROM_UNIT_CELL
 
 
     def plot(self, pause=-1, show=True, color=None, ax=None, close=False, show_sites_ids=False, file_name=None):
@@ -502,8 +514,8 @@ class Lattice:
         ax.set_ylabel('y (ang.)')
 
         #markers = ['o', '.', ',', 'x', '+', 'v', '^', '<', '>', 's', 'd']
-        markers = ['o', 's', 'v', '^']
-        colors = ['r', 'g', 'b', 'm']
+        markers = ['o', 's', 'v', '^', '+', '^']
+        colors =  ['r', 'g', 'b', 'm', 'c', 'k']
 
         for i,st_i in enumerate(list(set(self.site_types))):
             xvalues = [ x for (x,y),st in zip(self.site_coordinates,self.site_types) if st==st_i ]
