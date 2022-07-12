@@ -300,6 +300,7 @@ class ZacrosResults( scm.plams.Results ):
             conf_lines = lines[start:end]
 
             lattice_state = None
+            lattice_state_buffer = {} # key=adsorbate_number
             for nline,line in enumerate(conf_lines):
                 tokens = line.split()
 
@@ -322,7 +323,19 @@ class ZacrosResults( scm.plams.Results ):
                     dentation = int(tokens[3])
 
                     if( species_number > -1 ): # In pyzacros -1 means empty site (0 for Zacros)
-                        lattice_state.fill_site( site_number, surface_species[species_number], update_species_numbers=False )
+                        if( adsorbate_number not in lattice_state_buffer ):
+                            lattice_state_buffer[adsorbate_number] = [ [site_number], species_number, dentation ]
+                        else:
+                            lattice_state_buffer[adsorbate_number][0].append( site_number )
+                            lattice_state_buffer[adsorbate_number][2] = dentation
+
+            for key,item in lattice_state_buffer.items():
+                if( len(item[0]) != item[2] ):
+                    msg  = "Format error reading lattice state. Species' dentation is not compatible with the number of associated binding sites.\n"
+                    msg += ">> adsorbate_number="+str(key)+", site_number="+str(site_number)+"\n"
+                    msg += ">> species="+str(surface_species[item[1]])+", dentation="+str(dentation)+"\n"
+                    raise Exception( msg )
+                lattice_state.fill_site( item[0], surface_species[item[1]], update_species_numbers=False )
 
             if( lattice_state is not None ):
                 lattice_state._updateSpeciesNumbers()
@@ -574,7 +587,7 @@ class ZacrosResults( scm.plams.Results ):
                     procstat_state["occurence_frequency"] = occurence_frequency
 
                 else:
-                    raise( "Error: Wrong format in file specnum_output.txt" )
+                    raise Exception( "Error: Wrong format in file specnum_output.txt" )
 
                 pos += 1
 
