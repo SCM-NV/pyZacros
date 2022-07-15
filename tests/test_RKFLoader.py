@@ -58,22 +58,22 @@ def generateAMSResults():
 
     jobs = [ jobO_ads, jobCO_ads, jobO_lat, jobCO_lat ]
 
-    for job in jobs:
-        job.run()
+    #for job in jobs:
+        #job.run()
 
-    success = True
-    for job in jobs:
-        if not job.ok() and "AMSBIN" not in os.environ:
-            print( "Warning: The calculation FAILED likely because AMS executable is not available!" )
-            print( "         For testing purposes, now we load precalculated results.")
-            success = False
+    #success = True
+    #for job in jobs:
+        #if not job.ok() and "AMSBIN" not in os.environ:
+            #print( "Warning: The calculation FAILED likely because AMS executable is not available!" )
+            #print( "         For testing purposes, now we load precalculated results.")
+            #success = False
 
-    if success:
-        scm.plams.delete_job( jobO_ads )
-        scm.plams.delete_job( jobCO_ads )
-    else:
-        jobO_lat = scm.plams.load( RUNDIR+"/tests/test_RKFLoader.data/O-Pt111/O-Pt111.dill" )
-        jobCO_lat = scm.plams.load( RUNDIR+"/tests/test_RKFLoader.data/CO-Pt111/CO-Pt111.dill" )
+    #if success:
+        #scm.plams.delete_job( jobO_ads )
+        #scm.plams.delete_job( jobCO_ads )
+    #else:
+    jobO_lat = scm.plams.load( RUNDIR+"/tests/test_RKFLoader.data/O-Pt111/O-Pt111.dill" )
+    jobCO_lat = scm.plams.load( RUNDIR+"/tests/test_RKFLoader.data/CO-Pt111/CO-Pt111.dill" )
 
     return jobO_lat.results,jobCO_lat.results
 
