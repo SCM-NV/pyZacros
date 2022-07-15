@@ -71,8 +71,8 @@ class RKFLoader:
         if type(prefactorsFromProduct) != list: prefactorsFromProduct = [ prefactorsFromProduct ]
 
         # Fix ids from Fortran to python
-        reactants = [ max(0,idState-1) for idState in reactants ]
-        products = [ max(0,idState-1) for idState in products ]
+        reactants = [ idState-1 for idState in reactants ]
+        products = [ idState-1 for idState in products ]
 
         nFragments = 0
         if( "nFragments" in rkf_skeleton["EnergyLandscape"] ):
@@ -285,6 +285,10 @@ class RKFLoader:
             idReactant = reactants[idState]
             idProduct = products[idState]
 
+            # We only accept complete TSs
+            if( idReactant == -1 or idProduct == -1 ):
+                continue
+
             # Loop over the binding sites of the reactant
             for i,idSite in enumerate(state2BindingSites[idReactant]):
                 if( state2BindingSites[ idState ] is None ):
@@ -391,7 +395,7 @@ class RKFLoader:
 
 
         def getFormationEnergy( idState ):
-            fenergy = state2Energy[idReactant] # In eV
+            fenergy = state2Energy[idState] # In eV
 
             if( len(energyReference) > 0 ):
                 for i,atom in enumerate(state2Molecule[idState]):
@@ -422,7 +426,7 @@ class RKFLoader:
                 idTS = idState
 
                 # We only accept complete TSs
-                if( reactants[idTS] == 0 or products[idTS] == 0 ):
+                if( reactants[idTS] == -1 or products[idTS] == -1 ):
                     continue
 
                 # Locates the reactant and product
@@ -473,7 +477,7 @@ class RKFLoader:
                 entityNumberProduct = entityNumberProduct if entityNumberProduct.count(-1) != len(entityNumberProduct) else None
                 activationEnergy = state2Energy[idTS]-state2Energy[idReactant]
 
-                pe_ratio = prefactorR/prefactorP
+                pe_ratio = prefactorR/max(1e-7,prefactorP)
                 reversible = True if pe_ratio > 1e-6 else False
 
                 reaction = ElementaryReaction( site_types=site_types,
@@ -612,7 +616,7 @@ class RKFLoader:
 
 
     @staticmethod
-    def merge( rkf_loaders ):
+    def merge( rkf_loaders, bs_precision=0.5 ):
         """
         Merges a list of rkf_loader into a single one
 
@@ -631,7 +635,7 @@ class RKFLoader:
             if final_loader.lattice is None:
                 final_loader.lattice = loader.lattice
             else:
-                final_loader.lattice.extend( loader.lattice )
+                final_loader.lattice.extend( loader.lattice, precision=bs_precision )
 
         return final_loader
 
