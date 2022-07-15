@@ -327,7 +327,8 @@ class ZacrosResults( scm.plams.Results ):
                             lattice_state_buffer[adsorbate_number] = [ [site_number], species_number, dentation ]
                         else:
                             lattice_state_buffer[adsorbate_number][0].append( site_number )
-                            lattice_state_buffer[adsorbate_number][2] = dentation
+                            if( dentation > lattice_state_buffer[adsorbate_number][2] ):
+                                lattice_state_buffer[adsorbate_number][2] = dentation
 
             for key,item in lattice_state_buffer.items():
                 if( len(item[0]) != item[2] ):

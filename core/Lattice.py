@@ -389,11 +389,16 @@ class Lattice:
         """
         locId = None
         for i,(s,(x,y)) in enumerate(zip(self.site_types,self.site_coordinates)):
-            if( s != site_type and abs(x-coordinates[0]) < precision and abs(x-coordinates[1]) < precision ):
-                raise Exception("### Error ### RKFLoader.add_site_type(). Trying to add a site that already exists with a different label")
 
-            if( abs(x-coordinates[0]) < precision and abs(x-coordinates[1]) < precision ):
+            if( math.sqrt( (x-coordinates[0])**2 + (y-coordinates[1])**2 ) < precision ):
                 locId = i
+
+                if( s != site_type ):
+                    msg  = "### Error ### RKFLoader.add_site_type(). Trying to add a site that already exists with a different label\n"
+                    msg += "              (s_old,s_new) = ("+str(s)+","+str(site_type)+")\n"
+                    msg += "                 coords_old = "+str([x,y])+"\n"
+                    msg += "                 coords_new = "+str(coordinates)+"\n"
+                    raise Exception( msg )
 
         if locId is None:
             self.site_types.append( site_type )
@@ -415,13 +420,13 @@ class Lattice:
         self.__origin = Lattice.__FROM_EXPLICIT
 
 
-    def extend( self, other, precision=0.01, cell_vectors_precision=0.01 ):
+    def extend( self, other, precision=0.1, cell_vectors_precision=0.01 ):
         """
         Extends the sites and corresponding neighboring information by appending the equivalent items from another lattice.
 
         *   ``other`` -- Lattice to append
         *   ``precision`` -- Precision used to determine (based on the coordinates) if the site is already
-                             or not contained on the list of sites. Default: 0.01
+                             or not contained on the list of sites. Default: 0.1
         *   ``cell_vectors_precision`` -- Precision used to determine cell_vectors are the same or not. Default: 0.01
         """
         for i in range(len(self.cell_vectors)):
@@ -429,19 +434,31 @@ class Lattice:
                 if( self.cell_vectors[i][j] - other.cell_vectors[i][j] > cell_vectors_precision ):
                     raise Exception("### Error ### RKFLoader.extend(). Lattices not compatible")
 
+        #--------------------------------------------
+        # Merging the general attributes
+        #--------------------------------------------
         mapping = {}
         for old_id,(site_type,coordinates,neighbors) in enumerate(zip(other.site_types,other.site_coordinates,other.nearest_neighbors)):
-            new_id = self.add_site_type( site_type, coordinates )
+            new_id = self.add_site_type( site_type, coordinates, precision )
             mapping[old_id] = new_id
 
             if( new_id > len(self.nearest_neighbors)-1 ):
                 self.nearest_neighbors.append( set() )
 
         for old_id,nearest_neighbors in enumerate(other.nearest_neighbors):
+            if nearest_neighbors is None: continue
             for id in nearest_neighbors:
                 self.nearest_neighbors[mapping[old_id]].add( mapping[id] )
 
+        #self.__origin = other.__origin
+        #self.__cell_vectors_unit_cell = other.__cell_vectors_unit_cell
+        #self.__repeat_cell_unit_cell = other.__repeat_cell_unit_cell
+        #self.__site_types_unit_cell.extend( other.__site_types_unit_cell )
+        #self.__site_coordinates_unit_cell.extend( other.__site_coordinates_unit_cell )
+        #self.__neighboring_structure_unit_cell.extend( other.__neighboring_structure_unit_cell )
+
         self.__origin = Lattice.__FROM_EXPLICIT
+        #self.__origin = Lattice.__FROM_UNIT_CELL
 
 
     def plot(self, pause=-1, show=True, color=None, ax=None, close=False, show_sites_ids=False, file_name=None):
@@ -502,8 +519,8 @@ class Lattice:
         ax.set_ylabel('y (ang.)')
 
         #markers = ['o', '.', ',', 'x', '+', 'v', '^', '<', '>', 's', 'd']
-        markers = ['o', 's', 'v', '^']
-        colors = ['r', 'g', 'b', 'm']
+        markers = ['o', 's', 'v', '^', '+', '^']
+        colors =  ['r', 'g', 'b', 'm', 'c', 'k']
 
         for i,st_i in enumerate(list(set(self.site_types))):
             xvalues = [ x for (x,y),st in zip(self.site_coordinates,self.site_types) if st==st_i ]

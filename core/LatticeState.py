@@ -339,8 +339,8 @@ class LatticeState:
             fig,ax = plt.subplots()
 
         #markers = ['o', '.', ',', 'x', '+', 'v', '^', '<', '>', 's', 'd']
-        markers = ['o', 's', 'v', '^']
-        colors = ['r', 'g', 'b', 'm']
+        markers = ['o', 's', 'v', '^', 'x', 's', 'd',       '+']
+        colors =  ['r', 'g', 'b', 'c', 'm', 'y', 'k', '#eeefff']
 
         symbols = [sp if sp is None else sp.symbol for sp in self.__adsorbed_on_site]
 

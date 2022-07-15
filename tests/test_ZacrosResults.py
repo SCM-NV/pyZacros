@@ -36,8 +36,8 @@ def test_ZacrosResults():
     #---------------------------------------------
     # Clusters:
     #---------------------------------------------
-    CO_point = pz.Cluster(species=[CO_ads], cluster_energy=-1.3)
-    O_point = pz.Cluster(species=[O_ads], cluster_energy=-2.3)
+    CO_point = pz.Cluster(species=[CO_ads], energy=-1.3)
+    O_point = pz.Cluster(species=[O_ads], energy=-2.3)
 
     #---------------------------------------------
     # Elementary Reactions

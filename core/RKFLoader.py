@@ -44,6 +44,8 @@ class RKFLoader:
         self.clusterExpansion = ClusterExpansion()
         self.mechanism = Mechanism()
 
+        #----------------------------- begin reading rkf -----------------------------------
+
         rkf_skeleton = results.get_rkf_skeleton()
 
         nLatticeVectors = results.readrkf("Molecule", "nLatticeVectors")
@@ -51,6 +53,7 @@ class RKFLoader:
         latticeVectors = [ [latticeVectors[3*i+j]/angs for j in range(nLatticeVectors) ] for i in range(nLatticeVectors) ]
         regions = results.readrkf("InputMolecule", "EngineAtomicInfo").split("\0")
 
+        referenceRegion = results.readrkf("EnergyLandscape", "referenceRegionLabel").strip()
         nStates = results.readrkf("EnergyLandscape", "nStates")
         fileNames = results.readrkf("EnergyLandscape", "fileNames").replace(".rkf","").split("\0")
         counts = results.readrkf("EnergyLandscape", "counts")
@@ -68,8 +71,8 @@ class RKFLoader:
         if type(prefactorsFromProduct) != list: prefactorsFromProduct = [ prefactorsFromProduct ]
 
         # Fix ids from Fortran to python
-        reactants = [ max(0,idState-1) for idState in reactants ]
-        products = [ max(0,idState-1) for idState in products ]
+        reactants = [ idState-1 for idState in reactants ]
+        products = [ idState-1 for idState in products ]
 
         nFragments = 0
         if( "nFragments" in rkf_skeleton["EnergyLandscape"] ):
@@ -108,8 +111,26 @@ class RKFLoader:
                 fStatesComposition[i] = [ max(0,idFragment-1) for idFragment in fStatesComposition[i] ]
                 fStatesConnections[i] = [ max(0,idState-1) for idState in fStatesConnections[i] ]
 
+        energyReferenceLabels = []
+        energyReferenceValues = []
+        if( "energyReferenceLabels" in rkf_skeleton["EnergyLandscape"] and "energyReferenceValues" in rkf_skeleton["EnergyLandscape"] ):
+            energyReferenceLabels = results.readrkf("EnergyLandscape", "energyReferenceLabels").split("\0")
+            energyReferenceValues = results.readrkf("EnergyLandscape", "energyReferenceValues")
+
+        if type(energyReferenceValues) != list: energyReferenceValues = [ energyReferenceValues ]
+
+        if( "BindingSites" not in rkf_skeleton ):
+            msg  = "\n### ERROR ### RKFLoader.__deriveLatticeAndMechanism.\n"
+            msg += "              The BindingSites section is required to derive the lattice\n"
+            raise NameError(msg)
+
         nSites = results.readrkf("BindingSites", "nSites")
-        referenceRegion = results.readrkf("BindingSites", "ReferenceRegionLabel").strip()
+
+        if( referenceRegion != results.readrkf("BindingSites", "ReferenceRegionLabel").strip() ):
+            msg  = "\n### ERROR ### RKFLoader.__deriveLatticeAndMechanism.\n"
+            msg += "              The reference region from the EnergyLandscape is different than for the BindingSites\n"
+            raise NameError(msg)
+
         labels = results.readrkf("BindingSites", "Labels").split()
         coords = results.readrkf("BindingSites", "Coords")
         coords = [ [coords[3*i+j]/angs for j in range(3) ] for i in range(nSites) ]
@@ -130,7 +151,11 @@ class RKFLoader:
         if type(parentStatesRaw) != list: parentStatesRaw = [ parentStatesRaw ]
         if type(parentAtomsRaw) != list: parentAtomsRaw = [ parentAtomsRaw ]
 
-        energyReference = 0.0 if nFStates==0 else min(fStatesEnergy)/eV
+        #----------------------------- end reading rkf -----------------------------------
+
+        energyReference = {}
+        for i,label in enumerate(energyReferenceLabels):
+            energyReference[label.strip()] = energyReferenceValues[i]
 
         # Fix ids from Fortran to python
         fromSites = [ max(0,idSite-1) for idSite in fromSites ]
@@ -260,6 +285,10 @@ class RKFLoader:
             idReactant = reactants[idState]
             idProduct = products[idState]
 
+            # We only accept complete TSs
+            if( idReactant == -1 or idProduct == -1 ):
+                continue
+
             # Loop over the binding sites of the reactant
             for i,idSite in enumerate(state2BindingSites[idReactant]):
                 if( state2BindingSites[ idState ] is None ):
@@ -365,6 +394,30 @@ class RKFLoader:
             return mult
 
 
+        def getFormationEnergy( idState ):
+            fenergy = state2Energy[idState] # In eV
+
+            if( len(energyReference) > 0 ):
+                for i,atom in enumerate(state2Molecule[idState]):
+                    if( regions[i] != "region="+referenceRegion ):
+                        fenergy -= energyReference[atom.symbol]
+
+                if( referenceRegion in regions ):
+                    fenergy -= energyReference[referenceRegion]/eV
+
+            return fenergy
+
+
+        def getGasFormationEnergy( mol, energy ):
+            fenergy = energy # In eV
+
+            if( len(energyReference) > 0 ):
+                for atom in mol:
+                    fenergy -= energyReference[atom.symbol]/eV
+
+            return fenergy
+
+
         # Loop over the TSs to find the species
         # Each TS defines an ElementaryReaction and at the same time it defines
         # two Clusters from reactants and products.
@@ -373,7 +426,7 @@ class RKFLoader:
                 idTS = idState
 
                 # We only accept complete TSs
-                if( reactants[idTS] == 0 or products[idTS] == 0 ):
+                if( reactants[idTS] == -1 or products[idTS] == -1 ):
                     continue
 
                 # Locates the reactant and product
@@ -400,7 +453,7 @@ class RKFLoader:
                                            neighboring=cluster_data['neighboring'],
                                            species=cluster_data['species'],
                                            multiplicity=getMultiplicity(cluster_data),
-                                           cluster_energy=state2Energy[idReactant]-energyReference )
+                                           energy=getFormationEnergy(idReactant) )
 
                 entityNumberReactant = entityNumber
 
@@ -414,7 +467,7 @@ class RKFLoader:
                                           neighboring=cluster_data['neighboring'],
                                           species=cluster_data['species'],
                                           multiplicity=getMultiplicity(cluster_data),
-                                          cluster_energy=state2Energy[idReactant]-energyReference )
+                                          energy=getFormationEnergy(idReactant) )
 
                 entityNumberProduct = entityNumber
 
@@ -424,7 +477,7 @@ class RKFLoader:
                 entityNumberProduct = entityNumberProduct if entityNumberProduct.count(-1) != len(entityNumberProduct) else None
                 activationEnergy = state2Energy[idTS]-state2Energy[idReactant]
 
-                pe_ratio = prefactorR/prefactorP
+                pe_ratio = prefactorR/max(1e-7,prefactorP)
                 reversible = True if pe_ratio > 1e-6 else False
 
                 reaction = ElementaryReaction( site_types=site_types,
@@ -469,17 +522,17 @@ class RKFLoader:
                                         neighboring=cluster_data['neighboring'],
                                         species=cluster_data['species'],
                                         multiplicity=getMultiplicity(cluster_data),
-                                        cluster_energy=state2Energy[idState]-energyReference )
+                                        energy=getFormationEnergy(idState) )
 
                 #--------------------------------------------------------------------
                 # Fragmented State
-                speciesNames = [ "*" for f in cluster_data['site_types'] ]
+                speciesFState = SpeciesList( [ Species("*") for f in cluster_data['site_types'] ] )
                 for idFragment in composition:
                     if( fragmentsRegions[idFragment] == "active" ):
                         mol = results.get_molecule("Molecule", file=fragmentsFileNames[idFragment])
-                        speciesNames.append( mol.get_formula() )
+                        amsResults = results.read_rkf_section("AMSResults", file=fragmentsFileNames[idFragment])
 
-                speciesFState = SpeciesList( [ Species(f) for f in speciesNames ] )
+                        speciesFState.append( Species( mol.get_formula(), gas_energy=getGasFormationEnergy( mol, amsResults["Energy"]/eV ) ) )
 
                 #--------------------------------------------------------------------
                 # Reaction
@@ -536,6 +589,9 @@ class RKFLoader:
 
             neighboring_structure[i] = [first,second]
 
+        if( None in neighboring_structure ):
+            raise NameError("Neighboring structure incomplete")
+
         # Here we omit the z-axis. In the future, we should make a 2D projection of
         # the 3D lattice instead. This is necessary to be able to study adsorption on nanoclusters.
         self.lattice = Lattice( cell_vectors=[ [v[0],v[1]] for v in latticeVectors[0:2] ],
@@ -560,15 +616,16 @@ class RKFLoader:
 
 
     @staticmethod
-    def merge( rkf_loaders ):
+    def merge( rkf_loaders, bs_precision=0.5 ):
         """
         Merges a list of rkf_loader into a single one
 
         *   ``rkf_loaders`` -- List of rkf_loader items to merge
         """
+
         final_loader = RKFLoader()
 
-        for loader in rkf_loaders:
+        for i,loader in enumerate(rkf_loaders):
             for cluster in loader.clusterExpansion:
                 final_loader.clusterExpansion.append( cluster )
 
@@ -578,17 +635,7 @@ class RKFLoader:
             if final_loader.lattice is None:
                 final_loader.lattice = loader.lattice
             else:
-                final_loader.lattice.extend( loader.lattice )
-
-            #firstTime = False
-            #for lattice in loader.lattice:
-                #if firstTime:
-                    #final_loader.cell_vectors
-
-        #self.cell_vectors = None
-        #self.site_types = None
-        #self.site_coordinates = None
-        #self.nearest_neighbors = None
+                final_loader.lattice.extend( loader.lattice, precision=bs_precision )
 
         return final_loader
 

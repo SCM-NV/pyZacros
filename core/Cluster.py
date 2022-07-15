@@ -7,12 +7,12 @@ class Cluster:
     """
     Creates a new Cluster object. As in Zacros, each cluster is represented as a graph pattern, consisting of a collection of connected sites onto which surface species can bind. This pattern involves multi/mono-dentate species bound to neighboring sites of different types.
 
-    *   ``species`` -- List of species bound to the sites, e.g. ``[ Species("H*",1), Species("H*",1) ]``
+    *   ``species`` -- List of species bound to the sites (gas species are ignored) e.g. ``[ Species("H*",1), Species("H*",1) ]``
     *   ``site_types`` -- Specifies the name of the sites in the graph pattern representing the cluster. Notice that the order is essential and it should agree with the species option, e.g. ``['fcc','hcp']``.
     *   ``entity_number`` -- List of the molecular entities ids bound to each site. Notice that the order is essential and should agree with the site_types option. For example, if a bidentate species is bound to sites 1 and 2 ( ``species=[ Species("H**",2), Species("H**",2) ]`` ), both of these sites will have the same entity numbers, i.e. ``entity_number=[0,0]``. By default, the list of entity numbers is created by assuming that species with the same symbol belong to the same entity.
     *   ``neighboring`` -- Specifies the neighboring between sites, if more than one sites appear in the graph pattern, e.g. [ (0,1) ]
     *   ``multiplicity`` -- The multiplicity of the pattern, namely the number of times that the exact same pattern will be counted for a given lattice configuration.
-    *   ``cluster_energy`` -- The energy contribution of the pattern in eV.
+    *   ``energy`` -- The energy contribution of the pattern in eV.
     *   ``label`` -- If None, a unique label is generated based on its composition.
     """
 
@@ -21,12 +21,12 @@ class Cluster:
                  entity_number = None,
                  neighboring = None,
                  multiplicity = 1,
-                 cluster_energy = 0.000,
+                 energy = 0.000,
                  label = None):
         """
         Creates a new Cluster object
         """
-        self.species = species                        # e.g. [ Species("H*",1), Species("H*",1) ]
+        self.species = species  # e.g. [ Species("H*",1), Species("H*",1) ]
         self.sites = len([ sp for sp in species if sp == Species.UNSPECIFIED or sp.is_adsorbed() ])
 
         if( site_types is not None ):
@@ -41,7 +41,7 @@ class Cluster:
 
         self.neighboring = neighboring                # e.g. [ (0,1) ]
         self.multiplicity = multiplicity              # e.g. 2
-        self.cluster_energy = cluster_energy          # Units eV
+        self.energy = energy                          # Units eV
 
         self.entity_number = entity_number
         if( entity_number is None ): self.entity_number = SpeciesList.default_entity_numbers( self.sites, self.species )
@@ -57,10 +57,19 @@ class Cluster:
         self.__updateLabel()
 
         self.__mass = 0.0
+        self.__composition = {}
 
         for item in species:
             if( item != Species.UNSPECIFIED ):
                 self.__mass += item.mass()
+            else:
+                continue
+
+            for symbol,n in item.composition().items():
+                if( not symbol in self.__composition ):
+                    self.__composition[symbol] = n
+                else:
+                    self.__composition[symbol] += n
 
 
     def __len__(self):
@@ -184,10 +193,17 @@ class Cluster:
 
             output += "  graph_multiplicity "+str(self.multiplicity)+"\n"
 
-        output += "  cluster_eng "+("%12.5e"%self.cluster_energy)+"\n"
+        output += "  cluster_eng "+("%12.5e"%self.energy)+"\n"
         output += "end_cluster"
 
         return output
+
+
+    def composition(self):
+        """
+        Returns a dictionary containing the number of atoms of each kind.
+        """
+        return self.__composition
 
 
     def mass(self):
