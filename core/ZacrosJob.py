@@ -659,7 +659,7 @@ class ZacrosJob( scm.plams.SingleJob ):
                         "site_types" : lambda sv: parameters.setdefault("site_types", process_site_types(sv)),
                         "graph_multiplicity" : lambda sv: parameters.setdefault("multiplicity", int(sv[0])),
                         "cluster_eng" : lambda sv: parameters.setdefault("energy", float(sv[0])),
-                        "neighboring" : lambda sv: parameters.setdefault("neighboring", process_neighboring(sv))
+                        "neighboring" : lambda sv: parameters.setdefault("neighboring", process_neighboring(sv)),
                         "variant" : lambda sv: parameters.setdefault("variant", process_variant(sv))
                     }
                     cases.get( tokens[0], lambda sv: None )( tokens[1:] )
