@@ -1,5 +1,7 @@
 """Module containing the ZacrosMultiJob class."""
 
+import os
+import shutil
 import numpy
 from collections import OrderedDict
 
@@ -64,6 +66,7 @@ class ZacrosMultiJob( scm.plams.MultiJob ):
     *   ``restart`` -- ZacrosMultiJob object from which the calculation will be restarted
     """
 
+    _command = os.environ["AMSBIN"]+'/zacros' if 'AMSBIN' in os.environ else 'zacros.x'
     _result_type = ZacrosMultiResults
 
     class Parameter:
@@ -86,24 +89,39 @@ class ZacrosMultiJob( scm.plams.MultiJob ):
                 self.kind = ZacrosMultiJob.Parameter.DEPENDENT
 
 
-    def __init__(self, settings, lattice, mechanism, cluster_expansion, initial_state=None, restart=None, parameters=None, **kwargs):
+    def __init__(self, lattice, mechanism, cluster_expansion, initial_state=None, restart=None, parameters=None, **kwargs):
         scm.plams.MultiJob.__init__(self, children=OrderedDict(), **kwargs)
-
-        self._indices = None
-        self._parameters_values = None
 
         if parameters is None or len(parameters) == 0:
             msg  = "\n### ERROR ### ZacrosMultiJob.__init__.\n"
             msg += "              Parameter 'parameters' is required.\n"
             raise Exception(msg)
 
-        independent_params = []
         for name,item in parameters.items():
             if type(item) is not ZacrosMultiJob.Parameter:
                 msg  = "\n### ERROR ### ZacrosMultiJob.__init__.\n"
                 msg += "              Parameter 'parameters' should be a list of ZacrosMultiJob.Parameter objects.\n"
                 raise Exception(msg)
 
+        self._lattice = lattice
+        self._mechanism = mechanism
+        self._cluster_expansion = cluster_expansion
+        self._initial_state = initial_state
+        self._restart = restart
+        self._parameters = parameters
+        self._indices = None
+        self._parameters_values = None
+
+
+    def prerun(self):
+
+        path = shutil.which(self._command)
+        if( path is None ):
+            self._finalize()
+            raise ZacrosExecutableNotFoundError( self._command )
+
+        independent_params = []
+        for name,item in self._parameters.items():
             if item.kind == ZacrosMultiJob.Parameter.INDEPENDENT:
                 independent_params.append( item.values )
 
@@ -121,23 +139,24 @@ class ZacrosMultiJob( scm.plams.MultiJob ):
         self._parameters_values = {}
 
         for idx in self._indices:
-            settings_i = settings.copy()
+            settings_i = self.settings.copy()
 
             params = {}
-            for i,(name,item) in enumerate(parameters.items()):
+            for i,(name,item) in enumerate(self._parameters.items()):
                 if item.kind == ZacrosMultiJob.Parameter.INDEPENDENT:
                     value = mesh[i][idx]
                     eval('settings_i'+name2dict(item.name_in_settings).replace('$var_value',str(value)))
                     params[name] = value
 
-            for i,(name,item) in enumerate(parameters.items()):
+            for i,(name,item) in enumerate(self._parameters.items()):
                 if item.kind == ZacrosMultiJob.Parameter.DEPENDENT:
                     value = item.values(params)
                     eval('settings_i'+name2dict(item.name_in_settings).replace('$var_value',str(value)))
                     params[name] = value
 
-            self.children[idx] = ZacrosJob(settings=settings_i, lattice=lattice, mechanism=mechanism, \
-                                            cluster_expansion=cluster_expansion, initial_state=initial_state, restart=restart)
+            self.children[idx] = ZacrosJob(settings=settings_i, lattice=self._lattice, mechanism=self._mechanism, \
+                                            cluster_expansion=self._cluster_expansion, initial_state=self._initial_state, \
+                                            restart=self._restart)
 
             self._parameters_values[idx] = params
 

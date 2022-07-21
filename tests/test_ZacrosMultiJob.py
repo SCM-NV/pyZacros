@@ -2,9 +2,10 @@ import numpy
 import multiprocessing
 import scm.plams
 
-import pyzacros as pz
-from pyzacros.utils.compareReports import compare
-
+#import pyzacros as pz
+#from pyzacros.utils.compareReports import compare
+import scm.pyzacros as pz
+from scm.pyzacros.utils.compareReports import compare
 
 def test_ZacrosMultiJob():
     """Test of the Mechanism class."""
@@ -69,7 +70,7 @@ def test_ZacrosMultiJob():
     #---------------------------------------------
     # Calculation Settings
     #---------------------------------------------
-    scm.plams.init()
+    scm.plams.init(folder='test_ZacrosMultiJob')
 
     # Run as many job simultaneously as there are cpu on the system
     maxjobs = multiprocessing.cpu_count()
@@ -219,3 +220,5 @@ cond     x_CO       ac_O      ac_CO    TOF_CO2
     plt.text(0.37, 1.5, 'CO$_2$', fontsize=18, color="red")
 
     plt.pause(2)
+
+test_ZacrosMultiJob()
