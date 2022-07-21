@@ -496,7 +496,7 @@ class RKFLoader:
 
         # Loop over the Fragmented states to find the species and reactions
         for idFState in range(nFStates):
-            energy = fStatesEnergy[idFState]
+            energy = fStatesEnergy[idFState]/eV
             nFragments = fStatesNFragments[idFState]
             composition = fStatesComposition[idFState]
 
@@ -536,21 +536,21 @@ class RKFLoader:
 
                 #--------------------------------------------------------------------
                 # Reaction
-                activationEnergy = 0.0 #TODO Here we are assuming that there is no a TS between the fragmented state and the state.
+                # X_gas --> X*
+                #TODO Here we are assuming that there is no a TS between the fragmented state and the state.
 
-                # X_gas <--> X*
                 pe_ratio = prefactorAdsorption/prefactorDesorption
-                reversible = True if pe_ratio > 1e-6 else False
+                activationEnergy = 0.0 if state2Energy[idState]<energy else state2Energy[idState]-energy
 
                 reaction = ElementaryReaction( site_types=cluster_data['site_types'],
-                                               final_entity_number=cluster_data['entity_number'],
-                                               neighboring=cluster_data['neighboring'],
-                                               initial=speciesFState,
-                                               final=cluster_data['species'],
-                                               reversible=reversible,
-                                               pre_expon=prefactorAdsorption,
-                                               pe_ratio=pe_ratio,
-                                               activation_energy=activationEnergy )
+                                            final_entity_number=cluster_data['entity_number'],
+                                            neighboring=cluster_data['neighboring'],
+                                            initial=speciesFState,
+                                            final=cluster_data['species'],
+                                            reversible=True,
+                                            pre_expon=prefactorAdsorption,
+                                            pe_ratio=pe_ratio,
+                                            activation_energy=activationEnergy )
 
                 self.clusterExpansion.extend( [clusterState] )
                 self.mechanism.append( reaction )

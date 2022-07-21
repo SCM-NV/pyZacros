@@ -25,8 +25,8 @@ print(lat)
 lat.plot()
 
 # Clusters
-CO_p = pz.Cluster( species=[CO_s], cluster_energy=-1.3 )
-O_p = pz.Cluster( species=[O_s], cluster_energy=-2.3 )
+CO_p = pz.Cluster( species=[CO_s], energy=-1.3 )
+O_p = pz.Cluster( species=[O_s], energy=-2.3 )
 print(CO_p)
 
 # Cluster Expansion

@@ -24,7 +24,7 @@ latt = pz.Lattice( lattice_type=pz.Lattice.HEXAGONAL, lattice_constant=1.0, repe
 #---------------------------------------------
 # Clusters & Cluster expansion
 #---------------------------------------------
-empty_point = pz.Cluster( species=[pz.Species.UNSPECIFIED], cluster_energy=0.0, label="Empty")
+empty_point = pz.Cluster( species=[pz.Species.UNSPECIFIED], energy=0.0, label="Empty")
 myClusterExpansion = pz.ClusterExpansion( [empty_point] )
 
 #---------------------------------------------

@@ -191,7 +191,7 @@ reversible_step O*_1-fcc,*_2-hcp<-->*_1-fcc,O*_2-hcp;(0,1)
   activ_eng  7.00299e-01
 end_reversible_step
 
-step *-fcc:O-->O*-fcc
+reversible_step O*-fcc<-->*-fcc:O
   gas_reacs_prods O -1
   sites 1
   initial
@@ -200,10 +200,11 @@ step *-fcc:O-->O*-fcc
     1 O* 1
   site_types fcc
   pre_expon  1.06511e+07
+  pe_ratio  4.12763e-08
   activ_eng  0.00000e+00
-end_step
+end_reversible_step
 
-step *-hcp:O-->O*-hcp
+reversible_step O*-hcp<-->*-hcp:O
   gas_reacs_prods O -1
   sites 1
   initial
@@ -212,8 +213,9 @@ step *-hcp:O-->O*-hcp
     1 O* 1
   site_types hcp
   pre_expon  1.06511e+07
+  pe_ratio  4.60157e-08
   activ_eng  0.00000e+00
-end_step
+end_reversible_step
 
 reversible_step CO*_1-hcp,*_2-br<-->*_1-hcp,CO*_2-br;(0,1)
   sites 2
@@ -245,7 +247,7 @@ reversible_step CO*_1-fcc,*_2-br<-->*_1-fcc,CO*_2-br;(0,1)
   activ_eng  7.94883e-01
 end_reversible_step
 
-step *-fcc:CO-->CO*-fcc
+reversible_step CO*-fcc<-->*-fcc:CO
   gas_reacs_prods CO -1
   sites 1
   initial
@@ -254,10 +256,11 @@ step *-fcc:CO-->CO*-fcc
     1 CO* 1
   site_types fcc
   pre_expon  8.05092e+06
+  pe_ratio  1.23247e-24
   activ_eng  0.00000e+00
-end_step
+end_reversible_step
 
-step *-hcp:CO-->CO*-hcp
+reversible_step CO*-hcp<-->*-hcp:CO
   gas_reacs_prods CO -1
   sites 1
   initial
@@ -266,10 +269,11 @@ step *-hcp:CO-->CO*-hcp
     1 CO* 1
   site_types hcp
   pre_expon  8.05092e+06
+  pe_ratio  1.24673e-24
   activ_eng  0.00000e+00
-end_step
+end_reversible_step
 
-step *-br:CO-->CO*-br
+reversible_step CO*-br<-->*-br:CO
   gas_reacs_prods CO -1
   sites 1
   initial
@@ -278,8 +282,9 @@ step *-br:CO-->CO*-br
     1 CO* 1
   site_types br
   pre_expon  8.05092e+06
+  pe_ratio  8.81691e-24
   activ_eng  0.00000e+00
-end_step
+end_reversible_step
 
 end_mechanism
 

@@ -25,8 +25,8 @@ lattice = pz.Lattice( lattice_type=pz.Lattice.RECTANGULAR, lattice_constant=1.0,
 #---------------------------------------------
 # Clusters:
 #---------------------------------------------
-CO_point = pz.Cluster(species=[CO_ads], cluster_energy=-1.3)
-O_point = pz.Cluster(species=[O_ads], cluster_energy=-2.3)
+CO_point = pz.Cluster(species=[CO_ads], energy=-1.3)
+O_point = pz.Cluster(species=[O_ads], energy=-2.3)
 
 cluster_expansion = [CO_point, O_point]
 
@@ -103,32 +103,27 @@ for x in x_CO:
 #---------------------------------------------
 # Getting the results
 #---------------------------------------------
-cf_O = []
-cf_CO = []
+ac_O = []
+ac_CO = []
 TOF_CO2 = []
 
 for i,x in enumerate(x_CO):
    if( results[i].ok() ):
-      acf = { "O*":0.0, "CO*":0.0 }
-      for lattice_state in results[i].lattice_states(last=5):
-         fractions = lattice_state.coverage_fractions()
-         acf["O*"] += fractions["O*"]/5
-         acf["CO*"] += fractions["CO*"]/5
+      ac = results[i].average_coverage( last=5 )
+      TOFs,_,_ = results[i].turnover_frequency()
 
-      TOFs,_,_ = results[i].get_TOFs()
-
-      cf_O.append( acf["O*"] )
-      cf_CO.append( acf["CO*"] )
+      ac_O.append( ac["O*"] )
+      ac_CO.append( ac["CO*"] )
       TOF_CO2.append( TOFs["CO2"] )
 
 scm.pyzacros.finish()
 
 print("----------------------------------------------")
-print("%4s"%"cond", "%8s"%"x_CO", "%10s"%"acf_O", "%10s"%"acf_CO", "%10s"%"TOF_CO2")
+print("%4s"%"cond", "%8s"%"x_CO", "%10s"%"ac_O", "%10s"%"ac_CO", "%10s"%"TOF_CO2")
 print("----------------------------------------------")
 
 for i,x in enumerate(x_CO):
-   print("%4d"%i, "%8.2f"%x_CO[i], "%10.6f"%cf_O[i], "%10.6f"%cf_CO[i], "%10.6f"%TOF_CO2[i])
+   print("%4d"%i, "%8.2f"%x_CO[i], "%10.6f"%ac_O[i], "%10.6f"%ac_CO[i], "%10.6f"%TOF_CO2[i])
 
 #---------------------------------------------
 # Plotting the results
@@ -145,8 +140,8 @@ fig = plt.figure()
 ax = plt.axes()
 ax.set_xlabel('Partial Pressure CO', fontsize=14)
 ax.set_ylabel("Coverage Fraction (%)", color="blue", fontsize=14)
-ax.plot(x_CO, cf_O, color="blue", linestyle="-.", lw=2, zorder=1)
-ax.plot(x_CO, cf_CO, color="blue", linestyle="-", lw=2, zorder=2)
+ax.plot(x_CO, ac_O, color="blue", linestyle="-.", lw=2, zorder=1)
+ax.plot(x_CO, ac_CO, color="blue", linestyle="-", lw=2, zorder=2)
 plt.text(0.3, 0.9, 'O', fontsize=18, color="blue")
 plt.text(0.7, 0.9, 'CO', fontsize=18, color="blue")
 
@@ -168,3 +163,4 @@ results[34].plot_molecule_numbers( ["CO2"], normalize_per_site=True )
 # Molecule numbers for x_CO=0.54 and CO=0.55. First Derivative
 results[33].plot_molecule_numbers( ["CO2"], normalize_per_site=True, derivative=True )
 results[34].plot_molecule_numbers( ["CO2"], normalize_per_site=True, derivative=True )
+

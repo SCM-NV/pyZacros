@@ -353,6 +353,26 @@ class ZacrosResults( scm.plams.Results ):
         return self.lattice_states(last=1)[0]
 
 
+    def average_coverage(self, last=5):
+        """
+        Returns a dictionary with the average coverage fractions using the last ``last`` lattice states, e.g., ``{ "CO*":0.32, "O*":0.45 }``
+        """
+
+        surface_species_names = self.surface_species_names()
+
+        acf = {}
+        for sspecies in surface_species_names:
+            acf[sspecies] = 0.0
+
+        for lattice_state in self.lattice_states(last=last):
+            fractions = lattice_state.coverage_fractions()
+
+            for sspecies in surface_species_names:
+                acf[sspecies] += fractions[sspecies]/last
+
+        return acf
+
+
     def plot_lattice_states(self, data, pause=-1, show=True, ax=None, close=False, time_perframe=0.5, file_name=None):
         """
         Uses matplotlib to visualize the lattice states as an animation
@@ -727,7 +747,8 @@ class ZacrosResults( scm.plams.Results ):
 
 
     #--------------------------------------------------------------
-    # Function to compute the rate of production
+    # Function to compute the rate of production using the
+    # Batch-Means-Stopping method.
     # Original author: Mauro Bracconi (mauro.bracconi@polimi.it)
     # Evaluation of the steady state is inspired by this publication:
     #   Hashemi et al., J.Chem. Phys. 144, 074104 (2016)
@@ -735,49 +756,37 @@ class ZacrosResults( scm.plams.Results ):
     @staticmethod
     def __compute_rate( t_vect, spec, n_sites, n_batch=20, confidence=0.99 ):
 
-        def time_search(t,tvec):
-            ind_geq = 0
-            while tvec[ind_geq] < t:
-                ind_geq += 1
-
-            ind_leq = len( tvec ) - 1
-            while ind_leq>0 and tvec[ind_leq] > t:
-                ind_leq -= 1
-            low_frac = 1.0
-            if not (ind_geq == ind_leq):
-                low_frac = (tvec[ind_geq] - t) / (tvec[ind_geq] - tvec[ind_leq])
-            return [ (ind_leq,ind_geq), (low_frac,1-low_frac)]
-
+        # Batch means stopping implementation
+        n_batch = min( len(t_vect), int(len(t_vect)/n_batch) )
         t_vect = numpy.array(t_vect)
         prod_mol = numpy.array(spec)/n_sites
 
-        n_batch = min( len(t_vect), int(len(t_vect)/n_batch) )
-        dt_batch = t_vect[-1]/n_batch
-        bin_edge = numpy.linspace(0,t_vect[-1],n_batch+1)
+        # Define batch length
+        lt = int(len(t_vect)/(n_batch))
 
-        rate = numpy.zeros( n_batch )
-
+        # Compute TOF in each batch
+        ratet = numpy.empty(n_batch)
         for i in range(n_batch):
-            idb_s = time_search( bin_edge[i], t_vect )
-            idb_e = time_search( bin_edge[i+1], t_vect )
+            if ( i != n_batch-1 ) :
+                ratet[i] = numpy.polyfit(t_vect[lt*i:lt*(i+1)],prod_mol[lt*i:lt*(i+1)],1)[0]
+            else:
+                ratet[i] = numpy.polyfit(t_vect[lt*i:-1],prod_mol[lt*i:-1],1)[0]
 
-            pp_s = idb_s[1][0] * prod_mol[idb_s[0][0]] + idb_s[1][1] * prod_mol[idb_s[0][1]]
-            pp_e = idb_e[1][0] * prod_mol[idb_e[0][0]] + idb_e[1][1] * prod_mol[idb_e[0][1]]
-            rate[i] = (pp_e-pp_s)/dt_batch
+        # Exclude first batch
+        rate = ratet[1:]
 
-        rate = rate[1:]
+        # Compute average and CI
         rate_av, se = numpy.mean(rate), scipy.stats.sem(rate)
+        rate_CI = se * scipy.stats.t._ppf( (1.0+confidence)/2.0, len(rate) - 1.0 )
+        ratio = rate_CI/(rate_av+1e-8)
 
-        # Mean confidence interval
-        rate_CI = se * scipy.stats.t._ppf((1+confidence)/2.0, n_batch - 1)
-
-        if ( rate_CI/(rate_av+1e-8)<1.0-confidence ):
-            return ( rate_av,rate_CI,rate_CI/(rate_av+1e-8), True )
+        if ( ratio<1.0-confidence ):
+            return ( rate_av,rate_CI,ratio, True )
         else:
-            return ( rate_av,rate_CI,rate_CI/(rate_av+1e-8), False )
+            return ( rate_av,rate_CI,ratio, False )
 
 
-    def get_TOFs(self, nbatch=20, confidence=0.99):
+    def turnover_frequency(self, nbatch=20, confidence=0.99):
         """
         Returns the TOF (mol/sec/site) calculated by the batch-means stopping method. See Hashemi et al., J.Chem. Phys. 144, 074104 (2016)
 
