@@ -70,11 +70,11 @@ def test_ZacrosMultiJob():
     #---------------------------------------------
     scm.plams.init(folder='test_ZacrosMultiJob')
 
-    # Run as many job simultaneously as there are cpu on the system
-    maxjobs = multiprocessing.cpu_count()
-    scm.plams.config.default_jobrunner = scm.plams.JobRunner(parallel=True, maxjobs=maxjobs)
-    scm.plams.config.job.runscript.nproc = 1
-    print('Running up to {} jobs in parallel simultaneously'.format(maxjobs))
+    ## Run as many job simultaneously as there are cpu on the system
+    #maxjobs = multiprocessing.cpu_count()
+    #scm.plams.config.default_jobrunner = scm.plams.JobRunner(parallel=True, maxjobs=maxjobs)
+    #scm.plams.config.job.runscript.nproc = 1
+    #print('Running up to {} jobs in parallel simultaneously'.format(maxjobs))
 
     # Settings:
     sett = pz.Settings()
