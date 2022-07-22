@@ -89,26 +89,30 @@ class ZacrosMultiJob( scm.plams.MultiJob ):
                 self.kind = ZacrosMultiJob.Parameter.DEPENDENT
 
 
-    def __init__(self, lattice, mechanism, cluster_expansion, initial_state=None, restart=None, parameters=None, **kwargs):
+    def __init__(self, lattice, mechanism, cluster_expansion, initial_state=None,
+                    restart=None, generator=None, generator_parameters=None, **kwargs):
         scm.plams.MultiJob.__init__(self, children=OrderedDict(), **kwargs)
 
-        if parameters is None or len(parameters) == 0:
-            msg  = "\n### ERROR ### ZacrosMultiJob.__init__.\n"
-            msg += "              Parameter 'parameters' is required.\n"
-            raise Exception(msg)
-
-        for name,item in parameters.items():
-            if type(item) is not ZacrosMultiJob.Parameter:
+        if generator is not None:
+            if len(generator_parameters) == 0:
                 msg  = "\n### ERROR ### ZacrosMultiJob.__init__.\n"
-                msg += "              Parameter 'parameters' should be a list of ZacrosMultiJob.Parameter objects.\n"
+                msg += "              Parameter 'generator_parameters' is required if 'generator' different than None\n"
                 raise Exception(msg)
+
+            for name,item in generator_parameters.items():
+                if type(item) is not ZacrosMultiJob.Parameter:
+                    msg  = "\n### ERROR ### ZacrosMultiJob.__init__.\n"
+                    msg += "              Parameter 'generator_parameters' should be a list of ZacrosMultiJob.Parameter objects.\n"
+                    raise Exception(msg)
 
         self._lattice = lattice
         self._mechanism = mechanism
         self._cluster_expansion = cluster_expansion
         self._initial_state = initial_state
         self._restart = restart
-        self._parameters = parameters
+        self._generator = generator
+        self._generator_parameters = generator_parameters
+
         self._indices = None
         self._parameters_values = None
 
@@ -120,8 +124,20 @@ class ZacrosMultiJob( scm.plams.MultiJob ):
             self._finalize()
             raise ZacrosExecutableNotFoundError( self._command )
 
+        if self._generator_parameters is not None:
+            self._indices,self._parameters_values,settings_list = self._generator( self.settings, self._generator_parameters )
+
+            for idx,settings_i in settings_list.items():
+                self.children[idx] = ZacrosJob(settings=settings_i, lattice=self._lattice, mechanism=self._mechanism, \
+                                                cluster_expansion=self._cluster_expansion, initial_state=self._initial_state, \
+                                                restart=self._restart)
+
+
+    @staticmethod
+    def meshGenerator( settings, parameters ):
+
         independent_params = []
-        for name,item in self._parameters.items():
+        for name,item in parameters.items():
             if item.kind == ZacrosMultiJob.Parameter.INDEPENDENT:
                 independent_params.append( item.values )
 
@@ -135,28 +151,27 @@ class ZacrosMultiJob( scm.plams.MultiJob ):
                     output += "[\'"+token+"\']"
             return output+".__setitem__(\'"+tokens[-1]+"\',$var_value)"
 
-        self._indices = [ tuple(idx) for idx in numpy.ndindex(mesh[0].shape) ]
-        self._parameters_values = {}
+        indices = [ tuple(idx) for idx in numpy.ndindex(mesh[0].shape) ]
+        parameters_values = {}
+        settings_list = {}
 
-        for idx in self._indices:
-            settings_i = self.settings.copy()
+        for idx in indices:
+            settings_i = settings.copy()
 
             params = {}
-            for i,(name,item) in enumerate(self._parameters.items()):
+            for i,(name,item) in enumerate(parameters.items()):
                 if item.kind == ZacrosMultiJob.Parameter.INDEPENDENT:
                     value = mesh[i][idx]
                     eval('settings_i'+name2dict(item.name_in_settings).replace('$var_value',str(value)))
                     params[name] = value
 
-            for i,(name,item) in enumerate(self._parameters.items()):
+            for i,(name,item) in enumerate(parameters.items()):
                 if item.kind == ZacrosMultiJob.Parameter.DEPENDENT:
                     value = item.values(params)
                     eval('settings_i'+name2dict(item.name_in_settings).replace('$var_value',str(value)))
                     params[name] = value
 
-            self.children[idx] = ZacrosJob(settings=settings_i, lattice=self._lattice, mechanism=self._mechanism, \
-                                            cluster_expansion=self._cluster_expansion, initial_state=self._initial_state, \
-                                            restart=self._restart)
+            parameters_values[idx] = params
+            settings_list[idx] = settings_i
 
-            self._parameters_values[idx] = params
-
+        return indices,parameters_values,settings_list

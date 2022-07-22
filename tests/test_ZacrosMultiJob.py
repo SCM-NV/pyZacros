@@ -90,10 +90,11 @@ def test_ZacrosMultiJob():
 
     try:
         job = pz.ZacrosMultiJob( settings=sett,
-                                    lattice=lattice,
-                                    mechanism=mechanism,
-                                    cluster_expansion=cluster_expansion,
-                                    parameters=parameters )
+                                 lattice=lattice,
+                                 mechanism=mechanism,
+                                 cluster_expansion=cluster_expansion,
+                                 generator=pz.ZacrosMultiJob.meshGenerator,
+                                 generator_parameters=parameters )
 
         results = job.run()
 
