@@ -81,20 +81,28 @@ def test_ZacrosMultiJob():
     sett.random_seed = 953129
     sett.temperature = 500.0
     sett.pressure = 1.0
-    sett.snapshots = ('time', 0.5)
+    sett.snapshots = ('time', 2.0)
     sett.species_numbers = ('time', 0.1)
     sett.max_time = 10.0
 
-    parameters = { 'x_CO':pz.ZacrosMultiJob.Parameter('molar_fraction.CO', numpy.arange(0.2, 0.8, 0.01)),
+    parameters = { 'x_CO':pz.ZacrosMultiJob.Parameter('molar_fraction.CO', numpy.arange(0.2, 0.8, 0.1)),
                    'x_O2':pz.ZacrosMultiJob.Parameter('molar_fraction.O2', lambda params: 1.0-params['x_CO']) }
 
-    job = pz.ZacrosMultiJob( settings=sett,
-                                lattice=lattice,
-                                mechanism=mechanism,
-                                cluster_expansion=cluster_expansion,
-                                parameters=parameters )
+    try:
+        job = pz.ZacrosMultiJob( settings=sett,
+                                    lattice=lattice,
+                                    mechanism=mechanism,
+                                    cluster_expansion=cluster_expansion,
+                                    parameters=parameters )
 
-    results = job.run()
+        results = job.run()
+
+    except pz.ZacrosExecutableNotFoundError:
+        print( "Warning: The calculation FAILED because the zacros executable is not available!" )
+        print( "         For testing purposes, now we load precalculated results.")
+
+        job = scm.plams.load( 'tests/test_ZacrosMultiJob.idata/plamsjob/plamsjob.dill' )
+        results = job.results
 
     output = ""
 
@@ -105,7 +113,7 @@ def test_ZacrosMultiJob():
         TOF_CO2 = []
 
         results_dict = results.turnover_frequency()
-        results_dict = results.average_coverage( update=results_dict )
+        results_dict = results.average_coverage( last=3, update=results_dict )
 
         for i in range(len(results_dict)):
             x_CO.append( results_dict[i]['x_CO'] )
@@ -125,69 +133,15 @@ def test_ZacrosMultiJob():
 
     expectedOutput = """\
 ----------------------------------------------
-cond     x_CO       ac_O      ac_CO    TOF_CO2
+cond     x_CO       ac_O      ac_CO   TOF_CO2
 ----------------------------------------------
-   0     0.20   0.998000   0.000000   0.020759
-   1     0.21   0.999520   0.000000   0.014204
-   2     0.22   1.000000   0.000000   0.021340
-   3     0.23   0.998400   0.000000   0.018694
-   4     0.24   0.997360   0.000000   0.028042
-   5     0.25   0.993360   0.000000   0.044783
-   6     0.26   0.998400   0.000000   0.031256
-   7     0.27   0.997280   0.000000   0.045270
-   8     0.28   0.997440   0.000000   0.050511
-   9     0.29   0.993440   0.000080   0.065989
-  10     0.30   0.993120   0.000000   0.075326
-  11     0.31   0.995040   0.000000   0.076805
-  12     0.32   0.991120   0.000000   0.105631
-  13     0.33   0.988640   0.000000   0.105635
-  14     0.34   0.986640   0.000000   0.149911
-  15     0.35   0.974160   0.000080   0.207944
-  16     0.36   0.961360   0.000240   0.238777
-  17     0.37   0.956160   0.000320   0.284597
-  18     0.38   0.933280   0.000400   0.321649
-  19     0.39   0.925680   0.000320   0.439182
-  20     0.40   0.897760   0.000880   0.482301
-  21     0.41   0.862640   0.002160   0.569744
-  22     0.42   0.867040   0.001280   0.669620
-  23     0.43   0.820560   0.001680   0.841014
-  24     0.44   0.815760   0.002160   0.917175
-  25     0.45   0.743920   0.003680   1.199928
-  26     0.46   0.719840   0.006320   1.281847
-  27     0.47   0.653200   0.011520   1.488050
-  28     0.48   0.648240   0.009360   1.705636
-  29     0.49   0.602320   0.016240   1.830680
-  30     0.50   0.561440   0.020480   2.073205
-  31     0.51   0.540320   0.025440   2.222495
-  32     0.52   0.450880   0.057120   2.502978
-  33     0.53   0.396160   0.078080   2.776352
-  34     0.54   0.073440   0.708800   1.922850
-  35     0.55   0.019040   0.896560   1.537623
-  36     0.56   0.000000   0.998720   0.589056
-  37     0.57   0.000000   1.000000   0.159712
-  38     0.58   0.000000   1.000000   0.041097
-  39     0.59   0.000000   1.000000   0.011441
-  40     0.60   0.000000   1.000000   0.012715
-  41     0.61   0.000000   1.000000   0.000994
-  42     0.62   0.000000   1.000000   0.000675
-  43     0.63   0.000000   1.000000   0.000000
-  44     0.64   0.000000   1.000000   0.000000
-  45     0.65   0.000000   1.000000   0.000000
-  46     0.66   0.000000   1.000000   0.000000
-  47     0.67   0.000000   1.000000   0.000000
-  48     0.68   0.000000   1.000000  -0.000000
-  49     0.69   0.000000   1.000000  -0.000000
-  50     0.70   0.000000   1.000000   0.000000
-  51     0.71   0.000000   1.000000   0.000000
-  52     0.72   0.000000   1.000000  -0.000000
-  53     0.73   0.000000   1.000000  -0.000000
-  54     0.74   0.000000   1.000000   0.000000
-  55     0.75   0.000000   1.000000   0.000000
-  56     0.76   0.000000   1.000000   0.000000
-  57     0.77   0.000000   1.000000  -0.000000
-  58     0.78   0.000000   1.000000   0.000000
-  59     0.79   0.000000   1.000000   0.000000
-  60     0.80   0.000000   1.000000  -0.000000\
+   0     0.20   0.997467   0.000000   0.020759
+   1     0.30   0.989600   0.000000   0.075326
+   2     0.40   0.894667   0.000533   0.482301
+   3     0.50   0.554267   0.023867   2.073205
+   4     0.60   0.000000   1.000000   0.012715
+   5     0.70   0.000000   1.000000   0.000000
+   6     0.80   0.000000   1.000000  -0.000000\
 """
 
     assert( compare( output, expectedOutput, rel_error=0.1 ) )
