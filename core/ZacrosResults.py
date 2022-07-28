@@ -33,12 +33,6 @@ class ZacrosResults( scm.plams.Results ):
         'out': 'std.out'}
 
 
-    def ok(self):
-        """Check if the execution of the associated :attr:`job` was successful or not.
-        See :meth:`Job.ok<scm.plams.core.basejob.Job.ok>` for more information."""
-        return self.job.ok()
-
-
     def get_zacros_version(self):
         """
         Return the zacros's version from the 'general_output.txt' file.
@@ -783,10 +777,11 @@ class ZacrosResults( scm.plams.Results ):
         if ( ratio<1.0-confidence ):
             return ( rate_av,rate_CI,ratio, True )
         else:
-            return ( rate_av,rate_CI,ratio, False )
+            #return ( rate_av,rate_CI,ratio, False )
+            return ( rate[-1],rate_CI,ratio, False )
 
 
-    def turnover_frequency(self, nbatch=20, confidence=0.99):
+    def turnover_frequency(self, nbatch=20, confidence=0.99, species_name=None):
         """
         Returns the TOF (mol/sec/site) calculated by the batch-means stopping method. See Hashemi et al., J.Chem. Phys. 144, 074104 (2016)
 
@@ -831,4 +826,7 @@ class ZacrosResults( scm.plams.Results ):
             errors[sn] = ci
             converged[sn] = conv
 
-        return values,errors,converged
+        if species_name is None:
+            return values,errors,converged
+        else:
+            return values[species_name],errors[species_name],converged[species_name]

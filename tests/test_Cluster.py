@@ -1,9 +1,8 @@
 import pyzacros as pz
-from pyzacros.utils.compareReports import compare
+import pyzacros.utils
 
 
 def test_Cluster():
-    """Test of the Cluster class."""
     print( "---------------------------------------------------" )
     print( ">>> Testing Cluster class" )
     print( "---------------------------------------------------" )
@@ -28,7 +27,7 @@ cluster H*_1-f,H*_2-f:(0,1)
   cluster_eng 0.100
 end_cluster\
 """
-    assert( compare( output, expectedOutput, 1e-3 ) )
+    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
 
     cluster = pz.Cluster( site_types=( "f", "f" ),
                             neighboring=[ (0,1) ],
@@ -51,7 +50,7 @@ cluster H2**_1-f,H2**_1-f:(0,1)
   cluster_eng 0.100
 end_cluster\
 """
-    assert( compare( output, expectedOutput, 1e-3 ) )
+    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
 
     cluster = pz.Cluster( site_types=( "f", "g", "h", "i", "j" ),
                             neighboring=[ (0,1), (1,2), (2,3), (3,0), (2,4) ],
@@ -79,7 +78,7 @@ cluster my_weird_cluster
   cluster_eng 0.100
 end_cluster\
 """
-    assert( compare( output, expectedOutput, 1e-3 ) )
+    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
 
     cluster = pz.Cluster( site_types=( "f", "g", "h", "i", "j" ),
                             neighboring=[ (0,1), (1,2), (2,3), (3,0), (2,4) ],
@@ -106,4 +105,4 @@ cluster my_weird_cluster
   cluster_eng 0.100
 end_cluster\
 """
-    assert( compare( output, expectedOutput, 1e-3 ) )
+    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )

@@ -5,9 +5,8 @@ import shutil
 import scm.plams
 
 import pyzacros as pz
-from pyzacros.utils.compareReports import compare
+import pyzacros.utils
 
-RUNDIR=None
 
 def generateAMSResults():
     """Generates of the energy landscape for the O-Pt111 system"""
@@ -72,17 +71,13 @@ def generateAMSResults():
         scm.plams.delete_job( jobO_ads )
         scm.plams.delete_job( jobCO_ads )
     else:
-        jobO_lat = scm.plams.load( RUNDIR+"/tests/test_RKFLoader.data/O-Pt111/O-Pt111.dill" )
-        jobCO_lat = scm.plams.load( RUNDIR+"/tests/test_RKFLoader.data/CO-Pt111/CO-Pt111.dill" )
+        jobO_lat = scm.plams.load( "tests/test_RKFLoader.data/O-Pt111/O-Pt111.dill" )
+        jobCO_lat = scm.plams.load( "tests/test_RKFLoader.data/CO-Pt111/CO-Pt111.dill" )
 
     return jobO_lat.results,jobCO_lat.results
 
 
 def test_RKFLoader():
-    """Test of the Mechanism class loaded from AMS."""
-    global RUNDIR
-    RUNDIR = os.getcwd()
-
     print( "---------------------------------------------------" )
     print( ">>> Testing RKFLoader class" )
     print( "---------------------------------------------------" )
@@ -345,4 +340,4 @@ lattice explicit
   end_lattice_structure
 end_lattice\
 """
-    assert( compare( output, expectedOutput, rel_error=0.1 ) )
+    assert( pz.utils.compare( output, expectedOutput, rel_error=0.1 ) )

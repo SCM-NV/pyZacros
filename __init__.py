@@ -23,7 +23,7 @@ def __autoimport(path, folders):
     return ret
 
 
-__all__ = __autoimport(__path__[0], ['core','utils'])
+__all__ = __autoimport(__path__[0], ['core'])
 
 
 def init(path=None, folder=None, config_settings:Dict=None):

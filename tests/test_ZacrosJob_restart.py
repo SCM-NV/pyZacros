@@ -3,68 +3,16 @@ import os
 import scm.plams
 
 import pyzacros as pz
-from pyzacros.utils.compareReports import compare
+import pyzacros.models
+import pyzacros.utils
 
 
 def test_ZacrosJob_restart():
-    """Test of the ZacrosJob restart mechanism."""
     print( "---------------------------------------------------" )
     print( ">>> Testing ZacrosJob_restart mechanism" )
     print( "---------------------------------------------------" )
 
-    #---------------------------------------------
-    # Species:
-    #---------------------------------------------
-    # Gas-species:
-    CO_gas = pz.Species("CO")
-    O2_gas = pz.Species("O2")
-    CO2_gas = pz.Species("CO2", gas_energy=-2.337)
-
-    # Surface species:
-    s0 = pz.Species("*", 1)      # Empty adsorption site
-    CO_ads = pz.Species("CO*", 1)
-    O_ads = pz.Species("O*", 1)
-
-    #---------------------------------------------
-    # Lattice setup:
-    #---------------------------------------------
-    lattice = pz.Lattice( lattice_type=pz.Lattice.RECTANGULAR, lattice_constant=1.0, repeat_cell=[20,20] )
-
-    #---------------------------------------------
-    # Clusters:
-    #---------------------------------------------
-    CO_point = pz.Cluster(species=[CO_ads], energy=-1.3)
-    O_point = pz.Cluster(species=[O_ads], energy=-2.3)
-
-    cluster_expansion = [CO_point, O_point]
-
-    #---------------------------------------------
-    # Elementary Reactions
-    #---------------------------------------------
-    # CO_adsorption:
-    CO_adsorption = pz.ElementaryReaction( initial=[s0,CO_gas],
-                                           final=[CO_ads],
-                                           reversible=False,
-                                           pre_expon=10.0,
-                                           label="CO_adsorption")
-
-    # O2_adsorption:
-    O2_adsorption = pz.ElementaryReaction( initial=[s0,s0,O2_gas],
-                                           final=[O_ads,O_ads],
-                                           neighboring=[(0, 1)],
-                                           reversible=False,
-                                           pre_expon=2.5,
-                                           label="O2_adsorption")
-
-    # CO_oxidation:
-    CO_oxidation = pz.ElementaryReaction( initial=[CO_ads, O_ads],
-                                          final=[s0, s0, CO2_gas],
-                                          neighboring=[(0, 1)],
-                                          reversible=False,
-                                          pre_expon=1.0e+20,
-                                          label="CO_oxidation")
-
-    mechanism = [CO_adsorption, O2_adsorption, CO_oxidation]
+    zgb = pz.models.ZiffGulariBarshad( repeat_cell=[20,20] )
 
     #---------------------------------------------
     # Calculation Settings
@@ -91,9 +39,9 @@ def test_ZacrosJob_restart():
     # Running the full simulation for 2s
     sett.max_steps = 3225
     job0 = pz.ZacrosJob( settings=sett,
-                        lattice=lattice,
-                        mechanism=mechanism,
-                        cluster_expansion=cluster_expansion )
+                         lattice=zgb.lattice,
+                         mechanism=zgb.mechanism,
+                         cluster_expansion=zgb.cluster_expansion )
 
     try:
         job0.run()
@@ -114,9 +62,9 @@ def test_ZacrosJob_restart():
     # Running the only the first 1s
     sett.max_steps = 2222
     job1 = pz.ZacrosJob( settings=sett,
-                        lattice=lattice,
-                        mechanism=mechanism,
-                        cluster_expansion=cluster_expansion )
+                         lattice=zgb.lattice,
+                         mechanism=zgb.mechanism,
+                         cluster_expansion=zgb.cluster_expansion )
 
     job1.run()
     data = job1.results.provided_quantities()
@@ -127,10 +75,10 @@ def test_ZacrosJob_restart():
     # Resuming the simulation, starting at 1s and finishing at 2s
     sett.restart.max_steps = 3225
     job2 = pz.ZacrosJob( settings=sett,
-                        lattice=lattice,
-                        mechanism=mechanism,
-                        cluster_expansion=cluster_expansion,
-                        restart=job1 )
+                         lattice=zgb.lattice,
+                         mechanism=zgb.mechanism,
+                         cluster_expansion=zgb.cluster_expansion,
+                         restart=job1 )
 
     job2.run()
     data = job2.results.provided_quantities()
@@ -192,7 +140,7 @@ def test_ZacrosJob_restart():
   1.8    1199\
 """
 
-    assert( compare( output, expectedOutput, 1e-3 ) )
+    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
 
     lattice_states0 = job0.results.lattice_states()
     lattice_states2 = job2.results.lattice_states()

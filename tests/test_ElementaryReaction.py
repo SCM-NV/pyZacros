@@ -1,14 +1,13 @@
 import pyzacros as pz
-from pyzacros.utils.compareReports import compare
+import pyzacros.utils
 
 
 def test_ElementaryReaction():
-    """Test of the ElementaryReaction class."""
     print( "---------------------------------------------------" )
     print( ">>> Testing ElementaryReaction class" )
     print( "---------------------------------------------------" )
 
-    s0 = pz.Species( "*", 1 )      # Empty adsorption site
+    s0 = pz.Species( "*", 1 )   # Empty adsorption site
     s1 = pz.Species( "H*", 1 )  # H adsorbed with dentation 1
     s2 = pz.Species( "H2*", 1 ) # H2 adsorbed with dentation 1
 
@@ -40,7 +39,7 @@ reversible_step H2*_1-f,*_2-f<-->H*_1-f,H*_2-f;(0,1)
   activ_eng 0.2
 end_reversible_step\
 """
-    assert( compare( output, expectedOutput, 1e-3 ) )
+    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
 
     s3 = pz.Species( "H2", gas_energy=0.0 ) # H2(gas)
 
@@ -72,4 +71,4 @@ step H*_1-f,H*_2-f-->*_1-f,*_2-f:H2;(0,1)
   activ_eng 0.200
 end_step\
 """
-    assert( compare( output, expectedOutput, 1e-3 ) )
+    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )

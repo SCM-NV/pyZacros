@@ -1,18 +1,16 @@
 import random
 
 import pyzacros as pz
-from pyzacros.utils.compareReports import compare
 
 
 def test_InitialState():
-    """Test of the Lattice class."""
     print("---------------------------------------------------")
     print(">>> Testing InitialState class")
     print("---------------------------------------------------")
 
-    s0 = pz.Species( "*", 1 )   # Empty adsorption site
-    s1 = pz.Species( "H*", 1 )  # H adsorbed with dentation 1
-    s2 = pz.Species( "H2**", 2 ) # H2 adsorbed with dentation 2
+    s0 = pz.Species( "*", 1 )     # Empty adsorption site
+    s1 = pz.Species( "H*", 1 )    # H adsorbed with dentation 1
+    s2 = pz.Species( "H2**", 2 )  # H2 adsorbed with dentation 2
     s3 = pz.Species( "CO3***", 3) # CO3 adsorbed with dentation 3
 
     lattice = pz.Lattice(cell_vectors=[[2.814, 0.000],[1.407, 2.437]],

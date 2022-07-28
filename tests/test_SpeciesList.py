@@ -1,9 +1,8 @@
 import pyzacros as pz
-from pyzacros.utils.compareReports import compare
+import pyzacros.utils
 
 
 def test_SpeciesList():
-    """Test of the SpeciesList class."""
     print( "---------------------------------------------------" )
     print( ">>> Testing SpeciesList class" )
     print( "---------------------------------------------------" )
@@ -38,4 +37,4 @@ n_surf_species 2
 surf_specs_names         H2*       O2*
 surf_specs_dent            1         1\
 """
-    assert( compare( output, expectedOutput, 1e-3 ) )
+    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )

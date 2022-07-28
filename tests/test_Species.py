@@ -2,7 +2,6 @@ import pyzacros as pz
 
 
 def test_Species():
-    """Test of the Species class."""
     print("---------------------------------------------------")
     print(">>> Testing Species class")
     print("---------------------------------------------------")
