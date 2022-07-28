@@ -44,20 +44,20 @@ Floating license: not using directory
  Licensed to: Dr. Nestor Aguirre Castiblanco  / SCM / Amsterdam / NETHERLANDS 2022-01-24 09:33:25
  SCM User ID: u22021
   
- AMS 2022.204  RunTime: Jul21-2022 15:38:08  ShM Nodes: 1  Procs: 4
+ AMS 2022.204  RunTime: Jul28-2022 17:49:01  ShM Nodes: 1  Procs: 4
 
  AMS jobname: CO-Pt111
- AMS jobid  : 1679301309
+ AMS jobid  : 1930016138
 
  Start   directory: /home/aguirre/Develop/pyzacros/test_RKFLoader/CO-Pt111/
  Results directory: /home/aguirre/Develop/pyzacros/test_RKFLoader/CO-Pt111/
- Scratch directory: /scratch/aguirre/amstmp_CO-Pt111_kid0.1679301309/
+ Scratch directory: /scratch/aguirre/amstmp_CO-Pt111_kid0.1930016138/
 
 
- Communication costs MPI_COMM_WORLD:      0.328 usec per message,   0.0097 usec per 8-byte item
- Communication costs for intra-node:      0.492 usec per message,   0.0084 usec per 8-byte item
+ Communication costs MPI_COMM_WORLD:      0.255 usec per message,   0.0045 usec per 8-byte item
+ Communication costs for intra-node:      0.279 usec per message,   0.0052 usec per 8-byte item
 
- RNG seed: 838529535 -1858565486 1019043984 -1672279087 1931115796 -180896519 -1408222131 808315797
+ RNG seed: -252865139 -2027091555 -667591144 199677367 -1238494085 1332179019 -1742974102 1418318600
  MPI rank    0: Number of processors available to this process:      2
  MPI rank    0: Default max number of OpenMP threads:                2
  MPI rank    0: The OMP_NUM_THREADS environment variable is not set!
@@ -58691,6 +58691,6 @@ NORMAL TERMINATION
  RxfConnTableType%bo
  RxfConnTableType%neighb
  RxfConnTableType%bonds
-     Total cpu time:     140.29
-  Total system time:       9.89
- Total elapsed time:     152.45
+     Total cpu time:     144.36
+  Total system time:       9.42
+ Total elapsed time:     156.35

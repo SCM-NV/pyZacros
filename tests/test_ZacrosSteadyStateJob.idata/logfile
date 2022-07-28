@@ -1,63 +1,64 @@
-[27.07|10:55:55] Running PLAMS located in /home/aguirre/Develop/ams.trunk/scripting/scm/plams
-[27.07|10:55:55] Using Python 3.6.9 located in /home/aguirre/.scm/python/AMS2022.2.venv/bin/python
-[27.07|10:55:55] PLAMS defaults were loaded from /home/aguirre/Develop/ams.trunk/scripting/scm/plams/plams_defaults
-[27.07|10:55:55] PLAMS environment initialized
-[27.07|10:55:55] PLAMS working folder: /home/aguirre/Develop/pyzacros/test_ZacrosSteadyStateJob
-[27.07|10:55:55] JOB plamsjob STARTED
-[27.07|10:55:55] Starting plamsjob.prerun()
-[27.07|10:55:55] plamsjob.prerun() finished
-[27.07|10:55:55] JOB plamsjob RUNNING
-[27.07|10:55:55] JOB plamsjob/plamsjob_ss_iter000 STARTED
-[27.07|10:55:55] Starting plamsjob_ss_iter000.prerun()
-[27.07|10:55:55] plamsjob_ss_iter000.prerun() finished
-[27.07|10:55:55] JOB plamsjob/plamsjob_ss_iter000 RUNNING
-[27.07|10:55:55] Executing slurm.run
-[27.07|10:55:55] Execution of slurm.run finished with returncode 0
-[27.07|10:55:55] JOB plamsjob/plamsjob_ss_iter000 FINISHED
-[27.07|10:55:55] Starting plamsjob_ss_iter000.postrun()
-[27.07|10:55:55] plamsjob_ss_iter000.postrun() finished
-[27.07|10:55:55] JOB plamsjob/plamsjob_ss_iter000 SUCCESSFUL
-[27.07|10:55:55] JOB plamsjob/plamsjob_ss_iter001 STARTED
-[27.07|10:55:55] Starting plamsjob_ss_iter001.prerun()
-[27.07|10:55:55] plamsjob_ss_iter001.prerun() finished
-[27.07|10:55:55] JOB plamsjob/plamsjob_ss_iter001 RUNNING
-[27.07|10:55:55] Executing slurm.run
-[27.07|10:55:57] Execution of slurm.run finished with returncode 0
-[27.07|10:55:57] JOB plamsjob/plamsjob_ss_iter001 FINISHED
-[27.07|10:55:57] Starting plamsjob_ss_iter001.postrun()
-[27.07|10:55:57] plamsjob_ss_iter001.postrun() finished
-[27.07|10:55:57] JOB plamsjob/plamsjob_ss_iter001 SUCCESSFUL
-[27.07|10:55:57] JOB plamsjob/plamsjob_ss_iter002 STARTED
-[27.07|10:55:57] Starting plamsjob_ss_iter002.prerun()
-[27.07|10:55:57] plamsjob_ss_iter002.prerun() finished
-[27.07|10:55:57] JOB plamsjob/plamsjob_ss_iter002 RUNNING
-[27.07|10:55:57] Executing slurm.run
-[27.07|10:56:01] Execution of slurm.run finished with returncode 0
-[27.07|10:56:01] JOB plamsjob/plamsjob_ss_iter002 FINISHED
-[27.07|10:56:01] Starting plamsjob_ss_iter002.postrun()
-[27.07|10:56:01] plamsjob_ss_iter002.postrun() finished
-[27.07|10:56:01] JOB plamsjob/plamsjob_ss_iter002 SUCCESSFUL
-[27.07|10:56:02] JOB plamsjob/plamsjob_ss_iter003 STARTED
-[27.07|10:56:02] Starting plamsjob_ss_iter003.prerun()
-[27.07|10:56:02] plamsjob_ss_iter003.prerun() finished
-[27.07|10:56:02] JOB plamsjob/plamsjob_ss_iter003 RUNNING
-[27.07|10:56:02] Executing slurm.run
-[27.07|10:56:10] Execution of slurm.run finished with returncode 0
-[27.07|10:56:10] JOB plamsjob/plamsjob_ss_iter003 FINISHED
-[27.07|10:56:10] Starting plamsjob_ss_iter003.postrun()
-[27.07|10:56:10] plamsjob_ss_iter003.postrun() finished
-[27.07|10:56:10] JOB plamsjob/plamsjob_ss_iter003 SUCCESSFUL
-[27.07|10:56:10] JOB plamsjob/plamsjob_ss_iter004 STARTED
-[27.07|10:56:10] Starting plamsjob_ss_iter004.prerun()
-[27.07|10:56:10] plamsjob_ss_iter004.prerun() finished
-[27.07|10:56:10] JOB plamsjob/plamsjob_ss_iter004 RUNNING
-[27.07|10:56:10] Executing slurm.run
-[27.07|10:56:24] Execution of slurm.run finished with returncode 0
-[27.07|10:56:24] JOB plamsjob/plamsjob_ss_iter004 FINISHED
-[27.07|10:56:24] Starting plamsjob_ss_iter004.postrun()
-[27.07|10:56:24] plamsjob_ss_iter004.postrun() finished
-[27.07|10:56:24] JOB plamsjob/plamsjob_ss_iter004 SUCCESSFUL
-[27.07|10:56:25] JOB plamsjob FINISHED
-[27.07|10:56:25] Starting plamsjob.postrun()
-[27.07|10:56:25] plamsjob.postrun() finished
-[27.07|10:56:25] JOB plamsjob SUCCESSFUL
+[28.07|17:28:38] Running PLAMS located in /home/aguirre/Develop/ams.trunk/scripting/scm/plams
+[28.07|17:28:38] Using Python 3.6.9 located in /home/aguirre/.scm/python/AMS2022.2.venv/bin/python
+[28.07|17:28:38] PLAMS defaults were loaded from /home/aguirre/Develop/ams.trunk/scripting/scm/plams/plams_defaults
+[28.07|17:28:38] PLAMS environment initialized
+[28.07|17:28:38] PLAMS working folder: /home/aguirre/Develop/pyzacros/test_ZacrosSteadyStateJob
+[28.07|17:28:38] JOB plamsjob STARTED
+[28.07|17:28:38] Starting plamsjob.prerun()
+[28.07|17:28:38] plamsjob.prerun() finished
+[28.07|17:28:38] JOB plamsjob RUNNING
+[28.07|17:28:38] JOB plamsjob/plamsjob_ss_iter000 STARTED
+[28.07|17:28:38] Starting plamsjob_ss_iter000.prerun()
+[28.07|17:28:38] plamsjob_ss_iter000.prerun() finished
+[28.07|17:28:38] JOB plamsjob/plamsjob_ss_iter000 RUNNING
+[28.07|17:28:38] Executing slurm.run
+[28.07|17:28:38] Execution of slurm.run finished with returncode 0
+[28.07|17:28:38] JOB plamsjob/plamsjob_ss_iter000 FINISHED
+[28.07|17:28:38] Starting plamsjob_ss_iter000.postrun()
+[28.07|17:28:38] plamsjob_ss_iter000.postrun() finished
+[28.07|17:28:38] JOB plamsjob/plamsjob_ss_iter000 SUCCESSFUL
+[28.07|17:28:38] JOB plamsjob/plamsjob_ss_iter001 STARTED
+[28.07|17:28:38] Starting plamsjob_ss_iter001.prerun()
+[28.07|17:28:38] plamsjob_ss_iter001.prerun() finished
+[28.07|17:28:38] JOB plamsjob/plamsjob_ss_iter001 RUNNING
+[28.07|17:28:38] Executing slurm.run
+[28.07|17:28:41] Execution of slurm.run finished with returncode 0
+[28.07|17:28:41] JOB plamsjob/plamsjob_ss_iter001 FINISHED
+[28.07|17:28:41] Starting plamsjob_ss_iter001.postrun()
+[28.07|17:28:41] plamsjob_ss_iter001.postrun() finished
+[28.07|17:28:41] JOB plamsjob/plamsjob_ss_iter001 SUCCESSFUL
+[28.07|17:28:41] JOB plamsjob/plamsjob_ss_iter002 STARTED
+[28.07|17:28:41] Starting plamsjob_ss_iter002.prerun()
+[28.07|17:28:41] plamsjob_ss_iter002.prerun() finished
+[28.07|17:28:41] JOB plamsjob/plamsjob_ss_iter002 RUNNING
+[28.07|17:28:41] Executing slurm.run
+[28.07|17:28:46] Execution of slurm.run finished with returncode 0
+[28.07|17:28:46] JOB plamsjob/plamsjob_ss_iter002 FINISHED
+[28.07|17:28:46] Starting plamsjob_ss_iter002.postrun()
+[28.07|17:28:46] plamsjob_ss_iter002.postrun() finished
+[28.07|17:28:47] JOB plamsjob/plamsjob_ss_iter002 SUCCESSFUL
+[28.07|17:28:47] JOB plamsjob/plamsjob_ss_iter003 STARTED
+[28.07|17:28:47] Starting plamsjob_ss_iter003.prerun()
+[28.07|17:28:47] plamsjob_ss_iter003.prerun() finished
+[28.07|17:28:47] JOB plamsjob/plamsjob_ss_iter003 RUNNING
+[28.07|17:28:47] Executing slurm.run
+[28.07|17:28:57] Execution of slurm.run finished with returncode 0
+[28.07|17:28:57] JOB plamsjob/plamsjob_ss_iter003 FINISHED
+[28.07|17:28:57] Starting plamsjob_ss_iter003.postrun()
+[28.07|17:28:57] plamsjob_ss_iter003.postrun() finished
+[28.07|17:28:58] JOB plamsjob/plamsjob_ss_iter003 SUCCESSFUL
+[28.07|17:28:58] JOB plamsjob/plamsjob_ss_iter004 STARTED
+[28.07|17:28:58] Starting plamsjob_ss_iter004.prerun()
+[28.07|17:28:58] plamsjob_ss_iter004.prerun() finished
+[28.07|17:28:58] JOB plamsjob/plamsjob_ss_iter004 RUNNING
+[28.07|17:28:58] Executing slurm.run
+[28.07|17:29:17] Execution of slurm.run finished with returncode 0
+[28.07|17:29:17] JOB plamsjob/plamsjob_ss_iter004 FINISHED
+[28.07|17:29:17] Starting plamsjob_ss_iter004.postrun()
+[28.07|17:29:17] plamsjob_ss_iter004.postrun() finished
+[28.07|17:29:17] JOB plamsjob/plamsjob_ss_iter004 SUCCESSFUL
+[28.07|17:29:18] JOB plamsjob Steady State Convergence: OPTIMIZATION CONVERGED. DONE!
+[28.07|17:29:18] JOB plamsjob FINISHED
+[28.07|17:29:18] Starting plamsjob.postrun()
+[28.07|17:29:18] plamsjob.postrun() finished
+[28.07|17:29:18] JOB plamsjob SUCCESSFUL
