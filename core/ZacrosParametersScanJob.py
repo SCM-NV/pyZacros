@@ -90,7 +90,7 @@ class ZacrosParametersScanJob( scm.plams.MultiJob ):
 
 
     def __init__(self, reference, generator=None, generator_parameters=None, **kwargs):
-        scm.plams.MultiJob.__init__(self, settings=reference.settings, **kwargs)
+        scm.plams.MultiJob.__init__(self, settings=reference.settings, children=OrderedDict(), **kwargs)
 
         if generator is not None:
             if len(generator_parameters) == 0:
@@ -104,14 +104,9 @@ class ZacrosParametersScanJob( scm.plams.MultiJob ):
                     msg += "              Parameter 'generator_parameters' should be a list of ZacrosParametersScanJob.Parameter objects.\n"
                     raise Exception(msg)
 
-        self._reference = reference
-        self._generator = generator
-        self._generator_parameters = generator_parameters
-
         self._indices = None
         self._parameters_values = None
-        self.children = OrderedDict()
-        self._indices,self._parameters_values,settings_list = self._generator( self._reference.settings, self._generator_parameters )
+        self._indices,self._parameters_values,settings_list = generator( reference.settings, generator_parameters )
 
         for i,(idx,settings_idx) in enumerate(settings_list.items()):
 
@@ -119,9 +114,9 @@ class ZacrosParametersScanJob( scm.plams.MultiJob ):
 
             if isinstance(reference,ZacrosJob):
 
-                job = ZacrosJob( settings=settings_idx, lattice=self._reference.lattice, mechanism=self._reference.mechanism, \
-                                cluster_expansion=self._reference.cluster_expansion, initial_state=self._reference.initial_state, \
-                                restart=self._reference.restart, name=new_name )
+                job = ZacrosJob( settings=settings_idx, lattice=reference.lattice, mechanism=reference.mechanism, \
+                                cluster_expansion=reference.cluster_expansion, initial_state=reference.initial_state, \
+                                restart=reference.restart, name=new_name )
 
             elif isinstance(reference,ZacrosSteadyStateJob):
 
