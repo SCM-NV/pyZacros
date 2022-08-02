@@ -358,11 +358,24 @@ class ZacrosResults( scm.plams.Results ):
         for sspecies in surface_species_names:
             acf[sspecies] = 0.0
 
-        for lattice_state in self.lattice_states(last=last):
-            fractions = lattice_state.coverage_fractions()
+        #for lattice_state in self.lattice_states(last=last):
+            #fractions = lattice_state.coverage_fractions()
+
+            #for sspecies in surface_species_names:
+                #acf[sspecies] += fractions[sspecies]/last
+
+        provided_quantities = self.provided_quantities()
+        n_items = len(provided_quantities['Entry'])
+        nmol_total = n_items*[0]
+
+        for i in reversed(range(n_items)):
+            if i==n_items-last-1: break
 
             for sspecies in surface_species_names:
-                acf[sspecies] += fractions[sspecies]/last
+                acf[sspecies] += provided_quantities[sspecies][i]
+
+        for sspecies in surface_species_names:
+            acf[sspecies] /= self.job.lattice.number_of_sites()*last
 
         return acf
 
