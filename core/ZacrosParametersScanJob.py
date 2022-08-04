@@ -30,11 +30,12 @@ class ZacrosParametersScanResults( scm.plams.Results ):
 
         for pos,idx in enumerate(self.job._indices):
             params = self.job._parameters_values[idx]
-            TOFs,errors,converged = self.job.children[idx].results.turnover_frequency( nbatch=nbatch, confidence=confidence )
+            TOFs,errors,ratio,converged = self.job.children[idx].results.turnover_frequency( nbatch=nbatch, confidence=confidence )
 
             if update:
                 output[pos]['turnover_frequency'] = TOFs
                 output[pos]['turnover_frequency_error'] = errors
+                output[pos]['turnover_frequency_ratio'] = ratio
                 output[pos]['turnover_frequency_converged'] = converged
             else:
                 output.append( {**params, 'turnover_frequency':TOFs, 'turnover_frequency_error':errors,
