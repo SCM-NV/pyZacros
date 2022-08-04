@@ -764,12 +764,12 @@ class ZacrosResults( scm.plams.Results ):
     def __compute_rate( t_vect, spec, n_sites, n_batch=20, confidence=0.99 ):
 
         # Batch means stopping implementation
-        n_batch = min( len(t_vect), int(len(t_vect)/n_batch) )
         t_vect = numpy.array(t_vect)
         prod_mol = numpy.array(spec)/n_sites
 
         # Define batch length
-        lt = int(len(t_vect)/(n_batch))
+        lt = int(len(t_vect)/n_batch)
+        n_batch = min( len(t_vect), lt )
 
         # Compute TOF in each batch
         ratet = numpy.empty(n_batch)
@@ -785,7 +785,7 @@ class ZacrosResults( scm.plams.Results ):
         # Compute average and CI
         rate_av, se = numpy.mean(rate), scipy.stats.sem(rate)
         rate_CI = se * scipy.stats.t._ppf( (1.0+confidence)/2.0, len(rate) - 1.0 )
-        ratio = rate_CI/(rate_av+1e-8)
+        ratio = numpy.abs(rate_CI)/(numpy.abs(rate_av)+1e-8)
 
         if ( ratio<1.0-confidence ):
             return ( rate_av,rate_CI,ratio, True )
@@ -794,7 +794,7 @@ class ZacrosResults( scm.plams.Results ):
             return ( rate[-1],rate_CI,ratio, False )
 
 
-    def turnover_frequency(self, nbatch=20, confidence=0.99, species_name=None):
+    def turnover_frequency(self, nbatch=20, confidence=0.99, species_name=None, provided_quantities=None):
         """
         Returns the TOF (mol/sec/site) calculated by the batch-means stopping method. See Hashemi et al., J.Chem. Phys. 144, 074104 (2016)
 
@@ -825,21 +825,77 @@ class ZacrosResults( scm.plams.Results ):
         """
         values = {}
         errors = {}
+        ratios = {}
         converged = {}
 
-        provided_quantities = self.provided_quantities()
+        lprovided_quantities = provided_quantities
+        if provided_quantities is None:
+            lprovided_quantities = self.provided_quantities()
 
         for sn in self.gas_species_names():
 
-            nMolsVec = provided_quantities[sn]
+            nMolsVec = lprovided_quantities[sn]
 
-            aver,ci,ratio,conv = ZacrosResults.__compute_rate( provided_quantities["Time"], provided_quantities[sn],
-                                                                self.number_of_lattice_sites(), nbatch, confidence )
-            values[sn] = aver
-            errors[sn] = ci
-            converged[sn] = conv
+            if sum(numpy.abs(lprovided_quantities[sn])) > 0:
+                aver,ci,ratio,conv = ZacrosResults.__compute_rate( lprovided_quantities["Time"], lprovided_quantities[sn],
+                                                                    self.number_of_lattice_sites(), nbatch, confidence )
+                values[sn] = aver
+                errors[sn] = ci
+                ratios[sn] = ratio
+                converged[sn] = conv
+            else:
+                values[sn] = 0.0
+                errors[sn] = 0.0
+                ratios[sn] = 0.0
+                converged[sn] = True
 
         if species_name is None:
-            return values,errors,converged
+            return values,errors,ratios,converged
         else:
-            return values[species_name],errors[species_name],converged[species_name]
+            return values[species_name],errors[species_name],ratios[species_name],converged[species_name]
+
+
+    @staticmethod
+    def _average_provided_quantities( provided_quantities_list, key_column_name, columns_name=None ):
+
+        if len(provided_quantities_list) == 0:
+            msg  = "### ERROR ### ZacrosResults._average_provided_quantities\n"
+            msg += ">> provided_quantities_list parameter should eb a list with at least one item\n"
+            raise Exception( msg )
+
+        nexp = len(provided_quantities_list)
+        npoints = len(provided_quantities_list[0][key_column_name])
+
+        if columns_name is None:
+            columns_name = provided_quantities_list[0].keys()
+
+        for provided_quantities in provided_quantities_list:
+            for name in columns_name:
+                if len(provided_quantities[name]) != npoints:
+                    msg  = "### ERROR ### ZacrosResults._average_provided_quantities\n"
+                    msg += ">> provided_quantities_list contains items with different sizes\n"
+                    raise Exception( msg )
+
+        average = {}
+
+        average[key_column_name] = npoints*[0.0]
+        for name in columns_name:
+            average[name] = npoints*[0.0]
+
+        for i in range(npoints):
+            average[key_column_name][i] = provided_quantities_list[0][key_column_name][i]
+
+            for k in range(nexp):
+                if k>0 and provided_quantities_list[k][key_column_name][i] != provided_quantities_list[0][key_column_name][i]:
+                    msg  = "### ERROR ### ZacrosResults._average_provided_quantities\n"
+                    msg += ">> Reference column has different values for each item\n"
+                    raise Exception( msg )
+
+            for name in columns_name:
+                if name == key_column_name: continue
+                for k in range(nexp):
+                    average[name][i] += provided_quantities_list[k][name][i]
+                average[name][i] /= float(nexp)
+
+        return average
+

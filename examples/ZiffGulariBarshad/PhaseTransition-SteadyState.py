@@ -49,18 +49,16 @@ if( results.job.ok() ):
     ac_O = []
     ac_CO = []
     TOF_CO2 = []
-    max_time = []
     TOF_CO2_conv = []
 
     results_dict = results.turnover_frequency()
-    results_dict = results.average_coverage( last=5, update=results_dict )
+    results_dict = results.average_coverage( last=20, update=results_dict )
 
     for i in range(len(results_dict)):
         x_CO.append( results_dict[i]['x_CO'] )
         ac_O.append( results_dict[i]['average_coverage']['O*'] )
         ac_CO.append( results_dict[i]['average_coverage']['CO*'] )
         TOF_CO2.append( results_dict[i]['turnover_frequency']['CO2'] )
-        max_time.append( results_dict[i]['max_time'] )
         TOF_CO2_conv.append( results_dict[i]['turnover_frequency_converged']['CO2'] )
 
     output += "----------------------------------------------\n"
@@ -68,7 +66,7 @@ if( results.job.ok() ):
     output += "----------------------------------------------\n"
     for i in range(len(x_CO)):
         output += "%4d"%i+" %8.2f"%x_CO[i]+" %10.6f"%ac_O[i]+" %10.6f"%ac_CO[i] \
-                    +" %12.6f"%TOF_CO2[i]+" %10.1f"%max_time[i]+" %8s"%TOF_CO2_conv[i]+"\n"
+                    +" %12.6f"%TOF_CO2[i]+" %8s"%TOF_CO2_conv[i]+"\n"
 
 scm.plams.finish()
 

@@ -45,7 +45,7 @@ if( results.job.ok() ):
     TOF_CO2 = []
 
     results_dict = results.turnover_frequency()
-    results_dict = results.average_coverage( last=3, update=results_dict )
+    results_dict = results.average_coverage( update=results_dict )
 
     for i in range(len(results_dict)):
         x_CO.append( results_dict[i]['x_CO'] )

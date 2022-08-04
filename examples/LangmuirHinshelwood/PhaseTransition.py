@@ -25,26 +25,19 @@ sett = pz.Settings()
 sett.random_seed = 1609
 sett.temperature = 500.0
 sett.pressure = 1.000
-sett.snapshots = ('time', 10*dt)
 sett.process_statistics = ('time', dt)
 sett.species_numbers = ('time', dt)
 sett.max_time = 100*dt
+
+sett.steady_state_job.turnover_frequency.nbatch = 20
+sett.steady_state_job.turnover_frequency.confidence = 0.93
 
 # Adsorption and diffusion scaling factors
 for rxn in lh.mechanism:
     if 'adsorption' in rxn.label(): rxn.pre_expon *= 1e-2
     if  'diffusion' in rxn.label(): rxn.pre_expon *= 1e-2
 
-#parameters = { 'x_CO':pz.ZacrosParametersScanJob.Parameter('molar_fraction.CO', numpy.arange(0.0, 1.0+0.1, 0.1)),
-               #'x_O2':pz.ZacrosParametersScanJob.Parameter('molar_fraction.O2', lambda params: 1.0-params['x_CO']) }
-
-#job = pz.ZacrosJob( settings=sett, lattice=lh.lattice, mechanism=lh.mechanism, cluster_expansion=lh.cluster_expansion )
-
-#mjob = pz.ZacrosParametersScanJob( reference=job,
-                                    #generator=pz.ZacrosParametersScanJob.meshGenerator,
-                                    #generator_parameters=parameters )
-
-parametersA = { 'max_time':pz.ZacrosSteadyStateJob.Parameter('restart.max_time', 2*sett.max_time*( numpy.arange(10)+1 )**3) }
+parametersA = { 'max_time':pz.ZacrosSteadyStateJob.Parameter('restart.max_time', 2*sett.max_time*( numpy.arange(10)+1 )**2) }
 
 parametersB = { 'x_CO':pz.ZacrosParametersScanJob.Parameter('molar_fraction.CO', numpy.arange(0.0, 1.0+0.1, 0.1)),
                 'x_O2':pz.ZacrosParametersScanJob.Parameter('molar_fraction.O2', lambda params: 1.0-params['x_CO']) }
@@ -67,7 +60,7 @@ if( results.job.ok() ):
     TOF_CO2_conv = []
 
     results_dict = results.turnover_frequency()
-    results_dict = results.average_coverage( last=3, update=results_dict )
+    results_dict = results.average_coverage( last=10, update=results_dict )
 
     for i in range(len(results_dict)):
         x_CO.append( results_dict[i]['x_CO'] )
@@ -76,11 +69,11 @@ if( results.job.ok() ):
         TOF_CO2.append( results_dict[i]['turnover_frequency']['CO2'] )
         TOF_CO2_conv.append( results_dict[i]['turnover_frequency_converged']['CO2'] )
 
-    output += "----------------------------------------------\n"
-    output += "%4s"%"cond"+" %8s"%"x_CO"+" %10s"%"ac_O"+" %10s"%"ac_CO"+" %12s"%"TOF_CO2\n"
-    output += "----------------------------------------------\n"
+    print( "----------------------------------------------" )
+    print( "%4s"%"cond"+" %8s"%"x_CO"+" %10s"%"ac_O"+" %10s"%"ac_CO"+" %12s"%"TOF_CO2" )
+    print( "----------------------------------------------" )
     for i in range(len(x_CO)):
-        output += "%4d"%i+" %8.2f"%x_CO[i]+" %10.6f"%ac_O[i]+" %10.6f"%ac_CO[i]+" %12.6f"%TOF_CO2[i]+" %8s"%TOF_CO2_conv[i]+"\n"
+        print( "%4d"%i+" %8.2f"%x_CO[i]+" %10.6f"%ac_O[i]+" %10.6f"%ac_CO[i]+" %12.6f"%TOF_CO2[i]+" %8s"%TOF_CO2_conv[i] )
 
 scm.plams.finish()
 

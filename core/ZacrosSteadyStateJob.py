@@ -8,6 +8,7 @@ from collections import OrderedDict
 import scm.plams
 
 from .ZacrosJob import *
+from .ZacrosResults import *
 
 __all__ = ['ZacrosSteadyStateJob', 'ZacrosSteadyStateResults']
 
@@ -84,12 +85,6 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
             msg += "              All parameter in 'generator_parameters' should be lists with at least one element.\n"
             raise Exception(msg)
 
-        self.lattice = reference.lattice
-        self.mechanism = reference.mechanism
-        self.cluster_expansion = reference.cluster_expansion
-        self.initial_state = reference.initial_state
-        self.restart = reference.restart
-
         self._reference = reference
         self._generator_parameters = generator_parameters
 
@@ -97,6 +92,15 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
         self._n_iterations = 0
         self._history = []
         self._surface_poisoned = False
+
+        self.nbatch = None
+        self.confidence = None
+        self.nreplicas = 1
+        if 'steady_state_job' in self.settings:
+            self.nreplicas = self.settings.steady_state_job.get('nreplicas', default=1 )
+            if 'turnover_frequency' in self.settings.steady_state_job:
+                self.nbatch = self.settings.steady_state_job.turnover_frequency.get('nbatch')
+                self.confidence = self.settings.steady_state_job.turnover_frequency.get('confidence')
 
 
     @staticmethod
@@ -117,33 +121,55 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
 
         prev = None
         if len(self.children) > 0:
-            prev = self.children[-1]
 
-            if not prev.ok():
-                if len(self.children) > 1:
-                    scm.plams.log("JOB "+self.name+" Steady State Convergence: SURFACE POISONED")
-                    prevprev = self.children[-2]
-                    if prevprev.surface_poisoned():
-                        self.children.pop()
-                    self._surface_poisoned = True
-                else:
-                    scm.plams.log("JOB "+self.name+" Steady State Convergence: FAILED")
-                return None
 
-            TOF,error,conv = prev.results.turnover_frequency()
+            provided_quantities_list = []
+
+            for i in range(self.nreplicas):
+                prev = self.children[-(i+1)]
+                if prev.ok():
+                    pass
+
+            for i in range(self.nreplicas):
+                prev = self.children[-(i+1)]
+
+                if not prev.ok():
+                    if len(self.children) > 1:
+                        scm.plams.log("JOB "+prev._full_name()+" Steady State Convergence: SURFACE POISONED")
+                        prevprev = self.children[-(self.nreplicas-i)]
+                        if prevprev.surface_poisoned():
+                            self.children.pop(index=-i)
+                        self._surface_poisoned = True
+                    else:
+                        scm.plams.log("JOB "+prev._full_name()+" Steady State Convergence: FAILED")
+                    return None
+
+                TOF,error,ratios,conv = prev.results.turnover_frequency( nbatch=self.nbatch, confidence=self.confidence )
+
+                if self.nreplicas>1:
+                    scm.plams.log("   Replica #%d"%i )
+                    scm.plams.log("   %10s"%"species"+"%15s"%"TOF"+"%15s"%"error"+"%15s"%"ratio"+"%10s"%"conv?")
+                    for s in prev.results.gas_species_names():
+                        scm.plams.log("   %10s"%s+"%15.5f"%TOF[s]+"%15.5f"%error[s]+"%15.5f"%ratios[s]+"%10s"%conv[s])
+
+                provided_quantities_list.append( prev.results.provided_quantities() )
+
+            aver_provided_quantities = ZacrosResults._average_provided_quantities( provided_quantities_list, 'Time' )
+
+            TOF,error,ratios,conv = prev.results.turnover_frequency( nbatch=self.nbatch, confidence=self.confidence,
+                                                                        provided_quantities=aver_provided_quantities )
+
+            if self.nreplicas>1: scm.plams.log("   Average" )
+            scm.plams.log("   %10s"%"species"+"%15s"%"TOF"+"%15s"%"error"+"%15s"%"ratio"+"%10s"%"conv?")
+            for s in prev.results.gas_species_names():
+                scm.plams.log("   %10s"%s+"%15.5f"%TOF[s]+"%15.5f"%error[s]+"%15.5f"%ratios[s]+"%10s"%conv[s])
 
             history_i = { 'turnover_frequency':TOF,
-                          'turnover_frequency_error':error,
-                          'converged':conv }
+                        'turnover_frequency_error':error,
+                        'converged':conv }
 
             for name,item in self._generator_parameters.items():
                 history_i[name] = item.values[self._n_iterations-1]
-
-            self.lattice = prev.lattice
-            self.mechanism = prev.mechanism
-            self.cluster_expansion = prev.cluster_expansion
-            self.initial_state = prev.initial_state
-            self.restart = prev.restart
 
             self._history.append( history_i )
 
@@ -151,24 +177,31 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
                 scm.plams.log("JOB "+self.name+" Steady State Convergence: OPTIMIZATION CONVERGED. DONE!")
                 return None
 
-        lsettings = self._reference.settings.copy()
+        lparallel = []
 
-        params = {}
-        for name,item in self._generator_parameters.items():
-            value = item.values[self._n_iterations]
-            eval('lsettings'+ZacrosSteadyStateJob.__name2dict(item.name_in_settings).replace('$var_value',str(value)))
-            params[name] = value
+        for i in range(self.nreplicas):
+            lsettings = self._reference.settings.copy()
 
-        new_child = ZacrosJob( settings=lsettings,
-                               lattice=self._reference.lattice,
-                               mechanism=self._reference.mechanism,
-                               cluster_expansion=self._reference.cluster_expansion,
-                               name=self.name+"_ss_iter"+"%03d"%self._n_iterations,
-                               restart=prev )
+            lsettings.random_seed = lsettings.get('random_seed',default=0) + i
+
+            params = {}
+            for name,item in self._generator_parameters.items():
+                value = item.values[self._n_iterations]
+                eval('lsettings'+ZacrosSteadyStateJob.__name2dict(item.name_in_settings).replace('$var_value',str(value)))
+                params[name] = value
+
+            new_child = ZacrosJob( settings=lsettings,
+                                   lattice=self._reference.lattice,
+                                   mechanism=self._reference.mechanism,
+                                   cluster_expansion=self._reference.cluster_expansion,
+                                   name=self.name+"_ss_iter"+"%03d"%self._n_iterations,
+                                   restart=prev )
+
+            lparallel.append( new_child )
 
         self._n_iterations += 1
 
-        return [ new_child ]
+        return lparallel
 
 
     def check(self):
