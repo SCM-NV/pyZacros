@@ -1,53 +1,53 @@
-[28.07|17:47:11] Running PLAMS located in /home/aguirre/Develop/ams.trunk/scripting/scm/plams
-[28.07|17:47:11] Using Python 3.6.9 located in /home/aguirre/.scm/python/AMS2022.2.venv/bin/python
-[28.07|17:47:11] PLAMS defaults were loaded from /home/aguirre/Develop/ams.trunk/scripting/scm/plams/plams_defaults
-[28.07|17:47:11] PLAMS environment initialized
-[28.07|17:47:11] PLAMS working folder: /home/aguirre/Develop/pyzacros/test_RKFLoader
-[28.07|17:47:11] JOB O_ads-Pt111 STARTED
-[28.07|17:47:11] Starting O_ads-Pt111.prerun()
-[28.07|17:47:11] O_ads-Pt111.prerun() finished
-[28.07|17:47:11] JOB O_ads-Pt111 RUNNING
-[28.07|17:47:11] Executing O_ads-Pt111.run
-[28.07|17:47:52] Execution of O_ads-Pt111.run finished with returncode 0
-[28.07|17:47:52] JOB O_ads-Pt111 FINISHED
-[28.07|17:47:52] Job O_ads-Pt111 reported warnings. Please check the output
-[28.07|17:47:52] Starting O_ads-Pt111.postrun()
-[28.07|17:47:52] O_ads-Pt111.postrun() finished
-[28.07|17:47:52] JOB O_ads-Pt111 SUCCESSFUL
-[28.07|17:47:52] JOB CO_ads-Pt111 STARTED
-[28.07|17:47:52] Starting CO_ads-Pt111.prerun()
-[28.07|17:47:52] CO_ads-Pt111.prerun() finished
-[28.07|17:47:52] JOB CO_ads-Pt111 RUNNING
-[28.07|17:47:52] Executing CO_ads-Pt111.run
-[28.07|17:48:46] Execution of CO_ads-Pt111.run finished with returncode 0
-[28.07|17:48:46] JOB CO_ads-Pt111 FINISHED
-[28.07|17:48:46] Job CO_ads-Pt111 reported warnings. Please check the output
-[28.07|17:48:46] Starting CO_ads-Pt111.postrun()
-[28.07|17:48:46] CO_ads-Pt111.postrun() finished
-[28.07|17:48:46] JOB CO_ads-Pt111 SUCCESSFUL
-[28.07|17:48:46] JOB O-Pt111 STARTED
-[28.07|17:48:46] Starting O-Pt111.prerun()
-[28.07|17:48:46] O-Pt111.prerun() finished
-[28.07|17:48:46] JOB O-Pt111 RUNNING
-[28.07|17:48:46] Executing O-Pt111.run
-[28.07|17:49:01] Execution of O-Pt111.run finished with returncode 0
-[28.07|17:49:01] JOB O-Pt111 FINISHED
-[28.07|17:49:01] Job O-Pt111 reported warnings. Please check the output
-[28.07|17:49:01] Starting O-Pt111.postrun()
-[28.07|17:49:01] O-Pt111.postrun() finished
-[28.07|17:49:01] JOB O-Pt111 SUCCESSFUL
-[28.07|17:49:01] JOB CO-Pt111 STARTED
-[28.07|17:49:01] Starting CO-Pt111.prerun()
-[28.07|17:49:01] CO-Pt111.prerun() finished
-[28.07|17:49:01] JOB CO-Pt111 RUNNING
-[28.07|17:49:01] Executing CO-Pt111.run
-[28.07|17:51:37] Execution of CO-Pt111.run finished with returncode 0
-[28.07|17:51:38] JOB CO-Pt111 FINISHED
-[28.07|17:51:38] Job CO-Pt111 reported warnings. Please check the output
-[28.07|17:51:38] Starting CO-Pt111.postrun()
-[28.07|17:51:38] CO-Pt111.postrun() finished
-[28.07|17:51:42] JOB CO-Pt111 SUCCESSFUL
-[28.07|17:51:42] JOB O_ads-Pt111 DELETED
-[28.07|17:51:42] JOB CO_ads-Pt111 DELETED
-[28.07|17:51:42] PLAMS environment cleaned up successfully
-[28.07|17:51:42] PLAMS run finished. Goodbye
+[11.08|15:20:20] Running PLAMS located in /home/aguirre/Develop/ams.trunk/scripting/scm/plams
+[11.08|15:20:20] Using Python 3.6.9 located in /home/aguirre/.scm/python/AMS2022.2.venv/bin/python
+[11.08|15:20:20] PLAMS defaults were loaded from /home/aguirre/Develop/ams.trunk/scripting/scm/plams/plams_defaults
+[11.08|15:20:20] PLAMS environment initialized
+[11.08|15:20:20] PLAMS working folder: /home/aguirre/Develop/pyzacros/test_RKFLoader
+[11.08|15:20:20] JOB O_ads-Pt111 STARTED
+[11.08|15:20:20] Starting O_ads-Pt111.prerun()
+[11.08|15:20:20] O_ads-Pt111.prerun() finished
+[11.08|15:20:20] JOB O_ads-Pt111 RUNNING
+[11.08|15:20:20] Executing O_ads-Pt111.run
+[11.08|15:20:59] Execution of O_ads-Pt111.run finished with returncode 0
+[11.08|15:20:59] JOB O_ads-Pt111 FINISHED
+[11.08|15:20:59] Job O_ads-Pt111 reported warnings. Please check the output
+[11.08|15:20:59] Starting O_ads-Pt111.postrun()
+[11.08|15:20:59] O_ads-Pt111.postrun() finished
+[11.08|15:20:59] JOB O_ads-Pt111 SUCCESSFUL
+[11.08|15:20:59] JOB CO_ads-Pt111 STARTED
+[11.08|15:20:59] Starting CO_ads-Pt111.prerun()
+[11.08|15:20:59] CO_ads-Pt111.prerun() finished
+[11.08|15:20:59] JOB CO_ads-Pt111 RUNNING
+[11.08|15:20:59] Executing CO_ads-Pt111.run
+[11.08|15:21:32] Execution of CO_ads-Pt111.run finished with returncode 0
+[11.08|15:21:32] JOB CO_ads-Pt111 FINISHED
+[11.08|15:21:32] Job CO_ads-Pt111 reported warnings. Please check the output
+[11.08|15:21:32] Starting CO_ads-Pt111.postrun()
+[11.08|15:21:32] CO_ads-Pt111.postrun() finished
+[11.08|15:21:32] JOB CO_ads-Pt111 SUCCESSFUL
+[11.08|15:21:32] JOB O-Pt111 STARTED
+[11.08|15:21:32] Starting O-Pt111.prerun()
+[11.08|15:21:32] O-Pt111.prerun() finished
+[11.08|15:21:32] JOB O-Pt111 RUNNING
+[11.08|15:21:32] Executing O-Pt111.run
+[11.08|15:22:00] Execution of O-Pt111.run finished with returncode 0
+[11.08|15:22:00] JOB O-Pt111 FINISHED
+[11.08|15:22:00] Job O-Pt111 reported warnings. Please check the output
+[11.08|15:22:00] Starting O-Pt111.postrun()
+[11.08|15:22:00] O-Pt111.postrun() finished
+[11.08|15:22:00] JOB O-Pt111 SUCCESSFUL
+[11.08|15:22:00] JOB CO-Pt111 STARTED
+[11.08|15:22:00] Starting CO-Pt111.prerun()
+[11.08|15:22:00] CO-Pt111.prerun() finished
+[11.08|15:22:00] JOB CO-Pt111 RUNNING
+[11.08|15:22:00] Executing CO-Pt111.run
+[11.08|15:24:28] Execution of CO-Pt111.run finished with returncode 0
+[11.08|15:24:28] JOB CO-Pt111 FINISHED
+[11.08|15:24:28] Job CO-Pt111 reported warnings. Please check the output
+[11.08|15:24:28] Starting CO-Pt111.postrun()
+[11.08|15:24:28] CO-Pt111.postrun() finished
+[11.08|15:24:32] JOB CO-Pt111 SUCCESSFUL
+[11.08|15:24:32] JOB O_ads-Pt111 DELETED
+[11.08|15:24:32] JOB CO_ads-Pt111 DELETED
+[11.08|15:24:32] PLAMS environment cleaned up successfully
+[11.08|15:24:32] PLAMS run finished. Goodbye

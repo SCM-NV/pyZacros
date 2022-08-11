@@ -17,6 +17,7 @@ class ElementaryReaction:
     *   ``pre_expon`` -- Specifies the pre-exponential in the Arrhenius formula giving the rate constant of that elementary step. Units: 1/s or Hz.
     *   ``pe_ratio`` -- Sets the ratio of forward over reverse pre-exponential terms if the reaction is reversible.
     *   ``activation_energy`` -- Sets the activation energy at the zero coverage limit. Units eV.
+    *   ``prox_factor`` -- The proximity factor used in the BEP relationship to calculate the forward (and also reverse, if applicable) activation energy.
     *   ``label`` -- If None, a unique label is generated based on the label of its initial and final states.
     """
 
@@ -31,6 +32,7 @@ class ElementaryReaction:
                  pre_expon = 0.0,
                  pe_ratio = 0.0,
                  activation_energy = 0.0,
+                 prox_factor = None,
                  label = None):
 
         if( ( type(initial) != SpeciesList and type(initial) != list )
@@ -83,6 +85,7 @@ class ElementaryReaction:
         self.pre_expon = pre_expon
         self.pe_ratio = pe_ratio
         self.activation_energy = activation_energy     # e.g. 0.200
+        self.prox_factor = prox_factor
 
         #if( self.sites != sum([s.denticity for s in self.initial])
            #or self.sites != sum([s.denticity for s in self.final]) ):
@@ -284,6 +287,9 @@ class ElementaryReaction:
             output += "  pe_ratio "+("%12.5e"%self.pe_ratio)+"\n"
 
         output += "  activ_eng "+("%12.5e"%self.activation_energy)+"\n"
+
+        if self.prox_factor is not None:
+            output += "  prox_factor "+("%12.5e"%self.prox_factor)+"\n"
 
         if self.reversible:
             output += "end_reversible_step"

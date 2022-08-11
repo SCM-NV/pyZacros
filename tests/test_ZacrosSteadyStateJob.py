@@ -24,11 +24,14 @@ def test_ZacrosSteadyStateJob():
     sett.random_seed = 953129
     sett.temperature = 500.0
     sett.pressure = 1.0
-    #sett.snapshots = ('time', 2.0)
     sett.species_numbers = ('time', 0.1)
     sett.max_time = 10.0
     sett.molar_fraction.CO = 0.42
     sett.molar_fraction.O2 = 1.0 - sett.molar_fraction.CO
+
+    sett.steady_state_job.turnover_frequency.nbatch = 20
+    sett.steady_state_job.turnover_frequency.confidence = 0.97
+    sett.steady_state_job.nreplicas = 2
 
     parameters = { 'max_time':pz.ZacrosSteadyStateJob.Parameter('restart.max_time', 2*sett.max_time*( numpy.arange(10)+1 )**3) }
 
@@ -62,13 +65,11 @@ def test_ZacrosSteadyStateJob():
 
     expectedOutput = """\
 ------------------------------------------------
-iter    TOF_CO2      error   max_time      conv?
+iter    TOF_CO2      error   max_time     conv?
 ------------------------------------------------
-   0    0.56656    0.45237         20      False
-   1    0.60639    0.02403        160      False
-   2    0.63364    0.01267        540      False
-   3    0.67421    0.00800       1280      False
-   4    0.61321    0.00555       2500       True\
+   0    0.54200    0.11813         20      False
+   1    0.59095    0.02422        160      False
+   2    0.60063    0.01698        540       True\
 """
 
     assert( pz.utils.compare( output, expectedOutput, rel_error=0.1 ) )

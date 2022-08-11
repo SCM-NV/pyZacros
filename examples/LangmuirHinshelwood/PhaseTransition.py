@@ -1,3 +1,4 @@
+# Execution time: aprox. 35 min
 import multiprocessing
 import numpy
 
@@ -30,16 +31,17 @@ sett.species_numbers = ('time', dt)
 sett.max_time = 100*dt
 
 sett.steady_state_job.turnover_frequency.nbatch = 20
-sett.steady_state_job.turnover_frequency.confidence = 0.93
+sett.steady_state_job.turnover_frequency.confidence = 0.96
+sett.steady_state_job.replicas = 4
 
 # Adsorption and diffusion scaling factors
 for rxn in lh.mechanism:
     if 'adsorption' in rxn.label(): rxn.pre_expon *= 1e-2
     if  'diffusion' in rxn.label(): rxn.pre_expon *= 1e-2
 
-parametersA = { 'max_time':pz.ZacrosSteadyStateJob.Parameter('restart.max_time', 2*sett.max_time*( numpy.arange(10)+1 )**2) }
+parametersA = { 'max_time':pz.ZacrosSteadyStateJob.Parameter('restart.max_time', 2*sett.max_time*( numpy.arange(20)+1 )**2) }
 
-parametersB = { 'x_CO':pz.ZacrosParametersScanJob.Parameter('molar_fraction.CO', numpy.arange(0.0, 1.0+0.1, 0.1)),
+parametersB = { 'x_CO':pz.ZacrosParametersScanJob.Parameter('molar_fraction.CO', numpy.arange(0.1, 1.0, 0.01)),
                 'x_O2':pz.ZacrosParametersScanJob.Parameter('molar_fraction.O2', lambda params: 1.0-params['x_CO']) }
 
 job = pz.ZacrosJob( settings=sett, lattice=lh.lattice, mechanism=lh.mechanism, cluster_expansion=lh.cluster_expansion )
@@ -57,7 +59,6 @@ if( results.job.ok() ):
     ac_O = []
     ac_CO = []
     TOF_CO2 = []
-    TOF_CO2_conv = []
 
     results_dict = results.turnover_frequency()
     results_dict = results.average_coverage( last=10, update=results_dict )
@@ -67,13 +68,12 @@ if( results.job.ok() ):
         ac_O.append( results_dict[i]['average_coverage']['O*'] )
         ac_CO.append( results_dict[i]['average_coverage']['CO*'] )
         TOF_CO2.append( results_dict[i]['turnover_frequency']['CO2'] )
-        TOF_CO2_conv.append( results_dict[i]['turnover_frequency_converged']['CO2'] )
 
     print( "----------------------------------------------" )
     print( "%4s"%"cond"+" %8s"%"x_CO"+" %10s"%"ac_O"+" %10s"%"ac_CO"+" %12s"%"TOF_CO2" )
     print( "----------------------------------------------" )
     for i in range(len(x_CO)):
-        print( "%4d"%i+" %8.2f"%x_CO[i]+" %10.6f"%ac_O[i]+" %10.6f"%ac_CO[i]+" %12.6f"%TOF_CO2[i]+" %8s"%TOF_CO2_conv[i] )
+        print( "%4d"%i+" %8.2f"%x_CO[i]+" %10.6f"%ac_O[i]+" %10.6f"%ac_CO[i]+" %12.6f"%TOF_CO2[i] )
 
 scm.plams.finish()
 
@@ -94,13 +94,13 @@ ax.set_xlabel('Partial Pressure CO', fontsize=14)
 ax.set_ylabel("Coverage Fraction (%)", color="blue", fontsize=14)
 ax.plot(x_CO, ac_O, color="blue", linestyle="-.", lw=2, zorder=1)
 ax.plot(x_CO, ac_CO, color="blue", linestyle="-", lw=2, zorder=2)
-plt.text(0.3, 0.6, 'O', fontsize=18, color="blue")
-plt.text(0.7, 0.4, 'CO', fontsize=18, color="blue")
+plt.text(0.3, 0.60, 'O', fontsize=18, color="blue")
+plt.text(0.7, 0.45, 'CO', fontsize=18, color="blue")
 
 ax2 = ax.twinx()
 ax2.set_ylabel("TOF (mol/s/site)",color="red", fontsize=14)
 ax2.plot(x_CO, TOF_CO2, color="red", lw=2, zorder=5)
-plt.text(0.3, 0.3, 'CO$_2$', fontsize=18, color="red")
+plt.text(0.3, 200.0, 'CO$_2$', fontsize=18, color="red")
 
 plt.show()
 

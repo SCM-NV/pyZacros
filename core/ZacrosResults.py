@@ -65,6 +65,35 @@ class ZacrosResults( scm.plams.Results ):
         return reaction_network
 
 
+    def provided_quantities_names(self):
+        """
+        Return the provided quantities headers from the ``specnum_output.txt`` file in a list.
+        Below is shown an example of the ``specnum_output.txt`` for a zacros calculation.
+
+        .. code-block:: none
+
+            Entry   Nevents        Time   Temperature       Energy   O*  CO*     O2     CO   CO2
+                1         0   0.000E+00   5.00000E+02   -4.089E+01   11   12      0      0     0
+                2        88   1.000E-01   5.00000E+02   -7.269E+01   22   17    -21    -36    31
+                3       176   2.000E-01   5.00000E+02   -9.139E+01   29   19    -41    -71    64
+                4       247   3.000E-01   5.00000E+02   -1.041E+02   34   20    -57    -99    91
+
+        For this example, this function will return:
+
+        .. code-block:: python
+
+            [ 'Entry', 'Nevents', 'Time', 'Temperature', 'Energy', 'O*', 'CO*', 'O2', 'CO', 'CO2' ]
+        """
+        quantities = None
+        if( self.job.restart is None ):
+            lines = self.awk_file(self._filenames['specnum'],script='(NR==1){print $0}')
+            names = lines[0].split()
+        else:
+            names = self.job.restart.results.provided_quantities_names()
+
+        return names
+
+
     def provided_quantities(self):
         """
         Return the provided quantities from the ``specnum_output.txt`` file in a form of a dictionary.
@@ -95,10 +124,11 @@ class ZacrosResults( scm.plams.Results ):
                "CO2":[0, 31, 64, 91]
             }
         """
+
         quantities = None
+        names = None
         if( self.job.restart is None ):
-            lines = self.awk_file(self._filenames['specnum'],script='(NR==1){print $0}')
-            names = lines[0].split()
+            names = self.provided_quantities_names()
 
             quantities = {}
             for name in names:
@@ -183,6 +213,7 @@ class ZacrosResults( scm.plams.Results ):
             output.extend( self.job.restart.results.surface_species_names() )
 
         return output
+
 
     def site_type_names(self):
         """
@@ -769,7 +800,6 @@ class ZacrosResults( scm.plams.Results ):
 
         # Define batch length
         lt = int(len(t_vect)/n_batch)
-        n_batch = min( len(t_vect), lt )
 
         # Compute TOF in each batch
         ratet = numpy.empty(n_batch)

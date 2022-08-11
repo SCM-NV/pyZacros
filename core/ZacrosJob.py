@@ -797,6 +797,7 @@ class ZacrosJob( scm.plams.SingleJob ):
                         "pre_expon" : lambda sv: parameters.setdefault("pre_expon", float(sv[0])),
                         "pe_ratio" : lambda sv: parameters.setdefault("pe_ratio", float(sv[0])),
                         "activ_eng" : lambda sv: parameters.setdefault("activation_energy", float(sv[0])),
+                        "prox_factor" : lambda sv: parameters.setdefault("prox_factor", float(sv[0])),
                     }
                     cases.get( tokens[0], lambda sv: None )( tokens[1:] )
 

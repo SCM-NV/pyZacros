@@ -53,7 +53,7 @@ def test_post_process():
     scm.plams.finish()
 
     if( load_precalculated ):
-        job = pz.ZacrosJob.load_external( path="tests/test_ZacrosResults.data" )
+        job = pz.ZacrosJob.load_external( path="tests/test_ZacrosResults.data/plamsjob" )
     else:
         job = pz.ZacrosJob.load_external( path='old_results/plamsjob' )
 

@@ -18,25 +18,15 @@ Threading/multiprocessing information:
 Simulation setup:
 ~~~~~~~~~~~~~~~~~
 
-    Random sequence with seed: 953129
+    Random sequence with seed: 953130
 
     Temperature: 500.00000000000000
 
     Pressure: 1.0000000000000000
 
-    Snapshots will be reported in file history_output.txt every 0.10000000000000001 time units
-
-    Process statistics will be reported in file procstat_output.txt every 0.10000000000000001 time units
-
     Species numbers will be reported in file specnum_output.txt every 0.10000000000000001 time units
 
-    Event reporting turned off
-
-    Maximum number of steps: 9223372036854775807 (maximum allowed value)
-
-    Max simulated time: 1.0000000000000000              
-
-    Allowed walltime in seconds: 3600
+    Max simulated time: 10.000000000000000              
 
     Number of gas species: 3
 
@@ -46,7 +36,7 @@ Simulation setup:
 
     Gas species molecular weights: 27.994900000000001 31.989799999999999 43.989800000000002 
 
-    Gas species molar fractions: 0.45000000000000001 0.55000000000000004 0.0000000000000000 
+    Gas species molar fractions: 0.41999999999999998 0.57999999999999996 0.0000000000000000 
 
     Number of surface species: 2
 
@@ -56,7 +46,7 @@ Simulation setup:
 
     The default Mersenne Twister 19937 random number generator will be used for this simulation.
 
-    Initializing the random number generator took 7.0940000000000002E-006 seconds
+    Initializing the random number generator took 6.6719999999999998E-006 seconds
 
     The default first reaction method will be used for propagating the KMC state, with a binary heap for the event-queue
 
@@ -69,18 +59,18 @@ Lattice setup:
 
     Unit cell area: 1.0000000000000000
 
-    Unit cell tiling: 20 x 20
+    Unit cell tiling: 50 x 50
 
-    Lattice surface area: 400.00000000000000
+    Lattice surface area: 2500.0000000000000
 
     Number of lattice sites per cell: 1
 
-    Total number of lattice sites: 400
+    Total number of lattice sites: 2500
 
     Number of site types: 1
 
     Site type names and total number of sites of that type:
-      StTp1 (400)
+      StTp1 (2500)
 
     Maximum coordination number: 4
 
@@ -111,8 +101,8 @@ Mechanism setup:
 
     Reaction network:
 
-        1. CO_adsorption:    A(Tini) =  4.5000E+00    Ea       =  0.00    k(Tini) =  4.5000E+00    Reaction: CO  +  *(StTp1)  ->  CO*(StTp1)
-        2. O2_adsorption:    A(Tini) =  1.3750E+00    Ea       =  0.00    k(Tini) =  1.3750E+00    Reaction: O2  +  *(StTp1)  +  *(StTp1)  ->  O*(StTp1)  +  O*(StTp1)
+        1. CO_adsorption:    A(Tini) =  4.2000E+00    Ea       =  0.00    k(Tini) =  4.2000E+00    Reaction: CO  +  *(StTp1)  ->  CO*(StTp1)
+        2. O2_adsorption:    A(Tini) =  1.4500E+00    Ea       =  0.00    k(Tini) =  1.4500E+00    Reaction: O2  +  *(StTp1)  +  *(StTp1)  ->  O*(StTp1)  +  O*(StTp1)
         3. CO_oxidation:     A(Tini) =  1.0000E+20    Ea       =  0.00    k(Tini) =  1.0000E+20    Reaction: CO*(StTp1)  +  O*(StTp1)  ->  CO2  +  *(StTp1)  +  *(StTp1)
 
     This mechanism contains up to two-site events involving only monodentate species.
@@ -166,49 +156,49 @@ Preparing simulation:
 
     Initializing lattice events.
 
-        2000 lattice events found and stored in binary heap.
+        12500 lattice events found and stored in binary heap.
 
 Commencing simulation:
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Simulation stopped:
 ~~~~~~~~~~~~~~~~~~~
- Current KMC time: 1.00000942
- Events occurred:  2223
- Event frequency:  2222.97925
+ Current KMC time: 10.0000849
+ Events occurred:  52416
+ Event frequency:  5241.55566
 
 Performance facts:
 ~~~~~~~~~~~~~~~~~~
 
-Elapsed CPU time:         1.52940005E-02 seconds
-Elapsed clock time:       2.16561686E-02 seconds
-Setup clock time:         6.73523685E-03 seconds
-Simulation clock time:    1.49209313E-02 seconds
+Elapsed CPU time:         0.191958010 seconds
+Elapsed clock time:       0.208815545 seconds
+Setup clock time:         1.68858003E-02 seconds
+Simulation clock time:    0.191929743 seconds
 
-Clock time per KMC event: 9.74186605E-06 seconds
-Clock time per KMC time:  2.16559656E-02 seconds/KMCTimeUnits
+Clock time per KMC event: 3.98381326E-06 seconds
+Clock time per KMC time:  2.08813772E-02 seconds/KMCTimeUnits
 
-Events per clock hour:    369539040
-KMC Dt per clock hour:    166235.953 KMCTimeUnits
+Events per clock hour:    903656832
+KMC Dt per clock hour:    172402.422 KMCTimeUnits
 
 Execution queue statistics:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Number of insertions:                12387
-Number of removals:                  12013
+Number of insertions:               240197
+Number of removals:                 239433
 Number of updates:                       0
 
 Memory usage statistics:
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Used capacity of process queue:                    2000
-       ...out of max-allocated:                   20000  (  10.00% utilization )
+Used capacity of process queue:                   12500
+       ...out of max-allocated:                  125000  (  10.00% utilization )
 
 Used capacity of process-participation list:          9
        ...out of max-allocated:                     200  (   4.50% utilization )
 
-Used capacity of cluster list:                      289
-       ...out of max-allocated:                   20000  (   1.44% utilization )
+Used capacity of cluster list:                     2187
+       ...out of max-allocated:                  125000  (   1.75% utilization )
 
 Used capacity of cluster-participation list:          1
        ...out of max-allocated:                      60  (   1.67% utilization )

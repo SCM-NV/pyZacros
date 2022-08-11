@@ -48,7 +48,7 @@ Simulation setup:
 
     The default Mersenne Twister 19937 random number generator will be used for this simulation.
 
-    Initializing the random number generator took 1.0696999999999999E-005 seconds
+    Initializing the random number generator took 9.4040000000000001E-006 seconds
 
     The default first reaction method will be used for propagating the KMC state, with a binary heap for the event-queue
 
@@ -172,16 +172,16 @@ Simulation stopped:
 Performance facts:
 ~~~~~~~~~~~~~~~~~~
 
-Elapsed CPU time:         4.45560031E-02 seconds
-Elapsed clock time:       7.06264526E-02 seconds
-Setup clock time:         2.79485118E-02 seconds
-Simulation clock time:    4.26779427E-02 seconds
+Elapsed CPU time:         5.52039966E-02 seconds
+Elapsed clock time:       8.10254961E-02 seconds
+Setup clock time:         2.82186419E-02 seconds
+Simulation clock time:    5.28068542E-02 seconds
 
-Clock time per KMC event: 1.13256019E-05 seconds
-Clock time per KMC time:  7.05362251E-03 seconds/KMCTimeUnits
+Clock time per KMC event: 1.29931841E-05 seconds
+Clock time per KMC time:  8.09219852E-03 seconds/KMCTimeUnits
 
-Events per clock hour:    317863904
-KMC Dt per clock hour:    510376.062 KMCTimeUnits
+Events per clock hour:    277068352
+KMC Dt per clock hour:    444872.938 KMCTimeUnits
 
 Execution queue statistics:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
