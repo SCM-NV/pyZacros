@@ -1,6 +1,3 @@
-import os
-import time
-
 import scm.plams
 
 import pyzacros as pz
@@ -8,9 +5,6 @@ from pyzacros.utils.compareReports import compare
 
 
 def test_ZacrosResults():
-    """Test of the ZacrosResults class."""
-    RUNDIR = os.getcwd()
-
     print( "---------------------------------------------------" )
     print( ">>> Testing ZacrosResults class" )
     print( "---------------------------------------------------" )
@@ -100,7 +94,7 @@ def test_ZacrosResults():
         print( "Warning: The calculation FAILED because the zacros executable is not available!" )
         print( "         For testing purposes, now we load precalculated results.")
 
-        job = scm.plams.load( RUNDIR+"/tests/test_ZacrosResults.data/plamsjob.dill" )
+        job = scm.plams.load( "tests/test_ZacrosResults.data/plamsjob/plamsjob.dill" )
         results = job.results
 
     #-----------------------

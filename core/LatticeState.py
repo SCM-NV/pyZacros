@@ -27,7 +27,7 @@ class LatticeState:
         if( type(surface_species) != SpeciesList and type(surface_species) != list ):
             msg  = "\n### ERROR ### LatticeState.__init__.\n"
             msg += "              Inconsistent type for surface_species\n"
-            raise NameError(msg)
+            raise Exception(msg)
 
         self.surface_species = surface_species
         if( type(surface_species) == list ):
@@ -36,7 +36,7 @@ class LatticeState:
         if( len( self.surface_species.gas_species() ) > 0 ):
             msg  = "\n### ERROR ### LatticeState.__init__.\n"
             msg += "              LatticeState doesn't accept gas surface_species\n"
-            raise NameError(msg)
+            raise Exception(msg)
 
         self.initial = initial
 
@@ -132,6 +132,11 @@ class LatticeState:
                     break
         elif( isinstance(species, Species) ):
             lSpecies = species
+        else:
+            msg  = "\n### ERROR ### LatticeState.fill_sites.\n"
+            msg += "              Inconsistent type for species. It should be type str or Species.\n"
+            msg += "              Expected: Species|str. Obtained: "+str(type(species))+"\n"
+            raise Exception(msg)
 
         if( isinstance(site_number,int) ):
             site_number = [site_number]
@@ -140,18 +145,18 @@ class LatticeState:
             msg  = "\n### ERROR ### LatticeState.fill_site.\n"
             msg += "              Inconsistent values for species denticity and dimensions of site_number\n"
             msg += "              denticity>1 but site_number is not an instance of list or tuple\n"
-            raise NameError(msg)
+            raise Exception(msg)
 
         #if( len(site_number) != lSpecies.denticity ):
             #msg  = "\n### ERROR ### LatticeState.fill_site.\n"
             #msg += "              Inconsistent values for species denticity and dimensions of site_number\n"
             #msg += "              site_number should have the `denticity` number of elements\n"
-            #raise NameError(msg)
+            #raise Exception(msg)
 
         if( any([self.__adsorbed_on_site[site] is not None for site in site_number]) ):
             msg  = "\n### ERROR ### LatticeState.fill_site.\n"
             msg += "              site is already filled\n"
-            raise NameError(msg)
+            raise Exception(msg)
 
         connected = [site_number[0]]
         to_check = [site_number[0]]
@@ -165,7 +170,7 @@ class LatticeState:
         #if( len(connected) != lSpecies.denticity ):
              #msg  = "\n### ERROR ### LatticeState.fill_site.\n"
              #msg += "              sites are not neighboring\n"
-             #raise NameError(msg)
+             #raise Exception(msg)
 
         entity_number = self._next_entity_number()
 
@@ -197,11 +202,10 @@ class LatticeState:
                     break
         elif( isinstance(species, Species) ):
             lSpecies = species
-
         else:
             msg  = "\n### ERROR ### LatticeState.fill_sites_random.\n"
             msg += "              Inconsistent type for species. It should be type str or Species\n"
-            raise NameError(msg)
+            raise Exception(msg)
 
         if ( isinstance(site_name, str) or isinstance(site_name, int) ):
             site_name = [site_name]
@@ -209,7 +213,7 @@ class LatticeState:
         if ( lSpecies.denticity != len(site_name) ):
             msg = "\n### ERROR ### LatticeState.fill_sites_random.\n"
             msg += "             Inconsistent amount of site_name with species denticity\n"
-            raise NameError(msg)
+            raise Exception(msg)
 
         neighboring_order = []
         if ( lSpecies.denticity > 1 ):
@@ -232,7 +236,7 @@ class LatticeState:
                 if( len(connected) != lSpecies.denticity ):
                     msg = "\n### ERROR ### LatticeState.fill_sites_random.\n"
                     msg += "             neighboring sites not connected.\n"
-                    raise NameError(msg)
+                    raise Exception(msg)
                 neighboring_order = connected
                 neighboring = [[x[0],x[1]] if connected.index(x[0]) < connected.index(x[1]) else [x[1],x[0]] for x in neighboring]
 
@@ -262,7 +266,7 @@ class LatticeState:
         if( len(target_sites) == 0 ):
             msg  = "\n### ERROR ### LatticeState.fill_sites_random.\n"
             msg += "              site_name="+str(site_name)+" not found\n"
-            raise NameError(msg)
+            raise Exception(msg)
 
         n_sites_to_fill = round(len(target_sites)*coverage)
         random.shuffle( total_available_conf )

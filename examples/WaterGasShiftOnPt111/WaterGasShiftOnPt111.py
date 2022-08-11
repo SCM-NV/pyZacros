@@ -31,52 +31,52 @@ latt = pz.Lattice( lattice_type=pz.Lattice.HEXAGONAL, lattice_constant=1.0, repe
 # Clusters:
 #---------------------------------------------
 CO_point = pz.Cluster( species=[CO_adsorbed],
-                       cluster_energy=-2.077,
+                       energy=-2.077,
                        label="CO_point")
 
 H2O_point = pz.Cluster(species=[H2O_adsorbed],
-                       cluster_energy=-0.362,
+                       energy=-0.362,
                        label="H2O_point")
 
 OH_point = pz.Cluster(species=[OH_adsorbed],
-                      cluster_energy=0.830,
+                      energy=0.830,
                       label="OH_point")
 
 O_point = pz.Cluster(species=[O_adsorbed],
-                     cluster_energy=1.298,
+                     energy=1.298,
                      label="O_point")
 
 H_point = pz.Cluster(species=[H_adsorbed],
-                     cluster_energy=-0.619,
+                     energy=-0.619,
                      label="H_point")
 
 COOH_point = pz.Cluster(species=[COOH_adsorbed],
-                        cluster_energy=-1.487,
+                        energy=-1.487,
                         label="COOH_point")
 
 CO_pair_1NN = pz.Cluster(species=[CO_adsorbed, CO_adsorbed],
                          neighboring=[(0, 1)],
-                         cluster_energy=0.560,
+                         energy=0.560,
                          label="CO_pair_1NN")
 
 OH_H_1NN = pz.Cluster(species=[OH_adsorbed, H_adsorbed],
                       neighboring=[(0, 1)],
-                      cluster_energy=0.021,
+                      energy=0.021,
                       label="OH_H_1NN")
 
 O_H_1NN = pz.Cluster(species=[O_adsorbed, H_adsorbed],
                      neighboring=[(0, 1)],
-                     cluster_energy=0.198,
+                     energy=0.198,
                      label="O_H_1NN")
 
 CO_OH_1NN = pz.Cluster(species=[CO_adsorbed, OH_adsorbed],
                        neighboring=[(0, 1)],
-                       cluster_energy=0.066,
+                       energy=0.066,
                        label="CO_OH_1NN")
 
 CO_O_1NN = pz.Cluster(species=[CO_adsorbed, O_adsorbed],
                       neighboring=[(0, 1)],
-                      cluster_energy=0.423,
+                      energy=0.423,
                       label="CO_O_1NN")
 
 #---------------------------------------------

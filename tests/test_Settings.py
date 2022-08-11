@@ -1,9 +1,8 @@
 import pyzacros as pz
-from pyzacros.utils.compareReports import compare
+import pyzacros.utils
 
 
 def test_Settings():
-    """Test of the Settings class."""
     print("---------------------------------------------------")
     print(">>> Testing Settings class")
     print("---------------------------------------------------")
@@ -36,4 +35,4 @@ max_steps         infinity
 max_time          1e+50
 wall_time         5000\
 """
-    assert( compare( output, expectedOutput, 1e-3 ) )
+    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )

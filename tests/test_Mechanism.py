@@ -1,14 +1,13 @@
 import pyzacros as pz
-from pyzacros.utils.compareReports import compare
+import pyzacros.utils
 
 
 def test_Mechanism():
-    """Test of the Mechanism class."""
     print( "---------------------------------------------------" )
     print( ">>> Testing Mechanism class" )
     print( "---------------------------------------------------" )
 
-    s0 = pz.Species( "*", 1 )      # Empty adsorption site
+    s0 = pz.Species( "*", 1 )   # Empty adsorption site
     s1 = pz.Species( "H*", 1 )  # H adsorbed with dentation 1
     s2 = pz.Species( "H2*", 1 ) # H2 adsorbed with dentation 1
     s3 = pz.Species( "H2*", 2 ) # H2 adsorbed with dentation 2
@@ -74,4 +73,4 @@ end_reversible_step
 
 end_mechanism\
 """
-    assert( compare( output, expectedOutput, 1e-3 ) )
+    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )

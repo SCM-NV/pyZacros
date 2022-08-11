@@ -1,109 +1,36 @@
-"""Test script that reproduces https://zacros.org/tutorials/12-about-kinetic-monte-carlo?showall=1"""
-
 import scm
 import scm.pyzacros as pz
+import scm.pyzacros.models
 
-#---------------------------------------------
-# Species:
-#---------------------------------------------
-# - Gas-species:
-O2_gas = pz.Species("O2")
-CO_gas = pz.Species("CO")
-CO2_gas = pz.Species("CO2", gas_energy=-3.1800)
+lh = pz.models.LangmuirHinshelwood()
 
-# - Surface species:
-s0 = pz.Species("*", 1)      # Empty adsorption site
-O_adsorbed = pz.Species("O*", 1)
-CO_adsorbed = pz.Species("CO*", 1)
-
-#---------------------------------------------
-# Lattice setup:
-#---------------------------------------------
-latt = pz.Lattice( lattice_type=pz.Lattice.HEXAGONAL, lattice_constant=1.0, repeat_cell=[20,20] )
-
-#---------------------------------------------
-# Clusters & Cluster expansion
-#---------------------------------------------
-empty_point = pz.Cluster( species=[pz.Species.UNSPECIFIED], cluster_energy=0.0, label="Empty")
-myClusterExpansion = pz.ClusterExpansion( [empty_point] )
-
-#---------------------------------------------
-# Elementary Reactions & Mechanism
-#---------------------------------------------
-
-CO_adsorption = pz.ElementaryReaction(initial=[s0,CO_gas],
-                                      final=[CO_adsorbed],
-                                      reversible=True,
-                                      pre_expon=1.000e+7,
-                                      pe_ratio=2.000,
-                                      activation_energy=0.000,
-                                      label="CO_adsorption")
-
-O2_adsorption = pz.ElementaryReaction(initial=[s0,s0,O2_gas],
-                                      final=[O_adsorbed,O_adsorbed],
-                                      neighboring=[(0, 1)],
-                                      reversible=True,
-                                      pre_expon=1.000e+7,
-                                      pe_ratio=5.000,
-                                      activation_energy=0.000,
-                                      label="O2_adsorption")
-
-O_diffusion = pz.ElementaryReaction(initial=[O_adsorbed,s0],
-                                      final=[s0,O_adsorbed],
-                                      neighboring=[(0, 1)],
-                                      reversible=True,
-                                      pre_expon=1.000e+6,
-                                      pe_ratio=1.000,
-                                      activation_energy=0.000,
-                                      label="O_diffusion")
-
-CO_diffusion = pz.ElementaryReaction(initial=[CO_adsorbed,s0],
-                                      final=[s0,CO_adsorbed],
-                                      neighboring=[(0, 1)],
-                                      reversible=True,
-                                      pre_expon=1.000e+6,
-                                      pe_ratio=1.000,
-                                      activation_energy=0.000,
-                                      label="CO_diffusion")
-
-CO_oxidation = pz.ElementaryReaction(initial=[CO_adsorbed, O_adsorbed],
-                                     final=[s0, s0, CO2_gas],
-                                     neighboring=[(0, 1)],
-                                     reversible=False,
-                                     pre_expon=4.500e+2,
-                                     activation_energy=0.000,
-                                     label="CO_oxidation")
-
-mech = pz.Mechanism([CO_adsorption, O2_adsorption, O_diffusion, CO_diffusion, CO_oxidation])
-
-#---------------------------------------------
-# Settings:
-#---------------------------------------------
 scm.pyzacros.init()
 
+dt = 5.0e-5
+
 sett = pz.Settings()
+sett.random_seed = 1609
+sett.temperature = 300.0
+sett.pressure = 1.000
+sett.snapshots = ('time', 10*dt)
+sett.process_statistics = ('time', dt)
+sett.species_numbers = ('time', dt)
+sett.max_time = 100*dt
 
 sett.molar_fraction.O2 = 0.500
 sett.molar_fraction.CO = 0.500
 
-sett.random_seed = 1609
-sett.temperature = 300.0
-sett.pressure = 1.000
+# Adsorption and diffusion scaling factors
+for rxn in lh.mechanism:
+    if 'adsorption' in rxn.label(): rxn.pre_expon *= 1e-2
+    if  'diffusion' in rxn.label(): rxn.pre_expon *= 1e-2
 
-sett.snapshots = ('time', 5.0e-04)
-sett.process_statistics = ('time', 5.0e-05)
-sett.species_numbers = ('time', 5.0e-05)
-sett.event_report = 'off'
-sett.max_steps = 'infinity'
-sett.max_time = 5.0e-2
-sett.wall_time = 21600 # 6 hrs
+job = pz.ZacrosJob( settings=sett, lattice=lh.lattice, mechanism=lh.mechanism, cluster_expansion=lh.cluster_expansion )
 
-job = pz.ZacrosJob( settings=sett, lattice=latt, mechanism=mech, cluster_expansion=myClusterExpansion )
-
-print(job)
 results = job.run()
 
 if( job.ok() ):
-   results.plot_molecule_numbers( ["CO2"] )
+    results.plot_molecule_numbers( ['CO2'] )
+    print("turnover_frequency = ", results.turnover_frequency(species_name='CO2')[0])
 
 scm.pyzacros.finish()

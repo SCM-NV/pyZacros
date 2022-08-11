@@ -1,9 +1,8 @@
 import pyzacros as pz
-from pyzacros.utils.compareReports import compare
+import pyzacros.utils
 
 
 def test_Lattice():
-    """Test of the Lattice class."""
     print("---------------------------------------------------")
     print(">>> Testing Lattice class")
     print("---------------------------------------------------")
@@ -22,7 +21,7 @@ lattice default_choice
   hexagonal_periodic 1.0 8 10
 end_lattice\
 """
-    assert( compare( output, expectedOutput, 1e-3 ) )
+    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
 
     print("")
     print("From unit-cell")
@@ -92,7 +91,7 @@ lattice periodic_cell
   end_neighboring_structure
 end_lattice\
 """
-    assert( compare( output, expectedOutput, 1e-3 ) )
+    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
 
     print("")
     print("From explicitly defined lattices")
@@ -160,9 +159,9 @@ lattice explicit
   end_lattice_structure
 end_lattice\
 """
-    assert( compare( output, expectedOutput, 1e-3 ) )
+    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
 
     ## reading from yaml
     #myLattice = pz.Lattice(path_to_slab_yaml="./pyzacros/slabs/pd111.yaml")
     #output2 = str(myLattice)
-    #assert( compare( output2, expectedOutput, 1e-3 ) )
+    #assert( pz.utils.compare( output2, expectedOutput, 1e-3 ) )

@@ -1,18 +1,17 @@
 import scm.plams
 
 import pyzacros as pz
-from pyzacros.utils.compareReports import compare
+import pyzacros.utils
 
 
 def test_ZacrosJob():
-    """Test of the Mechanism class."""
     print( "---------------------------------------------------" )
     print( ">>> Testing ZacrosJob class" )
     print( "---------------------------------------------------" )
 
-    s0 = pz.Species( "*", 1 )   # Empty adsorption site
-    H_ads = pz.Species( "H*", 1 )  # H adsorbed with dentation 1
-    H2_ads = pz.Species( "H2*", 1 ) # H2 adsorbed with dentation 1
+    s0 = pz.Species( "*", 1 )                   # Empty adsorption site
+    H_ads = pz.Species( "H*", 1 )               # H adsorbed with dentation 1
+    H2_ads = pz.Species( "H2*", 1 )             # H2 adsorbed with dentation 1
     H2_gas = pz.Species( "H2", gas_energy=0.0 ) # H2(gas)
 
     myLattice = pz.Lattice(lattice_type=pz.Lattice.HEXAGONAL, lattice_constant=1.0, repeat_cell=[8,10])
@@ -66,7 +65,7 @@ def test_ZacrosJob():
     output = str(myJob)
     with open( "tests/test_ZacrosJob_expected_input.txt", "r" ) as inp:
         expectedOutput = inp.read()
-    assert( compare( output, expectedOutput, 1e-3 ) )
+    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
 
     try:
         myJob.run()
@@ -83,20 +82,20 @@ def test_ZacrosJob():
     output = str(myJob)
     with open( "tests/test_ZacrosJob_expected_input_default.txt", "r" ) as inp:
         expectedOutput = inp.read()
-    assert( compare( output, expectedOutput, 1e-3 ) )
+    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
 
     myJob = pz.ZacrosJob.load_external( path='tests/test_ZacrosJob.idata/periodic_cell' )
     print(myJob)
     output = str(myJob)
     with open( "tests/test_ZacrosJob_expected_input_periodic_cell.txt", "r" ) as inp:
         expectedOutput = inp.read()
-    assert( compare( output, expectedOutput, 1e-3 ) )
+    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
 
     myJob = pz.ZacrosJob.load_external( path='tests/test_ZacrosJob.idata/explicit' )
     print(myJob)
     output = str(myJob)
     with open( "tests/test_ZacrosJob_expected_input_explicit.txt", "r" ) as inp:
         expectedOutput = inp.read()
-    assert( compare( output, expectedOutput, 1e-3 ) )
+    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
 
     scm.plams.finish()

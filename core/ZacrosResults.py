@@ -33,12 +33,6 @@ class ZacrosResults( scm.plams.Results ):
         'out': 'std.out'}
 
 
-    def ok(self):
-        """Check if the execution of the associated :attr:`job` was successful or not.
-        See :meth:`Job.ok<scm.plams.core.basejob.Job.ok>` for more information."""
-        return self.job.ok()
-
-
     def get_zacros_version(self):
         """
         Return the zacros's version from the 'general_output.txt' file.
@@ -71,6 +65,35 @@ class ZacrosResults( scm.plams.Results ):
         return reaction_network
 
 
+    def provided_quantities_names(self):
+        """
+        Return the provided quantities headers from the ``specnum_output.txt`` file in a list.
+        Below is shown an example of the ``specnum_output.txt`` for a zacros calculation.
+
+        .. code-block:: none
+
+            Entry   Nevents        Time   Temperature       Energy   O*  CO*     O2     CO   CO2
+                1         0   0.000E+00   5.00000E+02   -4.089E+01   11   12      0      0     0
+                2        88   1.000E-01   5.00000E+02   -7.269E+01   22   17    -21    -36    31
+                3       176   2.000E-01   5.00000E+02   -9.139E+01   29   19    -41    -71    64
+                4       247   3.000E-01   5.00000E+02   -1.041E+02   34   20    -57    -99    91
+
+        For this example, this function will return:
+
+        .. code-block:: python
+
+            [ 'Entry', 'Nevents', 'Time', 'Temperature', 'Energy', 'O*', 'CO*', 'O2', 'CO', 'CO2' ]
+        """
+        quantities = None
+        if( self.job.restart is None ):
+            lines = self.awk_file(self._filenames['specnum'],script='(NR==1){print $0}')
+            names = lines[0].split()
+        else:
+            names = self.job.restart.results.provided_quantities_names()
+
+        return names
+
+
     def provided_quantities(self):
         """
         Return the provided quantities from the ``specnum_output.txt`` file in a form of a dictionary.
@@ -101,10 +124,11 @@ class ZacrosResults( scm.plams.Results ):
                "CO2":[0, 31, 64, 91]
             }
         """
+
         quantities = None
+        names = None
         if( self.job.restart is None ):
-            lines = self.awk_file(self._filenames['specnum'],script='(NR==1){print $0}')
-            names = lines[0].split()
+            names = self.provided_quantities_names()
 
             quantities = {}
             for name in names:
@@ -189,6 +213,7 @@ class ZacrosResults( scm.plams.Results ):
             output.extend( self.job.restart.results.surface_species_names() )
 
         return output
+
 
     def site_type_names(self):
         """
@@ -351,6 +376,39 @@ class ZacrosResults( scm.plams.Results ):
         Return the last configuration from the 'history_output.txt' file.
         """
         return self.lattice_states(last=1)[0]
+
+
+    def average_coverage(self, last=5):
+        """
+        Returns a dictionary with the average coverage fractions using the last ``last`` lattice states, e.g., ``{ "CO*":0.32, "O*":0.45 }``
+        """
+
+        surface_species_names = self.surface_species_names()
+
+        acf = {}
+        for sspecies in surface_species_names:
+            acf[sspecies] = 0.0
+
+        #for lattice_state in self.lattice_states(last=last):
+            #fractions = lattice_state.coverage_fractions()
+
+            #for sspecies in surface_species_names:
+                #acf[sspecies] += fractions[sspecies]/last
+
+        provided_quantities = self.provided_quantities()
+        n_items = len(provided_quantities['Entry'])
+        nmol_total = n_items*[0]
+
+        for i in reversed(range(n_items)):
+            if i==n_items-last-1: break
+
+            for sspecies in surface_species_names:
+                acf[sspecies] += provided_quantities[sspecies][i]
+
+        for sspecies in surface_species_names:
+            acf[sspecies] /= self.job.lattice.number_of_sites()*last
+
+        return acf
 
 
     def plot_lattice_states(self, data, pause=-1, show=True, ax=None, close=False, time_perframe=0.5, file_name=None):
@@ -727,7 +785,8 @@ class ZacrosResults( scm.plams.Results ):
 
 
     #--------------------------------------------------------------
-    # Function to compute the rate of production
+    # Function to compute the rate of production using the
+    # Batch-Means-Stopping method.
     # Original author: Mauro Bracconi (mauro.bracconi@polimi.it)
     # Evaluation of the steady state is inspired by this publication:
     #   Hashemi et al., J.Chem. Phys. 144, 074104 (2016)
@@ -735,49 +794,37 @@ class ZacrosResults( scm.plams.Results ):
     @staticmethod
     def __compute_rate( t_vect, spec, n_sites, n_batch=20, confidence=0.99 ):
 
-        def time_search(t,tvec):
-            ind_geq = 0
-            while tvec[ind_geq] < t:
-                ind_geq += 1
-
-            ind_leq = len( tvec ) - 1
-            while ind_leq>0 and tvec[ind_leq] > t:
-                ind_leq -= 1
-            low_frac = 1.0
-            if not (ind_geq == ind_leq):
-                low_frac = (tvec[ind_geq] - t) / (tvec[ind_geq] - tvec[ind_leq])
-            return [ (ind_leq,ind_geq), (low_frac,1-low_frac)]
-
+        # Batch means stopping implementation
         t_vect = numpy.array(t_vect)
         prod_mol = numpy.array(spec)/n_sites
 
-        n_batch = min( len(t_vect), int(len(t_vect)/n_batch) )
-        dt_batch = t_vect[-1]/n_batch
-        bin_edge = numpy.linspace(0,t_vect[-1],n_batch+1)
+        # Define batch length
+        lt = int(len(t_vect)/n_batch)
 
-        rate = numpy.zeros( n_batch )
-
+        # Compute TOF in each batch
+        ratet = numpy.empty(n_batch)
         for i in range(n_batch):
-            idb_s = time_search( bin_edge[i], t_vect )
-            idb_e = time_search( bin_edge[i+1], t_vect )
+            if ( i != n_batch-1 ) :
+                ratet[i] = numpy.polyfit(t_vect[lt*i:lt*(i+1)],prod_mol[lt*i:lt*(i+1)],1)[0]
+            else:
+                ratet[i] = numpy.polyfit(t_vect[lt*i:-1],prod_mol[lt*i:-1],1)[0]
 
-            pp_s = idb_s[1][0] * prod_mol[idb_s[0][0]] + idb_s[1][1] * prod_mol[idb_s[0][1]]
-            pp_e = idb_e[1][0] * prod_mol[idb_e[0][0]] + idb_e[1][1] * prod_mol[idb_e[0][1]]
-            rate[i] = (pp_e-pp_s)/dt_batch
+        # Exclude first batch
+        rate = ratet[1:]
 
-        rate = rate[1:]
+        # Compute average and CI
         rate_av, se = numpy.mean(rate), scipy.stats.sem(rate)
+        rate_CI = se * scipy.stats.t._ppf( (1.0+confidence)/2.0, len(rate) - 1.0 )
+        ratio = numpy.abs(rate_CI)/(numpy.abs(rate_av)+1e-8)
 
-        # Mean confidence interval
-        rate_CI = se * scipy.stats.t._ppf((1+confidence)/2.0, n_batch - 1)
-
-        if ( rate_CI/(rate_av+1e-8)<1.0-confidence ):
-            return ( rate_av,rate_CI,rate_CI/(rate_av+1e-8), True )
+        if ( ratio<1.0-confidence ):
+            return ( rate_av,rate_CI,ratio, True )
         else:
-            return ( rate_av,rate_CI,rate_CI/(rate_av+1e-8), False )
+            #return ( rate_av,rate_CI,ratio, False )
+            return ( rate[-1],rate_CI,ratio, False )
 
 
-    def get_TOFs(self, nbatch=20, confidence=0.99):
+    def turnover_frequency(self, nbatch=20, confidence=0.99, species_name=None, provided_quantities=None):
         """
         Returns the TOF (mol/sec/site) calculated by the batch-means stopping method. See Hashemi et al., J.Chem. Phys. 144, 074104 (2016)
 
@@ -808,18 +855,77 @@ class ZacrosResults( scm.plams.Results ):
         """
         values = {}
         errors = {}
+        ratios = {}
         converged = {}
 
-        provided_quantities = self.provided_quantities()
+        lprovided_quantities = provided_quantities
+        if provided_quantities is None:
+            lprovided_quantities = self.provided_quantities()
 
         for sn in self.gas_species_names():
 
-            nMolsVec = provided_quantities[sn]
+            nMolsVec = lprovided_quantities[sn]
 
-            aver,ci,ratio,conv = ZacrosResults.__compute_rate( provided_quantities["Time"], provided_quantities[sn],
-                                                                self.number_of_lattice_sites(), nbatch, confidence )
-            values[sn] = aver
-            errors[sn] = ci
-            converged[sn] = conv
+            if sum(numpy.abs(lprovided_quantities[sn])) > 0:
+                aver,ci,ratio,conv = ZacrosResults.__compute_rate( lprovided_quantities["Time"], lprovided_quantities[sn],
+                                                                    self.number_of_lattice_sites(), nbatch, confidence )
+                values[sn] = aver
+                errors[sn] = ci
+                ratios[sn] = ratio
+                converged[sn] = conv
+            else:
+                values[sn] = 0.0
+                errors[sn] = 0.0
+                ratios[sn] = 0.0
+                converged[sn] = True
 
-        return values,errors,converged
+        if species_name is None:
+            return values,errors,ratios,converged
+        else:
+            return values[species_name],errors[species_name],ratios[species_name],converged[species_name]
+
+
+    @staticmethod
+    def _average_provided_quantities( provided_quantities_list, key_column_name, columns_name=None ):
+
+        if len(provided_quantities_list) == 0:
+            msg  = "### ERROR ### ZacrosResults._average_provided_quantities\n"
+            msg += ">> provided_quantities_list parameter should eb a list with at least one item\n"
+            raise Exception( msg )
+
+        nexp = len(provided_quantities_list)
+        npoints = len(provided_quantities_list[0][key_column_name])
+
+        if columns_name is None:
+            columns_name = provided_quantities_list[0].keys()
+
+        for provided_quantities in provided_quantities_list:
+            for name in columns_name:
+                if len(provided_quantities[name]) != npoints:
+                    msg  = "### ERROR ### ZacrosResults._average_provided_quantities\n"
+                    msg += ">> provided_quantities_list contains items with different sizes\n"
+                    raise Exception( msg )
+
+        average = {}
+
+        average[key_column_name] = npoints*[0.0]
+        for name in columns_name:
+            average[name] = npoints*[0.0]
+
+        for i in range(npoints):
+            average[key_column_name][i] = provided_quantities_list[0][key_column_name][i]
+
+            for k in range(nexp):
+                if k>0 and provided_quantities_list[k][key_column_name][i] != provided_quantities_list[0][key_column_name][i]:
+                    msg  = "### ERROR ### ZacrosResults._average_provided_quantities\n"
+                    msg += ">> Reference column has different values for each item\n"
+                    raise Exception( msg )
+
+            for name in columns_name:
+                if name == key_column_name: continue
+                for k in range(nexp):
+                    average[name][i] += provided_quantities_list[k][name][i]
+                average[name][i] /= float(nexp)
+
+        return average
+

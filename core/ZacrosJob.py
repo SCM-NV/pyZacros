@@ -118,14 +118,14 @@ class ZacrosJob( scm.plams.SingleJob ):
 
         self.initial_state = initial_state
 
-        self.restart_file_content = None
+        self._restart_file_content = None
         self.restart = None
 
         if( restart is not None ):
             self.restart = restart
             restart_file = os.path.join(restart.path, ZacrosJob._filenames['restart'])
             with open(restart_file, "r") as depFile:
-                self.restart_file_content = depFile.readlines()
+                self._restart_file_content = depFile.readlines()
 
         check_molar_fraction(self.settings, self.mechanism.gas_species())
 
@@ -247,8 +247,8 @@ class ZacrosJob( scm.plams.SingleJob ):
         Returns a string with the content of the restart.inf file
         """
         output = ""
-        if( self.restart_file_content is not None ):
-            for line in self.restart_file_content:
+        if( self._restart_file_content is not None ):
+            for line in self._restart_file_content:
                 output += line
         return output
 
@@ -258,6 +258,14 @@ class ZacrosJob( scm.plams.SingleJob ):
         Look for the normal termination signal in the output. Note, that it does not mean your calculation was successful!
         """
         lines = self.results.grep_file(self.results._filenames['general'], pattern='> Normal termination <')
+        return len(lines) > 0
+
+
+    def surface_poisoned(self):
+        """
+        Returns true in the case the "Warning code 801002" is find in the output.
+        """
+        lines = self.results.grep_file(self.results._filenames['general'], pattern='Warning code 801002 .* this may indicate that the surface is poisoned')
         return len(lines) > 0
 
 
@@ -278,7 +286,7 @@ class ZacrosJob( scm.plams.SingleJob ):
         ret += '\n'
         ret += path
 
-        if( self.restart_file_content is not None and 'restart' in self.settings ):
+        if( self._restart_file_content is not None and 'restart' in self.settings ):
             if( 'max_time' in self.settings['restart'] ):
                 ret += ' --max_time='+str(self.settings.restart.max_time)
             if( 'max_steps' in self.settings['restart'] ):
@@ -325,7 +333,7 @@ class ZacrosJob( scm.plams.SingleJob ):
             with open(state, "w") as inp:
                 inp.write(self.get_initial_state_input())
 
-        if( self.restart_file_content is not None ):
+        if( self._restart_file_content is not None ):
             with open(restart, 'w') as inp:
                 inp.write(self.get_restart_input())
 
@@ -370,12 +378,12 @@ class ZacrosJob( scm.plams.SingleJob ):
             output += "---------------------------------------------------------------------"+"\n"
             output += self.get_initial_state_input()
 
-        if( self.restart_file_content is not None ):
+        if( self._restart_file_content is not None ):
             output += "\n"
             output += "---------------------------------------------------------------------"+"\n"
             output += ZacrosJob._filenames['restart']+"\n"
             output += "---------------------------------------------------------------------"+"\n"
-            for line in self.restart_file_content:
+            for line in self._restart_file_content:
                 output += line
 
         return output
@@ -789,6 +797,7 @@ class ZacrosJob( scm.plams.SingleJob ):
                         "pre_expon" : lambda sv: parameters.setdefault("pre_expon", float(sv[0])),
                         "pe_ratio" : lambda sv: parameters.setdefault("pe_ratio", float(sv[0])),
                         "activ_eng" : lambda sv: parameters.setdefault("activation_energy", float(sv[0])),
+                        "prox_factor" : lambda sv: parameters.setdefault("prox_factor", float(sv[0])),
                     }
                     cases.get( tokens[0], lambda sv: None )( tokens[1:] )
 
@@ -978,4 +987,3 @@ class ZacrosJob( scm.plams.SingleJob ):
         job.restart = restart
 
         return job
-

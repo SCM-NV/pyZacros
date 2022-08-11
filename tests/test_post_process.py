@@ -3,66 +3,16 @@ import os
 import scm.plams
 
 import pyzacros as pz
-from pyzacros.utils.compareReports import compare
+import pyzacros.models
+import pyzacros.utils
 
 
 def test_post_process():
-    """Test of the post_process methods."""
-    RUNDIR = os.getcwd()
-
     print( "---------------------------------------------------" )
     print( ">>> Testing Zacros post_process methods" )
     print( "---------------------------------------------------" )
 
-    #---------------------------------------------
-    # Species:
-    #---------------------------------------------
-    # - Gas-species:
-    CO_gas = pz.Species("CO")
-    O2_gas = pz.Species("O2")
-    CO2_gas = pz.Species("CO2", gas_energy=-2.337)
-
-    # -) Surface species:
-    s0 = pz.Species("*", 1)      # Empty adsorption site
-    CO_ads = pz.Species("CO*", 1)
-    O_ads = pz.Species("O*", 1)
-
-    #---------------------------------------------
-    # Lattice setup:
-    #---------------------------------------------
-    myLattice = pz.Lattice(lattice_type=pz.Lattice.RECTANGULAR, lattice_constant=1.0, repeat_cell=[20,20])
-
-    #---------------------------------------------
-    # Clusters:
-    #---------------------------------------------
-    CO_point = pz.Cluster(species=[CO_ads], energy=-1.3)
-    O_point = pz.Cluster(species=[O_ads], energy=-2.3)
-
-    #---------------------------------------------
-    # Elementary Reactions
-    #---------------------------------------------
-    # CO_adsorption:
-    CO_adsorption = pz.ElementaryReaction( initial=[s0,CO_gas],
-                                           final=[CO_ads],
-                                           reversible=False,
-                                           pre_expon=10.0,
-                                           label="CO_adsorption")
-
-    # O2_adsorption:
-    O2_adsorption = pz.ElementaryReaction( initial=[s0,s0,O2_gas],
-                                           final=[O_ads,O_ads],
-                                           neighboring=[(0, 1)],
-                                           reversible=False,
-                                           pre_expon=2.5,
-                                           label="O2_adsorption")
-
-    # CO_oxidation:
-    CO_oxidation = pz.ElementaryReaction( initial=[CO_ads, O_ads],
-                                          final=[s0, s0, CO2_gas],
-                                          neighboring=[(0, 1)],
-                                          reversible=False,
-                                          pre_expon=1.0e+20,
-                                          label="CO_oxidation")
+    zgb = pz.models.ZiffGulariBarshad( repeat_cell=[20,20] )
 
     scm.plams.init( folder='old_results' )
 
@@ -81,10 +31,8 @@ def test_post_process():
     sett.max_time = 1.0
     sett.wall_time = 3600
 
-    job = pz.ZacrosJob( settings=sett,
-                        lattice=myLattice,
-                        mechanism=[CO_adsorption, O2_adsorption, CO_oxidation],
-                        cluster_expansion=[CO_point, O_point] )
+    job = pz.ZacrosJob( settings=sett, lattice=zgb.lattice, mechanism=zgb.mechanism,
+                        cluster_expansion=zgb.cluster_expansion )
 
     #-----------------------
     # Running the job
@@ -105,7 +53,7 @@ def test_post_process():
     scm.plams.finish()
 
     if( load_precalculated ):
-        job = pz.ZacrosJob.load_external( path=RUNDIR+"/tests/test_ZacrosResults.data" )
+        job = pz.ZacrosJob.load_external( path="tests/test_ZacrosResults.data/plamsjob" )
     else:
         job = pz.ZacrosJob.load_external( path='old_results/plamsjob' )
 
@@ -117,4 +65,4 @@ def test_post_process():
 {'Entry': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 'Nevents': [0, 346, 614, 888, 1117, 1314, 1535, 1726, 1920, 2056, 2222], 'Time': [0.0, 0.1, 0.2, 0.30000000000000004, 0.4, 0.5, 0.6, 0.7, 0.7999999999999999, 0.8999999999999999, 0.9999999999999999], 'Temperature': [500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0, 500.0], 'Energy': [0.0, -362.40000000000106, -435.4000000000014, -481.8000000000016, -531.5000000000013, -514.4000000000016, -528.9000000000013, -530.2000000000013, -614.3999999999997, -653.499999999999, -612.0999999999998], 'CO*': [0, 24, 20, 15, 9, 10, 7, 8, 2, 2, 2], 'O*': [0, 144, 178, 201, 226, 218, 226, 226, 266, 283, 265], 'CO': [0, -124, -222, -324, -407, -488, -573, -650, -716, -767, -837], 'O2': [0, -122, -190, -255, -312, -348, -396, -434, -490, -524, -550], 'CO2': [0, 100, 202, 309, 398, 478, 566, 642, 714, 765, 835]}\
 """
 
-    assert( compare( output, expectedOutput, 1e-3 ) )
+    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
