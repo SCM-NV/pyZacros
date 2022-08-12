@@ -50,6 +50,8 @@ def test_ZacrosSteadyStateJob():
         mjob = scm.plams.load( 'tests/test_ZacrosSteadyStateJob.idata/plamsjob/plamsjob.dill' )
         results = mjob.results
 
+    scm.plams.finish()
+
     output = ""
 
     if mjob.ok():
