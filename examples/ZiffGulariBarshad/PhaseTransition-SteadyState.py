@@ -7,9 +7,6 @@ import scm.pyzacros.models
 
 zgb = pz.models.ZiffGulariBarshad()
 
-#---------------------------------------------
-# Calculation Settings
-#---------------------------------------------
 scm.plams.init()
 
 # Run as many job simultaneously as there are cpu on the system
@@ -18,7 +15,6 @@ scm.plams.config.default_jobrunner = scm.plams.JobRunner(parallel=True, maxjobs=
 scm.plams.config.job.runscript.nproc = 1
 print('Running up to {} jobs in parallel simultaneously'.format(maxjobs))
 
-# Settings:
 sett = pz.Settings()
 sett.random_seed = 953129
 sett.temperature = 500.0
@@ -26,19 +22,20 @@ sett.pressure = 1.0
 sett.species_numbers = ('time', 0.1)
 sett.max_time = 10.0
 
-sett.steady_state_job.turnover_frequency.nbatch = 20
-sett.steady_state_job.turnover_frequency.confidence = 0.95
-sett.steady_state_job.nreplicas = 4
-
 parametersA = { 'max_time':pz.ZacrosSteadyStateJob.Parameter('restart.max_time', 2*sett.max_time*( numpy.arange(20)+1 )**3) }
-
-parametersB = { 'x_CO':pz.ZacrosParametersScanJob.Parameter('molar_fraction.CO', numpy.arange(0.2, 0.8, 0.01)),
-                'x_O2':pz.ZacrosParametersScanJob.Parameter('molar_fraction.O2', lambda params: 1.0-params['x_CO']) }
 
 job = pz.ZacrosJob( settings=sett, lattice=zgb.lattice, mechanism=zgb.mechanism,
                     cluster_expansion=zgb.cluster_expansion )
 
-ssjob = pz.ZacrosSteadyStateJob( reference=job, generator_parameters=parametersA )
+parametersB = { 'x_CO':pz.ZacrosParametersScanJob.Parameter('molar_fraction.CO', numpy.arange(0.2, 0.8, 0.01)),
+                'x_O2':pz.ZacrosParametersScanJob.Parameter('molar_fraction.O2', lambda params: 1.0-params['x_CO']) }
+
+sett = pz.Settings()
+sett.turnover_frequency.nbatch = 20
+sett.turnover_frequency.confidence = 0.95
+sett.nreplicas = 4
+
+ssjob = pz.ZacrosSteadyStateJob( settings=sett, reference=job, generator_parameters=parametersA )
 
 mjob = pz.ZacrosParametersScanJob( reference=ssjob,
                                    generator=pz.ZacrosParametersScanJob.meshGenerator,

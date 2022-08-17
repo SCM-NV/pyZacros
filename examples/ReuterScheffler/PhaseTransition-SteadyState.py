@@ -38,7 +38,7 @@ parametersB = { 'x_CO':pz.ZacrosParametersScanJob.Parameter('molar_fraction.CO',
 
 job = pz.ZacrosJob( settings=sett, lattice=rs.lattice, mechanism=rs.mechanism, cluster_expansion=rs.cluster_expansion )
 
-ssjob = pz.ZacrosSteadyStateJob( reference=job, generator_parameters=parametersA )
+ssjob = pz.ZacrosSteadyStateJob( reference=job, generator_parameters=parametersA, scaling=True )
 
 mjob = pz.ZacrosParametersScanJob( reference=ssjob,
                                    generator=pz.ZacrosParametersScanJob.meshGenerator,

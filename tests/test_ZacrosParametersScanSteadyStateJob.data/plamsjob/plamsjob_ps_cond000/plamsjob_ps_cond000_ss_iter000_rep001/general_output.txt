@@ -1,0 +1,204 @@
++---------------------------------------------------+
+|  ZACROS 3.01                                      |
+|  GRAPH-THEORETICAL KMC SIMULATION CODE            |
+|                                                   |
+|  Multiscale Computational Catalysis and           |
+|  Materials Science Research Group                 |
+|                                                   |
+|  Michail Stamatakis, Ph.D.                        |
+|  Chemical Engineering Department                  |
+|  University College London                        |
++---------------------------------------------------+
+
+Threading/multiprocessing information:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    Shared-memory multiprocessing with 1 OpenMP thread.
+
+Simulation setup:
+~~~~~~~~~~~~~~~~~
+
+    Random sequence with seed: 1610
+
+    Temperature: 500.00000000000000
+
+    Pressure: 1.0000000000000000
+
+    Species numbers will be reported in file specnum_output.txt every 5.0000000000000002E-005 time units
+
+    Max simulated time: 5.0000000000000001E-003         
+
+    Number of gas species: 3
+
+    Gas species names: CO O2 CO2 
+
+    Gas species energies: 0.0000000000000000 0.0000000000000000 -3.1800000000000002 
+
+    Gas species molecular weights: 27.994900000000001 31.989799999999999 43.989800000000002 
+
+    Gas species molar fractions: 0.40000000000000002 0.59999999999999998 0.0000000000000000 
+
+    Number of surface species: 2
+
+    Surface species names: CO* O* 
+
+    Surface species dentation:  1  1
+
+    The default Mersenne Twister 19937 random number generator will be used for this simulation.
+
+    Initializing the random number generator took 3.2739999999999999E-006 seconds
+
+    The default first reaction method will be used for propagating the KMC state, with a binary heap for the event-queue
+
+Finished reading simulation input.
+
+Lattice setup:
+~~~~~~~~~~~~~~
+
+    Parsing one of the default lattice structures.
+
+    Unit cell area: 1.7320508075688772
+
+    Unit cell tiling: 20 x 20
+
+    Lattice surface area: 692.82032302755078
+
+    Number of lattice sites per cell: 2
+
+    Total number of lattice sites: 800
+
+    Number of site types: 1
+
+    Site type names and total number of sites of that type:
+      StTp1 (800)
+
+    Maximum coordination number: 6
+
+Finished reading lattice input.
+
+Energetics setup:
+~~~~~~~~~~~~~~~~~
+
+    Number of clusters: 1
+
+    Maximum number of sites involved in a cluster: 1
+
+    Clusters:
+
+        1. Empty:  Mult = 1      ECI = 0.0000000000000000        Entities:  
+
+Finished reading energetics input.
+
+Mechanism setup:
+~~~~~~~~~~~~~~~~
+
+    Number of elementary steps: 9
+
+    Maximum number of sites involved in a step: 2
+
+    Reaction network:
+
+        1. CO_adsorption_fwd:    A(Tini) =  4.6509E+04    Ea       =  0.00    k(Tini) =  4.6509E+04    Reaction: CO  +  *(StTp1)  ->  CO*(StTp1)
+        2. CO_adsorption_rev:    A(Tini) =  5.8136E+04  [ Ea-ideal =  0.00    k(Tini) =  5.8136E+04 ]  Reaction: CO*(StTp1)  ->  CO  +  *(StTp1)
+        3. O2_adsorption_fwd:    A(Tini) =  2.7230E+04    Ea       =  0.00    k(Tini) =  2.7230E+04    Reaction: O2  +  *(StTp1)  +  *(StTp1)  ->  O*(StTp1)  +  O*(StTp1)
+        4. O2_adsorption_rev:    A(Tini) =  9.0767E+03  [ Ea-ideal =  0.00    k(Tini) =  9.0767E+03 ]  Reaction: O*(StTp1)  +  O*(StTp1)  ->  O2  +  *(StTp1)  +  *(StTp1)
+        5. O_diffusion_fwd:      A(Tini) =  1.5654E+04    Ea       =  0.00    k(Tini) =  1.5654E+04    Reaction: O*(StTp1)  +  *(StTp1)  ->  *(StTp1)  +  O*(StTp1)
+        6. O_diffusion_rev:      A(Tini) =  1.5654E+04  [ Ea-ideal =  0.00    k(Tini) =  1.5654E+04 ]  Reaction: *(StTp1)  +  O*(StTp1)  ->  O*(StTp1)  +  *(StTp1)
+        7. CO_diffusion_fwd:     A(Tini) =  3.4131E+04    Ea       =  0.00    k(Tini) =  3.4131E+04    Reaction: CO*(StTp1)  +  *(StTp1)  ->  *(StTp1)  +  CO*(StTp1)
+        8. CO_diffusion_rev:     A(Tini) =  3.4131E+04  [ Ea-ideal =  0.00    k(Tini) =  3.4131E+04 ]  Reaction: *(StTp1)  +  CO*(StTp1)  ->  CO*(StTp1)  +  *(StTp1)
+        9. CO_oxidation:         A(Tini) =  4.5000E+02    Ea       =  0.00    k(Tini) =  4.5000E+02    Reaction: CO*(StTp1)  +  O*(StTp1)  ->  CO2  +  *(StTp1)  +  *(StTp1)
+
+    This mechanism contains up to two-site events involving only monodentate species.
+
+***************
+
+Warning code 4008 from mechanism_parser_module: this mechanism contains irreversible steps. DANGER: IRREVERSIBLE STEPS VIOLATE MICROSCOPIC REVERSIBILITY!
+Moreover, for such steps, Zacros treats the Bronsted-Evans-Polanyi relation as a purely mathematical relation and does not take any action if [activation energy] < max([reaction energy],0). 
+Use irreversible steps in mechanism_input.dat with caution, if you really know what you are doing!
+
+More information: 
+The following steps are irreversible:
+    9 : CO_oxidation
+
+***************
+
+Finished reading mechanism input.
+
+Preparing simulation:
+~~~~~~~~~~~~~~~~~~~~~
+
+    Constructing requested lattice structure.
+
+        Lattice structure written to lattice_output.txt
+
+    Pre-allocating KMC-simulation-handling datastructures... done!
+
+    Pre-allocating lattice-handling datastructures... done!
+
+    Pre-allocating event-rate-handling datastructures... done!
+
+    Initializing lattice state.
+
+        All lattice sites are vacant.
+
+    Initializing energetics.
+
+        Total adlayer energy: 0.0000000000000000
+
+    Initializing lattice events.
+
+        5600 lattice events found and stored in binary heap.
+
+Commencing simulation:
+~~~~~~~~~~~~~~~~~~~~~~
+
+Simulation stopped:
+~~~~~~~~~~~~~~~~~~~
+ Current KMC time: 5.00000501E-03
+ Events occurred:  421715
+ Event frequency:  84342912.0
+
+Performance facts:
+~~~~~~~~~~~~~~~~~~
+
+Elapsed CPU time:         6.30252123 seconds
+Elapsed clock time:       6.32766819 seconds
+Setup clock time:         1.15318503E-02 seconds
+Simulation clock time:    6.31613636 seconds
+
+Clock time per KMC event: 1.50046080E-05 seconds
+Clock time per KMC time:  1265.53235 seconds/KMCTimeUnits
+
+Events per clock hour:    239926288
+KMC Dt per clock hour:    2.84465241 KMCTimeUnits
+
+Execution queue statistics:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Number of insertions:              7737098
+Number of removals:                7732642
+Number of updates:                       0
+
+Memory usage statistics:
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Used capacity of process queue:                    5600
+       ...out of max-allocated:                   40000  (  14.00% utilization )
+
+Used capacity of process-participation list:         13
+       ...out of max-allocated:                     200  (   6.50% utilization )
+
+Used capacity of cluster list:                        0
+       ...out of max-allocated:                   40000  (   0.00% utilization )
+
+Used capacity of cluster-participation list:          0
+       ...out of max-allocated:                      60  (   0.00% utilization )
+
+Summary of warnings:
+~~~~~~~~~~~~~~~~~~~~
+
+Warning 4008 from mechanism_parser_module was triggered 1 time.                                                                                                   
+
+Restart information successfully written in file restart.inf.
+
+> Normal termination <

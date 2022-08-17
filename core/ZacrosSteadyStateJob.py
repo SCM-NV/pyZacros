@@ -7,6 +7,7 @@ from collections import OrderedDict
 
 import scm.plams
 
+from .Settings import *
 from .ZacrosJob import *
 from .ZacrosResults import *
 
@@ -84,8 +85,8 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
                 raise Exception(msg)
 
 
-    def __init__(self, reference, generator_parameters, scaling=False, **kwargs):
-        scm.plams.MultiJob.__init__(self, settings=reference.settings, **kwargs)
+    def __init__(self, reference, generator_parameters, scaling=False, settings=Settings(), **kwargs):
+        scm.plams.MultiJob.__init__(self, settings=settings, **kwargs)
 
         size = None
         for name,item in generator_parameters.items():
@@ -120,20 +121,19 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
         self.scaling_upper_bound = 100
         self.scaling_max_steps = None
         self.scaling_max_time = None
-        if 'steady_state_job' in self.settings:
 
-            self.nreplicas = self.settings.steady_state_job.get('nreplicas', default=self.nreplicas)
+        self.nreplicas = self.settings.get('nreplicas', default=self.nreplicas)
 
-            if 'turnover_frequency' in self.settings.steady_state_job:
-                self.nbatch = self.settings.steady_state_job.turnover_frequency.get('nbatch', default=self.nbatch)
-                self.confidence = self.settings.steady_state_job.turnover_frequency.get('confidence', default=self.confidence)
+        if 'turnover_frequency' in self.settings:
+            self.nbatch = self.settings.turnover_frequency.get('nbatch', default=self.nbatch)
+            self.confidence = self.settings.turnover_frequency.get('confidence', default=self.confidence)
 
-            # Scaling pre-exponential terms parameters
-            if 'scaling' in self.settings.steady_state_job:
-                self.partial_equilibrium_index_threshold = self.settings.steady_state_job.scaling.get('partial_equilibrium_index_threshold', default=self.partial_equilibrium_index_threshold)
-                self.scaling_upper_bound = self.settings.steady_state_job.scaling.get('upper_bound', default=self.scaling_upper_bound)
-                self.scaling_max_steps = self.settings.steady_state_job.scaling.get('max_steps', default=self.scaling_max_steps)
-                self.scaling_max_time = self.settings.steady_state_job.scaling.get('max_time', default=self.scaling_max_time)
+        # Scaling pre-exponential terms parameters
+        if 'scaling' in self.settings:
+            self.partial_equilibrium_index_threshold = self.settings.scaling.get('partial_equilibrium_index_threshold', default=self.partial_equilibrium_index_threshold)
+            self.scaling_upper_bound = self.settings.scaling.get('upper_bound', default=self.scaling_upper_bound)
+            self.scaling_max_steps = self.settings.scaling.get('max_steps', default=self.scaling_max_steps)
+            self.scaling_max_time = self.settings.scaling.get('max_time', default=self.scaling_max_time)
 
         scm.plams.log("JOB "+self._full_name()+" Steady State Convergence: Using nbatch="+str(self.nbatch)+
                         ",confidence="+str(self.confidence)+",nreplicas="+str(self.nreplicas))
@@ -174,10 +174,11 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
 
                 if not prev.ok():
                     if len(self.children) > 1:
-                        scm.plams.log("JOB "+prev._full_name()+" Steady State Convergence: SURFACE POISONED")
                         prevprev = self.children[-(self.nreplicas-i)]
-                        if prevprev.surface_poisoned():
-                            poisoned_job = self.children.pop(index=-i)
+                        if prev.restart_aborted() or prevprev.surface_poisoned():
+                            if prev.restart_aborted(): scm.plams.log("JOB "+prev._full_name()+" Steady State Convergence: RESTART ABORTED")
+                            if prev.surface_poisoned(): scm.plams.log("JOB "+prev._full_name()+" Steady State Convergence: SURFACE POISONED")
+                            poisoned_job = self.children.pop(-(i+1))
                             scm.plams.delete_job( poisoned_job )
                         self._surface_poisoned = True
                     else:
@@ -199,7 +200,7 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
             TOF,error,ratios,conv = prev.results.turnover_frequency( nbatch=self.nbatch, confidence=self.confidence,
                                                                         provided_quantities=aver_provided_quantities )
 
-            if self.nreplicas>1: scm.plams.log("   Average" )
+            if self.nreplicas > 1: scm.plams.log("   Average" )
             scm.plams.log("   %10s"%"species"+"%15s"%"TOF"+"%15s"%"error"+"%15s"%"ratio"+"%10s"%"conv?")
             for s in prev.results.gas_species_names():
                 scm.plams.log("   %10s"%s+"%15.5f"%TOF[s]+"%15.5f"%error[s]+"%15.5f"%ratios[s]+"%10s"%conv[s])
@@ -230,11 +231,16 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
                 value = item.values[self._n_iterations]
                 eval('lsettings'+ZacrosSteadyStateJob.__name2dict(item.name_in_settings).replace('$var_value',str(value)))
 
+            if self.nreplicas > 1:
+                name = self.name+"_ss_iter"+"%03d"%self._n_iterations+"_rep"+"%03d"%i
+            else:
+                name = self.name+"_ss_iter"+"%03d"%self._n_iterations
+
             new_child = ZacrosJob( settings=lsettings,
                                    lattice=self._reference.lattice,
                                    mechanism=self._reference.mechanism,
                                    cluster_expansion=self._reference.cluster_expansion,
-                                   name=self.name+"_ss_iter"+"%03d"%self._n_iterations,
+                                   name=name,
                                    restart=prev )
 
             lparallel.append( new_child )
@@ -325,22 +331,34 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
 
         lsettings = self._reference.settings.copy()
 
-        if 'process_statistics' not in lsettings:
-            if 'max_steps' in lsettings and lsettings.max_steps != 'infinity':
-                if self.scaling_max_steps is not None:
-                    lsettings['process_statistics'] = ('event', self.scaling_max_steps)
-                    lsettings['max_steps'] = self.scaling_max_steps
-                else:
-                    lsettings['process_statistics'] = ('event', lsettings.max_steps)
+        # This section is just to be sure that processes statistics (which
+        # are needed for the scaling) are available for at least the last
+        # step of the simulation
+        ok = False
 
-            elif 'max_time' in lsettings:
-                if self.scaling_max_time is not None:
-                    lsettings['process_statistics'] = ('time', self.scaling_max_time)
-                    lsettings['max_time'] = self.scaling_max_time
-                else:
-                    lsettings['process_statistics'] = ('time', lsettings.max_time)
-            else:
-                pass
+        if self.scaling_max_steps is not None:
+            lsettings['process_statistics'] = ('event', self.scaling_max_steps)
+            lsettings['max_steps'] = self.scaling_max_steps
+            ok = True
+
+        if self.scaling_max_time is not None:
+            lsettings['process_statistics'] = ('time', self.scaling_max_time)
+            lsettings['max_time'] = self.scaling_max_time
+            ok = True
+
+        if not ok:
+            if 'max_steps' in lsettings and lsettings.max_steps != 'infinity':
+                lsettings['process_statistics'] = ('event', lsettings.max_steps)
+                ok = True
+
+            if 'max_time' in lsettings:
+                lsettings['process_statistics'] = ('time', lsettings.max_time)
+                ok = True
+
+            if not ok:
+                msg  = "\n### ERROR ### ZacrosSteadyStateJob.__scaling_factors_step.\n"
+                msg += "                process_statistics section is needed in settings object.\n"
+                raise Exception(msg)
 
         for name,item in self._generator_parameters.items():
             value = item.values[0]

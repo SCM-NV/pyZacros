@@ -203,7 +203,7 @@ class ZacrosJob( scm.plams.SingleJob ):
         surfaceSpecies.remove_duplicates()
 
         if( len(molar_frac_list)>0 ):
-            output += "gas_molar_fracs   " + ''.join([" %12.5e"%elem for elem in molar_frac_list]) + "\n\n"
+            output += "gas_molar_fracs   " + ''.join([" %20.10e"%elem for elem in molar_frac_list]) + "\n\n"
         output += str(surfaceSpecies)+"\n"
 
         output += "\n"
@@ -266,6 +266,14 @@ class ZacrosJob( scm.plams.SingleJob ):
         Returns true in the case the "Warning code 801002" is find in the output.
         """
         lines = self.results.grep_file(self.results._filenames['general'], pattern='Warning code 801002 .* this may indicate that the surface is poisoned')
+        return len(lines) > 0
+
+
+    def restart_aborted(self):
+        """
+        Returns true in the case the "Restart aborted:" is find in the output.
+        """
+        lines = self.results.grep_file(self.results._filenames['general'], pattern='Restart aborted:')
         return len(lines) > 0
 
 

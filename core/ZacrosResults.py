@@ -817,11 +817,14 @@ class ZacrosResults( scm.plams.Results ):
         rate_CI = se * scipy.stats.t._ppf( (1.0+confidence)/2.0, len(rate) - 1.0 )
         ratio = numpy.abs(rate_CI)/(numpy.abs(rate_av)+1e-8)
 
-        if ( ratio<1.0-confidence ):
+        if ratio<1.0-confidence:
             return ( rate_av,rate_CI,ratio, True )
         else:
-            #return ( rate_av,rate_CI,ratio, False )
-            return ( rate[-1],rate_CI,ratio, False )
+            if abs(rate_av) < 1.0/n_sites:
+                return ( rate[-1],rate_CI,0.0, True )
+            else:
+                #return ( rate_av,rate_CI,ratio, False )
+                return ( rate[-1],rate_CI,ratio, False )
 
 
     def turnover_frequency(self, nbatch=20, confidence=0.99, species_name=None, provided_quantities=None):
@@ -863,8 +866,12 @@ class ZacrosResults( scm.plams.Results ):
             lprovided_quantities = self.provided_quantities()
 
         for sn in self.gas_species_names():
-
             nMolsVec = lprovided_quantities[sn]
+
+            values[sn] = 0.0
+            errors[sn] = 0.0
+            ratios[sn] = 0.0
+            converged[sn] = True
 
             if sum(numpy.abs(lprovided_quantities[sn])) > 0:
                 aver,ci,ratio,conv = ZacrosResults.__compute_rate( lprovided_quantities["Time"], lprovided_quantities[sn],
@@ -873,11 +880,6 @@ class ZacrosResults( scm.plams.Results ):
                 errors[sn] = ci
                 ratios[sn] = ratio
                 converged[sn] = conv
-            else:
-                values[sn] = 0.0
-                errors[sn] = 0.0
-                ratios[sn] = 0.0
-                converged[sn] = True
 
         if species_name is None:
             return values,errors,ratios,converged

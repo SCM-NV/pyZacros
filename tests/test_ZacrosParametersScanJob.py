@@ -55,8 +55,8 @@ def test_ZacrosParametersScanJob():
         print( "Warning: The calculation FAILED because the zacros executable is not available!" )
         print( "         For testing purposes, now we load precalculated results.")
 
-        job = scm.plams.load( 'tests/test_ZacrosParametersScanJob.idata/plamsjob/plamsjob.dill' )
-        results = job.results
+        mjob = scm.plams.load( 'tests/test_ZacrosParametersScanJob.data/plamsjob/plamsjob.dill' )
+        results = mjob.results
 
     output = ""
 
@@ -99,30 +99,3 @@ cond     x_CO       ac_O      ac_CO   TOF_CO2
 """
 
     assert( pz.utils.compare( output, expectedOutput, rel_error=0.1 ) )
-
-    #---------------------------------------------
-    # Plotting the results
-    #---------------------------------------------
-    try:
-        import matplotlib.pyplot as plt
-    except ImportError as e:
-        print('Consider to install matplotlib to visualize the results!')
-        return
-
-    # Coverage and TOF plot
-    fig = plt.figure()
-
-    ax = plt.axes()
-    ax.set_xlabel('Partial Pressure CO', fontsize=14)
-    ax.set_ylabel("Coverage Fraction (%)", color="blue", fontsize=14)
-    ax.plot(x_CO, ac_O, color="blue", linestyle="-.", lw=2, zorder=1)
-    ax.plot(x_CO, ac_CO, color="blue", linestyle="-", lw=2, zorder=2)
-    plt.text(0.3, 0.9, 'O', fontsize=18, color="blue")
-    plt.text(0.7, 0.9, 'CO', fontsize=18, color="blue")
-
-    ax2 = ax.twinx()
-    ax2.set_ylabel("TOF (mol/s/site)",color="red", fontsize=14)
-    ax2.plot(x_CO, TOF_CO2, color="red", lw=2, zorder=5)
-    plt.text(0.37, 1.5, 'CO$_2$', fontsize=18, color="red")
-
-    plt.pause(2)

@@ -1,0 +1,226 @@
+[17.08|17:02:07] Running PLAMS located in /home/aguirre/Develop/ams.trunk/scripting/scm/plams
+[17.08|17:02:07] Using Python 3.6.9 located in /home/aguirre/.scm/python/AMS2022.2.venv/bin/python
+[17.08|17:02:07] PLAMS defaults were loaded from /home/aguirre/Develop/ams.trunk/scripting/scm/plams/plams_defaults
+[17.08|17:02:07] PLAMS environment initialized
+[17.08|17:02:07] PLAMS working folder: /home/aguirre/Develop/pyzacros/test_ZacrosParametersScanSteadyStateJob
+[17.08|17:02:07] JOB plamsjob Steady State Convergence: Using nbatch=20,confidence=0.96,nreplicas=2
+[17.08|17:02:07] JOB plamsjob_ps_cond000 Steady State Convergence: Using nbatch=20,confidence=0.96,nreplicas=2
+[17.08|17:02:07] JOB plamsjob_ps_cond001 Steady State Convergence: Using nbatch=20,confidence=0.96,nreplicas=2
+[17.08|17:02:07] JOB plamsjob STARTED
+[17.08|17:02:07] Starting plamsjob.prerun()
+[17.08|17:02:07] plamsjob.prerun() finished
+[17.08|17:02:07] JOB plamsjob RUNNING
+[17.08|17:02:07] JOB plamsjob/plamsjob_ps_cond000 STARTED
+[17.08|17:02:07] Starting plamsjob_ps_cond000.prerun()
+[17.08|17:02:07] plamsjob_ps_cond000.prerun() finished
+[17.08|17:02:07] JOB plamsjob/plamsjob_ps_cond000 RUNNING
+[17.08|17:02:07] JOB plamsjob/plamsjob_ps_cond000 Scaling: Using partial_equilibrium_index_threshold=0.1,scaling_upper_bound=100,scaling_max_time=0.0001
+[17.08|17:02:07] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_scaling STARTED
+[17.08|17:02:07] Starting plamsjob_ps_cond000_ss_scaling.prerun()
+[17.08|17:02:07] plamsjob_ps_cond000_ss_scaling.prerun() finished
+[17.08|17:02:07] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_scaling RUNNING
+[17.08|17:02:07] Executing slurm.run
+[17.08|17:02:19] Execution of slurm.run finished with returncode 0
+[17.08|17:02:19] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_scaling FINISHED
+[17.08|17:02:19] Starting plamsjob_ps_cond000_ss_scaling.postrun()
+[17.08|17:02:19] plamsjob_ps_cond000_ss_scaling.postrun() finished
+[17.08|17:02:19] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_scaling SUCCESSFUL
+[17.08|17:02:19]            PE     kind    label
+[17.08|17:02:19]       0.00120     fast    CO_adsorption
+[17.08|17:02:19]       0.00044     fast    O2_adsorption
+[17.08|17:02:19]       0.00075     fast    O_diffusion
+[17.08|17:02:19]       0.00787     fast    CO_diffusion
+[17.08|17:02:19]       1.00000     slow    CO_oxidation
+[17.08|17:02:19]          orig_pexp              sf        new_pexp
+[17.08|17:02:19]        1.00000e+07     1.16273e-02     1.16273e+05
+[17.08|17:02:19]        1.00000e+07     4.53835e-03     4.53835e+04
+[17.08|17:02:19]        1.00000e+06     1.56545e-02     1.56545e+04
+[17.08|17:02:19]        1.00000e+06     3.41308e-02     3.41308e+04
+[17.08|17:02:19]        4.50000e+02     1.00000e+00     4.50000e+02
+[17.08|17:02:19] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_scaling DELETED
+[17.08|17:02:19] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter000_rep000 STARTED
+[17.08|17:02:19] Starting plamsjob_ps_cond000_ss_iter000_rep000.prerun()
+[17.08|17:02:19] plamsjob_ps_cond000_ss_iter000_rep000.prerun() finished
+[17.08|17:02:19] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter000_rep000 RUNNING
+[17.08|17:02:19] Executing slurm.run
+[17.08|17:02:26] Execution of slurm.run finished with returncode 0
+[17.08|17:02:26] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter000_rep000 FINISHED
+[17.08|17:02:26] Starting plamsjob_ps_cond000_ss_iter000_rep000.postrun()
+[17.08|17:02:26] plamsjob_ps_cond000_ss_iter000_rep000.postrun() finished
+[17.08|17:02:26] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter000_rep000 SUCCESSFUL
+[17.08|17:02:26] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter000_rep001 STARTED
+[17.08|17:02:26] Starting plamsjob_ps_cond000_ss_iter000_rep001.prerun()
+[17.08|17:02:26] plamsjob_ps_cond000_ss_iter000_rep001.prerun() finished
+[17.08|17:02:26] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter000_rep001 RUNNING
+[17.08|17:02:26] Executing slurm.run
+[17.08|17:02:32] Execution of slurm.run finished with returncode 0
+[17.08|17:02:32] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter000_rep001 FINISHED
+[17.08|17:02:32] Starting plamsjob_ps_cond000_ss_iter000_rep001.postrun()
+[17.08|17:02:32] plamsjob_ps_cond000_ss_iter000_rep001.postrun() finished
+[17.08|17:02:32] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter000_rep001 SUCCESSFUL
+[17.08|17:02:32]    Replica #0
+[17.08|17:02:32]       species            TOF          error          ratio     conv?
+[17.08|17:02:32]            CO     -417.50000       46.87776        0.13084     False
+[17.08|17:02:32]            O2     -175.00000       25.84752        0.17729     False
+[17.08|17:02:32]           CO2      340.00000       24.20968        0.07836     False
+[17.08|17:02:32]    Replica #1
+[17.08|17:02:32]       species            TOF          error          ratio     conv?
+[17.08|17:02:32]            CO     -332.50000       54.26050        0.16991     False
+[17.08|17:02:32]            O2     -120.00000       38.08715        0.25526     False
+[17.08|17:02:32]           CO2      327.50000       20.57394        0.06906     False
+[17.08|17:02:32]    Average
+[17.08|17:02:32]       species            TOF          error          ratio     conv?
+[17.08|17:02:32]            CO     -375.00000       36.93779        0.10902     False
+[17.08|17:02:32]            O2     -147.50000       25.31786        0.17165     False
+[17.08|17:02:32]           CO2      333.75000       15.61722        0.05147     False
+[17.08|17:02:32] JOB plamsjob/plamsjob_ps_cond000 Steady State Convergence: NO CONVERGENCE REACHED YET
+[17.08|17:02:32] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter001_rep000 STARTED
+[17.08|17:02:32] Starting plamsjob_ps_cond000_ss_iter001_rep000.prerun()
+[17.08|17:02:32] plamsjob_ps_cond000_ss_iter001_rep000.prerun() finished
+[17.08|17:02:32] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter001_rep000 RUNNING
+[17.08|17:02:32] Executing slurm.run
+[17.08|17:03:14] Execution of slurm.run finished with returncode 0
+[17.08|17:03:14] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter001_rep000 FINISHED
+[17.08|17:03:14] Starting plamsjob_ps_cond000_ss_iter001_rep000.postrun()
+[17.08|17:03:14] plamsjob_ps_cond000_ss_iter001_rep000.postrun() finished
+[17.08|17:03:14] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter001_rep000 SUCCESSFUL
+[17.08|17:03:14] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter001_rep001 STARTED
+[17.08|17:03:14] Starting plamsjob_ps_cond000_ss_iter001_rep001.prerun()
+[17.08|17:03:14] plamsjob_ps_cond000_ss_iter001_rep001.prerun() finished
+[17.08|17:03:14] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter001_rep001 RUNNING
+[17.08|17:03:14] Executing slurm.run
+[17.08|17:03:53] Execution of slurm.run finished with returncode 0
+[17.08|17:03:53] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter001_rep001 FINISHED
+[17.08|17:03:54] Starting plamsjob_ps_cond000_ss_iter001_rep001.postrun()
+[17.08|17:03:54] plamsjob_ps_cond000_ss_iter001_rep001.postrun() finished
+[17.08|17:03:54] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter001_rep001 SUCCESSFUL
+[17.08|17:03:54]    Replica #0
+[17.08|17:03:54]       species            TOF          error          ratio     conv?
+[17.08|17:03:54]            CO     -298.18854        7.99466        0.02681      True
+[17.08|17:03:54]            O2     -148.61077        4.39414        0.02957      True
+[17.08|17:03:54]           CO2      298.01977        7.97829        0.02677      True
+[17.08|17:03:54]    Replica #1
+[17.08|17:03:54]       species            TOF          error          ratio     conv?
+[17.08|17:03:54]            CO     -295.23236        7.17685        0.02431      True
+[17.08|17:03:54]            O2     -148.57213        3.61823        0.02435      True
+[17.08|17:03:54]           CO2      296.48048        6.99309        0.02359      True
+[17.08|17:03:54]    Average
+[17.08|17:03:54]       species            TOF          error          ratio     conv?
+[17.08|17:03:54]            CO     -296.71045        4.18222        0.01410      True
+[17.08|17:03:54]            O2     -148.59145        2.31470        0.01558      True
+[17.08|17:03:54]           CO2      297.25012        4.13866        0.01392      True
+[17.08|17:03:54] JOB plamsjob/plamsjob_ps_cond000 Steady State Convergence: CONVERGENCE REACHED. DONE!
+[17.08|17:03:54] JOB plamsjob/plamsjob_ps_cond000 FINISHED
+[17.08|17:03:54] Starting plamsjob_ps_cond000.postrun()
+[17.08|17:03:54] plamsjob_ps_cond000.postrun() finished
+[17.08|17:03:54] JOB plamsjob/plamsjob_ps_cond000 SUCCESSFUL
+[17.08|17:03:54] JOB plamsjob/plamsjob_ps_cond001 STARTED
+[17.08|17:03:54] Starting plamsjob_ps_cond001.prerun()
+[17.08|17:03:54] plamsjob_ps_cond001.prerun() finished
+[17.08|17:03:54] JOB plamsjob/plamsjob_ps_cond001 RUNNING
+[17.08|17:03:54] JOB plamsjob/plamsjob_ps_cond001 Scaling: Using partial_equilibrium_index_threshold=0.1,scaling_upper_bound=100,scaling_max_time=0.0001
+[17.08|17:03:54] JOB plamsjob/plamsjob_ps_cond001/plamsjob_ps_cond001_ss_scaling STARTED
+[17.08|17:03:54] Starting plamsjob_ps_cond001_ss_scaling.prerun()
+[17.08|17:03:54] plamsjob_ps_cond001_ss_scaling.prerun() finished
+[17.08|17:03:54] JOB plamsjob/plamsjob_ps_cond001/plamsjob_ps_cond001_ss_scaling RUNNING
+[17.08|17:03:54] Executing slurm.run
+[17.08|17:03:54] Execution of slurm.run finished with returncode 0
+[17.08|17:03:54] JOB plamsjob/plamsjob_ps_cond001/plamsjob_ps_cond001_ss_scaling FINISHED
+[17.08|17:03:54] Starting plamsjob_ps_cond001_ss_scaling.postrun()
+[17.08|17:03:54] plamsjob_ps_cond001_ss_scaling.postrun() finished
+[17.08|17:03:54] JOB plamsjob/plamsjob_ps_cond001/plamsjob_ps_cond001_ss_scaling SUCCESSFUL
+[17.08|17:03:54]            PE     kind    label
+[17.08|17:03:54]       0.09652     fast    CO_adsorption
+[17.08|17:03:54]       0.09091     fast    O2_adsorption
+[17.08|17:03:54]      -0.01184     fast    O_diffusion
+[17.08|17:03:54]       0.02199     fast    CO_diffusion
+[17.08|17:03:54]       1.00000     slow    CO_oxidation
+[17.08|17:03:54]          orig_pexp              sf        new_pexp
+[17.08|17:03:54]        1.16273e+05     9.76944e-01     1.13592e+05
+[17.08|17:03:54]        4.53835e+04     1.00000e+00     4.53835e+04
+[17.08|17:03:54]        1.56545e+04     1.00000e+00     1.56545e+04
+[17.08|17:03:54]        3.41308e+04     1.00000e+00     3.41308e+04
+[17.08|17:03:54]        4.50000e+02     1.00000e+00     4.50000e+02
+[17.08|17:03:54] JOB plamsjob/plamsjob_ps_cond001/plamsjob_ps_cond001_ss_scaling DELETED
+[17.08|17:03:54] JOB plamsjob/plamsjob_ps_cond001/plamsjob_ps_cond001_ss_iter000_rep000 STARTED
+[17.08|17:03:54] Starting plamsjob_ps_cond001_ss_iter000_rep000.prerun()
+[17.08|17:03:54] plamsjob_ps_cond001_ss_iter000_rep000.prerun() finished
+[17.08|17:03:54] JOB plamsjob/plamsjob_ps_cond001/plamsjob_ps_cond001_ss_iter000_rep000 RUNNING
+[17.08|17:03:54] Executing slurm.run
+[17.08|17:04:00] Execution of slurm.run finished with returncode 0
+[17.08|17:04:00] JOB plamsjob/plamsjob_ps_cond001/plamsjob_ps_cond001_ss_iter000_rep000 FINISHED
+[17.08|17:04:00] Starting plamsjob_ps_cond001_ss_iter000_rep000.postrun()
+[17.08|17:04:00] plamsjob_ps_cond001_ss_iter000_rep000.postrun() finished
+[17.08|17:04:00] JOB plamsjob/plamsjob_ps_cond001/plamsjob_ps_cond001_ss_iter000_rep000 SUCCESSFUL
+[17.08|17:04:00] JOB plamsjob/plamsjob_ps_cond001/plamsjob_ps_cond001_ss_iter000_rep001 STARTED
+[17.08|17:04:00] Starting plamsjob_ps_cond001_ss_iter000_rep001.prerun()
+[17.08|17:04:00] plamsjob_ps_cond001_ss_iter000_rep001.prerun() finished
+[17.08|17:04:00] JOB plamsjob/plamsjob_ps_cond001/plamsjob_ps_cond001_ss_iter000_rep001 RUNNING
+[17.08|17:04:00] Executing slurm.run
+[17.08|17:04:07] Execution of slurm.run finished with returncode 0
+[17.08|17:04:07] JOB plamsjob/plamsjob_ps_cond001/plamsjob_ps_cond001_ss_iter000_rep001 FINISHED
+[17.08|17:04:07] Starting plamsjob_ps_cond001_ss_iter000_rep001.postrun()
+[17.08|17:04:07] plamsjob_ps_cond001_ss_iter000_rep001.postrun() finished
+[17.08|17:04:07] JOB plamsjob/plamsjob_ps_cond001/plamsjob_ps_cond001_ss_iter000_rep001 SUCCESSFUL
+[17.08|17:04:07]    Replica #0
+[17.08|17:04:07]       species            TOF          error          ratio     conv?
+[17.08|17:04:07]            CO     -315.00000       55.42063        0.17477     False
+[17.08|17:04:07]            O2     -127.50000       31.87422        0.19074     False
+[17.08|17:04:07]           CO2      325.00000       18.05446        0.05637     False
+[17.08|17:04:08]    Replica #1
+[17.08|17:04:08]       species            TOF          error          ratio     conv?
+[17.08|17:04:08]            CO     -357.50000       59.78817        0.20404     False
+[17.08|17:04:08]            O2     -145.00000       29.08962        0.17353     False
+[17.08|17:04:08]           CO2      357.50000       22.80738        0.06790     False
+[17.08|17:04:08]    Average
+[17.08|17:04:08]       species            TOF          error          ratio     conv?
+[17.08|17:04:08]            CO     -336.25000       40.89587        0.13406     False
+[17.08|17:04:08]            O2     -136.25000       24.32006        0.14531     False
+[17.08|17:04:08]           CO2      341.25000       16.03529        0.04887     False
+[17.08|17:04:08] JOB plamsjob/plamsjob_ps_cond001 Steady State Convergence: NO CONVERGENCE REACHED YET
+[17.08|17:04:08] JOB plamsjob/plamsjob_ps_cond001/plamsjob_ps_cond001_ss_iter001_rep000 STARTED
+[17.08|17:04:08] Starting plamsjob_ps_cond001_ss_iter001_rep000.prerun()
+[17.08|17:04:08] plamsjob_ps_cond001_ss_iter001_rep000.prerun() finished
+[17.08|17:04:08] JOB plamsjob/plamsjob_ps_cond001/plamsjob_ps_cond001_ss_iter001_rep000 RUNNING
+[17.08|17:04:08] Executing slurm.run
+[17.08|17:05:02] Execution of slurm.run finished with returncode 0
+[17.08|17:05:02] JOB plamsjob/plamsjob_ps_cond001/plamsjob_ps_cond001_ss_iter001_rep000 FINISHED
+[17.08|17:05:02] Starting plamsjob_ps_cond001_ss_iter001_rep000.postrun()
+[17.08|17:05:02] plamsjob_ps_cond001_ss_iter001_rep000.postrun() finished
+[17.08|17:05:03] JOB plamsjob/plamsjob_ps_cond001/plamsjob_ps_cond001_ss_iter001_rep000 SUCCESSFUL
+[17.08|17:05:03] JOB plamsjob/plamsjob_ps_cond001/plamsjob_ps_cond001_ss_iter001_rep001 STARTED
+[17.08|17:05:03] Starting plamsjob_ps_cond001_ss_iter001_rep001.prerun()
+[17.08|17:05:03] plamsjob_ps_cond001_ss_iter001_rep001.prerun() finished
+[17.08|17:05:03] JOB plamsjob/plamsjob_ps_cond001/plamsjob_ps_cond001_ss_iter001_rep001 RUNNING
+[17.08|17:05:03] Executing slurm.run
+[17.08|17:06:06] Execution of slurm.run finished with returncode 0
+[17.08|17:06:06] JOB plamsjob/plamsjob_ps_cond001/plamsjob_ps_cond001_ss_iter001_rep001 FINISHED
+[17.08|17:06:06] Starting plamsjob_ps_cond001_ss_iter001_rep001.postrun()
+[17.08|17:06:06] plamsjob_ps_cond001_ss_iter001_rep001.postrun() finished
+[17.08|17:06:06] JOB plamsjob/plamsjob_ps_cond001/plamsjob_ps_cond001_ss_iter001_rep001 SUCCESSFUL
+[17.08|17:06:07]    Replica #0
+[17.08|17:06:07]       species            TOF          error          ratio     conv?
+[17.08|17:06:07]            CO     -332.75315       10.48486        0.03151      True
+[17.08|17:06:07]            O2     -167.26717        4.12559        0.02466      True
+[17.08|17:06:07]           CO2      333.25797        9.42932        0.02829      True
+[17.08|17:06:07]    Replica #1
+[17.08|17:06:07]       species            TOF          error          ratio     conv?
+[17.08|17:06:07]            CO     -328.79469        8.06935        0.02454      True
+[17.08|17:06:07]            O2     -163.99983        3.50689        0.02138      True
+[17.08|17:06:07]           CO2      328.00777        7.17927        0.02189      True
+[17.08|17:06:07]    Average
+[17.08|17:06:07]       species            TOF          error          ratio     conv?
+[17.08|17:06:07]            CO     -330.77392        6.66952        0.02016      True
+[17.08|17:06:07]            O2     -165.63350        2.50369        0.01512      True
+[17.08|17:06:07]           CO2      330.63287        5.70061        0.01724      True
+[17.08|17:06:07] JOB plamsjob/plamsjob_ps_cond001 Steady State Convergence: CONVERGENCE REACHED. DONE!
+[17.08|17:06:07] JOB plamsjob/plamsjob_ps_cond001 FINISHED
+[17.08|17:06:07] Starting plamsjob_ps_cond001.postrun()
+[17.08|17:06:07] plamsjob_ps_cond001.postrun() finished
+[17.08|17:06:07] JOB plamsjob/plamsjob_ps_cond001 SUCCESSFUL
+[17.08|17:06:07] JOB plamsjob FINISHED
+[17.08|17:06:07] Starting plamsjob.postrun()
+[17.08|17:06:07] plamsjob.postrun() finished
+[17.08|17:06:08] JOB plamsjob SUCCESSFUL
+[17.08|17:06:09] PLAMS environment cleaned up successfully
+[17.08|17:06:09] PLAMS run finished. Goodbye

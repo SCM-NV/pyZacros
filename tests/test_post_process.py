@@ -14,7 +14,7 @@ def test_post_process():
 
     zgb = pz.models.ZiffGulariBarshad( repeat_cell=[20,20] )
 
-    scm.plams.init( folder='old_results' )
+    scm.plams.init( folder='test_post_process' )
 
     # Settings:
     sett = pz.Settings()
@@ -41,10 +41,6 @@ def test_post_process():
 
     try:
         results = job.run()
-
-        if( not job.ok() ):
-            raise "Error: The Zacros calculation FAILED!"
-
     except pz.ZacrosExecutableNotFoundError:
         print( "Warning: The calculation FAILED because the zacros executable is not available!" )
         print( "         For testing purposes, now we load precalculated results.")
@@ -55,7 +51,7 @@ def test_post_process():
     if( load_precalculated ):
         job = pz.ZacrosJob.load_external( path="tests/test_ZacrosResults.data/plamsjob" )
     else:
-        job = pz.ZacrosJob.load_external( path='old_results/plamsjob' )
+        job = pz.ZacrosJob.load_external( path='test_post_process/plamsjob' )
 
     data = job.results.provided_quantities()
     output = str(data)

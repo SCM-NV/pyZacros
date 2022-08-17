@@ -1,0 +1,12 @@
+energetics
+
+cluster Empty
+  sites 1
+  lattice_state
+    & & &
+  site_types 1
+  graph_multiplicity 1
+  cluster_eng  0.00000e+00
+end_cluster
+
+end_energetics

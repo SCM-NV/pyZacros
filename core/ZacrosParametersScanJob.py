@@ -91,7 +91,7 @@ class ZacrosParametersScanJob( scm.plams.MultiJob ):
 
 
     def __init__(self, reference, generator=None, generator_parameters=None, **kwargs):
-        scm.plams.MultiJob.__init__(self, settings=reference.settings, children=OrderedDict(), **kwargs)
+        scm.plams.MultiJob.__init__(self, children=OrderedDict(), **kwargs)
 
         if generator is not None:
             if len(generator_parameters) == 0:
@@ -107,7 +107,16 @@ class ZacrosParametersScanJob( scm.plams.MultiJob ):
 
         self._indices = None
         self._parameters_values = None
-        self._indices,self._parameters_values,settings_list = generator( reference.settings, generator_parameters )
+
+        if isinstance(reference,ZacrosJob):
+            self._indices,self._parameters_values,settings_list = generator( reference.settings, generator_parameters )
+        elif isinstance(reference,ZacrosSteadyStateJob):
+            self._indices,self._parameters_values,settings_list = generator( reference._reference.settings, generator_parameters )
+        else:
+
+            msg  = "\n### ERROR ### ZacrosParametersScanJob.__init__.\n"
+            msg += "              Parameter 'reference' should be a ZacrosJob or ZacrosSteadyStateJob object.\n"
+            raise Exception(msg)
 
         for i,(idx,settings_idx) in enumerate(settings_list.items()):
 
@@ -121,17 +130,11 @@ class ZacrosParametersScanJob( scm.plams.MultiJob ):
 
             elif isinstance(reference,ZacrosSteadyStateJob):
 
-                new_reference = copy.copy(reference)
+                new_reference = copy.copy(reference._reference)
                 new_reference.settings = settings_idx
-                new_reference.name = reference.name+"_ps_cond"+"%03d"%i
-                job = ZacrosSteadyStateJob( reference=new_reference, generator_parameters=reference._generator_parameters,
-                                                name=new_name )
-
-            else:
-
-                msg  = "\n### ERROR ### ZacrosParametersScanJob.__init__.\n"
-                msg += "              Parameter 'reference' should be a ZacrosJob or ZacrosSteadyStateJob object.\n"
-                raise Exception(msg)
+                job = ZacrosSteadyStateJob( settings=reference.settings, reference=new_reference,
+                                            generator_parameters=reference._generator_parameters,
+                                            name=new_name, scaling=reference._scaling )
 
             self.children[ idx ] = job
 

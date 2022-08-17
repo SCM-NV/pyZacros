@@ -19,27 +19,27 @@ def test_ZacrosSteadyStateJob():
     #---------------------------------------------
     scm.plams.init(folder='test_ZacrosSteadyStateJob')
 
-    # Settings:
-    sett = pz.Settings()
-    sett.random_seed = 953129
-    sett.temperature = 500.0
-    sett.pressure = 1.0
-    sett.species_numbers = ('time', 0.1)
-    sett.max_time = 10.0
-    sett.molar_fraction.CO = 0.42
-    sett.molar_fraction.O2 = 1.0 - sett.molar_fraction.CO
-
-    sett.steady_state_job.turnover_frequency.nbatch = 20
-    sett.steady_state_job.turnover_frequency.confidence = 0.97
-    sett.steady_state_job.nreplicas = 2
-
-    parameters = { 'max_time':pz.ZacrosSteadyStateJob.Parameter('restart.max_time', 2*sett.max_time*( numpy.arange(10)+1 )**3) }
-
     try:
+        sett = pz.Settings()
+        sett.random_seed = 953129
+        sett.temperature = 500.0
+        sett.pressure = 1.0
+        sett.species_numbers = ('time', 0.1)
+        sett.max_time = 10.0
+        sett.molar_fraction.CO = 0.42
+        sett.molar_fraction.O2 = 1.0 - sett.molar_fraction.CO
+
+        parameters = { 'max_time':pz.ZacrosSteadyStateJob.Parameter('restart.max_time', 2*sett.max_time*( numpy.arange(10)+1 )**3) }
+
         job = pz.ZacrosJob( settings=sett, lattice=zgb.lattice, mechanism=zgb.mechanism,
                             cluster_expansion=zgb.cluster_expansion )
 
-        mjob = pz.ZacrosSteadyStateJob( reference=job, generator_parameters=parameters )
+        sett = pz.Settings()
+        sett.turnover_frequency.nbatch = 20
+        sett.turnover_frequency.confidence = 0.97
+        sett.nreplicas = 2
+
+        mjob = pz.ZacrosSteadyStateJob( settings=sett, reference=job, generator_parameters=parameters )
 
         results = mjob.run()
 
@@ -47,7 +47,7 @@ def test_ZacrosSteadyStateJob():
         print( "Warning: The calculation FAILED because the zacros executable is not available!" )
         print( "         For testing purposes, now we load precalculated results.")
 
-        mjob = scm.plams.load( 'tests/test_ZacrosSteadyStateJob.idata/plamsjob/plamsjob.dill' )
+        mjob = scm.plams.load( 'tests/test_ZacrosSteadyStateJob.data/plamsjob/plamsjob.dill' )
         results = mjob.results
 
     scm.plams.finish()
