@@ -11,9 +11,9 @@ def compare( report1, report2, error=None, abs_error=None, rel_error=None ):
         if error is not None:
             abs_error = error
             rel_error = error
-        if abs_error is not None:
+        elif abs_error is not None and rel_error is None:
             rel_error = 0.0
-        elif rel_error is not None:
+        elif rel_error is not None and abs_error is None:
             abs_error = 0.0
 
     lines1 = report1.splitlines()

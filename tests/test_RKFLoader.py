@@ -340,4 +340,4 @@ lattice explicit
   end_lattice_structure
 end_lattice\
 """
-    assert( pz.utils.compare( output, expectedOutput, rel_error=0.1 ) )
+    assert( pz.utils.compare( output, expectedOutput, abs_error=1e-12, rel_error=0.1 ) )
