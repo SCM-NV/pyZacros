@@ -38,7 +38,7 @@ def getRate( conditions ):
     ss_sett.scaling.partial_equilibrium_index_threshold = 0.1
     ss_sett.scaling.scaling_upper_bound = 100
 
-    ss_parameters = { 'max_time':pz.ZacrosSteadyStateJob.Parameter('restart.max_time', 2*sett.max_time*( numpy.arange(100)+1 )**3) }
+    ss_parameters = { 'max_time':pz.ZacrosSteadyStateJob.Parameter('restart.max_time', 2*z_sett.max_time*( numpy.arange(100)+1 )**3) }
 
     ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=z_job, generator_parameters=ss_parameters )
 
@@ -52,7 +52,7 @@ def getRate( conditions ):
                                          generator=pz.ZacrosParametersScanJob.meshGenerator,
                                          generator_parameters=ps_parameters, name='mesh' )
 
-    results = mjob.run()
+    results = ps_job.run()
 
     tof = numpy.nan*numpy.empty((len(conditions),1))
     if( results.job.ok() ):
@@ -86,7 +86,7 @@ algorithmParams={
         'VIth'        : 0.10,    # thresold variable importance
         'errTh'       : 1e-6,    # thresold for MRE error evaluation (remove from MRE calculation record below this value)
         'OOBth'       : 0.05,    # termination criterium on OOBnorm
-        'RADth'       : 25,      # termination criterium on Relative Approximation Error (RAD) [%]
+        'RADth'       : 70,      # termination criterium on Relative Approximation Error (RAD) [%]
         'maxTDSize'   : 200,     # maximum allowed size of the training data
         'AbsOOBTh'    : 0.2,     # maximum variations between OOB for two different tabulation variables
     }
