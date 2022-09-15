@@ -20,39 +20,39 @@ scm.plams.config.job.runscript.nproc = 1
 print('Running up to {} jobs in parallel simultaneously'.format(maxjobs))
 
 # Settings:
-dt = 5.0e-5
+dt = 1.0e-5
+z_sett = pz.Settings()
+z_sett.random_seed = 1609
+z_sett.temperature = 500.0
+z_sett.pressure = 1.000
+#z_sett.process_statistics = ('time', dt)
+z_sett.species_numbers = ('time', dt)
+z_sett.max_time = 100*dt
 
-sett = pz.Settings()
-sett.random_seed = 1609
-sett.temperature = 500.0
-sett.pressure = 1.000
-sett.process_statistics = ('time', dt)
-sett.species_numbers = ('time', dt)
-sett.max_time = 100*dt
+parametersA = { 'max_time':pz.ZacrosSteadyStateJob.Parameter('restart.max_time', 2*z_sett.max_time*( numpy.arange(50)+1 )**2) }
 
-sett.steady_state_job.turnover_frequency.nbatch = 20
-sett.steady_state_job.turnover_frequency.confidence = 0.96
-sett.steady_state_job.replicas = 4
+z_job = pz.ZacrosJob( settings=z_sett, lattice=lh.lattice, mechanism=lh.mechanism, cluster_expansion=lh.cluster_expansion )
 
-# Adsorption and diffusion scaling factors
-for rxn in lh.mechanism:
-    if 'adsorption' in rxn.label(): rxn.pre_expon *= 1e-2
-    if  'diffusion' in rxn.label(): rxn.pre_expon *= 1e-2
+ss_sett = pz.Settings()
+ss_sett.turnover_frequency.nbatch = 20
+ss_sett.turnover_frequency.confidence = 0.98
+ss_sett.nreplicas = 4
+ss_sett.scaling.partial_equilibrium_index_threshold = 0.1
+ss_sett.scaling.upper_bound = 10
+ss_sett.scaling.max_time = 10*dt
+ss_sett.scaling.species_numbers = ('time', dt)
+#ss_sett.scaling.nevents_per_timestep = 10000
 
-parametersA = { 'max_time':pz.ZacrosSteadyStateJob.Parameter('restart.max_time', 2*sett.max_time*( numpy.arange(20)+1 )**2) }
-
-parametersB = { 'x_CO':pz.ZacrosParametersScanJob.Parameter('molar_fraction.CO', numpy.arange(0.1, 1.0, 0.01)),
+parametersB = { 'x_CO':pz.ZacrosParametersScanJob.Parameter('molar_fraction.CO', numpy.arange(0.1, 1.0, 0.05)),
                 'x_O2':pz.ZacrosParametersScanJob.Parameter('molar_fraction.O2', lambda params: 1.0-params['x_CO']) }
 
-job = pz.ZacrosJob( settings=sett, lattice=lh.lattice, mechanism=lh.mechanism, cluster_expansion=lh.cluster_expansion )
+ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=z_job, generator_parameters=parametersA, scaling=True )
 
-ssjob = pz.ZacrosSteadyStateJob( reference=job, generator_parameters=parametersA )
+ps_job = pz.ZacrosParametersScanJob( reference=ss_job,
+                                     generator=pz.ZacrosParametersScanJob.meshGenerator,
+                                     generator_parameters=parametersB, name='mesh' )
 
-mjob = pz.ZacrosParametersScanJob( reference=ssjob,
-                                   generator=pz.ZacrosParametersScanJob.meshGenerator,
-                                   generator_parameters=parametersB, name='mesh' )
-
-results = mjob.run()
+results = ps_job.run()
 
 if( results.job.ok() ):
     x_CO = []
@@ -103,16 +103,3 @@ ax2.plot(x_CO, TOF_CO2, color="red", lw=2, zorder=5)
 plt.text(0.3, 200.0, 'CO$_2$', fontsize=18, color="red")
 
 plt.show()
-
-## Lattice states for x_CO=0.54 and CO=0.55
-#results[33].last_lattice_state().plot()
-#results[34].last_lattice_state().plot()
-
-## Molecule numbers for x_CO=0.54 and CO=0.55
-#results[33].plot_molecule_numbers( ["CO2"], normalize_per_site=True )
-#results[34].plot_molecule_numbers( ["CO2"], normalize_per_site=True )
-
-## Molecule numbers for x_CO=0.54 and CO=0.55. First Derivative
-#results[33].plot_molecule_numbers( ["CO2"], normalize_per_site=True, derivative=True )
-#results[34].plot_molecule_numbers( ["CO2"], normalize_per_site=True, derivative=True )
-

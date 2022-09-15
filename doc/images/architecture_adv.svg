@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="322.14374mm"
+   height="111.1544mm"
+   viewBox="0 0 322.14374 111.1544"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.1.2 (0a00cf5, 2022-02-04)"
+   sodipodi:docname="architecture_adv.svg"
+   inkscape:export-filename="/home/aguirre/Develop/pyzacros/doc/images/architecture_adv.png"
+   inkscape:export-xdpi="40"
+   inkscape:export-ydpi="40"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs2">
+    <marker
+       style="overflow:visible"
+       id="Arrow1Lstart"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path6984" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker4737"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path4735"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker2182"
+       style="overflow:visible"
+       inkscape:isstock="true"
+       inkscape:collect="always">
+      <path
+         id="path2180"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path1069"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Lend-2"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         inkscape:connector-curvature="0"
+         id="path1063-0"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Lend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="marker2182-3"
+       style="overflow:visible"
+       inkscape:isstock="true"
+       inkscape:collect="always">
+      <path
+         id="path2180-6"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="508.10673"
+     inkscape:cy="420.22346"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1015"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     showborder="true"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     fit-margin-top="10"
+     fit-margin-left="10"
+     fit-margin-right="10"
+     fit-margin-bottom="10"
+     inkscape:pagecheckerboard="0" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(64.862332,-203.13908)">
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot815"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:-17.82px;fill:#000000;fill-opacity:1;stroke:none"
+       transform="scale(0.26458333)"><flowRegion
+         id="flowRegion817"><rect
+           id="rect819"
+           width="118.57143"
+           height="52.857143"
+           x="161.42857"
+           y="331.09113" /></flowRegion><flowPara
+         id="flowPara821">Species</flowPara></flowRoot>
+    <g
+       id="g4721"
+       transform="translate(43.391688,-25.929177)">
+      <rect
+         style="opacity:0.997;fill:#d9d9d9;fill-opacity:1;stroke:none;stroke-width:0.243075;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect954-0-6-6-1-7"
+         width="69.590225"
+         height="17.8918"
+         x="9.0422421"
+         y="239.06825"
+         ry="4.4019532" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:-4.71487px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="22.34243"
+         y="251.55428"
+         id="text825-7-0"><tspan
+           sodipodi:role="line"
+           id="tspan823-5-9"
+           x="22.34243"
+           y="251.55428"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Termes';-inkscape-font-specification:'TeX Gyre Termes';stroke-width:0.264583">ZacrosJob</tspan></text>
+    </g>
+    <g
+       id="g4726"
+       transform="translate(38.800154,-25.929177)">
+      <rect
+         style="opacity:0.997;fill:#d9d9d9;fill-opacity:1;stroke:none;stroke-width:0.261239;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect954-0-6-6-1-9"
+         width="70.39843"
+         height="17.891809"
+         x="13.529457"
+         y="257.64349"
+         ry="4.4019532" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:-4.71487px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="18.923935"
+         y="270.1507"
+         id="text825-7-0-3"><tspan
+           sodipodi:role="line"
+           id="tspan823-5-9-6"
+           x="18.923935"
+           y="270.1507"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Termes';-inkscape-font-specification:'TeX Gyre Termes';stroke-width:0.264583">ZacrosResults</tspan></text>
+    </g>
+    <g
+       id="g4853"
+       transform="translate(84.88692,40.306133)">
+      <rect
+         ry="4.4019532"
+         y="173.12816"
+         x="-139.74925"
+         height="17.891809"
+         width="47.719845"
+         id="rect954-0-3"
+         style="opacity:0.997;fill:#d9d9d9;fill-opacity:1;stroke:none;stroke-width:0.215083;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         id="text825-3-3-7"
+         y="184.5347"
+         x="-132.93924"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:-4.71487px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Termes';-inkscape-font-specification:'TeX Gyre Termes';stroke-width:0.264583"
+           y="184.5347"
+           x="-132.93924"
+           id="tspan823-6-5-5"
+           sodipodi:role="line">Settings</tspan></text>
+    </g>
+    <g
+       id="g4591"
+       transform="translate(-3.7041668,-25.929177)">
+      <g
+         id="g4445"
+         transform="translate(-4.7715849,-18.103238)">
+        <rect
+           style="opacity:0.997;fill:#d9d9d9;fill-opacity:1;stroke:none;stroke-width:0.243075;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect954-0-6-6-1-7-3-5"
+           width="139.14995"
+           height="17.891815"
+           x="116.43667"
+           y="312.01309"
+           ry="4.4019532" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:-4.71487px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+           x="130.76004"
+           y="324.49911"
+           id="text825-7-0-6-3"><tspan
+             sodipodi:role="line"
+             id="tspan823-5-9-7-5"
+             x="130.76004"
+             y="324.49911"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Termes';-inkscape-font-specification:'TeX Gyre Termes';stroke-width:0.264583">ZacrosParametersScanJob</tspan></text>
+      </g>
+      <g
+         id="g4440"
+         transform="translate(-163.40561,0.07026831)">
+        <rect
+           style="opacity:0.997;fill:#d9d9d9;fill-opacity:1;stroke:none;stroke-width:0.243075;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect954-0-6-6-1-7-3-5-1"
+           width="139.3567"
+           height="17.891815"
+           x="275.03448"
+           y="312.26056"
+           ry="4.4019532" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:-4.71487px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+           x="281.34021"
+           y="324.74658"
+           id="text825-7-0-6-3-2"><tspan
+             sodipodi:role="line"
+             id="tspan823-5-9-7-5-7"
+             x="281.34021"
+             y="324.74658"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Termes';-inkscape-font-specification:'TeX Gyre Termes';stroke-width:0.264583">ZacrosParametersScanResults</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g4581"
+       transform="translate(-3.7041635,-24.621916)">
+      <g
+         id="g4430"
+         transform="translate(-167.84756,20.736105)">
+        <rect
+           style="opacity:0.997;fill:#d9d9d9;fill-opacity:1;stroke:none;stroke-width:0.243075;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect954-0-6-6-1-7-3"
+           width="119.59703"
+           height="17.891815"
+           x="118.91256"
+           y="271.86649"
+           ry="4.4019532" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:-4.71487px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+           x="132.31906"
+           y="283.27301"
+           id="text825-7-0-6"><tspan
+             sodipodi:role="line"
+             id="tspan823-5-9-7"
+             x="132.31906"
+             y="283.27301"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Termes';-inkscape-font-specification:'TeX Gyre Termes';stroke-width:0.264583">ZacrosSteadyStateJob</tspan></text>
+      </g>
+      <g
+         id="g4435"
+         transform="translate(-298.51276,40.251263)">
+        <rect
+           style="opacity:0.997;fill:#d9d9d9;fill-opacity:1;stroke:none;stroke-width:0.243075;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="rect954-0-6-6-1-7-3-6"
+           width="119.92604"
+           height="17.891815"
+           x="249.42384"
+           y="270.77231"
+           ry="4.4019532" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:-4.71487px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+           x="254.93063"
+           y="282.17883"
+           id="text825-7-0-6-2"><tspan
+             sodipodi:role="line"
+             id="tspan823-5-9-7-9"
+             x="254.93063"
+             y="282.17883"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Termes';-inkscape-font-specification:'TeX Gyre Termes';stroke-width:0.264583">ZacrosSteadyStateResults</tspan></text>
+      </g>
+    </g>
+    <path
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.265;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:2.12, 2.12;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker2182)"
+       d="M -7.1424875,222.32062 52.43393,222.17186"
+       id="path1013"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#g4853"
+       inkscape:connection-end="#g4721" />
+    <path
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.265;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:2.12, 2.12;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker2182-3)"
+       d="M -24.689922,231.3261 0.95168335,267.66476"
+       id="path1013-0"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       inkscape:connection-start="#g4853" />
+    <path
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.265;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:2.12, 2.12;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#Arrow1Lstart)"
+       d="M 16.063118,267.98052 52.158642,231.71416"
+       id="path1013-2"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.265;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:2.12, 2.12;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#Arrow1Lstart)"
+       d="M 166.65753,267.98053 122.55707,231.71416"
+       id="path1013-2-9"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <g
+       id="g4445-3"
+       transform="translate(30.808851,66.132149)" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:2.11666, 2.11666;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker4737)"
+       d="M 66.957857,285.87234 H 108.98742"
+       id="path8198" />
+  </g>
+</svg>

@@ -1,3 +1,10 @@
+# Execution time ~1.5h
+#
+# Questions for Mauro:
+# * How can I retrieve the calculated data points?
+# * How can I evaluate the Surrogate Model for a given new condition?
+# * Can we hide all temporary files generated during the training?
+
 import numpy
 import scm.plams
 import scm.pyzacros as pz

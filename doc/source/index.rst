@@ -10,5 +10,6 @@ Python Library for Automating Zacros Simulations
 
     intro
     components/components
+    extended_components/extended_components
     examples/examples
     citations

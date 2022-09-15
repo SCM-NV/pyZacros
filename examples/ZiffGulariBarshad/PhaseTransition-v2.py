@@ -7,9 +7,6 @@ import scm.pyzacros.models
 
 zgb = pz.models.ZiffGulariBarshad()
 
-#---------------------------------------------
-# Calculation Settings
-#---------------------------------------------
 scm.pyzacros.init()
 
 # Run as many job simultaneously as there are cpu on the system
@@ -27,10 +24,10 @@ sett.snapshots = ('time', 2.0)
 sett.species_numbers = ('time', 0.1)
 sett.max_time = 10.0
 
-parameters = { 'x_CO':pz.ZacrosParametersScanJob.Parameter('molar_fraction.CO', numpy.arange(0.2, 0.8, 0.01)),
-                'x_O2':pz.ZacrosParametersScanJob.Parameter('molar_fraction.O2', lambda params: 1.0-params['x_CO']) }
-
 job = pz.ZacrosJob( settings=sett, lattice=zgb.lattice, mechanism=zgb.mechanism, cluster_expansion=zgb.cluster_expansion )
+
+parameters = { 'x_CO':pz.ZacrosParametersScanJob.Parameter('molar_fraction.CO', numpy.arange(0.2, 0.8, 0.01)),
+               'x_O2':pz.ZacrosParametersScanJob.Parameter('molar_fraction.O2', lambda params: 1.0-params['x_CO']) }
 
 mjob = pz.ZacrosParametersScanJob( reference=job,
                                     generator=pz.ZacrosParametersScanJob.meshGenerator,
@@ -87,16 +84,3 @@ ax2.plot(x_CO, TOF_CO2, color="red", lw=2, zorder=5)
 plt.text(0.37, 1.5, 'CO$_2$', fontsize=18, color="red")
 
 plt.show()
-
-## Lattice states for x_CO=0.54 and CO=0.55
-#results[33].last_lattice_state().plot()
-#results[34].last_lattice_state().plot()
-
-## Molecule numbers for x_CO=0.54 and CO=0.55
-#results[33].plot_molecule_numbers( ["CO2"], normalize_per_site=True )
-#results[34].plot_molecule_numbers( ["CO2"], normalize_per_site=True )
-
-## Molecule numbers for x_CO=0.54 and CO=0.55. First Derivative
-#results[33].plot_molecule_numbers( ["CO2"], normalize_per_site=True, derivative=True )
-#results[34].plot_molecule_numbers( ["CO2"], normalize_per_site=True, derivative=True )
-

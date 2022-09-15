@@ -221,7 +221,6 @@ Generating the pyZacros objects
 In the previous sections, we obtained the irreducible-symmetry energy landscape and the complete lattice of binding sites. These results have to be post-processed to generate the cluster expansion Hamiltonian, the reaction mechanism, and the KMC lattice in the pyZacros/Zacros scheme. pyZacros offers a way to do this through the class ``RKFLoader``. This class receives a Results object in the constructor and makes available the expected objects already translated into the pyZacros scheme, namely: mechanism, clusterExpansion, and lattice. The following figure is a schematic representation of reaction processes as defined in AMS and pyZacros, and how the RKFLoader class translates them from one to the other:
 
 .. image:: ../../images/example_CO+Pt111-rfkloader.png
-   :scale: 60 %
    :align: center
 
 In this figure, red crosses represent the binding sites. A and B are the atoms attached to the binding sites (parent atoms), and R is the remainder of the adsorbed molecule. Remember that AMS currently only supports non-activated exothermic adsorption (X\ :sub:`gas` + * ⟷ X*) and surface reactions (X*+Y* ⟷ Z*) processes.

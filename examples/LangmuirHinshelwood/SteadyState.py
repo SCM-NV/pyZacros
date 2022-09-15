@@ -25,41 +25,42 @@ scm.plams.config.job.runscript.nproc = 1
 print('Running up to {} jobs in parallel simultaneously'.format(maxjobs))
 
 # Settings:
+
 dt = 5.0e-5
+z_sett = pz.Settings()
+z_sett.random_seed = 1609
+z_sett.temperature = 500.0
+z_sett.pressure = 1.000
+#z_sett.snapshots = ('time', 10*dt)
+#z_sett.process_statistics = ('time', dt)
+z_sett.species_numbers = ('time', dt)
+z_sett.max_time = 100*dt
 
-sett = pz.Settings()
-sett.random_seed = 1609
-sett.temperature = 500.0
-sett.pressure = 1.000
-#sett.snapshots = ('time', 10*dt)
-#sett.process_statistics = ('time', dt)
-sett.species_numbers = ('time', dt)
-sett.max_time = 100*dt
-
-sett.molar_fraction.CO = 0.4
-sett.molar_fraction.O2 = 1.0 - sett.molar_fraction.CO
-
-sett.steady_state_job.turnover_frequency.nbatch = 20
-sett.steady_state_job.turnover_frequency.confidence = 0.96
-sett.steady_state_job.nreplicas = 4
-
-sett.steady_state_job.scaling.max_time = 2*dt
-sett.steady_state_job.scaling.partial_equilibrium_index_threshold = 0.1
-sett.steady_state_job.scaling.upper_bound = 100
+#z_sett.molar_fraction.CO = 0.4
+#z_sett.molar_fraction.O2 = 1.0 - z_sett.molar_fraction.CO
+z_sett.molar_fraction.CO = 0.9
+z_sett.molar_fraction.O2 = 1.0 - z_sett.molar_fraction.CO
 
 ## Adsorption and diffusion scaling factors
 #for rxn in lh.mechanism:
     #if 'adsorption' in rxn.label(): rxn.pre_expon *= 1e-2
     #if  'diffusion' in rxn.label(): rxn.pre_expon *= 1e-2
 
-job = pz.ZacrosJob( settings=sett,
-                    lattice=lh.lattice,
-                    mechanism=lh.mechanism,
-                    cluster_expansion=lh.cluster_expansion )
+job = pz.ZacrosJob( settings=z_sett, lattice=lh.lattice, mechanism=lh.mechanism, cluster_expansion=lh.cluster_expansion )
 
-parameters = { 'max_time':pz.ZacrosSteadyStateJob.Parameter('restart.max_time', 2*sett.max_time*( numpy.arange(10)+1 )**2) }
+dt = 5.0e-5
+ss_sett = pz.Settings()
+ss_sett.turnover_frequency.nbatch = 20
+ss_sett.turnover_frequency.confidence = 0.96
+ss_sett.nreplicas = 4
+ss_sett.scaling.partial_equilibrium_index_threshold = 0.1
+ss_sett.scaling.upper_bound = 100
+ss_sett.scaling.max_time = 10*dt
+ss_sett.scaling.species_numbers = ('time', dt)
 
-cjob = pz.ZacrosSteadyStateJob( reference=job, generator_parameters=parameters, scaling=True )
+parameters = { 'max_time':pz.ZacrosSteadyStateJob.Parameter('restart.max_time', 2*z_sett.max_time*( numpy.arange(50)+1 )**2) }
+
+cjob = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=job, generator_parameters=parameters, scaling=True )
 
 results = cjob.run()
 

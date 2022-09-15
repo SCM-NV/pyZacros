@@ -30,6 +30,11 @@ class ZacrosParametersScanResults( scm.plams.Results ):
 
         for pos,idx in enumerate(self.job._indices):
             params = self.job._parameters_values[idx]
+
+            if pos==0 and isinstance(self.job.children[idx],ZacrosSteadyStateJob):
+                nbatch = self.job.children[idx].nbatch
+                confidence = self.job.children[idx].confidence
+
             TOFs,errors,ratio,converged = self.job.children[idx].results.turnover_frequency( nbatch=nbatch, confidence=confidence )
 
             if update:

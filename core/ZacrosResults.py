@@ -411,6 +411,33 @@ class ZacrosResults( scm.plams.Results ):
         return acf
 
 
+    def molecule_numbers(self, species_name, normalize_per_site=False):
+        """
+        The key 'Time' is included by default and includes the time in seconds.
+        The other keys correspond to species selected by the parameter `species_name`
+        and contain the number of molecules for the corresponding species.
+        If `normalize_per_site=True,` these last values are divided by the number of sites on the surface.
+        e.g., ``{ "Time":[0.0, 0.1, 0.2, ...], "O*":[5, 15, 20, ...], "CO2":[10, 25, 45, ...] }``
+
+        *   ``species_name`` -- List of species names to show, e.g., ``["CO*", "CO2"]``
+        *   ``normalize_per_site`` -- Divides the molecule numbers by the total number of sites in the lattice.
+        """
+
+        data = {}
+
+        provided_quantities = self.provided_quantities()
+
+        data['Time'] = numpy.array(provided_quantities['Time'])
+
+        for spn in species_name:
+            if( normalize_per_site ):
+                data[spn] = numpy.array(provided_quantities[spn])/self.number_of_lattice_sites()
+            else:
+                data[spn] = numpy.array(provided_quantities[spn])
+
+        return data
+
+
     def plot_lattice_states(self, data, pause=-1, show=True, ax=None, close=False, time_perframe=0.5, file_name=None):
         """
         Uses matplotlib to visualize the lattice states as an animation

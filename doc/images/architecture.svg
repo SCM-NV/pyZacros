@@ -327,7 +327,7 @@
          id="tspan823"
          x="18.904827"
          y="60.008923"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Nimbus Roman No9 L';-inkscape-font-specification:'Nimbus Roman No9 L';stroke-width:0.26458332">Species</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Termes';-inkscape-font-specification:'TeX Gyre Termes';stroke-width:0.26458332">Species</tspan></text>
     <rect
        style="opacity:0.997;fill:#afe8ff;fill-opacity:1;stroke:none;stroke-width:0.25628307;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect954-0-6"
@@ -346,7 +346,7 @@
          id="tspan823-6"
          x="10.453951"
          y="93.46891"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Nimbus Roman No9 L';-inkscape-font-specification:'Nimbus Roman No9 L';stroke-width:0.26458332">SpeciesList</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Termes';-inkscape-font-specification:'TeX Gyre Termes';stroke-width:0.26458332">SpeciesList</tspan></text>
     <rect
        style="opacity:0.997;fill:#afffc7;fill-opacity:1;stroke:none;stroke-width:0.20280759;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect954"
@@ -365,7 +365,7 @@
          id="tspan823-5"
          x="-37.155174"
          y="141.88536"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Nimbus Roman No9 L';-inkscape-font-specification:'Nimbus Roman No9 L';stroke-width:0.26458332">Cluster</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Termes';-inkscape-font-specification:'TeX Gyre Termes';stroke-width:0.26458332">Cluster</tspan></text>
     <rect
        style="opacity:0.997;fill:#fafafa;fill-opacity:1;stroke:#bbbbbb;stroke-width:0.21983688;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect2629"
@@ -392,7 +392,7 @@
          id="tspan823-6-5"
          x="-59.404976"
          y="184.53998"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Nimbus Roman No9 L';-inkscape-font-specification:'Nimbus Roman No9 L';stroke-width:0.26458332">ClusterExpansion</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Termes';-inkscape-font-specification:'TeX Gyre Termes';stroke-width:0.26458332">ClusterExpansion</tspan></text>
     <rect
        style="opacity:0.997;fill:#ffe2af;fill-opacity:1;stroke:none;stroke-width:0.30582494;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect954-0-6-6"
@@ -411,7 +411,7 @@
          id="tspan823-2"
          x="54.247097"
          y="140.80586"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Nimbus Roman No9 L';-inkscape-font-specification:'Nimbus Roman No9 L';stroke-width:0.26458332">ElementaryReaction</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Termes';-inkscape-font-specification:'TeX Gyre Termes';stroke-width:0.26458332">ElementaryReaction</tspan></text>
     <rect
        style="opacity:0.997;fill:#ffe2af;fill-opacity:1;stroke:none;stroke-width:0.24307504;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect954-0-6-6-1"
@@ -430,7 +430,7 @@
          id="tspan823-6-1"
          x="72.690628"
          y="185.63536"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Nimbus Roman No9 L';-inkscape-font-specification:'Nimbus Roman No9 L';stroke-width:0.26458332">Mechanism</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Termes';-inkscape-font-specification:'TeX Gyre Termes';stroke-width:0.26458332">Mechanism</tspan></text>
     <rect
        style="opacity:0.997;fill:#ff7d7d;fill-opacity:1;stroke:none;stroke-width:0.19450748;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect954-0-6-6-1-8"
@@ -449,7 +449,7 @@
          id="tspan823-5-7"
          x="164.47723"
          y="185.63536"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Nimbus Roman No9 L';-inkscape-font-specification:'Nimbus Roman No9 L';stroke-width:0.26458332">Lattice</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Termes';-inkscape-font-specification:'TeX Gyre Termes';stroke-width:0.26458332">Lattice</tspan></text>
     <rect
        style="opacity:0.997;fill:#d9d9d9;fill-opacity:1;stroke:none;stroke-width:0.24307506;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect954-0-6-6-1-7"
@@ -468,7 +468,7 @@
          id="tspan823-5-9"
          x="22.34243"
          y="251.55428"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Nimbus Roman No9 L';-inkscape-font-specification:'Nimbus Roman No9 L';stroke-width:0.26458332">ZacrosJob</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Termes';-inkscape-font-specification:'TeX Gyre Termes';stroke-width:0.26458332">ZacrosJob</tspan></text>
     <rect
        style="opacity:0.997;fill:#d9d9d9;fill-opacity:1;stroke:none;stroke-width:0.26123929;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect954-0-6-6-1-9"
@@ -487,7 +487,7 @@
          id="tspan823-5-9-6"
          x="14.161434"
          y="289.73016"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Nimbus Roman No9 L';-inkscape-font-specification:'Nimbus Roman No9 L';stroke-width:0.26458332">ZacrosResults</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Termes';-inkscape-font-specification:'TeX Gyre Termes';stroke-width:0.26458332">ZacrosResults</tspan></text>
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.26499999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Lend)"
        d="m 35.065906,66.488913 0,15.568178"
@@ -574,7 +574,7 @@
          x="-132.93924"
          style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:-4.71487474px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
          xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Nimbus Roman No9 L';-inkscape-font-specification:'Nimbus Roman No9 L';stroke-width:0.26458332"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Termes';-inkscape-font-specification:'TeX Gyre Termes';stroke-width:0.26458332"
            y="184.5347"
            x="-132.93924"
            id="tspan823-6-5-5"
@@ -604,7 +604,7 @@
          x="191.48096"
          style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:-4.71487474px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
          xml:space="preserve"><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Nimbus Roman No9 L';-inkscape-font-specification:'Nimbus Roman No9 L';stroke-width:0.26458332"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Termes';-inkscape-font-specification:'TeX Gyre Termes';stroke-width:0.26458332"
            y="242.35297"
            x="191.48096"
            id="tspan823-6-1-8"
@@ -649,7 +649,7 @@
              id="tspan823-6-5-5-5"
              x="-117.82019"
              y="184.5347"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Nimbus Roman No9 L';-inkscape-font-specification:'Nimbus Roman No9 L';stroke-width:0.26458332">PLAMS</tspan></text>
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'TeX Gyre Termes';-inkscape-font-specification:'TeX Gyre Termes';stroke-width:0.26458332">PLAMS</tspan></text>
       </g>
     </g>
     <path

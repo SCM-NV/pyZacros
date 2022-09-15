@@ -46,7 +46,6 @@ using as a use case the following example, which is known as the
 `Ziff-Gulari-Barshad (ZGB) Model <https://zacros.org/tutorials/4-tutorial-1-ziff-gulari-barshad-model-in-zacros>`_:
 
 .. image:: ../../images/reaction_example.png
-   :scale: 60 %
    :align: center
 
 The ZGB model includes:
@@ -71,3 +70,4 @@ The ZGB model includes:
     settings
     zacrosjob
     zacrosresults
+
