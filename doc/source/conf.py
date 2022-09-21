@@ -7,7 +7,7 @@ from pathlib import Path
 import sys
 
 def setup(app):
-    # For sphinx autodoc, we need the pyzacros module in the path. 
+    # For sphinx autodoc, we need the pyzacros module in the path.
     # So, here we add it to the path (in a quite hackish way...)
     sys.path.insert(0, str(Path(__file__).parent.parent.parent.resolve()))
 
@@ -34,5 +34,5 @@ add_module_names = False
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
 
-autodoc_default_flags = ['members', 'private-members', 'special-members']
+autodoc_default_options = {'members':True, 'private-members':True, 'special-members':True}
 autodoc_member_order = 'bysource'

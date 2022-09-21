@@ -5,20 +5,44 @@ ZacrosParametersScanJob
 
 .. currentmodule:: scm.pyzacros.core.ZacrosParametersScanJob
 
-The ``ZacrosParametersScanJob`` class represents a single zacros calculation. This class is an extension of the `PLAMS Job <../../plams/components/jobs.html>`_ class and so it inherits all its powerful features like e.g. being executed locally or submitted to some external queueing system in a transparent way, or executing your jobs in parallel with a predefined dependency structure. See all configure possibilities on the PLAMS Job class documentation in this link: `PLAMS.Job <../../plams/components/jobs.html>`_.
+``ZacrosParametersScanJob`` class represents a job that is a container for other jobs, called children jobs, which must be :ref:`ZacrosJobs <zacrosjob>` or :ref:`ZacrosSteadyStateJob <zacrossteadystatejob>` kind objects. This class is an extension of the PLAMS MultiJob class. So it inherits all its powerful features, e.g., being executed locally or submitted to some external queueing system transparently or executing jobs in parallel with a predefined dependency structure. See all configure possibilities on the PLAMS MultiJob class documentation in this link: `PLAMS.MultiJob <../../plams/components/jobs.html#multijobs>`_.
 
-The ``ZacrosParametersScanJob`` class constructor doesn't require a Settings object, and the set of objects that defines the system, namely: lattice, mechanism, and the cluster expansion Hamiltonian. See the following lines from our example (see :ref:`use case system <use_case_model_zgb>`)
+The ``ZacrosParametersScanJob`` class constructor doesn't require a Settings object; instead, it requires a reference job ``reference`` from which the calculation ``Settings`` is taken to be replicated through its children. Children are initially copies of the reference job. However, just before they are run, their corresponding Settings are altered accordingly to the rules defined through a ``Parameter`` object provided using the parameters ``generator`` and ``generator_parameters``  in the constructor. The following example illustrates how to use this class:
 
 .. code-block:: python
   :linenos:
 
-   job = pz.ZacrosParametersScanJob( settings=sett, lattice=lat,
-                       mechanism=[CO_ads, O2_ads, CO_oxi],
-                       cluster_expansion=[CO_p, O_p] )
+  import numpy
+  import scm.pyzacros as pz
+  import scm.pyzacros.models
 
-   print(job)
+  lh = pz.models.LangmuirHinshelwood()
 
-In the previous code, we used the function print() to see the content of the files that are going to be used with Zacros. This output information is separated into 4 sections, each corresponding to the zacros input files: ``simulation_input.dat``, ``lattice_input.dat``, ``energetics_input.dat``, and ``mechanism_input.dat``.
+  z_sett = pz.Settings()
+  z_sett.temperature = 500.0
+  z_sett.molar_fraction.CO = 0.1
+  z_sett.molar_fraction.O2 = 0.9
+  ...
+
+  z_job = pz.ZacrosJob( settings=z_sett,
+                        lattice=lh.lattice,
+                        mechanism=lh.mechanism,
+                        cluster_expansion=lh.clusterExpansion )
+
+  params = pz.ZacrosParametersScanJob.Parameters()
+  params.add( 'x_CO', 'molar_fraction.CO', numpy.arange(0.1, 1.0, 0.05) )
+  params.add( 'x_O2', 'molar_fraction.O2', lambda p: 1.0-p['x_CO'] )
+  params.generator = pz.ZacrosParametersScanJob.zipGenerator
+
+  ps_job = pz.ZacrosParametersScanJob(
+                reference=ss_job, parameters=parameters, name='mesh' )
+
+  results = ps_job.run()
+
+
+In the previous code, we used the predefined model ``LangmuirHinshelwood`` (line 5),
+select the job settings' (lines 7-11), and creates the corresponding job (lines 13-16).
+
 
 .. code-block:: none
 
@@ -132,4 +156,8 @@ API
 ~~~
 
 .. autoclass:: ZacrosParametersScanJob
-    :exclude-members: _result_type, __init__, _get_ready, __str__, _ZacrosParametersScanJob__recreate_energetics_input, _ZacrosParametersScanJob__recreate_initial_state_input, _ZacrosParametersScanJob__recreate_lattice_input, _ZacrosParametersScanJob__recreate_mechanism_input, _ZacrosParametersScanJob__recreate_simulation_input
+    :exclude-members: _result_type, __init__
+
+.. autoclass:: scm.pyzacros::ZacrosParametersScanJob.Parameter
+
+

@@ -450,6 +450,8 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
 
 
     def new_children(self):
+        """
+        """
 
         if self._scaling and self._scaling_status != 'finished':
             if self._scaling_status == 'requested':
