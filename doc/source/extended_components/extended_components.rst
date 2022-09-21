@@ -7,16 +7,16 @@ This chapter describes those components (classes) which don't have an equivalent
 Normally, these classes extend the Zacros functionality, facilitating the scripting process on regularly
 required tasks, like running and integrating the results from several Zacros calculations.
 The image below shows the currently available extended classes in pyZacros, in addition to the first level
-of dependencies with the basic components; `Settings <../components/settings.html>`_,
-`ZacrosJob <../components/zacrosjob.html>`_, and `ZacrosResults <../components/zacrosresults.html>`_.
+of dependencies with the basic components; :ref:`Settings <settings>`,
+:ref:`ZacrosJob <zacrosjob>`, and :ref:`ZacrosResults <zacrosresults>`.
 
 .. image:: ../../images/architecture_adv.png
    :align: center
 
 As in the equivalent figure of the basic components, these classes are represented in gray because they are
 also extensions of PLAMS.
-`ZacrosParametersScanJob <zacrosparametersscanjob.html>`_/`ZacrosSteadyStateJob <zacrossteadystatejob.html>`_, and
-`ZacrosParametersScanResults <zacrosparametersscanresults.html>`_/`ZacrosSteadyStateResults <zacrossteadystateresults.html>`_
+:ref:`ZacrosParametersScanJob <zacrosparametersscanjob>`/:ref:`ZacrosSteadyStateJob <zacrossteadystatejob>`, and
+:ref:`ZacrosParametersScanResults <zacrosparametersscanresults>`/:ref:`ZacrosSteadyStateResults <zacrossteadystateresults>`
 are subclasses of the PLAMS classes
 `MultiJob <../../plams/components/jobs.html#scm.plams.core.basejob.MultiJob>`_,
 and `Results <../../plams/components/results.html>`_ respectively.
