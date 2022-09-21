@@ -10,6 +10,7 @@ import scm.plams
 
 from .ZacrosJob import *
 from .ZacrosSteadyStateJob import *
+from .ParametersBase import *
 
 __all__ = ['ZacrosParametersScanJob', 'ZacrosParametersScanResults']
 
@@ -69,56 +70,40 @@ class ZacrosParametersScanResults( scm.plams.Results ):
 
 class ZacrosParametersScanJob( scm.plams.MultiJob ):
     """
-    Create a new ZacrosParametersScanJob object.
+    Creates a new ZacrosParametersScanJob object. This class is a job that is a container for other jobs, called children jobs and
+    it is an extension of the `PLAMS.MultiJob <../../plams/components/jobs.html#multijobs>`_. Children are copies of a reference
+    job ``reference``. However, just before they are run, their corresponding Settings are altered accordingly to the rules
+    defined through a ``Parameter`` object provided using the parameters ``generator`` and ``generator_parameters``.
+
+    *   ``reference`` -- Reference job. It must be :ref:`ZacrosJobs <zacrosjob>` or :ref:`ZacrosSteadyStateJob <zacrossteadystatejob>` kind object.
+    *   ``generator`` --
+    *   ``generator_parameters`` -- Mechanism containing the mechanisms involed in the calculation.
+    *   ``name`` -- A string containing the name of the job. All zacros input and output files are stored in a folder with this name. If not supplied, the default name is ``plamsjob``.
     """
+
+    class Parameter(ParameterBase):
+        def __init__(self, name_in_settings, kind, values):
+            super().__init__(self, name_in_settings, kind, values)
+
+    class Parameters(ParametersBase):
+        def __init__(self, *args, **kwargs):
+            super().__init__(self, *args, **kwargs)
+
 
     _result_type = ZacrosParametersScanResults
 
 
-    class Parameter:
-        INDEPENDENT = 0
-        DEPENDENT = 1
-
-        def __init__(self, name_in_settings, values):
-            self.name_in_settings = name_in_settings
-
-            self.values = values
-            if type(values) not in [list,numpy.ndarray] and not callable(values):
-                msg  = "\n### ERROR ### ZacrosParametersScanJob.Parameter.__init__.\n"
-                msg += "              Parameter 'values' should be a 'list', 'numpy.ndarray', or 'function'.\n"
-                raise Exception(msg)
-
-            self.kind = None
-            if type(values) in [list,numpy.ndarray]:
-                self.kind = ZacrosParametersScanJob.Parameter.INDEPENDENT
-            elif callable(values):
-                self.kind = ZacrosParametersScanJob.Parameter.DEPENDENT
-
-
-    def __init__(self, reference, generator=None, generator_parameters=None, **kwargs):
+    def __init__(self, reference, parameters=None, **kwargs):
         scm.plams.MultiJob.__init__(self, children=OrderedDict(), **kwargs)
-
-        if generator is not None:
-            if len(generator_parameters) == 0:
-                msg  = "\n### ERROR ### ZacrosParametersScanJob.__init__.\n"
-                msg += "              Parameter 'generator_parameters' is required if 'generator' different than None\n"
-                raise Exception(msg)
-
-            for name,item in generator_parameters.items():
-                if type(item) is not ZacrosParametersScanJob.Parameter:
-                    msg  = "\n### ERROR ### ZacrosParametersScanJob.__init__.\n"
-                    msg += "              Parameter 'generator_parameters' should be a list of ZacrosParametersScanJob.Parameter objects.\n"
-                    raise Exception(msg)
 
         self._indices = None
         self._parameters_values = None
 
         if isinstance(reference,ZacrosJob):
-            self._indices,self._parameters_values,settings_list = generator( reference.settings, generator_parameters )
+            self._indices,self._parameters_values,settings_list = parameters._generator( reference.settings, parameters )
         elif isinstance(reference,ZacrosSteadyStateJob):
-            self._indices,self._parameters_values,settings_list = generator( reference._reference.settings, generator_parameters )
+            self._indices,self._parameters_values,settings_list = parameters._generator( reference._reference.settings, parameters )
         else:
-
             msg  = "\n### ERROR ### ZacrosParametersScanJob.__init__.\n"
             msg += "              Parameter 'reference' should be a ZacrosJob or ZacrosSteadyStateJob object.\n"
             raise Exception(msg)
@@ -138,7 +123,7 @@ class ZacrosParametersScanJob( scm.plams.MultiJob ):
                 new_reference = copy.copy(reference._reference)
                 new_reference.settings = settings_idx
                 job = ZacrosSteadyStateJob( settings=reference.settings, reference=new_reference,
-                                            generator_parameters=reference._generator_parameters,
+                                            parameters=reference._parameters,
                                             name=new_name, scaling=reference._scaling )
 
             self.children[ idx ] = job
@@ -149,24 +134,27 @@ class ZacrosParametersScanJob( scm.plams.MultiJob ):
 
 
     @staticmethod
-    def __name2dict( name ):
-        tokens = name.split('.')
-        output = ""
-        for i,token in enumerate(tokens):
-            if i != len(tokens)-1:
-                output += "[\'"+token+"\']"
-        return output+".__setitem__(\'"+tokens[-1]+"\',$var_value)"
+    def zipGenerator( reference_settings, parameters ):
+        return ZacrosParametersScanJob.Parameters.zipGenerator( reference_settings, parameters )
 
 
     @staticmethod
-    def meshGenerator( settings, parameters ):
+    def meshgridGenerator( reference_settings, parameters ):
+        """
+        This function is used to create a rectangular
+        grid out of N given one-dimensional arrays representing the Cartesian indexing or Matrix
+        indexing. Meshgrid function is somewhat inspired from MATLAB.
+
+        *   ``reference_settings`` --
+        *   ``parameters`` --
+        """
 
         independent_params = []
         for name,item in parameters.items():
             if item.kind == ZacrosParametersScanJob.Parameter.INDEPENDENT:
                 independent_params.append( item.values )
                 if len(item.values) == 0:
-                    msg  = "\n### ERROR ### ZacrosParametersScanJob.meshGenerator().\n"
+                    msg  = "\n### ERROR ### ZacrosParametersScanJob.meshgridGenerator().\n"
                     msg += "              All parameter in 'generator_parameters' should be lists with at least one element.\n"
                     raise Exception(msg)
 
@@ -177,65 +165,19 @@ class ZacrosParametersScanJob( scm.plams.MultiJob ):
         settings_list = {}
 
         for idx in indices:
-            settings_idx = settings.copy()
+            settings_idx = reference_settings.copy()
 
             params = {}
             for i,(name,item) in enumerate(parameters.items()):
                 if item.kind == ZacrosParametersScanJob.Parameter.INDEPENDENT:
                     value = mesh[i][idx]
-                    eval('settings_idx'+ZacrosParametersScanJob.__name2dict(item.name_in_settings).replace('$var_value',str(value)))
+                    eval('settings_idx'+item.name2setitem().replace('$var_value',str(value)))
                     params[name] = value
 
             for i,(name,item) in enumerate(parameters.items()):
                 if item.kind == ZacrosParametersScanJob.Parameter.DEPENDENT:
                     value = item.values(params)
-                    eval('settings_idx'+ZacrosParametersScanJob.__name2dict(item.name_in_settings).replace('$var_value',str(value)))
-                    params[name] = value
-
-            parameters_values[idx] = params
-            settings_list[idx] = settings_idx
-
-        return indices,parameters_values,settings_list
-
-
-    @staticmethod
-    def zipGenerator( settings, parameters ):
-
-        independent_params = []
-        size = None
-        for name,item in parameters.items():
-            if item.kind == ZacrosParametersScanJob.Parameter.INDEPENDENT:
-                independent_params.append( item.values )
-                if size is None:
-                    size = len(item.values)
-                elif size != len(item.values):
-                    msg  = "\n### ERROR ### ZacrosParametersScanJob.zipGenerator().\n"
-                    msg += "              All parameter in 'generator_parameters' should be lists of the same size.\n"
-                    raise Exception(msg)
-
-        if size == 0:
-            msg  = "\n### ERROR ### ZacrosParametersScanJob.zipGenerator().\n"
-            msg += "              All parameter in 'generator_parameters' should be lists with at least one element.\n"
-            raise Exception(msg)
-
-        indices = list( range(size) )
-        parameters_values = {}
-        settings_list = {}
-
-        for idx in indices:
-            settings_idx = settings.copy()
-
-            params = {}
-            for i,(name,item) in enumerate(parameters.items()):
-                if item.kind == ZacrosParametersScanJob.Parameter.INDEPENDENT:
-                    value = independent_params[i][idx]
-                    eval('settings_idx'+ZacrosParametersScanJob.__name2dict(item.name_in_settings).replace('$var_value',str(value)))
-                    params[name] = value
-
-            for i,(name,item) in enumerate(parameters.items()):
-                if item.kind == ZacrosParametersScanJob.Parameter.DEPENDENT:
-                    value = item.values(params)
-                    eval('settings_idx'+ZacrosParametersScanJob.__name2dict(item.name_in_settings).replace('$var_value',str(value)))
+                    eval('settings_idx'+item.name2setitem().replace('$var_value',str(value)))
                     params[name] = value
 
             parameters_values[idx] = params

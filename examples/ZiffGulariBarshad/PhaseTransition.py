@@ -108,9 +108,9 @@ ac_CO = []
 TOF_CO2 = []
 
 for i,x in enumerate(x_CO):
-   if( results[i].ok() ):
+   if( results[i].job.ok() ):
       ac = results[i].average_coverage( last=5 )
-      TOFs,_,_ = results[i].turnover_frequency()
+      TOFs,_,_,_ = results[i].turnover_frequency()
 
       ac_O.append( ac["O*"] )
       ac_CO.append( ac["CO*"] )

@@ -1,10 +1,13 @@
 import numpy
 import multiprocessing
+from collections import UserList
+
 import scm.plams
 
 import pyzacros as pz
 import pyzacros.models
 import pyzacros.utils
+
 
 def test_ZacrosParametersScanJob():
     print( "---------------------------------------------------" )
@@ -33,21 +36,16 @@ def test_ZacrosParametersScanJob():
     sett.species_numbers = ('time', 0.1)
     sett.max_time = 10.0
 
-    # This is to be used in combination with: generator=pz.ZacrosParametersScanJob.meshGenerator
-    parameters = { 'x_CO':pz.ZacrosParametersScanJob.Parameter('molar_fraction.CO', numpy.arange(0.2, 0.8, 0.1)),
-                   'x_O2':pz.ZacrosParametersScanJob.Parameter('molar_fraction.O2', lambda params: 1.0-params['x_CO']) }
-
-    # This is to be used in combination with: generator=pz.ZacrosParametersScanJob.zipGenerator
-    #parameters = { 'x_CO':pz.ZacrosParametersScanJob.Parameter('molar_fraction.CO', numpy.arange(0.2, 0.8, 0.1)),
-                   #'x_O2':pz.ZacrosParametersScanJob.Parameter('molar_fraction.O2', 1.0-numpy.arange(0.2, 0.8, 0.1)) }
+    parameters = pz.ZacrosParametersScanJob.Parameters()
+    parameters.add('x_CO', 'molar_fraction.CO', numpy.arange(0.2, 0.8, 0.1) )
+    parameters.add('x_O2', 'molar_fraction.O2', lambda params: 1.0-params['x_CO'])
+    parameters.set_generator( pz.ZacrosParametersScanJob.meshgridGenerator )
 
     try:
         job = pz.ZacrosJob( settings=sett, lattice=zgb.lattice, mechanism=zgb.mechanism,
                             cluster_expansion=zgb.cluster_expansion )
 
-        mjob = pz.ZacrosParametersScanJob( reference=job,
-                                           generator=pz.ZacrosParametersScanJob.meshGenerator,
-                                           generator_parameters=parameters )
+        mjob = pz.ZacrosParametersScanJob( reference=job, parameters=parameters )
 
         results = mjob.run()
 
@@ -89,13 +87,14 @@ def test_ZacrosParametersScanJob():
 ----------------------------------------------
 cond     x_CO       ac_O      ac_CO   TOF_CO2
 ----------------------------------------------
-   0     0.20   0.997867   0.000000   0.004800
-   1     0.30   0.995733   0.000000   0.008800
-   2     0.40   0.903333   0.000533   0.413600
-   3     0.50   0.565733   0.024400   2.034400
-   4     0.60   0.000000   1.000000   0.000000
-   5     0.70   0.000000   1.000000   0.000000
-   6     0.80   0.000000   1.000000   0.000000\
+   0     0.20   0.997867   0.000000   0.049895
+   1     0.30   0.995733   0.000000   0.123811
+   2     0.40   0.903333   0.000533   0.577095
+   3     0.50   0.565733   0.024400   2.108442
+   4     0.60   0.000000   1.000000   0.221453
+   5     0.70   0.000000   1.000000   0.008863
+   6     0.80   0.000000   1.000000   0.000589\
 """
 
     assert( pz.utils.compare( output, expectedOutput, rel_error=0.1 ) )
+

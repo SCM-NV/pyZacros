@@ -41,9 +41,10 @@ sett.molar_fraction.O2 = 1.0-sett.molar_fraction.CO
 
 job = pz.ZacrosJob( settings=sett, lattice=rs.lattice, mechanism=rs.mechanism, cluster_expansion=rs.cluster_expansion )
 
-parameters = { 'max_time':pz.ZacrosSteadyStateJob.Parameter('restart.max_time', 2*sett.max_time*( numpy.arange(20)+1 )**2) }
+parameters = pz.ZacrosSteadyStateJob.Parameters()
+parameters.add( 'max_time', 'restart.max_time', 2*sett.max_time*( numpy.arange(20)+1 )**2 )
 
-cjob = pz.ZacrosSteadyStateJob( reference=job, generator_parameters=parameters, scaling=True )
+cjob = pz.ZacrosSteadyStateJob( reference=job, parameters=parameters, scaling=True )
 
 results = cjob.run()
 

@@ -3,47 +3,47 @@
 
 Simulation will resume from previously saved state... 
 
-This is restart No 1 from KMC step 423395 and t = 5.0000092812754375E-003
+This is restart No 1 from KMC step 8994 and t = 1.0001547471312404E-003
 
 Restart information successfully read from file restart.inf.
 
-Max simulated time overwritten from commandline: 4.0000000000000001E-002         
+Max simulated time overwritten from commandline: 8.0000000000000002E-003         
 
 Commencing simulation:
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Simulation stopped:
 ~~~~~~~~~~~~~~~~~~~
- Current KMC time: 4.00000438E-02
- Events occurred:  3374280
- Event frequency:  84356904.0
+ Current KMC time: 8.00000504E-03
+ Events occurred:  70476
+ Event frequency:  8809494.00
 
 Performance facts:
 ~~~~~~~~~~~~~~~~~~
 
-Elapsed CPU time:         39.4821167 seconds
-Elapsed clock time:       39.5102005 seconds
-Setup clock time:         2.43590083E-02 seconds
-Simulation clock time:    39.4858398 seconds
+Elapsed CPU time:         0.975875974 seconds
+Elapsed clock time:       1.00209653 seconds
+Setup clock time:         2.61771642E-02 seconds
+Simulation clock time:    0.975919366 seconds
 
-Clock time per KMC event: 1.33892718E-05 seconds
-Clock time per KMC time:  1128.86169 seconds/KMCTimeUnits
+Clock time per KMC event: 1.62990236E-05 seconds
+Clock time per KMC time:  143.159714 seconds/KMCTimeUnits
 
-Events per clock hour:    268871968
-KMC Dt per clock hour:    3.18905330 KMCTimeUnits
+Events per clock hour:    220872128
+KMC Dt per clock hour:    25.1467400 KMCTimeUnits
 
 Execution queue statistics:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Number of insertions:             54099063
-Number of removals:               54098965
+Number of insertions:              1147128
+Number of removals:                1147196
 Number of updates:                       0
 
 Memory usage statistics:
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Used capacity of process queue:                    4672
-       ...out of max-allocated:                   40000  (  11.68% utilization )
+Used capacity of process queue:                    4724
+       ...out of max-allocated:                   40000  (  11.81% utilization )
 
 Used capacity of process-participation list:         13
        ...out of max-allocated:                     200  (   6.50% utilization )

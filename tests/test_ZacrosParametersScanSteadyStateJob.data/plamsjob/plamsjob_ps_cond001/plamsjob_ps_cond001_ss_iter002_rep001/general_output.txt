@@ -1,0 +1,59 @@
+
+--------------------------------------------------------
+
+Simulation will resume from previously saved state... 
+
+This is restart No 2 from KMC step 91422 and t = 8.0001992988991740E-003
+
+Restart information successfully read from file restart.inf.
+
+Max simulated time overwritten from commandline: 1.8000000000000002E-002         
+
+Commencing simulation:
+~~~~~~~~~~~~~~~~~~~~~~
+
+Simulation stopped:
+~~~~~~~~~~~~~~~~~~~
+ Current KMC time: 1.80000141E-02
+ Events occurred:  205515
+ Event frequency:  11417492.0
+
+Performance facts:
+~~~~~~~~~~~~~~~~~~
+
+Elapsed CPU time:         1.86429203 seconds
+Elapsed clock time:       1.88983929 seconds
+Setup clock time:         2.54834928E-02 seconds
+Simulation clock time:    1.86435580 seconds
+
+Clock time per KMC event: 1.65640249E-05 seconds
+Clock time per KMC time:  188.987442 seconds/KMCTimeUnits
+
+Events per clock hour:    217338480
+KMC Dt per clock hour:    19.0488853 KMCTimeUnits
+
+Execution queue statistics:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Number of insertions:              2109873
+Number of removals:                2109831
+Number of updates:                       0
+
+Memory usage statistics:
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Used capacity of process queue:                    4630
+       ...out of max-allocated:                   40000  (  11.57% utilization )
+
+Used capacity of process-participation list:         13
+       ...out of max-allocated:                     200  (   6.50% utilization )
+
+Used capacity of cluster list:                        0
+       ...out of max-allocated:                   40000  (   0.00% utilization )
+
+Used capacity of cluster-participation list:          0
+       ...out of max-allocated:                      60  (   0.00% utilization )
+
+Restart information successfully written in file restart.inf.
+
+> Normal termination <

@@ -6,6 +6,7 @@ import pyzacros as pz
 import pyzacros.models
 import pyzacros.utils
 
+
 def test_ZacrosParametersScanSteadyStateJob():
     print( "----------------------------------------------------------------" )
     print( ">>> Testing ZacrosParametersScanJob(+ZacrosSteadyStateJob) class" )
@@ -25,7 +26,7 @@ def test_ZacrosParametersScanSteadyStateJob():
     #print('Running up to {} jobs in parallel simultaneously'.format(maxjobs))
 
     try:
-        dt = 5.0e-5
+        dt = 1.0e-5
 
         sett = pz.Settings()
         sett.random_seed = 1609
@@ -37,32 +38,34 @@ def test_ZacrosParametersScanSteadyStateJob():
         job = pz.ZacrosJob( settings=sett, lattice=lh.lattice, mechanism=lh.mechanism, cluster_expansion=lh.cluster_expansion )
 
         ss_sett = pz.Settings()
-        ss_sett.nreplicas = 2
         ss_sett.turnover_frequency.nbatch = 20
         ss_sett.turnover_frequency.confidence = 0.96
-        ss_sett.scaling.max_time = 2*dt
+        ss_sett.nreplicas = 2
         ss_sett.scaling.partial_equilibrium_index_threshold = 0.1
-        ss_sett.scaling.upper_bound = 100
+        ss_sett.scaling.upper_bound = 10
+        ss_sett.scaling.max_time = 10*dt
+        ss_sett.scaling.species_numbers = ('time', dt)
 
-        ss_parameters = { 'max_time':pz.ZacrosSteadyStateJob.Parameter('restart.max_time', 2*sett.max_time*( numpy.arange(20)+1 )**2) }
+        ss_parameters = pz.ZacrosSteadyStateJob.Parameters()
+        ss_parameters.add( 'max_time', 'restart.max_time', 2*sett.max_time*( numpy.arange(20)+1 )**2 )
 
-        ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=job, generator_parameters=ss_parameters, scaling=True )
+        ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=job, parameters=ss_parameters, scaling=True )
 
-        parameters = { 'x_CO':pz.ZacrosParametersScanJob.Parameter('molar_fraction.CO', [0.40, 0.50]),
-                       'x_O2':pz.ZacrosParametersScanJob.Parameter('molar_fraction.O2', lambda params: 1.0-params['x_CO']) }
+        ps_parameters = pz.ZacrosParametersScanJob.Parameters()
+        ps_parameters.add( 'x_CO', 'molar_fraction.CO', [0.40, 0.50] )
+        ps_parameters.add( 'x_O2', 'molar_fraction.O2', lambda params: 1.0-params['x_CO'] )
+        ps_parameters.set_generator( pz.ZacrosParametersScanJob.meshgridGenerator )
 
-        mjob = pz.ZacrosParametersScanJob( reference=ss_job,
-                                           generator=pz.ZacrosParametersScanJob.meshGenerator,
-                                           generator_parameters=parameters )
+        ps_job = pz.ZacrosParametersScanJob( reference=ss_job, parameters=ps_parameters )
 
-        results = mjob.run()
+        results = ps_job.run()
 
     except pz.ZacrosExecutableNotFoundError:
         print( "Warning: The calculation FAILED because the zacros executable is not available!" )
         print( "         For testing purposes, now we load precalculated results.")
 
-        mjob = scm.plams.load( 'tests/test_ZacrosParametersScanSteadyStateJob.data/plamsjob/plamsjob.dill' )
-        results = mjob.results
+        ps_job = scm.plams.load( 'tests/test_ZacrosParametersScanSteadyStateJob.data/plamsjob/plamsjob.dill' )
+        results = ps_job.results
 
     output = ""
 
@@ -95,8 +98,8 @@ def test_ZacrosParametersScanSteadyStateJob():
 ------------------------------------------------
 cond     x_CO       ac_O      ac_CO      TOF_CO2
 ------------------------------------------------
-   0     0.40   0.502917   0.213125   278.395749
-   1     0.50   0.435833   0.284583   320.506073\
+   0     0.40   0.512917   0.198542   262.345087
+   1     0.50   0.446042   0.253333   301.875030\
 """
 
     assert( pz.utils.compare( output, expectedOutput, rel_error=0.1 ) )

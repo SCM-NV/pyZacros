@@ -1,0 +1,77 @@
+mechanism
+
+reversible_step CO_adsorption
+  gas_reacs_prods CO -1
+  sites 1
+  initial
+    1 * 1
+  final
+    1 CO* 1
+  site_types 1
+  pre_expon  1.00000e+07
+  pe_ratio  2.00000e+00
+  activ_eng  0.00000e+00
+end_reversible_step
+
+reversible_step O2_adsorption
+  gas_reacs_prods O2 -1
+  sites 2
+  neighboring 1-2
+  initial
+    1 * 1
+    2 * 1
+  final
+    1 O* 1
+    2 O* 1
+  site_types 1 1
+  pre_expon  1.00000e+07
+  pe_ratio  5.00000e+00
+  activ_eng  0.00000e+00
+end_reversible_step
+
+reversible_step O_diffusion
+  sites 2
+  neighboring 1-2
+  initial
+    1 O* 1
+    2 * 1
+  final
+    1 * 1
+    2 O* 1
+  site_types 1 1
+  pre_expon  1.00000e+06
+  pe_ratio  1.00000e+00
+  activ_eng  0.00000e+00
+end_reversible_step
+
+reversible_step CO_diffusion
+  sites 2
+  neighboring 1-2
+  initial
+    1 CO* 1
+    2 * 1
+  final
+    1 * 1
+    2 CO* 1
+  site_types 1 1
+  pre_expon  1.00000e+06
+  pe_ratio  1.00000e+00
+  activ_eng  0.00000e+00
+end_reversible_step
+
+step CO_oxidation
+  gas_reacs_prods CO2 1
+  sites 2
+  neighboring 1-2
+  initial
+    1 CO* 1
+    2 O* 1
+  final
+    1 * 1
+    2 * 1
+  site_types 1 1
+  pre_expon  4.50000e+02
+  activ_eng  0.00000e+00
+end_step
+
+end_mechanism

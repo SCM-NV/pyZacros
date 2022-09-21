@@ -11,6 +11,7 @@ import scm.plams
 from .Settings import *
 from .ZacrosJob import *
 from .ZacrosResults import *
+from .ParametersBase import *
 
 __all__ = ['ZacrosSteadyStateJob', 'ZacrosSteadyStateResults']
 
@@ -96,44 +97,57 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
     _result_type = ZacrosSteadyStateResults
 
 
-    class Parameter:
+    class Parameter(ParameterBase):
+        def __init__(self, name_in_settings, kind, values):
+            super().__init__(self, name_in_settings, kind, values)
 
-        def __init__(self, name_in_settings, values):
-            self.name_in_settings = name_in_settings
-
-            self.values = values
-            if type(values) not in [list,numpy.ndarray]:
-                msg  = "\n### ERROR ### ZacrosSteadyStateJob.Parameter.__init__.\n"
-                msg += "              Parameter 'values' should be a 'list' or 'numpy.ndarray'.\n"
-                raise Exception(msg)
+    class Parameters(ParametersBase):
+        def __init__(self, *args, **kwargs):
+            super().__init__(self, *args, **kwargs)
 
 
-    def __init__(self, reference, generator_parameters, scaling=False, settings=Settings(), **kwargs):
+    def __init__(self, reference, parameters, scaling=False, settings=Settings(), **kwargs):
         scm.plams.MultiJob.__init__(self, settings=settings, **kwargs)
 
+        self._reference = reference
+
         size = None
-        for name,item in generator_parameters.items():
+
+        if parameters._generator.__name__ != "zipGenerator":
+            msg  = "\n### ERROR ### ZacrosSteadyStateJob.__init__().\n"
+            msg += "              The only generator allowed is the zipGenerator.\n"
+            raise Exception(msg)
+
+        for name,item in parameters.items():
             if size is None:
                 size = len(item.values)
             elif size != len(item.values):
-                msg  = "\n### ERROR ### ZacrosSteadyStateJob.zipGenerator().\n"
-                msg += "              All parameter in 'generator_parameters' should be lists of the same size.\n"
+                msg  = "\n### ERROR ### ZacrosSteadyStateJob.__init__().\n"
+                msg += "              All parameter in 'parameters' should be lists of the same size.\n"
                 raise Exception(msg)
 
         if size == 0:
-            msg  = "\n### ERROR ### ZacrosSteadyStateJob.meshGenerator().\n"
-            msg += "              All parameter in 'generator_parameters' should be lists with at least one element.\n"
+            msg  = "\n### ERROR ### ZacrosSteadyStateJob.__init__().\n"
+            msg += "              All parameter in 'parameters' should be lists with at least one element.\n"
             raise Exception(msg)
 
-        self._reference = reference
-        self._generator_parameters = generator_parameters
+        self._parameters = parameters
+
+        if not isinstance(reference,ZacrosJob):
+            msg  = "\n### ERROR ### ZacrosSteadyStateJob.__init__.\n"
+            msg += "              Parameter 'reference' must be a ZacrosJob object.\n"
+            raise Exception(msg)
+
+        # We don't need the indices because we are sure that the generator is the zipGenerator
+        _,self._parameters_values,self._parameters_settings = parameters._generator( reference.settings, parameters )
+
         self._scaling = scaling
 
         self._scaling_status = 'not_requested'
         if self._scaling: self._scaling_status = 'requested'
         self._scaling_factors = None
 
-        self.max_iterations = len(generator_parameters[list(generator_parameters.keys())[0]].values)
+        self.max_iterations = len(parameters[list(parameters.keys())[0]].values)
         self._n_iterations = 0
         self._history = []
         self._surface_poisoned = False
@@ -172,16 +186,6 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
         self.mechanism = reference.mechanism
         self.cluster_expansion = reference.cluster_expansion
         self.initial_state = reference.initial_state
-
-
-    @staticmethod
-    def __name2dict( name ):
-        tokens = name.split('.')
-        output = ""
-        for i,token in enumerate(tokens):
-            if i != len(tokens)-1:
-                output += "[\'"+token+"\']"
-        return output+".__setitem__(\'"+tokens[-1]+"\',$var_value)"
 
 
     def __steady_state_step(self):
@@ -238,8 +242,8 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
                           'turnover_frequency_error':error,
                           'converged':conv }
 
-            for name,item in self._generator_parameters.items():
-                history_i[name] = item.values[self._n_iterations-1]
+            for i,(name,item) in enumerate(self._parameters.items()):
+                history_i[name] = self._parameters_values[self._n_iterations-1][name]
 
             self._history.append( history_i )
 
@@ -259,18 +263,9 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
         lparallel = []
         for i in range(self.nreplicas):
             prev = None if len(self.children)==0 else self.children[i-self.nreplicas]
-            lsettings = self._reference.settings.copy()
 
+            lsettings = self._parameters_settings[self._n_iterations]
             lsettings.random_seed = lsettings.get('random_seed',default=0) + i
-
-            #if self._new_timestep is not None:
-                #scm.plams.log("JOB "+self._full_name()+" Steady State Convergence: Setting new time_step="+str(self._new_timestep))
-                #lsettings['species_numbers'] = ('time',self._new_timestep)
-                ## @TODO Actualizar las otras variables si las hay
-
-            for name,item in self._generator_parameters.items():
-                value = item.values[self._n_iterations]
-                eval('lsettings'+ZacrosSteadyStateJob.__name2dict(item.name_in_settings).replace('$var_value',str(value)))
 
             if self.nreplicas > 1:
                 name = self.name+"_ss_iter"+"%03d"%self._n_iterations+"_rep"+"%03d"%i
@@ -405,9 +400,9 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
                 msg += "                process_statistics section is needed in settings object.\n"
                 raise Exception(msg)
 
-        for name,item in self._generator_parameters.items():
+        for name,item in self._parameters.items():
             value = item.values[0]
-            eval('lsettings'+ZacrosSteadyStateJob.__name2dict(item.name_in_settings).replace('$var_value',str(value)))
+            eval('lsettings'+item.name2setitem().replace('$var_value',str(value)))
 
         new_child = ZacrosJob( settings=lsettings,
                                lattice=self._reference.lattice,

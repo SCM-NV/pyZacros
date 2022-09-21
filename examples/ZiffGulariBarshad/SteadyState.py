@@ -26,9 +26,10 @@ ss_sett.turnover_frequency.nbatch = 20
 ss_sett.turnover_frequency.confidence = 0.98
 ss_sett.nreplicas = 8
 
-parameters = { 'max_time':pz.ZacrosSteadyStateJob.Parameter('restart.max_time', numpy.arange(20.0, 50000.0, 100)) }
+parameters = pz.ZacrosSteadyStateJob.Parameters()
+parameters.add( 'max_time', 'restart.max_time', numpy.arange(20.0, 1000.0, 100) )
 
-ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=job, generator_parameters=parameters )
+ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=job, parameters=parameters )
 
 results = ss_job.run()
 
@@ -40,6 +41,6 @@ print((8+10+15+15+10+ 5)*"-")
 if ss_job.ok():
    for i,step in enumerate(results.history()):
       print("%8d"%i, "%10.5f"%step['turnover_frequency']['CO2'], "%15d"%step['max_time'],
-               "%15.5f"%step['turnover_frequency_error']['CO2'], "%10s"%step['converged']['CO2'])
+               "%15.5f"%step['turnover_frequency_error']['CO2'], "%10s"%(all(step['converged'].values())))
 
 scm.plams.finish()

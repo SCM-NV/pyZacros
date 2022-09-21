@@ -8,7 +8,7 @@ reversible_step CO_adsorption
   final
     1 CO* 1
   site_types 1
-  pre_expon  1.13592e+05
+  pre_expon  1.20305e+04
   pe_ratio  2.00000e+00
   activ_eng  0.00000e+00
 end_reversible_step
@@ -24,7 +24,7 @@ reversible_step O2_adsorption
     1 O* 1
     2 O* 1
   site_types 1 1
-  pre_expon  4.53835e+04
+  pre_expon  7.24877e+03
   pe_ratio  5.00000e+00
   activ_eng  0.00000e+00
 end_reversible_step
@@ -39,7 +39,7 @@ reversible_step O_diffusion
     1 * 1
     2 O* 1
   site_types 1 1
-  pre_expon  1.56545e+04
+  pre_expon  2.27838e+03
   pe_ratio  1.00000e+00
   activ_eng  0.00000e+00
 end_reversible_step
@@ -54,7 +54,7 @@ reversible_step CO_diffusion
     1 * 1
     2 CO* 1
   site_types 1 1
-  pre_expon  3.41308e+04
+  pre_expon  3.58723e+03
   pe_ratio  1.00000e+00
   activ_eng  0.00000e+00
 end_reversible_step

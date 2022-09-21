@@ -28,14 +28,14 @@ sett.event_report = 'off'
 sett.max_steps = 'infinity'
 sett.max_time = 1000*dt
 
-parameters = { 'x_CO':pz.ZacrosParametersScanJob.Parameter('molar_fraction.CO', numpy.arange(0.900, 0.999, 0.001)),
-                'x_O2':pz.ZacrosParametersScanJob.Parameter('molar_fraction.O2', lambda params: 1.0-params['x_CO']) }
+parameters = pz.ZacrosParametersScanJob.Parameters()
+parameters.add( 'x_CO', 'molar_fraction.CO', numpy.arange(0.900, 0.999, 0.001) )
+parameters.add( 'x_O2', 'molar_fraction.O2', lambda params: 1.0-params['x_CO'] )
+parameters.set_generator( pz.ZacrosParametersScanJob.meshgridGenerator )
 
 job = pz.ZacrosJob( settings=sett, lattice=rs.lattice, mechanism=rs.mechanism, cluster_expansion=rs.cluster_expansion )
 
-mjob = pz.ZacrosParametersScanJob( reference=job,
-                                    generator=pz.ZacrosParametersScanJob.meshGenerator,
-                                    generator_parameters=parameters )
+mjob = pz.ZacrosParametersScanJob( reference=job, parameters=parameters )
 
 results = mjob.run()
 

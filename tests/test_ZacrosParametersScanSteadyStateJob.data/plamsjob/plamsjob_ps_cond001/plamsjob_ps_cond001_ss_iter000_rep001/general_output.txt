@@ -24,9 +24,9 @@ Simulation setup:
 
     Pressure: 1.0000000000000000
 
-    Species numbers will be reported in file specnum_output.txt every 5.0000000000000002E-005 time units
+    Species numbers will be reported in file specnum_output.txt every 1.0000000000000001E-005 time units
 
-    Max simulated time: 5.0000000000000001E-003         
+    Max simulated time: 1.0000000000000000E-003         
 
     Number of gas species: 3
 
@@ -46,7 +46,7 @@ Simulation setup:
 
     The default Mersenne Twister 19937 random number generator will be used for this simulation.
 
-    Initializing the random number generator took 3.5460000000000000E-006 seconds
+    Initializing the random number generator took 3.6720000000000002E-006 seconds
 
     The default first reaction method will be used for propagating the KMC state, with a binary heap for the event-queue
 
@@ -98,14 +98,14 @@ Mechanism setup:
 
     Reaction network:
 
-        1. CO_adsorption_fwd:    A(Tini) =  5.6796E+04    Ea       =  0.00    k(Tini) =  5.6796E+04    Reaction: CO  +  *(StTp1)  ->  CO*(StTp1)
-        2. CO_adsorption_rev:    A(Tini) =  5.6796E+04  [ Ea-ideal =  0.00    k(Tini) =  5.6796E+04 ]  Reaction: CO*(StTp1)  ->  CO  +  *(StTp1)
-        3. O2_adsorption_fwd:    A(Tini) =  2.2692E+04    Ea       =  0.00    k(Tini) =  2.2692E+04    Reaction: O2  +  *(StTp1)  +  *(StTp1)  ->  O*(StTp1)  +  O*(StTp1)
-        4. O2_adsorption_rev:    A(Tini) =  9.0767E+03  [ Ea-ideal =  0.00    k(Tini) =  9.0767E+03 ]  Reaction: O*(StTp1)  +  O*(StTp1)  ->  O2  +  *(StTp1)  +  *(StTp1)
-        5. O_diffusion_fwd:      A(Tini) =  1.5654E+04    Ea       =  0.00    k(Tini) =  1.5654E+04    Reaction: O*(StTp1)  +  *(StTp1)  ->  *(StTp1)  +  O*(StTp1)
-        6. O_diffusion_rev:      A(Tini) =  1.5654E+04  [ Ea-ideal =  0.00    k(Tini) =  1.5654E+04 ]  Reaction: *(StTp1)  +  O*(StTp1)  ->  O*(StTp1)  +  *(StTp1)
-        7. CO_diffusion_fwd:     A(Tini) =  3.4131E+04    Ea       =  0.00    k(Tini) =  3.4131E+04    Reaction: CO*(StTp1)  +  *(StTp1)  ->  *(StTp1)  +  CO*(StTp1)
-        8. CO_diffusion_rev:     A(Tini) =  3.4131E+04  [ Ea-ideal =  0.00    k(Tini) =  3.4131E+04 ]  Reaction: *(StTp1)  +  CO*(StTp1)  ->  CO*(StTp1)  +  *(StTp1)
+        1. CO_adsorption_fwd:    A(Tini) =  6.0152E+03    Ea       =  0.00    k(Tini) =  6.0152E+03    Reaction: CO  +  *(StTp1)  ->  CO*(StTp1)
+        2. CO_adsorption_rev:    A(Tini) =  6.0152E+03  [ Ea-ideal =  0.00    k(Tini) =  6.0152E+03 ]  Reaction: CO*(StTp1)  ->  CO  +  *(StTp1)
+        3. O2_adsorption_fwd:    A(Tini) =  3.6244E+03    Ea       =  0.00    k(Tini) =  3.6244E+03    Reaction: O2  +  *(StTp1)  +  *(StTp1)  ->  O*(StTp1)  +  O*(StTp1)
+        4. O2_adsorption_rev:    A(Tini) =  1.4498E+03  [ Ea-ideal =  0.00    k(Tini) =  1.4498E+03 ]  Reaction: O*(StTp1)  +  O*(StTp1)  ->  O2  +  *(StTp1)  +  *(StTp1)
+        5. O_diffusion_fwd:      A(Tini) =  2.2784E+03    Ea       =  0.00    k(Tini) =  2.2784E+03    Reaction: O*(StTp1)  +  *(StTp1)  ->  *(StTp1)  +  O*(StTp1)
+        6. O_diffusion_rev:      A(Tini) =  2.2784E+03  [ Ea-ideal =  0.00    k(Tini) =  2.2784E+03 ]  Reaction: *(StTp1)  +  O*(StTp1)  ->  O*(StTp1)  +  *(StTp1)
+        7. CO_diffusion_fwd:     A(Tini) =  3.5872E+03    Ea       =  0.00    k(Tini) =  3.5872E+03    Reaction: CO*(StTp1)  +  *(StTp1)  ->  *(StTp1)  +  CO*(StTp1)
+        8. CO_diffusion_rev:     A(Tini) =  3.5872E+03  [ Ea-ideal =  0.00    k(Tini) =  3.5872E+03 ]  Reaction: *(StTp1)  +  CO*(StTp1)  ->  CO*(StTp1)  +  *(StTp1)
         9. CO_oxidation:         A(Tini) =  4.5000E+02    Ea       =  0.00    k(Tini) =  4.5000E+02    Reaction: CO*(StTp1)  +  O*(StTp1)  ->  CO2  +  *(StTp1)  +  *(StTp1)
 
     This mechanism contains up to two-site events involving only monodentate species.
@@ -154,29 +154,29 @@ Commencing simulation:
 
 Simulation stopped:
 ~~~~~~~~~~~~~~~~~~~
- Current KMC time: 5.00002271E-03
- Events occurred:  434484
- Event frequency:  86896408.0
+ Current KMC time: 1.00004952E-03
+ Events occurred:  11589
+ Event frequency:  11588426.0
 
 Performance facts:
 ~~~~~~~~~~~~~~~~~~
 
-Elapsed CPU time:         6.87258434 seconds
-Elapsed clock time:       6.88995934 seconds
-Setup clock time:         1.03586745E-02 seconds
-Simulation clock time:    6.87960052 seconds
+Elapsed CPU time:         0.186630011 seconds
+Elapsed clock time:       0.198226243 seconds
+Setup clock time:         1.15320897E-02 seconds
+Simulation clock time:    0.186694145 seconds
 
-Clock time per KMC event: 1.58577968E-05 seconds
-Clock time per KMC time:  1377.98560 seconds/KMCTimeUnits
+Clock time per KMC event: 1.71046886E-05 seconds
+Clock time per KMC time:  198.216431 seconds/KMCTimeUnits
 
-Events per clock hour:    227017648
-KMC Dt per clock hour:    2.61250925 KMCTimeUnits
+Events per clock hour:    210468608
+KMC Dt per clock hour:    18.1619663 KMCTimeUnits
 
 Execution queue statistics:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Number of insertions:              7597363
-Number of removals:                7593174
+Number of insertions:               223004
+Number of removals:                 218512
 Number of updates:                       0
 
 Memory usage statistics:

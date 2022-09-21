@@ -27,22 +27,24 @@ sett.event_report = 'off'
 sett.max_steps = 'infinity'
 sett.max_time = 1000*dt
 
-sett.steady_state_job.turnover_frequency.nbatch = 20
-sett.steady_state_job.turnover_frequency.confidence = 0.90
-sett.steady_state_job.nreplicas = 4
-
-parametersA = { 'max_time':pz.ZacrosSteadyStateJob.Parameter('restart.max_time', 2*sett.max_time*( numpy.arange(20)+1 )**2) }
-
-parametersB = { 'x_CO':pz.ZacrosParametersScanJob.Parameter('molar_fraction.CO', numpy.arange(0.900, 0.999, 0.001)),
-                'x_O2':pz.ZacrosParametersScanJob.Parameter('molar_fraction.O2', lambda params: 1.0-params['x_CO']) }
-
 job = pz.ZacrosJob( settings=sett, lattice=rs.lattice, mechanism=rs.mechanism, cluster_expansion=rs.cluster_expansion )
 
-ssjob = pz.ZacrosSteadyStateJob( reference=job, generator_parameters=parametersA, scaling=True )
+ss_sett = pz.Settings()
+ss_sett.steady_state_job.turnover_frequency.nbatch = 20
+ss_sett.steady_state_job.turnover_frequency.confidence = 0.90
+ss_sett.steady_state_job.nreplicas = 4
 
-mjob = pz.ZacrosParametersScanJob( reference=ssjob,
-                                   generator=pz.ZacrosParametersScanJob.meshGenerator,
-                                   generator_parameters=parametersB, name='mesh' )
+parametersA = pz.ZacrosSteadyStateJob.Parameters()
+parametersA.add( 'max_time', 'restart.max_time', 2*sett.max_time*( numpy.arange(20)+1 )**2 )
+
+ssjob = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=job, parameters=parametersA, scaling=True )
+
+parametersB = pz.ZacrosParametersScanJob.Parameters()
+parametersB.add( 'x_CO', 'molar_fraction.CO', numpy.arange(0.900, 0.999, 0.001) )
+parametersB.add( 'x_O2', 'molar_fraction.O2', lambda params: 1.0-params['x_CO'] )
+parametersB.set_generator( pz.ZacrosParametersScanJob.meshgridGenerator )
+
+mjob = pz.ZacrosParametersScanJob( reference=ssjob, parameters=parametersB, name='mesh' )
 
 results = mjob.run()
 

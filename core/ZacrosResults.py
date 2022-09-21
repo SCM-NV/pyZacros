@@ -850,8 +850,7 @@ class ZacrosResults( scm.plams.Results ):
             if abs(rate_av) < 1.0/n_sites:
                 return ( rate[-1],rate_CI,0.0, True )
             else:
-                #return ( rate_av,rate_CI,ratio, False )
-                return ( rate[-1],rate_CI,ratio, False )
+                return ( rate_av,rate_CI,ratio, False )
 
 
     def turnover_frequency(self, nbatch=20, confidence=0.99, species_name=None, provided_quantities=None):

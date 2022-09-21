@@ -29,7 +29,8 @@ def test_ZacrosSteadyStateJob():
         sett.molar_fraction.CO = 0.42
         sett.molar_fraction.O2 = 1.0 - sett.molar_fraction.CO
 
-        parameters = { 'max_time':pz.ZacrosSteadyStateJob.Parameter('restart.max_time', 2*sett.max_time*( numpy.arange(10)+1 )**3) }
+        parameters = pz.ZacrosSteadyStateJob.Parameters()
+        parameters.add( 'max_time', 'restart.max_time', 2*sett.max_time*( numpy.arange(10)+1 )**3 )
 
         job = pz.ZacrosJob( settings=sett, lattice=zgb.lattice, mechanism=zgb.mechanism,
                             cluster_expansion=zgb.cluster_expansion )
@@ -39,7 +40,7 @@ def test_ZacrosSteadyStateJob():
         sett.turnover_frequency.confidence = 0.97
         sett.nreplicas = 2
 
-        mjob = pz.ZacrosSteadyStateJob( settings=sett, reference=job, generator_parameters=parameters )
+        mjob = pz.ZacrosSteadyStateJob( settings=sett, reference=job, parameters=parameters )
 
         results = mjob.run()
 
@@ -69,9 +70,10 @@ def test_ZacrosSteadyStateJob():
 ------------------------------------------------
 iter    TOF_CO2      error   max_time     conv?
 ------------------------------------------------
-   0    0.54200    0.11813         20      False
-   1    0.59095    0.02422        160      False
+   0    0.75498    0.11813         20      False
+   1    0.59235    0.02422        160      False
    2    0.60063    0.01698        540       True\
 """
 
     assert( pz.utils.compare( output, expectedOutput, rel_error=0.1 ) )
+

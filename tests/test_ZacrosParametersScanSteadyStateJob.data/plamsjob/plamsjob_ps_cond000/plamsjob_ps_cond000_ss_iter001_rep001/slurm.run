@@ -1,4 +1,4 @@
 #!/bin/bash
 
 export OMP_NUM_THREADS=1
-/home/aguirre/Develop/ams.trunk/bin/zacros --max_time=0.04
+/home/aguirre/Develop/ams.trunk/bin/zacros --max_time=0.008

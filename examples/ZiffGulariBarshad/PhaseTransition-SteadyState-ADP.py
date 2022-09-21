@@ -45,19 +45,20 @@ def getRate( conditions ):
     ss_sett.scaling.partial_equilibrium_index_threshold = 0.1
     ss_sett.scaling.scaling_upper_bound = 100
 
-    ss_parameters = { 'max_time':pz.ZacrosSteadyStateJob.Parameter('restart.max_time', 2*z_sett.max_time*( numpy.arange(100)+1 )**3) }
+    ss_parameters = pz.ZacrosSteadyStateJob.Parameters()
+    ss_parameters.add( 'max_time', 'restart.max_time', 2*z_sett.max_time*( numpy.arange(100)+1 )**3 )
 
-    ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=z_job, generator_parameters=ss_parameters )
+    ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=z_job, parameters=ss_parameters )
 
     #---------------------------------------
     # Parameters scan calculation
     #---------------------------------------
-    ps_parameters = { 'x_CO':pz.ZacrosParametersScanJob.Parameter('molar_fraction.CO', [ cond[0] for cond in conditions ]),
-                      'x_O2':pz.ZacrosParametersScanJob.Parameter('molar_fraction.O2', lambda params: 1.0-params['x_CO']) }
+    ps_parameters = pz.ZacrosParametersScanJob.Parameters()
+    ps_parameters.add( 'x_CO', 'molar_fraction.CO', [ cond[0] for cond in conditions ] )
+    ps_parameters.add( 'x_O2', 'molar_fraction.O2', lambda params: 1.0-params['x_CO'] )
+    ps_parameters.set_generator( pz.ZacrosParametersScanJob.meshgridGenerator )
 
-    ps_job = pz.ZacrosParametersScanJob( reference=ss_job,
-                                         generator=pz.ZacrosParametersScanJob.meshGenerator,
-                                         generator_parameters=ps_parameters, name='mesh' )
+    ps_job = pz.ZacrosParametersScanJob( reference=ss_job, parameters=ps_parameters, name='mesh' )
 
     results = ps_job.run()
 

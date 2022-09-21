@@ -22,23 +22,25 @@ sett.pressure = 1.0
 sett.species_numbers = ('time', 0.1)
 sett.max_time = 10.0
 
-parametersA = { 'max_time':pz.ZacrosSteadyStateJob.Parameter('restart.max_time', 2*sett.max_time*( numpy.arange(20)+1 )**3) }
-
 job = pz.ZacrosJob( settings=sett, lattice=zgb.lattice, mechanism=zgb.mechanism,
                     cluster_expansion=zgb.cluster_expansion )
-
-parametersB = { 'x_CO':pz.ZacrosParametersScanJob.Parameter('molar_fraction.CO', numpy.arange(0.2, 0.8, 0.01)),
-                'x_O2':pz.ZacrosParametersScanJob.Parameter('molar_fraction.O2', lambda params: 1.0-params['x_CO']) }
 
 sett = pz.Settings()
 sett.turnover_frequency.nbatch = 20
 sett.turnover_frequency.confidence = 0.95
 sett.nreplicas = 4
 
+parametersA = pz.ZacrosSteadyStateJob.Parameters()
+parametersA.add( 'max_time', 'restart.max_time', 2*sett.max_time*( numpy.arange(20)+1 )**3 )
+
 ssjob = pz.ZacrosSteadyStateJob( settings=sett, reference=job, generator_parameters=parametersA )
 
+parametersB = pz.ZacrosParametersScanJob.Parameters()
+parametersB.add( 'x_CO', 'molar_fraction.CO', numpy.arange(0.2, 0.8, 0.01) )
+parametersB.add( 'x_O2', 'molar_fraction.O2', lambda params: 1.0-params['x_CO'] )
+
 mjob = pz.ZacrosParametersScanJob( reference=ssjob,
-                                   generator=pz.ZacrosParametersScanJob.meshGenerator,
+                                   generator=pz.ZacrosParametersScanJob.meshgridGenerator,
                                    generator_parameters=parametersB, name='mesh' )
 
 results = mjob.run()
