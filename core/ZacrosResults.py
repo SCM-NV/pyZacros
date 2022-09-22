@@ -927,13 +927,6 @@ class ZacrosResults( scm.plams.Results ):
         if columns_name is None:
             columns_name = provided_quantities_list[0].keys()
 
-        for provided_quantities in provided_quantities_list:
-            for name in columns_name:
-                if len(provided_quantities[name]) != npoints:
-                    msg  = "### ERROR ### ZacrosResults._average_provided_quantities\n"
-                    msg += ">> provided_quantities_list contains items with different sizes\n"
-                    raise Exception( msg )
-
         average = {}
 
         average[key_column_name] = npoints*[0.0]
@@ -951,9 +944,19 @@ class ZacrosResults( scm.plams.Results ):
 
             for name in columns_name:
                 if name == key_column_name: continue
+
+                eff_nexp = 0
                 for k in range(nexp):
+
+                    # If one of the replicas finished earlier, it has less points than
+                    # the rest. Either way, we include in the average the available points.
+                    if i > len(provided_quantities_list[k][name]):
+                        continue
+
                     average[name][i] += provided_quantities_list[k][name][i]
-                average[name][i] /= float(nexp)
+                    eff_nexp += 1
+
+                average[name][i] /= float(eff_nexp)
 
         return average
 

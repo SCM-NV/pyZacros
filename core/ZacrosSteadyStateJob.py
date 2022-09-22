@@ -75,7 +75,6 @@ class ZacrosSteadyStateResults( scm.plams.Results ):
         for i in range(self.job.nreplicas):
             prev = self.job.children[i-self.job.nreplicas]
 
-            TOF,error,ratio,conv = prev.results.turnover_frequency( nbatch=nbatch, confidence=confidence )
             provided_quantities_list.append( prev.results.provided_quantities() )
 
         aver_provided_quantities = ZacrosResults._average_provided_quantities( provided_quantities_list, 'Time' )
@@ -206,16 +205,24 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
                 prev = self.children[i-self.nreplicas]
 
                 if not prev.ok():
-                    if len(self.children) > 1:
-                        prevprev = self.children[i-self.nreplicas]
-                        if prev.restart_aborted() or prevprev.surface_poisoned():
-                            if prev.restart_aborted(): scm.plams.log("JOB "+prev._full_name()+" Steady State Convergence: RESTART ABORTED")
-                            if prev.surface_poisoned(): scm.plams.log("JOB "+prev._full_name()+" Steady State Convergence: SURFACE POISONED")
+                    if len(self.children) > self.nreplicas:
+                        if prev.restart_aborted():
+                            scm.plams.log("JOB "+prev._full_name()+" Steady State Convergence: RESTART ABORTED")
                             poisoned_job = self.children.pop(i-self.nreplicas)
                             scm.plams.delete_job( poisoned_job )
+                            scm.plams.log("JOB "+prev._full_name()+" Steady State Convergence: JOB REMOVED")
+                        self._surface_poisoned = True
+                    elif len(self.children) > 2*self.nreplicas:
+                        prevprev = self.children[i-2*self.nreplicas]
+                        if prevprev.surface_poisoned():
+                            scm.plams.log("JOB "+prev._full_name()+" Steady State Convergence: SURFACE POISONED")
+                            poisoned_job = self.children.pop(i-self.nreplicas)
+                            scm.plams.delete_job( poisoned_job )
+                            scm.plams.log("JOB "+prev._full_name()+" Steady State Convergence: JOB REMOVED")
                         self._surface_poisoned = True
                     else:
                         scm.plams.log("JOB "+prev._full_name()+" Steady State Convergence: FAILED")
+
                     return None
 
                 TOF,error,ratio,conv = prev.results.turnover_frequency( nbatch=self.nbatch, confidence=self.confidence )
@@ -264,7 +271,7 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
         for i in range(self.nreplicas):
             prev = None if len(self.children)==0 else self.children[i-self.nreplicas]
 
-            lsettings = self._parameters_settings[self._n_iterations]
+            lsettings = self._parameters_settings[self._n_iterations].copy()
             lsettings.random_seed = lsettings.get('random_seed',default=0) + i
 
             if self.nreplicas > 1:
