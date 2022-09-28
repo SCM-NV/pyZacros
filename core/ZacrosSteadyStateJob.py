@@ -20,8 +20,36 @@ class ZacrosSteadyStateResults( scm.plams.Results ):
     """
     A Class for handling ZacrosMulti Results.
     """
-    def history(self):
-        return self.job._history
+    def history(self, pos=None):
+        if pos is not None:
+            return self.job._history[pos]
+        else:
+            return self.job._history
+
+    def niterations(self): return self.job.niterations
+    def nreplicas(self): return self.job.nreplicas
+
+    def children_results(self, iteration=None, replica=None):
+        if iteration is None and replica is None:
+            output = []
+
+            for i in range(len(self.job.children)):
+                output.append( self.job.children[i].results )
+
+            return output
+        elif iteration is not None and replica is None:
+            output = []
+
+            for j in range(len(self.job.nreplicas)):
+                output.append( self.job.children[iteration*self.job.nreplicas+j].results )
+
+            return output
+        elif iteration is not None and replica is not None:
+            return self.job.children[iteration*self.job.nreplicas+replica].results
+        else:
+            msg  = "\n### ERROR ### ZacrosSteadyStateResults.children_results().\n"
+            msg += "                Wrong parameters combination.\n"
+            raise Exception(msg)
 
     def get_zacros_version(self): return self.job.children[-1].results.get_zacros_version()
     def get_reaction_network(self): return self.job.children[-1].results.get_reaction_network()
@@ -65,22 +93,28 @@ class ZacrosSteadyStateResults( scm.plams.Results ):
         self.job.children[-1].results.plot_process_statistics(data=data, key=key, log_scale=log_scale, pause=pause, show=show, ax=ax,
                                                         close=close, file_name=file_name)
 
-    def turnover_frequency(self, nbatch=None, confidence=None, species_name=None):
+    def turnover_frequency(self, nbatch=None, confidence=None, ignore_nbatch=None, species_name=None):
 
         if nbatch is None: nbatch = self.job.nbatch
         if confidence is None: confidence = self.job.confidence
+        if ignore_nbatch is None: ignore_nbatch = self.job.ignore_nbatch
 
         provided_quantities_list = []
 
         for i in range(self.job.nreplicas):
             prev = self.job.children[i-self.job.nreplicas]
-
             provided_quantities_list.append( prev.results.provided_quantities() )
 
         aver_provided_quantities = ZacrosResults._average_provided_quantities( provided_quantities_list, 'Time' )
 
+        # This case happens only when the surface gets quickly poisoned; in one iteration.
+        # In that case we use only the last values to estimate the TOF
+        if self.job._surface_poisoned and self.job.niterations == 1:
+            ignore_nbatch = nbatch-2
+
         TOF,error,ratio,conv = prev.results.turnover_frequency( nbatch=nbatch, confidence=confidence,
-                                                                    provided_quantities=aver_provided_quantities )
+                                                                ignore_nbatch=ignore_nbatch,
+                                                                provided_quantities=aver_provided_quantities )
 
         if species_name is None:
             return TOF,error,ratio,conv
@@ -147,12 +181,13 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
         self._scaling_factors = None
 
         self.max_iterations = len(parameters[list(parameters.keys())[0]].values)
-        self._n_iterations = 0
+        self.niterations = 0
         self._history = []
         self._surface_poisoned = False
 
         self.nbatch = 20
         self.confidence = 0.99
+        self.ignore_nbatch = 1
         self.nreplicas = 1
         self.partial_equilibrium_index_threshold = 0.1
         self.scaling_upper_bound = 100
@@ -167,6 +202,7 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
         if 'turnover_frequency' in self.settings:
             self.nbatch = self.settings.turnover_frequency.get('nbatch', default=self.nbatch)
             self.confidence = self.settings.turnover_frequency.get('confidence', default=self.confidence)
+            self.ignore_nbatch = self.settings.turnover_frequency.get('ignore_nbatch', default=self.ignore_nbatch)
 
         # Scaling pre-exponential terms parameters
         if 'scaling' in self.settings:
@@ -178,7 +214,7 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
             self.scaling_nevents_per_timestep = self.settings.scaling.get('nevents_per_timestep', default=self.scaling_nevents_per_timestep)
 
         scm.plams.log("JOB "+self._full_name()+" Steady State Convergence: Using nbatch="+str(self.nbatch)+
-                        ",confidence="+str(self.confidence)+",nreplicas="+str(self.nreplicas))
+                        ",confidence="+str(self.confidence)+",ignore_nbatch="+str(self.ignore_nbatch)+",nreplicas="+str(self.nreplicas))
 
         # These parameters a needed to make ZacrosSteadyStateJob compatible with ZacrosJob
         self.lattice = reference.lattice
@@ -189,7 +225,7 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
 
     def __steady_state_step(self):
 
-        if self._n_iterations >= self.max_iterations:
+        if self.niterations >= self.max_iterations:
             scm.plams.log("JOB "+self._full_name()+" Steady State Convergence: MAX ITERATIONS REACHED")
             return None
 
@@ -201,6 +237,10 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
                 prev = self.children[i-self.nreplicas]
                 prev.ok()
 
+            # This case happens only when the surface gets quickly poisoned; in less than one iteration.
+            # In that case we use only the last values to estimate the TOF
+            ignore_nbatch = self.ignore_nbatch
+
             for i in range(self.nreplicas):
                 prev = self.children[i-self.nreplicas]
 
@@ -211,7 +251,8 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
                             poisoned_job = self.children.pop(i-self.nreplicas)
                             scm.plams.delete_job( poisoned_job )
                             scm.plams.log("JOB "+prev._full_name()+" Steady State Convergence: JOB REMOVED")
-                        self._surface_poisoned = True
+                            self._surface_poisoned = True
+                            self.niterations -= 1
                     elif len(self.children) > 2*self.nreplicas:
                         prevprev = self.children[i-2*self.nreplicas]
                         if prevprev.surface_poisoned():
@@ -219,15 +260,17 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
                             poisoned_job = self.children.pop(i-self.nreplicas)
                             scm.plams.delete_job( poisoned_job )
                             scm.plams.log("JOB "+prev._full_name()+" Steady State Convergence: JOB REMOVED")
-                        self._surface_poisoned = True
+                            self._surface_poisoned = True
+                            self.niterations -= 1
                     else:
                         scm.plams.log("JOB "+prev._full_name()+" Steady State Convergence: FAILED")
 
                     return None
 
-                TOF,error,ratio,conv = prev.results.turnover_frequency( nbatch=self.nbatch, confidence=self.confidence )
+                TOF,error,ratio,conv = prev.results.turnover_frequency( nbatch=self.nbatch, confidence=self.confidence,
+                                                                        ignore_nbatch=ignore_nbatch )
 
-                if self.nreplicas>1:
+                if self.nreplicas > 1:
                     scm.plams.log("   Replica #%d"%i )
                     scm.plams.log("   %10s"%"species"+"%15s"%"TOF"+"%15s"%"error"+"%15s"%"ratio"+"%10s"%"conv?")
                     for s in prev.results.gas_species_names():
@@ -238,6 +281,7 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
             aver_provided_quantities = ZacrosResults._average_provided_quantities( provided_quantities_list, 'Time' )
 
             TOF,error,ratio,conv = prev.results.turnover_frequency( nbatch=self.nbatch, confidence=self.confidence,
+                                                                        ignore_nbatch=ignore_nbatch,
                                                                         provided_quantities=aver_provided_quantities )
 
             if self.nreplicas > 1: scm.plams.log("   Average" )
@@ -250,7 +294,7 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
                           'converged':conv }
 
             for i,(name,item) in enumerate(self._parameters.items()):
-                history_i[name] = self._parameters_values[self._n_iterations-1][name]
+                history_i[name] = self._parameters_values[self.niterations-1][name]
 
             self._history.append( history_i )
 
@@ -271,13 +315,13 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
         for i in range(self.nreplicas):
             prev = None if len(self.children)==0 else self.children[i-self.nreplicas]
 
-            lsettings = self._parameters_settings[self._n_iterations].copy()
+            lsettings = self._parameters_settings[self.niterations].copy()
             lsettings.random_seed = lsettings.get('random_seed',default=0) + i
 
             if self.nreplicas > 1:
-                name = self.name+"_ss_iter"+"%03d"%self._n_iterations+"_rep"+"%03d"%i
+                name = self.name+"_ss_iter"+"%03d"%self.niterations+"_rep"+"%03d"%i
             else:
-                name = self.name+"_ss_iter"+"%03d"%self._n_iterations
+                name = self.name+"_ss_iter"+"%03d"%self.niterations
 
             new_child = ZacrosJob( settings=lsettings,
                                    lattice=self._reference.lattice,
@@ -288,7 +332,7 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
 
             lparallel.append( new_child )
 
-        self._n_iterations += 1
+        self.niterations += 1
 
         return lparallel
 

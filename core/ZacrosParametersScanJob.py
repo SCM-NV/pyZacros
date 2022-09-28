@@ -88,11 +88,10 @@ class ZacrosParametersScanJob( scm.plams.MultiJob ):
     Creates a new ZacrosParametersScanJob object. This class is a job that is a container for other jobs, called children jobs and
     it is an extension of the `PLAMS.MultiJob <../../plams/components/jobs.html#multijobs>`_. Children are copies of a reference
     job ``reference``. However, just before they are run, their corresponding Settings are altered accordingly to the rules
-    defined through a ``Parameter`` object provided using the parameters ``generator`` and ``generator_parameters``.
+    defined through the ``Parameters`` object ``parameters``.
 
     *   ``reference`` -- Reference job. It must be :ref:`ZacrosJobs <zacrosjob>` or :ref:`ZacrosSteadyStateJob <zacrossteadystatejob>` kind object.
-    *   ``generator`` --
-    *   ``generator_parameters`` -- Mechanism containing the mechanisms involed in the calculation.
+    *   ``parameters`` --
     *   ``name`` -- A string containing the name of the job. All zacros input and output files are stored in a folder with this name. If not supplied, the default name is ``plamsjob``.
     """
 
