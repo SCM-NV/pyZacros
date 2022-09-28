@@ -819,7 +819,7 @@ class ZacrosResults( scm.plams.Results ):
     #   Hashemi et al., J.Chem. Phys. 144, 074104 (2016)
     #--------------------------------------------------------------
     @staticmethod
-    def __compute_rate( t_vect, spec, n_sites, n_batch=20, confidence=0.99 ):
+    def __compute_rate( t_vect, spec, n_sites, n_batch=20, confidence=0.99, ignore_nbatch=1 ):
 
         # Batch means stopping implementation
         t_vect = numpy.array(t_vect)
@@ -836,8 +836,8 @@ class ZacrosResults( scm.plams.Results ):
             else:
                 ratet[i] = numpy.polyfit(t_vect[lt*i:-1],prod_mol[lt*i:-1],1)[0]
 
-        # Exclude first batch
-        rate = ratet[1:]
+        # Exclude first ``ignore_nbatch`` elements
+        rate = ratet[ignore_nbatch:]
 
         # Compute average and CI
         rate_av, se = numpy.mean(rate), scipy.stats.sem(rate)
@@ -853,12 +853,13 @@ class ZacrosResults( scm.plams.Results ):
                 return ( rate_av,rate_CI,ratio, False )
 
 
-    def turnover_frequency(self, nbatch=20, confidence=0.99, species_name=None, provided_quantities=None):
+    def turnover_frequency(self, nbatch=20, confidence=0.99, ignore_nbatch=1, species_name=None, provided_quantities=None):
         """
         Returns the TOF (mol/sec/site) calculated by the batch-means stopping method. See Hashemi et al., J.Chem. Phys. 144, 074104 (2016)
 
         *   ``nbatch`` -- Number of batches to use.
         *   ``confidence`` -- Confidence level to use in the criterion to determine if the steady-state was reached.
+        *   ``ignore_nbatch`` -- Number of batches to ignore during the averaging in the calculation of the TOF.
 
         The simulation output is divided into an ensemble of contiguous batches where the TOF is computed.
         The average value and the standard deviation of the TOF ensemble are evaluated as follows:
@@ -901,7 +902,7 @@ class ZacrosResults( scm.plams.Results ):
 
             if sum(numpy.abs(lprovided_quantities[sn])) > 0:
                 aver,ci,ratio,conv = ZacrosResults.__compute_rate( lprovided_quantities["Time"], lprovided_quantities[sn],
-                                                                    self.number_of_lattice_sites(), nbatch, confidence )
+                                                                    self.number_of_lattice_sites(), nbatch, confidence, ignore_nbatch )
                 values[sn] = aver
                 errors[sn] = ci
                 ratios[sn] = ratio

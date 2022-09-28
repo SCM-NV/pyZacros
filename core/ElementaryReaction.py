@@ -133,11 +133,8 @@ class ElementaryReaction:
         for i in range(len(species)):
             label += species[i].symbol
             if( len(entity_number) > 1 ):
-                label += "_"+str(entity_number[i]+1)
-            label += "-"
+                label += str(entity_number[i]+1)
             label += str(site_types[i])
-            if(i != len(species)-1):
-                label += ","
 
         return label
 
@@ -165,11 +162,11 @@ class ElementaryReaction:
         if( self.reversible ):
             # Reaction labels in lexicographical order
             if( initialLabel > finalLabel ):
-                self.__label = initialLabel+"<-->"+finalLabel
+                self.__label = initialLabel+"<->"+finalLabel
             else:
-                self.__label = finalLabel+"<-->"+initialLabel
+                self.__label = finalLabel+"<->"+initialLabel
         else:
-            self.__label = initialLabel+"-->"+finalLabel
+            self.__label = initialLabel+"->"+finalLabel
 
         # For neighboring nodes are sorted
         if self.neighboring is not None:

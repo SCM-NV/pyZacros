@@ -23,7 +23,19 @@ class ZacrosParametersScanResults( scm.plams.Results ):
         return self.job._indices
 
 
-    def turnover_frequency(self, nbatch=20, confidence=0.99, update=None):
+    def children_results(self, child_id=None):
+        if child_id is None:
+            output = {}
+
+            for pos,idx in enumerate(self.job._indices):
+                output[idx] = self.job.children[idx].results
+
+            return output
+        else:
+            return self.job.children[child_id].results
+
+
+    def turnover_frequency(self, nbatch=20, confidence=0.99, ignore_nbatch=1, update=None):
         if update:
             output = update
         else:
@@ -35,8 +47,11 @@ class ZacrosParametersScanResults( scm.plams.Results ):
             if pos==0 and isinstance(self.job.children[idx],ZacrosSteadyStateJob):
                 nbatch = self.job.children[idx].nbatch
                 confidence = self.job.children[idx].confidence
+                ignore_nbatch = self.job.children[idx].ignore_nbatch
 
-            TOFs,errors,ratio,converged = self.job.children[idx].results.turnover_frequency( nbatch=nbatch, confidence=confidence )
+            TOFs,errors,ratio,converged = self.job.children[idx].results.turnover_frequency( nbatch=nbatch,
+                                                                                             confidence=confidence,
+                                                                                             ignore_nbatch=ignore_nbatch )
 
             if update:
                 output[pos]['turnover_frequency'] = TOFs

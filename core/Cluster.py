@@ -102,7 +102,7 @@ class Cluster:
         """
         Updates the attribute 'label'
         """
-        if( self.__userLabel is not None ):
+        if self.__userLabel is not None:
             self.__label = self.__userLabel
             return
 
@@ -114,11 +114,8 @@ class Cluster:
                 self.__label += "&"
 
             if( len(self.entity_number)>1 ):
-                self.__label += "_"+str(self.entity_number[i]+1)
-            self.__label += "-"
+                self.__label += str(self.entity_number[i]+1)
             self.__label += str(self.site_types[i])
-            if(i != len(self.species)-1):
-                self.__label += ","
 
         if self.neighboring is not None:
             if(len(self.neighboring) > 0):

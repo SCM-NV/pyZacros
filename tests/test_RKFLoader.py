@@ -107,7 +107,7 @@ def test_RKFLoader():
     expectedOutput = """\
 energetics
 
-cluster O*-fcc
+cluster O*fcc
   sites 1
   lattice_state
     1 O* 1
@@ -116,16 +116,16 @@ cluster O*-fcc
   cluster_eng -1.98060e+02
 end_cluster
 
-cluster O*-hcp
+cluster O*hcp
   sites 1
   lattice_state
     1 O* 1
   site_types hcp
   graph_multiplicity 1
-  cluster_eng -1.98060e+02
+  cluster_eng -1.97861e+02
 end_cluster
 
-cluster CO*-fcc
+cluster CO*fcc
   sites 1
   lattice_state
     1 CO* 1
@@ -134,29 +134,29 @@ cluster CO*-fcc
   cluster_eng -2.08212e+02
 end_cluster
 
-cluster CO*-hcp
+cluster CO*hcp
   sites 1
   lattice_state
     1 CO* 1
   site_types hcp
   graph_multiplicity 1
-  cluster_eng -2.08212e+02
+  cluster_eng -2.08210e+02
 end_cluster
 
-cluster CO*-br
+cluster CO*br
   sites 1
   lattice_state
     1 CO* 1
   site_types br
   graph_multiplicity 1
-  cluster_eng -2.08212e+02
+  cluster_eng -2.07455e+02
 end_cluster
 
 end_energetics
 
 mechanism
 
-reversible_step O*_1-hcp,*_2-fcc<-->*_1-hcp,O*_2-fcc;(0,1)
+reversible_step O*1hcp*2fcc<->*1hcpO*2fcc;(0,1)
   sites 2
   neighboring 1-2
   initial
@@ -171,7 +171,7 @@ reversible_step O*_1-hcp,*_2-fcc<-->*_1-hcp,O*_2-fcc;(0,1)
   activ_eng  7.00299e-01
 end_reversible_step
 
-reversible_step O*_1-fcc,*_2-hcp<-->*_1-fcc,O*_2-hcp;(0,1)
+reversible_step O*1fcc*2hcp<->*1fccO*2hcp;(0,1)
   sites 2
   neighboring 1-2
   initial
@@ -186,7 +186,7 @@ reversible_step O*_1-fcc,*_2-hcp<-->*_1-fcc,O*_2-hcp;(0,1)
   activ_eng  7.00299e-01
 end_reversible_step
 
-reversible_step O*-fcc<-->*-fcc:O
+reversible_step O*fcc<->*fcc:O
   gas_reacs_prods O -1
   sites 1
   initial
@@ -199,7 +199,7 @@ reversible_step O*-fcc<-->*-fcc:O
   activ_eng  0.00000e+00
 end_reversible_step
 
-reversible_step O*-hcp<-->*-hcp:O
+reversible_step O*hcp<->*hcp:O
   gas_reacs_prods O -1
   sites 1
   initial
@@ -212,7 +212,7 @@ reversible_step O*-hcp<-->*-hcp:O
   activ_eng  0.00000e+00
 end_reversible_step
 
-reversible_step CO*_1-hcp,*_2-br<-->*_1-hcp,CO*_2-br;(0,1)
+reversible_step CO*1hcp*2br<->*1hcpCO*2br;(0,1)
   sites 2
   neighboring 1-2
   initial
@@ -222,12 +222,12 @@ reversible_step CO*_1-hcp,*_2-br<-->*_1-hcp,CO*_2-br;(0,1)
     1 * 1
     2 CO* 1
   site_types hcp br
-  pre_expon  1.56321e+13
-  pe_ratio  6.96720e+00
+  pre_expon  1.57247e+13
+  pe_ratio  7.07192e+00
   activ_eng  7.89789e-01
 end_reversible_step
 
-reversible_step CO*_1-fcc,*_2-br<-->*_1-fcc,CO*_2-br;(0,1)
+reversible_step CO*1fcc*2br<->*1fccCO*2br;(0,1)
   sites 2
   neighboring 1-2
   initial
@@ -237,12 +237,12 @@ reversible_step CO*_1-fcc,*_2-br<-->*_1-fcc,CO*_2-br;(0,1)
     1 * 1
     2 CO* 1
   site_types fcc br
-  pre_expon  1.57076e+13
-  pe_ratio  7.04305e+00
-  activ_eng  7.94883e-01
+  pre_expon  1.57050e+13
+  pe_ratio  7.15381e+00
+  activ_eng  7.94878e-01
 end_reversible_step
 
-reversible_step CO*-fcc<-->*-fcc:CO
+reversible_step CO*fcc<->*fcc:CO
   gas_reacs_prods CO -1
   sites 1
   initial
@@ -255,7 +255,7 @@ reversible_step CO*-fcc<-->*-fcc:CO
   activ_eng  0.00000e+00
 end_reversible_step
 
-reversible_step CO*-hcp<-->*-hcp:CO
+reversible_step CO*hcp<->*hcp:CO
   gas_reacs_prods CO -1
   sites 1
   initial
@@ -268,7 +268,7 @@ reversible_step CO*-hcp<-->*-hcp:CO
   activ_eng  0.00000e+00
 end_reversible_step
 
-reversible_step CO*-br<-->*-br:CO
+reversible_step CO*br<->*br:CO
   gas_reacs_prods CO -1
   sites 1
   initial
@@ -310,33 +310,33 @@ lattice explicit
       16       9.24042755       3.75450923         fcc     5    39    41    42    14    17
       17       9.24094024       5.35507757         hcp     6    40    41    43    15    16    18
       18      10.62635684       6.15500917         fcc     4    17    43    44    45
-      19       1.60609631       0.94695596          br     2     1     2
-      20       2.31093302       2.16819424          br     2     2     3
-      21       3.01601528       0.94695595          br     2     2     4
-      22       2.99202560       3.34745591          br     2     3     5
-      23       3.69686230       4.56869419          br     2     5     6
-      24       4.37795489       0.94695595          br     2     4     7
-      25       4.40194457       3.34745590          br     2     5     8
-      26       4.37795489       5.74795584          br     2     9     6
-      27       5.08279160       2.16819424          br     2     7     8
-      28       5.08279159       6.96919413          br     1     9
-      29       5.78787386       0.94695595          br     2    10     7
-      30       5.76388418       3.34745591          br     2    11     8
-      31       5.78787386       5.74795584          br     2     9    12
-      32       6.46872089       4.56869419          br     2    11    12
-      33       7.14981347       0.94695596          br     2    10    13
-      34       7.17380315       3.34745590          br     2    11    14
-      35       7.14981347       5.74795584          br     2    12    15
-      36       7.85465018       2.16819424          br     2    13    14
-      37       7.85465017       6.96919413          br     1    15
-      38       8.55973244       0.94695594          br     1    13
-      39       8.53574276       3.34745591          br     2    14    16
-      40       8.55973244       5.74795584          br     2    17    15
-      41       9.24057947       4.56869419          br     2    17    16
-      42       9.94566174       3.34745590          br     1    16
-      43       9.92167205       5.74795585          br     2    17    18
-      44      10.62650876       6.96919413          br     1    18
-      45      11.33159102       5.74795583          br     1    18
+      19       1.60537481       0.94674127          br     2     1     2
+      20       2.31110785       2.16892643          br     2     2     3
+      21       3.01673678       0.94674127          br     2     2     4
+      22       2.99130410       3.34724122          br     2     3     5
+      23       3.69703714       4.56942638          br     2     5     6
+      24       4.37723339       0.94674127          br     2     4     7
+      25       4.40266607       3.34724122          br     2     5     8
+      26       4.37723339       5.74774116          br     2     9     6
+      27       5.08296643       2.16892643          br     2     7     8
+      28       5.08296643       6.96992632          br     1     9
+      29       5.78859536       0.94674127          br     2    10     7
+      30       5.76316268       3.34724122          br     2    11     8
+      31       5.78859536       5.74774116          br     2     9    12
+      32       6.46889572       4.56942638          br     2    11    12
+      33       7.14909197       0.94674127          br     2    10    13
+      34       7.17452465       3.34724122          br     2    11    14
+      35       7.14909197       5.74774116          br     2    12    15
+      36       7.85482502       2.16892643          br     2    13    14
+      37       7.85482501       6.96992632          br     1    15
+      38       8.56045395       0.94674127          br     1    13
+      39       8.53502126       3.34724122          br     2    14    16
+      40       8.56045394       5.74774116          br     2    17    15
+      41       9.24075431       4.56942638          br     2    17    16
+      42       9.94638324       3.34724122          br     1    16
+      43       9.92095055       5.74774116          br     2    17    18
+      44      10.62668360       6.96992632          br     1    18
+      45      11.33231253       5.74774116          br     1    18
   end_lattice_structure
 end_lattice\
 """
