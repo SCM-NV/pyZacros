@@ -41,6 +41,7 @@ def test_ZacrosParametersScanSteadyStateJob():
         ss_sett.turnover_frequency.nbatch = 20
         ss_sett.turnover_frequency.confidence = 0.96
         ss_sett.nreplicas = 2
+        ss_sett.scaling.enabled = 'T'
         ss_sett.scaling.partial_equilibrium_index_threshold = 0.1
         ss_sett.scaling.upper_bound = 10
         ss_sett.scaling.max_time = 10*dt
@@ -49,7 +50,7 @@ def test_ZacrosParametersScanSteadyStateJob():
         ss_parameters = pz.ZacrosSteadyStateJob.Parameters()
         ss_parameters.add( 'max_time', 'restart.max_time', 2*sett.max_time*( numpy.arange(20)+1 )**2 )
 
-        ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=job, parameters=ss_parameters, scaling=True )
+        ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=job, parameters=ss_parameters )
 
         ps_parameters = pz.ZacrosParametersScanJob.Parameters()
         ps_parameters.add( 'x_CO', 'molar_fraction.CO', [0.40, 0.50] )
