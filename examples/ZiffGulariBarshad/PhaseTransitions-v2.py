@@ -7,6 +7,9 @@ import scm.pyzacros.models
 
 zgb = pz.models.ZiffGulariBarshad()
 
+#---------------------------------------------
+# Calculation Settings
+#---------------------------------------------
 scm.pyzacros.init()
 
 # Run as many job simultaneously as there are cpu on the system
@@ -17,10 +20,12 @@ print('Running up to {} jobs in parallel simultaneously'.format(maxjobs))
 
 # Settings:
 sett = pz.Settings()
+sett.molar_fraction.CO = 0.45
+sett.molar_fraction.O2 = 0.55
 sett.random_seed = 953129
 sett.temperature = 500.0
 sett.pressure = 1.0
-sett.snapshots = ('time', 2.0)
+sett.snapshots = ('time', 0.5)
 sett.species_numbers = ('time', 0.1)
 sett.max_time = 10.0
 
@@ -31,9 +36,17 @@ parameters.add( 'x_CO', 'molar_fraction.CO', numpy.arange(0.2, 0.8, 0.01) )
 parameters.add( 'x_O2', 'molar_fraction.O2', lambda params: 1.0-params['x_CO'] )
 parameters.set_generator( pz.ZacrosParametersScanJob.meshgridGenerator )
 
+#---------------------------------------------
+# Running the calculations
+#---------------------------------------------
+
 mjob = pz.ZacrosParametersScanJob( reference=job, parameters=parameters )
 
 results = mjob.run()
+
+#---------------------------------------------
+# Getting the results
+#---------------------------------------------
 
 if( results.job.ok() ):
     x_CO = []
@@ -55,8 +68,6 @@ if( results.job.ok() ):
     print("----------------------------------------------")
     for i in range(len(x_CO)):
         print("%4d"%i, "%8.2f"%x_CO[i], "%10.6f"%ac_O[i], "%10.6f"%ac_CO[i], "%10.6f"%TOF_CO2[i])
-
-scm.plams.finish()
 
 #---------------------------------------------
 # Plotting the results
@@ -84,3 +95,19 @@ ax2.plot(x_CO, TOF_CO2, color="red", lw=2, zorder=5)
 plt.text(0.37, 1.5, 'CO$_2$', fontsize=18, color="red")
 
 plt.show()
+
+cresults = results.children_results()
+
+# Lattice states for x_CO=0.54 and CO=0.55
+cresults[(33,)].last_lattice_state().plot()
+cresults[(34,)].last_lattice_state().plot()
+
+# Molecule numbers for x_CO=0.54 and CO=0.55
+cresults[(33,)].plot_molecule_numbers( ["CO2"], normalize_per_site=True )
+cresults[(34,)].plot_molecule_numbers( ["CO2"], normalize_per_site=True )
+
+# Molecule numbers for x_CO=0.54 and CO=0.55. First Derivative
+cresults[(33,)].plot_molecule_numbers( ["CO2"], normalize_per_site=True, derivative=True )
+cresults[(34,)].plot_molecule_numbers( ["CO2"], normalize_per_site=True, derivative=True )
+
+scm.plams.finish()

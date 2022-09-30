@@ -1,3 +1,5 @@
+# Execution time ~5min
+
 import numpy
 import multiprocessing
 
@@ -15,62 +17,61 @@ scm.plams.config.default_jobrunner = scm.plams.JobRunner(parallel=True, maxjobs=
 scm.plams.config.job.runscript.nproc = 1
 print('Running up to {} jobs in parallel simultaneously'.format(maxjobs))
 
-sett = pz.Settings()
-sett.random_seed = 953129
-sett.temperature = 500.0
-sett.pressure = 1.0
-sett.species_numbers = ('time', 0.1)
-sett.max_time = 10.0
+z_sett = pz.Settings()
+z_sett.random_seed = 953129
+z_sett.temperature = 500.0
+z_sett.pressure = 1.0
+z_sett.species_numbers = ('time', 0.1)
+z_sett.max_time = 10.0
 
-job = pz.ZacrosJob( settings=sett, lattice=zgb.lattice, mechanism=zgb.mechanism,
-                    cluster_expansion=zgb.cluster_expansion )
+z_job = pz.ZacrosJob( settings=z_sett, lattice=zgb.lattice, mechanism=zgb.mechanism,
+                      cluster_expansion=zgb.cluster_expansion )
 
-sett = pz.Settings()
-sett.turnover_frequency.nbatch = 20
-sett.turnover_frequency.confidence = 0.95
-sett.nreplicas = 4
+ss_sett = pz.Settings()
+ss_sett.turnover_frequency.nbatch = 20
+ss_sett.turnover_frequency.confidence = 0.96
+ss_sett.turnover_frequency.ignore_nbatch = 5
+ss_sett.nreplicas = 4
 
-parametersA = pz.ZacrosSteadyStateJob.Parameters()
-parametersA.add( 'max_time', 'restart.max_time', 2*sett.max_time*( numpy.arange(20)+1 )**3 )
+ss_parameters = pz.ZacrosSteadyStateJob.Parameters()
+ss_parameters.add( 'max_time', 'restart.max_time', 2*z_sett.max_time*( numpy.arange(20)+1 )**3 )
 
-ssjob = pz.ZacrosSteadyStateJob( settings=sett, reference=job, generator_parameters=parametersA )
+ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=z_job, parameters=ss_parameters )
 
-parametersB = pz.ZacrosParametersScanJob.Parameters()
-parametersB.add( 'x_CO', 'molar_fraction.CO', numpy.arange(0.2, 0.8, 0.01) )
-parametersB.add( 'x_O2', 'molar_fraction.O2', lambda params: 1.0-params['x_CO'] )
+ps_parameters = pz.ZacrosParametersScanJob.Parameters()
+ps_parameters.add( 'x_CO', 'molar_fraction.CO', numpy.arange(0.2, 0.8, 0.01) )
+ps_parameters.add( 'x_O2', 'molar_fraction.O2', lambda params: 1.0-params['x_CO'] )
+ps_parameters.set_generator( pz.ZacrosParametersScanJob.meshgridGenerator )
 
-mjob = pz.ZacrosParametersScanJob( reference=ssjob,
-                                   generator=pz.ZacrosParametersScanJob.meshgridGenerator,
-                                   generator_parameters=parametersB, name='mesh' )
+ps_job = pz.ZacrosParametersScanJob( reference=ss_job, parameters=ps_parameters, name='mesh' )
 
-results = mjob.run()
+results = ps_job.run()
 
-output = ""
+x_CO = []
+ac_O = []
+ac_CO = []
+TOF_CO2 = []
+max_time = []
+
 if( results.job.ok() ):
-    x_CO = []
-    ac_O = []
-    ac_CO = []
-    TOF_CO2 = []
-
     results_dict = results.turnover_frequency()
     results_dict = results.average_coverage( last=20, update=results_dict )
+    cresults = results.children_results()
 
     for i in range(len(results_dict)):
         x_CO.append( results_dict[i]['x_CO'] )
         ac_O.append( results_dict[i]['average_coverage']['O*'] )
         ac_CO.append( results_dict[i]['average_coverage']['CO*'] )
         TOF_CO2.append( results_dict[i]['turnover_frequency']['CO2'] )
+        max_time.append( results.children_results( child_id=(i,) ).history( pos=-1 )['max_time'] )
 
-    output += "----------------------------------------------\n"
-    output += "%4s"%"cond"+" %8s"%"x_CO"+" %10s"%"ac_O"+" %10s"%"ac_CO"+" %12s"%"TOF_CO2\n"
-    output += "----------------------------------------------\n"
+    print( "-----------------------------------------------------------" )
+    print( "%4s"%"cond", " %8s"%"x_CO", " %10s"%"ac_O", "%10s"%"ac_CO", "%12s"%"TOF_CO2", "%10s"%"max_time" )
+    print( "-----------------------------------------------------------" )
     for i in range(len(x_CO)):
-        output += "%4d"%i+" %8.2f"%x_CO[i]+" %10.6f"%ac_O[i]+" %10.6f"%ac_CO[i] \
-                    +" %12.6f"%TOF_CO2[i]+"\n"
+        print( "%4d"%i, "%8.2f"%x_CO[i], "%10.6f"%ac_O[i], "%10.6f"%ac_CO[i], "%12.6f"%TOF_CO2[i], "%10.3f"%max_time[i] )
 
 scm.plams.finish()
-
-print(output)
 
 #---------------------------------------------
 # Plotting the results

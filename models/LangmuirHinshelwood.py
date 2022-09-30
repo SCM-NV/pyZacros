@@ -30,7 +30,7 @@ class LangmuirHinshelwood:
         #---------------------------------------------
         # Clusters & Cluster expansion
         #---------------------------------------------
-        empty_point = pz.Cluster( species=[pz.Species.UNSPECIFIED], energy=0.0, label="Empty")
+        empty_point = pz.Cluster( species=[pz.Species.UNSPECIFIED], energy=0.0, label="empty_point")
         self.cluster_expansion = pz.ClusterExpansion( [empty_point] )
 
         #---------------------------------------------

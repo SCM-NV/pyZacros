@@ -70,5 +70,5 @@ API
 
 .. currentmodule:: scm.pyzacros.core.ZacrosParametersScanJob
 .. autoclass:: ZacrosParametersScanResults
-    :exclude-members: _ZacrosParametersScanResults__plot_process_statistics
+    :exclude-members: __init__
 

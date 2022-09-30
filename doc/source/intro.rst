@@ -8,7 +8,7 @@ What is pyZacros
 ----------------
 
 pyZacros (Python Library for Automating Zacros Simulation) is a collection of tools that aims to provide a powerful, flexible, and easily extendable Python interface to
-`Zacros <https://zacros.org>`_. It is designed as an extension of the python library `PLAMS <../plams/index.html>`_. Thereby, pyZacros inherits from PLAMS the robust way of managing the inputs file preparation, job execution, file management, and output file processing. Above and above that, it also offers the possibility of postprocessing the results and building very advanced data workflows.
+`Zacros <https://zacros.org>`_, a Kinetic Monte Carlo software package for simulating molecular phenomena on catalytic surfaces. pyZacros is designed as an extension of the python library `PLAMS <../plams/index.html>`_. Thereby inherits from PLAMS the robust way of managing the inputs file preparation, job execution, file management, and output file processing. Above that, it also offers the possibility of postprocessing the results and building very advanced data workflows.
 
 The normal Zacros workflow has the following steps:
 

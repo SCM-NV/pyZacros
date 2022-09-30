@@ -47,8 +47,8 @@ class ClusterExpansion( UserList ):
         *   ``i`` -- The index where ``item`` needs to be inserted.
         *   ``item`` --  The cluster to be inserted in the list.
         """
-        for erxn in self:
-            if( erxn.label() == item.label() ):
+        for cl in self:
+            if( cl.label() == item.label() ):
                 return
 
         super(ClusterExpansion, self).insert(i, item)
@@ -60,8 +60,8 @@ class ClusterExpansion( UserList ):
         """
         output  = "energetics\n\n"
 
-        for cluster in self:
-            output += str(cluster)+"\n\n"
+        for cl in self:
+            output += str(cl)+"\n\n"
 
         output += "end_energetics"
 
@@ -114,3 +114,17 @@ class ClusterExpansion( UserList ):
 
         for cl in self:
             cl.replace_site_types( site_types_old, site_types_new )
+
+
+    def find( self, label ):
+        """
+        Returns the list of clusters where the substring ``label`` is found in the clusters' label
+        """
+        return [cl for cl in self if cl.label().find(label) != -1]
+
+
+    def find_one( self, label ):
+        """
+        Returns the first cluster where the substring ``label`` is found in the cluster's label
+        """
+        return next(cl for cl in self if cl.label().find(label) != -1)

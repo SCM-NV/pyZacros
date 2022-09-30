@@ -96,10 +96,16 @@ class ZacrosParametersScanJob( scm.plams.MultiJob ):
     """
 
     class Parameter(ParameterBase):
+        """
+        Creates a new Parameter object specifically tailored for ZacrosParametersScanJob
+        """
         def __init__(self, name_in_settings, kind, values):
             super().__init__(self, name_in_settings, kind, values)
 
     class Parameters(ParametersBase):
+        """
+        Creates a new Parameters object specifically tailored for ZacrosParametersScanJob
+        """
         def __init__(self, *args, **kwargs):
             super().__init__(self, *args, **kwargs)
 
@@ -137,8 +143,7 @@ class ZacrosParametersScanJob( scm.plams.MultiJob ):
                 new_reference = copy.copy(reference._reference)
                 new_reference.settings = settings_idx
                 job = ZacrosSteadyStateJob( settings=reference.settings, reference=new_reference,
-                                            parameters=reference._parameters,
-                                            name=new_name, scaling=reference._scaling )
+                                            parameters=reference._parameters, name=new_name )
 
             self.children[ idx ] = job
 
@@ -149,18 +154,67 @@ class ZacrosParametersScanJob( scm.plams.MultiJob ):
 
     @staticmethod
     def zipGenerator( reference_settings, parameters ):
+        """
+        This function combines the values of the parameters one-to-one following the order as they were defined
+
+        *   ``reference_settings`` -- ``Settings`` object to be used as a reference.
+        *   ``parameters`` -- ``Parameters`` object containing the specifications of the parameters.
+
+        Example of use:
+
+        .. code-block:: python
+
+            params = pz.ZacrosParametersScanJob.Parameters()
+            params.add( 'x_CO', 'molar_fraction.CO', numpy.arange(0.0, 1.0, 0.25) )
+            params.add( 'x_O2', 'molar_fraction.O2', lambda p: 1.0-p['x_CO'] )
+            params.set_generator( pz.ZacrosParametersScanJob.zipGenerator )
+            print(params)
+
+        The code above will generate the following output that lists the final values for the parameters:
+
+        .. code-block:: none
+
+            0: {'x_CO': 0.0, 'x_O2': 1.0}
+            1: {'x_CO': 0.25, 'x_O2': 0.75}
+            2: {'x_CO': 0.5, 'x_O2': 0.5}
+            3: {'x_CO': 0.75, 'x_O2': 0.25}
+        """
         return ZacrosParametersScanJob.Parameters.zipGenerator( reference_settings, parameters )
 
 
     @staticmethod
     def meshgridGenerator( reference_settings, parameters ):
         """
-        This function is used to create a rectangular
-        grid out of N given one-dimensional arrays representing the Cartesian indexing or Matrix
-        indexing. Meshgrid function is somewhat inspired from MATLAB.
+        This function combines the values of the parameters creating an `n-`dimensional rectangular grid,
+        being `n` the number of parameters. Meshgrid generator is inspired by ``numpy.meshgrid`` function.
 
-        *   ``reference_settings`` --
-        *   ``parameters`` --
+        *   ``reference_settings`` -- ``Settings`` object to be used as a reference.
+        *   ``parameters`` -- ``Parameters`` object containing the specifications of the parameters.
+
+        Example of use:
+
+        .. code-block:: python
+
+            params = pz.ZacrosParametersScanJob.Parameters()
+            params.add( 'x_CO', 'molar_fraction.CO', numpy.arange(0.0, 1.0, 0.4) )
+            params.add( 'x_O2', 'molar_fraction.O2', numpy.arange(0.0, 1.0, 0.4) )
+            params.add( 'x_N2', 'molar_fraction.N2', lambda p: 0.11+p['x_CO']+p['x_O2'] )
+            params.set_generator( pz.ZacrosParametersScanJob.meshgridGenerator )
+            print(params)
+
+        The code above will generate the following output that lists the final values for the parameters:
+
+        .. code-block:: none
+
+           (0, 0): {'x_CO': 0.0, 'x_O2': 0.0, 'x_N2': 0.11}
+           (0, 1): {'x_CO': 0.4, 'x_O2': 0.0, 'x_N2': 0.51}
+           (0, 2): {'x_CO': 0.8, 'x_O2': 0.0, 'x_N2': 0.91}
+           (1, 0): {'x_CO': 0.0, 'x_O2': 0.4, 'x_N2': 0.51}
+           (1, 1): {'x_CO': 0.4, 'x_O2': 0.4, 'x_N2': 0.91}
+           (1, 2): {'x_CO': 0.8, 'x_O2': 0.4, 'x_N2': 1.31}
+           (2, 0): {'x_CO': 0.0, 'x_O2': 0.8, 'x_N2': 0.91}
+           (2, 1): {'x_CO': 0.4, 'x_O2': 0.8, 'x_N2': 1.31}
+           (2, 2): {'x_CO': 0.8, 'x_O2': 0.8, 'x_N2': 1.71}
         """
 
         independent_params = []

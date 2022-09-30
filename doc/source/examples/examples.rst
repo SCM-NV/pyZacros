@@ -54,14 +54,14 @@ times and require access to higher computational resources.
    :scale: 35 %
    :target: zgb_pts.html
 
-.. |example_i2| image:: ../../images/example_ZGB-SteadyState.png
+.. |example_i2| image:: ../../images/example_ZGB-SS-nrep1.png
    :scale: 35 %
    :target: zgb_ss.html
 
 .. csv-table::
    :header: |example_i1|, |example_i2|
 
-   "Ziff-Gulari-Barshad model: |br| Phase Transition |br|", "Ziff-Gulari-Barshad model: |br| Steady State Conditions"
+   "Ziff-Gulari-Barshad model: |br| Phase Transitions |br|", "Ziff-Gulari-Barshad model: |br| Steady State Conditions"
 
 .. toctree::
    :maxdepth: 1
@@ -81,7 +81,7 @@ times and require access to higher computational resources.
 .. csv-table::
    :header: |example_i3|, |example_i4|
 
-   "Ziff-Gulari-Barshad model: |br| Phase Transition under Steady |br| State Conditions", "Langmuir-Hinshelwood model: |br| Acceleration by Automated |br| Rescaling of the Rate Constants |br|"
+   "Ziff-Gulari-Barshad model: |br| Phase Transitions under Steady |br| State Conditions", "Langmuir-Hinshelwood model: |br| Acceleration by Automated |br| Rescaling of the Rate Constants |br|"
 
 Advanced examples
 -----------------
@@ -108,4 +108,4 @@ to Massively Parallel Processing (MPP) becomes recommended.
 .. csv-table::
    :header: |example_a1|, |example_a2|
 
-   "Poisoning of Pt(111) by CO: |br| From atomistic to mesoscopic |br| modeling", "Ziff-Gulari-Barshad model: |br| Phase Transition and ML-based |br| Surrogate Model |br|"
+   "Poisoning of Pt(111) by CO: |br| From atomistic to mesoscopic |br| modeling", "Ziff-Gulari-Barshad model: |br| Phase Transitions and ML-based |br| Surrogate Model |br|"

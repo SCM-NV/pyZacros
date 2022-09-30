@@ -127,3 +127,18 @@ class Mechanism( UserList ):
 
         for erxn in self:
             erxn.replace_site_types( site_types_old, site_types_new )
+
+
+    def find( self, label ):
+        """
+        Returns the list of reactions where the substring ``label`` is found in the reactions' label
+        """
+        return [rxn for rxn in self if rxn.label().find(label) != -1]
+
+
+    def find_one( self, label ):
+        """
+        Returns the first reaction where the substring ``label`` is found in the reaction's label
+        """
+        return next(rxn for rxn in self if rxn.label().find(label) != -1)
+

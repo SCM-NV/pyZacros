@@ -1,4 +1,5 @@
 import numpy
+from .Settings import *
 
 class ParameterBase:
     """
@@ -58,6 +59,17 @@ class ParametersBase(dict):
         self._generator = ParametersBase.zipGenerator
 
 
+    def __str__(self):
+        """
+        Translates the object to a string
+        """
+        output = ""
+        for index,values in self.values().items():
+            output += str(index)+": "+str(values)+"\n"
+
+        return output
+
+
     def add(self, name, name_in_settings, values):
         """
         Adds a new parameter
@@ -89,11 +101,15 @@ class ParametersBase(dict):
         self._generator = generator
 
 
+    def values(self):
+        settings = Settings()
+        indices,parameters_values,settings_list = self._generator( settings, self )
+
+        return parameters_values
+
+
     @staticmethod
     def zipGenerator( reference_settings, parameters ):
-        """
-        The function returns a zip object version of the parameters, which is an iterator of tuples where the first item in each passed iterator is paired together, and then the second item in each passed iterator are paired together etc.
-        """
 
         independent_params = []
         size = None

@@ -13,8 +13,8 @@ z_sett.molar_fraction.O2 = 1.0 - z_sett.molar_fraction.CO
 z_sett.random_seed = 953129
 z_sett.temperature = 500.0
 z_sett.pressure = 1.0
-z_sett.species_numbers = ('time', 1.e-2)
-z_sett.max_time = 20.0
+z_sett.species_numbers = ('time', 0.1)
+z_sett.max_time = 10.0
 
 job = pz.ZacrosJob( settings=z_sett,
                     lattice=zgb.lattice,
@@ -23,8 +23,8 @@ job = pz.ZacrosJob( settings=z_sett,
 
 ss_sett = pz.Settings()
 ss_sett.turnover_frequency.nbatch = 20
-ss_sett.turnover_frequency.confidence = 0.98
-ss_sett.nreplicas = 8
+ss_sett.turnover_frequency.confidence = 0.96
+ss_sett.nreplicas = 4
 
 parameters = pz.ZacrosSteadyStateJob.Parameters()
 parameters.add( 'max_time', 'restart.max_time', numpy.arange(20.0, 1000.0, 100) )

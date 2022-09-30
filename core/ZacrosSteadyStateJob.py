@@ -139,7 +139,7 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
             super().__init__(self, *args, **kwargs)
 
 
-    def __init__(self, reference, parameters, scaling=False, settings=Settings(), **kwargs):
+    def __init__(self, reference, parameters, settings=Settings(), **kwargs):
         scm.plams.MultiJob.__init__(self, settings=settings, **kwargs)
 
         self._reference = reference
@@ -174,10 +174,8 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
         # We don't need the indices because we are sure that the generator is the zipGenerator
         _,self._parameters_values,self._parameters_settings = parameters._generator( reference.settings, parameters )
 
-        self._scaling = scaling
-
+        self._scaling = False
         self._scaling_status = 'not_requested'
-        if self._scaling: self._scaling_status = 'requested'
         self._scaling_factors = None
 
         self.max_iterations = len(parameters[list(parameters.keys())[0]].values)
@@ -189,7 +187,7 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
         self.confidence = 0.99
         self.ignore_nbatch = 1
         self.nreplicas = 1
-        self.partial_equilibrium_index_threshold = 0.1
+        self.scaling_partial_equilibrium_index_threshold = 0.1
         self.scaling_upper_bound = 100
         self.scaling_max_steps = None
         self.scaling_max_time = None
@@ -206,7 +204,10 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
 
         # Scaling pre-exponential terms parameters
         if 'scaling' in self.settings:
-            self.partial_equilibrium_index_threshold = self.settings.scaling.get('partial_equilibrium_index_threshold', default=self.partial_equilibrium_index_threshold)
+            self._scaling = self.settings.scaling.get('enabled', default=self._scaling)
+            if self._scaling == 'T' or self._scaling.upper() == 'TRUE' or self._scaling.upper() == 'Y' or self._scaling : self._scaling_status = 'requested'
+
+            self.scaling_partial_equilibrium_index_threshold = self.settings.scaling.get('partial_equilibrium_index_threshold', default=self.scaling_partial_equilibrium_index_threshold)
             self.scaling_upper_bound = self.settings.scaling.get('upper_bound', default=self.scaling_upper_bound)
             self.scaling_max_steps = self.settings.scaling.get('max_steps', default=self.scaling_max_steps)
             self.scaling_max_time = self.settings.scaling.get('max_time', default=self.scaling_max_time)
@@ -414,7 +415,7 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
         if self.scaling_max_time is not None: sufix += ",max_time="+str(self.scaling_max_time)
         if self.scaling_species_numbers is not None: sufix += ",species_numbers="+str(self.scaling_species_numbers)
 
-        scm.plams.log("JOB "+self._full_name()+" Scaling: Using partial_equilibrium_index_threshold="+str(self.partial_equilibrium_index_threshold)+
+        scm.plams.log("JOB "+self._full_name()+" Scaling: Using partial_equilibrium_index_threshold="+str(self.scaling_partial_equilibrium_index_threshold)+
                         ",upper_bound="+str(self.scaling_upper_bound)+sufix)
 
         lsettings = self._reference.settings.copy()
@@ -481,7 +482,7 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
 
         sf,PE,kind = self.__scaling_factors( self._reference.mechanism,
                                              process_statistics,
-                                             quasieq_th=self.partial_equilibrium_index_threshold,
+                                             quasieq_th=self.scaling_partial_equilibrium_index_threshold,
                                              delta=self.scaling_upper_bound )
 
         scm.plams.log("  "+" %5s"%"id"+" %10s"%"PE"+" %8s"%"kind"+" %15s"%"orig_pexp"+" %15s"%"sf"+" %15s"%"new_pexp"+"    label")

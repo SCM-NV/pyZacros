@@ -9,7 +9,7 @@ This example is inspired in the seminal paper: Kinetic Phase Transitions in an I
 Robert M. Ziff, Erdagon Gulari, and Yoav Barshad in 1986 (`Phys. Rev. Lett. 56, 25 <https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.56.2553>`_).
 This paper is the origin of the ZGB model we have been discussing above. While the model leaves out many important steps of the real system, it exhibits interesting steady-state off-equilibrium behavior and two types of phase transitions, which actually occur in real systems. Please refer to the original paper for more details. In this example, we will analyze the effect of changing the composition of the gas phase, namely partial pressures for O\ :sub:`2` and CO, in the CO\ :sub:`2` Turnover frequency (TOF).
 
-You can download the full example script following this link :download:`ZiffGulariBarshad-PhaseTransitions.py <../../../examples/ZiffGulariBarshad/PhaseTransition.py>`  and execute it with the following command:
+You can download the full example script following this link :download:`ZiffGulariBarshad-PhaseTransitions.py <../../../examples/ZiffGulariBarshad/PhaseTransitions.py>`  and execute it with the following command:
 
 .. code-block:: none
 
@@ -302,10 +302,10 @@ pyZacros also offers some predefined plot functions that use matplotlib as well.
 
 
 .. |latticeState1| image:: ../../images/example_ZGB-PhaseTransitions-ls1.png
-   :scale: 60 %
+   :scale: 50 %
 
 .. |latticeState2| image:: ../../images/example_ZGB-PhaseTransitions-ls2.png
-   :scale: 60 %
+   :scale: 50 %
 
 .. csv-table:: **Views of the Catalyst Surface**
    :header: |latticeState1|, |latticeState2|

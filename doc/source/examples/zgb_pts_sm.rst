@@ -2,5 +2,5 @@
 
       <br>
 
-Ziff-Gulari-Barshad model: Phase Transition and ML-based Surrogate Model.
--------------------------------------------------------------------------
+Ziff-Gulari-Barshad model: Phase Transitions and ML-based Surrogate Model.
+--------------------------------------------------------------------------

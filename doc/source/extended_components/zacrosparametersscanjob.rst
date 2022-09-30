@@ -7,150 +7,56 @@ ZacrosParametersScanJob
 
 ``ZacrosParametersScanJob`` class represents a job that is a container for other jobs, called children jobs, which must be :ref:`ZacrosJobs <zacrosjob>` or :ref:`ZacrosSteadyStateJob <zacrossteadystatejob>` kind objects. This class is an extension of the PLAMS MultiJob class. So it inherits all its powerful features, e.g., being executed locally or submitted to some external queueing system transparently or executing jobs in parallel with a predefined dependency structure. See all configure possibilities on the PLAMS MultiJob class documentation in this link: `PLAMS.MultiJob <../../plams/components/jobs.html#multijobs>`_.
 
-The ``ZacrosParametersScanJob`` class constructor doesn't require a Settings object; instead, it requires a reference job ``reference`` from which the calculation ``Settings`` is taken to be replicated through its children. Children are initially copies of the reference job. However, just before they are run, their corresponding Settings are altered accordingly to the rules defined through a ``Parameter`` object provided using the parameters ``generator`` and ``generator_parameters``  in the constructor. The following example illustrates how to use this class:
+The ``ZacrosParametersScanJob`` class constructor doesn't require a Settings object; instead, it requires a reference job ``reference`` from which the calculation ``Settings`` is taken to be replicated through its children. Children are initially copies of the reference job. However, just before they are run, their corresponding Settings are altered accordingly to the rules defined through a ``Parameters`` object provided in the constructor. The following lines illustrates how to use this class:
 
 .. code-block:: python
   :linenos:
 
-  import numpy
-  import scm.pyzacros as pz
-  import scm.pyzacros.models
+  ps_parameters = pz.ZacrosParametersScanJob.Parameters()
+  ps_parameters.add( 'x_CO', 'molar_fraction.CO', numpy.arange(0.1, 1.0, 0.1) )
+  ps_parameters.add( 'x_O2', 'molar_fraction.O2', lambda params: 1.0-params['x_CO'] )
+  ps_parameters.set_generator( pz.ZacrosParametersScanJob.zipGenerator )
 
-  lh = pz.models.LangmuirHinshelwood()
-
-  z_sett = pz.Settings()
-  z_sett.temperature = 500.0
-  z_sett.molar_fraction.CO = 0.1
-  z_sett.molar_fraction.O2 = 0.9
-  ...
-
-  z_job = pz.ZacrosJob( settings=z_sett,
-                        lattice=lh.lattice,
-                        mechanism=lh.mechanism,
-                        cluster_expansion=lh.clusterExpansion )
-
-  params = pz.ZacrosParametersScanJob.Parameters()
-  params.add( 'x_CO', 'molar_fraction.CO', numpy.arange(0.1, 1.0, 0.05) )
-  params.add( 'x_O2', 'molar_fraction.O2', lambda p: 1.0-p['x_CO'] )
-  params.generator = pz.ZacrosParametersScanJob.zipGenerator
-
-  ps_job = pz.ZacrosParametersScanJob(
-                reference=ss_job, parameters=parameters, name='mesh' )
+  ps_job = pz.ZacrosParametersScanJob( reference=z_job, parameters=ps_parameters )
 
   results = ps_job.run()
 
 
-In the previous code, we used the predefined model ``LangmuirHinshelwood`` (line 5),
-select the job settings' (lines 7-11), and creates the corresponding job (lines 13-16).
+Here we assumed that there is a ZacrosJob object already configured ``z_job`` that we call the reference job, and we aim to modify its settings to vary ``z_job.settings.molar_fraction.CO`` and ``z_job.settings.molar_fraction.O2`` in the range [0.1:0.9] with the restriction that their sum is 1. This is achieved with lines 1-3. First, we created a new ``ZacrosParametersScanJob.Parameters`` object (line 1), and then we added as many parameters to modify as needed through the method ``add``. Notice that in this case, we created two variables, ``x_CO`` and ``x_O2`` (equivalent to the parameters ``molar_fraction.CO`` and ``molar_fraction.O2`` in the Settings object), where the latter is the dependent variable (notice the lambda function that forces the sum with ``x_CO`` to 1.0) and the former is the independent one with its values ranging within the interval described above.
 
+Line 4 selects the generator, which will generate the final values of the parameters after combining them. In this case, the scanning is one-dimensional, so their combination is trivial. In the example, we used the ``zipGenerator`` (the default option), which combines the values of the parameters one-to-one following the order as they were defined. This means that for this example, the final set of calculations will use the following list of parameters: ``('xCO','xO2') = [(0.1,0.9), (0.2,0.8), ..., (0.9,0.1)]``. For more than two dimensions, the generator is essential. Because it allows generating, for example, a grid by combining two parameters, see ``pz.ZacrosParametersScanJob.meshgridGenerator`` for more details. Moreover, remember that the generator is a function that can be written by the user.
+
+The execution of the code above generates the following output:
 
 .. code-block:: none
 
-   ---------------------------------------------------------------------
-   simulation_input.dat
-   ---------------------------------------------------------------------
-   random_seed         953129
-   temperature          500.0
-   pressure               1.0
+  [22.09|16:19:57] PLAMS working folder: /home/user/plams_workdir
+  [22.09|16:19:58] JOB plamsjob STARTED
+  [22.09|16:19:58] JOB plamsjob RUNNING
+  [22.09|16:19:58] JOB plamsjob/plamsjob_ps_cond000 STARTED
+  [22.09|16:19:58] JOB plamsjob/plamsjob_ps_cond000 RUNNING
+  [22.09|16:23:33] JOB plamsjob/plamsjob_ps_cond000 FINISHED
+  [22.09|16:23:33] JOB plamsjob/plamsjob_ps_cond000 SUCCESSFUL
+  [22.09|16:23:33] JOB plamsjob/plamsjob_ps_cond001 STARTED
+  [22.09|16:23:33] JOB plamsjob/plamsjob_ps_cond001 RUNNING
+  [22.09|16:27:16] JOB plamsjob/plamsjob_ps_cond001 FINISHED
+  [22.09|16:27:17] JOB plamsjob/plamsjob_ps_cond001 SUCCESSFUL
+  ...
+  [22.09|16:47:18] JOB plamsjob/plamsjob_ps_cond008 STARTED
+  [22.09|16:47:18] JOB plamsjob/plamsjob_ps_cond008 RUNNING
+  [22.09|16:52:37] JOB plamsjob/plamsjob_ps_cond008 FINISHED
+  [22.09|16:52:37] JOB plamsjob/plamsjob_ps_cond008 SUCCESSFUL
+  [22.09|16:52:37] JOB plamsjob FINISHED
+  [22.09|16:52:37] JOB plamsjob SUCCESSFUL
+  [22.09|16:52:37] PLAMS run finished. Goodbye
 
-   snapshots                 on time       0.1
-   process_statistics        on time       0.1
-   species_numbers           on time       0.1
-   event_report      off
-   max_steps         infinity
-   max_time          1.0
+In this example, all conditions or molar fractions of ``CO`` are executed sequentially, but it is possible
+to execute in parallel using a different JobRunner. Each condition is executed in a new job directory,
+``plamsjob/plamsjob_ps_cond000``, ``plamsjob/plamsjob_ps_cond001``, etc., where all output files are generated
+and stored for future reference. The ``plams_job`` prefix can be replaced by using the option ``name`` in the
+constructor. Notice the status of each job follows the sequence ``STARTED-->RUNNING-->FINISHED-->SUCCESSFUL``.
 
-   n_gas_species    3
-   gas_specs_names              CO           O2          CO2
-   gas_energies        0.00000e+00  0.00000e+00 -2.33700e+00
-   gas_molec_weights   2.79949e+01  3.19898e+01  4.39898e+01
-   gas_molar_fracs     4.50000e-01  5.50000e-01  0.00000e+00
-
-   n_surf_species    2
-   surf_specs_names         CO*        O*
-   surf_specs_dent            1         1
-
-   finish
-   ---------------------------------------------------------------------
-   lattice_input.dat
-   ---------------------------------------------------------------------
-   lattice default_choice
-     triangular_periodic 1.0 10 3
-   end_lattice
-   ---------------------------------------------------------------------
-   energetics_input.dat
-   ---------------------------------------------------------------------
-   energetics
-
-   cluster CO*_0-0
-     sites 1
-     lattice_state
-       1 CO* 1
-     site_types 1
-     graph_multiplicity 1
-     cluster_eng -1.30000e+00
-   end_cluster
-
-   cluster O*_0-0
-     sites 1
-     lattice_state
-       1 O* 1
-     site_types 1
-     graph_multiplicity 1
-     cluster_eng -2.30000e+00
-   end_cluster
-
-   end_energetics
-   ---------------------------------------------------------------------
-   mechanism_input.dat
-   ---------------------------------------------------------------------
-   mechanism
-
-   step CO_adsorption
-     gas_reacs_prods CO -1
-     sites 1
-     initial
-       1 * 1
-     final
-       1 CO* 1
-     site_types 1
-     pre_expon  1.00000e+01
-     activ_eng  0.00000e+00
-   end_step
-
-   step O2_adsorption
-     gas_reacs_prods O2 -1
-     sites 2
-     neighboring 1-2
-     initial
-       1 * 1
-       2 * 1
-     final
-       1 O* 1
-       2 O* 1
-     site_types 1 1
-     pre_expon  2.50000e+00
-     activ_eng  0.00000e+00
-   end_step
-
-   step CO_oxidation
-     gas_reacs_prods CO2 1
-     sites 2
-     neighboring 1-2
-     initial
-       1 CO* 1
-       2 O* 1
-     final
-       1 * 1
-       2 * 1
-     site_types 1 1
-     pre_expon  1.00000e+20
-     activ_eng  0.00000e+00
-   end_step
-
-   end_mechanism
-
-When running the ``ZacrosParametersScanJob`` calculation (see :meth:`~ZacrosParametersScanJob.run` method), all necessary input files for zacros are generated in the job directory (see option ``name`` in the constructor), and Zacros is internally executed. Then, all output files generated by Zacros are stored for future reference in the same directory. The information contained in the output files can be easily accessed by using the class ``ZacrosResults``.
+The information in the output directories can be easily accessed using the class ``ZacrosParametersScanResults``.
 
 API
 ~~~
@@ -159,5 +65,7 @@ API
     :exclude-members: _result_type, __init__
 
 .. autoclass:: scm.pyzacros::ZacrosParametersScanJob.Parameter
+    :exclude-members: __init__
 
-
+.. autoclass:: scm.pyzacros::ZacrosParametersScanJob.Parameters
+    :exclude-members: __init__

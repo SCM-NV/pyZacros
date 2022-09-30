@@ -40,10 +40,9 @@ def getRate( conditions ):
     #---------------------------------------
     ss_sett = pz.Settings()
     ss_sett.turnover_frequency.nbatch = 20
-    ss_sett.turnover_frequency.confidence = 0.99
+    ss_sett.turnover_frequency.confidence = 0.96
+    ss_sett.turnover_frequency.ignore_nbatch = 5
     ss_sett.nreplicas = 4
-    ss_sett.scaling.partial_equilibrium_index_threshold = 0.1
-    ss_sett.scaling.scaling_upper_bound = 100
 
     ss_parameters = pz.ZacrosSteadyStateJob.Parameters()
     ss_parameters.add( 'max_time', 'restart.max_time', 2*z_sett.max_time*( numpy.arange(100)+1 )**3 )
@@ -93,7 +92,7 @@ algorithmParams={
         'd2th'        : 0.8,     # thresold second derivative
         'VIth'        : 0.10,    # thresold variable importance
         'errTh'       : 1e-6,    # thresold for MRE error evaluation (remove from MRE calculation record below this value)
-        'OOBth'       : 0.05,    # termination criterium on OOBnorm
+        'OOBth'       : 0.07,    # termination criterium on OOBnorm
         'RADth'       : 70,      # termination criterium on Relative Approximation Error (RAD) [%]
         'maxTDSize'   : 200,     # maximum allowed size of the training data
         'AbsOOBTh'    : 0.2,     # maximum variations between OOB for two different tabulation variables

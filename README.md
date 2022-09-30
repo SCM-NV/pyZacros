@@ -3,7 +3,7 @@
 What is pyZacros
 ----------------
 
-pyZacros (Python Library for Automating Zacros Simulation) is a collection of tools that aims to provide a powerful, flexible, and easily extendable Python interface to Zacros. It is designed as an extension of the python library [PLAMS](https://github.com/SCM-NV/PLAMS). Thereby, pyZacros inherits from PLAMS the robust way of managing the inputs file preparation, job execution, file management, and output file processing. Above and above that, it also offers the possibility of postprocessing the results and building very advanced data workflows.
+pyZacros (Python Library for Automating Zacros Simulation) is a collection of tools that aims to provide a powerful, flexible, and easily extendable Python interface to Zacros, a Kinetic Monte Carlo software package for simulating molecular phenomena on catalytic surfaces. pyZacros is designed as an extension of the python library [PLAMS](https://github.com/SCM-NV/PLAMS). Thereby inherits from PLAMS the robust way of managing the inputs file preparation, job execution, file management, and output file processing. Above that, it also offers the possibility of postprocessing the results and building very advanced data workflows.
 
 The normal Zacros workflow has the following steps:
 
@@ -42,7 +42,7 @@ Simple example
 --------------
 
 Here we show a simple pyZacros script that reproduces the Zacros tutorial
-[Ziff-Gulari-Barshad (ZGB) Model in Zacros](https://zacros.org/tutorials/4-tutorial-1-ziff-gulari-barshad-model-in-zacros). 
+[Ziff-Gulari-Barshad (ZGB) Model in Zacros](https://zacros.org/tutorials/4-tutorial-1-ziff-gulari-barshad-model-in-zacros).
 
 The ZGB model includes (see the script below):
 
@@ -131,7 +131,7 @@ Then, you should see the plot of the number of molecules of each kind as a funct
     <img src="doc/images/ZGB-mol_gas_nums.png" style="width:40%">
     <img src="doc/images/ZGB-mol_surf_nums.png" style="width:40%">
 </p>
-   
+
 During the execution the following information is written to the standard output:
 
 ```
@@ -143,7 +143,7 @@ During the execution the following information is written to the standard output
 nCO2 = [2825, 2827, 2828, 2829, 2829, 2830, 2830, 2832, 2832, 2834]
 [02.11|12:07:40] PLAMS run finished. Goodbye
 ```
-   
+
 It indicates that pyZacros created a uniquely named working folder (``plams_workdir``) and then ran the Zacros calculation in a separate
 subfolder of the working folder (``plamsjob``). All the files created by each Zacros run are saved in the corresponding subfolder for future reference. However, notice that you can access the results directly from the python script. To illustrate this, see line 54 of the script that produces line 6 in the standard output, which prints the number of CO2 molecules produced in the last ten-time steps of the simulation.
 

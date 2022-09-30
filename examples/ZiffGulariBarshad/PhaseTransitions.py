@@ -163,4 +163,3 @@ results[34].plot_molecule_numbers( ["CO2"], normalize_per_site=True )
 # Molecule numbers for x_CO=0.54 and CO=0.55. First Derivative
 results[33].plot_molecule_numbers( ["CO2"], normalize_per_site=True, derivative=True )
 results[34].plot_molecule_numbers( ["CO2"], normalize_per_site=True, derivative=True )
-

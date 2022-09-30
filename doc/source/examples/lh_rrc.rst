@@ -2,5 +2,10 @@
 
       <br>
 
-Ziff-Gulari-Barshad model: Phase Transition and ML-based Surrogate Model.
--------------------------------------------------------------------------
+Langmuir-Hinshelwood model: Acceleration by Automated Rescaling of the Rate Constants
+-------------------------------------------------------------------------------------
+
+.. image:: ../../images/example_LH-ProductionRate.png
+   :scale: 90 %
+   :align: center
+
