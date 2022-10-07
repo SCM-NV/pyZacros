@@ -98,7 +98,7 @@ API
 
 .. currentmodule:: scm.pyzacros.core.ElementaryReaction
 .. autoclass:: ElementaryReaction
-  :exclude-members: __init__, __eq__, __hash__, _ElementaryReaction__updateLabel, __weakref__, __str__
+  :exclude-members: __init__, __eq__, __hash__, __updateLabel, __weakref__, __str__
 
 .. currentmodule:: scm.pyzacros.core.Mechanism
 .. autoclass:: Mechanism

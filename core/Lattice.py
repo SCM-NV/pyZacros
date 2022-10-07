@@ -382,7 +382,7 @@ class Lattice:
         Adds a new site only if this is not already included in the lattice.
         It returns the id of the site
 
-        *   ``site_type`` -- Site type name, e.g. "StTp1"
+        *   ``site_type`` -- Site type name, e.g. 'StTp1'
         *   ``coordinates`` -- 2D vector representing the site position, e.g. [0.0, 0.5]
         *   ``precision`` -- Precision used to determine (based on the coordinates) if the site is already
                              or not contained on the list of sites. Default: 0.01
@@ -426,7 +426,7 @@ class Lattice:
 
         *   ``other`` -- Lattice to append
         *   ``precision`` -- Precision used to determine (based on the coordinates) if the site is already
-                             or not contained on the list of sites. Default: 0.1
+            or not contained on the list of sites. Default: 0.1
         *   ``cell_vectors_precision`` -- Precision used to determine cell_vectors are the same or not. Default: 0.01
         """
         for i in range(len(self.cell_vectors)):

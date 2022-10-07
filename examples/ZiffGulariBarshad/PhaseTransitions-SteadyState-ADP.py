@@ -1,10 +1,3 @@
-# Execution time ~1.5h
-#
-# Questions for Mauro:
-# * How can I retrieve the calculated data points?
-# * How can I evaluate the Surrogate Model for a given new condition?
-# * Can we hide all temporary files generated during the training?
-
 import numpy
 import scm.plams
 import scm.pyzacros as pz
@@ -12,9 +5,10 @@ import scm.pyzacros.models
 import adaptiveDesignProcedure as adp
 import multiprocessing
 
+#-------------------------------------
+# Calculating the rates with pyZacros
+#-------------------------------------
 def getRate( conditions ):
-
-    zgb = pz.models.ZiffGulariBarshad()
 
     print("")
     print("  Requesting:")
@@ -25,6 +19,8 @@ def getRate( conditions ):
     #---------------------------------------
     # Zacros calculation
     #---------------------------------------
+    zgb = pz.models.ZiffGulariBarshad()
+
     z_sett = pz.Settings()
     z_sett.random_seed = 953129
     z_sett.temperature = 500.0
@@ -32,7 +28,8 @@ def getRate( conditions ):
     z_sett.species_numbers = ('time', 0.1)
     z_sett.max_time = 10.0
 
-    z_job = pz.ZacrosJob( settings=z_sett, lattice=zgb.lattice, mechanism=zgb.mechanism,
+    z_job = pz.ZacrosJob( settings=z_sett, lattice=zgb.lattice,
+                          mechanism=zgb.mechanism,
                           cluster_expansion=zgb.cluster_expansion )
 
     #---------------------------------------
@@ -44,20 +41,21 @@ def getRate( conditions ):
     ss_sett.turnover_frequency.ignore_nbatch = 5
     ss_sett.nreplicas = 4
 
-    ss_parameters = pz.ZacrosSteadyStateJob.Parameters()
-    ss_parameters.add( 'max_time', 'restart.max_time', 2*z_sett.max_time*( numpy.arange(100)+1 )**3 )
+    ss_params = pz.ZacrosSteadyStateJob.Parameters()
+    ss_params.add( 'max_time', 'restart.max_time',
+                   2*z_sett.max_time*( numpy.arange(100)+1 )**3 )
 
-    ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=z_job, parameters=ss_parameters )
+    ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=z_job,
+                                      parameters=ss_params )
 
     #---------------------------------------
     # Parameters scan calculation
     #---------------------------------------
-    ps_parameters = pz.ZacrosParametersScanJob.Parameters()
-    ps_parameters.add( 'x_CO', 'molar_fraction.CO', [ cond[0] for cond in conditions ] )
-    ps_parameters.add( 'x_O2', 'molar_fraction.O2', lambda params: 1.0-params['x_CO'] )
-    ps_parameters.set_generator( pz.ZacrosParametersScanJob.meshgridGenerator )
+    ps_params = pz.ZacrosParametersScanJob.Parameters()
+    ps_params.add( 'x_CO', 'molar_fraction.CO', [ cond[0] for cond in conditions ] )
+    ps_params.add( 'x_O2', 'molar_fraction.O2', lambda params: 1.0-params['x_CO'] )
 
-    ps_job = pz.ZacrosParametersScanJob( reference=ss_job, parameters=ps_parameters, name='mesh' )
+    ps_job = pz.ZacrosParametersScanJob( reference=ss_job, parameters=ps_params )
 
     results = ps_job.run()
 
@@ -79,33 +77,56 @@ scm.plams.config.default_jobrunner = scm.plams.JobRunner(parallel=True, maxjobs=
 scm.plams.config.job.runscript.nproc = 1
 print('Running up to {} jobs in parallel simultaneously'.format(maxjobs))
 
-# Forest parameters
-forestParams={
-        'Ntree'       : 200,
-        'tps'         : 1,
-        'fraction'    : 0.9,
-    }
+#-----------------
+# Surrogate model
+#-----------------
+input_var = ( { 'name'    : 'CO',
+                'min'     : 0.001,
+                'max'     : 0.999,
+                'num'     : 5,
+                'typevar' : 'lin' }, )
 
-# Algorithm paramters
-algorithmParams={
-        'dth'         : 0.2,     # thresold first derivative
-        'd2th'        : 0.8,     # thresold second derivative
-        'VIth'        : 0.10,    # thresold variable importance
-        'errTh'       : 1e-6,    # thresold for MRE error evaluation (remove from MRE calculation record below this value)
-        'OOBth'       : 0.07,    # termination criterium on OOBnorm
-        'RADth'       : 70,      # termination criterium on Relative Approximation Error (RAD) [%]
-        'maxTDSize'   : 200,     # maximum allowed size of the training data
-        'AbsOOBTh'    : 0.2,     # maximum variations between OOB for two different tabulation variables
-    }
+tab_var = ( { 'name'    : 'CO2',
+              'typevar' : 'lin' }, )
 
-# Independent and tabulated variables
-input_var = ( { 'name' : 'CO', 'min' : 0.001, 'max' : 0.999, 'num' : 5, 'typevar' : 'lin'}, )
-tabulation_var = ( {'name' : 'CO2', 'typevar' : 'lin'}, )
+outputDir = scm.pyzacros.workdir()+'/adp.results'
 
-# Initialize ADPforML class
-adpML = adp.adaptiveDesignProcedure( input_var, tabulation_var, 'ml_ExtraTrees.pkl', 'train.dat',
-                                        forestParams, algorithmParams, getRate, benchmark=False )
+adpML = adp.adaptiveDesignProcedure( input_var, tab_var, getRate,
+                                     algorithmParams={'OOBth':0.06,'RADth':40},
+                                     benchmark=False,
+                                     outputDir=outputDir,
+                                     randomSeed=10 )
 
 adpML.createTrainingDataAndML()
 
-scm.plams.finish()
+x_CO,TOF_CO2 = adpML.trainingData.T
+
+print( '----------------------------' )
+print( '%4s'%'cond', '%8s'%'x_CO', '%12s'%'TOF_CO2' )
+print( '----------------------------' )
+for i in range(len(x_CO)):
+    print( '%4d'%i, '%8.3f'%x_CO[i], '%12.6f'%TOF_CO2[i] )
+
+scm.pyzacros.finish()
+
+#---------------------------------------------
+# Plotting the results
+#---------------------------------------------
+try:
+    import matplotlib.pyplot as plt
+except ImportError as e:
+    print('Consider to install matplotlib to visualize the results!')
+    exit(0)
+
+fig = plt.figure()
+
+x_CO_model = numpy.linspace(0.0,1.0,200)
+TOF_CO2_model = adpML.predict( x_CO_model.reshape(-1,1) ).T[0]
+
+ax = plt.axes()
+ax.set_xlabel('Partial Pressure CO', fontsize=14)
+ax.set_ylabel('TOF (mol/s/site)', fontsize=14)
+ax.plot(x_CO_model, TOF_CO2_model, color='red', linestyle='-', lw=2, zorder=0)
+ax.plot(x_CO, TOF_CO2, marker='$\u25EF$', color='black', markersize=4, lw=0, zorder=1)
+
+plt.show()

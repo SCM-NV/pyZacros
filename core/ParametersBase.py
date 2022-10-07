@@ -50,6 +50,9 @@ class ParametersBase(dict):
     Creates a new ParametersBase object which is used to modify parameters in :ref:`Settings <settings>` objects.
 
     Example:
+
+    .. code-block:: python
+
         parameters = ParametersBase()
         parameters.add( 'x_CO', 'molar_fraction.CO', [0.40, 0.50] )
         parameters.add( 'x_O2', 'molar_fraction.O2', lambda params: 1.0-params['x_CO'] )

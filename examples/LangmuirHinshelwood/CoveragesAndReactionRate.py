@@ -6,11 +6,6 @@ import scm.plams
 import scm.pyzacros as pz
 import scm.pyzacros.models
 
-lh = pz.models.LangmuirHinshelwood()
-
-#---------------------------------------------
-# Calculation Settings
-#---------------------------------------------
 scm.pyzacros.init()
 
 # Run as many job simultaneously as there are cpu on the system
@@ -18,6 +13,11 @@ maxjobs = multiprocessing.cpu_count()
 scm.plams.config.default_jobrunner = scm.plams.JobRunner(parallel=True, maxjobs=maxjobs)
 scm.plams.config.job.runscript.nproc = 1
 print('Running up to {} jobs in parallel simultaneously'.format(maxjobs))
+
+#---------------------------------------
+# Zacros calculation
+#---------------------------------------
+lh = pz.models.LangmuirHinshelwood()
 
 dt = 1.0e-5
 z_sett = pz.Settings()
@@ -27,8 +27,13 @@ z_sett.pressure = 1.000
 z_sett.species_numbers = ('time', dt)
 z_sett.max_time = 100*dt
 
-z_job = pz.ZacrosJob( settings=z_sett, lattice=lh.lattice, mechanism=lh.mechanism, cluster_expansion=lh.cluster_expansion )
+z_job = pz.ZacrosJob( settings=z_sett, lattice=lh.lattice,
+                      mechanism=lh.mechanism,
+                      cluster_expansion=lh.cluster_expansion )
 
+#---------------------------------------
+# Steady-State calculation
+#---------------------------------------
 ss_sett = pz.Settings()
 ss_sett.turnover_frequency.nbatch = 20
 ss_sett.turnover_frequency.confidence = 0.98
@@ -39,28 +44,27 @@ ss_sett.scaling.partial_equilibrium_index_threshold = 0.1
 ss_sett.scaling.upper_bound = 100
 ss_sett.scaling.max_time = 10*dt
 
-ss_parameters = pz.ZacrosSteadyStateJob.Parameters()
-ss_parameters.add( 'max_time', 'restart.max_time', 2*z_sett.max_time*( numpy.arange(50)+1 )**2 )
+ss_params = pz.ZacrosSteadyStateJob.Parameters()
+ss_params.add( 'max_time', 'restart.max_time',
+                2*z_sett.max_time*( numpy.arange(50)+1 )**2 )
 
-ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=z_job, parameters=ss_parameters )
+ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=z_job,
+                                  parameters=ss_params )
 
-ps_parameters = pz.ZacrosParametersScanJob.Parameters()
-ps_parameters.add( 'x_CO', 'molar_fraction.CO', numpy.arange(0.0, 1.0+0.05, 0.05) )
-ps_parameters.add( 'x_O2', 'molar_fraction.O2', lambda params: 1.0-params['x_CO'] )
-ps_parameters.set_generator( pz.ZacrosParametersScanJob.meshgridGenerator )
+#---------------------------------------
+# Parameters scan calculation
+#---------------------------------------
+ps_params = pz.ZacrosParametersScanJob.Parameters()
+ps_params.add( 'x_CO', 'molar_fraction.CO', numpy.linspace(0.0, 1.0, 21) )
+ps_params.add( 'x_O2', 'molar_fraction.O2', lambda params: 1.0-params['x_CO'] )
 
-#---------------------------------------------
-# Running the calculations
-#---------------------------------------------
-
-ps_job = pz.ZacrosParametersScanJob( reference=ss_job, parameters=ps_parameters, name='mesh' )
+ps_job = pz.ZacrosParametersScanJob( reference=ss_job, parameters=ps_params )
 
 results = ps_job.run()
 
 #---------------------------------------------
 # Getting the results
 #---------------------------------------------
-
 if( results.job.ok() ):
     x_CO = []
     ac_O = []
@@ -82,4 +86,4 @@ if( results.job.ok() ):
     for i in range(len(x_CO)):
         print( '%4d'%i, '%8.2f'%x_CO[i], '%10.6f'%ac_O[i], '%10.6f'%ac_CO[i], '%12.6f'%TOF_CO2[i] )
 
-scm.plams.finish()
+scm.pyzacros.finish()

@@ -6,9 +6,9 @@ __all__ = ['Mechanism']
 
 class Mechanism( UserList ):
     """
-    Creates a new Mechanism object
+    Creates a new Mechanism object. If no argument is given, the constructor creates a new empty mechanism.
 
-    *   ``data`` --
+    *   ``data`` -- List of elementary reactions to initialize the mechanism.
     """
 
     def __init__( self, data=[] ):

@@ -10,7 +10,7 @@ The image below shows the currently available extended classes in pyZacros, in a
 of dependencies with the basic components; :ref:`Settings <settings>`,
 :ref:`ZacrosJob <zacrosjob>`, and :ref:`ZacrosResults <zacrosresults>`.
 
-.. image:: ../../images/architecture_adv.png
+.. figure:: ../../images/architecture_adv.png
    :align: center
 
 As in the equivalent figure of the basic components, these classes are represented in gray because they are

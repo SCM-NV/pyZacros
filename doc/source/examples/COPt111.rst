@@ -16,7 +16,7 @@ The example we show here is a toy model system for the adsorption and diffusion 
 
 This example shows how to conduct a Kinetic Monte-Carlo simulation of CO interacting with Pt(111) surface, starting from its atomic representation. To that aim, we use a 3x3 Pt(111) surface to avoid artificial lateral interactions between the CO and its periodic images. Here, it is essential to point out that both the adsorption-sites and the reaction mechanisms will be automatically obtained from the results of the AMS calculation and translated appropriately to Zacros. There is not any predefined knowledge about the system. The expected mechanisms are sketched in the following figure.
 
-.. image:: ../../images/CO+Pt111-sketch.png
+.. figure:: ../../images/CO+Pt111-sketch.png
    :scale: 60 %
    :align: center
 
@@ -148,7 +148,7 @@ From this output information, we can see that the calculation took less than a m
 
    $ amsmovie plams_workdir/pes_exploration/ams.rkf
 
-.. image:: ../../images/example_CO+Pt111-iel.png
+.. figure:: ../../images/example_CO+Pt111-iel.png
    :scale: 80 %
    :align: center
 
@@ -161,7 +161,7 @@ To visualize the binding sites you can use our tool amsinput as follows:
 
    $ amsinput plams_workdir/pes_exploration/ams.rkf
 
-.. image:: ../../images/example_CO+Pt111-ibs.png
+.. figure:: ../../images/example_CO+Pt111-ibs.png
    :scale: 60 %
    :align: center
 
@@ -207,7 +207,7 @@ Notice that the calculation took less than a minute (lines 1-4). To visualize th
    $ amsinput plams_workdir/binding_sites/ams.rkf
 
 
-.. image:: ../../images/example_CO+Pt111-bs.png
+.. figure:: ../../images/example_CO+Pt111-bs.png
    :scale: 60 %
    :align: center
 
@@ -220,7 +220,7 @@ Generating the pyZacros objects
 
 In the previous sections, we obtained the irreducible-symmetry energy landscape and the complete lattice of binding sites. These results have to be post-processed to generate the cluster expansion Hamiltonian, the reaction mechanism, and the KMC lattice in the pyZacros/Zacros scheme. pyZacros offers a way to do this through the class ``RKFLoader``. This class receives a Results object in the constructor and makes available the expected objects already translated into the pyZacros scheme, namely: mechanism, clusterExpansion, and lattice. The following figure is a schematic representation of reaction processes as defined in AMS and pyZacros, and how the RKFLoader class translates them from one to the other:
 
-.. image:: ../../images/example_CO+Pt111-rfkloader.png
+.. figure:: ../../images/example_CO+Pt111-rfkloader.png
    :align: center
 
 In this figure, red crosses represent the binding sites. A and B are the atoms attached to the binding sites (parent atoms), and R is the remainder of the adsorbed molecule. Remember that AMS currently only supports non-activated exothermic adsorption (X\ :sub:`gas` + * ⟷ X*) and surface reactions (X*+Y* ⟷ Z*) processes.
@@ -313,7 +313,7 @@ Please consult Zacros' user guide (``$AMSHOME/scripting/scm/pyzacros/doc/ZacrosM
 
 Finally, line 55 allows visualizing the lattice:
 
-.. image:: ../../images/example_CO+Pt111-lattice_base.png
+.. figure:: ../../images/example_CO+Pt111-lattice_base.png
    :scale: 60 %
    :align: center
 
@@ -328,7 +328,7 @@ Finally, using a larger lattice in the final KMC simulation is convenient for im
   loader_bs.lattice.set_repeat_cell( (10,10) )
   loader_bs.lattice.plot()
 
-.. image:: ../../images/example_CO+Pt111-lattice.png
+.. figure:: ../../images/example_CO+Pt111-lattice.png
    :scale: 60 %
    :align: center
 
@@ -391,13 +391,13 @@ The obtained results are the following:
 
 Firstly, the lattice states (line 78):
 
-.. image:: ../../images/example_CO+Pt111-ls.png
+.. figure:: ../../images/example_CO+Pt111-ls.png
    :scale: 60 %
    :align: center
 
 Secondly, the number of CO molecules absorbed as a function of time (line 79):
 
-.. image:: ../../images/example_CO+Pt111-mn.png
+.. figure:: ../../images/example_CO+Pt111-mn.png
    :scale: 60 %
    :align: center
 

@@ -132,4 +132,4 @@ API
 ~~~
 
 .. autoclass:: ZacrosJob
-    :exclude-members: _result_type, __init__, _get_ready, __str__, _ZacrosJob__recreate_energetics_input, _ZacrosJob__recreate_initial_state_input, _ZacrosJob__recreate_lattice_input, _ZacrosJob__recreate_mechanism_input, _ZacrosJob__recreate_simulation_input
+    :exclude-members: _result_type, __init__, _get_ready, __str__, __recreate_energetics_input, __recreate_initial_state_input, __recreate_lattice_input, __recreate_mechanism_input, __recreate_simulation_input

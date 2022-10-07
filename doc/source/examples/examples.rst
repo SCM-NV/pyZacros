@@ -32,6 +32,7 @@ experience before moving on to more complex configurations.
 
 .. csv-table::
    :header: |example_s1|, |example_s2|
+   :align: center
 
    "Water-gas shift reaction on Pt(111)", "Ziff-Gulari-Barshad model"
 
@@ -60,6 +61,7 @@ times and require access to higher computational resources.
 
 .. csv-table::
    :header: |example_i1|, |example_i2|
+   :align: center
 
    "Ziff-Gulari-Barshad model: |br| Phase Transitions |br|", "Ziff-Gulari-Barshad model: |br| Steady State Conditions"
 
@@ -80,6 +82,7 @@ times and require access to higher computational resources.
 
 .. csv-table::
    :header: |example_i3|, |example_i4|
+   :align: center
 
    "Ziff-Gulari-Barshad model: |br| Phase Transitions under Steady |br| State Conditions", "Langmuir-Hinshelwood model: |br| Acceleration by Automated |br| Rescaling of the Rate Constants |br|"
 
@@ -101,11 +104,12 @@ to Massively Parallel Processing (MPP) becomes recommended.
    :scale: 54 %
    :target: COPt111.html
 
-.. |example_a2| image:: ../../images/example_ZGB-PhaseTransitions.png
-   :scale: 32 %
+.. |example_a2| image:: ../../images/example_ZGB-PhaseTransitionsADP_0.05_10.png
+   :scale: 35 %
    :target: zgb_pts_sm.html
 
 .. csv-table::
    :header: |example_a1|, |example_a2|
+   :align: center
 
    "Poisoning of Pt(111) by CO: |br| From atomistic to mesoscopic |br| modeling", "Ziff-Gulari-Barshad model: |br| Phase Transitions and ML-based |br| Surrogate Model |br|"

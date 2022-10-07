@@ -14,8 +14,8 @@ Components overview
 This chapter contains a description of all components (classes) that can be used within pyZacros scripts.
 The image below shows all classes available in pyZacros.
 
-.. image:: ../../images/architecture.png
-   :scale: 60 %
+.. figure:: ../../images/architecture.png
+   :scale: 50 %
    :align: center
 
 The classes represented in gray boxes are extensions of PLAMS. Settings, ZacrosJob, and ZacrosResults are subclasses
@@ -45,7 +45,7 @@ link :download:`intro.py <../../../examples/intro/intro.py>`. In particular, we 
 using as a use case the following example, which is known as the
 `Ziff-Gulari-Barshad (ZGB) Model <https://zacros.org/tutorials/4-tutorial-1-ziff-gulari-barshad-model-in-zacros>`_:
 
-.. image:: ../../images/reaction_example.png
+.. figure:: ../../images/reaction_example.png
    :align: center
 
 The ZGB model includes:

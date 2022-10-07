@@ -274,8 +274,8 @@ The above results are the final aim of the calculation. However, one can take ad
 
 
 .. _figure_cov_tof_results:
-.. image:: ../../images/example_ZGB-PhaseTransitions.png
-   :scale: 60 %
+.. figure:: ../../images/example_ZGB-PhaseTransitions.png
+   :scale: 90 %
    :align: center
 
 This model assumes that when gas-phase molecules of CO and O\ :sub:`2` are adsorbed immediately on empty sites,

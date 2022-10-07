@@ -2,8 +2,8 @@
 
       <br>
 
-ZiffGulariBarshad Model
------------------------
+Ziff-Gulari-Barshad Model
+-------------------------
 
 The ZGB model includes the following elementary reactions:
 

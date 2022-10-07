@@ -288,6 +288,6 @@ If everything is working well, you should get the following information in the s
   [14.02|16:31:17] JOB plamsjob SUCCESSFUL
   [14.02|16:31:27] PLAMS run finished. Goodbye
 
-.. image:: ../../images/example_WaterGasShiftOnPt111.png
+.. figure:: ../../images/example_WaterGasShiftOnPt111.png
    :scale: 100 %
    :align: center

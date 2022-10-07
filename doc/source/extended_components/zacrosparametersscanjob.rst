@@ -62,7 +62,7 @@ API
 ~~~
 
 .. autoclass:: ZacrosParametersScanJob
-    :exclude-members: _result_type, __init__
+    :exclude-members: _result_type, __init__, Parameter, Parameters
 
 .. autoclass:: scm.pyzacros::ZacrosParametersScanJob.Parameter
     :exclude-members: __init__

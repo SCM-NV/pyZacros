@@ -5,6 +5,8 @@
 Ziff-Gulari-Barshad model: Steady State Conditions.
 ---------------------------------------------------
 
+
+
 .. code-block:: none
 
   [27.09|23:20:26] PLAMS working folder: /home/user/pyzacros/examples/ZiffGulariBarshad/plams_workdir
@@ -51,8 +53,8 @@ Ziff-Gulari-Barshad model: Steady State Conditions.
          7    0.60170             720         0.02183       True
   [27.09|23:20:43] PLAMS run finished. Goodbye
 
-.. image:: ../../images/example_ZGB-SS-nrep1.png
-   :scale: 80 %
+.. figure:: ../../images/example_ZGB-SS-nrep1.png
+   :scale: 90 %
    :align: center
 
 .. code-block:: none
@@ -155,6 +157,6 @@ Ziff-Gulari-Barshad model: Steady State Conditions.
          1    0.60795             120         0.01423       True
   [27.09|23:31:43] PLAMS run finished. Goodbye
 
-.. image:: ../../images/example_ZGB-SS-nrep4.png
-   :scale: 80 %
+.. figure:: ../../images/example_ZGB-SS-nrep4.png
+   :scale: 90 %
    :align: center

@@ -130,17 +130,19 @@ in next chapters of this documentation.
 By executing the above script, you are going to see a visual representation of the lattice (see script's line 17) that should
 be similar to the image below:
 
-.. image:: ../images/ZGB-lattice.png
-   :scale: 60 %
+.. figure:: ../images/ZGB-lattice.png
+   :scale: 80 %
    :align: center
 
 Then, you should see the plot of the number of molecules of each kind as a function of time during the simulation. We have split this information into two Figures for clarity, one for gas-phase species and the other one for surface species, as follows (see script's line 54-55):
 
-.. image:: ../images/ZGB-mol_gas_nums.png
-   :scale: 55 %
+.. figure:: ../images/ZGB-mol_gas_nums.png
+   :scale: 80 %
+   :align: center
 
-.. image:: ../images/ZGB-mol_surf_nums.png
-   :scale: 55 %
+.. figure:: ../images/ZGB-mol_surf_nums.png
+   :scale: 80 %
+   :align: center
 
 During the execution the following information is written to the standard output:
 

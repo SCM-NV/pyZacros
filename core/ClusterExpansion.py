@@ -34,7 +34,7 @@ class ClusterExpansion( UserList ):
         """
         Extend sequence by appending elements from the iterable
 
-        *   ``other`` --
+        *   ``other`` -- Iterable with the clusters to extend the cluster expansion.
         """
         for item in other:
             self.append( item )

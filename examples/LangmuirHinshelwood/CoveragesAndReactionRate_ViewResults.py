@@ -1,15 +1,15 @@
-import math
+import numpy
 import scm.plams
 import scm.pyzacros as pz
 import scm.pyzacros.models
 import matplotlib.pyplot as plt
 
-scm.plams.init()
+scm.pyzacros.init()
 
 #------------------------
 # Collecting the results
 #------------------------
-job = scm.plams.load( 'plams_workdir/mesh/mesh.dill' )
+job = scm.pyzacros.load( 'plams_workdir-ok/plamsjob/plamsjob.dill' )
 results = job.results
 
 x_CO = []
@@ -41,14 +41,16 @@ K_CO = lh.mechanism.find_one( 'CO_adsorption' ).pe_ratio
 K_O2 = lh.mechanism.find_one( 'O2_adsorption' ).pe_ratio
 k_oxi = lh.mechanism.find_one( 'CO_oxidation' ).pre_expon
 
+x_CO_model = numpy.linspace(0.0,1.0,201)
+
 ac_O_model = []
 ac_CO_model = []
 TOF_CO2_model = []
 
-for i in range(len(x_CO)):
-    x_O2 = 1 - x_CO[i]
-    ac_O_model.append( math.sqrt(K_O2*x_O2)/( 1 + K_CO*x_CO[i] + math.sqrt(K_O2*x_O2) ) )
-    ac_CO_model.append( K_CO*x_CO[i]/( 1 + K_CO*x_CO[i] + math.sqrt(K_O2*x_O2) ) )
+for i in range(len(x_CO_model)):
+    x_O2 = 1 - x_CO_model[i]
+    ac_O_model.append( numpy.sqrt(K_O2*x_O2)/( 1 + K_CO*x_CO_model[i] + numpy.sqrt(K_O2*x_O2) ) )
+    ac_CO_model.append( K_CO*x_CO_model[i]/( 1 + K_CO*x_CO_model[i] + numpy.sqrt(K_O2*x_O2) ) )
     TOF_CO2_model.append( 6*k_oxi*ac_CO_model[i]*ac_O_model[i] )
 
 #------------------------
@@ -59,19 +61,19 @@ fig = plt.figure()
 ax = plt.axes()
 ax.set_xlabel('Partial Pressure CO', fontsize=14)
 ax.set_ylabel('Coverage Fraction (%)', color='blue', fontsize=14)
-ax.plot(x_CO, ac_O_model, color='blue', linestyle='-.', lw=2, zorder=1)
+ax.plot(x_CO_model, ac_O_model, color='blue', linestyle='-.', lw=2, zorder=1)
 ax.plot(x_CO, ac_O, marker='$\u25CF$', color='blue', lw=0, markersize=4, zorder=2)
-ax.plot(x_CO, ac_CO_model, color='blue', linestyle='-', lw=2, zorder=3)
+ax.plot(x_CO_model, ac_CO_model, color='blue', linestyle='-', lw=2, zorder=3)
 ax.plot(x_CO, ac_CO, marker='$\u25EF$', color='blue', markersize=4, lw=0, zorder=4)
 plt.text(0.3, 0.60, 'O', fontsize=18, color='blue')
 plt.text(0.7, 0.45, 'CO', fontsize=18, color='blue')
 
 ax2 = ax.twinx()
 ax2.set_ylabel('TOF (mol/s/site)',color='red', fontsize=14)
-ax2.plot(x_CO, TOF_CO2_model, color='red', linestyle='-', lw=2, zorder=5)
+ax2.plot(x_CO_model, TOF_CO2_model, color='red', linestyle='-', lw=2, zorder=5)
 ax2.plot(x_CO, TOF_CO2, marker='$\u25EF$', color='red', markersize=4, lw=0, zorder=6)
 plt.text(0.3, 200.0, 'CO$_2$', fontsize=18, color='red')
 
 plt.show()
 
-scm.plams.finish()
+scm.pyzacros.finish()

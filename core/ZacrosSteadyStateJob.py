@@ -125,6 +125,34 @@ class ZacrosSteadyStateResults( scm.plams.Results ):
 class ZacrosSteadyStateJob( scm.plams.MultiJob ):
     """
     Create a new ZacrosSteadyStateJob object.
+
+    .. code-block:: python
+
+       settings.turnover_frequency.nbatch = 20
+       settings.turnover_frequency.confidence = 0.99
+       settings.turnover_frequency.ignore_nbatch = 1
+
+       settings.scaling.enabled = 'F'
+       settings.scaling.partial_equilibrium_index_threshold = 0.1
+       settings.scaling.upper_bound = 100
+       settings.scaling.max_steps = None
+       settings.scaling.max_time = None
+       settings.scaling.species_numbers = None
+       settings.scaling.nevents_per_timestep = None
+
+    * turnover_frequency:
+       * `nbatch` --
+       * `confidence` --
+       * `ignore_nbatch` --
+
+    * scaling:
+       * `enabled` --
+       * `partial_equilibrium_index_threshold` --
+       * `upper_bound` --
+       * `max_steps` --
+       * `max_time` --
+       * `species_numbers` --
+       * `scaling_nevents_per_timestep` --
     """
 
     _result_type = ZacrosSteadyStateResults
@@ -205,7 +233,12 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
         # Scaling pre-exponential terms parameters
         if 'scaling' in self.settings:
             self._scaling = self.settings.scaling.get('enabled', default=self._scaling)
-            if self._scaling == 'T' or self._scaling.upper() == 'TRUE' or self._scaling.upper() == 'Y' or self._scaling : self._scaling_status = 'requested'
+            if type(self._scaling) == str \
+                and ( self._scaling.upper() == 'T' or self._scaling.upper() == 'TRUE'
+                    or self._scaling.upper() == 'Y' or self._scaling.upper() == 'Yes' ):
+                        self._scaling_status = 'requested'
+            if type(self._scaling) == bool and self._scaling :
+                self._scaling_status = 'requested'
 
             self.scaling_partial_equilibrium_index_threshold = self.settings.scaling.get('partial_equilibrium_index_threshold', default=self.scaling_partial_equilibrium_index_threshold)
             self.scaling_upper_bound = self.settings.scaling.get('upper_bound', default=self.scaling_upper_bound)

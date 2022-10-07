@@ -34,7 +34,6 @@ job = pz.ZacrosJob( settings=sett, lattice=zgb.lattice, mechanism=zgb.mechanism,
 parameters = pz.ZacrosParametersScanJob.Parameters()
 parameters.add( 'x_CO', 'molar_fraction.CO', numpy.arange(0.2, 0.8, 0.01) )
 parameters.add( 'x_O2', 'molar_fraction.O2', lambda params: 1.0-params['x_CO'] )
-parameters.set_generator( pz.ZacrosParametersScanJob.meshgridGenerator )
 
 #---------------------------------------------
 # Running the calculations

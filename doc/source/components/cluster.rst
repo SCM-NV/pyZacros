@@ -87,7 +87,7 @@ API
 
 .. currentmodule:: scm.pyzacros.core.Cluster
 .. autoclass:: Cluster
-   :exclude-members: __init__, __len__, __eq__, __hash__, __str__, _Cluster__updateLabel, __weakref__
+   :exclude-members: __init__, __len__, __eq__, __hash__, __str__, __updateLabel, __weakref__
 
 
 .. currentmodule:: scm.pyzacros.core.ClusterExpansion

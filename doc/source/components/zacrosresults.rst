@@ -44,7 +44,7 @@ Notice the line corresponding to the number of CO\ :sub:`2` molecules produced d
 
    results.plot_molecule_numbers( results.gas_species_names() )
 
-.. image:: ../../images/mol_gas_nums.png
+.. figure:: ../../images/mol_gas_nums.png
    :scale: 100 %
    :align: center
 
@@ -52,7 +52,7 @@ Notice the line corresponding to the number of CO\ :sub:`2` molecules produced d
 
    results.plot_lattice_states( results.lattice_states() )
 
-.. image:: ../../images/lattice_state.gif
+.. figure:: ../../images/lattice_state.gif
    :scale: 100 %
    :align: center
 
@@ -61,7 +61,7 @@ Notice the line corresponding to the number of CO\ :sub:`2` molecules produced d
    pstat = results.get_process_statistics()
    results.plot_process_statistics( pstat, key="number_of_events" )
 
-.. image:: ../../images/number_of_events.gif
+.. figure:: ../../images/number_of_events.gif
    :scale: 80 %
    :align: center
 
@@ -70,5 +70,5 @@ API
 
 .. currentmodule:: scm.pyzacros.core.ZacrosResults
 .. autoclass:: ZacrosResults
-    :exclude-members: _ZacrosResults__plot_process_statistics
+    :exclude-members: __plot_process_statistics
 

@@ -38,7 +38,7 @@ def finish(otherJM=None):
 
 def load(filename):
     """Load previously saved job from ``.dill`` file. It internally calls the scm.plams.load() method."""
-    scm.plams.load( filename )
+    return scm.plams.load( filename )
 
 
 def load_all(path, jobmanager=None):
@@ -54,3 +54,8 @@ def delete_job(job):
 def log(message, level=0):
     """Log *message* with verbosity *level*. It internally calls the scm.plams.log() method."""
     scm.plams.load_all( message=message, level=level )
+
+
+def workdir():
+    """Equivalent to scm.plams.config.default_jobmanager.workdir."""
+    return scm.plams.config.default_jobmanager.workdir

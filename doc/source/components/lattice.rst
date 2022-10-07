@@ -33,7 +33,7 @@ The previous lines produce the following output:
 In addition to the capabilities of building lattices, pyZacros also offers a way to visualize them by calling
 the function ``plot()``. e.g., see line 7 of the script above. This line produces the following figure:
 
-.. image:: ../../images/lattice.png
+.. figure:: ../../images/lattice.png
    :scale: 100 %
    :align: center
 
@@ -42,4 +42,4 @@ API
 
 .. currentmodule:: scm.pyzacros.core.Lattice
 .. autoclass:: Lattice
-  :exclude-members: __init__, __str__, __weakref__, _Lattice__fromDefaultLattices, _Lattice__fromExplicitlyDefined, _Lattice__fromUnitCellDefined
+  :exclude-members: __init__, __str__, __weakref__, __fromDefaultLattices, __fromExplicitlyDefined, __fromUnitCellDefined
