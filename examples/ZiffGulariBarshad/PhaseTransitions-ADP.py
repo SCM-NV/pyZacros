@@ -33,29 +33,13 @@ def getRate( conditions ):
                           cluster_expansion=zgb.cluster_expansion )
 
     #---------------------------------------
-    # Steady-State calculation
-    #---------------------------------------
-    ss_sett = pz.Settings()
-    ss_sett.turnover_frequency.nbatch = 20
-    ss_sett.turnover_frequency.confidence = 0.96
-    ss_sett.turnover_frequency.ignore_nbatch = 5
-    ss_sett.nreplicas = 4
-
-    ss_params = pz.ZacrosSteadyStateJob.Parameters()
-    ss_params.add( 'max_time', 'restart.max_time',
-                   2*z_sett.max_time*( numpy.arange(100)+1 )**3 )
-
-    ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=z_job,
-                                      parameters=ss_params )
-
-    #---------------------------------------
     # Parameters scan calculation
     #---------------------------------------
     ps_params = pz.ZacrosParametersScanJob.Parameters()
     ps_params.add( 'x_CO', 'molar_fraction.CO', [ cond[0] for cond in conditions ] )
     ps_params.add( 'x_O2', 'molar_fraction.O2', lambda params: 1.0-params['x_CO'] )
 
-    ps_job = pz.ZacrosParametersScanJob( reference=ss_job, parameters=ps_params )
+    ps_job = pz.ZacrosParametersScanJob( reference=z_job, parameters=ps_params )
 
     results = ps_job.run()
 
@@ -92,7 +76,7 @@ tab_var = ( { 'name'    : 'CO2',
 outputDir = scm.pyzacros.workdir()+'/adp.results'
 
 adpML = adp.adaptiveDesignProcedure( input_var, tab_var, getRate,
-                                     algorithmParams={'OOBth':0.06,'RADth':40},
+                                     algorithmParams={'dth':0.05,'d2th':0.7},
                                      benchmark=False,
                                      outputDir=outputDir,
                                      randomState=10 )
@@ -120,7 +104,7 @@ except ImportError as e:
 
 fig = plt.figure()
 
-x_CO_model = numpy.linspace(0.0,1.0,200)
+x_CO_model = numpy.linspace(0.0,1.0,201)
 TOF_CO2_model = adpML.predict( x_CO_model.reshape(-1,1) ).T[0]
 
 ax = plt.axes()
