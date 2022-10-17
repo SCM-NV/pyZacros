@@ -1,7 +1,5 @@
 import scm.plams
-
 import scm.pyzacros as pz
-from pyzacros.utils.compareReports import compare
 
 
 def test_ZacrosResults():
