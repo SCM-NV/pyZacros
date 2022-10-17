@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 here = os.path.abspath(os.path.dirname(__file__))
 
-packages = ['pyzacros'] + ['pyzacros.'+i for i in find_packages('.')]
+packages = ['scm.pyzacros'] + ['scm.pyzacros.'+i for i in find_packages('.')]
 
 # To update the package version number, edit pyZacros/__version__.py
 version = {}
@@ -35,7 +35,7 @@ setup(
     author_email='aguirre@scm.com',
     url='https://github.com/SCM-NV/pyZacros',
     packages=packages,
-    package_dir = {'pyzacros': '.'},
+    package_dir = {'scm.pyzacros': '.'},
     package_data={'': extra_data_files},
     include_package_data=True,
     license="LGPLv3",
