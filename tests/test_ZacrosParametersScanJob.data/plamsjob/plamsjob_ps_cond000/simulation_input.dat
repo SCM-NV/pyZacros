@@ -7,10 +7,10 @@ species_numbers           on time       0.1
 max_time          10.0
 
 n_gas_species    3
-gas_specs_names              CO           O2          CO2
-gas_energies        0.00000e+00  0.00000e+00 -2.33700e+00
-gas_molec_weights   2.79949e+01  3.19898e+01  4.39898e+01
-gas_molar_fracs     2.00000e-01  8.00000e-01  0.00000e+00
+gas_specs_names                      CO                   O2                  CO2
+gas_energies           0.0000000000e+00     0.0000000000e+00    -2.3370000000e+00
+gas_molec_weights      2.7994900000e+01     3.1989800000e+01     4.3989800000e+01
+gas_molar_fracs        2.0000000000e-01     8.0000000000e-01     0.0000000000e+00
 
 n_surf_species    2
 surf_specs_names         CO*        O*

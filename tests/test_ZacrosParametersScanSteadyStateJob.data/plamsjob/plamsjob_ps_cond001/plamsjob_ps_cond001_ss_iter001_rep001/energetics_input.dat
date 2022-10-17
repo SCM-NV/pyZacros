@@ -1,6 +1,6 @@
 energetics
 
-cluster Empty
+cluster empty_point
   sites 1
   lattice_state
     & & &

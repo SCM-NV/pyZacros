@@ -1,17 +1,17 @@
-[11.08|11:29:06] Running PLAMS located in /home/aguirre/Develop/ams.trunk/scripting/scm/plams
-[11.08|11:29:06] Using Python 3.6.9 located in /home/aguirre/.scm/python/AMS2022.2.venv/bin/python
-[11.08|11:29:06] PLAMS defaults were loaded from /home/aguirre/Develop/ams.trunk/scripting/scm/plams/plams_defaults
-[11.08|11:29:06] PLAMS environment initialized
-[11.08|11:29:06] PLAMS working folder: /home/aguirre/Develop/pyzacros/test_ZacrosResults
-[11.08|11:29:06] JOB plamsjob STARTED
-[11.08|11:29:06] Starting plamsjob.prerun()
-[11.08|11:29:06] plamsjob.prerun() finished
-[11.08|11:29:06] JOB plamsjob RUNNING
-[11.08|11:29:06] Executing slurm.run
-[11.08|11:29:06] Execution of slurm.run finished with returncode 0
-[11.08|11:29:06] JOB plamsjob FINISHED
-[11.08|11:29:06] Starting plamsjob.postrun()
-[11.08|11:29:06] plamsjob.postrun() finished
-[11.08|11:29:06] JOB plamsjob SUCCESSFUL
-[11.08|11:29:42] PLAMS environment cleaned up successfully
-[11.08|11:29:42] PLAMS run finished. Goodbye
+[17.10|19:00:46] Running PLAMS located in /home/aguirre/.local/lib/python3.8/site-packages/scm/plams
+[17.10|19:00:46] Using Python 3.8.10 located in /usr/bin/python3
+[17.10|19:00:46] PLAMS defaults were loaded from /home/aguirre/Develop/ams.trunk/scripting/scm/plams/plams_defaults
+[17.10|19:00:46] PLAMS environment initialized
+[17.10|19:00:46] PLAMS working folder: /home/aguirre/Develop/pyzacros/test_ZacrosResults
+[17.10|19:00:46] JOB plamsjob STARTED
+[17.10|19:00:46] Starting plamsjob.prerun()
+[17.10|19:00:46] plamsjob.prerun() finished
+[17.10|19:00:46] JOB plamsjob RUNNING
+[17.10|19:00:46] Executing slurm.run
+[17.10|19:00:46] Execution of slurm.run finished with returncode 0
+[17.10|19:00:46] JOB plamsjob FINISHED
+[17.10|19:00:46] Starting plamsjob.postrun()
+[17.10|19:00:46] plamsjob.postrun() finished
+[17.10|19:00:46] JOB plamsjob SUCCESSFUL
+[17.10|19:01:15] PLAMS environment cleaned up successfully
+[17.10|19:01:15] PLAMS run finished. Goodbye

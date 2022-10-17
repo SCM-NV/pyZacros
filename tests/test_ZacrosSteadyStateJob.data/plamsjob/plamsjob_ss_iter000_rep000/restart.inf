@@ -2688,7 +2688,7 @@ CO_adsorption                                                   O2_adsorption   
         -1.3000000000000000E+000        -4.5999999999999996E+000         3.5999999999999996E+000
 Energetics setup information
          2         1         0         0         0
-CO*-0                                                           O*-0                                                            
+CO_point                                                        O_point                                                         
          1         1
          1         1
          1         2

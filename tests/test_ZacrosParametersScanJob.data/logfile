@@ -1,85 +1,85 @@
-[11.08|11:28:59] Running PLAMS located in /home/aguirre/Develop/ams.trunk/scripting/scm/plams
-[11.08|11:28:59] Using Python 3.6.9 located in /home/aguirre/.scm/python/AMS2022.2.venv/bin/python
-[11.08|11:28:59] PLAMS defaults were loaded from /home/aguirre/Develop/ams.trunk/scripting/scm/plams/plams_defaults
-[11.08|11:28:59] PLAMS environment initialized
-[11.08|11:28:59] PLAMS working folder: /home/aguirre/Develop/pyzacros/test_ZacrosParametersScanJob
-[11.08|11:28:59] JOB plamsjob STARTED
-[11.08|11:28:59] Starting plamsjob.prerun()
-[11.08|11:28:59] plamsjob.prerun() finished
-[11.08|11:28:59] JOB plamsjob RUNNING
-[11.08|11:28:59] JOB plamsjob/plamsjob_ps_cond000 STARTED
-[11.08|11:28:59] Starting plamsjob_ps_cond000.prerun()
-[11.08|11:28:59] plamsjob_ps_cond000.prerun() finished
-[11.08|11:28:59] JOB plamsjob/plamsjob_ps_cond000 RUNNING
-[11.08|11:28:59] Executing slurm.run
-[11.08|11:29:00] Execution of slurm.run finished with returncode 0
-[11.08|11:29:00] JOB plamsjob/plamsjob_ps_cond000 FINISHED
-[11.08|11:29:00] Starting plamsjob_ps_cond000.postrun()
-[11.08|11:29:00] plamsjob_ps_cond000.postrun() finished
-[11.08|11:29:00] JOB plamsjob/plamsjob_ps_cond000 SUCCESSFUL
-[11.08|11:29:00] JOB plamsjob/plamsjob_ps_cond001 STARTED
-[11.08|11:29:00] Starting plamsjob_ps_cond001.prerun()
-[11.08|11:29:00] plamsjob_ps_cond001.prerun() finished
-[11.08|11:29:00] JOB plamsjob/plamsjob_ps_cond001 RUNNING
-[11.08|11:29:00] Executing slurm.run
-[11.08|11:29:00] Execution of slurm.run finished with returncode 0
-[11.08|11:29:00] JOB plamsjob/plamsjob_ps_cond001 FINISHED
-[11.08|11:29:00] Starting plamsjob_ps_cond001.postrun()
-[11.08|11:29:00] plamsjob_ps_cond001.postrun() finished
-[11.08|11:29:00] JOB plamsjob/plamsjob_ps_cond001 SUCCESSFUL
-[11.08|11:29:00] JOB plamsjob/plamsjob_ps_cond002 STARTED
-[11.08|11:29:00] Starting plamsjob_ps_cond002.prerun()
-[11.08|11:29:00] plamsjob_ps_cond002.prerun() finished
-[11.08|11:29:00] JOB plamsjob/plamsjob_ps_cond002 RUNNING
-[11.08|11:29:00] Executing slurm.run
-[11.08|11:29:00] Execution of slurm.run finished with returncode 0
-[11.08|11:29:00] JOB plamsjob/plamsjob_ps_cond002 FINISHED
-[11.08|11:29:00] Starting plamsjob_ps_cond002.postrun()
-[11.08|11:29:00] plamsjob_ps_cond002.postrun() finished
-[11.08|11:29:01] JOB plamsjob/plamsjob_ps_cond002 SUCCESSFUL
-[11.08|11:29:01] JOB plamsjob/plamsjob_ps_cond003 STARTED
-[11.08|11:29:01] Starting plamsjob_ps_cond003.prerun()
-[11.08|11:29:01] plamsjob_ps_cond003.prerun() finished
-[11.08|11:29:01] JOB plamsjob/plamsjob_ps_cond003 RUNNING
-[11.08|11:29:01] Executing slurm.run
-[11.08|11:29:01] Execution of slurm.run finished with returncode 0
-[11.08|11:29:01] JOB plamsjob/plamsjob_ps_cond003 FINISHED
-[11.08|11:29:01] Starting plamsjob_ps_cond003.postrun()
-[11.08|11:29:01] plamsjob_ps_cond003.postrun() finished
-[11.08|11:29:02] JOB plamsjob/plamsjob_ps_cond003 SUCCESSFUL
-[11.08|11:29:02] JOB plamsjob/plamsjob_ps_cond004 STARTED
-[11.08|11:29:02] Starting plamsjob_ps_cond004.prerun()
-[11.08|11:29:02] plamsjob_ps_cond004.prerun() finished
-[11.08|11:29:02] JOB plamsjob/plamsjob_ps_cond004 RUNNING
-[11.08|11:29:02] Executing slurm.run
-[11.08|11:29:02] Execution of slurm.run finished with returncode 0
-[11.08|11:29:02] JOB plamsjob/plamsjob_ps_cond004 FINISHED
-[11.08|11:29:02] Starting plamsjob_ps_cond004.postrun()
-[11.08|11:29:02] plamsjob_ps_cond004.postrun() finished
-[11.08|11:29:02] JOB plamsjob/plamsjob_ps_cond004 SUCCESSFUL
-[11.08|11:29:02] JOB plamsjob/plamsjob_ps_cond005 STARTED
-[11.08|11:29:02] Starting plamsjob_ps_cond005.prerun()
-[11.08|11:29:02] plamsjob_ps_cond005.prerun() finished
-[11.08|11:29:02] JOB plamsjob/plamsjob_ps_cond005 RUNNING
-[11.08|11:29:02] Executing slurm.run
-[11.08|11:29:02] Execution of slurm.run finished with returncode 0
-[11.08|11:29:02] JOB plamsjob/plamsjob_ps_cond005 FINISHED
-[11.08|11:29:02] Starting plamsjob_ps_cond005.postrun()
-[11.08|11:29:02] plamsjob_ps_cond005.postrun() finished
-[11.08|11:29:02] JOB plamsjob/plamsjob_ps_cond005 SUCCESSFUL
-[11.08|11:29:02] JOB plamsjob/plamsjob_ps_cond006 STARTED
-[11.08|11:29:02] Starting plamsjob_ps_cond006.prerun()
-[11.08|11:29:02] plamsjob_ps_cond006.prerun() finished
-[11.08|11:29:02] JOB plamsjob/plamsjob_ps_cond006 RUNNING
-[11.08|11:29:02] Executing slurm.run
-[11.08|11:29:02] Execution of slurm.run finished with returncode 0
-[11.08|11:29:02] JOB plamsjob/plamsjob_ps_cond006 FINISHED
-[11.08|11:29:02] Starting plamsjob_ps_cond006.postrun()
-[11.08|11:29:02] plamsjob_ps_cond006.postrun() finished
-[11.08|11:29:03] JOB plamsjob/plamsjob_ps_cond006 SUCCESSFUL
-[11.08|11:29:03] JOB plamsjob FINISHED
-[11.08|11:29:03] Starting plamsjob.postrun()
-[11.08|11:29:03] plamsjob.postrun() finished
-[11.08|11:29:03] JOB plamsjob SUCCESSFUL
-[11.08|11:29:04] PLAMS environment cleaned up successfully
-[11.08|11:29:04] PLAMS run finished. Goodbye
+[17.10|18:57:55] Running PLAMS located in /home/aguirre/.local/lib/python3.8/site-packages/scm/plams
+[17.10|18:57:55] Using Python 3.8.10 located in /usr/bin/python3
+[17.10|18:57:55] PLAMS defaults were loaded from /home/aguirre/Develop/ams.trunk/scripting/scm/plams/plams_defaults
+[17.10|18:57:55] PLAMS environment initialized
+[17.10|18:57:55] PLAMS working folder: /home/aguirre/Develop/pyzacros/test_ZacrosParametersScanJob
+[17.10|18:57:55] JOB plamsjob STARTED
+[17.10|18:57:55] Starting plamsjob.prerun()
+[17.10|18:57:55] plamsjob.prerun() finished
+[17.10|18:57:55] JOB plamsjob RUNNING
+[17.10|18:57:55] JOB plamsjob/plamsjob_ps_cond000 STARTED
+[17.10|18:57:55] Starting plamsjob_ps_cond000.prerun()
+[17.10|18:57:55] plamsjob_ps_cond000.prerun() finished
+[17.10|18:57:55] JOB plamsjob/plamsjob_ps_cond000 RUNNING
+[17.10|18:57:55] Executing slurm.run
+[17.10|18:57:55] Execution of slurm.run finished with returncode 0
+[17.10|18:57:55] JOB plamsjob/plamsjob_ps_cond000 FINISHED
+[17.10|18:57:55] Starting plamsjob_ps_cond000.postrun()
+[17.10|18:57:55] plamsjob_ps_cond000.postrun() finished
+[17.10|18:57:55] JOB plamsjob/plamsjob_ps_cond000 SUCCESSFUL
+[17.10|18:57:55] JOB plamsjob/plamsjob_ps_cond001 STARTED
+[17.10|18:57:55] Starting plamsjob_ps_cond001.prerun()
+[17.10|18:57:55] plamsjob_ps_cond001.prerun() finished
+[17.10|18:57:55] JOB plamsjob/plamsjob_ps_cond001 RUNNING
+[17.10|18:57:55] Executing slurm.run
+[17.10|18:57:56] Execution of slurm.run finished with returncode 0
+[17.10|18:57:56] JOB plamsjob/plamsjob_ps_cond001 FINISHED
+[17.10|18:57:56] Starting plamsjob_ps_cond001.postrun()
+[17.10|18:57:56] plamsjob_ps_cond001.postrun() finished
+[17.10|18:57:56] JOB plamsjob/plamsjob_ps_cond001 SUCCESSFUL
+[17.10|18:57:56] JOB plamsjob/plamsjob_ps_cond002 STARTED
+[17.10|18:57:56] Starting plamsjob_ps_cond002.prerun()
+[17.10|18:57:56] plamsjob_ps_cond002.prerun() finished
+[17.10|18:57:56] JOB plamsjob/plamsjob_ps_cond002 RUNNING
+[17.10|18:57:56] Executing slurm.run
+[17.10|18:57:56] Execution of slurm.run finished with returncode 0
+[17.10|18:57:56] JOB plamsjob/plamsjob_ps_cond002 FINISHED
+[17.10|18:57:56] Starting plamsjob_ps_cond002.postrun()
+[17.10|18:57:56] plamsjob_ps_cond002.postrun() finished
+[17.10|18:57:56] JOB plamsjob/plamsjob_ps_cond002 SUCCESSFUL
+[17.10|18:57:56] JOB plamsjob/plamsjob_ps_cond003 STARTED
+[17.10|18:57:56] Starting plamsjob_ps_cond003.prerun()
+[17.10|18:57:56] plamsjob_ps_cond003.prerun() finished
+[17.10|18:57:56] JOB plamsjob/plamsjob_ps_cond003 RUNNING
+[17.10|18:57:56] Executing slurm.run
+[17.10|18:57:57] Execution of slurm.run finished with returncode 0
+[17.10|18:57:57] JOB plamsjob/plamsjob_ps_cond003 FINISHED
+[17.10|18:57:57] Starting plamsjob_ps_cond003.postrun()
+[17.10|18:57:57] plamsjob_ps_cond003.postrun() finished
+[17.10|18:57:57] JOB plamsjob/plamsjob_ps_cond003 SUCCESSFUL
+[17.10|18:57:57] JOB plamsjob/plamsjob_ps_cond004 STARTED
+[17.10|18:57:57] Starting plamsjob_ps_cond004.prerun()
+[17.10|18:57:57] plamsjob_ps_cond004.prerun() finished
+[17.10|18:57:57] JOB plamsjob/plamsjob_ps_cond004 RUNNING
+[17.10|18:57:57] Executing slurm.run
+[17.10|18:57:57] Execution of slurm.run finished with returncode 0
+[17.10|18:57:57] JOB plamsjob/plamsjob_ps_cond004 FINISHED
+[17.10|18:57:57] Starting plamsjob_ps_cond004.postrun()
+[17.10|18:57:57] plamsjob_ps_cond004.postrun() finished
+[17.10|18:57:57] JOB plamsjob/plamsjob_ps_cond004 SUCCESSFUL
+[17.10|18:57:57] JOB plamsjob/plamsjob_ps_cond005 STARTED
+[17.10|18:57:57] Starting plamsjob_ps_cond005.prerun()
+[17.10|18:57:57] plamsjob_ps_cond005.prerun() finished
+[17.10|18:57:57] JOB plamsjob/plamsjob_ps_cond005 RUNNING
+[17.10|18:57:57] Executing slurm.run
+[17.10|18:57:57] Execution of slurm.run finished with returncode 0
+[17.10|18:57:57] JOB plamsjob/plamsjob_ps_cond005 FINISHED
+[17.10|18:57:57] Starting plamsjob_ps_cond005.postrun()
+[17.10|18:57:57] plamsjob_ps_cond005.postrun() finished
+[17.10|18:57:57] JOB plamsjob/plamsjob_ps_cond005 SUCCESSFUL
+[17.10|18:57:57] JOB plamsjob/plamsjob_ps_cond006 STARTED
+[17.10|18:57:57] Starting plamsjob_ps_cond006.prerun()
+[17.10|18:57:57] plamsjob_ps_cond006.prerun() finished
+[17.10|18:57:57] JOB plamsjob/plamsjob_ps_cond006 RUNNING
+[17.10|18:57:57] Executing slurm.run
+[17.10|18:57:57] Execution of slurm.run finished with returncode 0
+[17.10|18:57:57] JOB plamsjob/plamsjob_ps_cond006 FINISHED
+[17.10|18:57:57] Starting plamsjob_ps_cond006.postrun()
+[17.10|18:57:57] plamsjob_ps_cond006.postrun() finished
+[17.10|18:57:57] JOB plamsjob/plamsjob_ps_cond006 SUCCESSFUL
+[17.10|18:57:57] JOB plamsjob FINISHED
+[17.10|18:57:57] Starting plamsjob.postrun()
+[17.10|18:57:57] plamsjob.postrun() finished
+[17.10|18:57:57] JOB plamsjob SUCCESSFUL
+[17.10|18:57:58] PLAMS environment cleaned up successfully
+[17.10|18:57:58] PLAMS run finished. Goodbye
