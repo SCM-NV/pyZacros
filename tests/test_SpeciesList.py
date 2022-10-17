@@ -1,5 +1,5 @@
-import pyzacros as pz
-import pyzacros.utils
+import scm.pyzacros as pz
+import scm.pyzacros.utils
 
 
 def test_SpeciesList():

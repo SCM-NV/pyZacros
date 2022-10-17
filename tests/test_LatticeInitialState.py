@@ -1,6 +1,6 @@
 import random
 
-import pyzacros as pz
+import scm.pyzacros as pz
 
 
 def test_InitialState():

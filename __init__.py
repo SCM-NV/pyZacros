@@ -43,7 +43,7 @@ def load(filename):
 
 def load_all(path, jobmanager=None):
     """Load all jobs from *path*. It internally calls the scm.plams.load_all() method."""
-    scm.plams.load_all( path=path, jobmanager=jobmanager )
+    return scm.plams.load_all( path=path, jobmanager=jobmanager )
 
 
 def delete_job(job):
