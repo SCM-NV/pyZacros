@@ -21,16 +21,16 @@ Simulation stopped:
 Performance facts:
 ~~~~~~~~~~~~~~~~~~
 
-Elapsed CPU time:         2.48989105 seconds
-Elapsed clock time:       2.52012563 seconds
-Setup clock time:         2.77643409E-02 seconds
-Simulation clock time:    2.49236131 seconds
+Elapsed CPU time:         2.51351595 seconds
+Elapsed clock time:       2.53903651 seconds
+Setup clock time:         2.51972377E-02 seconds
+Simulation clock time:    2.51383924 seconds
 
-Clock time per KMC event: 1.57807681E-05 seconds
-Clock time per KMC time:  180.008820 seconds/KMCTimeUnits
+Clock time per KMC event: 1.58991861E-05 seconds
+Clock time per KMC time:  181.359589 seconds/KMCTimeUnits
 
-Events per clock hour:    228125776
-KMC Dt per clock hour:    19.9990196 KMCTimeUnits
+Events per clock hour:    226426672
+KMC Dt per clock hour:    19.8500671 KMCTimeUnits
 
 Execution queue statistics:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
