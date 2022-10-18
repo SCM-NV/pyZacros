@@ -1,4 +1,4 @@
-import scm
+import scm.plams
 import scm.pyzacros as pz
 import scm.pyzacros.models
 

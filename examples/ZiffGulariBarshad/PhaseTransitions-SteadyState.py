@@ -1,7 +1,6 @@
 # Execution time ~5min
-
-import numpy
 import multiprocessing
+import numpy
 
 import scm.plams
 import scm.pyzacros as pz

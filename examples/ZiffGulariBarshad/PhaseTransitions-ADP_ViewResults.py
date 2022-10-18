@@ -1,7 +1,6 @@
-import matplotlib.pyplot as plt
-
 import numpy as np
 import adaptiveDesignProcedure as adp
+import matplotlib.pyplot as plt
 
 path = "plams_workdir/adp.results/ml_ExtraTrees_forCFD.pkl"
 

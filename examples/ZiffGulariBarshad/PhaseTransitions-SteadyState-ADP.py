@@ -1,9 +1,11 @@
+import multiprocessing
 import numpy
+
 import scm.plams
 import scm.pyzacros as pz
 import scm.pyzacros.models
+
 import adaptiveDesignProcedure as adp
-import multiprocessing
 
 #-------------------------------------
 # Calculating the rates with pyZacros

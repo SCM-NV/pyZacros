@@ -5,8 +5,9 @@ https://zacros.org/tutorials/4-tutorial-1-ziff-gulari-barshad-model-in-zacros
 # Execution time: aprox. 1 min with manual scaling (TOF_CO2 = 295.40334 +/- 3.33394; ratio=0.04000)
 # Execution time: aprox. 1.5 min with auto scaling (TOF_CO2 = 296.68140 +/- 3.59279; ratio=0.04000)
 """
-import numpy
 import multiprocessing
+import numpy
+
 import scm.plams
 import scm.pyzacros as pz
 import scm.pyzacros.models
@@ -16,7 +17,7 @@ lh = pz.models.LangmuirHinshelwood()
 #---------------------------------------------
 # Calculation Settings
 #---------------------------------------------
-scm.plams.init()
+scm.pyzacros.init()
 
 # Run as many job simultaneously as there are cpu on the system
 maxjobs = multiprocessing.cpu_count()
@@ -58,9 +59,11 @@ ss_sett.scaling.upper_bound = 100
 ss_sett.scaling.max_time = 10*dt
 ss_sett.scaling.species_numbers = ('time', dt)
 
-parameters = { 'max_time':pz.ZacrosSteadyStateJob.Parameter('restart.max_time', 2*z_sett.max_time*( numpy.arange(50)+1 )**2) }
+ss_params = pz.ZacrosSteadyStateJob.Parameters()
+ss_params.add( 'max_time', 'restart.max_time',
+                2*z_sett.max_time*( numpy.arange(50)+1 )**2 )
 
-cjob = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=job, generator_parameters=parameters, scaling=True )
+cjob = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=job, parameters=ss_params )
 
 results = cjob.run()
 
@@ -68,3 +71,5 @@ if cjob.ok():
    for i,step in enumerate(results.history()):
       print("%8d"%i, "%10.5f"%step['turnover_frequency']['CO2'], "%10.5f"%step['max_time'],
                "%10.5f"%step['turnover_frequency_error']['CO2'], "%15s"%step['converged']['CO2'])
+
+scm.pyzacros.finish()

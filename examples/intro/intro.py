@@ -1,4 +1,3 @@
-import scm.plams
 import scm.pyzacros as pz
 
 # Gas species
@@ -60,7 +59,7 @@ print(ist)
 
 ist.plot()
 
-scm.plams.init()
+scm.pyzacros.init()
 
 # Settings:
 sett = pz.Settings()
@@ -97,4 +96,4 @@ if( job.ok() ):
    pstat = results.get_process_statistics()
    results.plot_process_statistics( pstat, key="number_of_events" )
 
-scm.plams.finish()
+scm.pyzacros.finish()

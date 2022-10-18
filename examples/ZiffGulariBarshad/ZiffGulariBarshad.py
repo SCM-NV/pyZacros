@@ -2,7 +2,6 @@
 This example reproduces the Zacros example described in:
 https://zacros.org/tutorials/4-tutorial-1-ziff-gulari-barshad-model-in-zacros
 """
-
 import scm.plams
 import scm.pyzacros as pz
 
@@ -63,7 +62,7 @@ mechanism = [CO_adsorption, O2_adsorption, CO_oxidation]
 #---------------------------------------------
 # Calculation Settings
 #---------------------------------------------
-scm.plams.init()
+scm.pyzacros.init()
 
 # Settings:
 sett = pz.Settings()
@@ -88,4 +87,4 @@ results = job.run()
 if( job.ok() ):
    results.plot_lattice_states( results.lattice_states() )
 
-scm.plams.finish()
+scm.pyzacros.finish()

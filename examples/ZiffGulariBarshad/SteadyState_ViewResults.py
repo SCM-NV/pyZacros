@@ -1,10 +1,11 @@
 import scm.plams
 import scm.pyzacros as pz
+
 import matplotlib.pyplot as plt
 
-scm.plams.init()
+scm.pyzacros.init()
 
-job = scm.plams.load( "plams_workdir/plamsjob/plamsjob.dill" )
+job = scm.pyzacros.load( "plams_workdir/plamsjob/plamsjob.dill" )
 results = job.results
 
 print((8+10+15+15+10+ 5)*"-")
@@ -30,4 +31,4 @@ for i in range(results.niterations()):
 
 plt.show()
 
-scm.plams.finish()
+scm.pyzacros.finish()

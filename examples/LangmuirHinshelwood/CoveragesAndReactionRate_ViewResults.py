@@ -1,7 +1,9 @@
 import numpy
+
 import scm.plams
 import scm.pyzacros as pz
 import scm.pyzacros.models
+
 import matplotlib.pyplot as plt
 
 scm.pyzacros.init()

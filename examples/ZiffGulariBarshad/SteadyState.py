@@ -1,11 +1,12 @@
 import numpy
+
 import scm.plams
 import scm.pyzacros as pz
 import scm.pyzacros.models
 
 zgb = pz.models.ZiffGulariBarshad()
 
-scm.plams.init()
+scm.pyzacros.init()
 
 z_sett = pz.Settings()
 z_sett.molar_fraction.CO = 0.42
@@ -43,4 +44,4 @@ if ss_job.ok():
       print("%8d"%i, "%10.5f"%step['turnover_frequency']['CO2'], "%15d"%step['max_time'],
                "%15.5f"%step['turnover_frequency_error']['CO2'], "%10s"%(all(step['converged'].values())))
 
-scm.plams.finish()
+scm.pyzacros.finish()
