@@ -42,18 +42,18 @@ setup(
     zip_safe=False,
     keywords = ['molecular modeling', 'computational chemistry', 'workflow', 'python interface'],
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.8',
         'Topic :: Scientific/Engineering :: Chemistry',
         'Topic :: Scientific/Engineering :: Physics',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     install_requires=[
-        'pyaml', 'chemparse', 'scipy', 'numpy', 'networkx',
+        'chemparse', 'scipy', 'numpy', 'networkx',
         'plams@git+https://github.com/SCM-NV/PLAMS@master'],
     extras_require={
         'test': ['coverage', 'pytest>=3.9', 'pytest-cov'],
