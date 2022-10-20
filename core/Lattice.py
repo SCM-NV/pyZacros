@@ -2,7 +2,6 @@
 
 from os import path
 import math
-import yaml
 
 __all__ = ['Lattice']
 
@@ -329,52 +328,6 @@ class Lattice:
         self.site_coordinates = site_coordinates
         self.nearest_neighbors = nearest_neighbors
         self.cell_vectors = cell_vectors
-
-
-    #def __fromYAMLfile(self, path):
-        """
-        :parm path_to_slab_yaml: Path to .yml or .yaml kmc slab file.
-        """
-        #argument_dict = locals()
-        #i = None
-
-        #if path_to_slab_yaml is not None:
-            ## Read arguments from .yaml file:
-            #if not path.exists(path_to_slab_yaml):
-                #msg = "### ERROR ### Lattice class.\n"
-                #msg += "KMC slab file not found.\n"
-                #raise FileNotFoundError(msg)
-
-            #else:
-                #print("Constructing KMC slab from YAML file:\n",
-                      #path_to_slab_yaml)
-                ## Read .yaml dicctionary:
-                #yaml_dict = path_to_slab_yaml
-                #with open(yaml_dict, 'r') as f:
-                    #KMC_list = yaml.load(f, Loader=yaml.FullLoader)
-
-                ## Loop on the None defined arguments:
-                #for i in argument_dict.keys():
-                    #if i != 'default_lattice' and argument_dict[i] is None:
-                        #argument_dict[i] = KMC_list[i]
-                        #setattr(self, i, argument_dict[i])
-        #else:
-            ## Reading arguments from user defined object:
-            #del argument_dict['path_to_slab_yaml'] # we don't need it.
-            ## Rise errors when the object is defined by the user:
-            #if self.lattice_type == 'default_choice':
-                #if not self.default_lattice:
-                    #msg = "### ERROR ### Lattice.__init__.\n"
-                    #msg += "default_choice requires a default_lattice argument.\n"
-                    #raise NameError(msg)
-            #else:
-                #for i in argument_dict.keys():
-                    #if i != 'default_lattice' and argument_dict[i] is None:
-                        #msg = "### ERROR ### Lattice.__init__.\n"
-                        #msg += str(i) + " argument is missed.\n"
-                        #raise NameError(msg)
-
-        #raise Exception("Error: The constructor Lattice.__fromYAMLfile has not been implemented yet!")
 
 
     def add_site_type( self, site_type, coordinates, precision=0.01 ):
