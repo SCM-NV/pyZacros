@@ -45,12 +45,15 @@ def getRate( conditions ):
 
     results = ps_job.run()
 
-    tof = numpy.nan*numpy.empty((len(conditions),1))
+    tof = numpy.nan*numpy.empty((len(conditions),3))
     if( results.job.ok() ):
         results_dict = results.turnover_frequency()
+        results_dict = results.average_coverage( last=20, update=results_dict )
 
         for i in range(len(results_dict)):
-            tof[i,0] = results_dict[i]['turnover_frequency']['CO2']
+            tof[i,0] = results_dict[i]['average_coverage']['O*']
+            tof[i,1] = results_dict[i]['average_coverage']['CO*']
+            tof[i,2] = results_dict[i]['turnover_frequency']['CO2']
 
     return tof
 
@@ -72,8 +75,9 @@ input_var = ( { 'name'    : 'CO',
                 'num'     : 5,
                 'typevar' : 'lin' }, )
 
-tab_var = ( { 'name'    : 'CO2',
-              'typevar' : 'lin' }, )
+tab_var = ( {'name':'ac_O', 'typevar':'lin'},
+            {'name':'ac_CO', 'typevar':'lin'},
+            {'name':'TOF_CO2', 'typevar':'lin'} )
 
 outputDir = scm.pyzacros.workdir()+'/adp.results'
 
@@ -85,13 +89,13 @@ adpML = adp.adaptiveDesignProcedure( input_var, tab_var, getRate,
 
 adpML.createTrainingDataAndML()
 
-x_CO,TOF_CO2 = adpML.trainingData.T
+x_CO,ac_O,ac_CO,TOF_CO2 = adpML.trainingData.T
 
-print( '----------------------------' )
-print( '%4s'%'cond', '%8s'%'x_CO', '%12s'%'TOF_CO2' )
-print( '----------------------------' )
+print( "-------------------------------------------------" )
+print( "%4s"%"cond", " %8s"%"x_CO", " %10s"%"ac_O", "%10s"%"ac_CO", "%12s"%"TOF_CO2" )
+print( "-------------------------------------------------" )
 for i in range(len(x_CO)):
-    print( '%4d'%i, '%8.3f'%x_CO[i], '%12.6f'%TOF_CO2[i] )
+    print( "%4d"%i, "%8.3f"%x_CO[i], "%10.6f"%ac_O[i], "%10.6f"%ac_CO[i], "%12.6f"%TOF_CO2[i] )
 
 scm.pyzacros.finish()
 
@@ -107,12 +111,26 @@ except ImportError as e:
 fig = plt.figure()
 
 x_CO_model = numpy.linspace(0.0,1.0,201)
-TOF_CO2_model = adpML.predict( x_CO_model.reshape(-1,1) ).T[0]
+print("<<<<<<<<<<<<<<<<<<<<<<<<<<")
+print( adpML.predict( x_CO_model ) )
+print("<<<<<<<<<<<<<<<<<<<<<<<<<<")
+ac_O_model,ac_CO_model,TOF_CO2_model = adpML.predict( x_CO_model ).T
 
 ax = plt.axes()
 ax.set_xlabel('Partial Pressure CO', fontsize=14)
-ax.set_ylabel('TOF (mol/s/site)', fontsize=14)
+
+ax.set_ylabel("Coverage Fraction (%)", color="blue", fontsize=14)
+ax.plot(x_CO_model, ac_O_model, color="blue", linestyle="-.", lw=2, zorder=1)
+ax.plot(x_CO, ac_O, marker='$\u25EF$', color='blue', markersize=4, lw=0, zorder=1)
+ax.plot(x_CO_model, ac_CO_model, color="blue", linestyle="-", lw=2, zorder=2)
+ax.plot(x_CO, ac_CO, marker='$\u25EF$', color='blue', markersize=4, lw=0, zorder=1)
+plt.text(0.3, 0.9, 'O', fontsize=18, color="blue")
+plt.text(0.7, 0.9, 'CO', fontsize=18, color="blue")
+
+ax2 = ax.twinx()
+ax2.set_ylabel("TOF (mol/s/site)",color="red", fontsize=14)
 ax.plot(x_CO_model, TOF_CO2_model, color='red', linestyle='-', lw=2, zorder=0)
-ax.plot(x_CO, TOF_CO2, marker='$\u25EF$', color='black', markersize=4, lw=0, zorder=1)
+ax.plot(x_CO, TOF_CO2, marker='$\u25EF$', color='red', markersize=4, lw=0, zorder=1)
+plt.text(0.37, 1.5, 'CO$_2$', fontsize=18, color="red")
 
 plt.show()

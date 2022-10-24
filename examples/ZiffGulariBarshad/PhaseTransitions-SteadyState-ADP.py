@@ -94,8 +94,8 @@ tab_var = ( { 'name'    : 'CO2',
 outputDir = scm.pyzacros.workdir()+'/adp.results'
 
 adpML = adp.adaptiveDesignProcedure( input_var, tab_var, getRate,
-                                     algorithmParams={'OOBth':0.06,'RADth':40},
-                                     benchmark=False,
+                                     #algorithmParams={'dth':0.05,'d2th':0.25,'OOBth':0.02},
+                                     algorithmParams={'dth':0.05,'d2th':0.25},
                                      outputDir=outputDir,
                                      randomState=10 )
 
