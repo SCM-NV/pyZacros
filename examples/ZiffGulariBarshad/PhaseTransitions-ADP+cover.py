@@ -58,7 +58,7 @@ def getRate( conditions ):
     return tof
 
 
-scm.pyzacros.init()
+scm.pyzacros.init( folder="PhaseTransitions-ADP+cover" )
 
 # Run as many job simultaneously as there are cpu on the system
 maxjobs = multiprocessing.cpu_count()
@@ -70,20 +70,19 @@ print('Running up to {} jobs in parallel simultaneously'.format(maxjobs))
 # Surrogate model
 #-----------------
 input_var = ( { 'name'    : 'CO',
-                'min'     : 0.001,
-                'max'     : 0.999,
+                'min'     : 0.2,
+                'max'     : 0.8,
                 'num'     : 5,
                 'typevar' : 'lin' }, )
 
-tab_var = ( {'name':'ac_O', 'typevar':'lin'},
-            {'name':'ac_CO', 'typevar':'lin'},
+tab_var = ( {'name':   'ac_O', 'typevar':'lin'},
+            {'name':  'ac_CO', 'typevar':'lin'},
             {'name':'TOF_CO2', 'typevar':'lin'} )
 
 outputDir = scm.pyzacros.workdir()+'/adp.results'
 
 adpML = adp.adaptiveDesignProcedure( input_var, tab_var, getRate,
-                                     algorithmParams={'dth':0.05,'d2th':0.25,'OOBth':0.02},
-                                     #algorithmParams={'dth':0.05,'d2th':0.7},
+                                     algorithmParams={'dth':0.01,'d2th':0.10}, # Quality Very Good
                                      outputDir=outputDir,
                                      randomState=10 )
 
@@ -110,10 +109,7 @@ except ImportError as e:
 
 fig = plt.figure()
 
-x_CO_model = numpy.linspace(0.0,1.0,201)
-print("<<<<<<<<<<<<<<<<<<<<<<<<<<")
-print( adpML.predict( x_CO_model ) )
-print("<<<<<<<<<<<<<<<<<<<<<<<<<<")
+x_CO_model = numpy.linspace(0.2,0.8,201)
 ac_O_model,ac_CO_model,TOF_CO2_model = adpML.predict( x_CO_model ).T
 
 ax = plt.axes()
@@ -129,8 +125,8 @@ plt.text(0.7, 0.9, 'CO', fontsize=18, color="blue")
 
 ax2 = ax.twinx()
 ax2.set_ylabel("TOF (mol/s/site)",color="red", fontsize=14)
-ax.plot(x_CO_model, TOF_CO2_model, color='red', linestyle='-', lw=2, zorder=0)
-ax.plot(x_CO, TOF_CO2, marker='$\u25EF$', color='red', markersize=4, lw=0, zorder=1)
+ax2.plot(x_CO_model, TOF_CO2_model, color='red', linestyle='-', lw=2, zorder=0)
+ax2.plot(x_CO, TOF_CO2, marker='$\u25EF$', color='red', markersize=4, lw=0, zorder=1)
 plt.text(0.37, 1.5, 'CO$_2$', fontsize=18, color="red")
 
 plt.show()

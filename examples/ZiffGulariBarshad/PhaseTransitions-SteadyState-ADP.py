@@ -71,7 +71,7 @@ def getRate( conditions ):
     return tof
 
 
-scm.pyzacros.init()
+scm.pyzacros.init( folder="PhaseTransitions-SteadyState-ADP" )
 
 # Run as many job simultaneously as there are cpu on the system
 maxjobs = multiprocessing.cpu_count()
@@ -83,9 +83,9 @@ print('Running up to {} jobs in parallel simultaneously'.format(maxjobs))
 # Surrogate model
 #-----------------
 input_var = ( { 'name'    : 'CO',
-                'min'     : 0.001,
-                'max'     : 0.999,
-                'num'     : 5,
+                'min'     :  0.2,
+                'max'     :  0.8,
+                'num'     :    5,
                 'typevar' : 'lin' }, )
 
 tab_var = ( { 'name'    : 'CO2',
@@ -95,7 +95,8 @@ outputDir = scm.pyzacros.workdir()+'/adp.results'
 
 adpML = adp.adaptiveDesignProcedure( input_var, tab_var, getRate,
                                      #algorithmParams={'dth':0.05,'d2th':0.25,'OOBth':0.02},
-                                     algorithmParams={'dth':0.05,'d2th':0.25},
+                                     #algorithmParams={'dth':0.05,'d2th':0.25}, # Quality Good
+                                     algorithmParams={'dth':0.01,'d2th':0.10}, # Quality Very Good
                                      outputDir=outputDir,
                                      randomState=10 )
 
@@ -122,8 +123,8 @@ except ImportError as e:
 
 fig = plt.figure()
 
-x_CO_model = numpy.linspace(0.0,1.0,200)
-TOF_CO2_model = adpML.predict( x_CO_model.reshape(-1,1) ).T[0]
+x_CO_model = numpy.linspace(0.2,0.8,201)
+TOF_CO2_model, = adpML.predict( x_CO_model ).T
 
 ax = plt.axes()
 ax.set_xlabel('Partial Pressure CO', fontsize=14)
