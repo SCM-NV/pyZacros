@@ -2,21 +2,15 @@ Constraints
   FixedRegion surface
 End
 
-GeometryOptimization
-  InitialHessian
-    Type Calculate
-  End
-End
-
 PESExploration
   BindingSites
-    Calculate T
     DistanceDifference 0.5
-    NeighborCutoff 3.8
+    NeighborCutoff 2.4
+    NeighborCutoffForLabels 10.0
   End
-  CalculateFragments T
+  CalculateFragments F
   DynamicSeedStates T
-  Job LandscapeRefinement
+  Job BindingSites
   LoadEnergyLandscape
     GenerateSymmetryImages T
     Path ../O_ads-Pt111
@@ -29,9 +23,6 @@ PESExploration
   RandomSeed 100
   SaddleSearch
     MaxEnergy 4.0
-    MinEnergyBarrier 0.02
-    RelaxFromSaddlePoint T
-    ZeroModeAbortCurvature 0.0001
   End
   StatesAlignment
     ReferenceRegion surface
@@ -40,12 +31,8 @@ PESExploration
     CheckSymmetry F
     DistanceDifference 0.2
     EnergyDifference 0.05
-    NeighborCutoff 2.4
+    NeighborCutoff 3.8
   End
-End
-
-PESPointCharacter
-  NegativeEigenvalueTolerance -0.001
 End
 
 Task PESExploration

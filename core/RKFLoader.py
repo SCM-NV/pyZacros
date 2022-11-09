@@ -360,7 +360,7 @@ class RKFLoader:
 
                 G2 = G1.subgraph( path )
                 G2_nodes = list(G2.nodes())
-                G2_edges = [ [G2_nodes.index(pair[0]),G2_nodes.index(pair[1])] for pair in G2.edges() ]
+                G2_edges = [ sorted([G2_nodes.index(pair[0]),G2_nodes.index(pair[1])]) for pair in G2.edges() ]
 
                 for bs in G2.nodes():
                     old_id = G1_nodes.index(bs)
@@ -438,7 +438,7 @@ class RKFLoader:
                 # Filters the connection specifically for this TS
                 G1 = getLatticeRxnSubgraph( state2BindingSites[idReactant], state2BindingSites[idProduct] )
                 G1_nodes = sorted(list(G1.nodes()))
-                G1_edges = [ [G1_nodes.index(pair[0]),G1_nodes.index(pair[1])] for pair in G1.edges() ]
+                G1_edges = [ sorted([G1_nodes.index(pair[0]),G1_nodes.index(pair[1])]) for pair in G1.edges() ]
                 G1_shortest_paths = dict(nx.all_pairs_shortest_path(G1))
 
                 site_types = [ labels[j] for j in G1_nodes ]
