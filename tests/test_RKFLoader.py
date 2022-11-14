@@ -35,8 +35,7 @@ def generateAMSResults():
     sett_lat.input.ams.PESExploration.LoadEnergyLandscape.GenerateSymmetryImages = 'T'
     sett_lat.input.ams.PESExploration.CalculateFragments = 'F'
     sett_lat.input.ams.PESExploration.BindingSites.NeighborCutoff = 2.4
-    sett_lat.input.ams.PESExploration.BindingSites.NeighborCutoffForLabels = 10.0
-    sett_lat.input.ams.PESExploration.BindingSites.DistanceDifference = 0.5
+    sett_lat.input.ams.PESExploration.BindingSites.MaxCoordinationShellsForLabels = 3
     sett_lat.input.ams.PESExploration.StructureComparison.CheckSymmetry = 'F'
 
     molO = scm.plams.Molecule( "tests/O-Pt111.xyz" )
@@ -88,7 +87,7 @@ def test_RKFLoader():
     loaderCO = pz.RKFLoader( resultsCO )
 
     loader = pz.RKFLoader.merge( [loaderO, loaderCO] )
-    loader.replace_site_types( ['N3333', 'N3334', 'N2222'], ['fcc', 'hcp', 'br'] )
+    loader.replace_site_types( ['N333', 'N313', 'N232'], ['fcc', 'hcp', 'br'] )
 
     output  = str( loader.clusterExpansion )+"\n\n"
     output += str( loader.mechanism )+"\n\n"

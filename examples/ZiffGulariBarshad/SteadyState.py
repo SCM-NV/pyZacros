@@ -4,9 +4,9 @@ import scm.plams
 import scm.pyzacros as pz
 import scm.pyzacros.models
 
-zgb = pz.models.ZiffGulariBarshad()
+scm.pyzacros.init( folder='SteadyState' )
 
-scm.pyzacros.init()
+zgb = pz.models.ZiffGulariBarshad()
 
 z_sett = pz.Settings()
 z_sett.molar_fraction.CO = 0.42
