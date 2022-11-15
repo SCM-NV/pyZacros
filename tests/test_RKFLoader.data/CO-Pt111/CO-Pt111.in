@@ -4,9 +4,7 @@ End
 
 PESExploration
   BindingSites
-    DistanceDifference 0.5
-    NeighborCutoff 2.4
-    NeighborCutoffForLabels 10.0
+    MaxCoordinationShellsForLabels 3
   End
   CalculateFragments F
   DynamicSeedStates T
@@ -29,7 +27,7 @@ PESExploration
   End
   StructureComparison
     CheckSymmetry F
-    DistanceDifference 0.2
+    DistanceDifference 0.1
     EnergyDifference 0.05
     NeighborCutoff 3.8
   End
