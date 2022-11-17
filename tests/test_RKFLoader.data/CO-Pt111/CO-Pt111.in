@@ -5,6 +5,7 @@ End
 PESExploration
   BindingSites
     MaxCoordinationShellsForLabels 3
+    NeighborCutoff 2.4
   End
   CalculateFragments F
   DynamicSeedStates T

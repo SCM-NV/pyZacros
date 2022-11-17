@@ -44,20 +44,20 @@ Floating license: not using directory
  Licensed to: Dr. Nestor Aguirre Castiblanco  / SCM / Amsterdam / NETHERLANDS 2022-01-24 09:33:25
  SCM User ID: u22021
   
- AMS 2022.204  RunTime: Nov15-2022 09:40:59  ShM Nodes: 1  Procs: 4
+ AMS 2022.204  RunTime: Nov17-2022 12:29:14  ShM Nodes: 1  Procs: 4
 
  AMS jobname: O-Pt111
- AMS jobid  : 721670399
+ AMS jobid  : 582308112
 
  Start   directory: /home/aguirre/Develop/pyzacros/test_RKFLoader/O-Pt111/
  Results directory: /home/aguirre/Develop/pyzacros/test_RKFLoader/O-Pt111/
- Scratch directory: /scratch/aguirre/amstmp_O-Pt111_kid0.721670399/
+ Scratch directory: /scratch/aguirre/amstmp_O-Pt111_kid0.582308112/
 
 
- Communication costs MPI_COMM_WORLD:      0.268 usec per message,   0.0037 usec per 8-byte item
- Communication costs for intra-node:      0.263 usec per message,   0.0037 usec per 8-byte item
+ Communication costs MPI_COMM_WORLD:      0.291 usec per message,   0.0056 usec per 8-byte item
+ Communication costs for intra-node:      0.351 usec per message,   0.0053 usec per 8-byte item
 
- RNG seed: -565017674 2078001844 1602889471 -509529582 1391885774 -840070873 491318454 1755639922
+ RNG seed: 381745968 -38723650 -477416676 -1742504270 -234555022 1285881105 -1893186545 -2113509546
  MPI rank    0: Number of processors available to this process:      2
  MPI rank    0: Default max number of OpenMP threads:                2
  MPI rank    0: The OMP_NUM_THREADS environment variable is not set!
@@ -825,7 +825,7 @@ GenerateSymmetryImages                               F
    Calculate                                         T
    ReferenceRegion                             surface
    DistanceDifference                          0.10000
-   NeighborCutoff                              3.80000
+   NeighborCutoff                              2.40000
    MaxCoordinationShellsForLabels                    3
 
 --------
@@ -3116,6 +3116,6 @@ Labels details:
 
 AMS application finished. Exiting.
 NORMAL TERMINATION
-     Total cpu time:       0.78
-  Total system time:       0.06
- Total elapsed time:       0.86
+     Total cpu time:       0.95
+  Total system time:       0.07
+ Total elapsed time:       1.06
