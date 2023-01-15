@@ -8,10 +8,7 @@
 #    heterogeneous catalysis: application to the CO oxidation at RuO2(110)
 #    Phys. Rev. B – Condens. Matter Mater. Phys. 73 (2006) 1–17
 
-try:
-    import pyzacros as pz
-except:
-    import scm.pyzacros as pz
+import scm.pyzacros as pz
 
 class ReuterScheffler:
 

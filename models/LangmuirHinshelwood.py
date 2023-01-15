@@ -1,9 +1,6 @@
 # Taken from: https://zacros.org/tutorials/12-about-kinetic-monte-carlo?showall=1
 
-try:
-    import pyzacros as pz
-except:
-    import scm.pyzacros as pz
+import scm.pyzacros as pz
 
 class LangmuirHinshelwood:
 

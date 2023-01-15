@@ -1,9 +1,6 @@
 # Taken from: https://zacros.org/tutorials/4-tutorial-1-ziff-gulari-barshad-model-in-zacros?showall=1
 
-try:
-    import pyzacros as pz
-except:
-    import scm.pyzacros as pz
+import scm.pyzacros as pz
 
 class ZiffGulariBarshad:
 
