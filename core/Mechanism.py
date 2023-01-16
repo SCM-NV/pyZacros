@@ -1,6 +1,7 @@
 from collections import UserList
 
 from .SpeciesList import *
+from .ElementaryReaction import *
 
 __all__ = ['Mechanism']
 
@@ -11,8 +12,14 @@ class Mechanism( UserList ):
     *   ``data`` -- List of elementary reactions to initialize the mechanism.
     """
 
-    def __init__( self, data=[] ):
+    def __init__( self, data=[], fileName=None, gas_species=None, surface_species=None ):
         super(Mechanism, self).__init__( data )
+
+        if fileName is not None:
+            if gas_species is not None and surface_species is not None:
+                self.__fromZacrosFile( fileName, gas_species, surface_species )
+            else:
+                raise Exception( "Error: Parameters gas_species and surface_species are requiered to load the Mechanism from a zacros input file" )
 
         # Duplicates are automatically removed.
         copy = self.data
@@ -21,6 +28,195 @@ class Mechanism( UserList ):
         for er in copy:
             if( er not in self.data ):
                 self.data.append( er )
+
+
+    def __fromZacrosFile(self, fileName, gas_species, surface_species):
+        """
+        Creates a Mechanism from a Zacros input file mechanism_input.dat
+        """
+        with open( fileName, "r" ) as inp:
+            file_content = inp.readlines()
+        file_content = [line.split("#")[0] for line in file_content if line.split("#")[0].strip()] # Removes empty lines and comments
+
+        nline = 0
+        while( nline < len(file_content) ):
+            tokens = file_content[nline].split()
+
+            if( tokens[0].lower() == "reversible_step" or tokens[0].lower() == "step" ):
+                parameters = {}
+
+                if( len(tokens) < 2 ):
+                    raise Exception( "Error: Format inconsistent in section reversible_step/step. Label not found!" )
+
+                parameters["label"] = tokens[1]
+
+                if( tokens[0].lower() == "reversible_step" ):
+                    parameters["reversible"] = True
+                elif( tokens[0].lower() == "step" ):
+                    parameters["reversible"] = False
+
+                nline += 1
+
+                while( nline < len(file_content) ):
+                    tokens = file_content[nline].split()
+
+                    if( tokens[0] == "end_reversible_step" or tokens[0] == "end_step" ):
+                        break
+
+                    def process_gas_reacs_prods( sv ):
+                        output = []
+                        for i in range(len(sv)-1):
+                            output.append( (sv[i],int(sv[i+1])) )
+                        return output
+
+                    def process_neighboring( sv ):
+                        output = []
+                        for pair in sv:
+                            a,b = pair.split("-")
+                            output.append( (int(a)-1,int(b)-1) )
+                        return output
+
+                    def process_site_types( sv ):
+                        output = []
+                        for i in range(len(sv)):
+                            if( sv[i].isdigit() ):
+                              output.append( int(sv[i])-1 )
+                            else:
+                              output.append( sv[i] )
+                        return output
+
+                    cases = {
+                        "gas_reacs_prods" : lambda sv: parameters.setdefault("gas_reacs_prods", process_gas_reacs_prods(sv) ),
+                        "sites" : lambda sv: parameters.setdefault("sites", int(sv[0])),
+                        "neighboring" : lambda sv: parameters.setdefault("neighboring", process_neighboring(sv)),
+                        "site_types" : lambda sv: parameters.setdefault("site_types", process_site_types(sv)),
+                        "pre_expon" : lambda sv: parameters.setdefault("pre_expon", float(sv[0])),
+                        "pe_ratio" : lambda sv: parameters.setdefault("pe_ratio", float(sv[0])),
+                        "activ_eng" : lambda sv: parameters.setdefault("activation_energy", float(sv[0])),
+                        "prox_factor" : lambda sv: parameters.setdefault("prox_factor", float(sv[0])),
+                    }
+                    cases.get( tokens[0], lambda sv: None )( tokens[1:] )
+
+                    if( tokens[0] == "initial" ):
+                        parameters["initial"] = []
+
+                        site_identate = {}
+
+                        isites = 0
+                        while( nline < len(file_content) ):
+                            nline += 1
+                            tokens = file_content[nline].split()
+
+                            if( isites == parameters["sites"] ):
+                                break
+
+                            if( len(tokens) < 3 ):
+                                raise Exception( "Error: Format inconsistent in section reversible_step/step!" )
+
+                            if( tokens[0]+tokens[1]+tokens[2] != "&&&" ):
+                                entity_number = int(tokens[0])
+                                species_name = tokens[1]
+                                dentate_number = int(tokens[2])
+
+                                loc_id = None
+                                for i,sp in enumerate(surface_species):
+                                    if( entity_number not in site_identate ):
+                                        site_identate[ entity_number ] = 0
+
+                                    #TODO Find a way to check consistency of dentate_number
+
+                                    if( sp.symbol == species_name and site_identate[ entity_number ]+1 == dentate_number ):
+                                        site_identate[ entity_number ] = site_identate[ entity_number ] + 1
+                                        loc_id = i
+                                        break
+
+                                if( loc_id is None ):
+                                    raise Exception( "Error: Species "+species_name+" not found! See mechanism initial: "+parameters["label"] )
+
+                                parameters["initial"].append( surface_species[loc_id] )
+
+                            isites += 1
+
+                        if( "gas_reacs_prods" in parameters ):
+                            for spn,k in parameters["gas_reacs_prods"]:
+                                if( k == -1 ):
+
+                                    loc_id = None
+                                    for i,sp in enumerate(gas_species):
+                                        if( spn == sp.symbol ):
+                                            loc_id = i
+                                            break
+
+                                    if( loc_id is None ):
+                                        raise Exception( "Error: Gas species "+species_name+" not found!" )
+
+                                    parameters["initial"].append( gas_species[loc_id] )
+
+                    if( tokens[0] == "final" ):
+                        parameters["final"] = []
+
+                        site_identate = {}
+
+                        isites = 0
+                        while( nline < len(file_content) ):
+                            nline += 1
+                            tokens = file_content[nline].split()
+
+                            if( isites == parameters["sites"] ):
+                                break
+
+                            if( len(tokens) < 3 ):
+                                raise Exception( "Error: Format inconsistent in section lattice_state!" )
+
+                            if( tokens[0]+tokens[1]+tokens[2] != "&&&" ):
+                                entity_number = int(tokens[0])
+                                species_name = tokens[1]
+                                dentate_number = int(tokens[2])
+
+                                loc_id = None
+                                for i,sp in enumerate(surface_species):
+                                    if( entity_number not in site_identate ):
+                                        site_identate[ entity_number ] = 0
+
+                                    #TODO Find a way to check consistency of dentate_number
+
+                                    if( sp.symbol == species_name and site_identate[ entity_number ]+1 == dentate_number ):
+                                        site_identate[ entity_number ] = site_identate[ entity_number ] + 1
+                                        loc_id = i
+                                        break
+
+                                if( loc_id is None ):
+                                    raise Exception( "Error: Species "+species_name+" not found! See mechanism final: "+parameters["label"] )
+
+                                parameters["final"].append( surface_species[loc_id] )
+
+                            isites += 1
+
+                        if( "gas_reacs_prods" in parameters ):
+                            for spn,k in parameters["gas_reacs_prods"]:
+                                if( k == 1 ):
+
+                                    loc_id = None
+                                    for i,sp in enumerate(gas_species):
+                                        if( spn == sp.symbol ):
+                                            loc_id = i
+                                            break
+
+                                    if( loc_id is None ):
+                                        raise Exception( "Error: Gas species "+species_name+" not found!" )
+
+                                    parameters["final"].append( gas_species[loc_id] )
+                    else:
+                        nline += 1
+
+                del parameters["sites"]
+                if( "gas_reacs_prods" in parameters ): del parameters["gas_reacs_prods"]
+
+                rxn = ElementaryReaction( **parameters )
+
+                self.append( rxn )
+
+            nline += 1
 
 
     def append(self, item):

@@ -1,6 +1,7 @@
 from collections import UserList
 
 from .SpeciesList import *
+from .Cluster import *
 
 __all__ = ['ClusterExpansion']
 
@@ -11,8 +12,14 @@ class ClusterExpansion( UserList ):
     *   ``data`` -- List of Clusters to initially include.
     """
 
-    def __init__(self, data=[]):
+    def __init__(self, data=[], fileName=None, gas_species=None, surface_species=None ):
         super(ClusterExpansion, self).__init__( data )
+
+        if fileName is not None:
+            if gas_species is not None and surface_species is not None:
+                self.__fromZacrosFile( fileName, gas_species, surface_species )
+            else:
+                raise Exception( "Error: Parameters gas_species and surface_species are requiered to load the ClusterExpansion from a zacros input file" )
 
         # Duplicates are automatically removed.
         copy_data = self.data
@@ -21,6 +28,118 @@ class ClusterExpansion( UserList ):
         for cl in copy_data:
             if( cl not in self.data ):
                 self.data.append( cl )
+
+
+    def __fromZacrosFile(self, fileName, gas_species, surface_species):
+        """
+        Creates a Mechanism from a Zacros input file energetics_input.dat
+        """
+        with open( fileName, "r" ) as inp:
+            file_content = inp.readlines()
+        file_content = [line.split("#")[0] for line in file_content if line.split("#")[0].strip()] # Removes empty lines and comments
+
+        nline = 0
+        while( nline < len(file_content) ):
+            tokens = file_content[nline].split()
+
+            if( tokens[0].lower() == "cluster" ):
+                parameters = {}
+
+                if( len(tokens) < 2 ):
+                    raise Exception( "Error: Format inconsistent in section cluster. Label not found!" )
+
+                parameters["label"] = tokens[1]
+
+                nline += 1
+
+                while( nline < len(file_content) ):
+                    tokens = file_content[nline].split()
+
+                    if( tokens[0] == "end_cluster" ):
+                        break
+
+                    def process_neighboring( sv ):
+                        output = []
+                        for pair in sv:
+                            a,b = pair.split("-")
+                            output.append( (int(a)-1,int(b)-1) )
+                        return output
+
+                    def process_site_types( sv ):
+                        output = []
+                        for i in range(len(sv)):
+                            if( sv[i].isdigit() ):
+                              output.append( int(sv[i])-1 )
+                            else:
+                              output.append( sv[i] )
+                        return output
+
+                    def process_variant( sv ):
+                        raise Exception( "ZacrosJob.__recreate_energetics_input. Option 'cluster%variant' is not supported yet!" )
+
+                    cases = {
+                        "sites" : lambda sv: parameters.setdefault("sites", int(sv[0])),
+                        "site_types" : lambda sv: parameters.setdefault("site_types", process_site_types(sv)),
+                        "graph_multiplicity" : lambda sv: parameters.setdefault("multiplicity", int(sv[0])),
+                        "cluster_eng" : lambda sv: parameters.setdefault("energy", float(sv[0])),
+                        "neighboring" : lambda sv: parameters.setdefault("neighboring", process_neighboring(sv)),
+                        "variant" : lambda sv: parameters.setdefault("variant", process_variant(sv))
+                    }
+                    cases.get( tokens[0], lambda sv: None )( tokens[1:] )
+
+                    if( tokens[0] == "lattice_state" ):
+                        parameters["lattice_state"] = []
+
+                        isites = 0
+                        while( nline < len(file_content) ):
+                            nline += 1
+                            tokens = file_content[nline].split()
+
+                            if( isites == parameters["sites"] ):
+                                break
+
+                            if( len(tokens) < 3 ):
+                                raise Exception( "Error: Format inconsistent in section lattice_state!" )
+
+                            if( tokens[0]+tokens[1]+tokens[2] != "&&&" ):
+                                entity_number = int(tokens[0])-1
+                                species_name = tokens[1]
+                                dentate_number = int(tokens[2])
+
+                                parameters["lattice_state"].append( [ entity_number, species_name, dentate_number ] )
+
+                            isites += 1
+                    else:
+                        nline += 1
+
+                parameters["species"] = []
+                parameters["entity_number"] = []
+                site_identate = {}
+                for entity_number,species_name,dentate_number in parameters["lattice_state"]:
+                    if( entity_number not in site_identate ):
+                        site_identate[ entity_number ] = 0
+                    else:
+                        site_identate[ entity_number ] = site_identate[ entity_number ] + 1
+
+                    #TODO Find a way to check consistency of dentate_number
+
+                    loc_id = -1
+                    for i,sp in enumerate(surface_species):
+                        if( sp.symbol == species_name and site_identate[ entity_number ]+1 == dentate_number ):
+                            loc_id = i
+                            break
+
+                    if( loc_id == -1 ):
+                        raise Exception( "Error: Species "+species_name+" was not defined in the simulation_input.txt file!" )
+
+                    parameters["species"].append( surface_species[loc_id] )
+                    parameters["entity_number"].append( entity_number )
+
+                del parameters["sites"]
+                del parameters["lattice_state"]
+                self.append( Cluster( **parameters ) )
+
+            nline += 1
 
 
     def append(self, item):

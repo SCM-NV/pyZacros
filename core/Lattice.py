@@ -1,6 +1,6 @@
 """Module containing the Lattice class."""
 
-from os import path
+import os
 import math
 
 __all__ = ['Lattice']
@@ -8,8 +8,8 @@ __all__ = ['Lattice']
 class Lattice:
     """
     Lattice class that defines the lattice structure on which species can bind, diffuse and react.
-    As in Zacros' original input files, there are three different ways of specifying a lattice structure.
-    Below we describe these three ways with the corresponding parameters as well with examples of use.
+    As in Zacros' original input files, there are four different ways of specifying a lattice structure.
+    Below we describe these four ways with the corresponding parameters as well with examples of use.
 
     **Default Lattices:**
 
@@ -122,6 +122,16 @@ class Lattice:
     .. image:: ../../images/lattice_custom.png
        :align: center
 
+    **From a Zacros input file:**
+
+    * ``fileName`` -- Path to the zacros file name, typically ``lattice_input.dat``
+
+    Example:
+
+    .. code:: python
+
+        lattice = Lattice( fileName='mypath/lattice_input.dat' )
+
     """
 
     # Origin
@@ -187,9 +197,9 @@ class Lattice:
             self.__fromExplicitlyDefined( kwargs["site_types"], kwargs["site_coordinates"],
                                                   kwargs["nearest_neighbors"], cell_vectors=kwargs.get("cell_vectors") )
 
-        ## From YAML file
-        #elif( "path" in kwargs ):
-            #self.__fromYAMLfile( kwargs["path"] )
+        # From a zacros file lattice_input.dat
+        elif( "fileName" in kwargs ):
+            self.__fromZacrosFile( kwargs["fileName"] )
 
         else:
             msg  = "\nError: The constructor for Lattice with the parameters:"+str(kwargs)+" is not implemented!\n"
@@ -197,7 +207,7 @@ class Lattice:
             msg += "       - Lattice( lattice_type, lattice_constant, repeat_cell )\n"
             msg += "       - Lattice( cell_vectors, repeat_cell, site_types, site_coordinates, neighboring_structure )\n"
             msg += "       - Lattice( site_types, site_coordinates, nearest_neighbors, cell_vectors=None )\n"
-            msg += "       - Lattice( path )\n"
+            msg += "       - Lattice( fileName )\n"
             raise Exception(msg)
 
 
@@ -328,6 +338,151 @@ class Lattice:
         self.site_coordinates = site_coordinates
         self.nearest_neighbors = nearest_neighbors
         self.cell_vectors = cell_vectors
+
+
+    def __fromZacrosFile(self, fileName):
+        """
+        Creates a Lattice from a Zacros input file lattice_input.dat
+        """
+        if not os.path.isfile( fileName ):
+            raise Exception( "Trying to load a file that doen't exist: "+fileName )
+
+        with open( fileName, "r" ) as inp:
+            file_content = inp.readlines()
+        file_content = [line.split("#")[0] for line in file_content if line.split("#")[0].strip()] # Removes empty lines and comments
+
+        nline = 0
+        while( nline < len(file_content) ):
+            tokens = file_content[nline].split()
+
+            if( tokens[0].lower() == "lattice" and tokens[1].lower() == "default_choice" ):
+                nline += 1
+                tokens = file_content[nline].split()
+
+                if( len(tokens) < 4 ):
+                    raise Exception( "Format Error in line "+str(nline)+" of file "+ZacrosJob._filenames['lattice'] )
+
+                cases = {
+                    "triangular_periodic" : Lattice.TRIANGULAR,
+                    "rectangular_periodic" : Lattice.RECTANGULAR,
+                    "hexagonal_periodic" : Lattice.HEXAGONAL
+                }
+
+                lattice_type = cases.get( tokens[0].lower(), None )
+
+                if( lattice_type is None ):
+                    raise Exception( "Error: Keyword "+tokens[0]+" in file "+ZacrosJob._filenames['lattice']+" is not supported!" )
+
+                lattice_constant = float(tokens[1])
+                repeat_cell = ( int(tokens[2]), int(tokens[3]) )
+
+                parameters = { "lattice_type":lattice_type,
+                               "lattice_constant":lattice_constant,
+                               "repeat_cell":repeat_cell }
+
+                self.__init__( **parameters )
+
+            if( tokens[0] == "lattice" and tokens[1] == "periodic_cell" ):
+                nline += 1
+
+                parameters = {}
+
+                while( nline < len(file_content) ):
+                    tokens = file_content[nline].split()
+
+                    cases = {
+                        "repeat_cell" : lambda sv: parameters.setdefault("repeat_cell", (int(sv[0]),int(sv[1])) ),
+                        "n_site_types" : lambda sv: parameters.setdefault("n_site_types", int(sv[0])),
+                        "site_type_names" : lambda sv: parameters.setdefault("site_type_names", sv),
+                        "n_cell_sites" : lambda sv: parameters.setdefault("n_cell_sites", int(sv[0])),
+                        "site_types" : lambda sv: parameters.setdefault("site_types", sv),
+                    }
+                    cases.get( tokens[0], lambda sv: None )( tokens[1:] )
+
+                    if( tokens[0] == "cell_vectors" ):
+                        parameters["cell_vectors"] = 2*[None]
+                        for n in [0,1]:
+                            nline += 1
+                            tokens = file_content[nline].split()
+                            parameters["cell_vectors"][n] = [ float(tokens[i]) for i in [0,1] ]
+
+                    elif( tokens[0] == "site_coordinates" ):
+                        # WARNING. Here, I'm assuming that n_cell_sites is defined before site_coordinates
+                        parameters["site_coordinates"] = parameters["n_cell_sites"]*[None]
+
+                        for n in range(parameters["n_cell_sites"]):
+                            nline += 1
+                            tokens = file_content[nline].split()
+                            parameters["site_coordinates"][n] = [ float(tokens[i]) for i in [0,1] ]
+
+                    elif( tokens[0] == "neighboring_structure" ):
+                        parameters["neighboring_structure"] = []
+
+                        while( nline < len(file_content) ):
+                            nline += 1
+                            tokens = file_content[nline].split()
+
+                            if( tokens[0] == "end_neighboring_structure" ):
+                                break
+
+                            cases = {
+                                "self" : Lattice.SELF,
+                                "north" : Lattice.NORTH,
+                                "northeast" : Lattice.NORTHEAST,
+                                "east" : Lattice.EAST,
+                                "southeast" : Lattice.SOUTHEAST
+                            }
+                            value = cases.get( tokens[1] )
+
+                            if( value is None ):
+                                raise Exception( "Error: Keyword "+tokens[1]+" in file "+ZacrosJob._filenames['lattice']+" is not supported!" )
+
+                            parameters["neighboring_structure"].append( [ tuple( int(a)-1 for a in tokens[0].split("-") ), value ] )
+
+                    nline += 1
+
+                self.__init__( **parameters )
+
+            if( tokens[0] == "lattice" and tokens[1] == "explicit" ):
+                nline += 1
+
+                parameters = {}
+
+                while( nline < len(file_content) ):
+                    tokens = file_content[nline].split()
+
+                    cases = {
+                        "n_sites" : lambda sv: parameters.setdefault("n_sites", int(sv[0])),
+                        "max_coord" : lambda sv: parameters.setdefault("max_coord", int(sv[0])),
+                        "n_site_types" : lambda sv: parameters.setdefault("n_site_types", int(sv[0])),
+                        "site_type_names" : lambda sv: parameters.setdefault("site_type_names", sv)
+                    }
+                    cases.get( tokens[0], lambda sv: None )( tokens[1:] )
+
+                    if( tokens[0] == "lattice_structure" ):
+                        parameters["site_types"] = []
+                        parameters["site_coordinates"] = []
+                        parameters["nearest_neighbors"] = []
+
+                        while( nline < len(file_content) ):
+                            nline += 1
+                            tokens = file_content[nline].split()
+
+                            if( tokens[0] == "end_lattice_structure" ):
+                                break
+
+                            if( len(tokens) < 5 ):
+                                raise Exception( "Error: Format inconsistent in section lattice_structure!" )
+
+                            parameters["site_coordinates"].append( [ float(tokens[1]), float(tokens[2]) ] )
+                            parameters["site_types"].append( tokens[3] )
+                            parameters["nearest_neighbors"].append( [ int(tokens[i])-1 for i in range(5,len(tokens)) ] )
+
+                    nline += 1
+
+                self.__init__( **parameters )
+
+            nline += 1
 
 
     def add_site_type( self, site_type, coordinates, precision=0.01 ):
