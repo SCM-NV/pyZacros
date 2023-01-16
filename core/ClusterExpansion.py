@@ -1,3 +1,4 @@
+import os
 from collections import UserList
 
 from .SpeciesList import *
@@ -10,16 +11,18 @@ class ClusterExpansion( UserList ):
     Creates a new ClusterExpansion object which is formally a list of Clusters. It implements all python list operations.
 
     *   ``data`` -- List of Clusters to initially include.
+    *   ``fileName`` -- Path to the zacros file name to load the cluster expansion, typically ``energetics_input.dat``
+    *   ``surface_species`` -- Surface species. It is required if the option ``fileName`` was used.
     """
 
-    def __init__(self, data=[], fileName=None, gas_species=None, surface_species=None ):
+    def __init__(self, data=[], fileName=None, surface_species=None ):
         super(ClusterExpansion, self).__init__( data )
 
         if fileName is not None:
-            if gas_species is not None and surface_species is not None:
-                self.__fromZacrosFile( fileName, gas_species, surface_species )
+            if surface_species is not None:
+                self.__fromZacrosFile( fileName, surface_species )
             else:
-                raise Exception( "Error: Parameters gas_species and surface_species are requiered to load the ClusterExpansion from a zacros input file" )
+                raise Exception( "Error: Parameter surface_species is required to load the ClusterExpansion from a zacros input file" )
 
         # Duplicates are automatically removed.
         copy_data = self.data
@@ -30,10 +33,13 @@ class ClusterExpansion( UserList ):
                 self.data.append( cl )
 
 
-    def __fromZacrosFile(self, fileName, gas_species, surface_species):
+    def __fromZacrosFile(self, fileName, surface_species):
         """
         Creates a Mechanism from a Zacros input file energetics_input.dat
         """
+        if not os.path.isfile( fileName ):
+            raise Exception( "Trying to load a file that doen't exist: "+fileName )
+
         with open( fileName, "r" ) as inp:
             file_content = inp.readlines()
         file_content = [line.split("#")[0] for line in file_content if line.split("#")[0].strip()] # Removes empty lines and comments

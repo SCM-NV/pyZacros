@@ -1,3 +1,4 @@
+import os
 from collections import UserList
 
 from .SpeciesList import *
@@ -10,6 +11,9 @@ class Mechanism( UserList ):
     Creates a new Mechanism object. If no argument is given, the constructor creates a new empty mechanism.
 
     *   ``data`` -- List of elementary reactions to initialize the mechanism.
+    *   ``fileName`` -- Path to the zacros file name to load the mechanism, typically ``mechanism_input.dat``
+    *   ``gas_species`` -- Gas species. It is required if the option ``fileName`` was used.
+    *   ``surface_species`` -- Surface species. It is required if the option ``fileName`` was used.
     """
 
     def __init__( self, data=[], fileName=None, gas_species=None, surface_species=None ):
@@ -34,6 +38,9 @@ class Mechanism( UserList ):
         """
         Creates a Mechanism from a Zacros input file mechanism_input.dat
         """
+        if not os.path.isfile( fileName ):
+            raise Exception( "Trying to load a file that doen't exist: "+fileName )
+
         with open( fileName, "r" ) as inp:
             file_content = inp.readlines()
         file_content = [line.split("#")[0] for line in file_content if line.split("#")[0].strip()] # Removes empty lines and comments

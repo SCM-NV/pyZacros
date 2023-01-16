@@ -489,7 +489,7 @@ class ZacrosJob( scm.plams.SingleJob ):
         This method is used by :func:~scm.pyzacros.ZacrosJob.load_external.
         Returns a list of :func:~scm.pyzacros.Cluster objects.
         """
-        return ClusterExpansion( fileName=path+"/"+ZacrosJob._filenames['energetics'], gas_species=gas_species, surface_species=surface_species )
+        return ClusterExpansion( fileName=path+"/"+ZacrosJob._filenames['energetics'], surface_species=surface_species )
 
 
     @staticmethod
