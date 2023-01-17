@@ -54,6 +54,7 @@ ss_sett = pz.Settings()
 ss_sett.turnover_frequency.nbatch = 20
 ss_sett.turnover_frequency.confidence = 0.96
 ss_sett.nreplicas = 4
+ss_sett.scaling.enabled = 'T'
 ss_sett.scaling.partial_equilibrium_index_threshold = 0.1
 ss_sett.scaling.upper_bound = 100
 ss_sett.scaling.max_time = 10*dt

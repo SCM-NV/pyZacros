@@ -3,67 +3,61 @@
 ZacrosParametersScanResults
 ---------------------------
 
-The ``ZacrosParametersScanResults`` class was designed to take charge of the job folder after executing the ``ZacrosJob``. It gathers the information from the output files and helps extract data of interest from them. Every ZacrosJob instance has an associated ``ZacrosParametersScanResults`` instance created automatically on job creation and stored in its results attribute. This class extends the `PLAMS Results <../../plams/components/results.html>`_ class.
+The ``ZacrosParametersScanResults`` class was designed to take charge of the job folder after executing the ``ZacrosParametersScanJob``. It gathers the information from the output files and helps to extract data of interest from them. Every ZacrosParametersScanJob instance has an associated ``ZacrosParametersScanResults`` instance created automatically on job creation and stored in its results attribute. This class extends the `PLAMS Results <../../plams/components/results.html>`_ class.
 
-For our example (see :ref:`use case system <use_case_model_zgb>`), the following lines of code show an example of how to use the ``ZacrosParametersScanResults`` class:
+The following lines of code show an example of how to use the ``ZacrosParametersScanResults`` class:
 
 .. code-block:: python
   :linenos:
 
-   results = job.run()
+   ps_parameters = pz.ZacrosParametersScanJob.Parameters()
+   ps_parameters.add( 'x_CO', 'molar_fraction.CO', numpy.arange(0.1, 1.0, 0.1) )
+   ps_parameters.add( 'x_O2', 'molar_fraction.O2', lambda params: 1.0-params['x_CO'] )
+   ps_parameters.set_generator( pz.ZacrosParametersScanJob.zipGenerator )
+   print(ps_parameters)
 
-   if( job.ok() ):
-      provided_quantities = results.provided_quantities()
-      print("nCO2 =", provided_quantities['CO2'])
+   ps_job = pz.ZacrosParametersScanJob( reference=z_job, parameters=ps_parameters )
+   results = ps_job.run()
 
-      results.plot_molecule_numbers( results.gas_species_names() )
-      results.plot_lattice_states( results.lattice_states() )
+   if( ps_job.ok() ):
+      results_dict = results.turnover_frequency()
+      print(results_dict[0])
 
-      pstat = results.get_process_statistics()
-      results.plot_process_statistics( pstat, key="number_of_events" )
+      print("%4s"%"cond", "%8s"%"x_CO", "%10s"%"TOF_CO2")
+      for i,idx in enumerate(results.indices()):
+          print( '%4d'%i,
+                 '%8.2f'%results_dict[i]['x_CO'],
+                 '%10.6f'%results_dict[i]['turnover_frequency']['CO2'] )
 
+Lines 1-8 were already discusssed before (see :ref:`ZacrosParametersScanJob <zacrosparametersscanjob>`).
+Here, the ``ZacrosParametersScanResults`` object ``results`` is created by calling the method ``run()`` of the corresponding ``ZacrosParametersScanJob`` job (line 8).
 
-Here, the ``ZacrosParametersScanResults`` object ``results`` is created by calling the method ``run()`` of the corresponding ``ZacrosJob`` job (line 1).
-Afterward, the method ``ok()`` is invoked to assure that the calculation finished appropriately (line 3), and only after that,
-it is good to go to get information from the output files by using the ZacrosParametersScanResults methods (lines 4-11).
-As an example, the method ``provided quantities()`` returns the content of the zacros output file ``specnum_output.txt`` in the form of a dictionary. Thus, in line 5, we print out the number of CO\ :sub:`2` molecules produced during the simulation. In addition to getting the information from the output files, the ZacrosParametersScanResults class also offers some methods to plot the results directly, as shown in lines 7-11.
+Afterward, the method ``ok()`` is invoked to assure that the calculation finished appropriately (line 10), and only after that,
+it is good to go to get information from the output files by using the ``ZacrosParametersScanResults`` methods (lines 11-18).
+As an example, the method ``turnover_frequency()`` returns the turnover frequency (TOF) for every gas species (for this example they are ``CO``, ``O2``, and ``CO2``) and for every composition (``x_CO`` and ``x_O2`` values) in the form of a dictionary (line 11).
 
-The execution of the block of code shown above produces the following information to the standard output:
+The execution of the code above after line 8 shows the following information to the standard output:
 
 .. code-block:: none
 
-   [05.11|10:22:27] JOB plamsjob STARTED
-   [05.11|10:22:27] JOB plamsjob RUNNING
-   [05.11|10:22:27] JOB plamsjob FINISHED
-   [05.11|10:22:27] JOB plamsjob SUCCESSFUL
-   nCO2 = [0, 28, 57, 85, 118, 139, 161, 184, 212, 232, 264]
+   {'x_CO': 0.1,
+    'x_O2': 0.9,
+    'turnover_frequency': {'CO': -0.017600, 'O2': -0.014926, 'CO2': 0.017600},
+    'turnover_frequency_error': {'CO': 0.018148, 'O2': 0.015503, 'CO2': 0.018148},
+    'turnover_frequency_converged': {'CO': False, 'O2': False, 'CO2': False}}
 
-Notice the line corresponding to the number of CO\ :sub:`2` molecules produced during the simulation. The rest of the functions generate the following figures:
+   cond     x_CO     TOF_CO2
+      0     0.10    0.017600
+      1     0.20    0.049895
+      2     0.30    0.123811
+      3     0.40    0.577095
+      4     0.50    2.108442
+      5     0.60    0.221453
+      6     0.70    0.008863
+      7     0.80    0.000589
+      8     0.90   -0.000000
 
-.. code-block:: python
-
-   results.plot_molecule_numbers( results.gas_species_names() )
-
-.. figure:: ../../images/mol_gas_nums.png
-   :scale: 100 %
-   :align: center
-
-.. code-block:: python
-
-   results.plot_lattice_states( results.lattice_states() )
-
-.. figure:: ../../images/lattice_state.gif
-   :scale: 100 %
-   :align: center
-
-.. code-block:: python
-
-   pstat = results.get_process_statistics()
-   results.plot_process_statistics( pstat, key="number_of_events" )
-
-.. figure:: ../../images/number_of_events.gif
-   :scale: 80 %
-   :align: center
+Line 12 prints out the first element of the list ``results_dict``. As you can see in the output generated, this element contains the molar fractions of the gas species (``x_CO`` and ``x_O2``) and three values related to the turnover frequency calculation, namely the value itself (``turnover_frequency``), its error (``turnover_frequency_error``), and a flag to determine if the calculation is converged or not (``turnover_frequency_converged``). Finally, lines 14-18 show the values of ``x_CO`` and ``TOF_CO2`` for all compositions in a summary table.
 
 API
 ~~~

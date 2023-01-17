@@ -17,13 +17,13 @@ The ZGB model includes the following elementary reactions:
    \end{align}
 
 
-.. csv-table:: Parameters
-   :header: "Parameter", "Value"
-
-   :math:`k_\text{CO}`, :math:`A_\text{CO}`
-                    "", :math:`A_\text{CO}`
-   :math:`k_{\text{O}_2}`, "Yes"
-   :math:`k_\text{oxi}`, "No"
+.. .. csv-table:: Parameters
+..    :header: "Parameter", "Value"
+..
+..    :math:`k_\text{CO}`, :math:`A_\text{CO}`
+..                     "", :math:`A_\text{CO}`
+..    :math:`k_{\text{O}_2}`, "Yes"
+..    :math:`k_\text{oxi}`, "No"
 
 
 .. figure:: ../../images/zgb_lattice5x5.png

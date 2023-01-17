@@ -35,7 +35,7 @@ class ZacrosResults( scm.plams.Results ):
 
     def get_zacros_version(self):
         """
-        Return the zacros's version from the 'general_output.txt' file.
+        Returns the zacros's version from the 'general_output.txt' file.
         """
         if( self.job.restart is None ):
             lines = self.grep_file(self._filenames['general'], pattern='ZACROS')
@@ -53,7 +53,7 @@ class ZacrosResults( scm.plams.Results ):
 
     def get_reaction_network(self):
         """
-        Return the reactions from the 'general_output.txt' file.
+        Returns the reactions from the 'general_output.txt' file.
         """
         lines = self.get_file_chunk(self._filenames['general'], begin="Reaction network:", end="Finished reading mechanism input.")
 
@@ -67,7 +67,7 @@ class ZacrosResults( scm.plams.Results ):
 
     def provided_quantities_names(self):
         """
-        Return the provided quantities headers from the ``specnum_output.txt`` file in a list.
+        Returns the provided quantities headers from the ``specnum_output.txt`` file in a list.
         Below is shown an example of the ``specnum_output.txt`` for a zacros calculation.
 
         .. code-block:: none
@@ -96,7 +96,7 @@ class ZacrosResults( scm.plams.Results ):
 
     def provided_quantities(self):
         """
-        Return the provided quantities from the ``specnum_output.txt`` file in a form of a dictionary.
+        Returns the provided quantities from the ``specnum_output.txt`` file in a form of a dictionary.
         Below is shown an example of the ``specnum_output.txt`` for a zacros calculation.
 
         .. code-block:: none
@@ -160,7 +160,7 @@ class ZacrosResults( scm.plams.Results ):
 
     def number_of_lattice_sites(self):
         """
-        Return the number of lattice sites from the 'general_output.txt' file.
+        Returns the number of lattice sites from the 'general_output.txt' file.
         """
         zversion = self.get_zacros_version()
 
@@ -183,7 +183,7 @@ class ZacrosResults( scm.plams.Results ):
 
     def gas_species_names(self):
         """
-        Return the gas species names from the 'general_output.txt' file.
+        Returns the gas species names from the 'general_output.txt' file.
         """
         output = []
 
@@ -200,7 +200,7 @@ class ZacrosResults( scm.plams.Results ):
 
     def surface_species_names(self):
         """
-        Return the surface species names from the 'general_output.txt' file.
+        Returns the surface species names from the 'general_output.txt' file.
         """
         output = []
 
@@ -217,7 +217,7 @@ class ZacrosResults( scm.plams.Results ):
 
     def site_type_names(self):
         """
-        Return the site types from the 'general_output.txt' file.
+        Returns the site types from the 'general_output.txt' file.
         """
         zversion = self.get_zacros_version()
 
@@ -240,7 +240,7 @@ class ZacrosResults( scm.plams.Results ):
 
     def number_of_snapshots(self):
         """
-        Return the number of configurations from the 'history_output.txt' file.
+        Returns the number of configurations from the 'history_output.txt' file.
         """
         lines = self.grep_file(self._filenames['history'], pattern='configuration')
         nconf = len(lines)
@@ -253,7 +253,7 @@ class ZacrosResults( scm.plams.Results ):
 
     def number_of_process_statistics(self):
         """
-        Return the number of process statistics from the 'procstat_output.txt' file.
+        Returns the number of process statistics from the 'procstat_output.txt' file.
         """
         lines = self.grep_file(self._filenames['procstat'], pattern='configuration')
         nconf = len(lines)
@@ -266,7 +266,7 @@ class ZacrosResults( scm.plams.Results ):
 
     def elementary_steps_names(self):
         """
-        Return the names of elementary steps from the 'procstat_output.txt' file.
+        Returns the names of elementary steps from the 'procstat_output.txt' file.
         """
         if( self.job.restart is None ):
             lines = self.grep_file(self._filenames['procstat'], pattern='Overall')
@@ -279,7 +279,7 @@ class ZacrosResults( scm.plams.Results ):
 
     def lattice_states(self, last=None):
         """
-        Return the configurations from the 'history_output.txt' file.
+        Returns the configurations from the 'history_output.txt' file.
         """
         output = []
 
@@ -373,7 +373,7 @@ class ZacrosResults( scm.plams.Results ):
 
     def last_lattice_state(self):
         """
-        Return the last configuration from the 'history_output.txt' file.
+        Returns the last configuration from the 'history_output.txt' file.
         """
         return self.lattice_states(last=1)[0]
 
@@ -440,7 +440,7 @@ class ZacrosResults( scm.plams.Results ):
 
     def plot_lattice_states(self, data, pause=-1, show=True, ax=None, close=False, time_perframe=0.5, file_name=None):
         """
-        Uses matplotlib to visualize the lattice states as an animation
+        Uses Matplotlib to create an animation of the lattice states.
 
         *   ``data`` -- List of LatticeState objects to plot
         *   ``pause`` -- After showing the figure, it will wait ``pause``-seconds before refreshing.
@@ -449,7 +449,6 @@ class ZacrosResults( scm.plams.Results ):
         *   ``close`` -- Closes the figure window after pause time.
         *   ``time_perframe`` -- Sets the time interval between frames in seconds.
         *   ``file_name`` -- Saves the figures to the file ``file_name-<id>`` (the corresponding id on the list replaces the ``<id>``). The format is inferred from the extension, and by default, ``.png`` is used.
-
         """
         if( type(data) == LatticeState ):
             data.plot( show=show, pause=pause, ax=ax, close=close, file_name=file_name )
@@ -485,7 +484,7 @@ class ZacrosResults( scm.plams.Results ):
     def plot_molecule_numbers(self, species_name, pause=-1, show=True, ax=None, close=False,
                                 file_name=None, normalize_per_site=False, derivative=False):
         """
-        Uses matplotlib to visualize the Molecule Numbers an animation
+        uses Matplotlib to create an animation of the Molecule Numbers.
 
         *   ``species_name`` -- List of species names to show, e.g., ``["CO*", "CO2"]``
         *   ``pause`` -- After showing the figure, it will wait ``pause``-seconds before refreshing. This can be used for crude animation.
@@ -551,7 +550,7 @@ class ZacrosResults( scm.plams.Results ):
 
     def get_process_statistics(self):
         """
-        Return the statistics from the 'procstat_output.txt' file in a form of a list of dictionaries.
+        Returns the statistics from the 'procstat_output.txt' file in a form of a list of dictionaries.
         Below is shown an example of the ``procstat_output.txt`` for a zacros calculation.
 
         .. code-block:: none
@@ -762,7 +761,7 @@ class ZacrosResults( scm.plams.Results ):
 
     def plot_process_statistics(self, data, key, log_scale=False, pause=-1, show=True, ax=None, close=False, file_name=None):
         """
-        Uses matplotlib to visualize the process statistics an animation
+        Uses Matplotlib to create an animation of the process statistics.
 
         *   ``data`` -- List of process statistics to plot. See function :func:`~scm.pyzacros.ZacrosResults.get_process_statistics`.
         *   ``key`` -- Key to plot, e.g., ``'average_waiting_time'``, ``'average_waiting_time'``. See function :func:`~scm.pyzacros.ZacrosResults.get_process_statistics`.
@@ -772,7 +771,6 @@ class ZacrosResults( scm.plams.Results ):
         *   ``ax`` -- The axes of the plot. It contains most of the figure elements: Axis, Tick, Line2D, Text, Polygon, etc., and sets the coordinate system. See `matplotlib.axes <https://matplotlib.org/stable/api/axes_api.html#id2>`_.
         *   ``close`` -- Closes the figure window after pause time.
         *   ``file_name`` -- Saves the figures to the file ``file_name-<id>`` (the corresponding id on the list replaces the ``<id>``). The format is inferred from the extension, and by default, ``.png`` is used.
-
         """
         if( type(data) == dict ):
             self.__plot_process_statistics( data, key, log_scale=log_scale, pause=pause, show=show,
@@ -811,13 +809,17 @@ class ZacrosResults( scm.plams.Results ):
                 plt.close("all")
 
 
-    #--------------------------------------------------------------
+    #---------------------------------------------------------------------
     # Function to compute the rate of production using the
     # Batch-Means-Stopping method.
     # Original author: Mauro Bracconi (mauro.bracconi@polimi.it)
     # Evaluation of the steady state is inspired by this publication:
-    #   Hashemi et al., J.Chem. Phys. 144, 074104 (2016)
-    #--------------------------------------------------------------
+    #   Araz Hashemi, Marcel Núñez, Petr Plecháč, and Dionisios G. Vlachos
+    #   Stochastic averaging and sensitivity analysis for two scale
+    #   reaction networks
+    #   J.Chem. Phys. 144, 074104 (2016)
+    #   https://doi.org/10.1063/1.4942008
+    #---------------------------------------------------------------------
     @staticmethod
     def __compute_rate( t_vect, spec, n_sites, n_batch=20, confidence=0.99, ignore_nbatch=1 ):
 

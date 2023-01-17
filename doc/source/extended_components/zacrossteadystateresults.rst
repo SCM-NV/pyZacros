@@ -3,67 +3,60 @@
 ZacrosSteadyStateResults
 ------------------------
 
-The ``ZacrosSteadyStateResults`` class was designed to take charge of the job folder after executing the ``ZacrosJob``. It gathers the information from the output files and helps extract data of interest from them. Every ZacrosJob instance has an associated ``ZacrosSteadyStateResults`` instance created automatically on job creation and stored in its results attribute. This class extends the `PLAMS Results <../../plams/components/results.html>`_ class.
+The ``ZacrosSteadyStateResults`` class was designed to take charge of the job folder after executing the ``ZacrosSteadyStateJob``. It gathers the information from the output files and helps to extract data of interest from them. Every ZacrosSteadyStateJob instance has an associated ``ZacrosSteadyStateResults`` instance created automatically on job creation and stored in its results attribute. This class extends the `PLAMS Results <../../plams/components/results.html>`_ class.
 
-For our example (see :ref:`use case system <use_case_model_zgb>`), the following lines of code show an example of how to use the ``ZacrosSteadyStateResults`` class:
+The following lines of code show an example of how to use the ``ZacrosSteadyStateResults`` class:
 
 .. code-block:: python
   :linenos:
 
-   results = job.run()
+  ss_sett = pz.Settings()
+  ss_sett.turnover_frequency.nbatch = 20
+  ss_sett.turnover_frequency.confidence = 0.96
+  ss_sett.nreplicas = 2
 
-   if( job.ok() ):
-      provided_quantities = results.provided_quantities()
-      print("nCO2 =", provided_quantities['CO2'])
+  params = pz.ZacrosSteadyStateJob.Parameters()
+  params.add( 'max_time', 'restart.max_time', numpy.arange(20.0, 100.0, 20.0) )
+  print(params)
 
-      results.plot_molecule_numbers( results.gas_species_names() )
-      results.plot_lattice_states( results.lattice_states() )
+  ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=job, parameters=params )
+  results = ss_job.run()
 
-      pstat = results.get_process_statistics()
-      results.plot_process_statistics( pstat, key="number_of_events" )
+  if ss_job.ok():
+     print(results.history()[0])
 
+     print("%8s"%"iter", "%10s"%"TOF_CO2", "%15s"%"max_time",
+           "%15s"%"TOF_CO2_error", "%10s"%"conv?")
 
-Here, the ``ZacrosSteadyStateResults`` object ``results`` is created by calling the method ``run()`` of the corresponding ``ZacrosJob`` job (line 1).
-Afterward, the method ``ok()`` is invoked to assure that the calculation finished appropriately (line 3), and only after that,
-it is good to go to get information from the output files by using the ZacrosSteadyStateResults methods (lines 4-11).
-As an example, the method ``provided quantities()`` returns the content of the zacros output file ``specnum_output.txt`` in the form of a dictionary. Thus, in line 5, we print out the number of CO\ :sub:`2` molecules produced during the simulation. In addition to getting the information from the output files, the ZacrosSteadyStateResults class also offers some methods to plot the results directly, as shown in lines 7-11.
+     for i,step in enumerate(results.history()):
+        print("%8d"%i,
+              "%10.5f"%step['turnover_frequency']['CO2'],
+              "%15d"%step['max_time'],
+              "%15.5f"%step['turnover_frequency_error']['CO2'],
+              "%10s"%(all(step['converged'].values())))
 
-The execution of the block of code shown above produces the following information to the standard output:
+Lines 1-11 were already discusssed before (see :ref:`ZacrosSteadyStateJob <zacrosparametersscanjob>`).
+Here, the ``ZacrosSteadyStateResults`` object ``results`` is created by calling the method ``run()`` of the corresponding ``ZacrosSteadyStateJob`` job (line 11).
+
+Afterward, the method ``ok()`` is invoked to assure that the calculation finished appropriately (line 13), and only after that,
+it is good to go to get information from the output files by using the ``ZacrosSteadyStateResults`` methods (lines 14-24).
+In this example, we want to print information about the history of the calculation after each iteration. Line 14 prints the first item of the list returned by the ``history()`` method to show its structure. Then after line 16, we show this information for all iterations summarized in a table.
+
+The execution of the code above after line 13 shows the following information to the standard output:
 
 .. code-block:: none
 
-   [05.11|10:22:27] JOB plamsjob STARTED
-   [05.11|10:22:27] JOB plamsjob RUNNING
-   [05.11|10:22:27] JOB plamsjob FINISHED
-   [05.11|10:22:27] JOB plamsjob SUCCESSFUL
-   nCO2 = [0, 28, 57, 85, 118, 139, 161, 184, 212, 232, 264]
+   {'turnover_frequency': {'CO': -0.75409, 'O2': -0.39222, 'CO2': 0.75498},
+    'turnover_frequency_error': {'CO': 0.11055, 'O2': 0.06458, 'CO2': 0.11099},
+    'converged': {'CO': False, 'O2': False, 'CO2': False},
+    'max_time': 20.0}
 
-Notice the line corresponding to the number of CO\ :sub:`2` molecules produced during the simulation. The rest of the functions generate the following figures:
+    iter    TOF_CO2        max_time   TOF_CO2_error      conv?
+       0    0.75498              20         0.11099      False
+       1    0.63210              40         0.03387      False
+       2    0.62030              60         0.02156       True
 
-.. code-block:: python
-
-   results.plot_molecule_numbers( results.gas_species_names() )
-
-.. figure:: ../../images/mol_gas_nums.png
-   :scale: 100 %
-   :align: center
-
-.. code-block:: python
-
-   results.plot_lattice_states( results.lattice_states() )
-
-.. figure:: ../../images/lattice_state.gif
-   :scale: 100 %
-   :align: center
-
-.. code-block:: python
-
-   pstat = results.get_process_statistics()
-   results.plot_process_statistics( pstat, key="number_of_events" )
-
-.. figure:: ../../images/number_of_events.gif
-   :scale: 80 %
-   :align: center
+As you can see in the output, each element of the history includes the maximum amount of time (referred to as ``max time``) used in that iteration as well as three numbers related to the turnover frequency calculation: the value itself (referred to as ``turnover frequency``), its error (referred to as ``turnover frequency error``), and a flag (referred to as ``turnover frequency converged``) that denotes whether or not the calculation has converged. Finally, lines 14-18 show the values of ``x_CO`` and ``TOF_CO2`` for all compositions in a summary table.
 
 API
 ~~~

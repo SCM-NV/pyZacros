@@ -18,18 +18,51 @@ __all__ = ['ZacrosSteadyStateJob', 'ZacrosSteadyStateResults']
 
 class ZacrosSteadyStateResults( scm.plams.Results ):
     """
-    A Class for handling ZacrosMulti Results.
+    A Class for handling ZacrosSteadyStateJob Results.
     """
+
     def history(self, pos=None):
+        """
+        Returns a list of properties related with the history of the calculation.
+        Each element of the history includes the maximum amount of time
+        (referred to as ``max_steps``, ``max_time``, or ``wall_time``) used in that iteration
+        as well as three numbers related to the turnover frequency calculation: the value itself
+        (referred to as ``turnover frequency``), its error (referred to as ``turnover frequency error``),
+        and a flag (referred to as ``turnover frequency converged``) that denotes whether or not the calculation has converged.
+
+        Example of an item of the returned history list:
+
+        .. code-block:: python
+
+           {'turnover_frequency': {'CO': -0.75409, 'O2': -0.39222, 'CO2': 0.75498},
+            'turnover_frequency_error': {'CO': 0.11055, 'O2': 0.06458, 'CO2': 0.11099},
+            'converged': {'CO': False, 'O2': False, 'CO2': False},
+            'max_time': 20.0}
+        """
         if pos is not None:
             return self.job._history[pos]
         else:
             return self.job._history
 
-    def niterations(self): return self.job.niterations
-    def nreplicas(self): return self.job.nreplicas
+
+    def niterations(self):
+        """
+        Returns the current number of iterations executed
+        """
+        return self.job.niterations
+
+
+    def nreplicas(self):
+        """
+        Returns the number of replicas used
+        """
+        return self.job.nreplicas
+
 
     def children_results(self, iteration=None, replica=None):
+        """
+        Returns a list of the children's results or the results for a specific iteration or replica if requested.
+        """
         if iteration is None and replica is None:
             output = []
 
@@ -51,20 +84,96 @@ class ZacrosSteadyStateResults( scm.plams.Results ):
             msg += "                Wrong parameters combination.\n"
             raise Exception(msg)
 
-    def get_zacros_version(self): return self.job.children[-1].results.get_zacros_version()
-    def get_reaction_network(self): return self.job.children[-1].results.get_reaction_network()
-    def provided_quantities(self): return self.job.children[-1].results.provided_quantities()
-    def number_of_lattice_sites(self): return self.job.children[-1].results.number_of_lattice_sites()
-    def gas_species_names(self): return self.job.children[-1].results.gas_species_names()
-    def surface_species_names(self): return self.job.children[-1].results.surface_species_names()
-    def site_type_names(self): return self.job.children[-1].results.site_type_names()
-    def number_of_snapshots(self): return self.job.children[-1].results.number_of_snapshots()
-    def number_of_process_statistics(self): return self.job.children[-1].results.number_of_process_statistics()
-    def elementary_steps_names(self): return self.job.children[-1].results.elementary_steps_names()
-    def lattice_states(self, last=None): return self.job.children[-1].results.lattice_states(last=last)
-    def last_lattice_state(self): return self.job.children[-1].results.last_lattice_state()
+
+    def get_zacros_version(self):
+        """
+        Returns the zacros's version from the 'general_output.txt' file.
+        """
+        return self.job.children[-1].results.get_zacros_version()
+
+
+    def get_reaction_network(self):
+        """
+        Returns the reactions from the 'general_output.txt' file associated to the last children.
+        """
+        return self.job.children[-1].results.get_reaction_network()
+
+
+    def provided_quantities(self):
+        """
+        Returns the provided quantities headers from the ``specnum_output.txt`` file in a list associated to the last children.
+        """
+        return self.job.children[-1].results.provided_quantities()
+
+
+    def number_of_lattice_sites(self):
+        """
+        Returns the number of lattice sites from the 'general_output.txt' file associated to the last children.
+        """
+        return self.job.children[-1].results.number_of_lattice_sites()
+
+
+    def gas_species_names(self):
+        """
+        Returns the gas species names from the 'general_output.txt' file associated to the last children.
+        """
+        return self.job.children[-1].results.gas_species_names()
+
+
+    def surface_species_names(self):
+        """
+        Returns the surface species names from the 'general_output.txt' file associated to the last children.
+        """
+        return self.job.children[-1].results.surface_species_names()
+
+
+    def site_type_names(self):
+        """
+        Returns the site types from the 'general_output.txt' file associated to the last children.
+        """
+        return self.job.children[-1].results.site_type_names()
+
+
+    def number_of_snapshots(self):
+        """
+        Returns the number of configurations from the 'history_output.txt' file associated to the last children.
+        """
+        return self.job.children[-1].results.number_of_snapshots()
+
+
+    def number_of_process_statistics(self):
+        """
+        Returns the number of process statistics from the 'procstat_output.txt' file associated to the last children.
+        """
+        return self.job.children[-1].results.number_of_process_statistics()
+
+
+    def elementary_steps_names(self):
+        """
+        Returns the names of elementary steps from the 'procstat_output.txt' file associated to the last children.
+        """
+        return self.job.children[-1].results.elementary_steps_names()
+
+
+    def lattice_states(self, last=None):
+        """
+        Returns the configurations from the 'history_output.txt' file associated to the last children.
+        """
+        return self.job.children[-1].results.lattice_states(last=last)
+
+
+    def last_lattice_state(self):
+        """
+        Returns the last configuration from the 'history_output.txt' file associated to the last children.
+        """
+        return self.job.children[-1].results.last_lattice_state()
+
 
     def average_coverage(self, last=5):
+        """
+        Returns a dictionary with the average coverage fractions using the last ``last`` lattice states, e.g., ``{ "CO*":0.32, "O*":0.45 }``.
+        It makes an average on the number of replicas if they were requested.
+        """
 
         acf = {}
 
@@ -81,17 +190,64 @@ class ZacrosSteadyStateResults( scm.plams.Results ):
 
         return acf
 
+
     def plot_lattice_states(self, data, pause=-1, show=True, ax=None, close=False, time_perframe=0.5, file_name=None):
+        """
+        Uses Matplotlib to create an animation of the lattice states associated to the last children.
+
+        *   ``data`` -- List of LatticeState objects to plot
+        *   ``pause`` -- After showing the figure, it will wait ``pause``-seconds before refreshing.
+        *   ``show`` -- Enables showing the figure on the screen.
+        *   ``ax`` -- The axes of the plot. It contains most of the figure elements: Axis, Tick, Line2D, Text, Polygon, etc., and sets the coordinate system. See `matplotlib.axes <https://matplotlib.org/stable/api/axes_api.html#id2>`_.
+        *   ``close`` -- Closes the figure window after pause time.
+        *   ``time_perframe`` -- Sets the time interval between frames in seconds.
+        *   ``file_name`` -- Saves the figures to the file ``file_name-<id>`` (the corresponding id on the list replaces the ``<id>``). The format is inferred from the extension, and by default, ``.png`` is used.
+        """
         self.job.children[-1].results.plot_lattice_states(data=data, pause=pause, show=show, ax=ax, close=close,
                                                     time_perframe=time_perframe, file_name=file_name)
+
+
     def plot_molecule_numbers(self, species_name, pause=-1, show=True, ax=None, close=False,
                                 file_name=None, normalize_per_site=False, derivative=False):
+        """
+        uses Matplotlib to create an animation of the Molecule Numbers associated to the last children.
+
+        *   ``species_name`` -- List of species names to show, e.g., ``["CO*", "CO2"]``
+        *   ``pause`` -- After showing the figure, it will wait ``pause``-seconds before refreshing. This can be used for crude animation.
+        *   ``show`` -- Enables showing the figure on the screen.
+        *   ``ax`` -- The axes of the plot. It contains most of the figure elements: Axis, Tick, Line2D, Text, Polygon, etc., and sets the coordinate system. See `matplotlib.axes <https://matplotlib.org/stable/api/axes_api.html#id2>`_.
+        *   ``close`` -- Closes the figure window after pause time.
+        *   ``file_name`` -- Saves the figure to the file ``file_name``. The format is inferred from the extension, and by default, ``.png`` is used.
+        *   ``normalize_per_site`` -- Divides the molecule numbers by the total number of sites in the lattice.
+        *   ``derivative`` -- Plots the first derivative.
+        """
         self.job.children[-1].results.plot_molecule_numbers(species_name=species_name, pause=pause, show=show, ax=ax, close=close,
                                                         file_name=file_name, normalize_per_site=normalize_per_site, derivative=derivative)
-    def get_process_statistics(self): return self.job.children[-1].results.get_process_statistics()
+
+
+    def get_process_statistics(self):
+        """
+        Returns the statistics from the 'procstat_output.txt' file in a form of a list of dictionaries associated to the last children.
+        """
+        return self.job.children[-1].results.get_process_statistics()
+
+
     def plot_process_statistics(self, data, key, log_scale=False, pause=-1, show=True, ax=None, close=False, file_name=None):
+        """
+        Uses Matplotlib to create an animation of the process statistics associated to the last children.
+
+        *   ``data`` -- List of process statistics to plot. See function :func:`~scm.pyzacros.ZacrosResults.get_process_statistics`.
+        *   ``key`` -- Key to plot, e.g., ``'average_waiting_time'``, ``'average_waiting_time'``. See function :func:`~scm.pyzacros.ZacrosResults.get_process_statistics`.
+        *   ``log_scale`` -- Use log scale for the x axis.
+        *   ``pause`` -- After showing the figure, it will wait ``pause``-seconds before refreshing.
+        *   ``show`` -- Enables showing the figure on the screen.
+        *   ``ax`` -- The axes of the plot. It contains most of the figure elements: Axis, Tick, Line2D, Text, Polygon, etc., and sets the coordinate system. See `matplotlib.axes <https://matplotlib.org/stable/api/axes_api.html#id2>`_.
+        *   ``close`` -- Closes the figure window after pause time.
+        *   ``file_name`` -- Saves the figures to the file ``file_name-<id>`` (the corresponding id on the list replaces the ``<id>``). The format is inferred from the extension, and by default, ``.png`` is used.
+        """
         self.job.children[-1].results.plot_process_statistics(data=data, key=key, log_scale=log_scale, pause=pause, show=show, ax=ax,
                                                         close=close, file_name=file_name)
+
 
     def turnover_frequency(self, nbatch=None, confidence=None, ignore_nbatch=None, species_name=None):
 
@@ -124,7 +280,11 @@ class ZacrosSteadyStateResults( scm.plams.Results ):
 
 class ZacrosSteadyStateJob( scm.plams.MultiJob ):
     """
-    Create a new ZacrosSteadyStateJob object.
+    Create a new ZacrosSteadyStateJob object. ``ZacrosSteadyStateJob`` class represents a job that is a container for other jobs, called children jobs, which must be :ref:`ZacrosJobs <zacrosjob>` or :ref:`ZacrosSteadyStateJob <zacrossteadystatejob>` kind objects. This class is an extension of the PLAMS MultiJob class. So it inherits all its powerful features, e.g., being executed locally or submitted to some external queueing system transparently or executing jobs in parallel with a predefined dependency structure. See all configure possibilities on the PLAMS MultiJob class documentation in this link: `PLAMS.MultiJob <../../plams/components/jobs.html#multijobs>`_.
+
+    The ``ZacrosSteadyStateJob`` class constructor requires a Settings object to set the parameters for the Steady-State calculation. The rest of the parameters related to the Zacros calculation ( e.g., lattice, mechanism, and the cluster expansion Hamiltonian ) are provided indirectly through a reference job ``reference`` from which the calculation ``Settings`` is taken to be replicated through its children. Children are initially copies of the reference job. However, just before they are run, their corresponding Settings are altered accordingly to the rules defined through a ``Parameters`` object provided in the constructor.
+
+    The following are the available parameters to be modified in the ``Settings`` object.
 
     .. code-block:: python
 
@@ -139,30 +299,25 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
        settings.scaling.max_time = None
        settings.scaling.species_numbers = None
        settings.scaling.nevents_per_timestep = None
-
-    * turnover_frequency:
-       * `nbatch` --
-       * `confidence` --
-       * `ignore_nbatch` --
-
-    * scaling:
-       * `enabled` --
-       * `partial_equilibrium_index_threshold` --
-       * `upper_bound` --
-       * `max_steps` --
-       * `max_time` --
-       * `species_numbers` --
-       * `scaling_nevents_per_timestep` --
     """
 
     _result_type = ZacrosSteadyStateResults
 
 
     class Parameter(ParameterBase):
+        """
+        Creates a new Parameter object specifically tailored for ZacrosSteadyStateJob
+        """
+
         def __init__(self, name_in_settings, kind, values):
             super().__init__(self, name_in_settings, kind, values)
 
+
     class Parameters(ParametersBase):
+        """
+        Creates a new Parameters object specifically tailored for ZacrosSteadyStateJob
+        """
+
         def __init__(self, *args, **kwargs):
             super().__init__(self, *args, **kwargs)
 
@@ -377,7 +532,9 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
     # Original author: Mauro Bracconi (mauro.bracconi@polimi.it)
     # Reference:
     #    M. Núñez, T. Robie, and D. G. Vlachosa
-    #    Acceleration and sensitivity analysis of lattice kinetic Monte Carlo simulations using parallel processing and rate constant rescaling
+    #    Acceleration and sensitivity analysis of lattice kinetic
+    #    Monte Carlo simulations using parallel processing and rate
+    #    constant rescaling
     #    J. Chem. Phys. 147, 164103 (2017)
     #    https://doi.org/10.1063/1.4998926
     #--------------------------------------------------------------

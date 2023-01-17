@@ -2,7 +2,7 @@ import numpy as np
 import adaptiveDesignProcedure as adp
 import matplotlib.pyplot as plt
 
-path = "plams_workdir/adp.results/ml_ExtraTrees_forCFD.pkl"
+path = "plams_workdir/adp.results"
 
 x_CO_model = np.linspace(0.0,1.0,200)
 TOF_CO2_model = adp.predict( x_CO_model.reshape(-1,1), path ).T[0]

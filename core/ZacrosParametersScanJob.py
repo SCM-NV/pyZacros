@@ -17,13 +17,36 @@ __all__ = ['ZacrosParametersScanJob', 'ZacrosParametersScanResults']
 
 class ZacrosParametersScanResults( scm.plams.Results ):
     """
-    A Class for handling ZacrosMulti Results.
+    A Class for handling ZacrosParametersScanJob Results.
     """
+
     def indices(self):
+        """
+        Returns the indices to get access to the children results.
+
+        Example of use:
+
+        .. code-block:: python
+
+           for i,idx in enumerate(results.indices()):
+               print( results.children_results( child_id=idx ).history( pos=-1 )['max_time'] )
+
+        """
         return self.job._indices
 
 
     def children_results(self, child_id=None):
+        """
+        Returns the children results in a dictionary form.
+
+        Example of use:
+
+        .. code-block:: python
+
+           for i,idx in enumerate(results.indices()):
+               print( results.children_results( child_id=idx ).history( pos=-1 )['max_time'] )
+
+        """
         if child_id is None:
             output = {}
 
@@ -36,6 +59,26 @@ class ZacrosParametersScanResults( scm.plams.Results ):
 
 
     def turnover_frequency(self, nbatch=20, confidence=0.99, ignore_nbatch=1, update=None):
+        """
+        Return a list with values related to the calculation of the turnover frequency for the gas species.
+
+        *   ``nbatch`` -- Number of batches to use.
+        *   ``confidence`` -- Confidence level to use in the criterion to determine if the steady-state was reached.
+        *   ``ignore_nbatch`` -- Number of batches to ignore during the averaging in the calculation of the TOF.
+        *   ``update`` -- List with dictionary items to be updated with the output values.
+
+        The following example illustrates the structure of one element of the output list:
+
+        .. code-block:: python
+
+           {'x_CO': 0.1,
+            'x_O2': 0.9,
+            'turnover_frequency': {'CO': -0.017600, 'O2': -0.014926, 'CO2': 0.017600},
+            'turnover_frequency_error': {'CO': 0.018148, 'O2': 0.015503, 'CO2': 0.018148},
+            'turnover_frequency_converged': {'CO': False, 'O2': False, 'CO2': False}}
+
+        """
+
         if update:
             output = update
         else:
@@ -66,6 +109,19 @@ class ZacrosParametersScanResults( scm.plams.Results ):
 
 
     def average_coverage(self, last=5, update=None):
+        """
+        Return a list with values related to the calculation of the average coverage for the adsorbed species.
+        Each element of the output list is a dictionary with the average coverage fractions using the last ``last``
+        lattice states, for example:
+
+        .. code-block:: python
+
+           {'x_CO': 0.1,
+            'x_O2': 0.9,
+            'average_coverage': { "CO*":0.32, "O*":0.45 }}
+
+        """
+
         if update:
             output = update
         else:
@@ -90,8 +146,8 @@ class ZacrosParametersScanJob( scm.plams.MultiJob ):
     job ``reference``. However, just before they are run, their corresponding Settings are altered accordingly to the rules
     defined through the ``Parameters`` object ``parameters``.
 
-    *   ``reference`` -- Reference job. It must be :ref:`ZacrosJobs <zacrosjob>` or :ref:`ZacrosSteadyStateJob <zacrossteadystatejob>` kind object.
-    *   ``parameters`` --
+    *   ``reference`` -- Reference job. It must be :ref:`ZacrosJob <zacrosjob>` or :ref:`ZacrosSteadyStateJob <zacrossteadystatejob>` kind object.
+    *   ``parameters`` -- ``Parameters`` object containing the parameters' specifications.
     *   ``name`` -- A string containing the name of the job. All zacros input and output files are stored in a folder with this name. If not supplied, the default name is ``plamsjob``.
     """
 
@@ -158,7 +214,7 @@ class ZacrosParametersScanJob( scm.plams.MultiJob ):
         This function combines the values of the parameters one-to-one following the order as they were defined
 
         *   ``reference_settings`` -- ``Settings`` object to be used as a reference.
-        *   ``parameters`` -- ``Parameters`` object containing the specifications of the parameters.
+        *   ``parameters`` -- ``Parameters`` object containing the parameters' specifications.
 
         Example of use:
 

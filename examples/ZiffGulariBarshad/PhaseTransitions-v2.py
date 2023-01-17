@@ -56,7 +56,7 @@ if( results.job.ok() ):
     results_dict = results.turnover_frequency()
     results_dict = results.average_coverage( update=results_dict )
 
-    for i in range(len(results_dict)):
+    for i,idx in enumerate(results.indices()):
         x_CO.append( results_dict[i]['x_CO'] )
         ac_O.append( results_dict[i]['average_coverage']['O*'] )
         ac_CO.append( results_dict[i]['average_coverage']['CO*'] )
@@ -98,15 +98,15 @@ plt.show()
 cresults = results.children_results()
 
 # Lattice states for x_CO=0.54 and CO=0.55
-cresults[(33,)].last_lattice_state().plot()
-cresults[(34,)].last_lattice_state().plot()
+cresults[33].last_lattice_state().plot()
+cresults[34].last_lattice_state().plot()
 
 # Molecule numbers for x_CO=0.54 and CO=0.55
-cresults[(33,)].plot_molecule_numbers( ["CO2"], normalize_per_site=True )
-cresults[(34,)].plot_molecule_numbers( ["CO2"], normalize_per_site=True )
+cresults[33].plot_molecule_numbers( ["CO2"], normalize_per_site=True )
+cresults[34].plot_molecule_numbers( ["CO2"], normalize_per_site=True )
 
 # Molecule numbers for x_CO=0.54 and CO=0.55. First Derivative
-cresults[(33,)].plot_molecule_numbers( ["CO2"], normalize_per_site=True, derivative=True )
-cresults[(34,)].plot_molecule_numbers( ["CO2"], normalize_per_site=True, derivative=True )
+cresults[33].plot_molecule_numbers( ["CO2"], normalize_per_site=True, derivative=True )
+cresults[34].plot_molecule_numbers( ["CO2"], normalize_per_site=True, derivative=True )
 
 scm.pyzacros.finish()

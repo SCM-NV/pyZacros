@@ -67,14 +67,13 @@ max_time = []
 if( results.job.ok() ):
     results_dict = results.turnover_frequency()
     results_dict = results.average_coverage( last=20, update=results_dict )
-    cresults = results.children_results()
 
-    for i in range(len(results_dict)):
+    for i,idx in enumerate(results.indices()):
         x_CO.append( results_dict[i]['x_CO'] )
         ac_O.append( results_dict[i]['average_coverage']['O*'] )
         ac_CO.append( results_dict[i]['average_coverage']['CO*'] )
         TOF_CO2.append( results_dict[i]['turnover_frequency']['CO2'] )
-        max_time.append( results.children_results( child_id=(i,) ).history( pos=-1 )['max_time'] )
+        max_time.append( results.children_results( child_id=idx ).history( pos=-1 )['max_time'] )
 
     print( "-----------------------------------------------------------" )
     print( "%4s"%"cond", " %8s"%"x_CO", " %10s"%"ac_O", "%10s"%"ac_CO", "%12s"%"TOF_CO2", "%10s"%"max_time" )

@@ -162,3 +162,4 @@ def test_ZacrosJob_restart():
     job2.results.plot_process_statistics( process_statistics2[n-1], key="occurence_frequency", log_scale=True, pause=2, close=True )
 
     scm.plams.finish()
+

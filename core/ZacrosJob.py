@@ -86,6 +86,11 @@ class ZacrosJob( scm.plams.SingleJob ):
                 for key in list_of_species:
                     section += {key: 0.000}
 
+        if( 'settings' not in kwargs ):
+            msg  = "\n### ERROR ### ZacrosJob.__init__.\n"
+            msg += "                Parameter 'settings' is required by the ZacrosJob constructor.\n"
+            raise NameError(msg)
+
         if( 'molecule' in kwargs ):
             print("Warning: parameter 'molecule' is not used by the ZacrosJob constructor'")
             del kwargs['molecule']
