@@ -37,9 +37,7 @@ scm.pyzacros.init()
 # dioxide ($\text{CO}+\frac{1}{2}\text{O}_2\longrightarrow \text{CO}_2$) and accurately
 # captures the interesting property of the phase transition between two surface poisoned
 # states (either CO- or O-poisoned) and a steady state in between. It is named after Robert
-# M. Ziff, Erdogan Gulari, and Yoav Barshad's pioneering work in 1986. Follow this
-# [link](../models/ZiffGulariBarshad.html) for more details about its implementation
-# in pyZacros.
+# M. Ziff, Erdogan Gulari, and Yoav Barshad's pioneering work in 1986.
 
 zgb = pz.models.ZiffGulariBarshad()
 
