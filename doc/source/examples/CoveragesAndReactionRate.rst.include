@@ -7,7 +7,6 @@ asdasd
 
     import multiprocessing
     import numpy
-    
     import scm.plams
     import scm.pyzacros as pz
     import scm.pyzacros.models
@@ -19,7 +18,7 @@ asdasd
 
 .. parsed-literal::
 
-    PLAMS working folder: /home/user/pyzacros/examples/ZiffGulariBarshad/plams_workdir.006
+    PLAMS working folder: /home/user/pyzacros/examples/ZiffGulariBarshad/plams_workdir.011
 
 
 .. code:: ipython3
@@ -38,7 +37,9 @@ asdasd
 .. code:: ipython3
 
     lh = pz.models.LangmuirHinshelwood()
-    
+
+.. code:: ipython3
+
     dt = 1.0e-5
     z_sett = pz.Settings()
     z_sett.random_seed = 1609
@@ -74,7 +75,7 @@ asdasd
 
 .. parsed-literal::
 
-    [16.01|18:11:29] JOB plamsjob Steady State Convergence: Using nbatch=20,confidence=0.5,ignore_nbatch=5,nreplicas=4
+    [17.01|22:35:16] JOB plamsjob Steady State Convergence: Using nbatch=20,confidence=0.5,ignore_nbatch=5,nreplicas=4
 
 
 .. code:: ipython3
@@ -85,6 +86,17 @@ asdasd
     ps_params.add( 'x_O2', 'molar_fraction.O2', lambda params: 1.0-params['x_CO'] )
     
     ps_job = pz.ZacrosParametersScanJob( reference=ss_job, parameters=ps_params )
+
+
+.. parsed-literal::
+
+    [17.01|22:35:16] JOB plamsjob_ps_cond000 Steady State Convergence: Using nbatch=20,confidence=0.5,ignore_nbatch=5,nreplicas=4
+    [17.01|22:35:16] JOB plamsjob_ps_cond001 Steady State Convergence: Using nbatch=20,confidence=0.5,ignore_nbatch=5,nreplicas=4
+    [17.01|22:35:16] JOB plamsjob_ps_cond002 Steady State Convergence: Using nbatch=20,confidence=0.5,ignore_nbatch=5,nreplicas=4
+
+
+.. code:: ipython3
+
     results = ps_job.run()
     
     if not ps_job.ok():
@@ -93,47 +105,47 @@ asdasd
 
 .. parsed-literal::
 
-    [16.01|18:11:29] JOB plamsjob_ps_cond000 Steady State Convergence: Using nbatch=20,confidence=0.5,ignore_nbatch=5,nreplicas=4
-    [16.01|18:11:29] JOB plamsjob_ps_cond001 Steady State Convergence: Using nbatch=20,confidence=0.5,ignore_nbatch=5,nreplicas=4
-    [16.01|18:11:29] JOB plamsjob_ps_cond002 Steady State Convergence: Using nbatch=20,confidence=0.5,ignore_nbatch=5,nreplicas=4
-    [16.01|18:11:29] JOB plamsjob STARTED
-    [16.01|18:11:29] Waiting for job plamsjob to finish
-    [16.01|18:11:29] JOB plamsjob RUNNING
+    [17.01|22:35:16] JOB plamsjob STARTED
+    [17.01|22:35:16] Waiting for job plamsjob to finish
+    [17.01|22:35:16] JOB plamsjob RUNNING
+    [17.01|22:35:16] JOB plamsjob/plamsjob_ps_cond000 STARTED
+    [17.01|22:35:16] JOB plamsjob/plamsjob_ps_cond001 STARTED
+    [17.01|22:35:16] JOB plamsjob/plamsjob_ps_cond002 STARTED
     
     ...
     
-    [16.01|18:12:02] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter004_rep000 SUCCESSFUL
-    [16.01|18:12:02] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter004_rep002 SUCCESSFUL
-    [16.01|18:12:02]    Replica #0
-    [16.01|18:12:02]       species            TOF          error          ratio     conv?
-    [16.01|18:12:02]            CO        0.00000        0.00000        0.00000      True
-    [16.01|18:12:02]            O2        0.07447        0.49566        6.65631     False
-    [16.01|18:12:02]           CO2        0.00000        0.00000        0.00000      True
-    [16.01|18:12:03]    Replica #1
-    [16.01|18:12:03]       species            TOF          error          ratio     conv?
-    [16.01|18:12:03]            CO        0.00000        0.00000        0.00000      True
-    [16.01|18:12:03]            O2       -0.67799        0.43939        0.64809     False
-    [16.01|18:12:03]           CO2        0.00000        0.00000        0.00000      True
-    [16.01|18:12:03]    Replica #2
-    [16.01|18:12:03]       species            TOF          error          ratio     conv?
-    [16.01|18:12:03]            CO        0.00000        0.00000        0.00000      True
-    [16.01|18:12:03]            O2       -0.88059        0.46912        0.53274     False
-    [16.01|18:12:03]           CO2        0.00000        0.00000        0.00000      True
-    [16.01|18:12:04]    Replica #3
-    [16.01|18:12:04]       species            TOF          error          ratio     conv?
-    [16.01|18:12:04]            CO        0.00000        0.00000        0.00000      True
-    [16.01|18:12:04]            O2       -1.89035        0.46856        0.24787      True
-    [16.01|18:12:04]           CO2        0.00000        0.00000        0.00000      True
-    [16.01|18:12:04]    Average
-    [16.01|18:12:04]       species            TOF          error          ratio     conv?
-    [16.01|18:12:04]            CO        0.00000        0.00000        0.00000      True
-    [16.01|18:12:04]            O2       -0.84362        0.31919        0.37836      True
-    [16.01|18:12:04]           CO2        0.00000        0.00000        0.00000      True
-    [16.01|18:12:04] JOB plamsjob/plamsjob_ps_cond000 Steady State Convergence: CONVERGENCE REACHED. DONE!
-    [16.01|18:12:04] JOB plamsjob/plamsjob_ps_cond000 FINISHED
-    [16.01|18:12:06] JOB plamsjob/plamsjob_ps_cond000 SUCCESSFUL
-    [16.01|18:12:09] JOB plamsjob FINISHED
-    [16.01|18:12:10] JOB plamsjob SUCCESSFUL
+    [17.01|22:35:55] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter004_rep001 SUCCESSFUL
+    [17.01|22:35:55] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter004_rep003 SUCCESSFUL
+    [17.01|22:35:55]    Replica #0
+    [17.01|22:35:55]       species            TOF          error          ratio     conv?
+    [17.01|22:35:55]            CO        0.00000        0.00000        0.00000      True
+    [17.01|22:35:55]            O2        0.07447        0.49566        6.65631     False
+    [17.01|22:35:55]           CO2        0.00000        0.00000        0.00000      True
+    [17.01|22:35:56]    Replica #1
+    [17.01|22:35:56]       species            TOF          error          ratio     conv?
+    [17.01|22:35:56]            CO        0.00000        0.00000        0.00000      True
+    [17.01|22:35:56]            O2       -0.67799        0.43939        0.64809     False
+    [17.01|22:35:56]           CO2        0.00000        0.00000        0.00000      True
+    [17.01|22:35:56]    Replica #2
+    [17.01|22:35:56]       species            TOF          error          ratio     conv?
+    [17.01|22:35:56]            CO        0.00000        0.00000        0.00000      True
+    [17.01|22:35:56]            O2       -0.88059        0.46912        0.53274     False
+    [17.01|22:35:56]           CO2        0.00000        0.00000        0.00000      True
+    [17.01|22:35:57]    Replica #3
+    [17.01|22:35:57]       species            TOF          error          ratio     conv?
+    [17.01|22:35:57]            CO        0.00000        0.00000        0.00000      True
+    [17.01|22:35:57]            O2       -1.89035        0.46856        0.24787      True
+    [17.01|22:35:57]           CO2        0.00000        0.00000        0.00000      True
+    [17.01|22:35:57]    Average
+    [17.01|22:35:57]       species            TOF          error          ratio     conv?
+    [17.01|22:35:57]            CO        0.00000        0.00000        0.00000      True
+    [17.01|22:35:57]            O2       -0.84362        0.31919        0.37836      True
+    [17.01|22:35:57]           CO2        0.00000        0.00000        0.00000      True
+    [17.01|22:35:57] JOB plamsjob/plamsjob_ps_cond000 Steady State Convergence: CONVERGENCE REACHED. DONE!
+    [17.01|22:35:57] JOB plamsjob/plamsjob_ps_cond000 FINISHED
+    [17.01|22:35:58] JOB plamsjob/plamsjob_ps_cond000 SUCCESSFUL
+    [17.01|22:36:01] JOB plamsjob FINISHED
+    [17.01|22:36:02] JOB plamsjob SUCCESSFUL
 
 .. code:: ipython3
 
@@ -175,5 +187,13 @@ asdasd
 
 .. parsed-literal::
 
-    [16.01|18:12:12] PLAMS run finished. Goodbye
+    [17.01|22:36:05] PLAMS run finished. Goodbye
+
+
+.. math::
+
+
+   \theta_\text{CO} = \frac{ K_\text{CO}P_\text{CO} }{ 1 + K_\text{CO}P_\text{CO} + \sqrt{K_{\text{O}_2}P_\text{O}} } \\
+   \theta_\text{O} = \frac{ \sqrt{K_{\text{O}_2}P_\text{O}} }{ 1 + K_\text{CO}P_\text{CO} + \sqrt{K_{\text{O}_2}P_\text{O}} } \\[7mm]
+   \text{TOF}_{\text{CO}_2} = 6 \, k_\text{oxi}\theta_\text{CO}\theta_\text{O}
 

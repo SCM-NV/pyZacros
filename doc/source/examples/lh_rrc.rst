@@ -2,6 +2,12 @@
 
       <br>
 
+.. Note::
+   To follow the example of this tutorial, either:
+
+   * Download :download:`SteadyState.py <../../../examples/LangmuirHinshelwood/CoveragesAndReactionRate.py>` (run as ``$AMSBIN/amspython CoveragesAndReactionRate.py``).
+   * Download :download:`SteadyState.ipynb <../../../examples/LangmuirHinshelwood/CoveragesAndReactionRate.ipynb>` (see also: how to install `Jupyterlab <:ref:`install-and-run-jupyter-lab-jupyter-notebooks>`)
+
 .. include:: CoveragesAndReactionRate.rst.include
 
 .. You can download the full example script following this link :download:`CoveragesAndReactionRate.py <../../../examples/LangmuirHinshelwood/CoveragesAndReactionRate.py>`  and execute it with the following command:

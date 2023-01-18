@@ -2,14 +2,15 @@
 
       <br>
 
-You can download the tutorial's Python script using one of the links below:
+.. Note::
+   To follow the example of this tutorial, either:
 
-* Download :download:`SteadyState.py <../../../examples/ZiffGulariBarshad/SteadyState.py>` (run as ``$AMSBIN/amspython MDintroPython.py``).
-* Download :download:`SteadyState.ipynb <../../../examples/ZiffGulariBarshad/SteadyState.ipynb>` (see also: how to install `Jupyterlab <../../../Scripting/Python_Stack/Python_Stack.html#install-and-run-jupyter-lab-jupyter-notebooks>`__)
+   * Download :download:`SteadyState.py <../../../examples/ZiffGulariBarshad/SteadyState.py>` (run as ``$AMSBIN/amspython SteadyState.py``).
+   * Download :download:`SteadyState.ipynb <../../../examples/ZiffGulariBarshad/SteadyState.ipynb>` (see also: how to install `Jupyterlab <:ref:`install-and-run-jupyter-lab-jupyter-notebooks>`)
 
 .. include:: SteadyState.rst.include
 
-Finally, if you run the entire script, replacing ``ss sett.nreplicas = 1`` with ``ss sett.nreplicas = 4``, you should get the following result:
+Finally, if you run the entire script, replacing ``ss_sett.nreplicas = 1`` with ``ss_sett.nreplicas = 4``, you should get the following result:
 
 .. figure:: ../../images/example_ZGB-SS-nrep4.png
    :scale: 90 %

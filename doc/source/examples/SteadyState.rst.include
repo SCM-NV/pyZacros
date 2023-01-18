@@ -50,7 +50,9 @@ processes of carbon monoxide oxidation to carbon dioxide
 accurately captures the interesting property of the phase transition
 between two surface poisoned states (either CO- or O-poisoned) and a
 steady state in between. It is named after Robert M. Ziff, Erdogan
-Gulari, and Yoav Barshad’s pioneering work in 1986.
+Gulari, and Yoav Barshad’s pioneering work in 1986. Follow this
+`link <../models/ZiffGulariBarshad.html>`__ for more details about its
+implementation in pyZacros.
 
 .. code:: ipython3
 
@@ -112,7 +114,7 @@ is verified for each point on this grid, and if it has not converged,
 the calculation is resumed up to the next point in ``max time``.
 
 Finally, we create ``ZacrosSteadyStateJob``, which references the
-“ZacrosJob” defined above as well as the ``Settings`` object and
+``ZacrosJob`` defined above as well as the ``Settings`` object and
 parameters we just defined:
 
 .. code:: ipython3
