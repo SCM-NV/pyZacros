@@ -38,14 +38,13 @@ scm.pyzacros.init()
 # dioxide ($\text{CO}+\frac{1}{2}\text{O}_2\longrightarrow \text{CO}_2$) and accurately
 # captures the interesting property of the phase transition between two surface poisoned
 # states (either CO- or O-poisoned) and a steady state in between. It is named after Robert
-# M. Ziff, Erdogan Gulari, and Yoav Barshad's pioneering work in 1986. Follow this
-# [link](../models/ZiffGulariBarshad.html) for more details about its implementation
-# in pyZacros.
+# M. Ziff, Erdogan Gulari, and Yoav Barshad's pioneering work in 1986. Check the API
+# documentation for more details about its implementation in pyZacros.
 
 zgb = pz.models.ZiffGulariBarshad()
 
 
-# Now set up the Zacros calculation. All parameters are set using a ``Setting`` object.
+# Then, we set up the Zacros calculation. All parameters are set using a ``Setting`` object.
 # To begin, we define the physical parameters: the molar fractions of the gas species
 # (``CO`` and ``O2``), the temperature (in K), and the pressure (in bar). The calculation
 # parameters are then set: ``species numbers`` (in s) determines how frequently information
@@ -64,7 +63,7 @@ z_sett.molar_fraction.O2 = 1.0 - z_sett.molar_fraction.CO
 z_sett.temperature = 500.0
 z_sett.pressure = 1.0
 z_sett.species_numbers = ('time', 0.1)
-z_sett.max_time = 10.0
+z_sett.max_time = 100.0*0.1
 z_sett.random_seed = 953129
 
 job = pz.ZacrosJob( settings=z_sett,
@@ -77,16 +76,15 @@ job = pz.ZacrosJob( settings=z_sett,
 # object to set its parameters, as shown in the first block of code below. To begin,
 # we define the parameters for calculating the turn-over frequency (TOF), which is
 # the property that will be monitored to determine convergence as the steady state
-# is reached. More information can be found in TOF. In a nutshell, for a given
-# simulation time (that will be increased systematically), the simulation is divided
-# into an ``turnover_frequency.nbatch`` ensemble of contiguous batches
-# (20 for this case) where the TOFs are calculated for each one. If the estimated
-# confidence level for these TOFs is higher than the confidence level specified by
-# the ``turnover frequency.confidence`` parameter (96% for this case), convergence
-# is then considered to have been achieved. The ``nreplicas`` parameter allows
-# several simulations to run in parallel to speed up the calculation at the expense
-# of more computational power. For the time being, we will leave it at 1, but we will
-# return to it later.
+# is reached. In a nutshell, for a given simulation time (that will be increased
+# systematically), the simulation is divided into an ``turnover_frequency.nbatch``
+# ensemble of contiguous batches (20 for this case) where the TOFs are calculated
+# for each one. If the estimated confidence level for these TOFs is higher than the
+# confidence level specified by the ``turnover frequency.confidence`` parameter
+# (96% for this case), convergence is then considered to have been achieved. The
+# ``nreplicas`` parameter allows several simulations to run in parallel to speed up
+# the calculation at the expense of more computational power. For the time being,
+# we will leave it at 1, but we will return to it later.
 # 
 # In the second block of code, the ``ZacrosSteadyStateJob.Parameters()`` class allows
 # us to specify the grid in ``max time``, which in this case ranges from 20 to 1000
@@ -124,14 +122,13 @@ if not ss_job.ok():
 # Now, in the following lines, we just nicely print the results in a table. See
 # the API documentation to learn more about the ``results`` object is structured.
 # Here we show the history of the simulation and see how it progresses as the
-# ``max_time`` is increased. We print the TOF for CO2, its error, and whether
-# the calculation converged. Notice that the calculation should have been
-# converged at 720 s of ``max_time``.
+# ``max_time`` is increased. We print the TOF for CO2 (in mol/s/site), its error,
+# and whether the calculation converged. Notice that the calculation should have
+# been converged at 720 s of ``max_time``.
 
 print(60*'-')
 fline = "{0:>8s}{1:>10s}{2:>15s}{3:>12s}{4:>10s}"
 print( fline.format('iter', 'max_time', 'TOF_CO2', 'error', 'conv?') )
-print( fline.format('', 's', 'mol/s/site', 'mol/s/site', '') )
 print(60*'-')
 
 for i,step in enumerate(results.history()):

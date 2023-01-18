@@ -35,7 +35,7 @@ Then, we initialize the **pyZacros** environment.
 
 .. parsed-literal::
 
-    PLAMS working folder: /home/user/pyzacros/examples/ZiffGulariBarshad/plams_workdir.010
+    PLAMS working folder: /home/user/pyzacros/examples/ZiffGulariBarshad/plams_workdir
 
 
 Notice this command created the directory where all **Zacros** input and
@@ -50,15 +50,14 @@ processes of carbon monoxide oxidation to carbon dioxide
 accurately captures the interesting property of the phase transition
 between two surface poisoned states (either CO- or O-poisoned) and a
 steady state in between. It is named after Robert M. Ziff, Erdogan
-Gulari, and Yoav Barshad’s pioneering work in 1986. Follow this
-`link <../models/ZiffGulariBarshad.html>`__ for more details about its
-implementation in pyZacros.
+Gulari, and Yoav Barshad’s pioneering work in 1986. Check the API
+documentation for more details about its implementation in pyZacros.
 
 .. code:: ipython3
 
     zgb = pz.models.ZiffGulariBarshad()
 
-Now set up the Zacros calculation. All parameters are set using a
+Then, we set up the Zacros calculation. All parameters are set using a
 ``Setting`` object. To begin, we define the physical parameters: the
 molar fractions of the gas species (``CO`` and ``O2``), the temperature
 (in K), and the pressure (in bar). The calculation parameters are then
@@ -82,7 +81,7 @@ steady-state calculation described below.
     z_sett.temperature = 500.0
     z_sett.pressure = 1.0
     z_sett.species_numbers = ('time', 0.1)
-    z_sett.max_time = 10.0
+    z_sett.max_time = 100.0*0.1
     z_sett.random_seed = 953129
     
     job = pz.ZacrosJob( settings=z_sett,
@@ -94,18 +93,17 @@ It is now time to set up the steady state calculation. It also needs a
 ``Settings`` object to set its parameters, as shown in the first block
 of code below. To begin, we define the parameters for calculating the
 turn-over frequency (TOF), which is the property that will be monitored
-to determine convergence as the steady state is reached. More
-information can be found in TOF. In a nutshell, for a given simulation
-time (that will be increased systematically), the simulation is divided
-into an ``turnover_frequency.nbatch`` ensemble of contiguous batches (20
-for this case) where the TOFs are calculated for each one. If the
-estimated confidence level for these TOFs is higher than the confidence
-level specified by the ``turnover frequency.confidence`` parameter (96%
-for this case), convergence is then considered to have been achieved.
-The ``nreplicas`` parameter allows several simulations to run in
-parallel to speed up the calculation at the expense of more
-computational power. For the time being, we will leave it at 1, but we
-will return to it later.
+to determine convergence as the steady state is reached. In a nutshell,
+for a given simulation time (that will be increased systematically), the
+simulation is divided into an ``turnover_frequency.nbatch`` ensemble of
+contiguous batches (20 for this case) where the TOFs are calculated for
+each one. If the estimated confidence level for these TOFs is higher
+than the confidence level specified by the
+``turnover frequency.confidence`` parameter (96% for this case),
+convergence is then considered to have been achieved. The ``nreplicas``
+parameter allows several simulations to run in parallel to speed up the
+calculation at the expense of more computational power. For the time
+being, we will leave it at 1, but we will return to it later.
 
 In the second block of code, the ``ZacrosSteadyStateJob.Parameters()``
 class allows us to specify the grid in ``max time``, which in this case
@@ -132,7 +130,7 @@ parameters we just defined:
 
 .. parsed-literal::
 
-    [17.01|16:58:42] JOB plamsjob Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=1
+    [18.01|13:41:42] JOB plamsjob Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=1
 
 
 The steady-state setup calculation is ready. Therefore, we can start the
@@ -152,46 +150,46 @@ completion of every executed thread in case of parallel execution.
 
 .. parsed-literal::
 
-    [17.01|16:58:42] JOB plamsjob STARTED
-    [17.01|16:58:42] JOB plamsjob RUNNING
-    [17.01|16:58:42] JOB plamsjob/plamsjob_ss_iter000 STARTED
-    [17.01|16:58:42] JOB plamsjob/plamsjob_ss_iter000 RUNNING
-    [17.01|16:58:43] JOB plamsjob/plamsjob_ss_iter000 FINISHED
-    [17.01|16:58:43] JOB plamsjob/plamsjob_ss_iter000 SUCCESSFUL
-    [17.01|16:58:43]       species            TOF          error          ratio     conv?
-    [17.01|16:58:43]            CO       -0.75520        0.12483        0.16529     False
-    [17.01|16:58:43]            O2       -0.39453        0.07267        0.18419     False
-    [17.01|16:58:43]           CO2        0.75640        0.12615        0.16678     False
-    [17.01|16:58:43] JOB plamsjob Steady State Convergence: NO CONVERGENCE REACHED YET
-    [17.01|16:58:43] JOB plamsjob/plamsjob_ss_iter001 STARTED
-    [17.01|16:58:43] JOB plamsjob/plamsjob_ss_iter001 RUNNING
+    [18.01|13:41:42] JOB plamsjob STARTED
+    [18.01|13:41:42] JOB plamsjob RUNNING
+    [18.01|13:41:42] JOB plamsjob/plamsjob_ss_iter000 STARTED
+    [18.01|13:41:42] JOB plamsjob/plamsjob_ss_iter000 RUNNING
+    [18.01|13:41:42] JOB plamsjob/plamsjob_ss_iter000 FINISHED
+    [18.01|13:41:42] JOB plamsjob/plamsjob_ss_iter000 SUCCESSFUL
+    [18.01|13:41:43]       species            TOF          error          ratio     conv?
+    [18.01|13:41:43]            CO       -0.75520        0.12483        0.16529     False
+    [18.01|13:41:43]            O2       -0.39453        0.07267        0.18419     False
+    [18.01|13:41:43]           CO2        0.75640        0.12615        0.16678     False
+    [18.01|13:41:43] JOB plamsjob Steady State Convergence: NO CONVERGENCE REACHED YET
+    [18.01|13:41:43] JOB plamsjob/plamsjob_ss_iter001 STARTED
+    [18.01|13:41:43] JOB plamsjob/plamsjob_ss_iter001 RUNNING
     
     ...
     
-    [17.01|16:59:05] JOB plamsjob/plamsjob_ss_iter007 FINISHED
-    [17.01|16:59:06] JOB plamsjob/plamsjob_ss_iter007 SUCCESSFUL
-    [17.01|16:59:08]       species            TOF          error          ratio     conv?
-    [17.01|16:59:08]            CO       -0.60170        0.02183        0.03628      True
-    [17.01|16:59:08]            O2       -0.30081        0.01095        0.03639      True
-    [17.01|16:59:08]           CO2        0.60170        0.02183        0.03628      True
-    [17.01|16:59:08] JOB plamsjob Steady State Convergence: CONVERGENCE REACHED. DONE!
-    [17.01|16:59:08] JOB plamsjob FINISHED
-    [17.01|16:59:08] JOB plamsjob SUCCESSFUL
+    [18.01|13:42:04] JOB plamsjob/plamsjob_ss_iter007 FINISHED
+    [18.01|13:42:05] JOB plamsjob/plamsjob_ss_iter007 SUCCESSFUL
+    [18.01|13:42:07]       species            TOF          error          ratio     conv?
+    [18.01|13:42:07]            CO       -0.60170        0.02183        0.03628      True
+    [18.01|13:42:07]            O2       -0.30081        0.01095        0.03639      True
+    [18.01|13:42:07]           CO2        0.60170        0.02183        0.03628      True
+    [18.01|13:42:07] JOB plamsjob Steady State Convergence: CONVERGENCE REACHED. DONE!
+    [18.01|13:42:07] JOB plamsjob FINISHED
+    [18.01|13:42:07] JOB plamsjob SUCCESSFUL
 
 If the execution got up to this point, everything worked as expected.
 Hooray! Now, in the following lines, we just nicely print the results in
 a table. See the API documentation to learn more about the ``results``
 object is structured. Here we show the history of the simulation and see
 how it progresses as the ``max_time`` is increased. We print the TOF for
-CO2, its error, and whether the calculation converged. Notice that the
-calculation should have been converged at 720 s of ``max_time``.
+CO2 (in mol/s/site), its error, and whether the calculation converged.
+Notice that the calculation should have been converged at 720 s of
+``max_time``.
 
 .. code:: ipython3
 
     print(60*'-')
     fline = "{0:>8s}{1:>10s}{2:>15s}{3:>12s}{4:>10s}"
     print( fline.format('iter', 'max_time', 'TOF_CO2', 'error', 'conv?') )
-    print( fline.format('', 's', 'mol/s/site', 'mol/s/site', '') )
     print(60*'-')
     
     for i,step in enumerate(results.history()):
@@ -207,7 +205,6 @@ calculation should have been converged at 720 s of ``max_time``.
 
     ------------------------------------------------------------
         iter  max_time        TOF_CO2       error     conv?
-                     s     mol/s/site  mol/s/site          
     ------------------------------------------------------------
            0     20.00        0.75640     0.12615     False
            1    120.00        0.59301     0.03157     False
@@ -229,7 +226,7 @@ environment:
 
 .. parsed-literal::
 
-    [17.01|16:59:08] PLAMS run finished. Goodbye
+    [18.01|13:42:07] PLAMS run finished. Goodbye
 
 
 Additionally, you can see the aforementioned results visually if you

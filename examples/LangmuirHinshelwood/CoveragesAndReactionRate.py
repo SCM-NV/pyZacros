@@ -4,7 +4,32 @@
 # Langmuir-Hinshelwood model: Acceleration by Automated Rescaling of the Rate Constants.
 # --------------------------------------------------------------------------------------
 # 
-# asdasd
+# The scale disparity issue is common in Kinetic Monte Carlo simulations. It emerges
+# as a result of the fact that some fundamental events or groups of them typically
+# occur at vastly different time scales; in other words, their rate constants can
+# span multiple orders of magnitude. In heterogeneous catalysis, there are typically
+# two groups: 1) very fast events that correspond to the species' surface diffusions
+# and 2) slow reactions that change their chemical identity. The latter group of events
+# is usually the one of interest because it allows the evaluation of the material's
+# catalytic activity. In contrast, the species' surface diffusion does not contribute
+# significantly to the net evolution of the slow reactions. But, as becomes the most
+# frequent step, it also becomes the limiting factor of the simulation progress,
+# considerably increasing the computational cost. This tutorial shows how to speed up
+# the calculation by several orders of magnitude without sacrificing precision by
+# automatically detecting and scaling the rate constants of fast reactions.
+# 
+# We will focus on the net reaction $\text{CO}+\frac{1}{2}\text{O}_2\longrightarrow \text{CO}_2$
+# that takes place at a catalyst's surface and whose reaction mechanism is described by
+# the Langmuir-Hinshelwood model. Because this model has four very fast processes
+# ($CO$ and $O_2$ adsorption, and $O*$ and $CO*$ diffusion) and one slow process
+# ($CO$ oxidation), it is an ideal prototype for demonstrating the benefits of the
+# automated rescaling of rate constants technique. Our ultimate goal is to investigate
+# how altering the relative percentage of the gas reactants $CO$ and $O_2$ (at a specific
+# temperature and pressure) affect the rate of $CO_2$ production under steady state
+# conditions. This example is inspired on Zacros tutorial
+# [What's KMC All About and Why Bother](https://zacros.org/tutorials/12-about-kinetic-monte-carlo?showall=1).
+
+# Let's start! The first step is to import all packages we need:
 
 import multiprocessing
 import numpy
@@ -13,41 +38,66 @@ import scm.pyzacros as pz
 import scm.pyzacros.models
 
 
+# Then, we initialize the **pyZacros** environment. 
+
 scm.pyzacros.init()
 
 
+# Notice this command created the directory where all **Zacros** input and output files
+# will be stored if they are needed for future reference (``plams_workdir`` by default).
+# Typically, the user doesn't need to use these files.
+
+# This calculation necessitates a significant computational effort. On a typical laptop,
+# it should take less than an hour to complete. So, in order to speed things up, we'll
+# use the ``plams.JobRunner`` class to run as many parallel instances as possible. In this
+# case, we choose to use the maximum number of simultaneous processes (``maxjobs``) equal
+# to the number of processors in the machine. 
+
 maxjobs = multiprocessing.cpu_count()
 scm.plams.config.default_jobrunner = scm.plams.JobRunner(parallel=True, maxjobs=maxjobs)
-scm.plams.config.job.runscript.nproc = 1
 print('Running up to {} jobs in parallel simultaneously'.format(maxjobs))
 
+
+# Now, we initialize our Langmuir-Hinshelwood model, which by luck is available as a predefined model in pyZacros,
 
 lh = pz.models.LangmuirHinshelwood()
 
 
-dt = 1.0e-5
+# Then, we set up the Zacros calculation. All parameters are set using a ``Setting``
+# object. To begin, we define the physical parameters: ``temperature`` (in K), and
+# ``pressure`` (in bar). The calculation parameters are then set: ``species numbers``
+# (in s) determines how frequently information about the number of gas and surface
+# species will be stored, ``max time`` (in s) specifies the maximum allowed simulated
+# time, and "random seed" specifies the random seed to make the calculation precisely
+# reproducible. Keep in mind that ``max time`` defines the calculation's stopping
+# criterion, and it is the parameter that will be controlled later to achieve the
+# steady-state configuration. Finally, we create the ``ZacrosJob``, which uses the
+# parameters we just defined as well as the Langmuir-Hinshelwood model's lattice,
+# mechanism, and cluster expansion. Notice we do not run this job, we use it as a
+# reference for the steady-state calculation described below.
+
 z_sett = pz.Settings()
-z_sett.random_seed = 1609
 z_sett.temperature = 500.0
 z_sett.pressure = 1.000
-z_sett.species_numbers = ('time', dt)
-z_sett.max_time = 100*dt
+z_sett.species_numbers = ('time', 1.0e-5)
+z_sett.max_time = 100*1.0e-5
+z_sett.random_seed = 1609
 
 z_job = pz.ZacrosJob( settings=z_sett, lattice=lh.lattice,
                       mechanism=lh.mechanism,
                       cluster_expansion=lh.cluster_expansion )
 
 
+# Hmmmmm
+
 ss_sett = pz.Settings()
-ss_sett.turnover_frequency.nbatch = 20
 #ss_sett.turnover_frequency.confidence = 0.98
+#ss_sett.turnover_frequency.confidence = 0.99 --> Funciona???? para dejar el default?
 ss_sett.turnover_frequency.confidence = 0.5
 ss_sett.turnover_frequency.ignore_nbatch = 5
+# ss_sett.turnover_frequency.ignore_nbatch = 1 --> Funciona??> para dejar el default?
 ss_sett.nreplicas = 4
 ss_sett.scaling.enabled = 'T'
-ss_sett.scaling.partial_equilibrium_index_threshold = 0.1
-ss_sett.scaling.upper_bound = 100
-ss_sett.scaling.max_time = 10*dt
 
 ss_params = pz.ZacrosSteadyStateJob.Parameters()
 ss_params.add( 'max_time', 'restart.max_time',

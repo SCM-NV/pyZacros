@@ -1,7 +1,39 @@
 Langmuir-Hinshelwood model: Acceleration by Automated Rescaling of the Rate Constants.
 --------------------------------------------------------------------------------------
 
-asdasd
+The scale disparity issue is common in Kinetic Monte Carlo simulations.
+It emerges as a result of the fact that some fundamental events or
+groups of them typically occur at vastly different time scales; in other
+words, their rate constants can span multiple orders of magnitude. In
+heterogeneous catalysis, there are typically two groups: 1) very fast
+events that correspond to the species’ surface diffusions and 2) slow
+reactions that change their chemical identity. The latter group of
+events is usually the one of interest because it allows the evaluation
+of the material’s catalytic activity. In contrast, the species’ surface
+diffusion does not contribute significantly to the net evolution of the
+slow reactions. But, as becomes the most frequent step, it also becomes
+the limiting factor of the simulation progress, considerably increasing
+the computational cost. This tutorial shows how to speed up the
+calculation by several orders of magnitude without sacrificing precision
+by automatically detecting and scaling the rate constants of fast
+reactions.
+
+We will focus on the net reaction
+:math:`\text{CO}+\frac{1}{2}\text{O}_2\longrightarrow \text{CO}_2` that
+takes place at a catalyst’s surface and whose reaction mechanism is
+described by the Langmuir-Hinshelwood model. Because this model has four
+very fast processes (:math:`CO` and :math:`O_2` adsorption, and
+:math:`O*` and :math:`CO*` diffusion) and one slow process (:math:`CO`
+oxidation), it is an ideal prototype for demonstrating the benefits of
+the automated rescaling of rate constants technique. Our ultimate goal
+is to investigate how altering the relative percentage of the gas
+reactants :math:`CO` and :math:`O_2` (at a specific temperature and
+pressure) affect the rate of :math:`CO_2` production under steady state
+conditions. This example is inspired on Zacros tutorial `What’s KMC All
+About and Why
+Bother <https://zacros.org/tutorials/12-about-kinetic-monte-carlo?showall=1>`__.
+
+Let’s start! The first step is to import all packages we need:
 
 .. code:: ipython3
 
@@ -11,6 +43,8 @@ asdasd
     import scm.pyzacros as pz
     import scm.pyzacros.models
 
+Then, we initialize the **pyZacros** environment.
+
 .. code:: ipython3
 
     scm.pyzacros.init()
@@ -18,14 +52,25 @@ asdasd
 
 .. parsed-literal::
 
-    PLAMS working folder: /home/user/pyzacros/examples/ZiffGulariBarshad/plams_workdir.011
+    PLAMS working folder: /home/user/pyzacros/examples/ZiffGulariBarshad/plams_workdir.002
 
+
+Notice this command created the directory where all **Zacros** input and
+output files will be stored if they are needed for future reference
+(``plams_workdir`` by default). Typically, the user doesn’t need to use
+these files.
+
+This calculation necessitates a significant computational effort. On a
+typical laptop, it should take less than an hour to complete. So, in
+order to speed things up, we’ll use the ``plams.JobRunner`` class to run
+as many parallel instances as possible. In this case, we choose to use
+the maximum number of simultaneous processes (``maxjobs``) equal to the
+number of processors in the machine.
 
 .. code:: ipython3
 
     maxjobs = multiprocessing.cpu_count()
     scm.plams.config.default_jobrunner = scm.plams.JobRunner(parallel=True, maxjobs=maxjobs)
-    scm.plams.config.job.runscript.nproc = 1
     print('Running up to {} jobs in parallel simultaneously'.format(maxjobs))
 
 
@@ -34,36 +79,53 @@ asdasd
     Running up to 8 jobs in parallel simultaneously
 
 
+Now, we initialize our Langmuir-Hinshelwood model, which by luck is
+available as a predefined model in pyZacros,
+
 .. code:: ipython3
 
     lh = pz.models.LangmuirHinshelwood()
 
+Then, we set up the Zacros calculation. All parameters are set using a
+``Setting`` object. To begin, we define the physical parameters:
+``temperature`` (in K), and ``pressure`` (in bar). The calculation
+parameters are then set: ``species numbers`` (in s) determines how
+frequently information about the number of gas and surface species will
+be stored, ``max time`` (in s) specifies the maximum allowed simulated
+time, and “random seed” specifies the random seed to make the
+calculation precisely reproducible. Keep in mind that ``max time``
+defines the calculation’s stopping criterion, and it is the parameter
+that will be controlled later to achieve the steady-state configuration.
+Finally, we create the ``ZacrosJob``, which uses the parameters we just
+defined as well as the Langmuir-Hinshelwood model’s lattice, mechanism,
+and cluster expansion. Notice we do not run this job, we use it as a
+reference for the steady-state calculation described below.
+
 .. code:: ipython3
 
-    dt = 1.0e-5
     z_sett = pz.Settings()
-    z_sett.random_seed = 1609
     z_sett.temperature = 500.0
     z_sett.pressure = 1.000
-    z_sett.species_numbers = ('time', dt)
-    z_sett.max_time = 100*dt
+    z_sett.species_numbers = ('time', 1.0e-5)
+    z_sett.max_time = 100*1.0e-5
+    z_sett.random_seed = 1609
     
     z_job = pz.ZacrosJob( settings=z_sett, lattice=lh.lattice,
                           mechanism=lh.mechanism,
                           cluster_expansion=lh.cluster_expansion )
 
+Hmmmmm
+
 .. code:: ipython3
 
     ss_sett = pz.Settings()
-    ss_sett.turnover_frequency.nbatch = 20
     #ss_sett.turnover_frequency.confidence = 0.98
+    #ss_sett.turnover_frequency.confidence = 0.99 --> Funciona???? para dejar el default?
     ss_sett.turnover_frequency.confidence = 0.5
     ss_sett.turnover_frequency.ignore_nbatch = 5
+    # ss_sett.turnover_frequency.ignore_nbatch = 1 --> Funciona??> para dejar el default?
     ss_sett.nreplicas = 4
     ss_sett.scaling.enabled = 'T'
-    ss_sett.scaling.partial_equilibrium_index_threshold = 0.1
-    ss_sett.scaling.upper_bound = 100
-    ss_sett.scaling.max_time = 10*dt
     
     ss_params = pz.ZacrosSteadyStateJob.Parameters()
     ss_params.add( 'max_time', 'restart.max_time',
@@ -75,7 +137,7 @@ asdasd
 
 .. parsed-literal::
 
-    [17.01|22:35:16] JOB plamsjob Steady State Convergence: Using nbatch=20,confidence=0.5,ignore_nbatch=5,nreplicas=4
+    [18.01|17:53:30] JOB plamsjob Steady State Convergence: Using nbatch=20,confidence=0.5,ignore_nbatch=5,nreplicas=4
 
 
 .. code:: ipython3
@@ -90,9 +152,9 @@ asdasd
 
 .. parsed-literal::
 
-    [17.01|22:35:16] JOB plamsjob_ps_cond000 Steady State Convergence: Using nbatch=20,confidence=0.5,ignore_nbatch=5,nreplicas=4
-    [17.01|22:35:16] JOB plamsjob_ps_cond001 Steady State Convergence: Using nbatch=20,confidence=0.5,ignore_nbatch=5,nreplicas=4
-    [17.01|22:35:16] JOB plamsjob_ps_cond002 Steady State Convergence: Using nbatch=20,confidence=0.5,ignore_nbatch=5,nreplicas=4
+    [18.01|17:53:30] JOB plamsjob_ps_cond000 Steady State Convergence: Using nbatch=20,confidence=0.5,ignore_nbatch=5,nreplicas=4
+    [18.01|17:53:30] JOB plamsjob_ps_cond001 Steady State Convergence: Using nbatch=20,confidence=0.5,ignore_nbatch=5,nreplicas=4
+    [18.01|17:53:30] JOB plamsjob_ps_cond002 Steady State Convergence: Using nbatch=20,confidence=0.5,ignore_nbatch=5,nreplicas=4
 
 
 .. code:: ipython3
@@ -105,47 +167,47 @@ asdasd
 
 .. parsed-literal::
 
-    [17.01|22:35:16] JOB plamsjob STARTED
-    [17.01|22:35:16] Waiting for job plamsjob to finish
-    [17.01|22:35:16] JOB plamsjob RUNNING
-    [17.01|22:35:16] JOB plamsjob/plamsjob_ps_cond000 STARTED
-    [17.01|22:35:16] JOB plamsjob/plamsjob_ps_cond001 STARTED
-    [17.01|22:35:16] JOB plamsjob/plamsjob_ps_cond002 STARTED
+    [18.01|17:53:30] JOB plamsjob STARTED
+    [18.01|17:53:30] Waiting for job plamsjob to finish
+    [18.01|17:53:30] JOB plamsjob RUNNING
+    [18.01|17:53:30] JOB plamsjob/plamsjob_ps_cond000 STARTED
+    [18.01|17:53:30] JOB plamsjob/plamsjob_ps_cond001 STARTED
+    [18.01|17:53:30] JOB plamsjob/plamsjob_ps_cond002 STARTED
     
     ...
     
-    [17.01|22:35:55] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter004_rep001 SUCCESSFUL
-    [17.01|22:35:55] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter004_rep003 SUCCESSFUL
-    [17.01|22:35:55]    Replica #0
-    [17.01|22:35:55]       species            TOF          error          ratio     conv?
-    [17.01|22:35:55]            CO        0.00000        0.00000        0.00000      True
-    [17.01|22:35:55]            O2        0.07447        0.49566        6.65631     False
-    [17.01|22:35:55]           CO2        0.00000        0.00000        0.00000      True
-    [17.01|22:35:56]    Replica #1
-    [17.01|22:35:56]       species            TOF          error          ratio     conv?
-    [17.01|22:35:56]            CO        0.00000        0.00000        0.00000      True
-    [17.01|22:35:56]            O2       -0.67799        0.43939        0.64809     False
-    [17.01|22:35:56]           CO2        0.00000        0.00000        0.00000      True
-    [17.01|22:35:56]    Replica #2
-    [17.01|22:35:56]       species            TOF          error          ratio     conv?
-    [17.01|22:35:56]            CO        0.00000        0.00000        0.00000      True
-    [17.01|22:35:56]            O2       -0.88059        0.46912        0.53274     False
-    [17.01|22:35:56]           CO2        0.00000        0.00000        0.00000      True
-    [17.01|22:35:57]    Replica #3
-    [17.01|22:35:57]       species            TOF          error          ratio     conv?
-    [17.01|22:35:57]            CO        0.00000        0.00000        0.00000      True
-    [17.01|22:35:57]            O2       -1.89035        0.46856        0.24787      True
-    [17.01|22:35:57]           CO2        0.00000        0.00000        0.00000      True
-    [17.01|22:35:57]    Average
-    [17.01|22:35:57]       species            TOF          error          ratio     conv?
-    [17.01|22:35:57]            CO        0.00000        0.00000        0.00000      True
-    [17.01|22:35:57]            O2       -0.84362        0.31919        0.37836      True
-    [17.01|22:35:57]           CO2        0.00000        0.00000        0.00000      True
-    [17.01|22:35:57] JOB plamsjob/plamsjob_ps_cond000 Steady State Convergence: CONVERGENCE REACHED. DONE!
-    [17.01|22:35:57] JOB plamsjob/plamsjob_ps_cond000 FINISHED
-    [17.01|22:35:58] JOB plamsjob/plamsjob_ps_cond000 SUCCESSFUL
-    [17.01|22:36:01] JOB plamsjob FINISHED
-    [17.01|22:36:02] JOB plamsjob SUCCESSFUL
+    [18.01|17:59:07] Waiting for job plamsjob_ps_cond000_ss_iter000_rep001 to finish
+    [18.01|17:59:07] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter000_rep001 SUCCESSFUL
+    [18.01|17:59:07]    Replica #0
+    [18.01|17:59:07]       species            TOF          error          ratio     conv?
+    [18.01|17:59:07]            CO        0.00000        0.00000        0.00000      True
+    [18.01|17:59:07]            O2     -205.83333       18.65665        0.09064      True
+    [18.01|17:59:07]           CO2        0.00000        0.00000        0.00000      True
+    [18.01|17:59:07]    Replica #1
+    [18.01|17:59:07]       species            TOF          error          ratio     conv?
+    [18.01|17:59:07]            CO        0.00000        0.00000        0.00000      True
+    [18.01|17:59:07]            O2     -211.66667       23.30819        0.11012      True
+    [18.01|17:59:07]           CO2        0.00000        0.00000        0.00000      True
+    [18.01|17:59:07]    Replica #2
+    [18.01|17:59:07]       species            TOF          error          ratio     conv?
+    [18.01|17:59:07]            CO        0.00000        0.00000        0.00000      True
+    [18.01|17:59:07]            O2     -220.00000       21.63061        0.09832      True
+    [18.01|17:59:07]           CO2        0.00000        0.00000        0.00000      True
+    [18.01|17:59:07]    Replica #3
+    [18.01|17:59:07]       species            TOF          error          ratio     conv?
+    [18.01|17:59:07]            CO        0.00000        0.00000        0.00000      True
+    [18.01|17:59:07]            O2     -190.83333       24.10570        0.12632      True
+    [18.01|17:59:07]           CO2        0.00000        0.00000        0.00000      True
+    [18.01|17:59:08]    Average
+    [18.01|17:59:08]       species            TOF          error          ratio     conv?
+    [18.01|17:59:08]            CO        0.00000        0.00000        0.00000      True
+    [18.01|17:59:08]            O2     -207.08333       17.73975        0.08566      True
+    [18.01|17:59:08]           CO2        0.00000        0.00000        0.00000      True
+    [18.01|17:59:08] JOB plamsjob/plamsjob_ps_cond000 Steady State Convergence: CONVERGENCE REACHED. DONE!
+    [18.01|17:59:08] JOB plamsjob/plamsjob_ps_cond000 FINISHED
+    [18.01|17:59:08] JOB plamsjob/plamsjob_ps_cond000 SUCCESSFUL
+    [18.01|17:59:10] JOB plamsjob FINISHED
+    [18.01|17:59:11] JOB plamsjob SUCCESSFUL
 
 .. code:: ipython3
 
@@ -175,9 +237,9 @@ asdasd
     ------------------------------------------------
     cond     x_CO       ac_O      ac_CO      TOF_CO2
     ------------------------------------------------
-       0     0.00   0.678625   0.000000     0.000000
-       1     0.50   0.444906   0.279719   330.208333
-       2     1.00   0.000000   0.627156     0.000000
+       0     0.00   0.539562   0.000000     0.000000
+       1     0.50   0.447031   0.271031   307.500000
+       2     1.00   0.000000   0.151219     0.000000
 
 
 .. code:: ipython3
@@ -187,7 +249,7 @@ asdasd
 
 .. parsed-literal::
 
-    [17.01|22:36:05] PLAMS run finished. Goodbye
+    [18.01|17:59:12] PLAMS run finished. Goodbye
 
 
 .. math::
