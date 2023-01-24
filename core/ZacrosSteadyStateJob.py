@@ -367,7 +367,7 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
         self._surface_poisoned = False
 
         self.nbatch = 20
-        self.confidence = 0.99
+        self.confidence = 0.96
         self.ignore_nbatch = 1
         self.nreplicas = 1
         self.scaling_partial_equilibrium_index_threshold = 0.1
@@ -378,7 +378,7 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
         self.scaling_nevents_per_timestep = None
         self._new_timestep = None
 
-        self.nreplicas = self.settings.get('nreplicas', default=self.nreplicas)
+        self.nreplicas = self.settings.turnover_frequency.get('nreplicas', default=self.nreplicas)
 
         if 'turnover_frequency' in self.settings:
             self.nbatch = self.settings.turnover_frequency.get('nbatch', default=self.nbatch)

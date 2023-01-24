@@ -1,12 +1,12 @@
 import scm.plams
 import scm.pyzacros as pz
 
-import matplotlib.pyplot as plt
-
 scm.pyzacros.init()
 
 job = scm.pyzacros.load( "plams_workdir/plamsjob/plamsjob.dill" )
 results = job.results
+
+scm.pyzacros.finish()
 
 print((8+10+15+15+10+ 5)*"-")
 print("%8s"%"iter", "%10s"%"TOF_CO2",    "%15s"%"max_time","%15s"%"TOF_CO2_error", "%10s"%"conv?")
@@ -16,6 +16,8 @@ print((8+10+15+15+10+ 5)*"-")
 for i,step in enumerate(results.history()):
     print("%8d"%i, "%10.5f"%step['turnover_frequency']['CO2'], "%15d"%step['max_time'],
             "%15.5f"%step['turnover_frequency_error']['CO2'], "%10s"%step['converged']['CO2'])
+
+import matplotlib.pyplot as plt
 
 fig = plt.figure()
 ax = plt.axes()
@@ -30,5 +32,3 @@ for i in range(results.niterations()):
         ax.vlines( max(molecule_numbers['Time']) , 0, max(molecule_numbers['CO2']), colors='0.8', linestyles='--',)
 
 plt.show()
-
-scm.pyzacros.finish()

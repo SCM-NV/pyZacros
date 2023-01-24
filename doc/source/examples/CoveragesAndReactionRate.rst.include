@@ -1,6 +1,3 @@
-Langmuir-Hinshelwood model: Acceleration by Automated Rescaling of the Rate Constants.
---------------------------------------------------------------------------------------
-
 The scale disparity issue is common in Kinetic Monte Carlo simulations.
 It emerges as a result of the fact that some fundamental events or
 groups of them typically occur at vastly different time scales; in other
@@ -52,7 +49,7 @@ Then, we initialize the **pyZacros** environment.
 
 .. parsed-literal::
 
-    PLAMS working folder: /home/user/pyzacros/examples/ZiffGulariBarshad/plams_workdir.002
+    PLAMS working folder: /home/user/pyzacros/examples/ZiffGulariBarshad/plams_workdir
 
 
 Notice this command created the directory where all **Zacros** input and
@@ -61,10 +58,10 @@ output files will be stored if they are needed for future reference
 these files.
 
 This calculation necessitates a significant computational effort. On a
-typical laptop, it should take less than an hour to complete. So, in
-order to speed things up, we’ll use the ``plams.JobRunner`` class to run
-as many parallel instances as possible. In this case, we choose to use
-the maximum number of simultaneous processes (``maxjobs``) equal to the
+typical laptop, it should take around 20 min to complete. So, in order
+to speed things up, we’ll use the ``plams.JobRunner`` class to run as
+many parallel instances as possible. In this case, we choose to use the
+maximum number of simultaneous processes (``maxjobs``) equal to the
 number of processors in the machine.
 
 .. code:: ipython3
@@ -79,27 +76,35 @@ number of processors in the machine.
     Running up to 8 jobs in parallel simultaneously
 
 
-Now, we initialize our Langmuir-Hinshelwood model, which by luck is
+First, we initialize our Langmuir-Hinshelwood model, which by luck is
 available as a predefined model in pyZacros,
 
 .. code:: ipython3
 
     lh = pz.models.LangmuirHinshelwood()
 
-Then, we set up the Zacros calculation. All parameters are set using a
-``Setting`` object. To begin, we define the physical parameters:
-``temperature`` (in K), and ``pressure`` (in bar). The calculation
-parameters are then set: ``species numbers`` (in s) determines how
-frequently information about the number of gas and surface species will
-be stored, ``max time`` (in s) specifies the maximum allowed simulated
-time, and “random seed” specifies the random seed to make the
-calculation precisely reproducible. Keep in mind that ``max time``
-defines the calculation’s stopping criterion, and it is the parameter
-that will be controlled later to achieve the steady-state configuration.
-Finally, we create the ``ZacrosJob``, which uses the parameters we just
-defined as well as the Langmuir-Hinshelwood model’s lattice, mechanism,
-and cluster expansion. Notice we do not run this job, we use it as a
-reference for the steady-state calculation described below.
+Then, we must set up a ``ZacrosParametersScanJob`` calculation, which
+will allow us to scan the molar fraction of :math:`CO` as a parameter
+However, this calculation requires the definition of a
+``ZacrosSteadyStateJob``, that in turns requires a ``ZacrosJob``. So, We
+will go through them one at a time:
+
+**1. Setting up the ZacrosJob**
+
+For ``ZacrosJob``, all parameters are set using a ``Setting`` object. To
+begin, we define the physical parameters: ``temperature`` (in K), and
+``pressure`` (in bar). The calculation parameters are then set:
+``species numbers`` (in s) determines how frequently information about
+the number of gas and surface species will be stored, ``max time`` (in
+s) specifies the maximum allowed simulated time, and “random seed”
+specifies the random seed to make the calculation precisely
+reproducible. Keep in mind that ``max time`` defines the calculation’s
+stopping criterion, and it is the parameter that will be controlled
+later to achieve the steady-state configuration. Finally, we create the
+``ZacrosJob``, which uses the parameters we just defined as well as the
+Langmuir-Hinshelwood model’s lattice, mechanism, and cluster expansion.
+Notice we do not run this job, we use it as a reference for the
+steady-state calculation described below.
 
 .. code:: ipython3
 
@@ -114,22 +119,38 @@ reference for the steady-state calculation described below.
                           mechanism=lh.mechanism,
                           cluster_expansion=lh.cluster_expansion )
 
-Hmmmmm
+**2. Setting up the ZacrosSteadyStateJob**
+
+We also need to create a ``Setting`` object for ``ZacrosJob`` There, we
+ask for a steady-state configuration using a TOFs calculation with a 95%
+confidence level (``turnover frequency.confidence``), using four
+replicas to speed up the calculation (``turnover frequency.nreplicas``);
+for more information, see example **Ziff-Gulari-Barshad model: Steady
+State Conditions**. Then, we ask for the rate constants to be
+automatically scaled (“scaling.enabled”) using an inspection time of
+0.0006 s (“scaling.max time”). In a nutshell, the scaling algorithm uses
+this maximum time and the original rate constants to execute a probe
+simulation. From there, the occurrence rates for each reaction are
+determined and scaled appropriately. Only reactions that are proven to
+be quasi-equilibrated are modified. The actual simulation is then
+started from the beginning using the new reaction rates following this.
+The ``ZacrosSteadyStateJob.Parameters`` object allows to set the grid of
+maximum times to explore in order to reach the steady state
+(``ss_params``). Finally, we create ``ZacrosSteadyStateJob``, which
+references the ``ZacrosJob`` defined above (``z_job``) as well as the
+``Settings`` object and parameters we just defined:
 
 .. code:: ipython3
 
     ss_sett = pz.Settings()
-    #ss_sett.turnover_frequency.confidence = 0.98
-    #ss_sett.turnover_frequency.confidence = 0.99 --> Funciona???? para dejar el default?
-    ss_sett.turnover_frequency.confidence = 0.5
-    ss_sett.turnover_frequency.ignore_nbatch = 5
-    # ss_sett.turnover_frequency.ignore_nbatch = 1 --> Funciona??> para dejar el default?
-    ss_sett.nreplicas = 4
+    ss_sett.turnover_frequency.confidence = 0.95
+    ss_sett.turnover_frequency.nreplicas = 4
     ss_sett.scaling.enabled = 'T'
+    ss_sett.scaling.max_time = 60*1e-5
     
     ss_params = pz.ZacrosSteadyStateJob.Parameters()
     ss_params.add( 'max_time', 'restart.max_time',
-                    2*z_sett.max_time*( numpy.arange(50)+1 )**2 )
+                    2*z_sett.max_time*( numpy.arange(10)+1 )**2 )
     
     ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=z_job,
                                       parameters=ss_params )
@@ -137,14 +158,28 @@ Hmmmmm
 
 .. parsed-literal::
 
-    [18.01|17:53:30] JOB plamsjob Steady State Convergence: Using nbatch=20,confidence=0.5,ignore_nbatch=5,nreplicas=4
+    [23.01|11:46:49] JOB plamsjob Steady State Convergence: Using nbatch=20,confidence=0.95,ignore_nbatch=1,nreplicas=4
 
+
+**3. Setting up the ZacrosParametersScanJob**
+
+Although the ``ZacrosParametersScanJob`` does not require a ``Setting``
+object, it does require a ``ZacrosSteadyStateJob.Parameters`` object to
+specify which parameters must be modified systematically. In this
+instance, all we need is a dependent parameter, the :math:`O_2` molar
+fraction ``x_O2``, and an independent parameter, the :math:`CO` molar
+fraction ``x_CO``, which ranges from 0.05 to 0.95. Keep in mind that the
+condition ``x_CO+x_O2=1`` must be met. These molar fractions will be
+used internally to replace ``molar fraction.CO`` and
+``molar fraction.O2`` in the Zacros input files. Then, using the
+``ZacrosSteadyStateJob`` defined earlier (``ss job``) and the parameters
+we just defined (``ps params``), we create the
+``ZacrosParametersScanJob``:
 
 .. code:: ipython3
 
     ps_params = pz.ZacrosParametersScanJob.Parameters()
-    #ps_params.add( 'x_CO', 'molar_fraction.CO', numpy.linspace(0.0, 1.0, 21) )
-    ps_params.add( 'x_CO', 'molar_fraction.CO', numpy.linspace(0.0, 1.0, 3) )
+    ps_params.add( 'x_CO', 'molar_fraction.CO', numpy.linspace(0.05, 0.95, 11) )
     ps_params.add( 'x_O2', 'molar_fraction.O2', lambda params: 1.0-params['x_CO'] )
     
     ps_job = pz.ZacrosParametersScanJob( reference=ss_job, parameters=ps_params )
@@ -152,10 +187,26 @@ Hmmmmm
 
 .. parsed-literal::
 
-    [18.01|17:53:30] JOB plamsjob_ps_cond000 Steady State Convergence: Using nbatch=20,confidence=0.5,ignore_nbatch=5,nreplicas=4
-    [18.01|17:53:30] JOB plamsjob_ps_cond001 Steady State Convergence: Using nbatch=20,confidence=0.5,ignore_nbatch=5,nreplicas=4
-    [18.01|17:53:30] JOB plamsjob_ps_cond002 Steady State Convergence: Using nbatch=20,confidence=0.5,ignore_nbatch=5,nreplicas=4
+    [23.01|11:46:49] JOB plamsjob_ps_cond000 Steady State Convergence: Using nbatch=20,confidence=0.95,ignore_nbatch=1,nreplicas=4
+    [23.01|11:46:49] JOB plamsjob_ps_cond001 Steady State Convergence: Using nbatch=20,confidence=0.95,ignore_nbatch=1,nreplicas=4
+    [23.01|11:46:49] JOB plamsjob_ps_cond002 Steady State Convergence: Using nbatch=20,confidence=0.95,ignore_nbatch=1,nreplicas=4
+    [23.01|11:46:49] JOB plamsjob_ps_cond003 Steady State Convergence: Using nbatch=20,confidence=0.95,ignore_nbatch=1,nreplicas=4
+    [23.01|11:46:49] JOB plamsjob_ps_cond004 Steady State Convergence: Using nbatch=20,confidence=0.95,ignore_nbatch=1,nreplicas=4
+    [23.01|11:46:49] JOB plamsjob_ps_cond005 Steady State Convergence: Using nbatch=20,confidence=0.95,ignore_nbatch=1,nreplicas=4
+    [23.01|11:46:49] JOB plamsjob_ps_cond006 Steady State Convergence: Using nbatch=20,confidence=0.95,ignore_nbatch=1,nreplicas=4
+    [23.01|11:46:49] JOB plamsjob_ps_cond007 Steady State Convergence: Using nbatch=20,confidence=0.95,ignore_nbatch=1,nreplicas=4
+    [23.01|11:46:49] JOB plamsjob_ps_cond008 Steady State Convergence: Using nbatch=20,confidence=0.95,ignore_nbatch=1,nreplicas=4
+    [23.01|11:46:49] JOB plamsjob_ps_cond009 Steady State Convergence: Using nbatch=20,confidence=0.95,ignore_nbatch=1,nreplicas=4
+    [23.01|11:46:49] JOB plamsjob_ps_cond010 Steady State Convergence: Using nbatch=20,confidence=0.95,ignore_nbatch=1,nreplicas=4
 
+
+The parameters scan calculation setup is ready. Therefore, we can start
+it by invoking the function ``run()``, which will provide access to the
+results via the ``results`` variable after it has been completed. The
+sentence involving the method ``ok()``, verifies that the calculation
+was successfully executed, and waits for the completion of every
+executed thread. Go and grab a cup of coffee, this step will take around
+15 mins!
 
 .. code:: ipython3
 
@@ -167,47 +218,58 @@ Hmmmmm
 
 .. parsed-literal::
 
-    [18.01|17:53:30] JOB plamsjob STARTED
-    [18.01|17:53:30] Waiting for job plamsjob to finish
-    [18.01|17:53:30] JOB plamsjob RUNNING
-    [18.01|17:53:30] JOB plamsjob/plamsjob_ps_cond000 STARTED
-    [18.01|17:53:30] JOB plamsjob/plamsjob_ps_cond001 STARTED
-    [18.01|17:53:30] JOB plamsjob/plamsjob_ps_cond002 STARTED
+    [23.01|11:46:49] JOB plamsjob STARTED
+    [23.01|11:46:49] Waiting for job plamsjob to finish
+    [23.01|11:46:49] JOB plamsjob RUNNING
+    [23.01|11:46:49] JOB plamsjob/plamsjob_ps_cond000 STARTED
+    [23.01|11:46:49] JOB plamsjob/plamsjob_ps_cond001 STARTED
+    [23.01|11:46:49] JOB plamsjob/plamsjob_ps_cond002 STARTED
     
     ...
     
-    [18.01|17:59:07] Waiting for job plamsjob_ps_cond000_ss_iter000_rep001 to finish
-    [18.01|17:59:07] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter000_rep001 SUCCESSFUL
-    [18.01|17:59:07]    Replica #0
-    [18.01|17:59:07]       species            TOF          error          ratio     conv?
-    [18.01|17:59:07]            CO        0.00000        0.00000        0.00000      True
-    [18.01|17:59:07]            O2     -205.83333       18.65665        0.09064      True
-    [18.01|17:59:07]           CO2        0.00000        0.00000        0.00000      True
-    [18.01|17:59:07]    Replica #1
-    [18.01|17:59:07]       species            TOF          error          ratio     conv?
-    [18.01|17:59:07]            CO        0.00000        0.00000        0.00000      True
-    [18.01|17:59:07]            O2     -211.66667       23.30819        0.11012      True
-    [18.01|17:59:07]           CO2        0.00000        0.00000        0.00000      True
-    [18.01|17:59:07]    Replica #2
-    [18.01|17:59:07]       species            TOF          error          ratio     conv?
-    [18.01|17:59:07]            CO        0.00000        0.00000        0.00000      True
-    [18.01|17:59:07]            O2     -220.00000       21.63061        0.09832      True
-    [18.01|17:59:07]           CO2        0.00000        0.00000        0.00000      True
-    [18.01|17:59:07]    Replica #3
-    [18.01|17:59:07]       species            TOF          error          ratio     conv?
-    [18.01|17:59:07]            CO        0.00000        0.00000        0.00000      True
-    [18.01|17:59:07]            O2     -190.83333       24.10570        0.12632      True
-    [18.01|17:59:07]           CO2        0.00000        0.00000        0.00000      True
-    [18.01|17:59:08]    Average
-    [18.01|17:59:08]       species            TOF          error          ratio     conv?
-    [18.01|17:59:08]            CO        0.00000        0.00000        0.00000      True
-    [18.01|17:59:08]            O2     -207.08333       17.73975        0.08566      True
-    [18.01|17:59:08]           CO2        0.00000        0.00000        0.00000      True
-    [18.01|17:59:08] JOB plamsjob/plamsjob_ps_cond000 Steady State Convergence: CONVERGENCE REACHED. DONE!
-    [18.01|17:59:08] JOB plamsjob/plamsjob_ps_cond000 FINISHED
-    [18.01|17:59:08] JOB plamsjob/plamsjob_ps_cond000 SUCCESSFUL
-    [18.01|17:59:10] JOB plamsjob FINISHED
-    [18.01|17:59:11] JOB plamsjob SUCCESSFUL
+    [23.01|12:00:26] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter003_rep003 SUCCESSFUL
+    [23.01|12:00:27] JOB plamsjob/plamsjob_ps_cond000/plamsjob_ps_cond000_ss_iter003_rep001 SUCCESSFUL
+    [23.01|12:00:27]    Replica #0
+    [23.01|12:00:27]       species            TOF          error          ratio     conv?
+    [23.01|12:00:27]            CO      -55.24401        4.32055        0.07821     False
+    [23.01|12:00:27]            O2      -26.47980        1.94110        0.07331     False
+    [23.01|12:00:27]           CO2       54.62957        3.99152        0.07307     False
+    [23.01|12:00:28]    Replica #1
+    [23.01|12:00:28]       species            TOF          error          ratio     conv?
+    [23.01|12:00:28]            CO      -57.21305        4.33638        0.07579     False
+    [23.01|12:00:28]            O2      -27.64411        2.39151        0.08651     False
+    [23.01|12:00:28]           CO2       57.23964        4.17937        0.07302     False
+    [23.01|12:00:29]    Replica #2
+    [23.01|12:00:29]       species            TOF          error          ratio     conv?
+    [23.01|12:00:29]            CO      -54.52540        3.34967        0.06143     False
+    [23.01|12:00:29]            O2      -26.37545        2.06279        0.07821     False
+    [23.01|12:00:29]           CO2       54.14939        3.32572        0.06142     False
+    [23.01|12:00:29]    Replica #3
+    [23.01|12:00:29]       species            TOF          error          ratio     conv?
+    [23.01|12:00:30]            CO      -52.52688        4.84537        0.09225     False
+    [23.01|12:00:30]            O2      -26.90450        2.78063        0.10335     False
+    [23.01|12:00:30]           CO2       52.91640        4.65244        0.08792     False
+    [23.01|12:00:30]    Average
+    [23.01|12:00:30]       species            TOF          error          ratio     conv?
+    [23.01|12:00:30]            CO      -54.87733        1.63967        0.02988      True
+    [23.01|12:00:30]            O2      -26.85096        1.08631        0.04046      True
+    [23.01|12:00:30]           CO2       54.73375        1.56100        0.02852      True
+    [23.01|12:00:30] JOB plamsjob/plamsjob_ps_cond000 Steady State Convergence: CONVERGENCE REACHED. DONE!
+    [23.01|12:00:30] JOB plamsjob/plamsjob_ps_cond000 FINISHED
+    [23.01|12:00:31] JOB plamsjob/plamsjob_ps_cond000 SUCCESSFUL
+    [23.01|12:00:36] JOB plamsjob FINISHED
+    [23.01|12:00:41] JOB plamsjob SUCCESSFUL
+
+If the execution got up to this point, everything worked as expected.
+Hooray!
+
+Finally, in the following lines, we just nicely print the results in a
+table. See the API documentation to learn more about how the ``results``
+object is structured, and the available methods. In this case, we use
+the ``turnover_frequency()`` and ``average_coverage()`` methods to get
+the TOF for the gas species and average coverage for the surface
+species, respectively. Regarding the latter one, we use the last ten
+steps in the simulation to calculate the average coverages.
 
 .. code:: ipython3
 
@@ -237,10 +299,32 @@ Hmmmmm
     ------------------------------------------------
     cond     x_CO       ac_O      ac_CO      TOF_CO2
     ------------------------------------------------
-       0     0.00   0.539562   0.000000     0.000000
-       1     0.50   0.447031   0.271031   307.500000
-       2     1.00   0.000000   0.151219     0.000000
+       0     0.05   0.665594   0.028219    54.733748
+       1     0.14   0.615375   0.082844   135.299544
+       2     0.23   0.582250   0.126594   198.215992
+       3     0.32   0.532375   0.178719   257.936395
+       4     0.41   0.497031   0.221625   300.382949
+       5     0.50   0.442750   0.272969   329.214754
+       6     0.59   0.402031   0.318562   352.259276
+       7     0.68   0.351687   0.372437   351.805662
+       8     0.77   0.297906   0.422687   332.247334
+       9     0.86   0.232156   0.488156   310.444388
+      10     0.95   0.144281   0.554344   220.656898
 
+
+The results table above demonstrates that when :math:`CO` coverage
+rises, the net :math:`CO` oxidation reaction tends to progress more
+quickly until it reaches a maximum of about 0.7. At this point, it
+begins to decline. Notice that the maximal :math:`CO_2` generation
+occurs simultaneously as the :math:`CO*` coverage reaches parity with
+the :math:`O*` coverage. This makes intuitive sense since, at that
+point, we maximize the likelihood of discovering an :math:`O*` and a
+:math:`CO*` that are close enough to react in accordance with the proper
+reaction’s stoichiometry. The number of :math:`O*` or :math:`CO*`
+observers rises as we move away from that critical point, decreasing the
+likelihood that the :math:`CO` oxidation process could take place.
+
+Now, we can close the pyZacros environment:
 
 .. code:: ipython3
 
@@ -249,13 +333,5 @@ Hmmmmm
 
 .. parsed-literal::
 
-    [18.01|17:59:12] PLAMS run finished. Goodbye
-
-
-.. math::
-
-
-   \theta_\text{CO} = \frac{ K_\text{CO}P_\text{CO} }{ 1 + K_\text{CO}P_\text{CO} + \sqrt{K_{\text{O}_2}P_\text{O}} } \\
-   \theta_\text{O} = \frac{ \sqrt{K_{\text{O}_2}P_\text{O}} }{ 1 + K_\text{CO}P_\text{CO} + \sqrt{K_{\text{O}_2}P_\text{O}} } \\[7mm]
-   \text{TOF}_{\text{CO}_2} = 6 \, k_\text{oxi}\theta_\text{CO}\theta_\text{O}
+    [23.01|12:00:55] PLAMS run finished. Goodbye
 

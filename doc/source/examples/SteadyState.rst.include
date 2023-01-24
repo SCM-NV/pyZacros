@@ -35,7 +35,7 @@ Then, we initialize the **pyZacros** environment.
 
 .. parsed-literal::
 
-    PLAMS working folder: /home/user/pyzacros/examples/ZiffGulariBarshad/plams_workdir
+    PLAMS working folder: /home/user/pyzacros/examples/ZiffGulariBarshad/plams_workdir.020
 
 
 Notice this command created the directory where all **Zacros** input and
@@ -100,10 +100,11 @@ contiguous batches (20 for this case) where the TOFs are calculated for
 each one. If the estimated confidence level for these TOFs is higher
 than the confidence level specified by the
 ``turnover frequency.confidence`` parameter (96% for this case),
-convergence is then considered to have been achieved. The ``nreplicas``
-parameter allows several simulations to run in parallel to speed up the
-calculation at the expense of more computational power. For the time
-being, we will leave it at 1, but we will return to it later.
+convergence is then considered to have been achieved. The
+``turnover frequency.nreplicas`` parameter allows several simulations to
+run in parallel to speed up the calculation at the expense of more
+computational power. For the time being, we will leave it at 1, but we
+will return to it later.
 
 In the second block of code, the ``ZacrosSteadyStateJob.Parameters()``
 class allows us to specify the grid in ``max time``, which in this case
@@ -120,7 +121,7 @@ parameters we just defined:
     ss_sett = pz.Settings()
     ss_sett.turnover_frequency.nbatch = 20
     ss_sett.turnover_frequency.confidence = 0.96
-    ss_sett.nreplicas = 1
+    ss_sett.turnover_frequency.nreplicas = 1
     
     parameters = pz.ZacrosSteadyStateJob.Parameters()
     parameters.add( 'max_time', 'restart.max_time', numpy.arange(20.0, 1000.0, 100) )
@@ -130,15 +131,15 @@ parameters we just defined:
 
 .. parsed-literal::
 
-    [18.01|13:41:42] JOB plamsjob Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=1
+    [19.01|15:51:26] JOB plamsjob Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=1
 
 
-The steady-state setup calculation is ready. Therefore, we can start the
-calculation by invoking the function ``run()``, which will provide
-access to the results via the ``results`` variable after it has been
-completed. The sentence involving the method ``ss_job.ok()``, verifies
-that the calculation was successfully executed, and waits for the
-completion of every executed thread in case of parallel execution.
+The steady-state calculation setup is ready. Therefore, we can start it
+by invoking the function ``run()``, which will provide access to the
+results via the ``results`` variable after it has been completed. The
+sentence involving the method ``ok()``, verifies that the calculation
+was successfully executed, and waits for the completion of every
+executed thread in case of parallel execution.
 
 .. code:: ipython3
 
@@ -150,35 +151,37 @@ completion of every executed thread in case of parallel execution.
 
 .. parsed-literal::
 
-    [18.01|13:41:42] JOB plamsjob STARTED
-    [18.01|13:41:42] JOB plamsjob RUNNING
-    [18.01|13:41:42] JOB plamsjob/plamsjob_ss_iter000 STARTED
-    [18.01|13:41:42] JOB plamsjob/plamsjob_ss_iter000 RUNNING
-    [18.01|13:41:42] JOB plamsjob/plamsjob_ss_iter000 FINISHED
-    [18.01|13:41:42] JOB plamsjob/plamsjob_ss_iter000 SUCCESSFUL
-    [18.01|13:41:43]       species            TOF          error          ratio     conv?
-    [18.01|13:41:43]            CO       -0.75520        0.12483        0.16529     False
-    [18.01|13:41:43]            O2       -0.39453        0.07267        0.18419     False
-    [18.01|13:41:43]           CO2        0.75640        0.12615        0.16678     False
-    [18.01|13:41:43] JOB plamsjob Steady State Convergence: NO CONVERGENCE REACHED YET
-    [18.01|13:41:43] JOB plamsjob/plamsjob_ss_iter001 STARTED
-    [18.01|13:41:43] JOB plamsjob/plamsjob_ss_iter001 RUNNING
+    [19.01|15:51:26] JOB plamsjob STARTED
+    [19.01|15:51:26] JOB plamsjob RUNNING
+    [19.01|15:51:26] JOB plamsjob/plamsjob_ss_iter000 STARTED
+    [19.01|15:51:26] JOB plamsjob/plamsjob_ss_iter000 RUNNING
+    [19.01|15:51:27] JOB plamsjob/plamsjob_ss_iter000 FINISHED
+    [19.01|15:51:27] JOB plamsjob/plamsjob_ss_iter000 SUCCESSFUL
+    [19.01|15:51:28]       species            TOF          error          ratio     conv?
+    [19.01|15:51:28]            CO       -0.75520        0.12483        0.16529     False
+    [19.01|15:51:28]            O2       -0.39453        0.07267        0.18419     False
+    [19.01|15:51:28]           CO2        0.75640        0.12615        0.16678     False
+    [19.01|15:51:28] JOB plamsjob Steady State Convergence: NO CONVERGENCE REACHED YET
+    [19.01|15:51:28] JOB plamsjob/plamsjob_ss_iter001 STARTED
+    [19.01|15:51:28] JOB plamsjob/plamsjob_ss_iter001 RUNNING
     
     ...
     
-    [18.01|13:42:04] JOB plamsjob/plamsjob_ss_iter007 FINISHED
-    [18.01|13:42:05] JOB plamsjob/plamsjob_ss_iter007 SUCCESSFUL
-    [18.01|13:42:07]       species            TOF          error          ratio     conv?
-    [18.01|13:42:07]            CO       -0.60170        0.02183        0.03628      True
-    [18.01|13:42:07]            O2       -0.30081        0.01095        0.03639      True
-    [18.01|13:42:07]           CO2        0.60170        0.02183        0.03628      True
-    [18.01|13:42:07] JOB plamsjob Steady State Convergence: CONVERGENCE REACHED. DONE!
-    [18.01|13:42:07] JOB plamsjob FINISHED
-    [18.01|13:42:07] JOB plamsjob SUCCESSFUL
+    [19.01|15:51:56] JOB plamsjob/plamsjob_ss_iter007 FINISHED
+    [19.01|15:51:56] JOB plamsjob/plamsjob_ss_iter007 SUCCESSFUL
+    [19.01|15:51:58]       species            TOF          error          ratio     conv?
+    [19.01|15:51:58]            CO       -0.60170        0.02183        0.03628      True
+    [19.01|15:51:58]            O2       -0.30081        0.01095        0.03639      True
+    [19.01|15:51:58]           CO2        0.60170        0.02183        0.03628      True
+    [19.01|15:51:58] JOB plamsjob Steady State Convergence: CONVERGENCE REACHED. DONE!
+    [19.01|15:51:58] JOB plamsjob FINISHED
+    [19.01|15:51:59] JOB plamsjob SUCCESSFUL
 
 If the execution got up to this point, everything worked as expected.
-Hooray! Now, in the following lines, we just nicely print the results in
-a table. See the API documentation to learn more about the ``results``
+Hooray!
+
+Now, in the following lines, we just nicely print the results in a
+table. See the API documentation to learn more about how the ``results``
 object is structured. Here we show the history of the simulation and see
 how it progresses as the ``max_time`` is increased. We print the TOF for
 CO2 (in mol/s/site), its error, and whether the calculation converged.
@@ -226,17 +229,16 @@ environment:
 
 .. parsed-literal::
 
-    [18.01|13:42:07] PLAMS run finished. Goodbye
+    [19.01|15:51:59] PLAMS run finished. Goodbye
 
 
 Additionally, you can see the aforementioned results visually if you
 have installed the package `matplotlib <https://matplotlib.org/>`__.
-Please review the code in the section below. In particular, pay close
-attention to how to obtain the “children results” (each thread executed)
-which are identified by their replica and iteration number. In the
-figure, each iteration is represented by a different color, and the
-stopping points on “max time” are represented by vertical gray dashed
-lines.
+Please review the code below. In particular, pay close attention to how
+to obtain the “children results” (each thread executed) which are
+identified by their replica and iteration number. In the figure, each
+iteration is represented by a different color, and the stopping points
+on “max time” are represented by vertical gray dashed lines.
 
 .. code:: ipython3
 

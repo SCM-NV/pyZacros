@@ -82,9 +82,9 @@ job = pz.ZacrosJob( settings=z_sett,
 # for each one. If the estimated confidence level for these TOFs is higher than the
 # confidence level specified by the ``turnover frequency.confidence`` parameter
 # (96% for this case), convergence is then considered to have been achieved. The
-# ``nreplicas`` parameter allows several simulations to run in parallel to speed up
-# the calculation at the expense of more computational power. For the time being,
-# we will leave it at 1, but we will return to it later.
+# ``turnover frequency.nreplicas`` parameter allows several simulations to run in
+# parallel to speed up the calculation at the expense of more computational power.
+# For the time being, we will leave it at 1, but we will return to it later.
 # 
 # In the second block of code, the ``ZacrosSteadyStateJob.Parameters()`` class allows
 # us to specify the grid in ``max time``, which in this case ranges from 20 to 1000
@@ -98,7 +98,7 @@ job = pz.ZacrosJob( settings=z_sett,
 ss_sett = pz.Settings()
 ss_sett.turnover_frequency.nbatch = 20
 ss_sett.turnover_frequency.confidence = 0.96
-ss_sett.nreplicas = 1
+ss_sett.turnover_frequency.nreplicas = 1
 
 parameters = pz.ZacrosSteadyStateJob.Parameters()
 parameters.add( 'max_time', 'restart.max_time', numpy.arange(20.0, 1000.0, 100) )
@@ -106,10 +106,10 @@ parameters.add( 'max_time', 'restart.max_time', numpy.arange(20.0, 1000.0, 100) 
 ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=job, parameters=parameters )
 
 
-# The steady-state setup calculation is ready. Therefore, we can start the calculation
+# The steady-state calculation setup is ready. Therefore, we can start it
 # by invoking the function ``run()``, which will provide access to the results via the
 # ``results`` variable after it has been completed. The sentence involving the method
-# ``ss_job.ok()``, verifies that the calculation was successfully executed, and waits
+# ``ok()``, verifies that the calculation was successfully executed, and waits
 # for the completion of every executed thread in case of parallel execution.
 
 results = ss_job.run()
@@ -119,8 +119,9 @@ if not ss_job.ok():
 
 
 # If the execution got up to this point, everything worked as expected. Hooray!
+# 
 # Now, in the following lines, we just nicely print the results in a table. See
-# the API documentation to learn more about the ``results`` object is structured.
+# the API documentation to learn more about how the ``results`` object is structured.
 # Here we show the history of the simulation and see how it progresses as the
 # ``max_time`` is increased. We print the TOF for CO2 (in mol/s/site), its error,
 # and whether the calculation converged. Notice that the calculation should have
@@ -147,8 +148,8 @@ scm.pyzacros.finish()
 
 # Additionally, you can see the aforementioned results visually if you have
 # installed the package [matplotlib](https://matplotlib.org/). Please review
-# the code in the section below. In particular, pay close attention to how to
-# obtain the "children results" (each thread executed) which are identified by
+# the code below. In particular, pay close attention to how to obtain
+# the "children results" (each thread executed) which are identified by
 # their replica and iteration number. In the figure, each iteration is
 # represented by a different color, and the stopping points on "max time" are
 # represented by vertical gray dashed lines.

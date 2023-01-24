@@ -3,10 +3,10 @@
       <br>
 
 .. Note::
-   To follow the example of this tutorial, either:
+   To follow this tutorial, either:
 
    * Download :download:`SteadyState.py <../../../examples/ZiffGulariBarshad/SteadyState.py>` (run as ``$AMSBIN/amspython SteadyState.py``).
-   * Download :download:`SteadyState.ipynb <../../../examples/ZiffGulariBarshad/SteadyState.ipynb>` (see also: how to install `Jupyterlab <:ref:`install-and-run-jupyter-lab-jupyter-notebooks>`)
+   * Download :download:`SteadyState.ipynb <../../../examples/ZiffGulariBarshad/SteadyState.ipynb>` (see also: how to install `Jupyterlab <../../Scripting/Python_Stack/Python_Stack.html#install-and-run-jupyter-lab-jupyter-notebooks>`__)
 
 .. include:: SteadyState.rst.include
 
