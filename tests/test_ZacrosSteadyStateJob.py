@@ -38,7 +38,7 @@ def test_ZacrosSteadyStateJob():
         sett = pz.Settings()
         sett.turnover_frequency.nbatch = 20
         sett.turnover_frequency.confidence = 0.97
-        sett.nreplicas = 2
+        sett.turnover_frequency.nreplicas = 2
 
         mjob = pz.ZacrosSteadyStateJob( settings=sett, reference=job, parameters=parameters )
 
