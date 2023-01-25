@@ -5,72 +5,87 @@ import scm.plams
 import scm.pyzacros as pz
 import scm.pyzacros.models
 
-zgb = pz.models.ZiffGulariBarshad()
-
-#---------------------------------------------
-# Calculation Settings
-#---------------------------------------------
 scm.pyzacros.init()
 
-# Run as many job simultaneously as there are cpu on the system
+#==============================================
+# Initializing the ZGB model
+#==============================================
+
+zgb = pz.models.ZiffGulariBarshad()
+
+#==============================================
+# Calculation Settings and Execution
+#==============================================
+
+# Configuring parallel execution
+#--------------------------------
 maxjobs = multiprocessing.cpu_count()
 scm.plams.config.default_jobrunner = scm.plams.JobRunner(parallel=True, maxjobs=maxjobs)
 scm.plams.config.job.runscript.nproc = 1
 print('Running up to {} jobs in parallel simultaneously'.format(maxjobs))
 
-# Settings:
+# Settings for ZacrosJob
+#------------------------
 sett = pz.Settings()
 sett.molar_fraction.CO = 0.45
 sett.molar_fraction.O2 = 0.55
-sett.random_seed = 953129
 sett.temperature = 500.0
 sett.pressure = 1.0
+sett.max_time = 10.0
 sett.snapshots = ('time', 0.5)
 sett.species_numbers = ('time', 0.1)
-sett.max_time = 10.0
+sett.random_seed = 953129
 
-job = pz.ZacrosJob( settings=sett, lattice=zgb.lattice, mechanism=zgb.mechanism, cluster_expansion=zgb.cluster_expansion )
+job = pz.ZacrosJob( settings=sett,
+                    lattice=zgb.lattice,
+                    mechanism=zgb.mechanism,
+                    cluster_expansion=zgb.cluster_expansion )
+
+# Settings for ZacrosParametersScanJob
+#--------------------------------------
 
 parameters = pz.ZacrosParametersScanJob.Parameters()
 parameters.add( 'x_CO', 'molar_fraction.CO', numpy.arange(0.2, 0.8, 0.01) )
 parameters.add( 'x_O2', 'molar_fraction.O2', lambda params: 1.0-params['x_CO'] )
 
-#---------------------------------------------
-# Running the calculations
-#---------------------------------------------
+mjob = pz.ZacrosParametersScanJob( reference=job,
+                                   parameters=parameters )
 
-mjob = pz.ZacrosParametersScanJob( reference=job, parameters=parameters )
+# Running the calculations
+#--------------------------
 
 results = mjob.run()
 
-#---------------------------------------------
-# Getting the results
-#---------------------------------------------
+if not results.job.ok():
+    print('Something went wrong!')
 
-if( results.job.ok() ):
-    x_CO = []
-    ac_O = []
-    ac_CO = []
-    TOF_CO2 = []
+#==============================================
+# Getting the Results
+#==============================================
 
-    results_dict = results.turnover_frequency()
-    results_dict = results.average_coverage( update=results_dict )
+x_CO = []
+ac_O = []
+ac_CO = []
+TOF_CO2 = []
 
-    for i,idx in enumerate(results.indices()):
-        x_CO.append( results_dict[i]['x_CO'] )
-        ac_O.append( results_dict[i]['average_coverage']['O*'] )
-        ac_CO.append( results_dict[i]['average_coverage']['CO*'] )
-        TOF_CO2.append( results_dict[i]['turnover_frequency']['CO2'] )
+results_dict = results.turnover_frequency()
+results_dict = results.average_coverage( update=results_dict )
 
-    print("----------------------------------------------")
-    print("%4s"%"cond", "%8s"%"x_CO", "%10s"%"ac_O", "%10s"%"ac_CO", "%10s"%"TOF_CO2")
-    print("----------------------------------------------")
-    for i in range(len(x_CO)):
-        print("%4d"%i, "%8.2f"%x_CO[i], "%10.6f"%ac_O[i], "%10.6f"%ac_CO[i], "%10.6f"%TOF_CO2[i])
+for i,idx in enumerate(results.indices()):
+    x_CO.append( results_dict[i]['x_CO'] )
+    ac_O.append( results_dict[i]['average_coverage']['O*'] )
+    ac_CO.append( results_dict[i]['average_coverage']['CO*'] )
+    TOF_CO2.append( results_dict[i]['turnover_frequency']['CO2'] )
 
-#---------------------------------------------
-# Plotting the results
-#---------------------------------------------
+print("----------------------------------------------")
+print("%4s"%"cond", "%8s"%"x_CO", "%10s"%"ac_O", "%10s"%"ac_CO", "%10s"%"TOF_CO2")
+print("----------------------------------------------")
+for i in range(len(x_CO)):
+    print("%4d"%i, "%8.2f"%x_CO[i], "%10.6f"%ac_O[i], "%10.6f"%ac_CO[i], "%10.6f"%TOF_CO2[i])
+
+#==============================================
+# Visualizing the Results
+#==============================================
 try:
     import matplotlib.pyplot as plt
 except ImportError as e:
@@ -78,6 +93,7 @@ except ImportError as e:
     exit(0)
 
 # Coverage and TOF plot
+#-----------------------
 fig = plt.figure()
 
 ax = plt.axes()
@@ -98,14 +114,17 @@ plt.show()
 cresults = results.children_results()
 
 # Lattice states for x_CO=0.54 and CO=0.55
+#------------------------------------------
 cresults[33].last_lattice_state().plot()
 cresults[34].last_lattice_state().plot()
 
 # Molecule numbers for x_CO=0.54 and CO=0.55
+#--------------------------------------------
 cresults[33].plot_molecule_numbers( ["CO2"], normalize_per_site=True )
 cresults[34].plot_molecule_numbers( ["CO2"], normalize_per_site=True )
 
 # Molecule numbers for x_CO=0.54 and CO=0.55. First Derivative
+#-------------------------------------------------------------
 cresults[33].plot_molecule_numbers( ["CO2"], normalize_per_site=True, derivative=True )
 cresults[34].plot_molecule_numbers( ["CO2"], normalize_per_site=True, derivative=True )
 

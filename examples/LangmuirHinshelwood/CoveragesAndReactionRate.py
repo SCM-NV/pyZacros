@@ -100,7 +100,7 @@ z_job = pz.ZacrosJob( settings=z_sett, lattice=lh.lattice,
 # (``turnover frequency.confidence``), using four replicas to speed up the calculation
 # (``turnover frequency.nreplicas``); for more information, see example
 # **Ziff-Gulari-Barshad model: Steady State Conditions**. Then, we ask for the
-# rate constants to be automatically  scaled ("scaling.enabled") using an inspection
+# rate constants to be automatically  scaled (``scaling.enabled``) using an inspection
 # time of 0.0006 s ("scaling.max time"). In a nutshell, the scaling algorithm uses
 # this maximum time and the original rate constants to execute a probe simulation.
 # From there, the occurrence rates for each reaction are determined and scaled

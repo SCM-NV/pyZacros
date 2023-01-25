@@ -2,6 +2,9 @@
 
       <br>
 
+Ziff-Gulari-Barshad model: Steady State Conditions.
+===================================================
+
 .. Note::
    To follow this tutorial, either:
 

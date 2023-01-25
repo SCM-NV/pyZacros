@@ -55,7 +55,7 @@ for i in range(len(x_CO)):
 
 # Additionally, you can see the aforementioned results visually if you have
 # installed the package [matplotlib](https://matplotlib.org/). Please review
-# the code in the section below.
+# the code below.
 
 import matplotlib.pyplot as plt
 

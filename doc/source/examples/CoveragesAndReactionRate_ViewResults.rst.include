@@ -80,7 +80,7 @@ of the first part of the tutorial. They must be exactly the same:
 
 Additionally, you can see the aforementioned results visually if you
 have installed the package `matplotlib <https://matplotlib.org/>`__.
-Please review the code in the section below.
+Please review the code below.
 
 .. code:: ipython3
 

@@ -3,8 +3,7 @@
       <br>
 
 Ziff-Gulari-Barshad model: Phase Transitions under Steady State Conditions.
----------------------------------------------------------------------------
-
+===========================================================================
 
 .. code-block:: python
   :caption: **Code: Running the Calculations**
