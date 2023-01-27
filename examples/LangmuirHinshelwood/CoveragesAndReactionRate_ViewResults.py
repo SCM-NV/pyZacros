@@ -168,7 +168,7 @@ for i in range(len(x_CO_model)):
 
 import matplotlib.pyplot as plt
 
-x_CO_max = (K_O2/K_CO**2/2.0)*(numpy.sqrt(1.0+4.0*K_CO**2/K_O2)-1.0)
+x_CO_max = (B_O2/B_CO**2/2.0)*(numpy.sqrt(1.0+4.0*B_CO**2/B_O2)-1.0)
 
 fig = plt.figure()
 
@@ -194,7 +194,7 @@ plt.show()
 
 
 # As a final note, we included in the code above the value of the $CO$ molar fraction
-# ($x_\text{CO}^*$) on which we get the maximum $CO 2$ production rate. The figure shows
+# ($x_\text{CO}^*$) on which we get the maximum $CO_2$ production rate. The figure shows
 # this value as a vertical gray dashed line. It is simple to deduce it from the
 # preceding analytical expressions: 
 # 

@@ -186,7 +186,7 @@ class ZacrosParametersScanJob( scm.plams.MultiJob ):
 
         for i,(idx,settings_idx) in enumerate(settings_list.items()):
 
-            new_name = self.name+"_ps_cond"+"%03d"%i
+            new_name = "ps_cond"+"%03d"%i
 
             if isinstance(reference,ZacrosJob):
 

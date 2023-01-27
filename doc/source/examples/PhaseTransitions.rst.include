@@ -2,7 +2,6 @@ This example is inspired in the seminal paper: Kinetic Phase Transitions
 in an Irreversible Surface-Reaction Model by Robert M. Ziff, Erdagon
 Gulari, and Yoav Barshad in 1986 `Phys. Rev. Lett. 56,
 25 <https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.56.2553%3E>`__.
-This paper is the origin of the ZGB model we have been discussing above.
 While the model leaves out many important steps of the real system, it
 exhibits interesting steady-state off-equilibrium behavior and two types
 of phase transitions, which actually occur in real systems. Please refer
@@ -191,29 +190,29 @@ before proceeding to access the results.
 
 .. parsed-literal::
 
-    [25.01|14:47:59] JOB plamsjob STARTED
-    [25.01|14:47:59] JOB plamsjob STARTED
-    [25.01|14:47:59] Renaming job plamsjob to plamsjob.002
-    [25.01|14:47:59] JOB plamsjob STARTED
-    [25.01|14:47:59] Renaming job plamsjob to plamsjob.003
-    [25.01|14:47:59] JOB plamsjob STARTED
-    [25.01|14:47:59] Renaming job plamsjob to plamsjob.004
-    [25.01|14:47:59] JOB plamsjob STARTED
-    [25.01|14:47:59] Renaming job plamsjob to plamsjob.005
-    [25.01|14:47:59] JOB plamsjob RUNNING
+    [27.01|09:13:22] JOB plamsjob STARTED
+    [27.01|09:13:22] JOB plamsjob STARTED
+    [27.01|09:13:22] Renaming job plamsjob to plamsjob.002
+    [27.01|09:13:22] JOB plamsjob STARTED
+    [27.01|09:13:22] Renaming job plamsjob to plamsjob.003
+    [27.01|09:13:22] JOB plamsjob STARTED
+    [27.01|09:13:22] Renaming job plamsjob to plamsjob.004
+    [27.01|09:13:22] JOB plamsjob STARTED
+    [27.01|09:13:22] JOB plamsjob RUNNING
+    [27.01|09:13:22] Renaming job plamsjob to plamsjob.005
     
     ...
     
-    [25.01|14:48:08] JOB plamsjob.052 SUCCESSFUL
-    [25.01|14:48:08] JOB plamsjob.055 SUCCESSFUL
-    [25.01|14:48:08] JOB plamsjob.056 SUCCESSFUL
-    [25.01|14:48:08] Waiting for job plamsjob.057 to finish
-    [25.01|14:48:09] JOB plamsjob.058 SUCCESSFUL
-    [25.01|14:48:09] JOB plamsjob.059 SUCCESSFUL
-    [25.01|14:48:09] JOB plamsjob.057 SUCCESSFUL
-    [25.01|14:48:09] JOB plamsjob.060 SUCCESSFUL
-    [25.01|14:48:09] JOB plamsjob.061 SUCCESSFUL
-    [25.01|14:48:09] Waiting for job plamsjob.061 to finish
+    [27.01|09:13:31] JOB plamsjob.054 SUCCESSFUL
+    [27.01|09:13:31] JOB plamsjob.055 SUCCESSFUL
+    [27.01|09:13:31] Waiting for job plamsjob.054 to finish
+    [27.01|09:13:31] JOB plamsjob.056 SUCCESSFUL
+    [27.01|09:13:31] JOB plamsjob.060 SUCCESSFUL
+    [27.01|09:13:31] JOB plamsjob.057 SUCCESSFUL
+    [27.01|09:13:32] JOB plamsjob.058 SUCCESSFUL
+    [27.01|09:13:32] JOB plamsjob.061 SUCCESSFUL
+    [27.01|09:13:32] Waiting for job plamsjob.059 to finish
+    [27.01|09:13:32] JOB plamsjob.059 SUCCESSFUL
 
 If the script worked successfully, you should have seen several
 ``SUCCESSFUL`` messages at the output’s end.
@@ -459,5 +458,5 @@ Now, we can close the pyZacros environment:
 
 .. parsed-literal::
 
-    [25.01|14:48:20] PLAMS run finished. Goodbye
+    [27.01|09:14:17] PLAMS run finished. Goodbye
 

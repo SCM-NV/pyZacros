@@ -32,7 +32,7 @@ Then, we initialize the **pyZacros** environment.
 
 .. parsed-literal::
 
-    PLAMS working folder: /home/user/pyzacros/examples/ZiffGulariBarshad/plams_workdir.020
+    PLAMS working folder: /home/user/pyzacros/examples/ZiffGulariBarshad/plams_workdir
 
 
 Notice this command created the directory where all **Zacros** input and
@@ -128,7 +128,7 @@ parameters we just defined:
 
 .. parsed-literal::
 
-    [19.01|15:51:26] JOB plamsjob Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=1
+    [27.01|09:11:22] JOB plamsjob Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=1
 
 
 The steady-state calculation setup is ready. Therefore, we can start it
@@ -148,31 +148,31 @@ executed thread in case of parallel execution.
 
 .. parsed-literal::
 
-    [19.01|15:51:26] JOB plamsjob STARTED
-    [19.01|15:51:26] JOB plamsjob RUNNING
-    [19.01|15:51:26] JOB plamsjob/plamsjob_ss_iter000 STARTED
-    [19.01|15:51:26] JOB plamsjob/plamsjob_ss_iter000 RUNNING
-    [19.01|15:51:27] JOB plamsjob/plamsjob_ss_iter000 FINISHED
-    [19.01|15:51:27] JOB plamsjob/plamsjob_ss_iter000 SUCCESSFUL
-    [19.01|15:51:28]       species            TOF          error          ratio     conv?
-    [19.01|15:51:28]            CO       -0.75520        0.12483        0.16529     False
-    [19.01|15:51:28]            O2       -0.39453        0.07267        0.18419     False
-    [19.01|15:51:28]           CO2        0.75640        0.12615        0.16678     False
-    [19.01|15:51:28] JOB plamsjob Steady State Convergence: NO CONVERGENCE REACHED YET
-    [19.01|15:51:28] JOB plamsjob/plamsjob_ss_iter001 STARTED
-    [19.01|15:51:28] JOB plamsjob/plamsjob_ss_iter001 RUNNING
+    [27.01|09:11:22] JOB plamsjob STARTED
+    [27.01|09:11:22] JOB plamsjob RUNNING
+    [27.01|09:11:22] JOB plamsjob/ss_iter000 Steady State: NEW
+    [27.01|09:11:22] JOB plamsjob/ss_iter000 STARTED
+    [27.01|09:11:22] JOB plamsjob/ss_iter000 RUNNING
+    [27.01|09:11:22] JOB plamsjob/ss_iter000 FINISHED
+    [27.01|09:11:23] JOB plamsjob/ss_iter000 SUCCESSFUL
+    [27.01|09:11:23]       species            TOF          error          ratio     conv?
+    [27.01|09:11:23]            CO       -0.57600        0.08915        0.15478     False
+    [27.01|09:11:23]            O2       -0.29120        0.07190        0.24691     False
+    [27.01|09:11:23]           CO2        0.57667        0.08573        0.14866     False
+    [27.01|09:11:23] JOB plamsjob Steady State Convergence: NO CONVERGENCE REACHED YET
+    [27.01|09:11:23] JOB plamsjob/ss_iter001 Steady State: NEW (dep=plamsjob/ss_iter000)
     
     ...
     
-    [19.01|15:51:56] JOB plamsjob/plamsjob_ss_iter007 FINISHED
-    [19.01|15:51:56] JOB plamsjob/plamsjob_ss_iter007 SUCCESSFUL
-    [19.01|15:51:58]       species            TOF          error          ratio     conv?
-    [19.01|15:51:58]            CO       -0.60170        0.02183        0.03628      True
-    [19.01|15:51:58]            O2       -0.30081        0.01095        0.03639      True
-    [19.01|15:51:58]           CO2        0.60170        0.02183        0.03628      True
-    [19.01|15:51:58] JOB plamsjob Steady State Convergence: CONVERGENCE REACHED. DONE!
-    [19.01|15:51:58] JOB plamsjob FINISHED
-    [19.01|15:51:59] JOB plamsjob SUCCESSFUL
+    [27.01|09:11:44] JOB plamsjob/ss_iter007 FINISHED
+    [27.01|09:11:45] JOB plamsjob/ss_iter007 SUCCESSFUL
+    [27.01|09:11:46]       species            TOF          error          ratio     conv?
+    [27.01|09:11:46]            CO       -0.60170        0.02183        0.03628      True
+    [27.01|09:11:46]            O2       -0.30081        0.01095        0.03639      True
+    [27.01|09:11:46]           CO2        0.60170        0.02183        0.03628      True
+    [27.01|09:11:46] JOB plamsjob Steady State Convergence: CONVERGENCE REACHED. DONE!
+    [27.01|09:11:46] JOB plamsjob FINISHED
+    [27.01|09:11:47] JOB plamsjob SUCCESSFUL
 
 If the execution got up to this point, everything worked as expected.
 Hooray!
@@ -206,7 +206,7 @@ Notice that the calculation should have been converged at 720 s of
     ------------------------------------------------------------
         iter  max_time        TOF_CO2       error     conv?
     ------------------------------------------------------------
-           0     20.00        0.75640     0.12615     False
+           0     20.00        0.57667     0.08573     False
            1    120.00        0.59301     0.03157     False
            2    220.00        0.59360     0.03311     False
            3    320.00        0.59293     0.03062     False
@@ -226,7 +226,7 @@ environment:
 
 .. parsed-literal::
 
-    [19.01|15:51:59] PLAMS run finished. Goodbye
+    [27.01|09:11:47] PLAMS run finished. Goodbye
 
 
 Additionally, you can see the aforementioned results visually if you

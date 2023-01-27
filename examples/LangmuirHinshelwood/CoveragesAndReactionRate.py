@@ -62,7 +62,7 @@ lh = pz.models.LangmuirHinshelwood()
 
 
 # Then, we must set up a ``ZacrosParametersScanJob`` calculation, which will allow
-# us to scan the molar fraction of $CO$ as a parameter However, this calculation
+# us to scan the molar fraction of $CO$ as a parameter. However, this calculation
 # requires the definition of a ``ZacrosSteadyStateJob``, that in turns requires a
 # ``ZacrosJob``. So, We will go through them one at a time:
 

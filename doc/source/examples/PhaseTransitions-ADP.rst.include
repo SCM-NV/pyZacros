@@ -1,0 +1,1041 @@
+$ amspackages install adaptivedesignprocedure
+
+.. code:: ipython3
+
+    import multiprocessing
+    import numpy
+    
+    import scm.plams
+    import scm.pyzacros as pz
+    import scm.pyzacros.models
+    
+    import adaptiveDesignProcedure as adp
+
+.. code:: ipython3
+
+    def getRate( conditions ):
+    
+        #---------------------------------------
+        # Zacros calculation
+        #---------------------------------------
+        zgb = pz.models.ZiffGulariBarshad()
+    
+        z_sett = pz.Settings()
+        z_sett.random_seed = 953129
+        z_sett.temperature = 500.0
+        z_sett.pressure = 1.0
+        z_sett.species_numbers = ('time', 0.1)
+        z_sett.max_time = 10.0
+    
+        z_job = pz.ZacrosJob( settings=z_sett, lattice=zgb.lattice,
+                              mechanism=zgb.mechanism,
+                              cluster_expansion=zgb.cluster_expansion )
+    
+        #---------------------------------------
+        # Parameters scan calculation
+        #---------------------------------------
+        ps_params = pz.ZacrosParametersScanJob.Parameters()
+        ps_params.add( 'x_CO', 'molar_fraction.CO', [ cond[0] for cond in conditions ] )
+        ps_params.add( 'x_O2', 'molar_fraction.O2', lambda params: 1.0-params['x_CO'] )
+    
+        ps_job = pz.ZacrosParametersScanJob( reference=z_job, parameters=ps_params )
+    
+        #---------------------------------------
+        # Running the calculations
+        #---------------------------------------
+        results = ps_job.run()
+        
+        if not results.job.ok():
+            print('Something went wrong!')
+    
+        #---------------------------------------
+        # Collecting the results
+        #---------------------------------------
+        data = numpy.nan*numpy.empty((len(conditions),3))
+        if( results.job.ok() ):
+            results_dict = results.turnover_frequency()
+            results_dict = results.average_coverage( last=20, update=results_dict )
+    
+            for i in range(len(results_dict)):
+                data[i,0] = results_dict[i]['average_coverage']['O*']
+                data[i,1] = results_dict[i]['average_coverage']['CO*']
+                data[i,2] = results_dict[i]['turnover_frequency']['CO2']
+    
+        return data
+
+.. code:: ipython3
+
+    scm.pyzacros.init()
+
+
+.. parsed-literal::
+
+    PLAMS working folder: /home/user/pyzacros/examples/ZiffGulariBarshad/plams_workdir.002
+
+
+.. code:: ipython3
+
+    maxjobs = multiprocessing.cpu_count()
+    scm.plams.config.default_jobrunner = scm.plams.JobRunner(parallel=True, maxjobs=maxjobs)
+    scm.plams.config.job.runscript.nproc = 1
+    print('Running up to {} jobs in parallel simultaneously'.format(maxjobs))
+
+
+.. parsed-literal::
+
+    Running up to 8 jobs in parallel simultaneously
+
+
+.. code:: ipython3
+
+    input_var = ( { 'name'    : 'CO',
+                    'min'     : 0.2,
+                    'max'     : 0.8,
+                    'num'     : 5,
+                    'typevar' : 'lin' }, )
+    
+    tab_var = ( {'name':   'ac_O', 'typevar':'lin'},
+                {'name':  'ac_CO', 'typevar':'lin'},
+                {'name':'TOF_CO2', 'typevar':'lin'} )
+
+.. code:: ipython3
+
+    outputDir = scm.pyzacros.workdir()+'/adp.results'
+
+.. code:: ipython3
+
+    adpML = adp.adaptiveDesignProcedure( input_var, tab_var, getRate,
+                                         algorithmParams={'dth':0.01,'d2th':0.10}, # Quality Very Good
+                                         outputDir=outputDir,
+                                         randomState=10 )
+
+
+.. parsed-literal::
+
+    
+    ------ Adaptive generation of Training Data for Machine Learning ------
+    
+    Input parameters:
+      * Forest file: /home/user/pyzacros/examples/ZiffGulariBarshad/plams_workdir.002/adp.results/ml_ExtraTrees.pkl
+      * Training file: /home/user/pyzacros/examples/ZiffGulariBarshad/plams_workdir.002/adp.results/tmp/train.dat
+      * Figure path: /home/user/pyzacros/examples/ZiffGulariBarshad/plams_workdir.002/adp.results/figures
+      * Plotting enabled: False
+      * Boruta as feature selector: True
+      * Use Weak Support Var in Boruta:True
+    
+      * Forest parameters:
+        {
+            Ntree: 200
+            tps: 1
+            fraction: 0.7
+        }
+    
+      * Algorithm parameters:
+        {
+            dth: 0.01
+            d2th: 0.1
+            VIth: 0.15
+            errTh: 1e-06
+            OOBth: 0.05
+            RADth: 10
+            maxTDSize: 5000
+            AbsOOBTh: 0.2
+        }
+    
+    
+      * Variables information:
+        {
+            name: CO
+            min: 0.2
+            max: 0.8
+            num: 5
+            typevar: lin
+        }
+    
+    
+      * Tabulation information:
+        {
+            name: ac_O
+            typevar: lin
+        }
+        {
+            name: ac_CO
+            typevar: lin
+        }
+        {
+            name: TOF_CO2
+            typevar: lin
+        }
+
+
+.. code:: ipython3
+
+    adpML.createTrainingDataAndML()
+
+
+.. parsed-literal::
+
+    
+    ------------------ Iterative Species Points Addition ------------------
+    
+      * Tabulation Variables: ac_O
+    
+        * Iteration: 0
+          --------------------------- 
+          Points per species :5
+          ---------------------------
+          Total number of points: 5
+
+
+.. parsed-literal::
+
+    [27.01|15:07:50] JOB plamsjob STARTED
+    [27.01|15:07:50] Waiting for job plamsjob to finish
+    [27.01|15:07:50] JOB plamsjob RUNNING
+    [27.01|15:07:50] JOB plamsjob/ps_cond000 STARTED
+    [27.01|15:07:50] JOB plamsjob/ps_cond001 STARTED
+    [27.01|15:07:50] JOB plamsjob/ps_cond002 STARTED
+    [27.01|15:07:50] JOB plamsjob/ps_cond003 STARTED
+    [27.01|15:07:50] JOB plamsjob/ps_cond004 STARTED
+    [27.01|15:07:50] JOB plamsjob/ps_cond000 RUNNING
+    [27.01|15:07:50] JOB plamsjob/ps_cond001 RUNNING
+    [27.01|15:07:50] JOB plamsjob/ps_cond002 RUNNING
+    [27.01|15:07:50] JOB plamsjob/ps_cond003 RUNNING
+    [27.01|15:07:50] JOB plamsjob/ps_cond004 RUNNING
+    [27.01|15:07:51] JOB plamsjob/ps_cond000 FINISHED
+    [27.01|15:07:51] JOB plamsjob/ps_cond004 FINISHED
+    [27.01|15:07:51] JOB plamsjob/ps_cond001 FINISHED
+    [27.01|15:07:51] JOB plamsjob/ps_cond003 FINISHED
+    [27.01|15:07:51] JOB plamsjob/ps_cond001 SUCCESSFUL
+    [27.01|15:07:51] JOB plamsjob/ps_cond003 SUCCESSFUL
+    [27.01|15:07:51] JOB plamsjob/ps_cond004 SUCCESSFUL
+    [27.01|15:07:51] JOB plamsjob/ps_cond000 SUCCESSFUL
+    [27.01|15:07:51] JOB plamsjob/ps_cond002 FINISHED
+    [27.01|15:07:51] JOB plamsjob/ps_cond002 SUCCESSFUL
+    [27.01|15:07:55] JOB plamsjob FINISHED
+    [27.01|15:07:55] JOB plamsjob SUCCESSFUL
+
+
+.. parsed-literal::
+
+    
+          Function solved in 6.09097957611084
+    
+          Approximation quality:
+              Out-Of-Bag error     : 0.0651373308715828
+              Out-Of-Bag score     : 0.6679651141798162
+    
+        * Iteration: 1
+          Normalized variable importance: 1.0
+    
+          Using Boruta for feature selection.
+          Boruta Support: 
+          Boruta Support Weak: 
+          Boruta did not select any feature for improvement in this iteration.
+          Forcing feature selection with Variable Importance threshold in this iteration.
+    
+    
+          --------------------------- 
+          Points per species :9
+          ---------------------------
+          Total number of points: 9
+          New points            : 4
+    
+
+
+.. parsed-literal::
+
+    [27.01|15:08:04] JOB plamsjob STARTED
+    [27.01|15:08:04] Renaming job plamsjob to plamsjob.002
+    [27.01|15:08:04] Waiting for job plamsjob.002 to finish
+    [27.01|15:08:04] JOB plamsjob.002 RUNNING
+    [27.01|15:08:04] JOB plamsjob.002/ps_cond000 STARTED
+    [27.01|15:08:04] JOB plamsjob.002/ps_cond001 STARTED
+    [27.01|15:08:04] JOB plamsjob.002/ps_cond002 STARTED
+    [27.01|15:08:04] JOB plamsjob.002/ps_cond003 STARTED
+    [27.01|15:08:04] Job ps_cond000 previously run as ps_cond000, using old results
+    [27.01|15:08:04] JOB plamsjob.002/ps_cond004 STARTED
+    [27.01|15:08:04] JOB plamsjob.002/ps_cond005 STARTED
+    [27.01|15:08:05] Job ps_cond002 previously run as ps_cond001, using old results
+    [27.01|15:08:05] JOB plamsjob.002/ps_cond006 STARTED
+    [27.01|15:08:05] JOB plamsjob.002/ps_cond001 RUNNING
+    [27.01|15:08:05] JOB plamsjob.002/ps_cond007 STARTED
+    [27.01|15:08:05] Job ps_cond004 previously run as ps_cond002, using old results
+    [27.01|15:08:05] JOB plamsjob.002/ps_cond000 COPIED
+    [27.01|15:08:05] JOB plamsjob.002/ps_cond008 STARTED
+    [27.01|15:08:05] JOB plamsjob.002/ps_cond003 RUNNING
+    [27.01|15:08:05] Job ps_cond006 previously run as ps_cond003, using old results
+    [27.01|15:08:05] JOB plamsjob.002/ps_cond002 COPIED
+    [27.01|15:08:05] JOB plamsjob.002/ps_cond005 RUNNING
+    [27.01|15:08:05] JOB plamsjob.002/ps_cond004 COPIED
+    [27.01|15:08:05] JOB plamsjob.002/ps_cond007 RUNNING
+    [27.01|15:08:05] Job ps_cond008 previously run as ps_cond004, using old results
+    [27.01|15:08:05] JOB plamsjob.002/ps_cond006 COPIED
+    [27.01|15:08:05] JOB plamsjob.002/ps_cond001 FINISHED
+    [27.01|15:08:05] JOB plamsjob.002/ps_cond008 COPIED
+    [27.01|15:08:05] JOB plamsjob.002/ps_cond001 SUCCESSFUL
+    [27.01|15:08:05] JOB plamsjob.002/ps_cond007 FINISHED
+    [27.01|15:08:05] JOB plamsjob.002/ps_cond007 SUCCESSFUL
+    [27.01|15:08:05] JOB plamsjob.002/ps_cond003 FINISHED
+    [27.01|15:08:05] JOB plamsjob.002/ps_cond005 FINISHED
+    [27.01|15:08:05] JOB plamsjob.002/ps_cond003 SUCCESSFUL
+    [27.01|15:08:05] JOB plamsjob.002/ps_cond005 SUCCESSFUL
+    [27.01|15:08:10] JOB plamsjob.002 FINISHED
+    [27.01|15:08:10] JOB plamsjob.002 SUCCESSFUL
+
+
+.. parsed-literal::
+
+          Function solved in 6.925413131713867
+    
+          Approximation quality:
+              Out-Of-Bag error     : 0.024648685066379853
+              Out-Of-Bag score     : 0.878186697003889
+              Iterative approx err : 34.306148459131656 %
+    
+        * Iteration: 2
+          Normalized variable importance: 1.0
+    
+          Using Boruta for feature selection.
+          Boruta Support: CO
+          Boruta Support Weak: 
+    
+    
+          --------------------------- 
+          Points per species :14
+          ---------------------------
+          Total number of points: 14
+          New points            : 5
+    
+
+
+.. parsed-literal::
+
+    [27.01|15:08:18] JOB plamsjob STARTED
+    [27.01|15:08:18] Renaming job plamsjob to plamsjob.003
+    [27.01|15:08:18] Waiting for job plamsjob.003 to finish
+    [27.01|15:08:18] JOB plamsjob.003 RUNNING
+    [27.01|15:08:18] JOB plamsjob.003/ps_cond000 STARTED
+    [27.01|15:08:18] JOB plamsjob.003/ps_cond001 STARTED
+    [27.01|15:08:18] JOB plamsjob.003/ps_cond002 STARTED
+    [27.01|15:08:18] Job ps_cond000 previously run as ps_cond000, using old results
+    [27.01|15:08:18] JOB plamsjob.003/ps_cond003 STARTED
+    [27.01|15:08:18] Job ps_cond001 previously run as ps_cond001, using old results
+    [27.01|15:08:18] JOB plamsjob.003/ps_cond004 STARTED
+    [27.01|15:08:18] JOB plamsjob.003/ps_cond005 STARTED
+    [27.01|15:08:18] JOB plamsjob.003/ps_cond006 STARTED
+    [27.01|15:08:18] Job ps_cond003 previously run as ps_cond001, using old results
+    [27.01|15:08:18] JOB plamsjob.003/ps_cond000 COPIED
+    [27.01|15:08:18] JOB plamsjob.003/ps_cond007 STARTED
+    [27.01|15:08:18] JOB plamsjob.003/ps_cond002 RUNNING
+    [27.01|15:08:18] JOB plamsjob.003/ps_cond001 COPIED
+    [27.01|15:08:18] Job ps_cond005 previously run as ps_cond003, using old results
+    [27.01|15:08:18] JOB plamsjob.003/ps_cond008 STARTED
+    [27.01|15:08:18] JOB plamsjob.003/ps_cond004 RUNNING
+    [27.01|15:08:18] JOB plamsjob.003/ps_cond003 COPIED
+    [27.01|15:08:18] JOB plamsjob.003/ps_cond009 STARTED
+    [27.01|15:08:18] JOB plamsjob.003/ps_cond005 COPIED
+    [27.01|15:08:18] JOB plamsjob.003/ps_cond010 STARTED
+    [27.01|15:08:18] Job ps_cond007 previously run as ps_cond002, using old results
+    [27.01|15:08:18] JOB plamsjob.003/ps_cond006 RUNNING
+    [27.01|15:08:18] JOB plamsjob.003/ps_cond011 STARTED
+    [27.01|15:08:18] Job ps_cond009 previously run as ps_cond005, using old results
+    [27.01|15:08:18] JOB plamsjob.003/ps_cond012 STARTED
+    [27.01|15:08:18] JOB plamsjob.003/ps_cond008 RUNNING
+    [27.01|15:08:18] JOB plamsjob.003/ps_cond013 STARTED
+    [27.01|15:08:18] JOB plamsjob.003/ps_cond010 RUNNING
+    [27.01|15:08:18] JOB plamsjob.003/ps_cond007 COPIED
+    [27.01|15:08:18] Job ps_cond011 previously run as ps_cond003, using old results
+    [27.01|15:08:19] JOB plamsjob.003/ps_cond009 COPIED
+    [27.01|15:08:19] Job ps_cond012 previously run as ps_cond007, using old results
+    [27.01|15:08:19] Job ps_cond013 previously run as ps_cond004, using old results
+    [27.01|15:08:19] JOB plamsjob.003/ps_cond002 FINISHED
+    [27.01|15:08:19] JOB plamsjob.003/ps_cond011 COPIED
+    [27.01|15:08:19] JOB plamsjob.003/ps_cond012 COPIED
+    [27.01|15:08:19] JOB plamsjob.003/ps_cond013 COPIED
+    [27.01|15:08:19] JOB plamsjob.003/ps_cond004 FINISHED
+    [27.01|15:08:19] JOB plamsjob.003/ps_cond002 SUCCESSFUL
+    [27.01|15:08:19] JOB plamsjob.003/ps_cond010 FINISHED
+    [27.01|15:08:19] JOB plamsjob.003/ps_cond004 SUCCESSFUL
+    [27.01|15:08:19] JOB plamsjob.003/ps_cond006 FINISHED
+    [27.01|15:08:19] JOB plamsjob.003/ps_cond010 SUCCESSFUL
+    [27.01|15:08:19] JOB plamsjob.003/ps_cond006 SUCCESSFUL
+    [27.01|15:08:20] JOB plamsjob.003/ps_cond008 FINISHED
+    [27.01|15:08:20] JOB plamsjob.003/ps_cond008 SUCCESSFUL
+    [27.01|15:08:23] JOB plamsjob.003 FINISHED
+    [27.01|15:08:24] JOB plamsjob.003 SUCCESSFUL
+
+
+.. parsed-literal::
+
+          Function solved in 8.17027997970581
+    
+          Approximation quality:
+              Out-Of-Bag error     : 0.00453710474080002
+              Out-Of-Bag score     : 0.975958844762778
+              Iterative approx err : 28.577097243365955 %
+    
+        * Iteration: 3
+          Normalized variable importance: 1.0
+    
+          Using Boruta for feature selection.
+          Boruta Support: CO
+          Boruta Support Weak: 
+    
+    
+          --------------------------- 
+          Points per species :22
+          ---------------------------
+          Total number of points: 22
+          New points            : 8
+    
+
+
+.. parsed-literal::
+
+    [27.01|15:08:32] JOB plamsjob STARTED
+    [27.01|15:08:32] Renaming job plamsjob to plamsjob.004
+    [27.01|15:08:32] Waiting for job plamsjob.004 to finish
+    [27.01|15:08:32] JOB plamsjob.004 RUNNING
+    [27.01|15:08:32] JOB plamsjob.004/ps_cond000 STARTED
+    [27.01|15:08:32] JOB plamsjob.004/ps_cond001 STARTED
+    [27.01|15:08:32] JOB plamsjob.004/ps_cond002 STARTED
+    [27.01|15:08:32] JOB plamsjob.004/ps_cond003 STARTED
+    [27.01|15:08:32] Job ps_cond000 previously run as ps_cond000, using old results
+    [27.01|15:08:32] JOB plamsjob.004/ps_cond004 STARTED
+    [27.01|15:08:32] JOB plamsjob.004/ps_cond005 STARTED
+    [27.01|15:08:32] Job ps_cond001 previously run as ps_cond001, using old results
+    [27.01|15:08:32] JOB plamsjob.004/ps_cond006 STARTED
+    [27.01|15:08:32] Job ps_cond002 previously run as ps_cond002, using old results
+    [27.01|15:08:32] JOB plamsjob.004/ps_cond007 STARTED
+    [27.01|15:08:32] JOB plamsjob.004/ps_cond008 STARTED
+    [27.01|15:08:32] Job ps_cond004 previously run as ps_cond001, using old results
+    [27.01|15:08:32] JOB plamsjob.004/ps_cond000 COPIED
+    [27.01|15:08:32] JOB plamsjob.004/ps_cond009 STARTED
+    [27.01|15:08:32] JOB plamsjob.004/ps_cond003 RUNNING
+    [27.01|15:08:32] JOB plamsjob.004/ps_cond001 COPIED
+    [27.01|15:08:32] JOB plamsjob.004/ps_cond010 STARTED
+    [27.01|15:08:32] JOB plamsjob.004/ps_cond002 COPIED
+    [27.01|15:08:32] Job ps_cond006 previously run as ps_cond004, using old results
+    [27.01|15:08:32] JOB plamsjob.004/ps_cond005 RUNNING
+    [27.01|15:08:32] JOB plamsjob.004/ps_cond004 COPIED
+    [27.01|15:08:32] JOB plamsjob.004/ps_cond011 STARTED
+    [27.01|15:08:32] Job ps_cond008 previously run as ps_cond003, using old results
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond012 STARTED
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond007 RUNNING
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond013 STARTED
+    [27.01|15:08:33] Job ps_cond010 previously run as ps_cond006, using old results
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond006 COPIED
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond014 STARTED
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond009 RUNNING
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond015 STARTED
+    [27.01|15:08:33] Job ps_cond012 previously run as ps_cond002, using old results
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond008 COPIED
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond011 RUNNING
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond016 STARTED
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond010 COPIED
+    [27.01|15:08:33] Job ps_cond014 previously run as ps_cond008, using old results
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond017 STARTED
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond013 RUNNING
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond012 COPIED
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond003 FINISHED
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond018 STARTED
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond015 RUNNING
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond014 COPIED
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond019 STARTED
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond005 FINISHED
+    [27.01|15:08:33] Job ps_cond016 previously run as ps_cond005, using old results
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond020 STARTED
+    [27.01|15:08:33] Job ps_cond018 previously run as ps_cond010, using old results
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond017 RUNNING
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond021 STARTED
+    [27.01|15:08:33] Job ps_cond019 previously run as ps_cond003, using old results
+    [27.01|15:08:33] Job ps_cond020 previously run as ps_cond007, using old results
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond007 FINISHED
+    [27.01|15:08:33] JOB plamsjob.004/ps_cond016 COPIED
+    [27.01|15:08:34] JOB plamsjob.004/ps_cond005 SUCCESSFUL
+    [27.01|15:08:34] Job ps_cond021 previously run as ps_cond004, using old results
+    [27.01|15:08:34] JOB plamsjob.004/ps_cond018 COPIED
+    [27.01|15:08:34] JOB plamsjob.004/ps_cond003 SUCCESSFUL
+    [27.01|15:08:34] JOB plamsjob.004/ps_cond020 COPIED
+    [27.01|15:08:34] JOB plamsjob.004/ps_cond019 COPIED
+    [27.01|15:08:34] JOB plamsjob.004/ps_cond009 FINISHED
+    [27.01|15:08:34] JOB plamsjob.004/ps_cond017 FINISHED
+    [27.01|15:08:34] JOB plamsjob.004/ps_cond021 COPIED
+    [27.01|15:08:34] JOB plamsjob.004/ps_cond007 SUCCESSFUL
+    [27.01|15:08:34] JOB plamsjob.004/ps_cond015 FINISHED
+    [27.01|15:08:34] JOB plamsjob.004/ps_cond011 FINISHED
+    [27.01|15:08:34] JOB plamsjob.004/ps_cond009 SUCCESSFUL
+    [27.01|15:08:34] JOB plamsjob.004/ps_cond017 SUCCESSFUL
+    [27.01|15:08:34] JOB plamsjob.004/ps_cond015 SUCCESSFUL
+    [27.01|15:08:34] JOB plamsjob.004/ps_cond011 SUCCESSFUL
+    [27.01|15:08:34] JOB plamsjob.004/ps_cond013 FINISHED
+    [27.01|15:08:34] JOB plamsjob.004/ps_cond013 SUCCESSFUL
+    [27.01|15:08:38] JOB plamsjob.004 FINISHED
+    [27.01|15:08:38] JOB plamsjob.004 SUCCESSFUL
+
+
+.. parsed-literal::
+
+          Function solved in 10.267860412597656
+    /home/aguirre/.scm/python/AMS2022.2.venv/lib/python3.8/site-packages/sklearn/ensemble/_forest.py:584: UserWarning: Some inputs do not have OOB scores. This probably means too few trees were used to compute any reliable OOB estimates.
+      warn(
+    
+          Approximation quality:
+              Out-Of-Bag error     : 0.0029969280748847237
+              Out-Of-Bag score     : 0.9825671411133113
+              Iterative approx err : 20.115547662197304 %
+    
+        * Iteration: 4
+          Normalized variable importance: 1.0
+    
+          Using Boruta for feature selection.
+          Boruta Support: CO
+          Boruta Support Weak: 
+    
+    
+          --------------------------- 
+          Points per species :35
+          ---------------------------
+          Total number of points: 35
+          New points            : 13
+    
+
+
+.. parsed-literal::
+
+    [27.01|15:08:49] JOB plamsjob STARTED
+    [27.01|15:08:49] Renaming job plamsjob to plamsjob.005
+    [27.01|15:08:49] Waiting for job plamsjob.005 to finish
+    [27.01|15:08:49] JOB plamsjob.005 RUNNING
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond000 STARTED
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond001 STARTED
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond002 STARTED
+    [27.01|15:08:49] Job ps_cond000 previously run as ps_cond000, using old results
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond003 STARTED
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond004 STARTED
+    [27.01|15:08:49] Job ps_cond001 previously run as ps_cond001, using old results
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond005 STARTED
+    [27.01|15:08:49] Job ps_cond002 previously run as ps_cond002, using old results
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond006 STARTED
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond000 COPIED
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond007 STARTED
+    [27.01|15:08:49] Job ps_cond003 previously run as ps_cond003, using old results
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond008 STARTED
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond001 COPIED
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond009 STARTED
+    [27.01|15:08:49] Job ps_cond005 previously run as ps_cond001, using old results
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond010 STARTED
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond004 RUNNING
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond002 COPIED
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond011 STARTED
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond003 COPIED
+    [27.01|15:08:49] Job ps_cond007 previously run as ps_cond005, using old results
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond006 RUNNING
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond012 STARTED
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond005 COPIED
+    [27.01|15:08:49] Job ps_cond009 previously run as ps_cond004, using old results
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond013 STARTED
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond008 RUNNING
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond014 STARTED
+    [27.01|15:08:49] Job ps_cond011 previously run as ps_cond007, using old results
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond007 COPIED
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond015 STARTED
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond010 RUNNING
+    [27.01|15:08:49] JOB plamsjob.005/ps_cond016 STARTED
+    [27.01|15:08:50] Job ps_cond013 previously run as ps_cond003, using old results
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond009 COPIED
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond017 STARTED
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond012 RUNNING
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond011 COPIED
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond018 STARTED
+    [27.01|15:08:50] Job ps_cond015 previously run as ps_cond009, using old results
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond014 RUNNING
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond004 FINISHED
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond013 COPIED
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond019 STARTED
+    [27.01|15:08:50] Job ps_cond017 previously run as ps_cond006, using old results
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond006 FINISHED
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond020 STARTED
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond016 RUNNING
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond021 STARTED
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond015 COPIED
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond022 STARTED
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond018 RUNNING
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond017 COPIED
+    [27.01|15:08:50] Job ps_cond019 previously run as ps_cond011, using old results
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond008 FINISHED
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond023 STARTED
+    [27.01|15:08:50] Job ps_cond021 previously run as ps_cond002, using old results
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond020 RUNNING
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond024 STARTED
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond004 SUCCESSFUL
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond006 SUCCESSFUL
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond010 FINISHED
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond025 STARTED
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond019 COPIED
+    [27.01|15:08:50] Job ps_cond023 previously run as ps_cond013, using old results
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond012 FINISHED
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond022 RUNNING
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond021 COPIED
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond026 STARTED
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond008 SUCCESSFUL
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond024 RUNNING
+    [27.01|15:08:50] JOB plamsjob.005/ps_cond027 STARTED
+    [27.01|15:08:51] JOB plamsjob.005/ps_cond014 FINISHED
+    [27.01|15:08:51] Job ps_cond025 previously run as ps_cond008, using old results
+    [27.01|15:08:51] JOB plamsjob.005/ps_cond028 STARTED
+    [27.01|15:08:51] JOB plamsjob.005/ps_cond023 COPIED
+    [27.01|15:08:51] JOB plamsjob.005/ps_cond010 SUCCESSFUL
+    [27.01|15:08:51] JOB plamsjob.005/ps_cond029 STARTED
+    [27.01|15:08:51] JOB plamsjob.005/ps_cond025 COPIED
+    [27.01|15:08:51] JOB plamsjob.005/ps_cond026 RUNNING
+    [27.01|15:08:51] JOB plamsjob.005/ps_cond030 STARTED
+    [27.01|15:08:51] JOB plamsjob.005/ps_cond016 FINISHED
+    [27.01|15:08:51] Job ps_cond027 previously run as ps_cond015, using old results
+    [27.01|15:08:51] JOB plamsjob.005/ps_cond012 SUCCESSFUL
+    [27.01|15:08:51] JOB plamsjob.005/ps_cond018 FINISHED
+    [27.01|15:08:51] JOB plamsjob.005/ps_cond027 COPIED
+    [27.01|15:08:51] JOB plamsjob.005/ps_cond031 STARTED
+    [27.01|15:08:51] Job ps_cond029 previously run as ps_cond005, using old results
+    [27.01|15:08:51] JOB plamsjob.005/ps_cond028 RUNNING
+    [27.01|15:08:51] JOB plamsjob.005/ps_cond014 SUCCESSFUL
+    [27.01|15:08:51] JOB plamsjob.005/ps_cond032 STARTED
+    [27.01|15:08:51] Job ps_cond030 previously run as ps_cond017, using old results
+    [27.01|15:08:51] JOB plamsjob.005/ps_cond033 STARTED
+    [27.01|15:08:51] JOB plamsjob.005/ps_cond034 STARTED
+    [27.01|15:08:51] Job ps_cond031 previously run as ps_cond010, using old results
+    [27.01|15:08:51] JOB plamsjob.005/ps_cond016 SUCCESSFUL
+    [27.01|15:08:51] JOB plamsjob.005/ps_cond029 COPIED
+    [27.01|15:08:52] Job ps_cond032 previously run as ps_cond003, using old results
+    [27.01|15:08:52] Job ps_cond033 previously run as ps_cond007, using old results
+    [27.01|15:08:52] Job ps_cond034 previously run as ps_cond004, using old results
+    [27.01|15:08:52] JOB plamsjob.005/ps_cond018 SUCCESSFUL
+    [27.01|15:08:52] JOB plamsjob.005/ps_cond031 COPIED
+    [27.01|15:08:52] JOB plamsjob.005/ps_cond030 COPIED
+    [27.01|15:08:52] JOB plamsjob.005/ps_cond033 COPIED
+    [27.01|15:08:52] JOB plamsjob.005/ps_cond020 FINISHED
+    [27.01|15:08:52] JOB plamsjob.005/ps_cond032 COPIED
+    [27.01|15:08:52] JOB plamsjob.005/ps_cond034 COPIED
+    [27.01|15:08:52] JOB plamsjob.005/ps_cond028 FINISHED
+    [27.01|15:08:52] JOB plamsjob.005/ps_cond028 SUCCESSFUL
+    [27.01|15:08:52] JOB plamsjob.005/ps_cond024 FINISHED
+    [27.01|15:08:52] JOB plamsjob.005/ps_cond020 SUCCESSFUL
+    [27.01|15:08:52] JOB plamsjob.005/ps_cond022 FINISHED
+    [27.01|15:08:52] JOB plamsjob.005/ps_cond026 FINISHED
+    [27.01|15:08:52] JOB plamsjob.005/ps_cond024 SUCCESSFUL
+    [27.01|15:08:52] JOB plamsjob.005/ps_cond022 SUCCESSFUL
+    [27.01|15:08:52] JOB plamsjob.005/ps_cond026 SUCCESSFUL
+    [27.01|15:08:56] JOB plamsjob.005 FINISHED
+    [27.01|15:08:57] JOB plamsjob.005 SUCCESSFUL
+
+
+.. parsed-literal::
+
+          Function solved in 15.669201135635376
+    
+          Approximation quality:
+              Out-Of-Bag error     : 0.001301567600680178
+              Out-Of-Bag score     : 0.9912974956760324
+              Iterative approx err : 11.555194142857513 %
+    
+        * Iteration: 5
+          Normalized variable importance: 1.0
+    
+          Using Boruta for feature selection.
+          Boruta Support: CO
+          Boruta Support Weak: 
+    
+    
+          --------------------------- 
+          Points per species :59
+          ---------------------------
+          Total number of points: 59
+          New points            : 24
+    
+
+
+.. parsed-literal::
+
+    [27.01|15:09:11] JOB plamsjob STARTED
+    [27.01|15:09:11] Renaming job plamsjob to plamsjob.006
+    [27.01|15:09:11] Waiting for job plamsjob.006 to finish
+    [27.01|15:09:12] JOB plamsjob.006 RUNNING
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond000 STARTED
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond001 STARTED
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond002 STARTED
+    [27.01|15:09:12] Job ps_cond000 previously run as ps_cond000, using old results
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond003 STARTED
+    [27.01|15:09:12] Job ps_cond001 previously run as ps_cond001, using old results
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond004 STARTED
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond005 STARTED
+    [27.01|15:09:12] Job ps_cond002 previously run as ps_cond002, using old results
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond006 STARTED
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond001 COPIED
+    [27.01|15:09:12] Job ps_cond003 previously run as ps_cond003, using old results
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond007 STARTED
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond000 COPIED
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond008 STARTED
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond009 STARTED
+    [27.01|15:09:12] Job ps_cond005 previously run as ps_cond004, using old results
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond004 RUNNING
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond002 COPIED
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond010 STARTED
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond003 COPIED
+    [27.01|15:09:12] Job ps_cond007 previously run as ps_cond001, using old results
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond011 STARTED
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond006 RUNNING
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond012 STARTED
+    [27.01|15:09:12] Job ps_cond009 previously run as ps_cond006, using old results
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond005 COPIED
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond008 RUNNING
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond013 STARTED
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond007 COPIED
+    [27.01|15:09:12] Job ps_cond011 previously run as ps_cond005, using old results
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond014 STARTED
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond010 RUNNING
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond009 COPIED
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond015 STARTED
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond016 STARTED
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond012 RUNNING
+    [27.01|15:09:12] Job ps_cond013 previously run as ps_cond008, using old results
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond017 STARTED
+    [27.01|15:09:12] Job ps_cond015 previously run as ps_cond004, using old results
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond018 STARTED
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond004 FINISHED
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond011 COPIED
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond019 STARTED
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond013 COPIED
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond014 RUNNING
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond006 FINISHED
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond020 STARTED
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond016 RUNNING
+    [27.01|15:09:12] JOB plamsjob.006/ps_cond021 STARTED
+    [27.01|15:09:13] Job ps_cond017 previously run as ps_cond010, using old results
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond015 COPIED
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond022 STARTED
+    [27.01|15:09:13] Job ps_cond019 previously run as ps_cond007, using old results
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond008 FINISHED
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond018 RUNNING
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond023 STARTED
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond017 COPIED
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond004 SUCCESSFUL
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond020 RUNNING
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond024 STARTED
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond010 FINISHED
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond012 FINISHED
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond019 COPIED
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond006 SUCCESSFUL
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond025 STARTED
+    [27.01|15:09:13] Job ps_cond021 previously run as ps_cond012, using old results
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond014 FINISHED
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond026 STARTED
+    [27.01|15:09:13] Job ps_cond023 previously run as ps_cond003, using old results
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond022 RUNNING
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond008 SUCCESSFUL
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond027 STARTED
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond021 COPIED
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond016 FINISHED
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond024 RUNNING
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond010 SUCCESSFUL
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond012 SUCCESSFUL
+    [27.01|15:09:13] JOB plamsjob.006/ps_cond028 STARTED
+    [27.01|15:09:14] JOB plamsjob.006/ps_cond029 STARTED
+    [27.01|15:09:14] JOB plamsjob.006/ps_cond023 COPIED
+    [27.01|15:09:14] Job ps_cond025 previously run as ps_cond014, using old results
+    [27.01|15:09:14] JOB plamsjob.006/ps_cond018 FINISHED
+    [27.01|15:09:14] JOB plamsjob.006/ps_cond020 FINISHED
+    [27.01|15:09:14] JOB plamsjob.006/ps_cond030 STARTED
+    [27.01|15:09:14] Job ps_cond027 previously run as ps_cond009, using old results
+    [27.01|15:09:14] JOB plamsjob.006/ps_cond026 RUNNING
+    [27.01|15:09:14] JOB plamsjob.006/ps_cond028 RUNNING
+    [27.01|15:09:14] JOB plamsjob.006/ps_cond031 STARTED
+    [27.01|15:09:14] Job ps_cond029 previously run as ps_cond016, using old results
+    [27.01|15:09:14] JOB plamsjob.006/ps_cond014 SUCCESSFUL
+    [27.01|15:09:14] JOB plamsjob.006/ps_cond016 SUCCESSFUL
+    [27.01|15:09:14] JOB plamsjob.006/ps_cond032 STARTED
+    [27.01|15:09:14] JOB plamsjob.006/ps_cond025 COPIED
+    [27.01|15:09:14] JOB plamsjob.006/ps_cond027 COPIED
+    [27.01|15:09:14] JOB plamsjob.006/ps_cond033 STARTED
+    [27.01|15:09:14] JOB plamsjob.006/ps_cond018 SUCCESSFUL
+    [27.01|15:09:14] JOB plamsjob.006/ps_cond022 FINISHED
+    [27.01|15:09:14] JOB plamsjob.006/ps_cond030 RUNNING
+    [27.01|15:09:14] JOB plamsjob.006/ps_cond029 COPIED
+    [27.01|15:09:15] Job ps_cond031 previously run as ps_cond006, using old results
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond024 FINISHED
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond032 RUNNING
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond034 STARTED
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond020 SUCCESSFUL
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond031 COPIED
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond026 FINISHED
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond035 STARTED
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond036 STARTED
+    [27.01|15:09:15] Job ps_cond033 previously run as ps_cond018, using old results
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond037 STARTED
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond024 SUCCESSFUL
+    [27.01|15:09:15] Job ps_cond035 previously run as ps_cond011, using old results
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond038 STARTED
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond022 SUCCESSFUL
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond034 RUNNING
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond039 STARTED
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond026 SUCCESSFUL
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond033 COPIED
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond036 RUNNING
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond040 STARTED
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond028 FINISHED
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond035 COPIED
+    [27.01|15:09:15] Job ps_cond037 previously run as ps_cond020, using old results
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond041 STARTED
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond042 STARTED
+    [27.01|15:09:15] Job ps_cond039 previously run as ps_cond002, using old results
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond038 RUNNING
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond043 STARTED
+    [27.01|15:09:15] JOB plamsjob.006/ps_cond044 STARTED
+    [27.01|15:09:16] Job ps_cond041 previously run as ps_cond022, using old results
+    [27.01|15:09:16] JOB plamsjob.006/ps_cond040 RUNNING
+    [27.01|15:09:16] JOB plamsjob.006/ps_cond037 COPIED
+    [27.01|15:09:16] JOB plamsjob.006/ps_cond045 STARTED
+    [27.01|15:09:16] JOB plamsjob.006/ps_cond039 COPIED
+    [27.01|15:09:16] JOB plamsjob.006/ps_cond042 RUNNING
+    [27.01|15:09:16] Job ps_cond043 previously run as ps_cond013, using old results
+    [27.01|15:09:16] JOB plamsjob.006/ps_cond028 SUCCESSFUL
+    [27.01|15:09:16] JOB plamsjob.006/ps_cond041 COPIED
+    [27.01|15:09:16] JOB plamsjob.006/ps_cond030 FINISHED
+    [27.01|15:09:16] JOB plamsjob.006/ps_cond046 STARTED
+    [27.01|15:09:16] JOB plamsjob.006/ps_cond032 FINISHED
+    [27.01|15:09:16] JOB plamsjob.006/ps_cond047 STARTED
+    [27.01|15:09:16] JOB plamsjob.006/ps_cond048 STARTED
+    [27.01|15:09:16] JOB plamsjob.006/ps_cond044 RUNNING
+    [27.01|15:09:16] Job ps_cond045 previously run as ps_cond024, using old results
+    [27.01|15:09:16] JOB plamsjob.006/ps_cond049 STARTED
+    [27.01|15:09:16] JOB plamsjob.006/ps_cond043 COPIED
+    [27.01|15:09:16] JOB plamsjob.006/ps_cond050 STARTED
+    [27.01|15:09:16] Job ps_cond047 previously run as ps_cond008, using old results
+    [27.01|15:09:16] JOB plamsjob.006/ps_cond046 RUNNING
+    [27.01|15:09:16] JOB plamsjob.006/ps_cond051 STARTED
+    [27.01|15:09:16] JOB plamsjob.006/ps_cond045 COPIED
+    [27.01|15:09:16] JOB plamsjob.006/ps_cond052 STARTED
+    [27.01|15:09:16] JOB plamsjob.006/ps_cond048 RUNNING
+    [27.01|15:09:16] Job ps_cond049 previously run as ps_cond026, using old results
+    [27.01|15:09:17] JOB plamsjob.006/ps_cond053 STARTED
+    [27.01|15:09:17] JOB plamsjob.006/ps_cond034 FINISHED
+    [27.01|15:09:17] Job ps_cond051 previously run as ps_cond015, using old results
+    [27.01|15:09:17] JOB plamsjob.006/ps_cond050 RUNNING
+    [27.01|15:09:17] JOB plamsjob.006/ps_cond054 STARTED
+    [27.01|15:09:17] JOB plamsjob.006/ps_cond030 SUCCESSFUL
+    [27.01|15:09:17] JOB plamsjob.006/ps_cond036 FINISHED
+    [27.01|15:09:17] JOB plamsjob.006/ps_cond047 COPIED
+    [27.01|15:09:17] JOB plamsjob.006/ps_cond055 STARTED
+    [27.01|15:09:17] JOB plamsjob.006/ps_cond032 SUCCESSFUL
+    [27.01|15:09:17] Job ps_cond052 previously run as ps_cond028, using old results
+    [27.01|15:09:17] JOB plamsjob.006/ps_cond056 STARTED
+    [27.01|15:09:17] JOB plamsjob.006/ps_cond057 STARTED
+    [27.01|15:09:17] Job ps_cond053 previously run as ps_cond005, using old results
+    [27.01|15:09:17] JOB plamsjob.006/ps_cond038 FINISHED
+    [27.01|15:09:17] JOB plamsjob.006/ps_cond058 STARTED
+    [27.01|15:09:17] Job ps_cond055 previously run as ps_cond010, using old results
+    [27.01|15:09:17] JOB plamsjob.006/ps_cond049 COPIED
+    [27.01|15:09:17] Job ps_cond054 previously run as ps_cond017, using old results
+    [27.01|15:09:18] Job ps_cond056 previously run as ps_cond003, using old results
+    [27.01|15:09:18] Job ps_cond057 previously run as ps_cond007, using old results
+    [27.01|15:09:18] JOB plamsjob.006/ps_cond040 FINISHED
+    [27.01|15:09:18] JOB plamsjob.006/ps_cond051 COPIED
+    [27.01|15:09:18] JOB plamsjob.006/ps_cond034 SUCCESSFUL
+    [27.01|15:09:18] JOB plamsjob.006/ps_cond042 FINISHED
+    [27.01|15:09:18] JOB plamsjob.006/ps_cond036 SUCCESSFUL
+    [27.01|15:09:18] Job ps_cond058 previously run as ps_cond004, using old results
+    [27.01|15:09:18] JOB plamsjob.006/ps_cond052 COPIED
+    [27.01|15:09:18] JOB plamsjob.006/ps_cond055 COPIED
+    [27.01|15:09:18] JOB plamsjob.006/ps_cond053 COPIED
+    [27.01|15:09:19] JOB plamsjob.006/ps_cond054 COPIED
+    [27.01|15:09:19] JOB plamsjob.006/ps_cond056 COPIED
+    [27.01|15:09:19] JOB plamsjob.006/ps_cond038 SUCCESSFUL
+    [27.01|15:09:19] JOB plamsjob.006/ps_cond057 COPIED
+    [27.01|15:09:19] JOB plamsjob.006/ps_cond050 FINISHED
+    [27.01|15:09:19] JOB plamsjob.006/ps_cond058 COPIED
+    [27.01|15:09:19] JOB plamsjob.006/ps_cond044 FINISHED
+    [27.01|15:09:19] JOB plamsjob.006/ps_cond046 FINISHED
+    [27.01|15:09:19] JOB plamsjob.006/ps_cond048 FINISHED
+    [27.01|15:09:19] JOB plamsjob.006/ps_cond040 SUCCESSFUL
+    [27.01|15:09:19] JOB plamsjob.006/ps_cond042 SUCCESSFUL
+    [27.01|15:09:19] JOB plamsjob.006/ps_cond044 SUCCESSFUL
+    [27.01|15:09:19] JOB plamsjob.006/ps_cond050 SUCCESSFUL
+    [27.01|15:09:19] JOB plamsjob.006/ps_cond046 SUCCESSFUL
+    [27.01|15:09:19] JOB plamsjob.006/ps_cond048 SUCCESSFUL
+    [27.01|15:09:22] JOB plamsjob.006 FINISHED
+    [27.01|15:09:23] JOB plamsjob.006 SUCCESSFUL
+
+
+.. parsed-literal::
+
+          Function solved in 22.316295623779297
+    
+          Approximation quality:
+              Out-Of-Bag error     : 0.000392864878232063
+              Out-Of-Bag score     : 0.9967914808583572
+              Iterative approx err : 5.754278225481044 %
+    
+          Accuracy constraints reached in 6 iterations
+    
+      * Tabulation Variables: ac_CO
+    
+        * Iteration: 0
+          --------------------------- 
+          Points per species :59
+          ---------------------------
+          Total number of points: 59
+    
+          Function loaded in 0.001961231231689453
+    
+          Approximation quality:
+              Out-Of-Bag error     : 0.0015512913363598065
+              Out-Of-Bag score     : 0.9889891285569959
+    
+          Accuracy constraints reached in 1 iterations
+    
+      * Tabulation Variables: TOF_CO2
+    
+        * Iteration: 0
+          --------------------------- 
+          Points per species :59
+          ---------------------------
+          Total number of points: 59
+    
+          Function loaded in 0.0020265579223632812
+    
+          Approximation quality:
+              Out-Of-Bag error     : 0.0015315380429822092
+              Out-Of-Bag score     : 0.982862192557661
+    
+          Accuracy constraints reached in 1 iterations
+    
+    -------------------- Generating Final ExtraTrees ----------------------
+    
+    ----------------------- Model for CFD generated -----------------------
+    
+    
+    --------------------------- Procedure stats ---------------------------
+    
+        * Training data size evolution: 5 9 14 22 35 59 59 59
+    
+    --------------------------------- end ---------------------------------
+
+
+.. code:: ipython3
+
+    x_CO,ac_O,ac_CO,TOF_CO2 = adpML.trainingData.T
+    
+    print( "-------------------------------------------------" )
+    print( "%4s"%"cond", " %8s"%"x_CO", " %10s"%"ac_O", "%10s"%"ac_CO", "%12s"%"TOF_CO2" )
+    print( "-------------------------------------------------" )
+    for i in range(len(x_CO)):
+        print( "%4d"%i, "%8.3f"%x_CO[i], "%10.6f"%ac_O[i], "%10.6f"%ac_CO[i], "%12.6f"%TOF_CO2[i] )
+
+
+.. parsed-literal::
+
+    -------------------------------------------------
+    cond      x_CO        ac_O      ac_CO      TOF_CO2
+    -------------------------------------------------
+       0    0.200   0.998060   0.000000     0.049895
+       1    0.275   0.997720   0.000000     0.089642
+       2    0.312   0.994260   0.000000     0.145305
+       3    0.331   0.992240   0.000060     0.176737
+       4    0.336   0.981180   0.000020     0.227368
+       5    0.341   0.987320   0.000040     0.193916
+       6    0.345   0.977400   0.000020     0.237684
+       7    0.350   0.974020   0.000200     0.273811
+       8    0.355   0.958480   0.000440     0.315179
+       9    0.359   0.960800   0.000200     0.310947
+      10    0.364   0.966200   0.000140     0.344168
+      11    0.369   0.938580   0.000360     0.403137
+      12    0.373   0.962440   0.000140     0.349937
+      13    0.378   0.944420   0.000420     0.400358
+      14    0.383   0.925900   0.000320     0.460884
+      15    0.388   0.925940   0.000260     0.462316
+      16    0.392   0.917020   0.000340     0.506905
+      17    0.397   0.887160   0.001060     0.629684
+      18    0.402   0.902820   0.000760     0.584737
+      19    0.406   0.879640   0.000560     0.664653
+      20    0.411   0.861040   0.001140     0.705474
+      21    0.416   0.854660   0.001520     0.759789
+      22    0.420   0.843740   0.001580     0.761895
+      23    0.425   0.802920   0.002940     0.902253
+      24    0.430   0.800200   0.002660     0.933916
+      25    0.434   0.796640   0.002460     0.975221
+      26    0.439   0.770300   0.002760     1.052042
+      27    0.444   0.770360   0.003760     1.129684
+      28    0.448   0.749260   0.005040     1.199874
+      29    0.453   0.772080   0.003540     1.167158
+      30    0.458   0.727540   0.005560     1.315116
+      31    0.463   0.734200   0.004960     1.336484
+      32    0.467   0.709920   0.006820     1.404800
+      33    0.472   0.701580   0.009360     1.555474
+      34    0.477   0.664300   0.008920     1.624653
+      35    0.481   0.643280   0.011700     1.741516
+      36    0.486   0.625060   0.012460     1.748463
+      37    0.491   0.586160   0.016680     1.960968
+      38    0.495   0.568580   0.024860     2.032400
+      39    0.500   0.568160   0.018740     2.108442
+      40    0.505   0.577220   0.019720     2.125432
+      41    0.509   0.552720   0.022160     2.306632
+      42    0.514   0.513500   0.033000     2.438716
+      43    0.519   0.512560   0.032800     2.432063
+      44    0.523   0.449100   0.063540     2.633326
+      45    0.528   0.391280   0.101060     2.705432
+      46    0.533   0.278300   0.257240     2.624568
+      47    0.538   0.204580   0.342040     2.731326
+      48    0.542   0.056060   0.714700     2.101621
+      49    0.547   0.004320   0.958380     1.596042
+      50    0.552   0.000000   0.999920     1.027768
+      51    0.556   0.000000   1.000000     1.006589
+      52    0.566   0.000000   1.000000     0.575158
+      53    0.575   0.000000   1.000000     0.581137
+      54    0.594   0.000000   1.000000     0.243600
+      55    0.613   0.000000   1.000000     0.169137
+      56    0.650   0.000000   1.000000     0.042695
+      57    0.725   0.000000   1.000000     0.004505
+      58    0.800   0.000000   1.000000     0.000589
+
+
+.. code:: ipython3
+
+    import matplotlib.pyplot as plt
+    
+    fig = plt.figure()
+    
+    x_CO_model = numpy.linspace(0.2,0.8,201)
+    ac_O_model,ac_CO_model,TOF_CO2_model = adpML.predict( x_CO_model ).T
+    
+    ax = plt.axes()
+    ax.set_xlabel('Partial Pressure CO', fontsize=14)
+    
+    ax.set_ylabel("Coverage Fraction (%)", color="blue", fontsize=14)
+    ax.plot(x_CO_model, ac_O_model, color="blue", linestyle="-.", lw=2, zorder=1)
+    ax.plot(x_CO, ac_O, marker='$\u25EF$', color='blue', markersize=4, lw=0, zorder=1)
+    ax.plot(x_CO_model, ac_CO_model, color="blue", linestyle="-", lw=2, zorder=2)
+    ax.plot(x_CO, ac_CO, marker='$\u25EF$', color='blue', markersize=4, lw=0, zorder=1)
+    plt.text(0.3, 0.9, 'O', fontsize=18, color="blue")
+    plt.text(0.7, 0.9, 'CO', fontsize=18, color="blue")
+    
+    ax2 = ax.twinx()
+    ax2.set_ylabel("TOF (mol/s/site)",color="red", fontsize=14)
+    ax2.plot(x_CO_model, TOF_CO2_model, color='red', linestyle='-', lw=2, zorder=0)
+    ax2.plot(x_CO, TOF_CO2, marker='$\u25EF$', color='red', markersize=4, lw=0, zorder=1)
+    plt.text(0.37, 1.5, 'CO$_2$', fontsize=18, color="red")
+    
+    plt.show()
+
+
+
+.. image:: PhaseTransitions-ADP_files/PhaseTransitions-ADP_10_0.png
+
+
+.. code:: ipython3
+
+    scm.pyzacros.finish()
+
+
+.. parsed-literal::
+
+    [27.01|15:09:56] PLAMS run finished. Goodbye
