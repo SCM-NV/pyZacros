@@ -18,25 +18,25 @@ Threading/multiprocessing information:
 Simulation setup:
 ~~~~~~~~~~~~~~~~~
 
-    Random sequence with seed: 953130
+    Random sequence with seed: 953129
 
-    Temperature: 500.00000000000000
+    Temperature: 500.000000000000
 
-    Pressure: 1.0000000000000000
+    Pressure: 1.00000000000000
 
-    Species numbers will be reported in file specnum_output.txt every 0.10000000000000001 time units
+    Species numbers will be reported in file specnum_output.txt every 0.100000000000000 time units
 
-    Max simulated time: 10.000000000000000              
+    Max simulated time: 10.0000000000000                
 
     Number of gas species: 3
 
     Gas species names: CO O2 CO2 
 
-    Gas species energies: 0.0000000000000000 0.0000000000000000 -2.3370000000000002 
+    Gas species energies: 0.000000000000000E+000 0.000000000000000E+000 -2.33700000000000 
 
-    Gas species molecular weights: 27.994900000000001 31.989799999999999 43.989800000000002 
+    Gas species molecular weights: 27.9949000000000 31.9898000000000 43.9898000000000 
 
-    Gas species molar fractions: 0.41999999999999998 0.57999999999999996 0.0000000000000000 
+    Gas species molar fractions: 0.420000000000000 0.580000000000000 0.000000000000000E+000 
 
     Number of surface species: 2
 
@@ -46,7 +46,7 @@ Simulation setup:
 
     The default Mersenne Twister 19937 random number generator will be used for this simulation.
 
-    Initializing the random number generator took 3.4890000000000000E-006 seconds
+    Initializing the random number generator took 8.000000000000000E-006 seconds
 
     The default first reaction method will be used for propagating the KMC state, with a binary heap for the event-queue
 
@@ -57,11 +57,11 @@ Lattice setup:
 
     Parsing one of the default lattice structures.
 
-    Unit cell area: 1.0000000000000000
+    Unit cell area: 1.00000000000000
 
     Unit cell tiling: 50 x 50
 
-    Lattice surface area: 2500.0000000000000
+    Lattice surface area: 2500.00000000000
 
     Number of lattice sites per cell: 1
 
@@ -85,8 +85,8 @@ Energetics setup:
 
     Clusters:
 
-        1. CO_point:  Mult = 1      ECI = -1.3000000000000000       Entities:  CO*
-        2. O_point:   Mult = 1      ECI = -2.2999999999999998       Entities:  O*
+        1. CO_point:  Mult = 1      ECI = -1.30000000000000         Entities:  CO*
+        2. O_point:   Mult = 1      ECI = -2.30000000000000         Entities:  O*
 
     This cluster expansion involves only single body patterns.
 
@@ -127,7 +127,7 @@ Warning code 4009 from mechanism_parser_module: a cached activation energy for a
 
 More information: 
 Activation energy out of physically meaningful bounds for elementary step 3: CO_oxidation.
-Ea = 0.0000000000000000, DErxn = 1.2629999999999995.
+Ea = 0.000000000000000E+000, DErxn = 1.26300000000000.
 
 ***************
 
@@ -152,7 +152,7 @@ Preparing simulation:
 
     Initializing energetics.
 
-        Total adlayer energy: 0.0000000000000000
+        Total adlayer energy: 0.000000000000000E+000
 
     Initializing lattice events.
 
@@ -163,29 +163,29 @@ Commencing simulation:
 
 Simulation stopped:
 ~~~~~~~~~~~~~~~~~~~
- Current KMC time: 10.0000849
- Events occurred:  52416
- Event frequency:  5241.55566
+ Current KMC time: 10.00027
+ Events occurred:  52296
+ Event frequency:  5229.459
 
 Performance facts:
 ~~~~~~~~~~~~~~~~~~
 
-Elapsed CPU time:         0.208577007 seconds
-Elapsed clock time:       0.226051196 seconds
-Setup clock time:         1.74557269E-02 seconds
-Simulation clock time:    0.208595470 seconds
+Elapsed CPU time:         0.2552120 seconds
+Elapsed clock time:       0.3011050 seconds
+Setup clock time:         4.5936000E-02 seconds
+Simulation clock time:    0.2551690 seconds
 
-Clock time per KMC event: 4.31263743E-06 seconds
-Clock time per KMC time:  2.26049274E-02 seconds/KMCTimeUnits
+Clock time per KMC event: 5.7577058E-06 seconds
+Clock time per KMC time:  3.0109689E-02 seconds/KMCTimeUnits
 
-Events per clock hour:    834756032
-KMC Dt per clock hour:    159257.312 KMCTimeUnits
+Events per clock hour:    625249024
+KMC Dt per clock hour:    119562.8 KMCTimeUnits
 
 Execution queue statistics:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Number of insertions:               240197
-Number of removals:                 239433
+Number of insertions:               240500
+Number of removals:                 239707
 Number of updates:                       0
 
 Memory usage statistics:
@@ -197,8 +197,8 @@ Used capacity of process queue:                   12500
 Used capacity of process-participation list:          9
        ...out of max-allocated:                     200  (   4.50% utilization )
 
-Used capacity of cluster list:                     2187
-       ...out of max-allocated:                  125000  (   1.75% utilization )
+Used capacity of cluster list:                     2222
+       ...out of max-allocated:                  125000  (   1.78% utilization )
 
 Used capacity of cluster-participation list:          1
        ...out of max-allocated:                      60  (   1.67% utilization )

@@ -3,34 +3,34 @@
 
 Simulation will resume from previously saved state... 
 
-This is restart No 1 from KMC step 52416 and t = 10.000084965942735
+This is restart No 1 from KMC step 52416 and t = 10.0000849659427
 
 Restart information successfully read from file restart.inf.
 
-Max simulated time overwritten from commandline: 160.00000000000000              
+Max simulated time overwritten from commandline: 160.000000000000                
 
 Commencing simulation:
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Simulation stopped:
 ~~~~~~~~~~~~~~~~~~~
- Current KMC time: 160.000687
+ Current KMC time: 160.0007
  Events occurred:  602740
- Event frequency:  3767.10913
+ Event frequency:  3767.109
 
 Performance facts:
 ~~~~~~~~~~~~~~~~~~
 
-Elapsed CPU time:         2.16605783 seconds
-Elapsed clock time:       2.18507910 seconds
-Setup clock time:         1.89830251E-02 seconds
-Simulation clock time:    2.16609621 seconds
+Elapsed CPU time:         2.895182 seconds
+Elapsed clock time:       2.915952 seconds
+Setup clock time:         2.0764001E-02 seconds
+Simulation clock time:    2.895188 seconds
 
-Clock time per KMC event: 3.97053191E-06 seconds
-Clock time per KMC time:  1.45671358E-02 seconds/KMCTimeUnits
+Clock time per KMC event: 5.2986093E-06 seconds
+Clock time per KMC time:  1.9439602E-02 seconds/KMCTimeUnits
 
-Events per clock hour:    906679488
-KMC Dt per clock hour:    247131.609 KMCTimeUnits
+Events per clock hour:    679423488
+KMC Dt per clock hour:    185189.0 KMCTimeUnits
 
 Execution queue statistics:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
