@@ -113,7 +113,7 @@ x_CO_model = numpy.linspace(0.2,0.8,201)
 ac_O_model,ac_CO_model,TOF_CO2_model = adpML.predict( x_CO_model ).T
 
 ax = plt.axes()
-ax.set_xlabel('Partial Pressure CO', fontsize=14)
+ax.set_xlabel('Molar Fraction CO', fontsize=14)
 
 ax.set_ylabel("Coverage Fraction (%)", color="blue", fontsize=14)
 ax.plot(x_CO_model, ac_O_model, color="blue", linestyle="-.", lw=2, zorder=1)

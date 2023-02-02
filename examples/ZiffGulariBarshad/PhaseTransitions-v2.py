@@ -97,7 +97,7 @@ except ImportError as e:
 fig = plt.figure()
 
 ax = plt.axes()
-ax.set_xlabel('Partial Pressure CO', fontsize=14)
+ax.set_xlabel('Molar Fraction CO', fontsize=14)
 ax.set_ylabel("Coverage Fraction (%)", color="blue", fontsize=14)
 ax.plot(x_CO, ac_O, color="blue", linestyle="-.", lw=2, zorder=1)
 ax.plot(x_CO, ac_CO, color="blue", linestyle="-", lw=2, zorder=2)

@@ -4,13 +4,16 @@
 # This example is inspired in the seminal paper: Kinetic Phase Transitions in
 # an Irreversible Surface-Reaction Model by Robert M. Ziff, Erdagon Gulari,
 # and Yoav Barshad in 1986
-# [Phys. Rev. Lett. 56, 25](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.56.2553>).
-# While the model leaves out many important steps of the real system, it exhibits
-# interesting steady-state off-equilibrium behavior and two types of phase
-# transitions, which actually occur in real systems. Please refer to the original
-# paper for more details. In this example, we will analyze the effect of changing
+# [Phys. Rev. Lett. 56, (1986) 2553](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.56.2553>).
+# The authors proposed a simple model for catalytic reactions of carbon monoxide
+# oxidation to carbon dioxide on a surface. This model is now known as the
+# Ziff-Gulari-Barshad (ZGB) model after their names.  While the model leaves
+# out many important steps of the real system, it exhibits interesting
+# steady-state off-equilibrium behavior and two types of phase transitions,
+# which actually occur in real systems. Please refer to the original paper
+# for more details. In this example, we will analyze the effect of changing
 # the composition of the gas phase, namely partial pressures for $O_2$ and $CO$,
-# in the $CO_2$ Turnover frequency (TOF).
+# in the $CO_2$ Turnover frequency (TOF) in the ZGB model.
 
 # The first step is to import all packages we need:
 
@@ -197,8 +200,8 @@ for i,x in enumerate(x_CO):
 # can take advantage of python libraries to visualize them. Here, we
 # use matplotlib. Please check the matplotlib documentation for more
 # details at [matplotlib](https://matplotlib.org/). The following lines
-# of code allow visualizing the effect of changing the $CO$ partial
-# pressure on the average coverage of $O*$ and $CO*$ and the production
+# of code allow visualizing the effect of changing the $CO$ molar
+# fraction on the average coverage of $O*$ and $CO*$ and the production
 # rate of $CO_2$:
 
 import matplotlib.pyplot as plt
@@ -206,7 +209,7 @@ import matplotlib.pyplot as plt
 fig = plt.figure()
 
 ax = plt.axes()
-ax.set_xlabel('Partial Pressure CO', fontsize=14)
+ax.set_xlabel('Molar Fraction CO', fontsize=14)
 ax.set_ylabel("Coverage Fraction (%)", color="blue", fontsize=14)
 ax.plot(x_CO, ac_O, color="blue", linestyle="-.", lw=2, zorder=1)
 ax.plot(x_CO, ac_CO, color="blue", linestyle="-", lw=2, zorder=2)
@@ -222,7 +225,7 @@ plt.show()
 
 
 # This model assumes that gas-phase molecules of $CO$ and $O_2$ are
-# adsorbed immediately on empty sites, and when the $0^*$ and $CO^*$ occupy
+# adsorbed immediately on empty sites, and when the $0*$ and $CO*$ occupy
 # adjacent sites, they react immediately. This model is intrinsically
 # irreversible because the molecules are sticky to their original sites
 # and remain stationary until they are removed by a reaction. This leads

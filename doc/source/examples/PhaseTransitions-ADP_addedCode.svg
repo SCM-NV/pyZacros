@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="435.60226mm"
+   height="232.93997mm"
+   viewBox="0 0 435.60226 232.93997"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (0a00cf5, 2022-02-04)"
+   sodipodi:docname="PhaseTransitions-ADP_addedCode.svg"
+   inkscape:export-filename="/home/aguirre/Develop/pyzacros/doc/source/examples/PhaseTransitions-ADP_addedCode.png"
+   inkscape:export-xdpi="119"
+   inkscape:export-ydpi="119"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="0.52221046"
+     inkscape:cx="828.21014"
+     inkscape:cy="183.83393"
+     inkscape:window-width="1920"
+     inkscape:window-height="1015"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     showborder="false"
+     inkscape:showpageshadow="false" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-4.8938631,-14.654266)">
+    <rect
+       style="opacity:1;fill:#ffffff;stroke:#000000;stroke-width:0.106805;stroke-linecap:round;stroke-linejoin:bevel"
+       id="rect36"
+       width="435.49545"
+       height="232.83316"
+       x="4.9472656"
+       y="14.707668"
+       ry="2.1261954" />
+    <path
+       style="fill:#bebeed;fill-opacity:0.704482;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 5.7649278,129.89625 H 439.27775 v 70.53918 c 0,0 -182.97394,0.25871 -208.66959,0 -7.4062,0.24354 -2.37922,-68.65489 -13.78604,-68.77817 -11.40682,-0.12329 -211.064701,0 -211.064701,0 z"
+       id="path87"
+       sodipodi:nodetypes="ccccscc" />
+    <path
+       style="fill:#edbebe;fill-opacity:0.7;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 5.7703982,165.27399 c 0,0 180.1921118,-0.12672 210.9668118,0 10.87682,0.18587 6.60377,70.73383 14.10157,70.90833 10.86148,0.0664 208.44445,0 208.44445,0 v 5.98085 c 0,0 -182.97394,0.25871 -208.66959,0 -9.34235,0.35579 -2.37922,-71.82989 -13.78604,-71.95317 -11.40682,-0.12329 -211.0647018,0 -211.0647018,0 z"
+       id="path87-3"
+       sodipodi:nodetypes="ccccccscc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.09305px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:-1.82346px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.102443;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       x="132.19681"
+       y="168.84428"
+       id="text14501-6"><tspan
+         sodipodi:role="line"
+         id="tspan14499-7"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Hack;-inkscape-font-specification:'Hack Bold';stroke:#000000;stroke-width:0.102443;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         x="132.19681"
+         y="168.84428">z_job</tspan></text>
+    <image
+       width="433.38751"
+       height="232.30417"
+       preserveAspectRatio="none"
+       xlink:href="PhaseTransitions-ADP_addedCode_raw.png"
+       id="image183"
+       x="5.650177"
+       y="14.707582" />
+    <rect
+       style="opacity:0.710294;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.77222;stroke-linecap:round;stroke-linejoin:bevel"
+       id="rect10309"
+       width="202.95047"
+       height="73.562851"
+       x="5.6878424"
+       y="173.5739"
+       ry="1.909276" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:3.95388px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:-1.76145px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.0989601;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       x="353.86349"
+       y="240.2625"
+       id="text14501"><tspan
+         sodipodi:role="line"
+         id="tspan14499"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Hack;-inkscape-font-specification:'Hack Bold';stroke:#000000;stroke-width:0.0989601;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         x="353.86349"
+         y="240.2625">ss_job</tspan></text>
+  </g>
+</svg>

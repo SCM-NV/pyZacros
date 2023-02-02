@@ -1,14 +1,17 @@
 This example is inspired in the seminal paper: Kinetic Phase Transitions
 in an Irreversible Surface-Reaction Model by Robert M. Ziff, Erdagon
-Gulari, and Yoav Barshad in 1986 `Phys. Rev. Lett. 56,
-25 <https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.56.2553%3E>`__.
-While the model leaves out many important steps of the real system, it
+Gulari, and Yoav Barshad in 1986 `Phys. Rev. Lett. 56, (1986)
+2553 <https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.56.2553%3E>`__.
+The authors proposed a simple model for catalytic reactions of carbon
+monoxide oxidation to carbon dioxide on a surface. This model is now
+known as the Ziff-Gulari-Barshad (ZGB) model after their names. While
+the model leaves out many important steps of the real system, it
 exhibits interesting steady-state off-equilibrium behavior and two types
 of phase transitions, which actually occur in real systems. Please refer
 to the original paper for more details. In this example, we will analyze
 the effect of changing the composition of the gas phase, namely partial
 pressures for :math:`O_2` and :math:`CO`, in the :math:`CO_2` Turnover
-frequency (TOF).
+frequency (TOF) in the ZGB model.
 
 The first step is to import all packages we need:
 
@@ -190,29 +193,29 @@ before proceeding to access the results.
 
 .. parsed-literal::
 
-    [27.01|09:13:22] JOB plamsjob STARTED
-    [27.01|09:13:22] JOB plamsjob STARTED
-    [27.01|09:13:22] Renaming job plamsjob to plamsjob.002
-    [27.01|09:13:22] JOB plamsjob STARTED
-    [27.01|09:13:22] Renaming job plamsjob to plamsjob.003
-    [27.01|09:13:22] JOB plamsjob STARTED
-    [27.01|09:13:22] Renaming job plamsjob to plamsjob.004
-    [27.01|09:13:22] JOB plamsjob STARTED
-    [27.01|09:13:22] JOB plamsjob RUNNING
-    [27.01|09:13:22] Renaming job plamsjob to plamsjob.005
+    [02.02|22:23:20] JOB plamsjob STARTED
+    [02.02|22:23:20] JOB plamsjob STARTED
+    [02.02|22:23:20] Renaming job plamsjob to plamsjob.002
+    [02.02|22:23:20] JOB plamsjob STARTED
+    [02.02|22:23:20] Renaming job plamsjob to plamsjob.003
+    [02.02|22:23:20] JOB plamsjob STARTED
+    [02.02|22:23:20] Renaming job plamsjob to plamsjob.004
+    [02.02|22:23:20] JOB plamsjob STARTED
+    [02.02|22:23:20] Renaming job plamsjob to plamsjob.005
+    [02.02|22:23:20] JOB plamsjob STARTED
     
     ...
     
-    [27.01|09:13:31] JOB plamsjob.054 SUCCESSFUL
-    [27.01|09:13:31] JOB plamsjob.055 SUCCESSFUL
-    [27.01|09:13:31] Waiting for job plamsjob.054 to finish
-    [27.01|09:13:31] JOB plamsjob.056 SUCCESSFUL
-    [27.01|09:13:31] JOB plamsjob.060 SUCCESSFUL
-    [27.01|09:13:31] JOB plamsjob.057 SUCCESSFUL
-    [27.01|09:13:32] JOB plamsjob.058 SUCCESSFUL
-    [27.01|09:13:32] JOB plamsjob.061 SUCCESSFUL
-    [27.01|09:13:32] Waiting for job plamsjob.059 to finish
-    [27.01|09:13:32] JOB plamsjob.059 SUCCESSFUL
+    [02.02|22:23:28] JOB plamsjob.054 SUCCESSFUL
+    [02.02|22:23:28] JOB plamsjob.056 SUCCESSFUL
+    [02.02|22:23:28] JOB plamsjob.061 FINISHED
+    [02.02|22:23:28] JOB plamsjob.055 SUCCESSFUL
+    [02.02|22:23:28] JOB plamsjob.060 SUCCESSFUL
+    [02.02|22:23:28] JOB plamsjob.058 SUCCESSFUL
+    [02.02|22:23:28] Waiting for job plamsjob.058 to finish
+    [02.02|22:23:28] JOB plamsjob.059 SUCCESSFUL
+    [02.02|22:23:28] Waiting for job plamsjob.061 to finish
+    [02.02|22:23:28] JOB plamsjob.061 SUCCESSFUL
 
 If the script worked successfully, you should have seen several
 ``SUCCESSFUL`` messages at the output’s end.
@@ -321,7 +324,7 @@ The above results are the final aim of the calculation. However, we can
 take advantage of python libraries to visualize them. Here, we use
 matplotlib. Please check the matplotlib documentation for more details
 at `matplotlib <https://matplotlib.org/>`__. The following lines of code
-allow visualizing the effect of changing the :math:`CO` partial pressure
+allow visualizing the effect of changing the :math:`CO` molar fraction
 on the average coverage of :math:`O*` and :math:`CO*` and the production
 rate of :math:`CO_2`:
 
@@ -332,7 +335,7 @@ rate of :math:`CO_2`:
     fig = plt.figure()
     
     ax = plt.axes()
-    ax.set_xlabel('Partial Pressure CO', fontsize=14)
+    ax.set_xlabel('Molar Fraction CO', fontsize=14)
     ax.set_ylabel("Coverage Fraction (%)", color="blue", fontsize=14)
     ax.plot(x_CO, ac_O, color="blue", linestyle="-.", lw=2, zorder=1)
     ax.plot(x_CO, ac_CO, color="blue", linestyle="-", lw=2, zorder=2)
@@ -353,7 +356,7 @@ rate of :math:`CO_2`:
 
 This model assumes that gas-phase molecules of :math:`CO` and
 :math:`O_2` are adsorbed immediately on empty sites, and when the
-:math:`0^*` and :math:`CO^*` occupy adjacent sites, they react
+:math:`0*` and :math:`CO*` occupy adjacent sites, they react
 immediately. This model is intrinsically irreversible because the
 molecules are sticky to their original sites and remain stationary until
 they are removed by a reaction. This leads to the figure above having
@@ -458,5 +461,5 @@ Now, we can close the pyZacros environment:
 
 .. parsed-literal::
 
-    [27.01|09:14:17] PLAMS run finished. Goodbye
+    [02.02|22:24:09] PLAMS run finished. Goodbye
 

@@ -1,18 +1,21 @@
 This example is inspired in the seminal paper: Kinetic Phase Transitions
 in an Irreversible Surface-Reaction Model by Robert M. Ziff, Erdagon
-Gulari, and Yoav Barshad in 1986 `Phys. Rev. Lett. 56,
-25 <https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.56.2553%3E>`__.
-While the model leaves out many important steps of the real system, it
+Gulari, and Yoav Barshad in 1986 `Phys. Rev. Lett. 56, (1986)
+2553 <https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.56.2553%3E>`__.
+The authors proposed a simple model for catalytic reactions of carbon
+monoxide oxidation to carbon dioxide on a surface. This model is now
+known as the Ziff-Gulari-Barshad (ZGB) model after their names. While
+the model leaves out many important steps of the real system, it
 exhibits interesting steady-state off-equilibrium behavior and two types
 of phase transitions, which actually occur in real systems. Please refer
 to the original paper for more details. In this example, we will analyze
 the effect of changing the composition of the gas phase, namely partial
 pressures for :math:`O_2` and :math:`CO`, in the :math:`CO_2` Turnover
-frequency (TOF). At variance with the example **Phase Transitions in the
-ZGB model**, here we extend the dynamics up to reaching the system’s
-steady state for each gas phase composition value. Most of the code is
-the same, except for the section regarding the setup of the steady state
-calculation.
+frequency (TOF) in the ZGB model. At variance with the example **Phase
+Transitions in the ZGB model**, here we extend the dynamics up to
+reaching the system’s steady state for each gas phase composition value.
+Most of the code is the same, except for the section regarding the setup
+of the steady state calculation.
 
 First, we import all packages we need:
 
@@ -132,7 +135,7 @@ just defined:
 
 .. parsed-literal::
 
-    [27.01|11:36:27] JOB plamsjob Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=4
+    [02.02|22:26:23] JOB plamsjob Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=4
 
 
 **3. Setting up the ZacrosParametersScanJob**
@@ -161,19 +164,19 @@ we just defined (``ps params``), we create the
 
 .. parsed-literal::
 
-    [27.01|11:36:27] JOB ps_cond000 Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=4
-    [27.01|11:36:27] JOB ps_cond001 Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=4
-    [27.01|11:36:27] JOB ps_cond002 Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=4
-    [27.01|11:36:27] JOB ps_cond003 Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=4
-    [27.01|11:36:27] JOB ps_cond004 Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=4
+    [02.02|22:26:23] JOB ps_cond000 Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=4
+    [02.02|22:26:23] JOB ps_cond001 Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=4
+    [02.02|22:26:23] JOB ps_cond002 Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=4
+    [02.02|22:26:23] JOB ps_cond003 Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=4
+    [02.02|22:26:23] JOB ps_cond004 Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=4
     
     ...
     
-    [27.01|11:36:27] JOB ps_cond056 Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=4
-    [27.01|11:36:27] JOB ps_cond057 Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=4
-    [27.01|11:36:27] JOB ps_cond058 Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=4
-    [27.01|11:36:27] JOB ps_cond059 Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=4
-    [27.01|11:36:27] JOB ps_cond060 Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=4
+    [02.02|22:26:23] JOB ps_cond056 Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=4
+    [02.02|22:26:23] JOB ps_cond057 Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=4
+    [02.02|22:26:23] JOB ps_cond058 Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=4
+    [02.02|22:26:23] JOB ps_cond059 Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=4
+    [02.02|22:26:23] JOB ps_cond060 Steady State Convergence: Using nbatch=20,confidence=0.96,ignore_nbatch=1,nreplicas=4
 
 The parameters scan calculation setup is ready. Therefore, we can start
 it by invoking the function ``run()``, which will provide access to the
@@ -192,47 +195,47 @@ executed thread. This step should take less than 10 mins!
 
 .. parsed-literal::
 
-    [27.01|11:36:27] JOB plamsjob STARTED
-    [27.01|11:36:27] Waiting for job plamsjob to finish
-    [27.01|11:36:27] JOB plamsjob RUNNING
-    [27.01|11:36:27] JOB plamsjob/ps_cond000 STARTED
-    [27.01|11:36:27] JOB plamsjob/ps_cond001 STARTED
-    [27.01|11:36:27] JOB plamsjob/ps_cond002 STARTED
+    [02.02|22:26:23] JOB plamsjob STARTED
+    [02.02|22:26:23] Waiting for job plamsjob to finish
+    [02.02|22:26:23] JOB plamsjob RUNNING
+    [02.02|22:26:23] JOB plamsjob/ps_cond000 STARTED
+    [02.02|22:26:23] JOB plamsjob/ps_cond001 STARTED
+    [02.02|22:26:23] JOB plamsjob/ps_cond002 STARTED
     
     ...
     
-    [27.01|11:42:19] JOB plamsjob/ps_cond020/ss_iter004_rep003 RUNNING
-    [27.01|11:42:19] JOB plamsjob/ps_cond020/ss_iter004_rep000 FINISHED
-    [27.01|11:42:19] JOB plamsjob/ps_cond020/ss_iter004_rep000 FAILED
-    [27.01|11:42:19] Waiting for job ss_iter004_rep001 to finish
-    [27.01|11:42:19]    Average
-    [27.01|11:42:19]       species            TOF          error          ratio     conv?
-    [27.01|11:42:20]            CO       -0.42282        0.01585        0.03748      True
-    [27.01|11:42:20]            O2       -0.21130        0.00793        0.03751      True
-    [27.01|11:42:20]           CO2        0.42282        0.01585        0.03748      True
-    [27.01|11:42:20] JOB plamsjob/ps_cond021 Steady State Convergence: CONVERGENCE REACHED. DONE!
-    [27.01|11:42:20] JOB plamsjob/ps_cond021 FINISHED
-    [27.01|11:42:21] JOB plamsjob/ps_cond020/ss_iter004_rep001 FINISHED
-    [27.01|11:42:22] JOB plamsjob/ps_cond020/ss_iter004_rep002 FINISHED
-    [27.01|11:42:26] JOB plamsjob/ps_cond020/ss_iter004_rep003 FINISHED
-    [27.01|11:42:26] JOB plamsjob/ps_cond020/ss_iter004_rep001 SUCCESSFUL
-    [27.01|11:42:26] Waiting for job ss_iter004_rep003 to finish
-    [27.01|11:42:27] JOB plamsjob/ps_cond020/ss_iter004_rep002 SUCCESSFUL
-    [27.01|11:42:28] JOB plamsjob/ps_cond021 SUCCESSFUL
-    [27.01|11:42:28] JOB plamsjob/ps_cond020/ss_iter004_rep003 SUCCESSFUL
-    [27.01|11:42:28] WARNING: Trying to obtain results of crashed or failed job ss_iter004_rep000
-    [27.01|11:42:28] WARNING: Trying to obtain results of crashed or failed job ss_iter004_rep000
-    [27.01|11:42:28] Obtaining results of ss_iter004_rep000 successful. However, no guarantee that they make sense
-    [27.01|11:42:28] Obtaining results of ss_iter004_rep000 successful. However, no guarantee that they make sense
-    [27.01|11:42:28] JOB plamsjob/ps_cond020/ss_iter004_rep000 Steady State Convergence: RESTART ABORTED
-    [27.01|11:42:29] JOB plamsjob/ps_cond020/ss_iter004_rep000 Steady State Convergence: JOB REMOVED
-    [27.01|11:42:29] JOB plamsjob/ps_cond020/ss_iter004_rep001 Steady State Convergence: JOB REMOVED
-    [27.01|11:42:29] JOB plamsjob/ps_cond020/ss_iter004_rep002 Steady State Convergence: JOB REMOVED
-    [27.01|11:42:29] JOB plamsjob/ps_cond020/ss_iter004_rep003 Steady State Convergence: JOB REMOVED
-    [27.01|11:42:29] JOB plamsjob/ps_cond020 FINISHED
-    [27.01|11:42:31] JOB plamsjob/ps_cond020 SUCCESSFUL
-    [27.01|11:42:35] JOB plamsjob FINISHED
-    [27.01|11:42:49] JOB plamsjob SUCCESSFUL
+    [02.02|22:29:57]           CO2        0.44695        0.02674        0.05983     False
+    [02.02|22:29:57] JOB plamsjob/ps_cond020/ss_iter004_rep000 FINISHED
+    [02.02|22:29:57] JOB plamsjob/ps_cond020/ss_iter004_rep000 FAILED
+    [02.02|22:29:57] Waiting for job ss_iter004_rep001 to finish
+    [02.02|22:29:57] JOB plamsjob/ps_cond020/ss_iter004_rep001 FINISHED
+    [02.02|22:29:58] JOB plamsjob/ps_cond020/ss_iter004_rep002 FINISHED
+    [02.02|22:29:58]    Average
+    [02.02|22:29:58] JOB plamsjob/ps_cond020/ss_iter004_rep001 SUCCESSFUL
+    [02.02|22:29:58] Waiting for job ss_iter004_rep003 to finish
+    [02.02|22:29:58]       species            TOF          error          ratio     conv?
+    [02.02|22:29:58]            CO       -0.42282        0.01585        0.03748      True
+    [02.02|22:29:58]            O2       -0.21130        0.00793        0.03751      True
+    [02.02|22:29:58]           CO2        0.42282        0.01585        0.03748      True
+    [02.02|22:29:58] JOB plamsjob/ps_cond021 Steady State Convergence: CONVERGENCE REACHED. DONE!
+    [02.02|22:29:58] JOB plamsjob/ps_cond020/ss_iter004_rep002 SUCCESSFUL
+    [02.02|22:29:58] JOB plamsjob/ps_cond020/ss_iter004_rep003 FINISHED
+    [02.02|22:29:58] JOB plamsjob/ps_cond021 FINISHED
+    [02.02|22:29:59] JOB plamsjob/ps_cond020/ss_iter004_rep003 SUCCESSFUL
+    [02.02|22:29:59] WARNING: Trying to obtain results of crashed or failed job ss_iter004_rep000
+    [02.02|22:29:59] WARNING: Trying to obtain results of crashed or failed job ss_iter004_rep000
+    [02.02|22:29:59] Obtaining results of ss_iter004_rep000 successful. However, no guarantee that they make sense
+    [02.02|22:29:59] Obtaining results of ss_iter004_rep000 successful. However, no guarantee that they make sense
+    [02.02|22:29:59] JOB plamsjob/ps_cond020/ss_iter004_rep000 Steady State Convergence: RESTART ABORTED
+    [02.02|22:29:59] JOB plamsjob/ps_cond020/ss_iter004_rep000 Steady State Convergence: JOB REMOVED
+    [02.02|22:29:59] JOB plamsjob/ps_cond020/ss_iter004_rep001 Steady State Convergence: JOB REMOVED
+    [02.02|22:29:59] JOB plamsjob/ps_cond020/ss_iter004_rep002 Steady State Convergence: JOB REMOVED
+    [02.02|22:29:59] JOB plamsjob/ps_cond020/ss_iter004_rep003 Steady State Convergence: JOB REMOVED
+    [02.02|22:30:00] JOB plamsjob/ps_cond020 FINISHED
+    [02.02|22:30:00] JOB plamsjob/ps_cond021 SUCCESSFUL
+    [02.02|22:30:00] JOB plamsjob/ps_cond020 SUCCESSFUL
+    [02.02|22:30:03] JOB plamsjob FINISHED
+    [02.02|22:30:14] JOB plamsjob SUCCESSFUL
 
 If the execution got up to this point, everything worked as expected.
 Hooray!
@@ -350,7 +353,7 @@ The above results are the final aim of the calculation. However, we can
 take advantage of python libraries to visualize them. Here, we use
 matplotlib. Please check the matplotlib documentation for more details
 at `matplotlib <https://matplotlib.org/>`__. The following lines of code
-allow visualizing the effect of changing the :math:`CO` partial pressure
+allow visualizing the effect of changing the :math:`CO` molar fraction
 on the average coverage of :math:`O*` and :math:`CO*` and the production
 rate of :math:`CO_2`:
 
@@ -361,7 +364,7 @@ rate of :math:`CO_2`:
     fig = plt.figure()
     
     ax = plt.axes()
-    ax.set_xlabel('Partial Pressure CO', fontsize=14)
+    ax.set_xlabel('Molar fraction CO', fontsize=14)
     ax.set_ylabel("Coverage Fraction (%)", color="blue", fontsize=14)
     ax.plot(x_CO, ac_O, color="blue", linestyle="-.", lw=2, zorder=1)
     ax.plot(x_CO, ac_CO, color="blue", linestyle="-", lw=2, zorder=2)
@@ -398,5 +401,5 @@ Now, we can close the pyZacros environment:
 
 .. parsed-literal::
 
-    [27.01|11:44:30] PLAMS run finished. Goodbye
+    [02.02|22:31:38] PLAMS run finished. Goodbye
 
