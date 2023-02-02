@@ -289,16 +289,13 @@ ax.set_xlabel('Molar Fraction CO', fontsize=14)
 
 ax.set_ylabel("Coverage Fraction (%)", color="blue", fontsize=14)
 ax.plot(x_CO_model, ac_O_model, color="blue", linestyle="-.", lw=2, zorder=1)
-ax.plot(x_CO, ac_O, marker='$\u25EF$', color='blue', markersize=4, lw=0, zorder=1)
 ax.plot(x_CO_model, ac_CO_model, color="blue", linestyle="-", lw=2, zorder=2)
-ax.plot(x_CO, ac_CO, marker='$\u25EF$', color='blue', markersize=4, lw=0, zorder=1)
 plt.text(0.3, 0.9, 'O', fontsize=18, color="blue")
 plt.text(0.7, 0.9, 'CO', fontsize=18, color="blue")
 
 ax2 = ax.twinx()
 ax2.set_ylabel("TOF (mol/s/site)",color="red", fontsize=14)
 ax2.plot(x_CO_model, TOF_CO2_model, color='red', linestyle='-', lw=2, zorder=0)
-ax2.plot(x_CO, TOF_CO2, marker='$\u25EF$', color='red', markersize=4, lw=0, zorder=1)
 plt.text(0.37, 1.5, 'CO$_2$', fontsize=18, color="red")
 
 plt.show()
