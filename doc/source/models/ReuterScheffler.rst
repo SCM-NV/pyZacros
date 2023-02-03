@@ -5,6 +5,8 @@
 Reuter-Scheffler Model
 ----------------------
 
+For more information, see file :download:`ReuterScheffler.py <../../../models/ReuterScheffler.py>`.
+
 The RS model includes the following elementary reactions:
 
 .. math::

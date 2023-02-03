@@ -51,11 +51,11 @@ times and require access to higher computational resources.
    zgb_pts.rst
    zgb_ss.rst
 
-.. |example_i1| image:: ../../images/example_ZGB-PhaseTransitions.png
+.. |example_i1| image:: PhaseTransitions_files/PhaseTransitions_28_0.png
    :scale: 35 %
    :target: zgb_pts.html
 
-.. |example_i2| image:: ../../images/example_ZGB-SS-nrep1.png
+.. |example_i2| image:: SteadyState_files/SteadyState_19_0.png
    :scale: 35 %
    :target: zgb_ss.html
 
@@ -72,11 +72,11 @@ times and require access to higher computational resources.
    zgb_pts_ss
    lh_rrc
 
-.. |example_i3| image:: ../../images/example_ZGB-PhaseTransitions-SteadyState.png
+.. |example_i3| image:: PhaseTransitions-SteadyState_files/PhaseTransitions-SteadyState_21_0.png
    :scale: 35 %
    :target: zgb_pts_ss.html
 
-.. |example_i4| image:: ../../images/example_LH-ProductionRate.png
+.. |example_i4| image:: CoveragesAndReactionRate_ViewResults_files/CoveragesAndReactionRate_ViewResults_10_0.png
    :scale: 35 %
    :target: lh_rrc.html
 
@@ -90,8 +90,8 @@ Advanced examples
 -----------------
 
 This section contains challenging examples often involving multiphysics throw specific coupling with external codes.
-Many of these examples represent industrial problems or show some state-of-the-art validation problems. Switching
-to Massively Parallel Processing (MPP) becomes recommended.
+Many of these examples represent industrial problems or show some state-of-the-art validation problems.
+.. Switching to Massively Parallel Processing (MPP) becomes recommended.
 
 .. toctree::
    :maxdepth: 1
@@ -104,7 +104,7 @@ to Massively Parallel Processing (MPP) becomes recommended.
    :scale: 54 %
    :target: COPt111.html
 
-.. |example_a2| image:: ../../images/example_ZGB-PhaseTransitionsADP_0.05_10.png
+.. |example_a2| image:: PhaseTransitions-ADP_improved.png
    :scale: 35 %
    :target: zgb_pts_sm.html
 

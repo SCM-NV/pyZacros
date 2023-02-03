@@ -5,6 +5,8 @@
 Ziff-Gulari-Barshad Model
 -------------------------
 
+For more information, see file :download:`ZiffGulariBarshad.py <../../../models/ZiffGulariBarshad.py>`.
+
 The ZGB model includes the following elementary reactions:
 
 .. math::
@@ -15,15 +17,6 @@ The ZGB model includes the following elementary reactions:
       \text{O}_{2(\text{g})} + 2\text{*} & \overset{k_{\text{O}_2}}{\longrightarrow} \text{O}^\text{*} + \text{O}^\text{*}  &\qquad \text{'O2_adsorption'}\\
       \text{CO}^\text{*} + \text{O}^\text{*} & \overset{k_\text{oxi}}{\longrightarrow} 2\text{*} + \text{CO}_{2(\text{g})} &\qquad \text{'CO_oxidation'} \\
    \end{align}
-
-
-.. .. csv-table:: Parameters
-..    :header: "Parameter", "Value"
-..
-..    :math:`k_\text{CO}`, :math:`A_\text{CO}`
-..                     "", :math:`A_\text{CO}`
-..    :math:`k_{\text{O}_2}`, "Yes"
-..    :math:`k_\text{oxi}`, "No"
 
 
 .. figure:: ../../images/zgb_lattice5x5.png
