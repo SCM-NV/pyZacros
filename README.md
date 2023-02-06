@@ -74,8 +74,8 @@ lattice = pz.Lattice( lattice_type=pz.Lattice.RECTANGULAR,
 lattice.plot()
 
 # Clusters:
-CO_p = pz.Cluster( species=[CO_s], cluster_energy=-1.3 )
-O_p = pz.Cluster( species=[O_s], cluster_energy=-2.3 )
+CO_p = pz.Cluster( species=[CO_s], energy=-1.3 )
+O_p = pz.Cluster( species=[O_s], energy=-2.3 )
 
 # Elementary Reactions
 CO_ads = pz.ElementaryReaction( initial=[s0, CO_g], final=[CO_s],
