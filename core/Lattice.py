@@ -630,7 +630,7 @@ class Lattice:
         markers = ['o', 's', 'v', '^', '+', '^']
         colors =  ['r', 'g', 'b', 'm', 'c', 'k']
 
-        for i,st_i in enumerate(list(set(self.site_types))):
+        for i,st_i in enumerate(sorted(list(set(self.site_types)))):
             xvalues = [ x for (x,y),st in zip(self.site_coordinates,self.site_types) if st==st_i ]
             yvalues = [ y for (x,y),st in zip(self.site_coordinates,self.site_types) if st==st_i ]
 

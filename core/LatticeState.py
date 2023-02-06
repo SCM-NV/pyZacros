@@ -361,7 +361,7 @@ class LatticeState:
         #--------------------------------
         # Plots the species
         #--------------------------------
-        site_types = list(set(self.lattice.site_types))
+        site_types = sorted(list(set(self.lattice.site_types)))
         for i,sym_i in enumerate([item.symbol for item in items]):
 
             if( all([sym is None for sym in symbols]) ): continue

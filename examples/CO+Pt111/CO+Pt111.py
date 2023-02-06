@@ -20,12 +20,12 @@ sett_ads.input.ams.PESExploration.SaddleSearch.MaxEnergy = 2.0
 sett_ads.input.ams.PESExploration.DynamicSeedStates = 'T'
 sett_ads.input.ams.PESExploration.CalculateFragments = 'T'
 sett_ads.input.ams.PESExploration.StatesAlignment.ReferenceRegion = 'surface'
-sett_ads.input.ams.PESExploration.StructureComparison.DistanceDifference = 0.1
+sett_ads.input.ams.PESExploration.StructureComparison.DistanceDifference = 0.2
 sett_ads.input.ams.PESExploration.StructureComparison.NeighborCutoff = 2.5
 sett_ads.input.ams.PESExploration.StructureComparison.EnergyDifference = 0.05
 sett_ads.input.ams.PESExploration.StructureComparison.CheckSymmetry = 'T'
 sett_ads.input.ams.PESExploration.BindingSites.Calculate = 'T'
-sett_ads.input.ams.PESExploration.BindingSites.NeighborCutoff = 3.8
+sett_ads.input.ams.PESExploration.BindingSites.DistanceDifference = 0.1
 
 job = scm.plams.AMSJob(name='pes_exploration', molecule=mol, settings=sett_ads+engine_sett)
 results_ads = job.run()
@@ -34,10 +34,9 @@ energy_landscape = results_ads.get_energy_landscape()
 print(energy_landscape)
 
 sett_bs = sett_ads.copy()
+sett_ads.input.ams.PESExploration.Job = 'BindingSites'
 sett_bs.input.ams.PESExploration.LoadEnergyLandscape.Path= '../pes_exploration'
-sett_bs.input.ams.PESExploration.NumExpeditions = 1
-sett_ads.input.ams.PESExploration.NumExplorers = 1
-sett_bs.input.ams.PESExploration.GenerateSymmetryImages = 'T'
+sett_bs.input.ams.PESExploration.LoadEnergyLandscape.GenerateSymmetryImages = 'T'
 sett_bs.input.ams.PESExploration.CalculateFragments = 'F'
 sett_bs.input.ams.PESExploration.StructureComparison.CheckSymmetry = 'F'
 
@@ -45,9 +44,9 @@ job = scm.plams.AMSJob(name='binding_sites', molecule=mol, settings=sett_bs+engi
 results_bs = job.run()
 
 loader_ads = scm.pyzacros.RKFLoader( results_ads )
-loader_ads.replace_site_types( ['A','B','C'], ['fcc','br','hcp'] )
+loader_ads.replace_site_types( ['N33','N221','N331'], ['fcc','br','hcp'] )
 loader_bs = scm.pyzacros.RKFLoader( results_bs )
-loader_bs.replace_site_types( ['A','B','C'], ['fcc','br','hcp'] )
+loader_bs.replace_site_types( ['N33','N221','N331'], ['fcc','br','hcp'] )
 
 print(loader_ads.clusterExpansion)
 print(loader_ads.mechanism)
@@ -74,7 +73,7 @@ job = scm.pyzacros.ZacrosJob( name='zacros_job', lattice=loader_bs.lattice,
                                 settings=settings )
 results_pz = job.run()
 
-if( job.ok() ):
+if job.ok():
     results_pz.plot_lattice_states( results_pz.lattice_states() )
     results_pz.plot_molecule_numbers( ["CO*"] )
 

@@ -79,18 +79,18 @@ This section aims to get the energy landscape of the system, but by being carefu
   sett_ads.input.ams.Task = "PESExploration"
   sett_ads.input.ams.PESExploration.Job = 'ProcessSearch'
   sett_ads.input.ams.PESExploration.RandomSeed = 100
-  sett_ads.input.ams.PESExploration.NumExpeditions = 10
+  sett_ads.input.ams.PESExploration.NumExpeditions = 30
   sett_ads.input.ams.PESExploration.NumExplorers = 4
   sett_ads.input.ams.PESExploration.SaddleSearch.MaxEnergy = 2.0
-  sett_ads.input.ams.PESExploration.DynamicSeedStates = True
-  sett_ads.input.ams.PESExploration.CalculateFragments = True
+  sett_ads.input.ams.PESExploration.DynamicSeedStates = 'T'
+  sett_ads.input.ams.PESExploration.CalculateFragments = 'T'
   sett_ads.input.ams.PESExploration.StatesAlignment.ReferenceRegion = 'surface'
-  sett_ads.input.ams.PESExploration.StructureComparison.DistanceDifference = 0.1
-  sett_ads.input.ams.PESExploration.StructureComparison.NeighborCutoff = 2.5
+  sett_ads.input.ams.PESExploration.StructureComparison.DistanceDifference = 0.2
+  sett_ads.input.ams.PESExploration.StructureComparison.NeighborCutoff = 2.4
   sett_ads.input.ams.PESExploration.StructureComparison.EnergyDifference = 0.05
-  sett_ads.input.ams.PESExploration.StructureComparison.CheckSymmetry = True
-  sett_ads.input.ams.PESExploration.BindingSites.Calculate = True
-  sett_ads.input.ams.PESExploration.BindingSites.NeighborCutoff = 3.8
+  sett_ads.input.ams.PESExploration.StructureComparison.CheckSymmetry = 'T'
+  sett_ads.input.ams.PESExploration.BindingSites.Calculate = 'T'
+  sett_ads.input.ams.PESExploration.BindingSites.DistanceDifference = 0.1
 
   job = scm.plams.AMSJob(name='pes_exploration', molecule=mol, settings=sett_ads+engine_sett)
   results_ads = job.run()
@@ -114,33 +114,33 @@ Finally, we create the AMSJob calculation, which requires both the initial molec
 .. code-block:: none
   :linenos:
 
-  [05.02|08:15:06] PLAMS working folder: /home/user/pyzacros/examples/CO+Pt111/plams_workdir
-  [05.02|08:15:06] JOB pes_exploration STARTED
-  [05.02|08:15:06] JOB pes_exploration RUNNING
-  [05.02|08:15:51] JOB pes_exploration FINISHED
-  [05.02|08:15:51] JOB pes_exploration SUCCESSFUL
+  PLAMS working folder: /home/user/pyzacros/examples/CO+Pt111/plams_workdir
+  [06.02|11:22:44] JOB pes_exploration STARTED
+  [06.02|11:22:44] JOB pes_exploration RUNNING
+  [06.02|11:23:38] JOB pes_exploration FINISHED
+  [06.02|11:23:38] JOB pes_exploration SUCCESSFUL
   All stationary points:
   ======================
-  State 1: COPt36 local minimum @ -7.65164210 Hartree (found 1 times, results on State-1_MIN)
+  State 1: COPt36 local minimum @ -7.65164231 Hartree (found 1 times, results on State-1_MIN)
   State 2: COPt36 local minimum @ -7.65157184 Hartree (found 1 times, results on State-2_MIN)
-  State 3: COPt36 local minimum @ -7.62381952 Hartree (found 1 times, results on State-3_MIN)
-  State 4: COPt36 transition state @ -7.62254756 Hartree (found 5 times, results on State-4_TS_2-3)
+  State 3: COPt36 local minimum @ -7.62382298 Hartree (found 1 times, results on State-3_MIN)
+  State 4: COPt36 transition state @ -7.62254754 Hartree (found 6 times, results on State-4_TS_2-3)
     +- Reactants: State 2: COPt36 local minimum @ -7.65157184 Hartree (found 1 times, results on State-2_MIN)
-       Products:  State 3: COPt36 local minimum @ -7.62381952 Hartree (found 1 times, results on State-3_MIN)
-       Prefactors: 1.586E+13:2.362E+12
-  State 5: COPt36 transition state @ -7.62242984 Hartree (found 3 times, results on State-5_TS_3-1)
-    +- Reactants: State 3: COPt36 local minimum @ -7.62381952 Hartree (found 1 times, results on State-3_MIN)
-       Products:  State 1: COPt36 local minimum @ -7.65164210 Hartree (found 1 times, results on State-1_MIN)
-       Prefactors: 2.205E+12:1.504E+13
+       Products:  State 3: COPt36 local minimum @ -7.62382298 Hartree (found 1 times, results on State-3_MIN)
+       Prefactors: 1.549E+13:2.197E+12
+  State 5: COPt36 transition state @ -7.62243092 Hartree (found 6 times, results on State-5_TS_1-3)
+    +- Reactants: State 1: COPt36 local minimum @ -7.65164231 Hartree (found 1 times, results on State-1_MIN)
+       Products:  State 3: COPt36 local minimum @ -7.62382298 Hartree (found 1 times, results on State-3_MIN)
+       Prefactors: 1.575E+13:2.200E+12
   Fragment 1: CO local minimum @ -0.42445368 Hartree (results on Fragment-1)
-  Fragment 2: Pt36 local minimum @ -7.154286 Hartree (results on Fragment-2)
+  Fragment 2: Pt36 local minimum @ -7.15428639 Hartree (results on Fragment-2)
   FragmentedState 1: CO+Pt36 local minimum @ -7.57874007 Hartree (fragments [1, 2])
-    +- State 1: COPt36 local minimum @ -7.65164210 Hartree (found 1 times, results on State-1_MIN)
-    |  Prefactors: 8.051E+06:1.668E+16
+    +- State 1: COPt36 local minimum @ -7.65164231 Hartree (found 1 times, results on State-1_MIN)
+    |  Prefactors: 8.051E+06:1.667E+16
     +- State 2: COPt36 local minimum @ -7.65157184 Hartree (found 1 times, results on State-2_MIN)
     |  Prefactors: 8.051E+06:1.642E+16
-    +- State 3: COPt36 local minimum @ -7.62381952 Hartree (found 1 times, results on State-3_MIN)
-       Prefactors: 8.051E+06:2.446E+15
+    +- State 3: COPt36 local minimum @ -7.62382298 Hartree (found 1 times, results on State-3_MIN)
+       Prefactors: 8.051E+06:2.329E+15
 
 From this output information, we can see that the calculation took less than a minute (lines 1-5) and that the obtained energy landscape contains three local minima (lines 8-10), two transition states (lines 11-18), and one fragmented state (lines 21-27). Notice there is more information available there, like absolute energies, the connections between local minima and transition states, and preexponential factors. To get a more amicable and interactive visualization of the energy landscape, you can use our amsmovie tool by executing the following command:
 
@@ -179,12 +179,11 @@ In the previous section, we obtained both the energy landscape and the associate
   :lineno-start: 36
 
   sett_bs = sett_ads.copy()
+  sett_ads.input.ams.PESExploration.Job = 'BindingSites'
   sett_bs.input.ams.PESExploration.LoadEnergyLandscape.Path= '../pes_exploration'
-  sett_bs.input.ams.PESExploration.NumExpeditions = 1
-  sett_ads.input.ams.PESExploration.NumExplorers = 1
-  sett_bs.input.ams.PESExploration.GenerateSymmetryImages = True
-  sett_bs.input.ams.PESExploration.CalculateFragments = False
-  sett_bs.input.ams.PESExploration.StructureComparison.CheckSymmetry = False
+  sett_bs.input.ams.PESExploration.LoadEnergyLandscape.GenerateSymmetryImages = 'T'
+  sett_bs.input.ams.PESExploration.CalculateFragments = 'F'
+  sett_bs.input.ams.PESExploration.StructureComparison.CheckSymmetry = 'F'
 
   job = scm.plams.AMSJob(name='binding_sites', molecule=mol, settings=sett_bs+engine_sett)
   results_bs = job.run()
@@ -195,10 +194,10 @@ Here, we start from the settings object of the previous calculation (line 36) an
 .. code-block:: none
   :linenos:
 
-  [05.02|08:15:51] JOB binding_sites STARTED
-  [05.02|08:15:51] JOB binding_sites RUNNING
-  [05.02|08:16:16] JOB binding_sites FINISHED
-  [05.02|08:16:16] JOB binding_sites SUCCESSFUL
+  [06.02|11:23:38] JOB binding_sites STARTED
+  [06.02|11:23:38] JOB binding_sites RUNNING
+  [06.02|11:23:57] JOB binding_sites FINISHED
+  [06.02|11:23:57] JOB binding_sites SUCCESSFUL
 
 Notice that the calculation took less than a minute (lines 1-4). To visualize the binding sites you can use again amsinput:
 
@@ -229,12 +228,12 @@ The following section of the script shows how to use the RKFLoader object and ac
 
 .. code-block:: python
   :linenos:
-  :lineno-start: 47
+  :lineno-start: 46
 
   loader_ads = scm.pyzacros.RKFLoader( results_ads )
-  loader_ads.replace_site_types( ['A','B','C'], ['fcc','br','hcp'] )
+  loader_ads.replace_site_types( ['N33','N221','N331'], ['fcc','br','hcp'] )
   loader_bs = scm.pyzacros.RKFLoader( results_bs )
-  loader_bs.replace_site_types( ['A','B','C'], ['fcc','br','hcp'] )
+  loader_bs.replace_site_types( ['N33','N221','N331'], ['fcc','br','hcp'] )
 
   print(loader_ads.clusterExpansion)
   print(loader_ads.mechanism)
@@ -247,26 +246,26 @@ Additionally, line 51 should print out the cluster expansion in the zacros forma
 
   energetics
 
-  cluster CO*-fcc
+  cluster CO*fcc
     sites 1
     lattice_state
       1 CO* 1
     site_types fcc
     graph_multiplicity 1
-    cluster_eng -1.98185e+00
+    cluster_eng -2.08204e+02
   end_cluster
 
   ...
   end_energetics
 
 
-... line 53 the mechanism:
+... line 52 the mechanism:
 
 .. code-block:: none
 
   mechanism
 
-  reversible_step CO*_0-fcc,*_1-br<-->*_0-fcc,CO*_1-br;(0,1)
+  reversible_step CO*1hcp*2br<->*1hcpCO*2br;(0,1)
     sites 2
     neighboring 1-2
     initial
@@ -275,16 +274,16 @@ Additionally, line 51 should print out the cluster expansion in the zacros forma
     final
       1 * 1
       2 CO* 1
-    site_types fcc br
-    pre_expon  1.58623e+13
-    pe_ratio  6.71496e+00
-    activ_eng  7.89791e-01
+    site_types hcp br
+    pre_expon  1.54880e+13
+    pe_ratio  7.05110e+00
+    activ_eng  7.89792e-01
   end_reversible_step
 
   ...
   end_mechanism
 
-... line 54 the lattice:
+... line 53 the lattice:
 
 .. code-block:: none
 
@@ -296,22 +295,22 @@ Additionally, line 51 should print out the cluster expansion in the zacros forma
     n_site_types 3
     site_type_names br fcc hcp
     n_cell_sites 45
-    site_types fcc hcp fcc fcc hcp fcc hcp fcc hcp hcp fcc fcc hcp fcc ...
+    site_types hcp fcc hcp hcp fcc hcp fcc hcp fcc hcp fcc hcp fcc hcp ...
     site_coordinates
-      0.07278722    0.07705806
-      0.18374454    0.18811093
-      0.07278722    0.41039139
-      0.40612054    0.07705806
+      0.07278720    0.07705805
+      0.18391338    0.18801095
+      0.07278720    0.41039138
+      0.40612054    0.07705805
   ...
-      41-16  self
-      27-7  self
-      37-15  self
+      9-26  self
+      7-24  self
+      11-30  self
     end_neighboring_structure
   end_lattice
 
 Please consult Zacros' user guide (``$AMSHOME/scripting/scm/pyzacros/doc/ZacrosManual.pdf``) for more details about the specific meaning of the keywords shown in the previous output blocks.
 
-Finally, line 55 allows visualizing the lattice:
+Finally, line 54 allows visualizing the lattice:
 
 .. figure:: ../../images/example_CO+Pt111-lattice_base.png
    :scale: 60 %
@@ -323,7 +322,7 @@ Finally, using a larger lattice in the final KMC simulation is convenient for im
 
 .. code-block:: python
   :linenos:
-  :lineno-start: 57
+  :lineno-start: 56
 
   loader_bs.lattice.set_repeat_cell( (10,10) )
   loader_bs.lattice.plot()
@@ -341,7 +340,7 @@ At this point, we finally have all the ingredients we need for our final KMC sim
 
 .. code-block:: python
   :linenos:
-  :lineno-start: 60
+  :lineno-start: 59
 
   settings = scm.pyzacros.Settings()
   settings.random_seed = 10
@@ -361,27 +360,27 @@ At this point, we finally have all the ingredients we need for our final KMC sim
   results_pz = job.run()
 
 
-Here we use standard conditions of temperature (273.15 K; line 62) and pressure (1 atm; line 63) and a molar fraction of ``0.1`` for the CO in the gas phase. In addition to that, we run the simulation for 10 µs of KMC time (line 67), print snapshots of the lattice state at 0.01, 0.035, 0.123, 0.429, 1.5, and 5.25 µs (line 68 using the ``logtime`` option), and save information about the number of gas and surface species every 0.01 µs (line 69). Notice that by default pyZacros/Zacros will start the simulation with an empty lattice.
+Here we use standard conditions of temperature (273.15 K; line 61) and pressure (1 atm; line 62) and a molar fraction of ``0.1`` for the CO in the gas phase. In addition to that, we run the simulation for 10 µs of KMC time (line 66), print snapshots of the lattice state at 0.01, 0.035, 0.123, 0.429, 1.5, and 5.25 µs (line 67 using the ``logtime`` option), and save information about the number of gas and surface species every 0.01 µs (line 68). Notice that by default pyZacros/Zacros will start the simulation with an empty lattice.
 
-Finally, we set up the ZacrosJob calculation and run it! (lines 71-75). Notice that the cluster expansion and the mechanism were taken from the symmetry-irreducible energy landscape (see ``loader_ads``) and the lattice from the calculation of the symmetry-generated images (see ``loader_bs``).
+Finally, we set up the ZacrosJob calculation and run it! (lines 70-74). Notice that the cluster expansion and the mechanism were taken from the symmetry-irreducible energy landscape (see ``loader_ads``) and the lattice from the calculation of the symmetry-generated images (see ``loader_bs``).
 
 If everything went well, at this point, you should get something like this in the standard output:
 
 .. code-block:: none
   :linenos:
 
-  [05.02|08:15:51] JOB zacros_job STARTED
-  [05.02|08:15:51] JOB zacros_job RUNNING
-  [05.02|08:16:16] JOB zacros_job FINISHED
-  [05.02|08:16:16] JOB zacros_job SUCCESSFUL
+  [06.02|16:08:46] JOB zacros_job STARTED
+  [06.02|16:08:46] JOB zacros_job RUNNING
+  [06.02|16:08:47] JOB zacros_job FINISHED
+  [06.02|16:08:47] JOB zacros_job SUCCESSFUL
 
 Notice that the calculation took less than a minute. Now we can visualize the results, and close the PLAMS environment:
 
 .. code-block:: python
   :linenos:
-  :lineno-start: 77
+  :lineno-start: 76
 
-  if( job.ok() ):
+  if job.ok():
       results_pz.plot_lattice_states( results_pz.lattice_states() )
       results_pz.plot_molecule_numbers( ["CO*"] )
 
@@ -389,18 +388,18 @@ Notice that the calculation took less than a minute. Now we can visualize the re
 
 The obtained results are the following:
 
-Firstly, the lattice states (line 78):
+Firstly, the lattice states (line 77):
 
-.. figure:: ../../images/example_CO+Pt111-ls.png
-   :scale: 60 %
+.. figure:: ../../images/example_CO+Pt111-ls.gif
+   :scale: 100 %
    :align: center
 
-Secondly, the number of CO molecules absorbed as a function of time (line 79):
+Secondly, the number of CO molecules absorbed as a function of time (line 78):
 
 .. figure:: ../../images/example_CO+Pt111-mn.png
-   :scale: 60 %
+   :scale: 100 %
    :align: center
 
 These results show that the Pt surface gets completely poisoned by CO in around 5 µs. Keep in mind that the lattice has in 4500 sites.
 
-As we said initially, we are not interested in an accurate description of the system itself. So, even if this model is far from reality, it helps us illustrate all steps to follow in a fully automated workflow to go from atomistic to mesoscopic modeling.
+As we said initially, we are not interested in accurately describing the system. So, even if this model is far from reality, it helps us illustrate all steps to follow in a fully automated workflow from atomistic to mesoscopic modeling.
