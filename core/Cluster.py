@@ -7,7 +7,7 @@ class Cluster:
     """
     Creates a new Cluster object. As in Zacros, each cluster is represented as a graph pattern, consisting of a collection of connected sites onto which surface species can bind. This pattern involves multi/mono-dentate species bound to neighboring sites of different types.
 
-    *   ``species`` -- List of species bound to the sites (gas species are ignored) e.g. ``[ Species("H*",1), Species("H*",1) ]``
+    *   ``species`` -- List of species bound to the sites (gas species are ignored) e.g. ``[ Species("H*"), Species("H*") ]``
     *   ``site_types`` -- Specifies the name of the sites in the graph pattern representing the cluster. Notice that the order is essential and it should agree with the species option, e.g. ``['fcc','hcp']``.
     *   ``entity_number`` -- List of the molecular entities ids bound to each site. Notice that the order is essential and should agree with the site_types option. For example, if a bidentate species is bound to sites 1 and 2 ( ``species=[ Species("H**",2), Species("H**",2) ]`` ), both of these sites will have the same entity numbers, i.e. ``entity_number=[0,0]``. By default, the list of entity numbers is created by assuming that species with the same symbol belong to the same entity.
     *   ``neighboring`` -- Specifies the neighboring between sites, if more than one sites appear in the graph pattern, e.g. [ (0,1) ]
@@ -26,7 +26,7 @@ class Cluster:
         """
         Creates a new Cluster object
         """
-        self.species = species  # e.g. [ Species("H*",1), Species("H*",1) ]
+        self.species = species  # e.g. [ Species("H*"), Species("H*") ]
         self.sites = len([ sp for sp in species if sp == Species.UNSPECIFIED or sp.is_adsorbed() ])
 
         if( site_types is not None ):
