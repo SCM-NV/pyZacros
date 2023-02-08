@@ -54,7 +54,7 @@ The ZGB model includes (see the script below):
 5. Three irreversible events: non-dissociative adsorption of CO, dissociative adsorption of O2, and fast reaction between
    an O adatom and a CO adsorbate. (Lines 24-31)
 
-https://github.com/SCM-NV/pyZacros/blob/054811fb9379b8ce6e4950ca493e86ae0b53c82a/examples/intro/intro0.py#L1-L58
+https://github.com/SCM-NV/pyZacros/blob/e7a76431f738d15e5d1f36de75b11a061e92fd1e/examples/intro/intro0.py#L1-L58
 
 Don't worry if something in the above code is incomprehensible or confusing.
 Everything you need to know to understand how pyZacros works and how to write your own scripts is explained
