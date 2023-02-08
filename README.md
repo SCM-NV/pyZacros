@@ -55,7 +55,7 @@ The ZGB model includes (see the script below):
    an O adatom and a CO adsorbate. (Lines 24-31)
 
 ```python {.line-numbers}
-import scm.plams
+import scm
 import scm.pyzacros as pz
 
 # Gas species:
@@ -64,13 +64,13 @@ O2_g = pz.Species("O2")
 CO2_g = pz.Species("CO2", gas_energy=-2.337)
 
 # Surface species:
-s0 = pz.Species("*", 1)      # Empty adsorption site
-CO_s = pz.Species("CO*", 1)
-O_s = pz.Species("O*", 1)
+s0 = pz.Species("*")      # Empty adsorption site
+CO_s = pz.Species("CO*")
+O_s = pz.Species("O*")
 
 # Lattice setup:
 lattice = pz.Lattice( lattice_type=pz.Lattice.RECTANGULAR,
-                        lattice_constant=1.0, repeat_cell=[10,10] )
+                      lattice_constant=1.0, repeat_cell=[10,10] )
 lattice.plot()
 
 # Clusters:
@@ -87,7 +87,7 @@ O2_ads = pz.ElementaryReaction( initial=[s0, s0, O2_g], final=[O_s, O_s], neighb
 CO_oxi = pz.ElementaryReaction( initial=[CO_s, O_s], final=[s0, s0, CO2_g], neighboring=[(0, 1)],
                                 reversible=False, pre_expon=1.0e+20, activation_energy=0.0)
 
-scm.plams.init()
+scm.pyzacros.init()
 
 # Settings:
 sett = pz.Settings()
@@ -97,6 +97,7 @@ sett.snapshots = ('time', 5.e-1)
 sett.process_statistics = ('time', 1.e-2)
 sett.species_numbers = ('time', 1.e-2)
 sett.max_time = 25.0
+sett.random_seed = 953129
 
 sett.molar_fraction.CO = 0.45
 sett.molar_fraction.O2 = 0.55
@@ -111,7 +112,7 @@ print( "nCO2 = ", results.provided_quantities()["CO2"][-10:] )
 results.plot_molecule_numbers( results.gas_species_names() )
 results.plot_molecule_numbers( results.surface_species_names() )
 
-scm.plams.finish()
+scm.pyzacros.finish()
 ```
 
 Don't worry if something in the above code is incomprehensible or confusing.
@@ -125,7 +126,7 @@ be similar to the image below:
     <img src="doc/images/ZGB-lattice.png" style="width:40%">
 </p>
 
-Then, you should see the plot of the number of molecules of each kind as a function of time during the simulation. We have split this information into two Figures for clarity, one for gas-phase species and the other one for surface species, as follows (see script's line 54-55):
+Then, you should see the plot of the number of molecules of each kind as a function of time during the simulation. We have split this information into two Figures for clarity, one for gas-phase species and the other one for surface species, as follows (see script's line 55-56):
 
 <p align="center">
     <img src="doc/images/ZGB-mol_gas_nums.png" style="width:40%">
@@ -136,12 +137,12 @@ During the execution the following information is written to the standard output
 
 ```
 [02.11|12:07:12] PLAMS working folder: /home/user/plams_workdir
-[02.11|12:07:12] JOB plamsjob STARTED
-[02.11|12:07:12] JOB plamsjob RUNNING
-[02.11|12:07:12] JOB plamsjob FINISHED
-[02.11|12:07:12] JOB plamsjob SUCCESSFUL
-nCO2 = [2825, 2827, 2828, 2829, 2829, 2830, 2830, 2832, 2832, 2834]
-[02.11|12:07:40] PLAMS run finished. Goodbye
+[08.02|13:57:45] JOB plamsjob STARTED
+[08.02|13:57:45] JOB plamsjob RUNNING
+[08.02|13:57:45] JOB plamsjob FINISHED
+[08.02|13:57:45] JOB plamsjob SUCCESSFUL
+nCO2 =  [2790, 2790, 2790, 2792, 2792, 2793, 2793, 2795, 2797, 2797]
+[08.02|13:58:05] PLAMS run finished. Goodbye
 ```
 
 It indicates that pyZacros created a uniquely named working folder (``plams_workdir``) and then ran the Zacros calculation in a separate

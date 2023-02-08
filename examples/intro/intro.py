@@ -1,3 +1,4 @@
+import scm
 import scm.pyzacros as pz
 
 # Gas species
