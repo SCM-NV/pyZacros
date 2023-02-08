@@ -7,9 +7,9 @@ O2_g = pz.Species("O2")
 CO2_g = pz.Species("CO2", gas_energy=-2.337)
 
 # Surface species:
-s0 = pz.Species("*", 1)      # Empty adsorption site
-CO_s = pz.Species("CO*", 1)
-O_s = pz.Species("O*", 1)
+s0 = pz.Species("*")      # Empty adsorption site
+CO_s = pz.Species("CO*")
+O_s = pz.Species("O*")
 
 # Lattice setup:
 lattice = pz.Lattice( lattice_type=pz.Lattice.RECTANGULAR,
