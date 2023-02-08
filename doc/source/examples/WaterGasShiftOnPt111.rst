@@ -11,7 +11,7 @@ If everything is working well, you should get the following information in the s
   :linenos:
 
   $ amspython WaterGasShiftOnPt111.py
-  [14.02|16:30:47] PLAMS working folder: /home/user/pyzacros/examples/WaterGasShiftOnPt111/plams_workdir
+  PLAMS working folder: /home/user/pyzacros/examples/WaterGasShiftOnPt111/plams_workdir
   ---------------------------------------------------------------------
   simulation_input.dat
   ---------------------------------------------------------------------
@@ -24,8 +24,7 @@ If everything is working well, you should get the following information in the s
   species_numbers           on time       0.0005
   event_report      off
   max_steps         infinity
-  max_time          250.0
-  wall_time         30
+  max_time          0.25
 
   n_gas_species    4
   gas_specs_names              CO           H2          H2O          CO2
@@ -282,11 +281,11 @@ If everything is working well, you should get the following information in the s
   end_step
 
   end_mechanism
-  [14.02|16:30:47] JOB plamsjob STARTED
-  [14.02|16:30:47] JOB plamsjob RUNNING
-  [14.02|16:31:17] JOB plamsjob FINISHED
-  [14.02|16:31:17] JOB plamsjob SUCCESSFUL
-  [14.02|16:31:27] PLAMS run finished. Goodbye
+  [08.02|15:34:32] JOB plamsjob STARTED
+  [08.02|15:34:32] JOB plamsjob RUNNING
+  [08.02|15:34:57] JOB plamsjob FINISHED
+  [08.02|15:34:57] JOB plamsjob SUCCESSFUL
+  [08.02|15:35:10] PLAMS run finished. Goodbye
 
 .. figure:: ../../images/example_WaterGasShiftOnPt111.png
    :scale: 100 %

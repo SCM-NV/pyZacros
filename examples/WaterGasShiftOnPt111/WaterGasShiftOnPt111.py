@@ -185,8 +185,7 @@ sett.process_statistics = ('time', 5.e-4)
 sett.species_numbers = ('time', 5.e-4)
 sett.event_report = 'off'
 sett.max_steps = 'infinity'
-sett.max_time = 250.0
-sett.wall_time = 30
+sett.max_time = 0.25
 
 job = pz.ZacrosJob( settings=sett, lattice=latt, mechanism=mech, cluster_expansion=myClusterExpansion )
 
