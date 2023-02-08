@@ -93,7 +93,14 @@ class ElementaryReaction:
             #msg += "              Inconsistent dimensions for sites, initial or final\n"
             #raise NameError(msg)
 
-        if( abs( self.initial.mass( self.initial_entity_number ) - self.final.mass( self.final_entity_number ) ) > 1e-6 ):
+        # If adsorbed species have 'mass==0.0', the user didn't use a chemical formula for its symbol,
+        # or the job was reconstructed from a Zacros input file. So, it doesn't make any sense to
+        # check mass conservation
+        check_mass = True
+        if( abs( self.initial.mass( self.initial_entity_number ) ) < 1e-6 or abs(self.final.mass( self.final_entity_number )) < 1e-6 ):
+            check_mass = False
+
+        if( abs( self.initial.mass( self.initial_entity_number ) - self.final.mass( self.final_entity_number ) ) > 1e-6 and check_mass ):
             msg  = "\n### ERROR ### ElementaryReaction.__init__.\n"
             msg += "              The mass is not conserved during the reaction\n"
             msg += "              initial:mass("+str([sp.symbol for sp in self.initial])+")="+str(self.initial.mass(self.initial_entity_number))

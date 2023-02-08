@@ -545,7 +545,7 @@ class ZacrosJob( scm.plams.SingleJob ):
 
         gas_species = SpeciesList()
         for i in range(len(sett["gas_specs_names"])):
-            gas_species.append( Species( symbol=sett["gas_specs_names"][i], gas_energy=sett["gas_energies"][i], kind=Species.GAS ) )
+            gas_species.append( Species( symbol=sett["gas_specs_names"][i], gas_energy=sett["gas_energies"][i], kind=Species.GAS, mass=sett["gas_molec_weights"][i] ) )
 
         surface_species = SpeciesList()
         surface_species.append( Species( "*", 1 ) )      # Empty adsorption site

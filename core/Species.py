@@ -127,17 +127,26 @@ class Species:
         if( self.kind == Species.GAS and self.gas_energy is None ):
             self.gas_energy = 0.0
 
-        self.__composition = chemparse.parse_formula( symbol.replace("*","") )
+        self.__composition = {}
+        self.__mass = 0.0
 
         if( mass is None ):
-            if( not all( [ key.upper() in Species.__ATOMIC_MASS.keys() for key in self.__composition.keys() ] ) ):
-                msg  = "\n### ERROR ### Species.__init__.\n"
-                msg += "Wrong format for species symbol. It should correspond to a chemical formula.\n"
-                raise NameError(msg)
+            self.__composition = chemparse.parse_formula( symbol.replace("*","") )
 
-            self.__mass = 0.0
-            for s,n in self.__composition.items():
-                self.__mass += n*Species.__ATOMIC_MASS[s.upper()]
+            if( not all( [ key.upper() in Species.__ATOMIC_MASS.keys() for key in self.__composition.keys() ] ) ):
+
+                if( self.kind == Species.GAS ):
+                    msg  = "\n### ERROR ### Species.__init__.\n"
+                    msg += "The parameter 'mass' is required for gas species if the symbol doesn't correspond to a chemical formula\n"
+                    raise NameError(msg)
+                elif( self.kind == Species.SURFACE ):
+                    msg = "Species symbol ("+self.symbol+") does not correspond to a chemical formula. Using default mass=0.0"
+                    print(msg)
+
+            else:
+
+                for s,n in self.__composition.items():
+                    self.__mass += n*Species.__ATOMIC_MASS[s.upper()]
         else:
             self.__mass = mass
 
