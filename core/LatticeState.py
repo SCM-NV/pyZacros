@@ -1,5 +1,6 @@
 import math
 import random
+import numpy
 
 from .Species import *
 from .SpeciesList import *
@@ -366,10 +367,20 @@ class LatticeState:
 
             if( all([sym is None for sym in symbols]) ): continue
 
+            ids_nn = [ pos for pos,v in enumerate(symbols) if v is not None ]
+            s_ids_nn = numpy.argsort( [ symbols[k] for k in ids_nn ] )
+            sorted_ids = [ ids_nn[k] for k in s_ids_nn ]
+            sorted_ids = sorted_ids + [ k for k in range(len(symbols)) if k not in sorted_ids ]
+
             xvalues = []
             yvalues = []
             imarkers = []
-            for (x,y),site_type,sym in zip(self.lattice.site_coordinates,self.lattice.site_types,symbols):
+            for sid in sorted_ids:
+                x = self.lattice.site_coordinates[sid][0]
+                y = self.lattice.site_coordinates[sid][1]
+                site_type = self.lattice.site_types[sid]
+                sym = symbols[sid]
+
                 if( sym == sym_i ):
                     xvalues.append( x )
                     yvalues.append( y )
