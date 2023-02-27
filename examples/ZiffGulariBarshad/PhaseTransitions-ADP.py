@@ -17,7 +17,7 @@
 # computational cost of these property scans. This is precisely why the
 # **Adaptive Design Procedure (ADP)** was created.
 # 
-# The ADP was created to generate training data for Machine Learning algorithms,
+# The ADP was created to generate training data for Machine Learning (ML) algorithms,
 # with a particular emphasis on approximating computationally-intensive
 # first-principles kinetic models in catalysis. The procedure is based on
 # function topology and behavior, with the discrete gradient and relative
@@ -26,7 +26,7 @@
 # The authors demonstrate that the procedure could design a dataset (achieving
 # the same accuracy) using only between 60 and 80% fewer data points as are
 # needed in an evenly distributed grid. Furthermore, the ADP generates a
-# **Surrogate Model** of the data based on Machine Learning techniques,
+# **Surrogate Model** of the data based on ML techniques,
 # allowing interpolation of points not included in the original data set,
 # which is critical for multiscale simulations of complex chemical reactors.
 # 
@@ -34,6 +34,9 @@
 # phase's composition in the $CO_2$ Turnover frequency (TOF) in the ZGB model,
 # but we will do so while utilizing the ADP to both suggest the values of the
 # $CO$ molar fractions to evaluate and generate a surrogate model for this solution.
+# In practice, the surrogate model is a [PKL file](https://docs.python.org/3/library/pickle.html)
+# that contains all of the parameters of the ML model, allowing it to be regenerated
+# and used subsequently. The main goal of this tutorial is to obtain this file.
 
 # First of all, we must install the package **adaptiveDesignProcedure**. You
 # can either follow the procedure described in its GitHub repository
@@ -190,7 +193,7 @@ adpML = adp.adaptiveDesignProcedure( input_var, output_var, get_rate,
 
 # Now, we begin the calculation by invoking the method ``createTrainingDataAndML()``,
 # which, as the name implies, generates the training data as well as the surrogate model
-# (or machine learning model). The program runs several cycles, and for each cycle,
+# (or ML model). The program runs several cycles, and for each cycle,
 # increases the number of points and calls the "get rate()" function to evaluate them.
 # When the Relative Approximation Error and the Out-Of-Bag error are less than
 # ``algorithmParams['RADth']`` (default=10%) and ``algorithmParams['OOBth']`` (default=0.05),
@@ -300,3 +303,9 @@ plt.text(0.37, 1.5, 'CO$_2$', fontsize=18, color="red")
 
 plt.show()
 
+
+# By default, the Surrogate Model's file is ``ml_ExtraTrees_forCFD.pkl``. The option
+# ``forestFile`` in the ADP constructor allows you to alter the prefix ``ml_ExtraTrees``.
+# In the ``adp.predict()`` method, you can provide the complete path to this file, but if
+# a directory is supplied instead, it will try to discover the proper file inside,
+# as shown in the lines of code above. 
