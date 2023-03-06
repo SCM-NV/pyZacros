@@ -38,13 +38,51 @@ class Settings( scm.plams.Settings ):
         output += "temperature     " + "%10s"%self.get('temperature')+"\n"
         output += "pressure        " + "%10s"%self.get('pressure')+"\n\n"
 
-        for option in ['snapshots', 'process_statistics', 'species_numbers']:
+        for option in ['snapshots', 'process_statistics', 'species_numbers', 'energetics_lists', 'process_lists']:
             if( option in self ):
                     pair = self[option]
-                    if( len(pair) == 2 ):
-                        key,value = pair
-                    elif( len(pair) == 3 ):
-                        key,value = pair[0],(pair[1],pair[2])
+                    add = None
+
+                    if( pair[0] in ['event', 'elemevent', 'time', 'logtime', 'realtime'] ):
+
+                        # e.g. sett.snapshots = ('time', 1e1*dt)
+                        if( len(pair) == 2 ):
+                            key,value = pair
+
+                        # e.g. sett.on_sites_seeding_reportevent_report = ('time', 1e1*dt, 'on')
+                        elif(
+                            len(pair) == 3
+                            and pair[2] in ['on', 'off']
+                        ):
+                            key,value,add = pair[0],pair[1],pair[2]
+
+                        # e.g. sett.snapshots = ('logtime', 1e1*dt, 0.1)
+                        elif( len(pair) == 3 ):
+                            key,value = pair[0],(pair[1],pair[2])
+
+                        # e.g. sett.on_sites_seeding_reportevent_report = ('logtime', 1e-08*dt, 1.5, 'on')
+                        elif(
+                            len(pair) == 4
+                            and pair[3] in ['on', 'off']
+                        ):
+                            key,value,add = pair[0],(pair[1],pair[2]),pair[3]
+
+                        # e.g. sett.process_lists = ('time', 1e1*dt, 'select_event_type', [1,2])
+                        elif(
+                            len(pair) == 4
+                            and pair[2] in ['select_cluster_type', 'select_event_type']
+                            and type(pair[3]) == list
+                        ):
+                            key,value,add = pair[0],pair[1],(pair[2],pair[3])
+
+                        # e.g. sett.process_lists = ('logtime', 1e-08*dt, 1.5, 'select_event_type', [1,2])
+                        elif(
+                            len(pair) == 5
+                            and pair[3] in ['select_cluster_type', 'select_event_type']
+                            and type(pair[4]) == list
+                        ):
+                            key,value,add = pair[0],(pair[1],pair[2]),(pair[3],pair[4])
+
                     else:
                         msg  = "\n### ERROR ### keyword "+option+" in settings.\n"
                         msg += "              Its value should be a pair (key,value[,value1]).\n"
@@ -60,13 +98,21 @@ class Settings( scm.plams.Settings ):
                             msg += "              Given value: "+str(value)+"\n"
                             raise NameError(msg)
 
-                        output += "%-20s"%option + "      " + "on "+ key + "       " + str(float(value[0])) + "  " + str(float(value[1])) + "\n"
+                        output += "%-20s"%option + "      " + "on "+ key + "       " + str(float(value[0])) + "  " + str(float(value[1]))
                     elif( key == 'event' or key == 'elemevent' ):
-                        output += "%-20s"%option + "      " + "on "+ key + "       " + str(int(value)) + "\n"
+                        output += "%-20s"%option + "      " + "on "+ key + "       " + str(int(value))
                     else:
-                        output += "%-20s"%option + "      " + "on "+ key + "       " + str(float(value)) + "\n"
+                        output += "%-20s"%option + "      " + "on "+ key + "       " + str(float(value))
 
-        if( 'event_report' in self ): output += "event_report      " + str(self.get(('event_report')))+"\n"
+                    if( add is not None ):
+                        if( type(add) == tuple and type(add[1]) == list ):
+                            output += "%20s"%add[0] + "      " + " ".join([str(v) for v in add[1]])
+
+                    output += "\n"
+
+        if( 'on_sites_seeding_report' in self ): output += "on_sites_seeding_report         " + str(self.get(('on_sites_seeding_report')))+"\n"
+        if( 'event_report' in self ): output += "event_report         " + str(self.get(('event_report')))+"\n"
+
         if( 'max_steps' in self ): output += "max_steps         " + str(self.get(('max_steps')))+"\n"
         if( 'max_time' in self ): output += "max_time          " + str(self.get(('max_time')))+"\n"
         if( 'wall_time' in self ): output += "wall_time         " + str(self.get(('wall_time')))+"\n"
