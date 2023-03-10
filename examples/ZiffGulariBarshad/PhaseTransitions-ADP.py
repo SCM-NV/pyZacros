@@ -10,12 +10,12 @@
 # From the results, it is possible to see that, typically, the lower the $CO_2$
 # production, the more difficult it is to achieve a steady state (except when
 # $CO_2$ production is zero, likely because the surface got poisoned, which
-# makes the calculation finish quickly). This means that most of the computational
-# time is spent on points that are not as interesting from a catalytic perspective
-# as points with higher CO2 production. Thus, it would be ideal an automatically
-# generate more points in the more interesting areas to reduce the overall
-# computational cost of these property scans. This is precisely why the
-# **Adaptive Design Procedure (ADP)** was created.
+# makes the calculation finish quickly). This means that most of the
+# computational time is spent on points that, from a catalytic standpoint,
+# are not as interesting as points with higher $CO_2$ production. Thus, to
+# reduce the overall computational cost, it would be ideal to generate more
+# points in the more interesting areas automatically. This is the main goal
+# of the **Adaptive Design Procedure (ADP)**.
 # 
 # The ADP was created to generate training data for Machine Learning (ML) algorithms,
 # with a particular emphasis on approximating computationally-intensive
