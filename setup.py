@@ -3,6 +3,8 @@ import os
 
 from setuptools import setup, find_packages
 
+description = "pyZacros (Python Library for Automating Zacros Simulation) is a collection of tools that aims to provide a powerful, flexible, and easily extendable Python interface to Zacros, a Kinetic Monte Carlo software package for simulating molecular phenomena on catalytic surfaces. pyZacros is designed as an extension of the python library [PLAMS](https://github.com/SCM-NV/PLAMS). Thereby inherits from PLAMS the robust way of managing the inputs file preparation, job execution, file management, and output file processing. Above that, it also offers the possibility of postprocessing the results and building very advanced data workflows."
+
 here = os.path.abspath(os.path.dirname(__file__))
 
 packages = ['scm.pyzacros'] + ['scm.pyzacros.'+i for i in find_packages('.')]
@@ -30,7 +32,7 @@ setup(
     name='pyzacros',
     version=version['__version__'],
     description="Python Library for Automating Zacros Simulations",
-    long_description=readme + '\n\n',
+    long_description=description,
     author="Nestor F. Aguirre & Pablo Lopez-Tarifa",
     author_email='aguirre@scm.com',
     url='https://github.com/SCM-NV/pyZacros',
