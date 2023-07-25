@@ -698,7 +698,7 @@ class ZacrosResults( scm.plams.Results ):
 
         provided_quantities = self.provided_quantities()
 
-        ax.set_title('t $\in$ [0.0,{:.3g}] s'.format(data["time"]))
+        ax.set_title(r't $\in$ [0.0,{:.3g}] s'.format(data["time"]))
         ax.set_xlabel(key)
 
         keys = list(data[key].keys())
@@ -880,9 +880,9 @@ class ZacrosResults( scm.plams.Results ):
 
         .. math::
 
-           t_{n-1,1-\\frac{\\delta}{2}}\\frac{\\sigma_{TOF}}{\\sqrt{n}} \lt \epsilon
+           t_{n-1,1-\\frac{\\delta}{2}}\\frac{\\sigma_{TOF}}{\\sqrt{n}} \\lt \\epsilon
 
-        Here the convergence criteria is :math:`\epsilon=1-\\text{confidence}`
+        Here the convergence criteria is :math:`\\epsilon=1-\\text{confidence}`
 
         """
         values = {}

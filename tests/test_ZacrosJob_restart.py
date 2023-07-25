@@ -7,7 +7,7 @@ import scm.pyzacros.models
 import scm.pyzacros.utils
 
 
-def test_ZacrosJob_restart():
+def test_ZacrosJob_restart(tmp_path):
     print( "---------------------------------------------------" )
     print( ">>> Testing ZacrosJob_restart mechanism" )
     print( "---------------------------------------------------" )
@@ -17,7 +17,7 @@ def test_ZacrosJob_restart():
     #---------------------------------------------
     # Calculation Settings
     #---------------------------------------------
-    scm.plams.init(folder='test_ZacrosJob_restart')
+    scm.plams.init(folder=str(tmp_path / 'test_ZacrosJob_restart'))
 
     # Settings:
     sett = pz.Settings()

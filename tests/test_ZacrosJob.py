@@ -4,7 +4,7 @@ import scm.pyzacros as pz
 import scm.pyzacros.utils
 
 
-def test_ZacrosJob():
+def test_ZacrosJob(test_folder, tmp_path):
     print( "---------------------------------------------------" )
     print( ">>> Testing ZacrosJob class" )
     print( "---------------------------------------------------" )
@@ -51,7 +51,7 @@ def test_ZacrosJob():
     myMechanism.append( reaction1 )
     myMechanism.append( reaction2 )
 
-    scm.plams.init(folder='test_ZacrosJob')
+    scm.plams.init(folder=str(tmp_path / 'test_ZacrosJob'))
 
     sett = pz.Settings()
     sett.random_seed = 10
@@ -63,7 +63,7 @@ def test_ZacrosJob():
     myJob = pz.ZacrosJob( myLattice, myMechanism, myClusterExpansion, settings=sett )
     print(myJob)
     output = str(myJob)
-    with open( "tests/test_ZacrosJob_expected_input.txt", "r" ) as inp:
+    with open( test_folder / "test_ZacrosJob_expected_input.txt", "r" ) as inp:
         expectedOutput = inp.read()
     assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
 
@@ -77,24 +77,24 @@ def test_ZacrosJob():
         print( "Warning: The calculation FAILED because the zacros executable is not available!" )
         print( "         For testing purposes, we just omit this step.")
 
-    myJob = pz.ZacrosJob.load_external( path='tests/test_ZacrosJob.idata/default' )
+    myJob = pz.ZacrosJob.load_external( path=test_folder / 'test_ZacrosJob.idata/default' )
     print(myJob)
     output = str(myJob)
-    with open( "tests/test_ZacrosJob_expected_input_default.txt", "r" ) as inp:
+    with open( test_folder / "test_ZacrosJob_expected_input_default.txt", "r" ) as inp:
         expectedOutput = inp.read()
     assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
 
-    myJob = pz.ZacrosJob.load_external( path='tests/test_ZacrosJob.idata/periodic_cell' )
+    myJob = pz.ZacrosJob.load_external( path=test_folder / 'test_ZacrosJob.idata/periodic_cell' )
     print(myJob)
     output = str(myJob)
-    with open( "tests/test_ZacrosJob_expected_input_periodic_cell.txt", "r" ) as inp:
+    with open( test_folder / "test_ZacrosJob_expected_input_periodic_cell.txt", "r" ) as inp:
         expectedOutput = inp.read()
     assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
 
-    myJob = pz.ZacrosJob.load_external( path='tests/test_ZacrosJob.idata/explicit' )
+    myJob = pz.ZacrosJob.load_external( path=test_folder / 'test_ZacrosJob.idata/explicit' )
     print(myJob)
     output = str(myJob)
-    with open( "tests/test_ZacrosJob_expected_input_explicit.txt", "r" ) as inp:
+    with open( test_folder / "test_ZacrosJob_expected_input_explicit.txt", "r" ) as inp:
         expectedOutput = inp.read()
     assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
 

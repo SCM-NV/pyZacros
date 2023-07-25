@@ -7,14 +7,14 @@ import scm.pyzacros.models
 import scm.pyzacros.utils
 
 
-def test_post_process():
+def test_post_process(tmp_path):
     print( "---------------------------------------------------" )
     print( ">>> Testing Zacros post_process methods" )
     print( "---------------------------------------------------" )
 
     zgb = pz.models.ZiffGulariBarshad( repeat_cell=[20,20] )
-
-    scm.plams.init( folder='test_post_process' )
+    workdir = tmp_path / 'test_post_process'
+    scm.plams.init(folder=str(workdir))
 
     # Settings:
     sett = pz.Settings()
@@ -51,7 +51,7 @@ def test_post_process():
     if( load_precalculated ):
         job = pz.ZacrosJob.load_external( path="tests/test_ZacrosResults.data/plamsjob" )
     else:
-        job = pz.ZacrosJob.load_external( path='test_post_process/plamsjob' )
+        job = pz.ZacrosJob.load_external( path=workdir / 'plamsjob')
 
     data = job.results.provided_quantities()
     output = str(data)

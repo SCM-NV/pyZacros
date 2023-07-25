@@ -7,7 +7,7 @@ import scm.pyzacros.models
 import scm.pyzacros.utils
 
 
-def test_ZacrosParametersScanSteadyStateJob():
+def test_ZacrosParametersScanSteadyStateJob(tmp_path, test_folder):
     print( "----------------------------------------------------------------" )
     print( ">>> Testing ZacrosParametersScanJob(+ZacrosSteadyStateJob) class" )
     print( "----------------------------------------------------------------" )
@@ -17,7 +17,7 @@ def test_ZacrosParametersScanSteadyStateJob():
     #---------------------------------------------
     # Calculation Settings
     #---------------------------------------------
-    scm.plams.init(folder='test_ZacrosParametersScanSteadyStateJob')
+    scm.plams.init(folder=tmp_path / 'test_ZacrosParametersScanSteadyStateJob')
 
     ## Run as many job simultaneously as there are cpu on the system
     #maxjobs = multiprocessing.cpu_count()
@@ -65,7 +65,7 @@ def test_ZacrosParametersScanSteadyStateJob():
         print( "Warning: The calculation FAILED because the zacros executable is not available!" )
         print( "         For testing purposes, now we load precalculated results.")
 
-        ps_job = scm.plams.load( 'tests/test_ZacrosParametersScanSteadyStateJob.data/plamsjob/plamsjob.dill' )
+        ps_job = scm.plams.load( test_folder / '/test_ZacrosParametersScanSteadyStateJob.data/plamsjob/plamsjob.dill' )
         results = ps_job.results
 
     output = ""

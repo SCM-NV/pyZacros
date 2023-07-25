@@ -2,7 +2,7 @@ import scm.plams
 import scm.pyzacros as pz
 
 
-def test_ZacrosResults():
+def test_ZacrosResults(test_folder, tmp_path):
     print( "---------------------------------------------------" )
     print( ">>> Testing ZacrosResults class" )
     print( "---------------------------------------------------" )
@@ -57,7 +57,7 @@ def test_ZacrosResults():
                                           pre_expon=1.0e+20,
                                           label="CO_oxidation")
 
-    scm.plams.init(folder='test_ZacrosResults')
+    scm.plams.init(folder=tmp_path / 'test_ZacrosResults')
 
     # Settings:
     sett = pz.Settings()
@@ -92,7 +92,7 @@ def test_ZacrosResults():
         print( "Warning: The calculation FAILED because the zacros executable is not available!" )
         print( "         For testing purposes, now we load precalculated results.")
 
-        job = scm.plams.load( "tests/test_ZacrosResults.data/plamsjob/plamsjob.dill" )
+        job = scm.plams.load( test_folder / "test_ZacrosResults.data/plamsjob/plamsjob.dill" )
         results = job.results
 
     #-----------------------

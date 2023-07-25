@@ -8,7 +8,7 @@ import scm.pyzacros as pz
 import scm.pyzacros.utils
 
 
-def generateAMSResults():
+def generateAMSResults(test_folder):
     """Generates of the energy landscape for the O-Pt111 system"""
 
     sett_ads = scm.plams.Settings()
@@ -38,8 +38,8 @@ def generateAMSResults():
     sett_lat.input.ams.PESExploration.BindingSites.MaxCoordinationShellsForLabels = 3
     sett_lat.input.ams.PESExploration.StructureComparison.CheckSymmetry = 'F'
 
-    molO = scm.plams.Molecule( "tests/O-Pt111.xyz" )
-    molCO = scm.plams.Molecule( "tests/CO-Pt111.xyz" )
+    molO = scm.plams.Molecule( test_folder / "O-Pt111.xyz" )
+    molCO = scm.plams.Molecule( test_folder / "CO-Pt111.xyz" )
 
     jobO_ads = scm.plams.AMSJob(molecule=molO, settings=sett_ads, name="O_ads-Pt111")
     jobCO_ads = scm.plams.AMSJob(molecule=molCO, settings=sett_ads, name="CO_ads-Pt111")
@@ -66,20 +66,21 @@ def generateAMSResults():
         scm.plams.delete_job( jobO_ads )
         scm.plams.delete_job( jobCO_ads )
     else:
-        jobO_lat = scm.plams.load( "tests/test_RKFLoader.data/O-Pt111/O-Pt111.dill" )
-        jobCO_lat = scm.plams.load( "tests/test_RKFLoader.data/CO-Pt111/CO-Pt111.dill" )
+        jobO_lat = scm.plams.load(test_folder / "test_RKFLoader.data/O-Pt111/O-Pt111.dill")
+        jobCO_lat = scm.plams.load(test_folder / "test_RKFLoader.data/CO-Pt111/CO-Pt111.dill")
 
     return jobO_lat.results,jobCO_lat.results
 
 
-def test_RKFLoader():
+def test_RKFLoader(test_folder, tmp_path):
     print( "---------------------------------------------------" )
     print( ">>> Testing RKFLoader class" )
     print( "---------------------------------------------------" )
 
-    scm.plams.init(folder='test_RKFLoader')
+    workdir = tmp_path / 'test_RKFLoader'
+    scm.plams.init(folder=str(workdir))
 
-    resultsO,resultsCO = generateAMSResults()
+    resultsO,resultsCO = generateAMSResults(test_folder=test_folder)
 
     scm.plams.finish()
 
