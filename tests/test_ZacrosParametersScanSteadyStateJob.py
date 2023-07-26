@@ -7,7 +7,7 @@ import scm.pyzacros.models
 import scm.pyzacros.utils
 
 
-def test_ZacrosParametersScanSteadyStateJob(tmp_path, test_folder):
+def test_ZacrosParametersScanSteadyStateJob(test_folder, tmp_path):
     print( "----------------------------------------------------------------" )
     print( ">>> Testing ZacrosParametersScanJob(+ZacrosSteadyStateJob) class" )
     print( "----------------------------------------------------------------" )
