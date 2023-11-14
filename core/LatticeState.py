@@ -104,6 +104,10 @@ class LatticeState:
         return entity
 
 
+    def _adsorbed_on_site(self):
+        return self.__adsorbed_on_site
+
+
     def _updateSpeciesNumbers(self):
         for sp in self.surface_species:
             self.__speciesNumbers[sp] = 0
