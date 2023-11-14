@@ -101,6 +101,9 @@ class ZacrosJob( scm.plams.SingleJob ):
         self.mechanism = mechanism
         if( type(mechanism) == list ): self.mechanism = Mechanism(mechanism)
 
+        if( 'temperature' in kwargs['settings'] ):
+            self.mechanism.set_temperature( kwargs['settings']['temperature'] )
+
         #if( set(map(type, self.mechanism.site_types_set())) == {int} )
 
         if( not self.mechanism.site_types_set().issubset( self.lattice.site_types_set() ) ):

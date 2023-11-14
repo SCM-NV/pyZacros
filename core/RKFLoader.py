@@ -60,6 +60,7 @@ class RKFLoader:
         isTS = results.readrkf("EnergyLandscape", "isTS")
         reactants = results.readrkf("EnergyLandscape", "reactants")
         products = results.readrkf("EnergyLandscape", "products")
+        prefactorsTemperature = results.readrkf("EnergyLandscape", "prefactorsTemperature")
         prefactorsFromReactant = results.readrkf("EnergyLandscape", "prefactorsFromReactant")
         prefactorsFromProduct = results.readrkf("EnergyLandscape", "prefactorsFromProduct")
 
@@ -491,6 +492,11 @@ class RKFLoader:
                                                pe_ratio=pe_ratio,
                                                activation_energy=activationEnergy )
 
+                reaction._prefactors_temperature = prefactorsTemperature
+                reaction._prefactors_model = REACTION_MEDIATED_BY_A_TRANSITION_STATE
+                reaction._kf_reactants = fileName[idReactant]
+                reaction._kf_products = fileName[idProduct]
+
                 #self.clusterExpansion.extend( [clusterReactant, clusterProduct] )
                 self.mechanism.append( reaction )
 
@@ -543,14 +549,18 @@ class RKFLoader:
                 activationEnergy = 0.0 if state2Energy[idState]<energy else state2Energy[idState]-energy
 
                 reaction = ElementaryReaction( site_types=cluster_data['site_types'],
-                                            final_entity_number=cluster_data['entity_number'],
-                                            neighboring=cluster_data['neighboring'],
-                                            initial=speciesFState,
-                                            final=cluster_data['species'],
-                                            reversible=True,
-                                            pre_expon=prefactorAdsorption,
-                                            pe_ratio=pe_ratio,
-                                            activation_energy=activationEnergy )
+                                               final_entity_number=cluster_data['entity_number'],
+                                               neighboring=cluster_data['neighboring'],
+                                               initial=speciesFState,
+                                               final=cluster_data['species'],
+                                               reversible=True,
+                                               pre_expon=prefactorAdsorption,
+                                               pe_ratio=pe_ratio,
+                                               activation_energy=activationEnergy)
+
+                reaction._prefactorsTemperature = prefactorsTemperature
+                reaction._kf_reactants = fileName[idReactant]
+                reaction._kf_fragments = fileName[idProduct]
 
                 self.clusterExpansion.extend( [clusterState] )
                 self.mechanism.append( reaction )

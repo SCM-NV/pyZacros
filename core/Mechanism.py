@@ -345,3 +345,13 @@ class Mechanism( UserList ):
         """
         return next(rxn for rxn in self if rxn.label().find(label) != -1)
 
+
+    def set_temperature( self, temperature ):
+        """
+        Sets the temperature of the mechanism. It recalculates the pre-exponential factors if needed.
+
+        *   ``temperature`` -- Temperature in K
+        """
+
+        for erxn in self:
+            erxn.set_temperature( temperature )

@@ -113,6 +113,10 @@ class ElementaryReaction:
         self.__label = None
         self.__updateLabel()
 
+        # Hidden attributes. Only for using with AMS
+        self._kf_prefactors_forward = RKFPrefactors()
+        self._kf_prefactors_backward = RKFPrefactors()
+
 
     def __eq__(self, other):
         """
@@ -325,3 +329,14 @@ class ElementaryReaction:
                     self.site_types[j] = site_types_new[i]
 
         self.__updateLabel()
+
+
+    def set_temperature( self, temperature ):
+        """
+        Sets the temperature of the reaction. It recalculates the pre-exponential factors if needed.
+
+        *   ``temperature`` -- Temperature in K
+        """
+
+        for erxn in self:
+            erxn.set_temperature( temperature )
