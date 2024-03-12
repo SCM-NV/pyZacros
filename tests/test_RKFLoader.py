@@ -13,44 +13,44 @@ def generateAMSResults(test_folder):
 
     sett_ads = scm.plams.Settings()
     sett_ads.input.ams.Task = "PESExploration"
-    sett_ads.input.ams.PESExploration.Job = 'ProcessSearch'
+    sett_ads.input.ams.PESExploration.Job = "ProcessSearch"
     sett_ads.input.ams.PESExploration.RandomSeed = 100
     sett_ads.input.ams.PESExploration.NumExpeditions = 10
     sett_ads.input.ams.PESExploration.NumExplorers = 4
     sett_ads.input.ams.PESExploration.Optimizer.ConvergedForce = 0.005
     sett_ads.input.ams.PESExploration.SaddleSearch.MaxEnergy = 4.0
-    sett_ads.input.ams.PESExploration.DynamicSeedStates = 'T'
+    sett_ads.input.ams.PESExploration.DynamicSeedStates = "T"
     sett_ads.input.ams.PESExploration.StructureComparison.DistanceDifference = 0.1
     sett_ads.input.ams.PESExploration.StructureComparison.NeighborCutoff = 3.8
     sett_ads.input.ams.PESExploration.StructureComparison.EnergyDifference = 0.05
-    sett_ads.input.ams.PESExploration.StructureComparison.CheckSymmetry = 'T'
-    sett_ads.input.ams.PESExploration.CalculateFragments = 'T'
-    sett_ads.input.ams.PESExploration.StatesAlignment.ReferenceRegion = 'surface'
-    sett_ads.input.ReaxFF.ForceField = 'CHONSFPtClNi.ff'
-    sett_ads.input.ReaxFF.Charges.Solver = 'Direct'
-    sett_ads.input.ams.Constraints.FixedRegion = 'surface'
+    sett_ads.input.ams.PESExploration.StructureComparison.CheckSymmetry = "T"
+    sett_ads.input.ams.PESExploration.CalculateFragments = "T"
+    sett_ads.input.ams.PESExploration.StatesAlignment.ReferenceRegion = "surface"
+    sett_ads.input.ReaxFF.ForceField = "CHONSFPtClNi.ff"
+    sett_ads.input.ReaxFF.Charges.Solver = "Direct"
+    sett_ads.input.ams.Constraints.FixedRegion = "surface"
 
     sett_lat = sett_ads.copy()
-    sett_lat.input.ams.PESExploration.Job = 'BindingSites'
-    sett_lat.input.ams.PESExploration.LoadEnergyLandscape.GenerateSymmetryImages = 'T'
-    sett_lat.input.ams.PESExploration.CalculateFragments = 'F'
+    sett_lat.input.ams.PESExploration.Job = "BindingSites"
+    sett_lat.input.ams.PESExploration.LoadEnergyLandscape.GenerateSymmetryImages = "T"
+    sett_lat.input.ams.PESExploration.CalculateFragments = "F"
     sett_lat.input.ams.PESExploration.BindingSites.NeighborCutoff = 2.4
     sett_lat.input.ams.PESExploration.BindingSites.MaxCoordinationShellsForLabels = 3
-    sett_lat.input.ams.PESExploration.StructureComparison.CheckSymmetry = 'F'
+    sett_lat.input.ams.PESExploration.StructureComparison.CheckSymmetry = "F"
 
-    molO = scm.plams.Molecule( test_folder / "O-Pt111.xyz" )
-    molCO = scm.plams.Molecule( test_folder / "CO-Pt111.xyz" )
+    molO = scm.plams.Molecule(test_folder / "O-Pt111.xyz")
+    molCO = scm.plams.Molecule(test_folder / "CO-Pt111.xyz")
 
     jobO_ads = scm.plams.AMSJob(molecule=molO, settings=sett_ads, name="O_ads-Pt111")
     jobCO_ads = scm.plams.AMSJob(molecule=molCO, settings=sett_ads, name="CO_ads-Pt111")
 
-    sett_lat.input.ams.PESExploration.LoadEnergyLandscape.Path= '../O_ads-Pt111'
+    sett_lat.input.ams.PESExploration.LoadEnergyLandscape.Path = "../O_ads-Pt111"
     jobO_lat = scm.plams.AMSJob(molecule=molO, settings=sett_lat, name="O-Pt111", depend=[jobO_ads])
 
-    sett_lat.input.ams.PESExploration.LoadEnergyLandscape.Path= '../CO_ads-Pt111'
+    sett_lat.input.ams.PESExploration.LoadEnergyLandscape.Path = "../CO_ads-Pt111"
     jobCO_lat = scm.plams.AMSJob(molecule=molCO, settings=sett_lat, name="CO-Pt111", depend=[jobCO_ads])
 
-    jobs = [ jobO_ads, jobCO_ads, jobO_lat, jobCO_lat ]
+    jobs = [jobO_ads, jobCO_ads, jobO_lat, jobCO_lat]
 
     for job in jobs:
         job.run()
@@ -58,45 +58,45 @@ def generateAMSResults(test_folder):
     success = True
     for job in jobs:
         if not job.ok() and "AMSBIN" not in os.environ:
-            print( "Warning: The calculation FAILED likely because AMS executable is not available!" )
-            print( "         For testing purposes, now we load precalculated results.")
+            print("Warning: The calculation FAILED likely because AMS executable is not available!")
+            print("         For testing purposes, now we load precalculated results.")
             success = False
 
     if success:
-        scm.plams.delete_job( jobO_ads )
-        scm.plams.delete_job( jobCO_ads )
+        scm.plams.delete_job(jobO_ads)
+        scm.plams.delete_job(jobCO_ads)
     else:
         jobO_lat = scm.plams.load(test_folder / "test_RKFLoader.data/O-Pt111/O-Pt111.dill")
         jobCO_lat = scm.plams.load(test_folder / "test_RKFLoader.data/CO-Pt111/CO-Pt111.dill")
 
-    return jobO_lat.results,jobCO_lat.results
+    return jobO_lat.results, jobCO_lat.results
 
 
 def test_RKFLoader(test_folder, tmp_path):
-    print( "---------------------------------------------------" )
-    print( ">>> Testing RKFLoader class" )
-    print( "---------------------------------------------------" )
+    print("---------------------------------------------------")
+    print(">>> Testing RKFLoader class")
+    print("---------------------------------------------------")
 
-    workdir = tmp_path / 'test_RKFLoader'
+    workdir = tmp_path / "test_RKFLoader"
     scm.plams.init(folder=str(workdir))
 
-    resultsO,resultsCO = generateAMSResults(test_folder=test_folder)
+    resultsO, resultsCO = generateAMSResults(test_folder=test_folder)
 
     scm.plams.finish()
 
-    loaderO = pz.RKFLoader( resultsO )
-    loaderCO = pz.RKFLoader( resultsCO )
+    loaderO = pz.RKFLoader(resultsO)
+    loaderCO = pz.RKFLoader(resultsCO)
 
-    loader = pz.RKFLoader.merge( [loaderO, loaderCO] )
-    loader.replace_site_types( ['N33', 'N331', 'N221'], ['fcc', 'hcp', 'br'] )
+    loader = pz.RKFLoader.merge([loaderO, loaderCO])
+    loader.replace_site_types(["N33", "N331", "N221"], ["fcc", "hcp", "br"])
 
-    output  = str( loader.clusterExpansion )+"\n\n"
-    output += str( loader.mechanism )+"\n\n"
+    output = str(loader.clusterExpansion) + "\n\n"
+    output += str(loader.mechanism) + "\n\n"
 
-    loader.lattice.set_repeat_cell( [2,2] )
-    loader.lattice.plot( pause=2 )
+    loader.lattice.set_repeat_cell([2, 2])
+    loader.lattice.plot(pause=2)
 
-    output += str( loader.lattice )
+    output += str(loader.lattice)
 
     print(output)
 
@@ -336,4 +336,4 @@ lattice explicit
   end_lattice_structure
 end_lattice\
 """
-    assert( pz.utils.compare( output, expectedOutput, abs_error=1e-12, rel_error=0.1 ) )
+    assert pz.utils.compare(output, expectedOutput, abs_error=1e-12, rel_error=0.1)

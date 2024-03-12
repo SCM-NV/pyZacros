@@ -11,12 +11,12 @@ def test_Settings():
     sett.random_seed = 71543
     sett.temperature = 380.0
     sett.pressure = 2.00
-    sett.snapshots= ('time', 1e-5)
-    sett.process_statistics = ('time', 1e-5)
-    sett.species_numbers = ('time', 1e-5)
-    sett.event_report = 'off'
-    sett.max_steps = 'infinity'
-    sett.max_time = 1.0e+50
+    sett.snapshots = ("time", 1e-5)
+    sett.process_statistics = ("time", 1e-5)
+    sett.species_numbers = ("time", 1e-5)
+    sett.event_report = "off"
+    sett.max_steps = "infinity"
+    sett.max_time = 1.0e50
     sett.wall_time = 5000
     output = str(sett)
 
@@ -35,4 +35,4 @@ max_steps         infinity
 max_time          1e+50
 wall_time         5000\
 """
-    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
+    assert pz.utils.compare(output, expectedOutput, 1e-3)

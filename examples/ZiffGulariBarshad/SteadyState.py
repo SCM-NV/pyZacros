@@ -22,7 +22,7 @@ import scm.pyzacros as pz
 import scm.pyzacros.models
 
 
-# Then, we initialize the **pyZacros** environment. 
+# Then, we initialize the **pyZacros** environment.
 
 scm.pyzacros.init()
 
@@ -60,14 +60,13 @@ z_sett.molar_fraction.CO = 0.42
 z_sett.molar_fraction.O2 = 1.0 - z_sett.molar_fraction.CO
 z_sett.temperature = 500.0
 z_sett.pressure = 1.0
-z_sett.species_numbers = ('time', 0.1)
-z_sett.max_time = 100.0*0.1
+z_sett.species_numbers = ("time", 0.1)
+z_sett.max_time = 100.0 * 0.1
 z_sett.random_seed = 953129
 
-job = pz.ZacrosJob( settings=z_sett,
-                    lattice=zgb.lattice,
-                    mechanism=zgb.mechanism,
-                    cluster_expansion=zgb.cluster_expansion )
+job = pz.ZacrosJob(
+    settings=z_sett, lattice=zgb.lattice, mechanism=zgb.mechanism, cluster_expansion=zgb.cluster_expansion
+)
 
 
 # It is now time to set up the steady state calculation. It also needs a ``Settings``
@@ -83,13 +82,13 @@ job = pz.ZacrosJob( settings=z_sett,
 # ``turnover frequency.nreplicas`` parameter allows several simulations to run in
 # parallel to speed up the calculation at the expense of more computational power.
 # For the time being, we will leave it at 1, but we will return to it later.
-# 
+#
 # In the second block of code, the ``ZacrosSteadyStateJob.Parameters()`` class allows
 # us to specify the grid in ``max time``, which in this case ranges from 20 to 1000
 # every 100 seconds. Take note that the convergence is verified for each point on
 # this grid, and if it has not converged, the calculation is resumed up to the next
 # point in ``max time``.
-# 
+#
 # Finally, we create ``ZacrosSteadyStateJob``, which references the ``ZacrosJob``
 # defined above as well as the ``Settings`` object and parameters we just defined:
 
@@ -99,9 +98,9 @@ ss_sett.turnover_frequency.confidence = 0.96
 ss_sett.turnover_frequency.nreplicas = 1
 
 parameters = pz.ZacrosSteadyStateJob.Parameters()
-parameters.add( 'max_time', 'restart.max_time', numpy.arange(20.0, 1000.0, 100) )
+parameters.add("max_time", "restart.max_time", numpy.arange(20.0, 1000.0, 100))
 
-ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=job, parameters=parameters )
+ss_job = pz.ZacrosSteadyStateJob(settings=ss_sett, reference=job, parameters=parameters)
 
 
 # The steady-state calculation setup is ready. Therefore, we can start it
@@ -113,11 +112,11 @@ ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=job, parameters=pa
 results = ss_job.run()
 
 if not ss_job.ok():
-    print('Something went wrong!')
+    print("Something went wrong!")
 
 
 # If the execution got up to this point, everything worked as expected. Hooray!
-# 
+#
 # Now, in the following lines, we just nicely print the results in a table. See
 # the API documentation to learn more about how the ``results`` object is structured.
 # Here we show the history of the simulation and see how it progresses as the
@@ -125,18 +124,22 @@ if not ss_job.ok():
 # and whether the calculation converged. Notice that the calculation should have
 # been converged at 720 s of ``max_time``.
 
-print(60*'-')
+print(60 * "-")
 fline = "{0:>8s}{1:>10s}{2:>15s}{3:>12s}{4:>10s}"
-print( fline.format('iter', 'max_time', 'TOF_CO2', 'error', 'conv?') )
-print(60*'-')
+print(fline.format("iter", "max_time", "TOF_CO2", "error", "conv?"))
+print(60 * "-")
 
-for i,step in enumerate(results.history()):
+for i, step in enumerate(results.history()):
     fline = "{0:8d}{1:>10.2f}{2:15.5f}{3:>12.5f}{4:>10s}"
-    print( fline.format(i,
-                        step['max_time'],
-                        step['turnover_frequency']['CO2'],
-                        step['turnover_frequency_error']['CO2'],
-                        str(all(step['converged'].values()))) )
+    print(
+        fline.format(
+            i,
+            step["max_time"],
+            step["turnover_frequency"]["CO2"],
+            step["turnover_frequency_error"]["CO2"],
+            str(all(step["converged"].values())),
+        )
+    )
 
 
 # Now that all calculations are done, we can close the pyZacros environment:
@@ -156,16 +159,21 @@ import matplotlib.pyplot as plt
 
 fig = plt.figure()
 ax = plt.axes()
-ax.set_xlabel('Time (s)', fontsize=14)
+ax.set_xlabel("Time (s)", fontsize=14)
 ax.set_ylabel("CO$_2$ Production (mol/site)", fontsize=14)
 
-colors = 'bgrcmykb'
+colors = "bgrcmykb"
 for i in range(results.niterations()):
     for j in range(results.nreplicas()):
-        molecule_numbers = results.children_results(i,j).molecule_numbers(['CO2'], normalize_per_site=True)
-        
-        ax.plot( molecule_numbers['Time'], molecule_numbers['CO2'], lw=3, color=colors[i], zorder=-i )
-        ax.vlines( max(molecule_numbers['Time']) , 0, max(molecule_numbers['CO2']), colors='0.8', linestyles='--',)
+        molecule_numbers = results.children_results(i, j).molecule_numbers(["CO2"], normalize_per_site=True)
+
+        ax.plot(molecule_numbers["Time"], molecule_numbers["CO2"], lw=3, color=colors[i], zorder=-i)
+        ax.vlines(
+            max(molecule_numbers["Time"]),
+            0,
+            max(molecule_numbers["CO2"]),
+            colors="0.8",
+            linestyles="--",
+        )
 
 plt.show()
-

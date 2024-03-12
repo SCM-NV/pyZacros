@@ -3,27 +3,28 @@ import numpy
 import scm.pyzacros as pz
 import scm.pyzacros.utils
 
+
 def test_Parameters():
-    print( "---------------------------------------------------" )
-    print( ">>> Testing Parameters class" )
-    print( "---------------------------------------------------" )
+    print("---------------------------------------------------")
+    print(">>> Testing Parameters class")
+    print("---------------------------------------------------")
 
     output = ""
 
     params = pz.ZacrosParametersScanJob.Parameters()
-    params.add( 'x_CO', 'molar_fraction.CO', numpy.arange(0.0, 1.0, 0.25) )
-    params.add( 'x_O2', 'molar_fraction.O2', lambda p: 1.0-p['x_CO'] )
-    params.set_generator( pz.ZacrosParametersScanJob.zipGenerator )
+    params.add("x_CO", "molar_fraction.CO", numpy.arange(0.0, 1.0, 0.25))
+    params.add("x_O2", "molar_fraction.O2", lambda p: 1.0 - p["x_CO"])
+    params.set_generator(pz.ZacrosParametersScanJob.zipGenerator)
 
     output += "zipGenerator:\n"
     output += str(params)
     output += "\n"
 
     params = pz.ZacrosParametersScanJob.Parameters()
-    params.add( 'x_CO', 'molar_fraction.CO', numpy.arange(0.0, 1.0, 0.4) )
-    params.add( 'x_O2', 'molar_fraction.O2', numpy.arange(0.0, 1.0, 0.4) )
-    params.add( 'x_N2', 'molar_fraction.N2', lambda p: 0.11+p['x_CO']+p['x_O2'] )
-    params.set_generator( pz.ZacrosParametersScanJob.meshgridGenerator )
+    params.add("x_CO", "molar_fraction.CO", numpy.arange(0.0, 1.0, 0.4))
+    params.add("x_O2", "molar_fraction.O2", numpy.arange(0.0, 1.0, 0.4))
+    params.add("x_N2", "molar_fraction.N2", lambda p: 0.11 + p["x_CO"] + p["x_O2"])
+    params.set_generator(pz.ZacrosParametersScanJob.meshgridGenerator)
 
     output += "meshgridGenerator:\n"
     output += str(params)
@@ -48,4 +49,4 @@ meshgridGenerator:
 (2, 1): {'x_CO': 0.4, 'x_O2': 0.8, 'x_N2': 1.31}
 (2, 2): {'x_CO': 0.8, 'x_O2': 0.8, 'x_N2': 1.71}\
 """
-    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
+    assert pz.utils.compare(output, expectedOutput, 1e-3)

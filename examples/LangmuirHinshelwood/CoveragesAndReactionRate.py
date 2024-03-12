@@ -14,7 +14,7 @@
 # considerably increasing the computational cost. This tutorial shows how to speed up
 # the calculation by several orders of magnitude without sacrificing precision by
 # automatically detecting and scaling the rate constants of fast reactions.
-# 
+#
 # We will focus on the net reaction $\text{CO}+\frac{1}{2}\text{O}_2\longrightarrow \text{CO}_2$
 # that takes place at a catalyst's surface and whose reaction mechanism is described by
 # the Langmuir-Hinshelwood model. Because this model has four very fast processes
@@ -35,7 +35,7 @@ import scm.pyzacros as pz
 import scm.pyzacros.models
 
 
-# Then, we initialize the **pyZacros** environment. 
+# Then, we initialize the **pyZacros** environment.
 
 scm.pyzacros.init()
 
@@ -48,11 +48,11 @@ scm.pyzacros.init()
 # it should take around 20 min to complete. So, in order to speed things up, we'll
 # use the ``plams.JobRunner`` class to run as many parallel instances as possible. In this
 # case, we choose to use the maximum number of simultaneous processes (``maxjobs``) equal
-# to the number of processors in the machine. 
+# to the number of processors in the machine.
 
 maxjobs = multiprocessing.cpu_count()
 scm.plams.config.default_jobrunner = scm.plams.JobRunner(parallel=True, maxjobs=maxjobs)
-print('Running up to {} jobs in parallel simultaneously'.format(maxjobs))
+print("Running up to {} jobs in parallel simultaneously".format(maxjobs))
 
 
 # First, we initialize our Langmuir-Hinshelwood model, which by luck is available as a
@@ -67,7 +67,7 @@ lh = pz.models.LangmuirHinshelwood()
 # ``ZacrosJob``. So, We will go through them one at a time:
 
 # **1. Setting up the ZacrosJob**
-# 
+#
 # For ``ZacrosJob``, all parameters are set using a ``Setting`` object. To begin,
 # we define the physical parameters: ``temperature`` (in K), and ``pressure``
 # (in bar). The calculation parameters are then set: ``species numbers`` (in s)
@@ -84,17 +84,17 @@ lh = pz.models.LangmuirHinshelwood()
 z_sett = pz.Settings()
 z_sett.temperature = 500.0
 z_sett.pressure = 1.000
-z_sett.species_numbers = ('time', 1.0e-5)
-z_sett.max_time = 100*1.0e-5
+z_sett.species_numbers = ("time", 1.0e-5)
+z_sett.max_time = 100 * 1.0e-5
 z_sett.random_seed = 1609
 
-z_job = pz.ZacrosJob( settings=z_sett, lattice=lh.lattice,
-                      mechanism=lh.mechanism,
-                      cluster_expansion=lh.cluster_expansion )
+z_job = pz.ZacrosJob(
+    settings=z_sett, lattice=lh.lattice, mechanism=lh.mechanism, cluster_expansion=lh.cluster_expansion
+)
 
 
 # **2. Setting up the ZacrosSteadyStateJob**
-# 
+#
 # We also need to create a ``Setting`` object for ``ZacrosJob`` There, we ask for a
 # steady-state configuration using a TOFs calculation with a 95% confidence level
 # (``turnover frequency.confidence``), using four replicas to speed up the calculation
@@ -114,19 +114,17 @@ z_job = pz.ZacrosJob( settings=z_sett, lattice=lh.lattice,
 ss_sett = pz.Settings()
 ss_sett.turnover_frequency.confidence = 0.95
 ss_sett.turnover_frequency.nreplicas = 4
-ss_sett.scaling.enabled = 'T'
-ss_sett.scaling.max_time = 60*1e-5
+ss_sett.scaling.enabled = "T"
+ss_sett.scaling.max_time = 60 * 1e-5
 
 ss_params = pz.ZacrosSteadyStateJob.Parameters()
-ss_params.add( 'max_time', 'restart.max_time',
-                2*z_sett.max_time*( numpy.arange(10)+1 )**2 )
+ss_params.add("max_time", "restart.max_time", 2 * z_sett.max_time * (numpy.arange(10) + 1) ** 2)
 
-ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=z_job,
-                                  parameters=ss_params )
+ss_job = pz.ZacrosSteadyStateJob(settings=ss_sett, reference=z_job, parameters=ss_params)
 
 
 # **3. Setting up the ZacrosParametersScanJob**
-# 
+#
 # Although the ``ZacrosParametersScanJob`` does not require a ``Setting`` object,
 # it does require a ``ZacrosSteadyStateJob.Parameters`` object to specify which
 # parameters must be modified systematically. In this instance, all we need is a
@@ -136,13 +134,13 @@ ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=z_job,
 # will be used internally to replace ``molar fraction.CO`` and ``molar fraction.O2``
 # in the Zacros input files. Then, using the ``ZacrosSteadyStateJob`` defined
 # earlier (``ss job``) and the parameters we just defined (``ps params``), we
-# create the ``ZacrosParametersScanJob``: 
+# create the ``ZacrosParametersScanJob``:
 
 ps_params = pz.ZacrosParametersScanJob.Parameters()
-ps_params.add( 'x_CO', 'molar_fraction.CO', numpy.linspace(0.05, 0.95, 11) )
-ps_params.add( 'x_O2', 'molar_fraction.O2', lambda params: 1.0-params['x_CO'] )
+ps_params.add("x_CO", "molar_fraction.CO", numpy.linspace(0.05, 0.95, 11))
+ps_params.add("x_O2", "molar_fraction.O2", lambda params: 1.0 - params["x_CO"])
 
-ps_job = pz.ZacrosParametersScanJob( reference=ss_job, parameters=ps_params )
+ps_job = pz.ZacrosParametersScanJob(reference=ss_job, parameters=ps_params)
 
 
 # The parameters scan calculation setup is ready. Therefore, we can start it
@@ -155,11 +153,11 @@ ps_job = pz.ZacrosParametersScanJob( reference=ss_job, parameters=ps_params )
 results = ps_job.run()
 
 if not ps_job.ok():
-    print('Something went wrong!')
+    print("Something went wrong!")
 
 
 # If the execution got up to this point, everything worked as expected. Hooray!
-# 
+#
 # Finally, in the following lines, we just nicely print the results in a table. See
 # the API documentation to learn more about how the ``results`` object is structured,
 # and the available methods. In this case, we use the ``turnover_frequency()`` and
@@ -173,19 +171,19 @@ ac_CO = []
 TOF_CO2 = []
 
 results_dict = results.turnover_frequency()
-results_dict = results.average_coverage( last=10, update=results_dict )
+results_dict = results.average_coverage(last=10, update=results_dict)
 
 for i in range(len(results_dict)):
-    x_CO.append( results_dict[i]['x_CO'] )
-    ac_O.append( results_dict[i]['average_coverage']['O*'] )
-    ac_CO.append( results_dict[i]['average_coverage']['CO*'] )
-    TOF_CO2.append( results_dict[i]['turnover_frequency']['CO2'] )
+    x_CO.append(results_dict[i]["x_CO"])
+    ac_O.append(results_dict[i]["average_coverage"]["O*"])
+    ac_CO.append(results_dict[i]["average_coverage"]["CO*"])
+    TOF_CO2.append(results_dict[i]["turnover_frequency"]["CO2"])
 
-print( '------------------------------------------------' )
-print( '%4s'%'cond', '%8s'%'x_CO', '%10s'%'ac_O', '%10s'%'ac_CO', '%12s'%'TOF_CO2' )
-print( '------------------------------------------------' )
+print("------------------------------------------------")
+print("%4s" % "cond", "%8s" % "x_CO", "%10s" % "ac_O", "%10s" % "ac_CO", "%12s" % "TOF_CO2")
+print("------------------------------------------------")
 for i in range(len(x_CO)):
-    print( '%4d'%i, '%8.2f'%x_CO[i], '%10.6f'%ac_O[i], '%10.6f'%ac_CO[i], '%12.6f'%TOF_CO2[i] )
+    print("%4d" % i, "%8.2f" % x_CO[i], "%10.6f" % ac_O[i], "%10.6f" % ac_CO[i], "%12.6f" % TOF_CO2[i])
 
 
 # The results table above demonstrates that when $CO$ coverage rises, the net $CO$
@@ -201,4 +199,3 @@ for i in range(len(x_CO)):
 # Now, we can close the pyZacros environment:
 
 scm.pyzacros.finish()
-

@@ -13,10 +13,10 @@ from .ZacrosJob import *
 from .ZacrosResults import *
 from .ParametersBase import *
 
-__all__ = ['ZacrosSteadyStateJob', 'ZacrosSteadyStateResults']
+__all__ = ["ZacrosSteadyStateJob", "ZacrosSteadyStateResults"]
 
 
-class ZacrosSteadyStateResults( scm.plams.Results ):
+class ZacrosSteadyStateResults(scm.plams.Results):
     """
     A Class for handling ZacrosSteadyStateJob Results.
     """
@@ -44,20 +44,17 @@ class ZacrosSteadyStateResults( scm.plams.Results ):
         else:
             return self.job._history
 
-
     def niterations(self):
         """
         Returns the current number of iterations executed
         """
         return self.job.niterations
 
-
     def nreplicas(self):
         """
         Returns the number of replicas used
         """
         return self.job.nreplicas
-
 
     def children_results(self, iteration=None, replica=None):
         """
@@ -67,23 +64,22 @@ class ZacrosSteadyStateResults( scm.plams.Results ):
             output = []
 
             for i in range(len(self.job.children)):
-                output.append( self.job.children[i].results )
+                output.append(self.job.children[i].results)
 
             return output
         elif iteration is not None and replica is None:
             output = []
 
             for j in range(len(self.job.nreplicas)):
-                output.append( self.job.children[iteration*self.job.nreplicas+j].results )
+                output.append(self.job.children[iteration * self.job.nreplicas + j].results)
 
             return output
         elif iteration is not None and replica is not None:
-            return self.job.children[iteration*self.job.nreplicas+replica].results
+            return self.job.children[iteration * self.job.nreplicas + replica].results
         else:
-            msg  = "\n### ERROR ### ZacrosSteadyStateResults.children_results().\n"
+            msg = "\n### ERROR ### ZacrosSteadyStateResults.children_results().\n"
             msg += "                Wrong parameters combination.\n"
             raise Exception(msg)
-
 
     def get_zacros_version(self):
         """
@@ -91,13 +87,11 @@ class ZacrosSteadyStateResults( scm.plams.Results ):
         """
         return self.job.children[-1].results.get_zacros_version()
 
-
     def get_reaction_network(self):
         """
         Returns the reactions from the 'general_output.txt' file associated to the last children.
         """
         return self.job.children[-1].results.get_reaction_network()
-
 
     def provided_quantities(self):
         """
@@ -105,13 +99,11 @@ class ZacrosSteadyStateResults( scm.plams.Results ):
         """
         return self.job.children[-1].results.provided_quantities()
 
-
     def number_of_lattice_sites(self):
         """
         Returns the number of lattice sites from the 'general_output.txt' file associated to the last children.
         """
         return self.job.children[-1].results.number_of_lattice_sites()
-
 
     def gas_species_names(self):
         """
@@ -119,13 +111,11 @@ class ZacrosSteadyStateResults( scm.plams.Results ):
         """
         return self.job.children[-1].results.gas_species_names()
 
-
     def surface_species_names(self):
         """
         Returns the surface species names from the 'general_output.txt' file associated to the last children.
         """
         return self.job.children[-1].results.surface_species_names()
-
 
     def site_type_names(self):
         """
@@ -133,13 +123,11 @@ class ZacrosSteadyStateResults( scm.plams.Results ):
         """
         return self.job.children[-1].results.site_type_names()
 
-
     def number_of_snapshots(self):
         """
         Returns the number of configurations from the 'history_output.txt' file associated to the last children.
         """
         return self.job.children[-1].results.number_of_snapshots()
-
 
     def number_of_process_statistics(self):
         """
@@ -147,13 +135,11 @@ class ZacrosSteadyStateResults( scm.plams.Results ):
         """
         return self.job.children[-1].results.number_of_process_statistics()
 
-
     def elementary_steps_names(self):
         """
         Returns the names of elementary steps from the 'procstat_output.txt' file associated to the last children.
         """
         return self.job.children[-1].results.elementary_steps_names()
-
 
     def lattice_states(self, last=None):
         """
@@ -161,13 +147,11 @@ class ZacrosSteadyStateResults( scm.plams.Results ):
         """
         return self.job.children[-1].results.lattice_states(last=last)
 
-
     def last_lattice_state(self):
         """
         Returns the last configuration from the 'history_output.txt' file associated to the last children.
         """
         return self.job.children[-1].results.last_lattice_state()
-
 
     def average_coverage(self, last=5):
         """
@@ -178,18 +162,17 @@ class ZacrosSteadyStateResults( scm.plams.Results ):
         acf = {}
 
         for i in range(self.job.nreplicas):
-            prev = self.job.children[i-self.job.nreplicas]
+            prev = self.job.children[i - self.job.nreplicas]
 
             lacf = prev.results.average_coverage(last=last)
 
-            for k,v in lacf.items():
+            for k, v in lacf.items():
                 if k not in acf:
-                    acf[k] = v/self.job.nreplicas
+                    acf[k] = v / self.job.nreplicas
                 else:
-                    acf[k] += v/self.job.nreplicas
+                    acf[k] += v / self.job.nreplicas
 
         return acf
-
 
     def plot_lattice_states(self, data, pause=-1, show=True, ax=None, close=False, time_perframe=0.5, file_name=None):
         """
@@ -203,12 +186,21 @@ class ZacrosSteadyStateResults( scm.plams.Results ):
         *   ``time_perframe`` -- Sets the time interval between frames in seconds.
         *   ``file_name`` -- Saves the figures to the file ``file_name-<id>`` (the corresponding id on the list replaces the ``<id>``). The format is inferred from the extension, and by default, ``.png`` is used.
         """
-        self.job.children[-1].results.plot_lattice_states(data=data, pause=pause, show=show, ax=ax, close=close,
-                                                    time_perframe=time_perframe, file_name=file_name)
+        self.job.children[-1].results.plot_lattice_states(
+            data=data, pause=pause, show=show, ax=ax, close=close, time_perframe=time_perframe, file_name=file_name
+        )
 
-
-    def plot_molecule_numbers(self, species_name, pause=-1, show=True, ax=None, close=False,
-                                file_name=None, normalize_per_site=False, derivative=False):
+    def plot_molecule_numbers(
+        self,
+        species_name,
+        pause=-1,
+        show=True,
+        ax=None,
+        close=False,
+        file_name=None,
+        normalize_per_site=False,
+        derivative=False,
+    ):
         """
         uses Matplotlib to create an animation of the Molecule Numbers associated to the last children.
 
@@ -221,9 +213,16 @@ class ZacrosSteadyStateResults( scm.plams.Results ):
         *   ``normalize_per_site`` -- Divides the molecule numbers by the total number of sites in the lattice.
         *   ``derivative`` -- Plots the first derivative.
         """
-        self.job.children[-1].results.plot_molecule_numbers(species_name=species_name, pause=pause, show=show, ax=ax, close=close,
-                                                        file_name=file_name, normalize_per_site=normalize_per_site, derivative=derivative)
-
+        self.job.children[-1].results.plot_molecule_numbers(
+            species_name=species_name,
+            pause=pause,
+            show=show,
+            ax=ax,
+            close=close,
+            file_name=file_name,
+            normalize_per_site=normalize_per_site,
+            derivative=derivative,
+        )
 
     def get_process_statistics(self):
         """
@@ -231,8 +230,9 @@ class ZacrosSteadyStateResults( scm.plams.Results ):
         """
         return self.job.children[-1].results.get_process_statistics()
 
-
-    def plot_process_statistics(self, data, key, log_scale=False, pause=-1, show=True, ax=None, close=False, file_name=None):
+    def plot_process_statistics(
+        self, data, key, log_scale=False, pause=-1, show=True, ax=None, close=False, file_name=None
+    ):
         """
         Uses Matplotlib to create an animation of the process statistics associated to the last children.
 
@@ -245,41 +245,47 @@ class ZacrosSteadyStateResults( scm.plams.Results ):
         *   ``close`` -- Closes the figure window after pause time.
         *   ``file_name`` -- Saves the figures to the file ``file_name-<id>`` (the corresponding id on the list replaces the ``<id>``). The format is inferred from the extension, and by default, ``.png`` is used.
         """
-        self.job.children[-1].results.plot_process_statistics(data=data, key=key, log_scale=log_scale, pause=pause, show=show, ax=ax,
-                                                        close=close, file_name=file_name)
-
+        self.job.children[-1].results.plot_process_statistics(
+            data=data, key=key, log_scale=log_scale, pause=pause, show=show, ax=ax, close=close, file_name=file_name
+        )
 
     def turnover_frequency(self, nbatch=None, confidence=None, ignore_nbatch=None, species_name=None):
 
-        if nbatch is None: nbatch = self.job.nbatch
-        if confidence is None: confidence = self.job.confidence
-        if ignore_nbatch is None: ignore_nbatch = self.job.ignore_nbatch
+        if nbatch is None:
+            nbatch = self.job.nbatch
+        if confidence is None:
+            confidence = self.job.confidence
+        if ignore_nbatch is None:
+            ignore_nbatch = self.job.ignore_nbatch
 
         provided_quantities_list = []
 
         for i in range(self.job.nreplicas):
-            prev = self.job.children[i-self.job.nreplicas]
-            provided_quantities_list.append( prev.results.provided_quantities() )
+            prev = self.job.children[i - self.job.nreplicas]
+            provided_quantities_list.append(prev.results.provided_quantities())
 
-        aver_provided_quantities = ZacrosResults._average_provided_quantities( provided_quantities_list, 'Time' )
+        aver_provided_quantities = ZacrosResults._average_provided_quantities(provided_quantities_list, "Time")
 
         # This case happens only when the surface gets quickly poisoned; in less than one iteration.
         # In that case we use only the last values to estimate the TOF
         # We need at least 3 points to make an standard deviation
         if self.job.niterations == 1:
-            ignore_nbatch = nbatch-3
+            ignore_nbatch = nbatch - 3
 
-        TOF,error,ratio,conv = prev.results.turnover_frequency( nbatch=nbatch, confidence=confidence,
-                                                                ignore_nbatch=ignore_nbatch,
-                                                                provided_quantities=aver_provided_quantities )
+        TOF, error, ratio, conv = prev.results.turnover_frequency(
+            nbatch=nbatch,
+            confidence=confidence,
+            ignore_nbatch=ignore_nbatch,
+            provided_quantities=aver_provided_quantities,
+        )
 
         if species_name is None:
-            return TOF,error,ratio,conv
+            return TOF, error, ratio, conv
         else:
-            return TOF[species_name],error[species_name],ratio[species_name],conv[species_name]
+            return TOF[species_name], error[species_name], ratio[species_name], conv[species_name]
 
 
-class ZacrosSteadyStateJob( scm.plams.MultiJob ):
+class ZacrosSteadyStateJob(scm.plams.MultiJob):
     """
     Create a new ZacrosSteadyStateJob object. ``ZacrosSteadyStateJob`` class represents a job that is a container for other jobs, called children jobs, which must be :ref:`ZacrosJobs <zacrosjob>` or :ref:`ZacrosSteadyStateJob <zacrossteadystatejob>` kind objects. This class is an extension of the PLAMS MultiJob class. So it inherits all its powerful features, e.g., being executed locally or submitted to some external queueing system transparently or executing jobs in parallel with a predefined dependency structure. See all configure possibilities on the PLAMS MultiJob class documentation in this link: `PLAMS.MultiJob <../../plams/components/jobs.html#multijobs>`_.
 
@@ -304,7 +310,6 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
 
     _result_type = ZacrosSteadyStateResults
 
-
     class Parameter(ParameterBase):
         """
         Creates a new Parameter object specifically tailored for ZacrosSteadyStateJob
@@ -312,7 +317,6 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
 
         def __init__(self, name_in_settings, kind, values):
             super().__init__(self, name_in_settings, kind, values)
-
 
     class Parameters(ParametersBase):
         """
@@ -322,7 +326,6 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
         def __init__(self, *args, **kwargs):
             super().__init__(self, *args, **kwargs)
 
-
     def __init__(self, reference, parameters, settings=Settings(), **kwargs):
         scm.plams.MultiJob.__init__(self, settings=settings, **kwargs)
 
@@ -331,35 +334,35 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
         size = None
 
         if parameters._generator.__name__ != "zipGenerator":
-            msg  = "\n### ERROR ### ZacrosSteadyStateJob.__init__().\n"
+            msg = "\n### ERROR ### ZacrosSteadyStateJob.__init__().\n"
             msg += "              The only generator allowed is the zipGenerator.\n"
             raise Exception(msg)
 
-        for name,item in parameters.items():
+        for name, item in parameters.items():
             if size is None:
                 size = len(item.values)
             elif size != len(item.values):
-                msg  = "\n### ERROR ### ZacrosSteadyStateJob.__init__().\n"
+                msg = "\n### ERROR ### ZacrosSteadyStateJob.__init__().\n"
                 msg += "              All parameter in 'parameters' should be lists of the same size.\n"
                 raise Exception(msg)
 
         if size == 0:
-            msg  = "\n### ERROR ### ZacrosSteadyStateJob.__init__().\n"
+            msg = "\n### ERROR ### ZacrosSteadyStateJob.__init__().\n"
             msg += "              All parameter in 'parameters' should be lists with at least one element.\n"
             raise Exception(msg)
 
         self._parameters = parameters
 
-        if not isinstance(reference,ZacrosJob):
-            msg  = "\n### ERROR ### ZacrosSteadyStateJob.__init__.\n"
+        if not isinstance(reference, ZacrosJob):
+            msg = "\n### ERROR ### ZacrosSteadyStateJob.__init__.\n"
             msg += "              Parameter 'reference' must be a ZacrosJob object.\n"
             raise Exception(msg)
 
         # We don't need the indices because we are sure that the generator is the zipGenerator
-        _,self._parameters_values,self._parameters_settings = parameters._generator( reference.settings, parameters )
+        _, self._parameters_values, self._parameters_settings = parameters._generator(reference.settings, parameters)
 
         self._scaling = False
-        self._scaling_status = 'not_requested'
+        self._scaling_status = "not_requested"
         self._scaling_factors = None
 
         self.max_iterations = len(parameters[list(parameters.keys())[0]].values)
@@ -379,32 +382,51 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
         self.scaling_nevents_per_timestep = None
         self._new_timestep = None
 
-        self.nreplicas = self.settings.turnover_frequency.get('nreplicas', default=self.nreplicas)
+        self.nreplicas = self.settings.turnover_frequency.get("nreplicas", default=self.nreplicas)
 
-        if 'turnover_frequency' in self.settings:
-            self.nbatch = self.settings.turnover_frequency.get('nbatch', default=self.nbatch)
-            self.confidence = self.settings.turnover_frequency.get('confidence', default=self.confidence)
-            self.ignore_nbatch = self.settings.turnover_frequency.get('ignore_nbatch', default=self.ignore_nbatch)
+        if "turnover_frequency" in self.settings:
+            self.nbatch = self.settings.turnover_frequency.get("nbatch", default=self.nbatch)
+            self.confidence = self.settings.turnover_frequency.get("confidence", default=self.confidence)
+            self.ignore_nbatch = self.settings.turnover_frequency.get("ignore_nbatch", default=self.ignore_nbatch)
 
         # Scaling pre-exponential terms parameters
-        if 'scaling' in self.settings:
-            self._scaling = self.settings.scaling.get('enabled', default=self._scaling)
-            if type(self._scaling) == str \
-                and ( self._scaling.upper() == 'T' or self._scaling.upper() == 'TRUE'
-                    or self._scaling.upper() == 'Y' or self._scaling.upper() == 'Yes' ):
-                        self._scaling_status = 'requested'
-            if type(self._scaling) == bool and self._scaling :
-                self._scaling_status = 'requested'
+        if "scaling" in self.settings:
+            self._scaling = self.settings.scaling.get("enabled", default=self._scaling)
+            if type(self._scaling) == str and (
+                self._scaling.upper() == "T"
+                or self._scaling.upper() == "TRUE"
+                or self._scaling.upper() == "Y"
+                or self._scaling.upper() == "Yes"
+            ):
+                self._scaling_status = "requested"
+            if type(self._scaling) == bool and self._scaling:
+                self._scaling_status = "requested"
 
-            self.scaling_partial_equilibrium_index_threshold = self.settings.scaling.get('partial_equilibrium_index_threshold', default=self.scaling_partial_equilibrium_index_threshold)
-            self.scaling_upper_bound = self.settings.scaling.get('upper_bound', default=self.scaling_upper_bound)
-            self.scaling_max_steps = self.settings.scaling.get('max_steps', default=self.scaling_max_steps)
-            self.scaling_max_time = self.settings.scaling.get('max_time', default=self.scaling_max_time)
-            self.scaling_species_numbers = self.settings.scaling.get('species_numbers', default=self.scaling_species_numbers)
-            self.scaling_nevents_per_timestep = self.settings.scaling.get('nevents_per_timestep', default=self.scaling_nevents_per_timestep)
+            self.scaling_partial_equilibrium_index_threshold = self.settings.scaling.get(
+                "partial_equilibrium_index_threshold", default=self.scaling_partial_equilibrium_index_threshold
+            )
+            self.scaling_upper_bound = self.settings.scaling.get("upper_bound", default=self.scaling_upper_bound)
+            self.scaling_max_steps = self.settings.scaling.get("max_steps", default=self.scaling_max_steps)
+            self.scaling_max_time = self.settings.scaling.get("max_time", default=self.scaling_max_time)
+            self.scaling_species_numbers = self.settings.scaling.get(
+                "species_numbers", default=self.scaling_species_numbers
+            )
+            self.scaling_nevents_per_timestep = self.settings.scaling.get(
+                "nevents_per_timestep", default=self.scaling_nevents_per_timestep
+            )
 
-        scm.plams.log("JOB "+self._full_name()+" Steady State Convergence: Using nbatch="+str(self.nbatch)+
-                        ",confidence="+str(self.confidence)+",ignore_nbatch="+str(self.ignore_nbatch)+",nreplicas="+str(self.nreplicas))
+        scm.plams.log(
+            "JOB "
+            + self._full_name()
+            + " Steady State Convergence: Using nbatch="
+            + str(self.nbatch)
+            + ",confidence="
+            + str(self.confidence)
+            + ",ignore_nbatch="
+            + str(self.ignore_nbatch)
+            + ",nreplicas="
+            + str(self.nreplicas)
+        )
 
         # These parameters a needed to make ZacrosSteadyStateJob compatible with ZacrosJob
         self.lattice = reference.lattice
@@ -412,11 +434,10 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
         self.cluster_expansion = reference.cluster_expansion
         self.initial_state = reference.initial_state
 
-
     def __steady_state_step(self):
 
         if self.niterations >= self.max_iterations:
-            scm.plams.log("JOB "+self._full_name()+" Steady State Convergence: MAX ITERATIONS REACHED")
+            scm.plams.log("JOB " + self._full_name() + " Steady State Convergence: MAX ITERATIONS REACHED")
             return None
 
         if len(self.children) > 0:
@@ -425,34 +446,34 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
 
             # We wait for threads to finish
             for i in range(self.nreplicas):
-                prev = self.children[i-self.nreplicas]
+                prev = self.children[i - self.nreplicas]
                 prev.ok()
 
             # We check for failures. If one thread fails, we stop the whole set of replicas.
             # Otherwise, we cannot make an average because we have different number of points.
             for i in range(self.nreplicas):
-                prev = self.children[i-self.nreplicas]
+                prev = self.children[i - self.nreplicas]
 
                 if not prev.ok():
                     if len(self.children) > self.nreplicas:
                         if prev.restart_aborted():
-                            scm.plams.log("JOB "+prev._full_name()+" Steady State Convergence: RESTART ABORTED")
+                            scm.plams.log("JOB " + prev._full_name() + " Steady State Convergence: RESTART ABORTED")
                             self._surface_poisoned = True
-                    elif len(self.children) > 2*self.nreplicas:
-                        prevprev = self.children[i-2*self.nreplicas]
+                    elif len(self.children) > 2 * self.nreplicas:
+                        prevprev = self.children[i - 2 * self.nreplicas]
                         if prevprev.surface_poisoned():
-                            scm.plams.log("JOB "+prev._full_name()+" Steady State Convergence: SURFACE POISONED")
+                            scm.plams.log("JOB " + prev._full_name() + " Steady State Convergence: SURFACE POISONED")
                             self._surface_poisoned = True
                     else:
-                        scm.plams.log("JOB "+prev._full_name()+" Steady State Convergence: FAILED")
+                        scm.plams.log("JOB " + prev._full_name() + " Steady State Convergence: FAILED")
 
             # If failures we clean previous results if needed and stops
             # the creation of new children
             if self._surface_poisoned:
                 for i in range(self.nreplicas):
-                    poisoned_job = self.children.pop(i-self.nreplicas)
-                    scm.plams.delete_job( poisoned_job )
-                    scm.plams.log("JOB "+poisoned_job._full_name()+" Steady State Convergence: JOB REMOVED")
+                    poisoned_job = self.children.pop(i - self.nreplicas)
+                    scm.plams.delete_job(poisoned_job)
+                    scm.plams.log("JOB " + poisoned_job._full_name() + " Steady State Convergence: JOB REMOVED")
 
                 self.niterations -= 1
                 return None
@@ -461,90 +482,116 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
             # In that case we use only the last values to estimate the TOF
             # We need at least 3 points to make an standard deviation
             ignore_nbatch = self.ignore_nbatch
-            if len(self.children)==self.nreplicas:
-                ignore_nbatch = self.nbatch-3
+            if len(self.children) == self.nreplicas:
+                ignore_nbatch = self.nbatch - 3
 
             # If no failures we continue extracting the properties to make the average
             for i in range(self.nreplicas):
-                prev = self.children[i-self.nreplicas]
+                prev = self.children[i - self.nreplicas]
 
-                TOF,error,ratio,conv = prev.results.turnover_frequency( nbatch=self.nbatch, confidence=self.confidence,
-                                                                        ignore_nbatch=ignore_nbatch )
+                TOF, error, ratio, conv = prev.results.turnover_frequency(
+                    nbatch=self.nbatch, confidence=self.confidence, ignore_nbatch=ignore_nbatch
+                )
 
                 if self.nreplicas > 1:
-                    scm.plams.log("   Replica #%d"%i )
-                    scm.plams.log("   %10s"%"species"+"%15s"%"TOF"+"%15s"%"error"+"%15s"%"ratio"+"%10s"%"conv?")
+                    scm.plams.log("   Replica #%d" % i)
+                    scm.plams.log(
+                        "   %10s" % "species" + "%15s" % "TOF" + "%15s" % "error" + "%15s" % "ratio" + "%10s" % "conv?"
+                    )
                     for s in prev.results.gas_species_names():
-                        scm.plams.log("   %10s"%s+"%15.5f"%TOF[s]+"%15.5f"%error[s]+"%15.5f"%ratio[s]+"%10s"%conv[s])
+                        scm.plams.log(
+                            "   %10s" % s
+                            + "%15.5f" % TOF[s]
+                            + "%15.5f" % error[s]
+                            + "%15.5f" % ratio[s]
+                            + "%10s" % conv[s]
+                        )
 
-                provided_quantities_list.append( prev.results.provided_quantities() )
+                provided_quantities_list.append(prev.results.provided_quantities())
 
+            aver_provided_quantities = ZacrosResults._average_provided_quantities(provided_quantities_list, "Time")
 
-            aver_provided_quantities = ZacrosResults._average_provided_quantities( provided_quantities_list, 'Time' )
+            TOF, error, ratio, conv = prev.results.turnover_frequency(
+                nbatch=self.nbatch,
+                confidence=self.confidence,
+                ignore_nbatch=ignore_nbatch,
+                provided_quantities=aver_provided_quantities,
+            )
 
-            TOF,error,ratio,conv = prev.results.turnover_frequency( nbatch=self.nbatch, confidence=self.confidence,
-                                                                    ignore_nbatch=ignore_nbatch,
-                                                                    provided_quantities=aver_provided_quantities )
-
-            if self.nreplicas > 1: scm.plams.log("   Average" )
-            scm.plams.log("   %10s"%"species"+"%15s"%"TOF"+"%15s"%"error"+"%15s"%"ratio"+"%10s"%"conv?")
+            if self.nreplicas > 1:
+                scm.plams.log("   Average")
+            scm.plams.log(
+                "   %10s" % "species" + "%15s" % "TOF" + "%15s" % "error" + "%15s" % "ratio" + "%10s" % "conv?"
+            )
             for s in prev.results.gas_species_names():
-                scm.plams.log("   %10s"%s+"%15.5f"%TOF[s]+"%15.5f"%error[s]+"%15.5f"%ratio[s]+"%10s"%conv[s])
+                scm.plams.log(
+                    "   %10s" % s + "%15.5f" % TOF[s] + "%15.5f" % error[s] + "%15.5f" % ratio[s] + "%10s" % conv[s]
+                )
 
-            history_i = { 'turnover_frequency':TOF,
-                          'turnover_frequency_error':error,
-                          'converged':conv }
+            history_i = {"turnover_frequency": TOF, "turnover_frequency_error": error, "converged": conv}
 
-            for i,(name,item) in enumerate(self._parameters.items()):
-                history_i[name] = self._parameters_values[self.niterations-1][name]
+            for i, (name, item) in enumerate(self._parameters.items()):
+                history_i[name] = self._parameters_values[self.niterations - 1][name]
 
-            self._history.append( history_i )
+            self._history.append(history_i)
 
             if all(conv.values()):
-                scm.plams.log("JOB "+self._full_name()+" Steady State Convergence: CONVERGENCE REACHED. DONE!")
+                scm.plams.log("JOB " + self._full_name() + " Steady State Convergence: CONVERGENCE REACHED. DONE!")
                 return None
             else:
-                scm.plams.log("JOB "+self._full_name()+" Steady State Convergence: NO CONVERGENCE REACHED YET")
+                scm.plams.log("JOB " + self._full_name() + " Steady State Convergence: NO CONVERGENCE REACHED YET")
 
         # Here we apply the scaling factors
         mechanism = copy.deepcopy(self._reference.mechanism)
         if self._scaling_factors is not None:
-            for i,rxn in enumerate(mechanism):
+            for i, rxn in enumerate(mechanism):
                 old = rxn.pre_expon
                 rxn.pre_expon *= self._scaling_factors[i]
 
         lparallel = []
         for i in range(self.nreplicas):
-            prev = None if len(self.children)==0 else self.children[i-self.nreplicas]
+            prev = None if len(self.children) == 0 else self.children[i - self.nreplicas]
 
             lsettings = self._parameters_settings[self.niterations].copy()
-            lsettings.random_seed = lsettings.get('random_seed',default=0) + i
+            lsettings.random_seed = lsettings.get("random_seed", default=0) + i
 
             if self.nreplicas > 1:
-                name = "ss_iter"+"%03d"%self.niterations+"_rep"+"%03d"%i
+                name = "ss_iter" + "%03d" % self.niterations + "_rep" + "%03d" % i
             else:
-                name = "ss_iter"+"%03d"%self.niterations
+                name = "ss_iter" + "%03d" % self.niterations
 
-            new_child = ZacrosJob( settings=lsettings,
-                                   lattice=self._reference.lattice,
-                                   mechanism=mechanism,
-                                   cluster_expansion=self._reference.cluster_expansion,
-                                   name=name,
-                                   restart=prev )
+            new_child = ZacrosJob(
+                settings=lsettings,
+                lattice=self._reference.lattice,
+                mechanism=mechanism,
+                cluster_expansion=self._reference.cluster_expansion,
+                name=name,
+                restart=prev,
+            )
 
             if prev is None:
-                scm.plams.log("JOB "+self.name+"/"+name+" Steady State: NEW")
+                scm.plams.log("JOB " + self.name + "/" + name + " Steady State: NEW")
             else:
-                scm.plams.log("JOB "+self.name+"/"+name+" Steady State: NEW"+" (dep="+self.name+"/"+prev.name+")")
+                scm.plams.log(
+                    "JOB "
+                    + self.name
+                    + "/"
+                    + name
+                    + " Steady State: NEW"
+                    + " (dep="
+                    + self.name
+                    + "/"
+                    + prev.name
+                    + ")"
+                )
 
-            lparallel.append( new_child )
+            lparallel.append(new_child)
 
         self.niterations += 1
 
         return lparallel
 
-
-    #--------------------------------------------------------------
+    # --------------------------------------------------------------
     # Function to compute the scaling factors of the mechanisms
     # pre-exponential factors.
     # Original author: Mauro Bracconi (mauro.bracconi@polimi.it)
@@ -555,24 +602,24 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
     #    constant rescaling
     #    J. Chem. Phys. 147, 164103 (2017)
     #    https://doi.org/10.1063/1.4998926
-    #--------------------------------------------------------------
+    # --------------------------------------------------------------
     @staticmethod
-    def __scaling_factors( mechanism, process_statistics, quasieq_th=0.1, delta=100 ) :
+    def __scaling_factors(mechanism, process_statistics, quasieq_th=0.1, delta=100):
 
         # kMC rate scaling
-        freq = numpy.zeros(len(mechanism)*2)
-        value = list(process_statistics[-1]['number_of_events'].values())
+        freq = numpy.zeros(len(mechanism) * 2)
+        value = list(process_statistics[-1]["number_of_events"].values())
 
         cont = 0
-        for i,step in enumerate(mechanism):
-            if(step.reversible):
-                freq[2*i] = value[cont]
-                freq[2*i+1] = value[cont+1]
-                cont = cont+2
+        for i, step in enumerate(mechanism):
+            if step.reversible:
+                freq[2 * i] = value[cont]
+                freq[2 * i + 1] = value[cont + 1]
+                cont = cont + 2
             else:
-                freq[2*i] = value[cont]
-                freq[2*i+1] = 0
-                cont = cont+1
+                freq[2 * i] = value[cont]
+                freq[2 * i + 1] = 0
+                cont = cont + 1
 
         # Forward & backward
         fwq = freq[0::2]
@@ -589,19 +636,19 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
         for i in range(len(tot)):
             if tot[i] == 0:
                 slow_rxn.append(i)
-                PE_vec.append( 0.0 ) # TODO Check this case
-                kind_vec.append( 'slow' )
+                PE_vec.append(0.0)  # TODO Check this case
+                kind_vec.append("slow")
             else:
                 PE = float(net[i]) / tot[i]
-                PE_vec.append( PE )
+                PE_vec.append(PE)
                 if numpy.abs(PE) < quasieq_th:
                     fast_rxn.append(i)
-                    kind_vec.append( 'fast' )
+                    kind_vec.append("fast")
                 else:
                     slow_rxn.append(i)
-                    kind_vec.append( 'slow' )
+                    kind_vec.append("slow")
 
-        slow_f = [1.]
+        slow_f = [1.0]
         for i in slow_rxn:
             slow_f.append(tot[i])
 
@@ -611,20 +658,29 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
         for i in fast_rxn:
             Nf = tot[i] / float(slow_scale)
 
-            delta_sdf[i] = numpy.min([1.0, delta / Nf ])
+            delta_sdf[i] = numpy.min([1.0, delta / Nf])
 
-        return delta_sdf,PE_vec,kind_vec
-
+        return delta_sdf, PE_vec, kind_vec
 
     def __scaling_factors_step_start(self):
 
         sufix = ""
-        if self.scaling_max_steps is not None: sufix += ",max_steps="+str(self.scaling_max_steps)
-        if self.scaling_max_time is not None: sufix += ",max_time="+str(self.scaling_max_time)
-        if self.scaling_species_numbers is not None: sufix += ",species_numbers="+str(self.scaling_species_numbers)
+        if self.scaling_max_steps is not None:
+            sufix += ",max_steps=" + str(self.scaling_max_steps)
+        if self.scaling_max_time is not None:
+            sufix += ",max_time=" + str(self.scaling_max_time)
+        if self.scaling_species_numbers is not None:
+            sufix += ",species_numbers=" + str(self.scaling_species_numbers)
 
-        scm.plams.log("JOB "+self._full_name()+" Scaling: Using partial_equilibrium_index_threshold="+str(self.scaling_partial_equilibrium_index_threshold)+
-                        ",upper_bound="+str(self.scaling_upper_bound)+sufix)
+        scm.plams.log(
+            "JOB "
+            + self._full_name()
+            + " Scaling: Using partial_equilibrium_index_threshold="
+            + str(self.scaling_partial_equilibrium_index_threshold)
+            + ",upper_bound="
+            + str(self.scaling_upper_bound)
+            + sufix
+        )
 
         lsettings = self._reference.settings.copy()
 
@@ -634,46 +690,47 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
         ok = False
 
         if self.scaling_max_steps is not None:
-            lsettings['process_statistics'] = ('event', self.scaling_max_steps)
-            lsettings['max_steps'] = self.scaling_max_steps
+            lsettings["process_statistics"] = ("event", self.scaling_max_steps)
+            lsettings["max_steps"] = self.scaling_max_steps
             ok = True
 
         if self.scaling_max_time is not None:
-            lsettings['process_statistics'] = ('time', self.scaling_max_time)
-            lsettings['max_time'] = self.scaling_max_time
+            lsettings["process_statistics"] = ("time", self.scaling_max_time)
+            lsettings["max_time"] = self.scaling_max_time
             ok = True
 
         if self.scaling_species_numbers is not None:
-            lsettings['species_numbers'] = self.scaling_species_numbers
+            lsettings["species_numbers"] = self.scaling_species_numbers
 
         if not ok:
-            if 'max_steps' in lsettings and lsettings.max_steps != 'infinity':
-                lsettings['process_statistics'] = ('event', lsettings.max_steps)
+            if "max_steps" in lsettings and lsettings.max_steps != "infinity":
+                lsettings["process_statistics"] = ("event", lsettings.max_steps)
                 ok = True
 
-            if 'max_time' in lsettings:
-                lsettings['process_statistics'] = ('time', lsettings.max_time)
+            if "max_time" in lsettings:
+                lsettings["process_statistics"] = ("time", lsettings.max_time)
                 ok = True
 
             if not ok:
-                msg  = "\n### ERROR ### ZacrosSteadyStateJob.__scaling_factors_step_start.\n"
+                msg = "\n### ERROR ### ZacrosSteadyStateJob.__scaling_factors_step_start.\n"
                 msg += "                process_statistics section is needed in settings object.\n"
                 raise Exception(msg)
 
-        for name,item in self._parameters.items():
+        for name, item in self._parameters.items():
             value = item.values[0]
-            eval('lsettings'+item.name2setitem().replace('$var_value',str(value)))
+            eval("lsettings" + item.name2setitem().replace("$var_value", str(value)))
 
-        new_child = ZacrosJob( settings=lsettings,
-                               lattice=self._reference.lattice,
-                               mechanism=self._reference.mechanism,
-                               cluster_expansion=self._reference.cluster_expansion,
-                               name="ss_scaling" )
+        new_child = ZacrosJob(
+            settings=lsettings,
+            lattice=self._reference.lattice,
+            mechanism=self._reference.mechanism,
+            cluster_expansion=self._reference.cluster_expansion,
+            name="ss_scaling",
+        )
 
-        self._scaling_status = 'started'
+        self._scaling_status = "started"
 
-        return [ new_child ]
-
+        return [new_child]
 
     def __scaling_factors_step_end(self):
 
@@ -683,44 +740,62 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
         process_statistics = prev.results.get_process_statistics()
 
         if self.scaling_nevents_per_timestep is not None:
-            time = process_statistics[-1]['time']
-            nevents = process_statistics[-1]['total_number_of_events']
+            time = process_statistics[-1]["time"]
+            nevents = process_statistics[-1]["total_number_of_events"]
 
-            self._new_timestep = (time/nevents)*self.scaling_nevents_per_timestep
+            self._new_timestep = (time / nevents) * self.scaling_nevents_per_timestep
 
-        sf,PE,kind = self.__scaling_factors( self._reference.mechanism,
-                                             process_statistics,
-                                             quasieq_th=self.scaling_partial_equilibrium_index_threshold,
-                                             delta=self.scaling_upper_bound )
+        sf, PE, kind = self.__scaling_factors(
+            self._reference.mechanism,
+            process_statistics,
+            quasieq_th=self.scaling_partial_equilibrium_index_threshold,
+            delta=self.scaling_upper_bound,
+        )
 
-        scm.plams.log("  "+" %5s"%"id"+" %10s"%"PE"+" %8s"%"kind"+" %15s"%"orig_pexp"+" %15s"%"sf"+" %15s"%"new_pexp"+"    label")
+        scm.plams.log(
+            "  "
+            + " %5s" % "id"
+            + " %10s" % "PE"
+            + " %8s" % "kind"
+            + " %15s" % "orig_pexp"
+            + " %15s" % "sf"
+            + " %15s" % "new_pexp"
+            + "    label"
+        )
 
         self._scaling_factors = []
-        for i,rxn in enumerate(self._reference.mechanism):
+        for i, rxn in enumerate(self._reference.mechanism):
             old = rxn.pre_expon
-            new = old*sf[i]
-            self._scaling_factors.append( sf[i] )
+            new = old * sf[i]
+            self._scaling_factors.append(sf[i])
 
-            scm.plams.log("  "+" %5d"%i+" %10.5f"%PE[i]+" %8s"%kind[i]+" %15.5e"%old+" %15.5e"%sf[i]+" %15.5e"%new+"    "+rxn.label())
+            scm.plams.log(
+                "  "
+                + " %5d" % i
+                + " %10.5f" % PE[i]
+                + " %8s" % kind[i]
+                + " %15.5e" % old
+                + " %15.5e" % sf[i]
+                + " %15.5e" % new
+                + "    "
+                + rxn.label()
+            )
 
-        self._scaling_status = 'finished'
+        self._scaling_status = "finished"
 
         scaling_job = self.children.pop()
-        #scm.plams.delete_job( scaling_job )
-
+        # scm.plams.delete_job( scaling_job )
 
     def new_children(self):
-        """
-        """
+        """ """
 
-        if self._scaling and self._scaling_status != 'finished':
-            if self._scaling_status == 'requested':
+        if self._scaling and self._scaling_status != "finished":
+            if self._scaling_status == "requested":
                 return self.__scaling_factors_step_start()
-            elif self._scaling_status == 'started':
+            elif self._scaling_status == "started":
                 self.__scaling_factors_step_end()
 
         return self.__steady_state_step()
-
 
     def check(self):
         """
@@ -732,5 +807,4 @@ class ZacrosSteadyStateJob( scm.plams.MultiJob ):
             if len(self._history) == 0:
                 return False
             else:
-                return all(self._history[-1]['converged'].values())
-
+                return all(self._history[-1]["converged"].values())

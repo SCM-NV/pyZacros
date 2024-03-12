@@ -6,7 +6,8 @@ from .Species import *
 from .SpeciesList import *
 from .Lattice import *
 
-__all__ = ['LatticeState']
+__all__ = ["LatticeState"]
+
 
 class LatticeState:
     """
@@ -25,71 +26,71 @@ class LatticeState:
         self.lattice = lattice
         self.add_info = add_info
 
-        if( type(surface_species) != SpeciesList and type(surface_species) != list ):
-            msg  = "\n### ERROR ### LatticeState.__init__.\n"
+        if type(surface_species) != SpeciesList and type(surface_species) != list:
+            msg = "\n### ERROR ### LatticeState.__init__.\n"
             msg += "              Inconsistent type for surface_species\n"
             raise Exception(msg)
 
         self.surface_species = surface_species
-        if( type(surface_species) == list ):
+        if type(surface_species) == list:
             self.surface_species = SpeciesList(surface_species)
 
-        if( len( self.surface_species.gas_species() ) > 0 ):
-            msg  = "\n### ERROR ### LatticeState.__init__.\n"
+        if len(self.surface_species.gas_species()) > 0:
+            msg = "\n### ERROR ### LatticeState.__init__.\n"
             msg += "              LatticeState doesn't accept gas surface_species\n"
             raise Exception(msg)
 
         self.initial = initial
 
-        self.__adsorbed_on_site = lattice.number_of_sites()*[ None ]
-        self.__entity_number = lattice.number_of_sites()*[ None ]
+        self.__adsorbed_on_site = lattice.number_of_sites() * [None]
+        self.__entity_number = lattice.number_of_sites() * [None]
         self.__next_entity_number = 0
 
         self.__speciesNumbers = {}
         for sp in self.surface_species:
             self.__speciesNumbers[sp] = 0
 
-
     def __str__(self):
         """
         Translates the object to a string
         """
-        if( self.initial ):
-            output  = "initial_state"+"\n"
+        if self.initial:
+            output = "initial_state" + "\n"
         else:
-            output  = "state"+"\n"
+            output = "state" + "\n"
 
-        if( self.surface_species is not None ): output += "  # species "+(" ".join([sp.symbol for sp in self.surface_species]))+"\n"
+        if self.surface_species is not None:
+            output += "  # species " + (" ".join([sp.symbol for sp in self.surface_species])) + "\n"
 
-        if( len(self.__speciesNumbers) > 0 ):
+        if len(self.__speciesNumbers) > 0:
             output += "  # species_numbers\n"
-            for sp,nsites in self.__speciesNumbers.items():
-                output += "  #   - "+sp.symbol+"  "+str(nsites)+"\n"
+            for sp, nsites in self.__speciesNumbers.items():
+                output += "  #   - " + sp.symbol + "  " + str(nsites) + "\n"
 
         processed_entity_number = {}
-        for id_site,sp in enumerate(self.__adsorbed_on_site):
-            if( sp is not None and self.__entity_number[id_site] not in processed_entity_number ):
-                entity_pos = [ str(i+1) for i,v in enumerate(self.__entity_number) if v==self.__entity_number[id_site] ]
+        for id_site, sp in enumerate(self.__adsorbed_on_site):
+            if sp is not None and self.__entity_number[id_site] not in processed_entity_number:
+                entity_pos = [
+                    str(i + 1) for i, v in enumerate(self.__entity_number) if v == self.__entity_number[id_site]
+                ]
 
-                if( len(entity_pos)>0 ):
-                    output += "  seed_on_sites "+sp.symbol+" "+' '.join(entity_pos)+"\n"
+                if len(entity_pos) > 0:
+                    output += "  seed_on_sites " + sp.symbol + " " + " ".join(entity_pos) + "\n"
 
-                    processed_entity_number[ self.__entity_number[id_site] ] = 1
+                    processed_entity_number[self.__entity_number[id_site]] = 1
 
-        if( self.initial ):
+        if self.initial:
             output += "end_initial_state"
         else:
             output += "end_state"
 
         return output
 
-
     def empty(self):
         """
         Returns True if the state is empty
         """
-        return ( len(self.__adsorbed_on_site) == self.__adsorbed_on_site.count(None) )
-
+        return len(self.__adsorbed_on_site) == self.__adsorbed_on_site.count(None)
 
     def number_of_filled_sites(self):
         """
@@ -97,29 +98,26 @@ class LatticeState:
         """
         return len(self.__adsorbed_on_site)
 
-
     def _next_entity_number(self):
         entity = self.__next_entity_number
         self.__next_entity_number += 1
         return entity
 
-
     def _adsorbed_on_site(self):
         return self.__adsorbed_on_site
-
 
     def _updateSpeciesNumbers(self):
         for sp in self.surface_species:
             self.__speciesNumbers[sp] = 0
 
         for sp in self.__adsorbed_on_site:
-            if( sp is None ): continue
+            if sp is None:
+                continue
 
-            if( sp not in self.__speciesNumbers ):
+            if sp not in self.__speciesNumbers:
                 self.__speciesNumbers[sp] = 1
             else:
                 self.__speciesNumbers[sp] += 1
-
 
     def fill_site(self, site_number, species, update_species_numbers=True):
         """
@@ -130,52 +128,59 @@ class LatticeState:
         *   ``update_species_numbers`` -- Forces to update the statistics about the number of species adsorbed in the lattice. For better performance, it would be wise to set it to False if a massive number of species are going to be added (one by one) using this function.
         """
         lSpecies = None
-        if( isinstance(species, str) ):
+        if isinstance(species, str):
             for sp in self.surface_species:
-                if( sp.symbol == species ):
+                if sp.symbol == species:
                     lSpecies = sp
                     break
-        elif( isinstance(species, Species) ):
+        elif isinstance(species, Species):
             lSpecies = species
         else:
-            msg  = "\n### ERROR ### LatticeState.fill_sites.\n"
+            msg = "\n### ERROR ### LatticeState.fill_sites.\n"
             msg += "              Inconsistent type for species. It should be type str or Species.\n"
-            msg += "              Expected: Species|str. Obtained: "+str(type(species))+"\n"
+            msg += "              Expected: Species|str. Obtained: " + str(type(species)) + "\n"
             raise Exception(msg)
 
-        if( isinstance(site_number,int) ):
+        if isinstance(site_number, int):
             site_number = [site_number]
 
-        if( not ( isinstance(site_number,list) or isinstance(site_number,tuple) ) ):
-            msg  = "\n### ERROR ### LatticeState.fill_site.\n"
+        if not (isinstance(site_number, list) or isinstance(site_number, tuple)):
+            msg = "\n### ERROR ### LatticeState.fill_site.\n"
             msg += "              Inconsistent values for species denticity and dimensions of site_number\n"
             msg += "              denticity>1 but site_number is not an instance of list or tuple\n"
             raise Exception(msg)
 
-        #if( len(site_number) != lSpecies.denticity ):
-            #msg  = "\n### ERROR ### LatticeState.fill_site.\n"
-            #msg += "              Inconsistent values for species denticity and dimensions of site_number\n"
-            #msg += "              site_number should have the `denticity` number of elements\n"
-            #raise Exception(msg)
+        # if( len(site_number) != lSpecies.denticity ):
+        # msg  = "\n### ERROR ### LatticeState.fill_site.\n"
+        # msg += "              Inconsistent values for species denticity and dimensions of site_number\n"
+        # msg += "              site_number should have the `denticity` number of elements\n"
+        # raise Exception(msg)
 
-        if( any([self.__adsorbed_on_site[site] is not None for site in site_number]) ):
-            msg  = "\n### ERROR ### LatticeState.fill_site.\n"
+        if any([self.__adsorbed_on_site[site] is not None for site in site_number]):
+            msg = "\n### ERROR ### LatticeState.fill_site.\n"
             msg += "              site is already filled\n"
             raise Exception(msg)
 
         connected = [site_number[0]]
         to_check = [site_number[0]]
-        while( to_check and len(connected) < lSpecies.denticity ):
+        while to_check and len(connected) < lSpecies.denticity:
             new_check = []
             for site in to_check:
-                new_check.extend(list(filter(lambda x: x in site_number and x not in connected and x not in to_check,self.lattice.nearest_neighbors[site])))
+                new_check.extend(
+                    list(
+                        filter(
+                            lambda x: x in site_number and x not in connected and x not in to_check,
+                            self.lattice.nearest_neighbors[site],
+                        )
+                    )
+                )
             to_check = list(set(new_check))
             connected.extend(to_check)
 
-        #if( len(connected) != lSpecies.denticity ):
-             #msg  = "\n### ERROR ### LatticeState.fill_site.\n"
-             #msg += "              sites are not neighboring\n"
-             #raise Exception(msg)
+        # if( len(connected) != lSpecies.denticity ):
+        # msg  = "\n### ERROR ### LatticeState.fill_site.\n"
+        # msg += "              sites are not neighboring\n"
+        # raise Exception(msg)
 
         entity_number = self._next_entity_number()
 
@@ -183,9 +188,8 @@ class LatticeState:
             self.__adsorbed_on_site[site] = lSpecies
             self.__entity_number[site] = entity_number
 
-        if( update_species_numbers ):
+        if update_species_numbers:
             self._updateSpeciesNumbers()
-
 
     def fill_sites_random(self, site_name, species, coverage, neighboring=None):
         """
@@ -200,94 +204,111 @@ class LatticeState:
         *   ``neighboring`` -- Neighboring relations associated to the sites ``site_name``, e.g., ``[[0,2],[1,2]]``.
         """
         lSpecies = None
-        if( isinstance(species, str) ):
+        if isinstance(species, str):
             for sp in self.surface_species:
-                if( sp.symbol == species ):
+                if sp.symbol == species:
                     lSpecies = sp
                     break
-        elif( isinstance(species, Species) ):
+        elif isinstance(species, Species):
             lSpecies = species
         else:
-            msg  = "\n### ERROR ### LatticeState.fill_sites_random.\n"
+            msg = "\n### ERROR ### LatticeState.fill_sites_random.\n"
             msg += "              Inconsistent type for species. It should be type str or Species\n"
             raise Exception(msg)
 
-        if ( isinstance(site_name, str) or isinstance(site_name, int) ):
+        if isinstance(site_name, str) or isinstance(site_name, int):
             site_name = [site_name]
 
-        if ( lSpecies.denticity != len(site_name) ):
+        if lSpecies.denticity != len(site_name):
             msg = "\n### ERROR ### LatticeState.fill_sites_random.\n"
             msg += "             Inconsistent amount of site_name with species denticity\n"
             raise Exception(msg)
 
         neighboring_order = []
-        if ( lSpecies.denticity > 1 ):
-            if ( neighboring == None ):
-                neighboring = [[x-1,x] for x in range(1,lSpecies.denticity)]
+        if lSpecies.denticity > 1:
+            if neighboring == None:
+                neighboring = [[x - 1, x] for x in range(1, lSpecies.denticity)]
                 neighboring_order = range(lSpecies.denticity)
             else:
                 connected = [0]
                 to_check = [0]
                 # We need to check if the sites are neighboring, and generate an ordering to generate the subgraphs from the site_names
                 # E.g. when denticity == 3 and neighboring=[[0,2],[1,2]], it should generate as site_name[0], site_name[2], site_name[1]
-                while ( to_check and len(connected) < lSpecies.denticity ):
+                while to_check and len(connected) < lSpecies.denticity:
                     new_check = []
                     for site in to_check:
-                        neighbor_pairs = list(filter(lambda x: site in x,neighboring))
+                        neighbor_pairs = list(filter(lambda x: site in x, neighboring))
                         neighbors = [x[0] if x[1] == site else x[1] for x in neighbor_pairs]
-                        new_check.extend(list(filter(lambda x: x not in connected and x not in to_check,neighbors)))
+                        new_check.extend(list(filter(lambda x: x not in connected and x not in to_check, neighbors)))
                     to_check = list(set(new_check))
                     connected.extend(to_check)
-                if( len(connected) != lSpecies.denticity ):
+                if len(connected) != lSpecies.denticity:
                     msg = "\n### ERROR ### LatticeState.fill_sites_random.\n"
                     msg += "             neighboring sites not connected.\n"
                     raise Exception(msg)
                 neighboring_order = connected
-                neighboring = [[x[0],x[1]] if connected.index(x[0]) < connected.index(x[1]) else [x[1],x[0]] for x in neighboring]
+                neighboring = [
+                    [x[0], x[1]] if connected.index(x[0]) < connected.index(x[1]) else [x[1], x[0]] for x in neighboring
+                ]
 
         total_available_conf = []
 
-        empty_sites = list(filter(lambda x: self.__adsorbed_on_site[x] is None and self.lattice.site_types[x] == site_name[0],range(self.lattice.number_of_sites())))
+        empty_sites = list(
+            filter(
+                lambda x: self.__adsorbed_on_site[x] is None and self.lattice.site_types[x] == site_name[0],
+                range(self.lattice.number_of_sites()),
+            )
+        )
         for site_number_i in empty_sites:
             available_conf = [[site_number_i]]
             for identicity in neighboring_order[1:]:
                 new_conf = []
                 neighbors = list(filter(lambda x: x[1] == identicity, neighboring))
                 for conf in available_conf:
-                    nearest_neighbors = [self.lattice.nearest_neighbors[conf[neighboring_order.index(x[0])]] for x in neighbors]
-                    if (not nearest_neighbors):
+                    nearest_neighbors = [
+                        self.lattice.nearest_neighbors[conf[neighboring_order.index(x[0])]] for x in neighbors
+                    ]
+                    if not nearest_neighbors:
                         continue
-                    nearest_neighbors = set.intersection(*map(set,nearest_neighbors))
-                    new_conf.extend([conf + [x] for x in list(filter(lambda x:
-                                    self.__adsorbed_on_site[x] is None and
-                                    x not in conf and
-                                    self.lattice.site_types[x] == site_name[identicity],
-                                    nearest_neighbors))])
+                    nearest_neighbors = set.intersection(*map(set, nearest_neighbors))
+                    new_conf.extend(
+                        [
+                            conf + [x]
+                            for x in list(
+                                filter(
+                                    lambda x: self.__adsorbed_on_site[x] is None
+                                    and x not in conf
+                                    and self.lattice.site_types[x] == site_name[identicity],
+                                    nearest_neighbors,
+                                )
+                            )
+                        ]
+                    )
                 available_conf = new_conf
             total_available_conf.extend(available_conf)
 
         target_sites = set([item for sublist in total_available_conf for item in sublist])
 
-        if( len(target_sites) == 0 ):
-            msg  = "\n### ERROR ### LatticeState.fill_sites_random.\n"
-            msg += "              site_name="+str(site_name)+" not found\n"
+        if len(target_sites) == 0:
+            msg = "\n### ERROR ### LatticeState.fill_sites_random.\n"
+            msg += "              site_name=" + str(site_name) + " not found\n"
             raise Exception(msg)
 
-        n_sites_to_fill = round(len(target_sites)*coverage)
-        random.shuffle( total_available_conf )
+        n_sites_to_fill = round(len(target_sites) * coverage)
+        random.shuffle(total_available_conf)
 
         filled_sites = {}
         available_conf = []
         for conf in total_available_conf:
-            if( len(filled_sites) >= n_sites_to_fill ):
+            if len(filled_sites) >= n_sites_to_fill:
                 break
 
             if any((site in filled_sites for site in conf)):
                 continue
 
             for site in conf:
-                filled_sites[ site ] = True
-            available_conf.append( conf )
+                filled_sites[site] = True
+            available_conf.append(conf)
 
         entity_number = self._next_entity_number()
         for conf in available_conf:
@@ -298,21 +319,19 @@ class LatticeState:
 
         self._updateSpeciesNumbers()
 
-        if (lSpecies not in self.__speciesNumbers):
+        if lSpecies not in self.__speciesNumbers:
             return 0.0
-        actual_coverage = self.__speciesNumbers[lSpecies]/len(target_sites)
+        actual_coverage = self.__speciesNumbers[lSpecies] / len(target_sites)
         return actual_coverage
 
-
-    def fill_all_sites( self, site_name, species ):
+    def fill_all_sites(self, site_name, species):
         """
         Fills all available named sites ``site_name`` with the species ``species``.
 
         *   ``site_name`` -- Name of the sites to be filled, e.g., ``["fcc","hcp"]``
         *   ``species`` -- Species to be used to fill the site, e.g., ``Species("O2*")``, or ``"O2*"``.
         """
-        self.fill_sites_random( site_name, species, coverage=1.0 )
-
+        self.fill_sites_random(site_name, species, coverage=1.0)
 
     def coverage_fractions(self):
         """
@@ -322,11 +341,10 @@ class LatticeState:
         for sp in self.surface_species:
             fractions[sp.symbol] = 0.0
 
-        for sp,nsites in self.__speciesNumbers.items():
-            fractions[sp.symbol] = float(nsites)/self.lattice.number_of_sites()
+        for sp, nsites in self.__speciesNumbers.items():
+            fractions[sp.symbol] = float(nsites) / self.lattice.number_of_sites()
 
         return fractions
-
 
     def plot(self, pause=-1, show=True, ax=None, close=False, show_sites_ids=False, file_name=None):
         """
@@ -344,37 +362,38 @@ class LatticeState:
         except ImportError as e:
             return  # module doesn't exist, deal with it.
 
-        if( ax is None ):
-            fig,ax = plt.subplots()
+        if ax is None:
+            fig, ax = plt.subplots()
 
-        #markers = ['o', '.', ',', 'x', '+', 'v', '^', '<', '>', 's', 'd']
-        markers = ['o', 's', 'v', '^', 'x', 's', 'd',       '+']
-        colors =  ['r', 'g', 'b', 'c', 'm', 'y', 'k', '#eeefff']
+        # markers = ['o', '.', ',', 'x', '+', 'v', '^', '<', '>', 's', 'd']
+        markers = ["o", "s", "v", "^", "x", "s", "d", "+"]
+        colors = ["r", "g", "b", "c", "m", "y", "k", "#eeefff"]
 
         symbols = [sp if sp is None else sp.symbol for sp in self.__adsorbed_on_site]
 
         items = list(filter(None.__ne__, set(self.__adsorbed_on_site)))
 
-        if( self.add_info is not None ):
+        if self.add_info is not None:
             ax.set_title("t = {:.3g} s".format(self.add_info.get("time")))
 
-        #--------------------------------
+        # --------------------------------
         # Plots the lattice
-        #--------------------------------
-        self.lattice.plot( show=False, ax=ax, close=False, color='0.8', show_sites_ids=show_sites_ids )
+        # --------------------------------
+        self.lattice.plot(show=False, ax=ax, close=False, color="0.8", show_sites_ids=show_sites_ids)
 
-        #--------------------------------
+        # --------------------------------
         # Plots the species
-        #--------------------------------
+        # --------------------------------
         site_types = sorted(list(set(self.lattice.site_types)))
-        for i,sym_i in enumerate([item.symbol for item in items]):
+        for i, sym_i in enumerate([item.symbol for item in items]):
 
-            if( all([sym is None for sym in symbols]) ): continue
+            if all([sym is None for sym in symbols]):
+                continue
 
-            ids_nn = [ pos for pos,v in enumerate(symbols) if v is not None ]
-            s_ids_nn = numpy.argsort( [ symbols[k] for k in ids_nn ] )
-            sorted_ids = [ ids_nn[k] for k in s_ids_nn ]
-            sorted_ids = sorted_ids + [ k for k in range(len(symbols)) if k not in sorted_ids ]
+            ids_nn = [pos for pos, v in enumerate(symbols) if v is not None]
+            s_ids_nn = numpy.argsort([symbols[k] for k in ids_nn])
+            sorted_ids = [ids_nn[k] for k in s_ids_nn]
+            sorted_ids = sorted_ids + [k for k in range(len(symbols)) if k not in sorted_ids]
 
             xvalues = []
             yvalues = []
@@ -385,50 +404,62 @@ class LatticeState:
                 site_type = self.lattice.site_types[sid]
                 sym = symbols[sid]
 
-                if( sym == sym_i ):
-                    xvalues.append( x )
-                    yvalues.append( y )
+                if sym == sym_i:
+                    xvalues.append(x)
+                    yvalues.append(y)
 
                     lSpecies = None
                     for sp in self.surface_species:
-                        if( sp.symbol == sym_i ):
+                        if sp.symbol == sym_i:
                             lSpecies = sp
                             break
 
-                    imarkers.append( site_types.index(site_type) )
+                    imarkers.append(site_types.index(site_type))
 
-            if( len(xvalues)>0 ):
-                #ax.scatter(xvalues, yvalues, color=colors[i], marker=markers[imarkers[i]], s=100, zorder=4, label=sym_i)
-                #ax.scatter(xvalues, yvalues, color=colors[i], marker=markers[imarkers[i]], s=100/5, zorder=4, label=sym_i)
-                ax.scatter(xvalues, yvalues, color=colors[i], marker=markers[imarkers[i]],
-                           s=450/math.sqrt(len(self.lattice.site_coordinates)), zorder=4, label=sym_i)
+            if len(xvalues) > 0:
+                # ax.scatter(xvalues, yvalues, color=colors[i], marker=markers[imarkers[i]], s=100, zorder=4, label=sym_i)
+                # ax.scatter(xvalues, yvalues, color=colors[i], marker=markers[imarkers[i]], s=100/5, zorder=4, label=sym_i)
+                ax.scatter(
+                    xvalues,
+                    yvalues,
+                    color=colors[i],
+                    marker=markers[imarkers[i]],
+                    s=450 / math.sqrt(len(self.lattice.site_coordinates)),
+                    zorder=4,
+                    label=sym_i,
+                )
 
-        #-------------------------------------------------
+        # -------------------------------------------------
         # Plots the links for species with denticity > 1
-        #-------------------------------------------------
-        for id_site,sp in enumerate(self.__adsorbed_on_site):
-            if( sp is not None ):
-                entity_pos = [ i for i,v in enumerate(self.__entity_number) if v==self.__entity_number[id_site] ]
+        # -------------------------------------------------
+        for id_site, sp in enumerate(self.__adsorbed_on_site):
+            if sp is not None:
+                entity_pos = [i for i, v in enumerate(self.__entity_number) if v == self.__entity_number[id_site]]
 
-                if( len(entity_pos)>0 ):
+                if len(entity_pos) > 0:
                     for id_site_2 in self.lattice.nearest_neighbors[id_site]:
-                        if( id_site_2 in entity_pos ):
+                        if id_site_2 in entity_pos:
                             coords_i = self.lattice.site_coordinates[id_site]
                             coords_j = self.lattice.site_coordinates[id_site_2]
-                            ax.plot([coords_i[0],coords_j[0]],
-                                    [coords_i[1],coords_j[1]],
-                                    color=colors[items.index(sp)], linestyle='solid', linewidth=5, zorder=4)
+                            ax.plot(
+                                [coords_i[0], coords_j[0]],
+                                [coords_i[1], coords_j[1]],
+                                color=colors[items.index(sp)],
+                                linestyle="solid",
+                                linewidth=5,
+                                zorder=4,
+                            )
 
-        ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+        ax.legend(loc="center left", bbox_to_anchor=(1, 0.5))
 
-        if( file_name is not None ):
-            plt.savefig( file_name )
+        if file_name is not None:
+            plt.savefig(file_name)
 
-        if( show ):
-            if( pause == -1 ):
+        if show:
+            if pause == -1:
                 plt.show()
             else:
-                plt.pause( pause )
+                plt.pause(pause)
 
-        if( close ):
+        if close:
             plt.close("all")

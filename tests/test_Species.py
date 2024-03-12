@@ -12,7 +12,7 @@ def test_Species():
 
     output = str(myAdsorbedSpecies)
     expectedOutput = "H2*"
-    assert( output == expectedOutput )
+    assert output == expectedOutput
 
     # Gas specie
     myGasSpecies = pz.Species("H2", gas_energy=0.0)
@@ -20,7 +20,7 @@ def test_Species():
 
     output = str(myGasSpecies)
     expectedOutput = "H2"
-    assert( output == expectedOutput )
+    assert output == expectedOutput
 
     # Free adsorption site
     myAdsorptionFreeSite = pz.Species("*")
@@ -28,4 +28,4 @@ def test_Species():
 
     output = str(myAdsorptionFreeSite)
     expectedOutput = "*"
-    assert( output == expectedOutput )
+    assert output == expectedOutput

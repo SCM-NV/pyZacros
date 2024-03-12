@@ -3,24 +3,26 @@ import scm.pyzacros.utils
 
 
 def test_ElementaryReaction():
-    print( "---------------------------------------------------" )
-    print( ">>> Testing ElementaryReaction class" )
-    print( "---------------------------------------------------" )
+    print("---------------------------------------------------")
+    print(">>> Testing ElementaryReaction class")
+    print("---------------------------------------------------")
 
-    s0 = pz.Species( "*", 1 )   # Empty adsorption site
-    s1 = pz.Species( "H*", 1 )  # H adsorbed with dentation 1
-    s2 = pz.Species( "H2*", 1 ) # H2 adsorbed with dentation 1
+    s0 = pz.Species("*", 1)  # Empty adsorption site
+    s1 = pz.Species("H*", 1)  # H adsorbed with dentation 1
+    s2 = pz.Species("H2*", 1)  # H2 adsorbed with dentation 1
 
-    myReaction1 = pz.ElementaryReaction( site_types=( "f", "f" ),
-                                        neighboring=[ (0,1) ],
-                                        initial=[s1, s1],
-                                        final=[s2, s0],
-                                        reversible=True,
-                                        pre_expon=1e+13,
-                                        pe_ratio=0.676,
-                                        activation_energy=0.2 )
+    myReaction1 = pz.ElementaryReaction(
+        site_types=("f", "f"),
+        neighboring=[(0, 1)],
+        initial=[s1, s1],
+        final=[s2, s0],
+        reversible=True,
+        pre_expon=1e13,
+        pe_ratio=0.676,
+        activation_energy=0.2,
+    )
 
-    print( myReaction1 )
+    print(myReaction1)
 
     output = str(myReaction1)
     expectedOutput = """\
@@ -39,20 +41,22 @@ reversible_step H2*1f*2f<->H*1fH*2f;(0,1)
   activ_eng 0.2
 end_reversible_step\
 """
-    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
+    assert pz.utils.compare(output, expectedOutput, 1e-3)
 
-    s3 = pz.Species( "H2", gas_energy=0.0 ) # H2(gas)
+    s3 = pz.Species("H2", gas_energy=0.0)  # H2(gas)
 
-    myReaction2 = pz.ElementaryReaction( site_types=( "f", "f" ),
-                                        neighboring=[ (0,1) ],
-                                        initial=[ s1, s1 ],
-                                        final=[ s0, s0, s3 ],
-                                        reversible=False,
-                                        pre_expon=1e+13,
-                                        pe_ratio=0.676,
-                                        activation_energy=0.2 )
+    myReaction2 = pz.ElementaryReaction(
+        site_types=("f", "f"),
+        neighboring=[(0, 1)],
+        initial=[s1, s1],
+        final=[s0, s0, s3],
+        reversible=False,
+        pre_expon=1e13,
+        pe_ratio=0.676,
+        activation_energy=0.2,
+    )
 
-    print( myReaction2 )
+    print(myReaction2)
 
     output = str(myReaction2)
     expectedOutput = """\
@@ -71,4 +75,4 @@ step H*1fH*2f->*1f*2f:H2;(0,1)
   activ_eng 0.200
 end_step\
 """
-    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
+    assert pz.utils.compare(output, expectedOutput, 1e-3)

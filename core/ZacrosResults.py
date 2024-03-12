@@ -15,55 +15,59 @@ from .Mechanism import *
 from .LatticeState import *
 from .Settings import *
 
-__all__ = ['ZacrosResults']
+__all__ = ["ZacrosResults"]
 
-class ZacrosResults( scm.plams.Results ):
+
+class ZacrosResults(scm.plams.Results):
     """
     A Class for handling Zacros Results.
     """
 
     _filenames = {
-        'general': 'general_output.txt',
-        'history': 'history_output.txt',
-        'lattice': 'lattice_output.txt',
-        'procstat': 'procstat_output.txt',
-        'specnum': 'specnum_output.txt',
-        'restart': 'restart.inf',
-        'err': 'std.err',
-        'out': 'std.out'}
-
+        "general": "general_output.txt",
+        "history": "history_output.txt",
+        "lattice": "lattice_output.txt",
+        "procstat": "procstat_output.txt",
+        "specnum": "specnum_output.txt",
+        "restart": "restart.inf",
+        "err": "std.err",
+        "out": "std.out",
+    }
 
     def get_zacros_version(self):
         """
         Returns the zacros's version from the 'general_output.txt' file.
         """
-        if( self.job.restart is None ):
-            lines = self.grep_file(self._filenames['general'], pattern='ZACROS')
+        if self.job.restart is None:
+            lines = self.grep_file(self._filenames["general"], pattern="ZACROS")
 
-            if( len(lines) > 0 ):
+            if len(lines) > 0:
                 zversion = lines[0].split()[2]
             else:
-                lines = self.grep_file(self._filenames['restart'], pattern='Version')
-                zversion = float(lines[0].split()[1])/1e5
+                lines = self.grep_file(self._filenames["restart"], pattern="Version")
+                zversion = float(lines[0].split()[1]) / 1e5
         else:
-            lines = self.grep_file(self._filenames['restart'], pattern='Version')
-            zversion = float(lines[0].split()[1])/1e5
+            lines = self.grep_file(self._filenames["restart"], pattern="Version")
+            zversion = float(lines[0].split()[1]) / 1e5
         return float(zversion)
-
 
     def get_reaction_network(self):
         """
         Returns the reactions from the 'general_output.txt' file.
         """
-        lines = self.get_file_chunk(self._filenames['general'], begin="Reaction network:", end="Finished reading mechanism input.")
+        lines = self.get_file_chunk(
+            self._filenames["general"], begin="Reaction network:", end="Finished reading mechanism input."
+        )
 
         reaction_network = {}
         for line in lines:
-            if( not line.strip() or line.find("A(Tini)") == -1 ): continue
-            reaction_network[ line.split()[1].replace(':','') ] = line[line.find("Reaction:")+len("Reaction:"):].strip().replace('  ',' ')
+            if not line.strip() or line.find("A(Tini)") == -1:
+                continue
+            reaction_network[line.split()[1].replace(":", "")] = (
+                line[line.find("Reaction:") + len("Reaction:") :].strip().replace("  ", " ")
+            )
 
         return reaction_network
-
 
     def provided_quantities_names(self):
         """
@@ -85,14 +89,13 @@ class ZacrosResults( scm.plams.Results ):
             [ 'Entry', 'Nevents', 'Time', 'Temperature', 'Energy', 'O*', 'CO*', 'O2', 'CO', 'CO2' ]
         """
         quantities = None
-        if( self.job.restart is None ):
-            lines = self.awk_file(self._filenames['specnum'],script='(NR==1){print $0}')
+        if self.job.restart is None:
+            lines = self.awk_file(self._filenames["specnum"], script="(NR==1){print $0}")
             names = lines[0].split()
         else:
             names = self.job.restart.results.provided_quantities_names()
 
         return names
-
 
     def provided_quantities(self):
         """
@@ -127,7 +130,7 @@ class ZacrosResults( scm.plams.Results ):
 
         quantities = None
         names = None
-        if( self.job.restart is None ):
+        if self.job.restart is None:
             names = self.provided_quantities_names()
 
             quantities = {}
@@ -137,26 +140,25 @@ class ZacrosResults( scm.plams.Results ):
             quantities = self.job.restart.results.provided_quantities()
             names = list(quantities.keys())
 
-        if( self.job.restart is None ):
-            lines = self.awk_file(self._filenames['specnum'],script='(NR>1){print $0}')
+        if self.job.restart is None:
+            lines = self.awk_file(self._filenames["specnum"], script="(NR>1){print $0}")
         else:
-            lines = self.awk_file(self._filenames['specnum'],script='{print $0}')
+            lines = self.awk_file(self._filenames["specnum"], script="{print $0}")
 
         for line in lines:
-            for i,token in enumerate(line.split()):
+            for i, token in enumerate(line.split()):
                 # Specific conversion rules
                 cases = {
-                    "Time"        : lambda sv: float(sv),
-                    "Temperature" : lambda sv: float(sv),
-                    "Energy"      : lambda sv: float(sv)
+                    "Time": lambda sv: float(sv),
+                    "Temperature": lambda sv: float(sv),
+                    "Energy": lambda sv: float(sv),
                 }
 
                 # Notice that by default values are considered integers
-                value = cases.get( names[i], lambda sv: int(sv) )( token.strip() )
-                quantities[ names[i] ].append( value )
+                value = cases.get(names[i], lambda sv: int(sv))(token.strip())
+                quantities[names[i]].append(value)
 
         return quantities
-
 
     def number_of_lattice_sites(self):
         """
@@ -164,22 +166,23 @@ class ZacrosResults( scm.plams.Results ):
         """
         zversion = self.get_zacros_version()
 
-        if( self.job.restart is not None ):
+        if self.job.restart is not None:
             nsites = self.job.restart.results.number_of_lattice_sites()
         else:
-            if( zversion >= 2.0 and zversion < 3.0 ):
-                lines = self.grep_file(self._filenames['general'], pattern='Number of lattice sites:')
-                nsites = lines[0][ lines[0].find('Number of lattice sites:')+len("Number of lattice sites:"): ]
-            elif( zversion >= 3.0 ):
-                lines = self.grep_file(self._filenames['general'], pattern='Total number of lattice sites:')
-                nsites = lines[0][ lines[0].find('Total number of lattice sites:')+len("Total number of lattice sites:"): ]
+            if zversion >= 2.0 and zversion < 3.0:
+                lines = self.grep_file(self._filenames["general"], pattern="Number of lattice sites:")
+                nsites = lines[0][lines[0].find("Number of lattice sites:") + len("Number of lattice sites:") :]
+            elif zversion >= 3.0:
+                lines = self.grep_file(self._filenames["general"], pattern="Total number of lattice sites:")
+                nsites = lines[0][
+                    lines[0].find("Total number of lattice sites:") + len("Total number of lattice sites:") :
+                ]
             else:
-                raise Exception( "Error: Zacros version "+str(zversion)+" not supported!" )
+                raise Exception("Error: Zacros version " + str(zversion) + " not supported!")
 
             nsites = int(nsites)
 
         return nsites
-
 
     def gas_species_names(self):
         """
@@ -187,16 +190,15 @@ class ZacrosResults( scm.plams.Results ):
         """
         output = []
 
-        lines = self.grep_file(self._filenames['general'], pattern='Gas species names:')
+        lines = self.grep_file(self._filenames["general"], pattern="Gas species names:")
 
-        if( len(lines) != 0 ):
-            output = lines[0][ lines[0].find('Gas species names:')+len("Gas species names:"): ].split()
+        if len(lines) != 0:
+            output = lines[0][lines[0].find("Gas species names:") + len("Gas species names:") :].split()
 
-        if( self.job.restart is not None ):
-            output.extend( self.job.restart.results.gas_species_names() )
+        if self.job.restart is not None:
+            output.extend(self.job.restart.results.gas_species_names())
 
         return output
-
 
     def surface_species_names(self):
         """
@@ -204,16 +206,15 @@ class ZacrosResults( scm.plams.Results ):
         """
         output = []
 
-        lines = self.grep_file(self._filenames['general'], pattern='Surface species names:')
+        lines = self.grep_file(self._filenames["general"], pattern="Surface species names:")
 
-        if( len(lines) != 0 ):
-            return lines[0][ lines[0].find('Surface species names:')+len("Surface species names:"): ].split()
+        if len(lines) != 0:
+            return lines[0][lines[0].find("Surface species names:") + len("Surface species names:") :].split()
 
-        if( self.job.restart is not None ):
-            output.extend( self.job.restart.results.surface_species_names() )
+        if self.job.restart is not None:
+            output.extend(self.job.restart.results.surface_species_names())
 
         return output
-
 
     def site_type_names(self):
         """
@@ -221,61 +222,64 @@ class ZacrosResults( scm.plams.Results ):
         """
         zversion = self.get_zacros_version()
 
-        if( zversion >= 2.0 and zversion < 3.0 ):
-            lines = self.get_file_chunk(self._filenames['general'], begin="Site type names and number of sites of that type:",
-                                            end='Maximum coordination number:')
-        elif( zversion >= 3.0 ):
-            lines = self.get_file_chunk(self._filenames['general'], begin="Site type names and total number of sites of that type:",
-                                            end='Maximum coordination number:')
+        if zversion >= 2.0 and zversion < 3.0:
+            lines = self.get_file_chunk(
+                self._filenames["general"],
+                begin="Site type names and number of sites of that type:",
+                end="Maximum coordination number:",
+            )
+        elif zversion >= 3.0:
+            lines = self.get_file_chunk(
+                self._filenames["general"],
+                begin="Site type names and total number of sites of that type:",
+                end="Maximum coordination number:",
+            )
         else:
-            raise Exception( "Error: Zacros version "+str(zversion)+" not supported!" )
+            raise Exception("Error: Zacros version " + str(zversion) + " not supported!")
 
         site_types = []
         for line in lines:
-            if( not line.strip() ): continue
-            site_types.append( line.split()[0] )
+            if not line.strip():
+                continue
+            site_types.append(line.split()[0])
 
         return site_types
-
 
     def number_of_snapshots(self):
         """
         Returns the number of configurations from the 'history_output.txt' file.
         """
-        lines = self.grep_file(self._filenames['history'], pattern='configuration')
+        lines = self.grep_file(self._filenames["history"], pattern="configuration")
         nconf = len(lines)
 
-        if( self.job.restart is not None ):
+        if self.job.restart is not None:
             nconf = self.job.restart.results.number_of_snapshots() + nconf
 
         return nconf
-
 
     def number_of_process_statistics(self):
         """
         Returns the number of process statistics from the 'procstat_output.txt' file.
         """
-        lines = self.grep_file(self._filenames['procstat'], pattern='configuration')
+        lines = self.grep_file(self._filenames["procstat"], pattern="configuration")
         nconf = len(lines)
 
-        if( self.job.restart is not None ):
+        if self.job.restart is not None:
             nconf = self.job.restart.results.number_of_process_statistics() + nconf
 
         return nconf
-
 
     def elementary_steps_names(self):
         """
         Returns the names of elementary steps from the 'procstat_output.txt' file.
         """
-        if( self.job.restart is None ):
-            lines = self.grep_file(self._filenames['procstat'], pattern='Overall')
-            names = lines[0][ lines[0].find('Overall')+len("Overall"): ].split()
+        if self.job.restart is None:
+            lines = self.grep_file(self._filenames["procstat"], pattern="Overall")
+            names = lines[0][lines[0].find("Overall") + len("Overall") :].split()
         else:
             names = self.job.restart.results.elementary_steps_names()
 
         return names
-
 
     def lattice_states(self, last=None):
         """
@@ -293,43 +297,52 @@ class ZacrosResults( scm.plams.Results ):
         number_of_snapshots_to_load = total_number_of_snapshots
 
         llast = number_of_snapshots_to_load
-        if( last is not None ): llast = last
+        if last is not None:
+            llast = last
 
-        if( self.job.restart is not None ):
+        if self.job.restart is not None:
             prev_total_number_of_snapshots = self.job.restart.results.number_of_snapshots()
-            number_of_snapshots_to_load = total_number_of_snapshots-prev_total_number_of_snapshots
+            number_of_snapshots_to_load = total_number_of_snapshots - prev_total_number_of_snapshots
 
-        if( number_of_snapshots_to_load-llast < 0 ):
-            if( self.job.restart is not None ):
-                output = self.job.restart.results.lattice_states( last=abs(number_of_snapshots_to_load-llast) )
+        if number_of_snapshots_to_load - llast < 0:
+            if self.job.restart is not None:
+                output = self.job.restart.results.lattice_states(last=abs(number_of_snapshots_to_load - llast))
             else:
-                raise Exception("\n### ERROR ### Trying to load more snapshots ("+str(llast)+") than available ("+str(total_number_of_snapshots)+")")
+                raise Exception(
+                    "\n### ERROR ### Trying to load more snapshots ("
+                    + str(llast)
+                    + ") than available ("
+                    + str(total_number_of_snapshots)
+                    + ")"
+                )
 
-        surface_species = len(surface_species_names)*[None]
-        for i,sname in enumerate(surface_species_names):
+        surface_species = len(surface_species_names) * [None]
+        for i, sname in enumerate(surface_species_names):
             for sp in self.job.mechanism.surface_species():
-                if( sname == sp.symbol ):
+                if sname == sp.symbol:
                     surface_species[i] = sp
 
-            if( surface_species[i] is None ):
+            if surface_species[i] is None:
                 for sp in self.job.cluster_expansion.surface_species():
-                    if( sname == sp.symbol ):
+                    if sname == sp.symbol:
                         surface_species[i] = sp
-        surface_species = SpeciesList( surface_species )
+        surface_species = SpeciesList(surface_species)
 
-        lines = self.grep_file(self._filenames['history'], pattern='configuration', options="-A"+str(number_of_lattice_sites))
+        lines = self.grep_file(
+            self._filenames["history"], pattern="configuration", options="-A" + str(number_of_lattice_sites)
+        )
         lines = [line for line in lines if line != "--"]
-        for nconf in range(max(0,number_of_snapshots_to_load-llast),number_of_snapshots_to_load):
-            start = nconf*(number_of_lattice_sites+1)
-            end = (nconf+1)*(number_of_lattice_sites+1)
+        for nconf in range(max(0, number_of_snapshots_to_load - llast), number_of_snapshots_to_load):
+            start = nconf * (number_of_lattice_sites + 1)
+            end = (nconf + 1) * (number_of_lattice_sites + 1)
             conf_lines = lines[start:end]
 
             lattice_state = None
-            lattice_state_buffer = {} # key=adsorbate_number
-            for nline,line in enumerate(conf_lines):
+            lattice_state_buffer = {}  # key=adsorbate_number
+            for nline, line in enumerate(conf_lines):
                 tokens = line.split()
 
-                if( nline==0 ):
+                if nline == 0:
                     assert tokens[0] == "configuration"
 
                     configuration_number = int(tokens[1])
@@ -338,45 +351,47 @@ class ZacrosResults( scm.plams.Results ):
                     temperature = float(tokens[4])
                     energy = float(tokens[5])
 
-                    add_info = {"number_of_events":number_of_events, "time":time,
-                                "temperature":temperature, "energy":energy}
-                    lattice_state = LatticeState( self.job.lattice, surface_species, add_info=add_info )
+                    add_info = {
+                        "number_of_events": number_of_events,
+                        "time": time,
+                        "temperature": temperature,
+                        "energy": energy,
+                    }
+                    lattice_state = LatticeState(self.job.lattice, surface_species, add_info=add_info)
                 else:
-                    site_number = int(tokens[0])-1 # Zacros uses arrays indexed from 1
+                    site_number = int(tokens[0]) - 1  # Zacros uses arrays indexed from 1
                     adsorbate_number = int(tokens[1])
-                    species_number = int(tokens[2])-1 # Zacros uses arrays indexed from 1
+                    species_number = int(tokens[2]) - 1  # Zacros uses arrays indexed from 1
                     dentation = int(tokens[3])
 
-                    if( species_number > -1 ): # In pyzacros -1 means empty site (0 for Zacros)
-                        if( adsorbate_number not in lattice_state_buffer ):
-                            lattice_state_buffer[adsorbate_number] = [ [site_number], species_number, dentation ]
+                    if species_number > -1:  # In pyzacros -1 means empty site (0 for Zacros)
+                        if adsorbate_number not in lattice_state_buffer:
+                            lattice_state_buffer[adsorbate_number] = [[site_number], species_number, dentation]
                         else:
-                            lattice_state_buffer[adsorbate_number][0].append( site_number )
-                            if( dentation > lattice_state_buffer[adsorbate_number][2] ):
+                            lattice_state_buffer[adsorbate_number][0].append(site_number)
+                            if dentation > lattice_state_buffer[adsorbate_number][2]:
                                 lattice_state_buffer[adsorbate_number][2] = dentation
 
-            for key,item in lattice_state_buffer.items():
-                if( len(item[0]) != item[2] ):
-                    msg  = "Format error reading lattice state. Species' dentation is not compatible with the number of associated binding sites.\n"
-                    msg += ">> adsorbate_number="+str(key)+", site_number="+str(site_number)+"\n"
-                    msg += ">> species="+str(surface_species[item[1]])+", dentation="+str(dentation)+"\n"
-                    raise Exception( msg )
-                lattice_state.fill_site( item[0], surface_species[item[1]], update_species_numbers=False )
+            for key, item in lattice_state_buffer.items():
+                if len(item[0]) != item[2]:
+                    msg = "Format error reading lattice state. Species' dentation is not compatible with the number of associated binding sites.\n"
+                    msg += ">> adsorbate_number=" + str(key) + ", site_number=" + str(site_number) + "\n"
+                    msg += ">> species=" + str(surface_species[item[1]]) + ", dentation=" + str(dentation) + "\n"
+                    raise Exception(msg)
+                lattice_state.fill_site(item[0], surface_species[item[1]], update_species_numbers=False)
 
-            if( lattice_state is not None ):
+            if lattice_state is not None:
                 lattice_state._updateSpeciesNumbers()
 
-            output.append( lattice_state )
+            output.append(lattice_state)
 
         return output
-
 
     def last_lattice_state(self):
         """
         Returns the last configuration from the 'history_output.txt' file.
         """
         return self.lattice_states(last=1)[0]
-
 
     def average_coverage(self, last=5):
         """
@@ -389,27 +404,27 @@ class ZacrosResults( scm.plams.Results ):
         for sspecies in surface_species_names:
             acf[sspecies] = 0.0
 
-        #for lattice_state in self.lattice_states(last=last):
-            #fractions = lattice_state.coverage_fractions()
+        # for lattice_state in self.lattice_states(last=last):
+        # fractions = lattice_state.coverage_fractions()
 
-            #for sspecies in surface_species_names:
-                #acf[sspecies] += fractions[sspecies]/last
+        # for sspecies in surface_species_names:
+        # acf[sspecies] += fractions[sspecies]/last
 
         provided_quantities = self.provided_quantities()
-        n_items = len(provided_quantities['Entry'])
-        nmol_total = n_items*[0]
+        n_items = len(provided_quantities["Entry"])
+        nmol_total = n_items * [0]
 
         for i in reversed(range(n_items)):
-            if i==n_items-last-1: break
+            if i == n_items - last - 1:
+                break
 
             for sspecies in surface_species_names:
                 acf[sspecies] += provided_quantities[sspecies][i]
 
         for sspecies in surface_species_names:
-            acf[sspecies] /= self.job.lattice.number_of_sites()*last
+            acf[sspecies] /= self.job.lattice.number_of_sites() * last
 
         return acf
-
 
     def molecule_numbers(self, species_name, normalize_per_site=False):
         """
@@ -427,16 +442,15 @@ class ZacrosResults( scm.plams.Results ):
 
         provided_quantities = self.provided_quantities()
 
-        data['Time'] = numpy.array(provided_quantities['Time'])
+        data["Time"] = numpy.array(provided_quantities["Time"])
 
         for spn in species_name:
-            if( normalize_per_site ):
-                data[spn] = numpy.array(provided_quantities[spn])/self.number_of_lattice_sites()
+            if normalize_per_site:
+                data[spn] = numpy.array(provided_quantities[spn]) / self.number_of_lattice_sites()
             else:
                 data[spn] = numpy.array(provided_quantities[spn])
 
         return data
-
 
     def plot_lattice_states(self, data, pause=-1, show=True, ax=None, close=False, time_perframe=0.5, file_name=None):
         """
@@ -450,39 +464,47 @@ class ZacrosResults( scm.plams.Results ):
         *   ``time_perframe`` -- Sets the time interval between frames in seconds.
         *   ``file_name`` -- Saves the figures to the file ``file_name-<id>`` (the corresponding id on the list replaces the ``<id>``). The format is inferred from the extension, and by default, ``.png`` is used.
         """
-        if( type(data) == LatticeState ):
-            data.plot( show=show, pause=pause, ax=ax, close=close, file_name=file_name )
-        if( type(data) == list ):
+        if type(data) == LatticeState:
+            data.plot(show=show, pause=pause, ax=ax, close=close, file_name=file_name)
+        if type(data) == list:
             try:
                 import matplotlib.pyplot as plt
             except ImportError as e:
-                return # module doesn't exist, deal with it.
+                return  # module doesn't exist, deal with it.
 
-            if( ax is None ):
-                fig,ax = plt.subplots()
+            if ax is None:
+                fig, ax = plt.subplots()
 
             plt.rcParams["figure.autolayout"] = True
-            for i,ls in enumerate(data):
+            for i, ls in enumerate(data):
                 ifile_name = None
-                if( file_name is not None ):
-                    prefix,ext = os.path.splitext(file_name)
-                    ifile_name = prefix+"-"+"%05d"%i+ext
+                if file_name is not None:
+                    prefix, ext = os.path.splitext(file_name)
+                    ifile_name = prefix + "-" + "%05d" % i + ext
 
                 ax.cla()
-                ls.plot( show=show, pause=time_perframe, ax=ax, close=False, file_name=ifile_name )
+                ls.plot(show=show, pause=time_perframe, ax=ax, close=False, file_name=ifile_name)
 
-            if( show ):
-                if( pause == -1 ):
+            if show:
+                if pause == -1:
                     plt.show()
                 else:
-                    plt.pause( pause )
+                    plt.pause(pause)
 
-            if( close ):
+            if close:
                 plt.close("all")
 
-
-    def plot_molecule_numbers(self, species_name, pause=-1, show=True, ax=None, close=False,
-                                file_name=None, normalize_per_site=False, derivative=False):
+    def plot_molecule_numbers(
+        self,
+        species_name,
+        pause=-1,
+        show=True,
+        ax=None,
+        close=False,
+        file_name=None,
+        normalize_per_site=False,
+        derivative=False,
+    ):
         """
         uses Matplotlib to create an animation of the Molecule Numbers.
 
@@ -498,55 +520,54 @@ class ZacrosResults( scm.plams.Results ):
         try:
             import matplotlib.pyplot as plt
         except ImportError as e:
-            return # module doesn't exist, deal with it.
+            return  # module doesn't exist, deal with it.
 
-        if( ax is None ):
-            fig,ax = plt.subplots()
+        if ax is None:
+            fig, ax = plt.subplots()
 
         plt.rcParams["figure.autolayout"] = True
         provided_quantities = self.provided_quantities()
 
-        COLORS = ['r', 'g', 'b', 'm']
+        COLORS = ["r", "g", "b", "m"]
 
-        ax.set_xlabel('t (s)')
+        ax.set_xlabel("t (s)")
 
-        if( normalize_per_site ):
-            if( derivative ):
-                ax.set_ylabel('Derivative of the Molecule Numbers per Site')
+        if normalize_per_site:
+            if derivative:
+                ax.set_ylabel("Derivative of the Molecule Numbers per Site")
             else:
-                ax.set_ylabel('Molecule Numbers per Site')
+                ax.set_ylabel("Molecule Numbers per Site")
         else:
-            if( derivative ):
-                ax.set_ylabel('Derivative of the Molecule Numbers')
+            if derivative:
+                ax.set_ylabel("Derivative of the Molecule Numbers")
             else:
-                ax.set_ylabel('Molecule Numbers')
+                ax.set_ylabel("Molecule Numbers")
 
         x = provided_quantities["Time"]
-        for i,spn in enumerate(species_name):
-            if( normalize_per_site ):
-                y = numpy.array(provided_quantities[spn])/self.number_of_lattice_sites()
+        for i, spn in enumerate(species_name):
+            if normalize_per_site:
+                y = numpy.array(provided_quantities[spn]) / self.number_of_lattice_sites()
             else:
                 y = numpy.array(provided_quantities[spn])
 
-            if( derivative ):
+            if derivative:
                 y = numpy.gradient(y, x)
 
-            ax.step( x, y, where='post', color=COLORS[i], label=spn)
+            ax.step(x, y, where="post", color=COLORS[i], label=spn)
 
-        ax.legend(loc='best')
+        ax.legend(loc="best")
 
-        if( file_name is not None ):
-            plt.savefig( file_name )
+        if file_name is not None:
+            plt.savefig(file_name)
 
-        if( show ):
-            if( pause == -1 ):
+        if show:
+            if pause == -1:
                 plt.show()
             else:
-                plt.pause( pause )
+                plt.pause(pause)
 
-        if( close ):
+        if close:
             plt.close("all")
-
 
     def get_process_statistics(self):
         """
@@ -617,25 +638,25 @@ class ZacrosResults( scm.plams.Results ):
         prev_number_of_process_statistics = 0
         number_of_process_statistics = self.number_of_process_statistics()
 
-        if( self.job.restart is None ):
-            lines = self.grep_file(self._filenames['procstat'], pattern='Overall')
-            elementary_steps_names = lines[0][ lines[0].find('Overall')+len("Overall"): ].split()
+        if self.job.restart is None:
+            lines = self.grep_file(self._filenames["procstat"], pattern="Overall")
+            elementary_steps_names = lines[0][lines[0].find("Overall") + len("Overall") :].split()
         else:
             prev_number_of_process_statistics = self.job.restart.results.number_of_process_statistics()
             elementary_steps_names = self.job.restart.results.elementary_steps_names()
             output = self.job.restart.results.get_process_statistics()
 
-        all_lines = self.grep_file(self._filenames['procstat'], pattern='configuration', options="-A2")
+        all_lines = self.grep_file(self._filenames["procstat"], pattern="configuration", options="-A2")
         all_lines = [line for line in all_lines if line != "--"]
-        for nconf in range(number_of_process_statistics-prev_number_of_process_statistics):
-            lines = all_lines[nconf*3:(nconf+1)*3]
+        for nconf in range(number_of_process_statistics - prev_number_of_process_statistics):
+            lines = all_lines[nconf * 3 : (nconf + 1) * 3]
 
             procstat_state = {}
             pos = 0
-            for nline,line in enumerate(lines):
+            for nline, line in enumerate(lines):
                 tokens = line.split()
 
-                if( nline==0 ):
+                if nline == 0:
                     assert tokens[0] == "configuration"
 
                     configuration_number = int(tokens[1])
@@ -646,25 +667,25 @@ class ZacrosResults( scm.plams.Results ):
                     procstat_state["total_number_of_events"] = total_number_of_events
                     procstat_state["time"] = time
 
-                elif( nline==1 ):
-                    assert len(tokens)-1 == len(elementary_steps_names)
+                elif nline == 1:
+                    assert len(tokens) - 1 == len(elementary_steps_names)
 
                     average_waiting_time = {}
-                    for i,k in enumerate(elementary_steps_names):
-                        average_waiting_time[k] = float(tokens[i+1])
+                    for i, k in enumerate(elementary_steps_names):
+                        average_waiting_time[k] = float(tokens[i + 1])
 
                     procstat_state["average_waiting_time"] = average_waiting_time
 
-                elif( nline==2 ):
-                    assert len(tokens)-1 == len(elementary_steps_names)
+                elif nline == 2:
+                    assert len(tokens) - 1 == len(elementary_steps_names)
 
                     number_of_events = {}
                     occurence_frequency = {}
-                    for i,k in enumerate(elementary_steps_names):
-                        number_of_events[k] = int(tokens[i+1])
+                    for i, k in enumerate(elementary_steps_names):
+                        number_of_events[k] = int(tokens[i + 1])
 
-                        if( procstat_state["time"] > 0.0 ):
-                            occurence_frequency[k] = number_of_events[k]/procstat_state["time"]
+                        if procstat_state["time"] > 0.0:
+                            occurence_frequency[k] = number_of_events[k] / procstat_state["time"]
                         else:
                             occurence_frequency[k] = 0.0
 
@@ -672,94 +693,97 @@ class ZacrosResults( scm.plams.Results ):
                     procstat_state["occurence_frequency"] = occurence_frequency
 
                 else:
-                    raise Exception( "Error: Wrong format in file specnum_output.txt" )
+                    raise Exception("Error: Wrong format in file specnum_output.txt")
 
                 pos += 1
 
-            output.append( procstat_state )
-
+            output.append(procstat_state)
 
         return output
 
-
-    def __plot_process_statistics(self, data, key, log_scale=False, pause=-1, show=True, ax=None, close=False, xmax=None, file_name=None):
+    def __plot_process_statistics(
+        self, data, key, log_scale=False, pause=-1, show=True, ax=None, close=False, xmax=None, file_name=None
+    ):
         """
         Plots data as a histogram
         """
         try:
             import matplotlib.pyplot as plt
         except ImportError as e:
-            return # module doesn't exist, deal with it.
+            return  # module doesn't exist, deal with it.
 
-        if( ax is None ):
-            fig,ax = plt.subplots()
+        if ax is None:
+            fig, ax = plt.subplots()
 
         plt.rcParams["figure.autolayout"] = True
 
         provided_quantities = self.provided_quantities()
 
-        ax.set_title(r't $\in$ [0.0,{:.3g}] s'.format(data["time"]))
+        ax.set_title(r"t $\in$ [0.0,{:.3g}] s".format(data["time"]))
         ax.set_xlabel(key)
 
         keys = list(data[key].keys())
         idkeys_sorted = sorted(enumerate(keys), key=lambda x: x[1])
 
-        keys = [ k for i,k in idkeys_sorted ]
-        data_sorted = [ list(data[key].values())[i] for i,k in idkeys_sorted ]
+        keys = [k for i, k in idkeys_sorted]
+        data_sorted = [list(data[key].values())[i] for i, k in idkeys_sorted]
 
-        y_pos = len(keys)*[None]
+        y_pos = len(keys) * [None]
         j = 0
         for i in range(len(keys)):
-            if( i==0 ):
+            if i == 0:
                 y_pos[i] = j
             else:
-                if( keys[i].replace('_fwd','').replace('_rev','') != keys[i-1].replace('_fwd','').replace('_rev','') ):
+                if keys[i].replace("_fwd", "").replace("_rev", "") != keys[i - 1].replace("_fwd", "").replace(
+                    "_rev", ""
+                ):
                     j += 1
 
                 y_pos[i] = j
 
-        COLORS = ['r', 'b', 'g', 'm']
-        color = len(y_pos)*[COLORS[0]]
+        COLORS = ["r", "b", "g", "m"]
+        color = len(y_pos) * [COLORS[0]]
 
         j = 0
-        for i in range(1,len(y_pos)):
-            if( y_pos[i] == y_pos[i-1] ):
+        for i in range(1, len(y_pos)):
+            if y_pos[i] == y_pos[i - 1]:
                 y_pos[i] += 0.15
-                y_pos[i-1] -= 0.15
+                y_pos[i - 1] -= 0.15
                 color[i] = COLORS[j]
-                color[i-1] = COLORS[j+1]
+                color[i - 1] = COLORS[j + 1]
 
-        ax.barh(y_pos, data_sorted, align='center', height=0.25, color=color)
+        ax.barh(y_pos, data_sorted, align="center", height=0.25, color=color)
 
         maxval = max(data_sorted)
-        if( xmax is not None ):
+        if xmax is not None:
             maxval = xmax
 
-        if( log_scale ):
-            ax.set_xlim((1e0,1.2*maxval))
+        if log_scale:
+            ax.set_xlim((1e0, 1.2 * maxval))
             plt.xscale("log")
         else:
-            ax.set_xlim((0,1.05*maxval))
+            ax.set_xlim((0, 1.05 * maxval))
 
         ax.invert_yaxis()  # labels read top-to-bottom
         ax.set_yticks(y_pos)
         ax.set_yticklabels(keys)
         plt.tight_layout()
 
-        if( file_name is not None ):
-            plt.savefig( file_name )
+        if file_name is not None:
+            plt.savefig(file_name)
 
-        if( show ):
-            if( pause == -1 ):
+        if show:
+            if pause == -1:
                 plt.show()
             else:
-                plt.pause( pause )
+                plt.pause(pause)
 
-        if( close ):
+        if close:
             plt.close("all")
 
-
-    def plot_process_statistics(self, data, key, log_scale=False, pause=-1, show=True, ax=None, close=False, file_name=None):
+    def plot_process_statistics(
+        self, data, key, log_scale=False, pause=-1, show=True, ax=None, close=False, file_name=None
+    ):
         """
         Uses Matplotlib to create an animation of the process statistics.
 
@@ -772,44 +796,53 @@ class ZacrosResults( scm.plams.Results ):
         *   ``close`` -- Closes the figure window after pause time.
         *   ``file_name`` -- Saves the figures to the file ``file_name-<id>`` (the corresponding id on the list replaces the ``<id>``). The format is inferred from the extension, and by default, ``.png`` is used.
         """
-        if( type(data) == dict ):
-            self.__plot_process_statistics( data, key, log_scale=log_scale, pause=pause, show=show,
-                                            close=close, file_name=file_name )
-        if( type(data) == list ):
+        if type(data) == dict:
+            self.__plot_process_statistics(
+                data, key, log_scale=log_scale, pause=pause, show=show, close=close, file_name=file_name
+            )
+        if type(data) == list:
             try:
                 import matplotlib.pyplot as plt
             except ImportError as e:
-                return # module doesn't exist, deal with it.
+                return  # module doesn't exist, deal with it.
 
-            if( ax is None ):
-                fig,ax = plt.subplots()
+            if ax is None:
+                fig, ax = plt.subplots()
 
             maxval = -1e8
             for idata in data:
-                if( max(idata[key].values()) > maxval ):
+                if max(idata[key].values()) > maxval:
                     maxval = max(idata[key].values())
 
-            for i,idata in enumerate(data):
+            for i, idata in enumerate(data):
                 ifile_name = None
-                if( file_name is not None ):
-                    prefix,ext = os.path.splitext(file_name)
-                    ifile_name = prefix+"-"+"%05d"%i+ext
+                if file_name is not None:
+                    prefix, ext = os.path.splitext(file_name)
+                    ifile_name = prefix + "-" + "%05d" % i + ext
 
                 ax.cla()
-                self.__plot_process_statistics( idata, key, log_scale=log_scale, pause=0.5, show=show, ax=ax,
-                                                close=False, xmax=maxval, file_name=ifile_name )
+                self.__plot_process_statistics(
+                    idata,
+                    key,
+                    log_scale=log_scale,
+                    pause=0.5,
+                    show=show,
+                    ax=ax,
+                    close=False,
+                    xmax=maxval,
+                    file_name=ifile_name,
+                )
 
-            if( show ):
-                if( pause == -1 ):
+            if show:
+                if pause == -1:
                     plt.show()
                 else:
-                    plt.pause( pause )
+                    plt.pause(pause)
 
-            if( close ):
+            if close:
                 plt.close("all")
 
-
-    #---------------------------------------------------------------------
+    # ---------------------------------------------------------------------
     # Function to compute the rate of production using the
     # Batch-Means-Stopping method.
     # Original author: Mauro Bracconi (mauro.bracconi@polimi.it)
@@ -819,43 +852,44 @@ class ZacrosResults( scm.plams.Results ):
     #   reaction networks
     #   J.Chem. Phys. 144, 074104 (2016)
     #   https://doi.org/10.1063/1.4942008
-    #---------------------------------------------------------------------
+    # ---------------------------------------------------------------------
     @staticmethod
-    def __compute_rate( t_vect, spec, n_sites, n_batch=20, confidence=0.99, ignore_nbatch=1 ):
+    def __compute_rate(t_vect, spec, n_sites, n_batch=20, confidence=0.99, ignore_nbatch=1):
 
         # Batch means stopping implementation
         t_vect = numpy.array(t_vect)
-        prod_mol = numpy.array(spec)/n_sites
+        prod_mol = numpy.array(spec) / n_sites
 
         # Define batch length
-        lt = int(len(t_vect)/n_batch)
+        lt = int(len(t_vect) / n_batch)
 
         # Compute TOF in each batch
         ratet = numpy.empty(n_batch)
         for i in range(n_batch):
-            if ( i != n_batch-1 ) :
-                ratet[i] = numpy.polyfit(t_vect[lt*i:lt*(i+1)],prod_mol[lt*i:lt*(i+1)],1)[0]
+            if i != n_batch - 1:
+                ratet[i] = numpy.polyfit(t_vect[lt * i : lt * (i + 1)], prod_mol[lt * i : lt * (i + 1)], 1)[0]
             else:
-                ratet[i] = numpy.polyfit(t_vect[lt*i:-1],prod_mol[lt*i:-1],1)[0]
+                ratet[i] = numpy.polyfit(t_vect[lt * i : -1], prod_mol[lt * i : -1], 1)[0]
 
         # Exclude first ``ignore_nbatch`` elements
         rate = ratet[ignore_nbatch:]
 
         # Compute average and CI
         rate_av, se = numpy.mean(rate), scipy.stats.sem(rate)
-        rate_CI = se * scipy.stats.t._ppf( (1.0+confidence)/2.0, len(rate) - 1.0 )
-        ratio = numpy.abs(rate_CI)/(numpy.abs(rate_av)+1e-8)
+        rate_CI = se * scipy.stats.t._ppf((1.0 + confidence) / 2.0, len(rate) - 1.0)
+        ratio = numpy.abs(rate_CI) / (numpy.abs(rate_av) + 1e-8)
 
-        if ratio<1.0-confidence:
-            return ( rate_av,rate_CI,ratio, True )
+        if ratio < 1.0 - confidence:
+            return (rate_av, rate_CI, ratio, True)
         else:
-            if abs(rate_av) < 1.0/n_sites:
-                return ( rate[-1],rate_CI,0.0, True )
+            if abs(rate_av) < 1.0 / n_sites:
+                return (rate[-1], rate_CI, 0.0, True)
             else:
-                return ( rate_av,rate_CI,ratio, False )
+                return (rate_av, rate_CI, ratio, False)
 
-
-    def turnover_frequency(self, nbatch=20, confidence=0.99, ignore_nbatch=1, species_name=None, provided_quantities=None):
+    def turnover_frequency(
+        self, nbatch=20, confidence=0.99, ignore_nbatch=1, species_name=None, provided_quantities=None
+    ):
         """
         Returns the TOF (mol/sec/site) calculated by the batch-means stopping method. See Hashemi et al., J.Chem. Phys. 144, 074104 (2016)
 
@@ -903,26 +937,31 @@ class ZacrosResults( scm.plams.Results ):
             converged[sn] = True
 
             if sum(numpy.abs(lprovided_quantities[sn])) > 0:
-                aver,ci,ratio,conv = ZacrosResults.__compute_rate( lprovided_quantities["Time"], lprovided_quantities[sn],
-                                                                    self.number_of_lattice_sites(), nbatch, confidence, ignore_nbatch )
+                aver, ci, ratio, conv = ZacrosResults.__compute_rate(
+                    lprovided_quantities["Time"],
+                    lprovided_quantities[sn],
+                    self.number_of_lattice_sites(),
+                    nbatch,
+                    confidence,
+                    ignore_nbatch,
+                )
                 values[sn] = aver
                 errors[sn] = ci
                 ratios[sn] = ratio
                 converged[sn] = conv
 
         if species_name is None:
-            return values,errors,ratios,converged
+            return values, errors, ratios, converged
         else:
-            return values[species_name],errors[species_name],ratios[species_name],converged[species_name]
-
+            return values[species_name], errors[species_name], ratios[species_name], converged[species_name]
 
     @staticmethod
-    def _average_provided_quantities( provided_quantities_list, key_column_name, columns_name=None ):
+    def _average_provided_quantities(provided_quantities_list, key_column_name, columns_name=None):
 
         if len(provided_quantities_list) == 0:
-            msg  = "### ERROR ### ZacrosResults._average_provided_quantities\n"
+            msg = "### ERROR ### ZacrosResults._average_provided_quantities\n"
             msg += ">> provided_quantities_list parameter should eb a list with at least one item\n"
-            raise Exception( msg )
+            raise Exception(msg)
 
         nexp = len(provided_quantities_list)
         npoints = len(provided_quantities_list[0][key_column_name])
@@ -932,21 +971,26 @@ class ZacrosResults( scm.plams.Results ):
 
         average = {}
 
-        average[key_column_name] = npoints*[0.0]
+        average[key_column_name] = npoints * [0.0]
         for name in columns_name:
-            average[name] = npoints*[0.0]
+            average[name] = npoints * [0.0]
 
         for i in range(npoints):
             average[key_column_name][i] = provided_quantities_list[0][key_column_name][i]
 
             for k in range(nexp):
-                if k>0 and provided_quantities_list[k][key_column_name][i] != provided_quantities_list[0][key_column_name][i]:
-                    msg  = "### ERROR ### ZacrosResults._average_provided_quantities\n"
+                if (
+                    k > 0
+                    and provided_quantities_list[k][key_column_name][i]
+                    != provided_quantities_list[0][key_column_name][i]
+                ):
+                    msg = "### ERROR ### ZacrosResults._average_provided_quantities\n"
                     msg += ">> Reference column has different values for each item\n"
-                    raise Exception( msg )
+                    raise Exception(msg)
 
             for name in columns_name:
-                if name == key_column_name: continue
+                if name == key_column_name:
+                    continue
 
                 eff_nexp = 0
                 for k in range(nexp):
@@ -962,4 +1006,3 @@ class ZacrosResults( scm.plams.Results ):
                 average[name][i] /= float(eff_nexp)
 
         return average
-

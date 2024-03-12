@@ -1,7 +1,8 @@
 from .Species import *
 from .SpeciesList import SpeciesList
 
-__all__ = ['Cluster']
+__all__ = ["Cluster"]
+
 
 class Cluster:
     """
@@ -16,41 +17,38 @@ class Cluster:
     *   ``label`` -- If None, a unique label is generated based on its composition.
     """
 
-    def __init__(self, species,
-                 site_types = None,
-                 entity_number = None,
-                 neighboring = None,
-                 multiplicity = 1,
-                 energy = 0.000,
-                 label = None):
+    def __init__(
+        self, species, site_types=None, entity_number=None, neighboring=None, multiplicity=1, energy=0.000, label=None
+    ):
         """
         Creates a new Cluster object
         """
         self.species = species  # e.g. [ Species("H*",1), Species("H*",1) ]
-        self.sites = len([ sp for sp in species if sp == Species.UNSPECIFIED or sp.is_adsorbed() ])
+        self.sites = len([sp for sp in species if sp == Species.UNSPECIFIED or sp.is_adsorbed()])
 
-        if( site_types is not None ):
-            if( not ( all([ type(st)==int for st in site_types ]) or all([ type(st)==str for st in site_types ]) ) ):
-                msg  = "\n### ERROR ### ElementaryReaction.__init__.\n"
+        if site_types is not None:
+            if not (all([type(st) == int for st in site_types]) or all([type(st) == str for st in site_types])):
+                msg = "\n### ERROR ### ElementaryReaction.__init__.\n"
                 msg += "              Inconsistent type for site_types. It should be a list of int or str\n"
                 raise NameError(msg)
 
-            self.site_types = site_types              # e.g. [ "f", "f" ], [ 0, 0 ]
+            self.site_types = site_types  # e.g. [ "f", "f" ], [ 0, 0 ]
         else:
-            self.site_types = self.sites*[ 0 ]
+            self.site_types = self.sites * [0]
 
-        self.neighboring = neighboring                # e.g. [ (0,1) ]
-        self.multiplicity = multiplicity              # e.g. 2
-        self.energy = energy                          # Units eV
+        self.neighboring = neighboring  # e.g. [ (0,1) ]
+        self.multiplicity = multiplicity  # e.g. 2
+        self.energy = energy  # Units eV
 
         self.entity_number = entity_number
-        if( entity_number is None ): self.entity_number = SpeciesList.default_entity_numbers( self.sites, self.species )
+        if entity_number is None:
+            self.entity_number = SpeciesList.default_entity_numbers(self.sites, self.species)
 
-        #TODO Make a way to check denticity consistency
-        #if( sum([s.denticity for s in self.species]) != self.sites ):
-            #msg  = "\n### ERROR ### Cluster.__init__.\n"
-            #msg += "Inconsistent dimensions for species or site_types\n"
-            #raise NameError(msg)
+        # TODO Make a way to check denticity consistency
+        # if( sum([s.denticity for s in self.species]) != self.sites ):
+        # msg  = "\n### ERROR ### Cluster.__init__.\n"
+        # msg += "Inconsistent dimensions for species or site_types\n"
+        # raise NameError(msg)
 
         self.__userLabel = label
         self.__label = None
@@ -60,17 +58,16 @@ class Cluster:
         self.__composition = {}
 
         for item in species:
-            if( item != Species.UNSPECIFIED ):
+            if item != Species.UNSPECIFIED:
                 self.__mass += item.mass()
             else:
                 continue
 
-            for symbol,n in item.composition().items():
-                if( not symbol in self.__composition ):
+            for symbol, n in item.composition().items():
+                if not symbol in self.__composition:
                     self.__composition[symbol] = n
                 else:
                     self.__composition[symbol] += n
-
 
     def __len__(self):
         """
@@ -78,25 +75,22 @@ class Cluster:
         """
         return len(self.species)
 
-
     def __eq__(self, other):
         """
         Returns True if both objects have the same label. Otherwise returns False
 
         *   ``other`` --
         """
-        if( self.__label == other.__label ):
+        if self.__label == other.__label:
             return True
         else:
             return False
-
 
     def __hash__(self):
         """
         Returns a hash based on the label
         """
         return hash(self.__label)
-
 
     def __updateLabel(self):
         """
@@ -108,17 +102,17 @@ class Cluster:
 
         self.__label = ""
         for i in range(len(self.species)):
-            if( self.species[i] != Species.UNSPECIFIED ):
+            if self.species[i] != Species.UNSPECIFIED:
                 self.__label += self.species[i].symbol
             else:
                 self.__label += "&"
 
-            if( len(self.entity_number)>1 ):
-                self.__label += str(self.entity_number[i]+1)
+            if len(self.entity_number) > 1:
+                self.__label += str(self.entity_number[i] + 1)
             self.__label += str(self.site_types[i])
 
         if self.neighboring is not None:
-            if(len(self.neighboring) > 0):
+            if len(self.neighboring) > 0:
                 self.__label += ":"
 
         # For neighboring nodes are sorted
@@ -127,74 +121,79 @@ class Cluster:
                 lNeighboring = list(self.neighboring[i])
                 lNeighboring.sort()
                 self.__label += str(tuple(lNeighboring)).replace(" ", "")
-                if( i != len(self.neighboring)-1):
+                if i != len(self.neighboring) - 1:
                     self.__label += ","
-
 
     def label(self):
         """
         Returns the label of the cluster
         """
-        if( self.__label is None ):
+        if self.__label is None:
             self.__updateLabel()
 
         return self.__label
-
 
     def __str__(self):
         """
         Translates the object to a string
         """
-        output  = "cluster " + self.__label +"\n"
+        output = "cluster " + self.__label + "\n"
 
-        if( self.sites != 0 ):
-            output += "  sites " + str(self.sites)+"\n"
+        if self.sites != 0:
+            output += "  sites " + str(self.sites) + "\n"
 
             if self.neighboring is not None and len(self.neighboring) > 0:
                 output += "  neighboring "
                 for i in range(len(self.neighboring)):
-                    output += str(self.neighboring[i][0]+1)+"-"+str(self.neighboring[i][1]+1)
-                    if( i != len(self.neighboring)-1 ):
+                    output += str(self.neighboring[i][0] + 1) + "-" + str(self.neighboring[i][1] + 1)
+                    if i != len(self.neighboring) - 1:
                         output += " "
                 output += "\n"
 
             site_identate = {}
-            output += "  lattice_state"+"\n"
+            output += "  lattice_state" + "\n"
             for i in range(self.sites):
-                if( self.entity_number[i] not in site_identate ):
-                    site_identate[ self.entity_number[i] ] = 0
+                if self.entity_number[i] not in site_identate:
+                    site_identate[self.entity_number[i]] = 0
                 else:
-                    site_identate[ self.entity_number[i] ] = site_identate[ self.entity_number[i] ] + 1
+                    site_identate[self.entity_number[i]] = site_identate[self.entity_number[i]] + 1
 
-                if( self.species[i] != Species.UNSPECIFIED ):
-                    if( site_identate[ self.entity_number[i] ] >= self.species[i].denticity ):
-                        msg  = "\n### ERROR ### Cluster.__str__.\n"
-                        msg += "Inconsistent of denticity value for "+self.species[i].symbol+"\n"
+                if self.species[i] != Species.UNSPECIFIED:
+                    if site_identate[self.entity_number[i]] >= self.species[i].denticity:
+                        msg = "\n### ERROR ### Cluster.__str__.\n"
+                        msg += "Inconsistent of denticity value for " + self.species[i].symbol + "\n"
                         raise NameError(msg)
 
-                    output += "    "+str(self.entity_number[i]+1)+" "+self.species[i].symbol+" "+str(site_identate[self.entity_number[i]]+1)+"\n"
+                    output += (
+                        "    "
+                        + str(self.entity_number[i] + 1)
+                        + " "
+                        + self.species[i].symbol
+                        + " "
+                        + str(site_identate[self.entity_number[i]] + 1)
+                        + "\n"
+                    )
                 else:
                     output += "    & & &\n"
 
             output += "  site_types "
             for i in range(len(self.site_types)):
 
-                if( type(self.site_types[i]) == int ):
-                    output += str(self.site_types[i]+1)
-                elif( type(self.site_types[i]) == str ):
+                if type(self.site_types[i]) == int:
+                    output += str(self.site_types[i] + 1)
+                elif type(self.site_types[i]) == str:
                     output += self.site_types[i]
 
-                if( i != len(self.site_types)-1 ):
+                if i != len(self.site_types) - 1:
                     output += " "
             output += "\n"
 
-            output += "  graph_multiplicity "+str(self.multiplicity)+"\n"
+            output += "  graph_multiplicity " + str(self.multiplicity) + "\n"
 
-        output += "  cluster_eng "+("%12.5e"%self.energy)+"\n"
+        output += "  cluster_eng " + ("%12.5e" % self.energy) + "\n"
         output += "end_cluster"
 
         return output
-
 
     def composition(self):
         """
@@ -202,39 +201,35 @@ class Cluster:
         """
         return self.__composition
 
-
     def mass(self):
         """
         Returns the mass of the cluster in Da
         """
         return self.__mass
 
-
     def gas_species(self):
         """Returns the gas species."""
         species = []
 
         for sp in self.species:
-            if( sp != Species.UNSPECIFIED and sp.kind == Species.GAS ):
-                species.append( sp )
+            if sp != Species.UNSPECIFIED and sp.kind == Species.GAS:
+                species.append(sp)
 
-        species = SpeciesList( species )
+        species = SpeciesList(species)
         species.remove_duplicates()
         return species
-
 
     def surface_species(self):
         """Returns the surface species."""
         species = []
 
         for sp in self.species:
-            if( sp != Species.UNSPECIFIED and sp.kind == Species.SURFACE ):
-                species.append( sp )
+            if sp != Species.UNSPECIFIED and sp.kind == Species.SURFACE:
+                species.append(sp)
 
-        species = SpeciesList( species )
+        species = SpeciesList(species)
         species.remove_duplicates()
         return species
-
 
     def site_types_set(self):
         """
@@ -242,19 +237,18 @@ class Cluster:
         """
         return set(self.site_types)
 
-
-    def replace_site_types( self, site_types_old, site_types_new ):
+    def replace_site_types(self, site_types_old, site_types_new):
         """
         Replaces the site types names
 
         *   ``site_types_old`` -- List of strings containing the old site_types to be replaced
         *   ``site_types_new`` -- List of strings containing the new site_types which would replace old site_types_old.
         """
-        assert( len(site_types_old) == len(site_types_new) )
+        assert len(site_types_old) == len(site_types_new)
 
         for i in range(len(site_types_old)):
             for j in range(len(self.site_types)):
-                if( self.site_types[j] == site_types_old[i] ):
+                if self.site_types[j] == site_types_old[i]:
                     self.site_types[j] = site_types_new[i]
 
         self.__updateLabel()

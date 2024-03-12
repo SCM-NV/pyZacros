@@ -12,10 +12,10 @@ from .ZacrosJob import *
 from .ZacrosSteadyStateJob import *
 from .ParametersBase import *
 
-__all__ = ['ZacrosParametersScanJob', 'ZacrosParametersScanResults']
+__all__ = ["ZacrosParametersScanJob", "ZacrosParametersScanResults"]
 
 
-class ZacrosParametersScanResults( scm.plams.Results ):
+class ZacrosParametersScanResults(scm.plams.Results):
     """
     A Class for handling ZacrosParametersScanJob Results.
     """
@@ -34,7 +34,6 @@ class ZacrosParametersScanResults( scm.plams.Results ):
         """
         return self.job._indices
 
-
     def children_results(self, child_id=None):
         """
         Returns the children results in a dictionary form.
@@ -50,13 +49,12 @@ class ZacrosParametersScanResults( scm.plams.Results ):
         if child_id is None:
             output = {}
 
-            for pos,idx in enumerate(self.job._indices):
+            for pos, idx in enumerate(self.job._indices):
                 output[idx] = self.job.children[idx].results
 
             return output
         else:
             return self.job.children[child_id].results
-
 
     def turnover_frequency(self, nbatch=20, confidence=0.99, ignore_nbatch=1, update=None):
         """
@@ -84,29 +82,34 @@ class ZacrosParametersScanResults( scm.plams.Results ):
         else:
             output = []
 
-        for pos,idx in enumerate(self.job._indices):
+        for pos, idx in enumerate(self.job._indices):
             params = self.job._parameters_values[idx]
 
-            if pos==0 and isinstance(self.job.children[idx],ZacrosSteadyStateJob):
+            if pos == 0 and isinstance(self.job.children[idx], ZacrosSteadyStateJob):
                 nbatch = self.job.children[idx].nbatch
                 confidence = self.job.children[idx].confidence
                 ignore_nbatch = self.job.children[idx].ignore_nbatch
 
-            TOFs,errors,ratio,converged = self.job.children[idx].results.turnover_frequency( nbatch=nbatch,
-                                                                                             confidence=confidence,
-                                                                                             ignore_nbatch=ignore_nbatch )
+            TOFs, errors, ratio, converged = self.job.children[idx].results.turnover_frequency(
+                nbatch=nbatch, confidence=confidence, ignore_nbatch=ignore_nbatch
+            )
 
             if update:
-                output[pos]['turnover_frequency'] = TOFs
-                output[pos]['turnover_frequency_error'] = errors
-                output[pos]['turnover_frequency_ratio'] = ratio
-                output[pos]['turnover_frequency_converged'] = converged
+                output[pos]["turnover_frequency"] = TOFs
+                output[pos]["turnover_frequency_error"] = errors
+                output[pos]["turnover_frequency_ratio"] = ratio
+                output[pos]["turnover_frequency_converged"] = converged
             else:
-                output.append( {**params, 'turnover_frequency':TOFs, 'turnover_frequency_error':errors,
-                                    'turnover_frequency_converged':converged} )
+                output.append(
+                    {
+                        **params,
+                        "turnover_frequency": TOFs,
+                        "turnover_frequency_error": errors,
+                        "turnover_frequency_converged": converged,
+                    }
+                )
 
         return output
-
 
     def average_coverage(self, last=5, update=None):
         """
@@ -127,19 +130,19 @@ class ZacrosParametersScanResults( scm.plams.Results ):
         else:
             output = []
 
-        for pos,idx in enumerate(self.job._indices):
+        for pos, idx in enumerate(self.job._indices):
             params = self.job._parameters_values[idx]
-            acf = self.job.children[idx].results.average_coverage( last=last )
+            acf = self.job.children[idx].results.average_coverage(last=last)
 
             if update:
-                output[pos]['average_coverage'] = acf
+                output[pos]["average_coverage"] = acf
             else:
-                output.append( {**params, 'average_coverage':acf} )
+                output.append({**params, "average_coverage": acf})
 
         return output
 
 
-class ZacrosParametersScanJob( scm.plams.MultiJob ):
+class ZacrosParametersScanJob(scm.plams.MultiJob):
     """
     Creates a new ZacrosParametersScanJob object. This class is a job that is a container for other jobs, called children jobs and
     it is an extension of the `PLAMS.MultiJob <../../plams/components/jobs.html#multijobs>`_. Children are copies of a reference
@@ -155,6 +158,7 @@ class ZacrosParametersScanJob( scm.plams.MultiJob ):
         """
         Creates a new Parameter object specifically tailored for ZacrosParametersScanJob
         """
+
         def __init__(self, name_in_settings, kind, values):
             super().__init__(self, name_in_settings, kind, values)
 
@@ -162,12 +166,11 @@ class ZacrosParametersScanJob( scm.plams.MultiJob ):
         """
         Creates a new Parameters object specifically tailored for ZacrosParametersScanJob
         """
+
         def __init__(self, *args, **kwargs):
             super().__init__(self, *args, **kwargs)
 
-
     _result_type = ZacrosParametersScanResults
-
 
     def __init__(self, reference, parameters=None, **kwargs):
         scm.plams.MultiJob.__init__(self, children=OrderedDict(), **kwargs)
@@ -175,41 +178,53 @@ class ZacrosParametersScanJob( scm.plams.MultiJob ):
         self._indices = None
         self._parameters_values = None
 
-        if isinstance(reference,ZacrosJob):
-            self._indices,self._parameters_values,settings_list = parameters._generator( reference.settings, parameters )
-        elif isinstance(reference,ZacrosSteadyStateJob):
-            self._indices,self._parameters_values,settings_list = parameters._generator( reference._reference.settings, parameters )
+        if isinstance(reference, ZacrosJob):
+            self._indices, self._parameters_values, settings_list = parameters._generator(
+                reference.settings, parameters
+            )
+        elif isinstance(reference, ZacrosSteadyStateJob):
+            self._indices, self._parameters_values, settings_list = parameters._generator(
+                reference._reference.settings, parameters
+            )
         else:
-            msg  = "\n### ERROR ### ZacrosParametersScanJob.__init__.\n"
+            msg = "\n### ERROR ### ZacrosParametersScanJob.__init__.\n"
             msg += "              Parameter 'reference' should be a ZacrosJob or ZacrosSteadyStateJob object.\n"
             raise Exception(msg)
 
-        for i,(idx,settings_idx) in enumerate(settings_list.items()):
+        for i, (idx, settings_idx) in enumerate(settings_list.items()):
 
-            new_name = "ps_cond"+"%03d"%i
+            new_name = "ps_cond" + "%03d" % i
 
-            if isinstance(reference,ZacrosJob):
+            if isinstance(reference, ZacrosJob):
 
-                job = ZacrosJob( settings=settings_idx, lattice=reference.lattice, mechanism=reference.mechanism, \
-                                cluster_expansion=reference.cluster_expansion, initial_state=reference.initial_state, \
-                                restart=reference.restart, name=new_name )
+                job = ZacrosJob(
+                    settings=settings_idx,
+                    lattice=reference.lattice,
+                    mechanism=reference.mechanism,
+                    cluster_expansion=reference.cluster_expansion,
+                    initial_state=reference.initial_state,
+                    restart=reference.restart,
+                    name=new_name,
+                )
 
-            elif isinstance(reference,ZacrosSteadyStateJob):
+            elif isinstance(reference, ZacrosSteadyStateJob):
 
                 new_reference = copy.copy(reference._reference)
                 new_reference.settings = settings_idx
-                job = ZacrosSteadyStateJob( settings=reference.settings, reference=new_reference,
-                                            parameters=reference._parameters, name=new_name )
+                job = ZacrosSteadyStateJob(
+                    settings=reference.settings,
+                    reference=new_reference,
+                    parameters=reference._parameters,
+                    name=new_name,
+                )
 
-            self.children[ idx ] = job
-
+            self.children[idx] = job
 
     def check(self):
         return all([job.ok() for job in self.children.values()])
 
-
     @staticmethod
-    def zipGenerator( reference_settings, parameters ):
+    def zipGenerator(reference_settings, parameters):
         """
         This function combines the values of the parameters one-to-one following the order as they were defined
 
@@ -235,11 +250,10 @@ class ZacrosParametersScanJob( scm.plams.MultiJob ):
             2: {'x_CO': 0.5, 'x_O2': 0.5}
             3: {'x_CO': 0.75, 'x_O2': 0.25}
         """
-        return ZacrosParametersScanJob.Parameters.zipGenerator( reference_settings, parameters )
-
+        return ZacrosParametersScanJob.Parameters.zipGenerator(reference_settings, parameters)
 
     @staticmethod
-    def meshgridGenerator( reference_settings, parameters ):
+    def meshgridGenerator(reference_settings, parameters):
         """
         This function combines the values of the parameters creating an `n-`dimensional rectangular grid,
         being `n` the number of parameters. Meshgrid generator is inspired by ``numpy.meshgrid`` function.
@@ -274,17 +288,17 @@ class ZacrosParametersScanJob( scm.plams.MultiJob ):
         """
 
         independent_params = []
-        for name,item in parameters.items():
+        for name, item in parameters.items():
             if item.kind == ZacrosParametersScanJob.Parameter.INDEPENDENT:
-                independent_params.append( item.values )
+                independent_params.append(item.values)
                 if len(item.values) == 0:
-                    msg  = "\n### ERROR ### ZacrosParametersScanJob.meshgridGenerator().\n"
+                    msg = "\n### ERROR ### ZacrosParametersScanJob.meshgridGenerator().\n"
                     msg += "              All parameter in 'generator_parameters' should be lists with at least one element.\n"
                     raise Exception(msg)
 
-        mesh = numpy.meshgrid( *independent_params, sparse=False )
+        mesh = numpy.meshgrid(*independent_params, sparse=False)
 
-        indices = [ tuple(idx) for idx in numpy.ndindex(mesh[0].shape) ]
+        indices = [tuple(idx) for idx in numpy.ndindex(mesh[0].shape)]
         parameters_values = {}
         settings_list = {}
 
@@ -292,19 +306,19 @@ class ZacrosParametersScanJob( scm.plams.MultiJob ):
             settings_idx = reference_settings.copy()
 
             params = {}
-            for i,(name,item) in enumerate(parameters.items()):
+            for i, (name, item) in enumerate(parameters.items()):
                 if item.kind == ZacrosParametersScanJob.Parameter.INDEPENDENT:
                     value = mesh[i][idx]
-                    eval('settings_idx'+item.name2setitem().replace('$var_value',str(value)))
+                    eval("settings_idx" + item.name2setitem().replace("$var_value", str(value)))
                     params[name] = value
 
-            for i,(name,item) in enumerate(parameters.items()):
+            for i, (name, item) in enumerate(parameters.items()):
                 if item.kind == ZacrosParametersScanJob.Parameter.DEPENDENT:
                     value = item.values(params)
-                    eval('settings_idx'+item.name2setitem().replace('$var_value',str(value)))
+                    eval("settings_idx" + item.name2setitem().replace("$var_value", str(value)))
                     params[name] = value
 
             parameters_values[idx] = params
             settings_list[idx] = settings_idx
 
-        return indices,parameters_values,settings_list
+        return indices, parameters_values, settings_list
