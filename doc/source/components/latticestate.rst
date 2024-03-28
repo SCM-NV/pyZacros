@@ -21,14 +21,14 @@ We are going to make the initial state as a randomly populated lattice by ``CO*`
 .. code-block:: python
   :linenos:
 
-   # LatticeState setup (initial state)
-   ist = pz.LatticeState(lat, surface_species=spl.surface_species())
-   ist.fill_sites_random(site_name='StTp1', species='CO*', coverage=0.1)
-   ist.fill_sites_random(site_name='StTp1', species='O*', coverage=0.1)
+  # LatticeState setup (initial state)
+  ist = pz.LatticeState(lat, surface_species=spl.surface_species())
+  ist.fill_sites_random(site_name='StTp1', species='CO*', coverage=0.1)
+  ist.fill_sites_random(site_name='StTp1', species='O*', coverage=0.1)
 
-   print(ist)
+  print(ist)
 
-   ist.plot()
+  ist.plot()
 
 Similarly to the other classes, the function ``print()`` (see line 6) allows taking a look at the Zacros code that
 will be internally generated, which for this example is the following:

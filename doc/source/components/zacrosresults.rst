@@ -10,17 +10,17 @@ For our example (see :ref:`use case system <use_case_model_zgb>`), the following
 .. code-block:: python
   :linenos:
 
-   results = job.run()
+  results = job.run()
 
-   if( job.ok() ):
-      provided_quantities = results.provided_quantities()
-      print("nCO2 =", provided_quantities['CO2'])
+  if( job.ok() ):
+     provided_quantities = results.provided_quantities()
+     print("nCO2 =", provided_quantities['CO2'])
 
-      results.plot_molecule_numbers( results.gas_species_names() )
-      results.plot_lattice_states( results.lattice_states() )
+     results.plot_molecule_numbers( results.gas_species_names() )
+     results.plot_lattice_states( results.lattice_states() )
 
-      pstat = results.get_process_statistics()
-      results.plot_process_statistics( pstat, key="number_of_events" )
+     pstat = results.get_process_statistics()
+     results.plot_process_statistics( pstat, key="number_of_events" )
 
 
 Here, the ``ZacrosResults`` object ``results`` is created by calling the method ``run()`` of the corresponding ``ZacrosJob`` job (line 1).

@@ -12,11 +12,11 @@ The ``ZacrosJob`` class constructor requires a Settings object, and the set of o
 .. code-block:: python
   :linenos:
 
-   job = pz.ZacrosJob( settings=sett, lattice=lat,
-                       mechanism=[CO_ads, O2_ads, CO_oxi],
-                       cluster_expansion=[CO_p, O_p] )
+  job = pz.ZacrosJob( settings=sett, lattice=lat,
+                      mechanism=[CO_ads, O2_ads, CO_oxi],
+                      cluster_expansion=[CO_p, O_p] )
 
-   print(job)
+  print(job)
 
 In the previous code, we used the function print() to see the content of the files that are going to be used with Zacros. This output information is separated into 4 sections, each corresponding to the zacros input files: ``simulation_input.dat``, ``lattice_input.dat``, ``energetics_input.dat``, and ``mechanism_input.dat``.
 
