@@ -1,0 +1,64 @@
+[project]
+name = "pyzacros"
+dynamic = ["version"]
+description = "Python Library for Automating Zacros Simulations"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "LGPLv3" }
+authors = [
+    { name = "Nestor F. Aguirre", email = "aguirre@scm.com" },
+    { name = "Pablo Lopez-Tarifa" },
+    { name = "Software for Chemistry & Materials", email = "info@scm.com" }
+]
+maintainers = [
+    { name = "Software for Chemistry & Materials", email = "info@scm.com" }
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Topic :: Scientific/Engineering :: Chemistry",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+keywords=["molecular modeling", "computational chemistry", "workflow", "python interface"]
+dependencies = [
+    "chemparse>=0.1.1",
+    "matplotlib>=3.5.1",
+    "networkx>=2.7.1",
+    "numpy>=1.21.2",
+    "scipy>=1.8.0",
+    "plams>=2025",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.4.0",
+    "coverage>=7.5.3",
+    "pytest-cov>=3"
+]
+
+doc = [
+    "sphinx>=6.2.1,<8.2",
+    "sphinx-rtd-theme>=3.0.1",
+    "sphinx_copybutton>=0.5.2",
+    "nbconvert>=6.4.5"
+]
+
+[project.urls]
+Homepage = "https://www.scm.com/doc/pyzacros/index.html"
+Documentation = "https://www.scm.com/doc/pyzacros/index.html"
+GitHub = "https://github.com/SCM-NV/pyZacros"
+
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = { "scm.pyzacros" = "." }
+
+[tool.setuptools.dynamic]
+version = {attr = "__version__.__version__"}

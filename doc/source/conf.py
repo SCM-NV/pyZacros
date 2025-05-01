@@ -24,9 +24,7 @@ project, htmlhelp_basename, latex_documents = set_project_specific_var("pyZacros
 
 # html_logo = '_static/pyZacros_logo_compact.svg'
 
-extensions += [
-    "sphinx.ext.autodoc",
-]
+extensions += ["sphinx.ext.autodoc", "sphinx_copybutton"]
 
 # Avoid duplicate names by prefixing the document's name.
 # autosectionlabel_prefix_document = True
