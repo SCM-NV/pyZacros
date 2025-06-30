@@ -40,12 +40,16 @@ def test_post_process(tmp_path, test_folder):
     # -----------------------
     load_precalculated = False
 
-    try:
-        results = job.run()
-    except pz.ZacrosExecutableNotFoundError:
-        print("Warning: The calculation FAILED because the zacros executable is not available!")
-        print("         For testing purposes, now we load precalculated results.")
-        load_precalculated = True
+    job.run()
+
+    if not job.ok():
+        error_msg = job.get_errormsg()
+        if "ZacrosExecutableNotFoundError" in error_msg:
+            print("Warning: The calculation FAILED because the zacros executable is not available!")
+            print("         For testing purposes, now we load precalculated results.")
+            load_precalculated = True
+        else:
+            raise scm.plams.JobError(f"Error: The Zacros calculation FAILED! Error was: {error_msg}")
 
     scm.plams.finish()
 

@@ -62,15 +62,15 @@ def test_ZacrosJob(test_folder, tmp_path):
         expectedOutput = inp.read()
     assert pz.utils.compare(output, expectedOutput, 1e-3)
 
-    try:
-        myJob.run()
+    myJob.run()
 
-        if not myJob.ok():
-            raise scm.plams.JobError("Error: The Zacros calculation FAILED!")
-
-    except pz.ZacrosExecutableNotFoundError:
-        print("Warning: The calculation FAILED because the zacros executable is not available!")
-        print("         For testing purposes, we just omit this step.")
+    if not myJob.ok():
+        error_msg = myJob.get_errormsg()
+        if "ZacrosExecutableNotFoundError" in error_msg:
+            print("Warning: The calculation FAILED because the zacros executable is not available!")
+            print("         For testing purposes, we just omit this step.")
+        else:
+            raise scm.plams.JobError(f"Error: The Zacros calculation FAILED! Error was: {error_msg}")
 
     myJob = pz.ZacrosJob.load_external(path=test_folder / "test_ZacrosJob.idata/default")
     print(myJob)

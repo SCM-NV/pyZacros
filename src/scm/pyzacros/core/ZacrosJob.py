@@ -1,8 +1,5 @@
 """Module containing the ZacrosJob class."""
 
-#### WAIT FOR NEXT FIX VERSION, THEN LOAD SHOULD WORK PROPERLY, REVERT CHANGES TO DATA FILES, THINK ABOUT HOW TO HANDLE EXCEPTION ####
-
-
 
 import os
 import stat
