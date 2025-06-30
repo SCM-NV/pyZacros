@@ -1,4 +1,4 @@
-import pytest
+import os
 
 import scm.plams
 
@@ -42,15 +42,16 @@ def test_ZacrosJob_restart(tmp_path):
         settings=sett, lattice=zgb.lattice, mechanism=zgb.mechanism, cluster_expansion=zgb.cluster_expansion
     )
 
-    job0.run()
-    if not job0.ok():
-        error_msg = job0.get_errormsg()
-        if "ZacrosExecutableNotFoundError" in error_msg:
-            print("Warning: The calculation FAILED because the zacros executable is not available!")
-            print("         So let's skip this test.")
-            pytest.skip()
-        else:
-            raise scm.plams.JobError(f"Error: The Zacros calculation FAILED! Error was: {error_msg}")
+    try:
+        job0.run()
+
+        if not job0.ok():
+            raise scm.plams.JobError("Error: The Zacros calculation FAILED!")
+
+    except pz.ZacrosExecutableNotFoundError:
+        print("Warning: The calculation FAILED because the zacros executable is not available!")
+        print("         So let's skip this test.")
+        return
 
     data = job0.results.provided_quantities()
     for time, nCO2 in zip(data["Time"], data["CO2"]):

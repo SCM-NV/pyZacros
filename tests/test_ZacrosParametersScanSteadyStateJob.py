@@ -25,52 +25,50 @@ def test_ZacrosParametersScanSteadyStateJob(test_folder, tmp_path):
     # scm.plams.config.job.runscript.nproc = 1
     # print('Running up to {} jobs in parallel simultaneously'.format(maxjobs))
 
-    dt = 1.0e-5
+    try:
+        dt = 1.0e-5
 
-    sett = pz.Settings()
-    sett.random_seed = 1609
-    sett.temperature = 500.0
-    sett.pressure = 1.000
-    sett.species_numbers = ("time", dt)
-    sett.max_time = 100 * dt
+        sett = pz.Settings()
+        sett.random_seed = 1609
+        sett.temperature = 500.0
+        sett.pressure = 1.000
+        sett.species_numbers = ("time", dt)
+        sett.max_time = 100 * dt
 
-    job = pz.ZacrosJob(
-        settings=sett, lattice=lh.lattice, mechanism=lh.mechanism, cluster_expansion=lh.cluster_expansion
-    )
+        job = pz.ZacrosJob(
+            settings=sett, lattice=lh.lattice, mechanism=lh.mechanism, cluster_expansion=lh.cluster_expansion
+        )
 
-    ss_sett = pz.Settings()
-    ss_sett.turnover_frequency.nbatch = 20
-    ss_sett.turnover_frequency.confidence = 0.96
-    ss_sett.turnover_frequency.nreplicas = 2
-    ss_sett.scaling.enabled = "T"
-    ss_sett.scaling.partial_equilibrium_index_threshold = 0.1
-    ss_sett.scaling.upper_bound = 10
-    ss_sett.scaling.max_time = 10 * dt
-    ss_sett.scaling.species_numbers = ("time", dt)
+        ss_sett = pz.Settings()
+        ss_sett.turnover_frequency.nbatch = 20
+        ss_sett.turnover_frequency.confidence = 0.96
+        ss_sett.turnover_frequency.nreplicas = 2
+        ss_sett.scaling.enabled = "T"
+        ss_sett.scaling.partial_equilibrium_index_threshold = 0.1
+        ss_sett.scaling.upper_bound = 10
+        ss_sett.scaling.max_time = 10 * dt
+        ss_sett.scaling.species_numbers = ("time", dt)
 
-    ss_parameters = pz.ZacrosSteadyStateJob.Parameters()
-    ss_parameters.add("max_time", "restart.max_time", 2 * sett.max_time * (numpy.arange(20) + 1) ** 2)
+        ss_parameters = pz.ZacrosSteadyStateJob.Parameters()
+        ss_parameters.add("max_time", "restart.max_time", 2 * sett.max_time * (numpy.arange(20) + 1) ** 2)
 
-    ss_job = pz.ZacrosSteadyStateJob(settings=ss_sett, reference=job, parameters=ss_parameters)
+        ss_job = pz.ZacrosSteadyStateJob(settings=ss_sett, reference=job, parameters=ss_parameters)
 
-    ps_parameters = pz.ZacrosParametersScanJob.Parameters()
-    ps_parameters.add("x_CO", "molar_fraction.CO", [0.40, 0.50])
-    ps_parameters.add("x_O2", "molar_fraction.O2", lambda params: 1.0 - params["x_CO"])
-    ps_parameters.set_generator(pz.ZacrosParametersScanJob.meshgridGenerator)
+        ps_parameters = pz.ZacrosParametersScanJob.Parameters()
+        ps_parameters.add("x_CO", "molar_fraction.CO", [0.40, 0.50])
+        ps_parameters.add("x_O2", "molar_fraction.O2", lambda params: 1.0 - params["x_CO"])
+        ps_parameters.set_generator(pz.ZacrosParametersScanJob.meshgridGenerator)
 
-    ps_job = pz.ZacrosParametersScanJob(reference=ss_job, parameters=ps_parameters)
+        ps_job = pz.ZacrosParametersScanJob(reference=ss_job, parameters=ps_parameters)
 
-    results = ps_job.run()
+        results = ps_job.run()
 
-    if not ps_job.ok():
-        error_msg = ps_job.get_errormsg()
-        if "ZacrosExecutableNotFoundError" in error_msg:
-            print("Warning: The calculation FAILED because the zacros executable is not available!")
-            print("         For testing purposes, now we load precalculated results.")
-            ps_job = scm.plams.load(test_folder / "test_ZacrosParametersScanSteadyStateJob.data/plamsjob/plamsjob.dill")
-            results = ps_job.results
-        else:
-            raise scm.plams.JobError(f"Error: The Zacros calculation FAILED! Error was: {error_msg}")
+    except pz.ZacrosExecutableNotFoundError:
+        print("Warning: The calculation FAILED because the zacros executable is not available!")
+        print("         For testing purposes, now we load precalculated results.")
+
+        ps_job = scm.plams.load(test_folder / "test_ZacrosParametersScanSteadyStateJob.data/plamsjob/plamsjob.dill")
+        results = ps_job.results
 
     output = ""
 

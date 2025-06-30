@@ -86,17 +86,18 @@ def test_ZacrosResults(test_folder, tmp_path):
     # -----------------------
     # Running the job
     # -----------------------
-    results = job.run()
+    try:
+        results = job.run()
 
-    if not job.ok():
-        error_msg = job.get_errormsg()
-        if "ZacrosExecutableNotFoundError" in error_msg:
-            print("Warning: The calculation FAILED because the zacros executable is not available!")
-            print("         For testing purposes, now we load precalculated results.")
-            job = pz.ZacrosJob.load_external(test_folder / "test_ZacrosResults.data/plamsjob")
-            results = job.results
-        else:
-            raise scm.plams.JobError(f"Error: The Zacros calculation FAILED! Error was: {error_msg}")
+        if not job.ok():
+            raise scm.plams.JobError("Error: The Zacros calculation FAILED!")
+
+    except pz.ZacrosExecutableNotFoundError:
+        print("Warning: The calculation FAILED because the zacros executable is not available!")
+        print("         For testing purposes, now we load precalculated results.")
+
+        job = scm.plams.load(test_folder / "test_ZacrosResults.data/plamsjob/plamsjob.dill")
+        results = job.results
 
     # -----------------------
     # Analyzing the results

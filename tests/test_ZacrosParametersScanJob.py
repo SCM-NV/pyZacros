@@ -41,23 +41,21 @@ def test_ZacrosParametersScanJob(test_folder, tmp_path):
     parameters.add("x_O2", "molar_fraction.O2", lambda params: 1.0 - params["x_CO"])
     parameters.set_generator(pz.ZacrosParametersScanJob.meshgridGenerator)
 
-    job = pz.ZacrosJob(
-        settings=sett, lattice=zgb.lattice, mechanism=zgb.mechanism, cluster_expansion=zgb.cluster_expansion
-    )
+    try:
+        job = pz.ZacrosJob(
+            settings=sett, lattice=zgb.lattice, mechanism=zgb.mechanism, cluster_expansion=zgb.cluster_expansion
+        )
 
-    mjob = pz.ZacrosParametersScanJob(reference=job, parameters=parameters)
+        mjob = pz.ZacrosParametersScanJob(reference=job, parameters=parameters)
 
-    results = mjob.run()
+        results = mjob.run()
 
-    if not mjob.ok():
-        error_msg = mjob.get_errormsg()
-        if "ZacrosExecutableNotFoundError" in error_msg:
-            print("Warning: The calculation FAILED because the zacros executable is not available!")
-            print("         For testing purposes, now we load precalculated results.")
-            mjob = scm.plams.load(test_folder / "test_ZacrosParametersScanJob.data/plamsjob/plamsjob.dill")
-            results = mjob.results
-        else:
-            raise scm.plams.JobError(f"Error: The Zacros calculation FAILED! Error was: {error_msg}")
+    except pz.ZacrosExecutableNotFoundError:
+        print("Warning: The calculation FAILED because the zacros executable is not available!")
+        print("         For testing purposes, now we load precalculated results.")
+
+        mjob = scm.plams.load(test_folder / "test_ZacrosParametersScanJob.data/plamsjob/plamsjob.dill")
+        results = mjob.results
 
     output = ""
 

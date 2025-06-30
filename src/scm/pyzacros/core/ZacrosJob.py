@@ -1,6 +1,5 @@
 """Module containing the ZacrosJob class."""
 
-
 import os
 import stat
 import shutil

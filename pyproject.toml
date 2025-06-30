@@ -31,7 +31,7 @@ dependencies = [
     "networkx>=2.7.1",
     "numpy>=1.21.2",
     "scipy>=1.8.0",
-    "plams>=2025",
+    "plams<2025",
 ]
 
 [project.optional-dependencies]
