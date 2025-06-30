@@ -788,6 +788,9 @@ class ZacrosSteadyStateJob(scm.plams.MultiJob):
 
     def new_children(self):
         """ """
+        # Abort job if the zacros executable is not available
+        if any("ZacrosExecutableNotFoundError" in c.get_errormsg() for c in self.children if not c.ok()):
+            return None
 
         if self._scaling and self._scaling_status != "finished":
             if self._scaling_status == "requested":
@@ -808,3 +811,11 @@ class ZacrosSteadyStateJob(scm.plams.MultiJob):
                 return False
             else:
                 return all(self._history[-1]["converged"].values())
+
+    def get_errormsg(self):
+        if self.check():
+            return None
+
+        return self._error_msg or "\n".join(
+            [f"Child job '{c.name}' failed with: {c.get_errormsg()}" for c in self.children if not c.ok()]
+        )

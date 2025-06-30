@@ -223,6 +223,14 @@ class ZacrosParametersScanJob(scm.plams.MultiJob):
     def check(self):
         return all([job.ok() for job in self.children.values()])
 
+    def get_errormsg(self):
+        if self.check():
+            return None
+
+        return self._error_msg or "\n".join(
+            [f"Child job '{c.name}' failed with: {c.get_errormsg()}" for c in self.children.values() if not c.ok()]
+        )
+
     @staticmethod
     def zipGenerator(reference_settings, parameters):
         """

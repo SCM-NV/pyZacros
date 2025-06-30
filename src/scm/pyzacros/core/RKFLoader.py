@@ -286,7 +286,9 @@ class RKFLoader:
                 # This block finds the attached molecule to the binding site idSite
                 attachedAtom = parentAtoms[idSite][i]
 
-                adsorbate_atoms = [atom for j, atom in enumerate(state2Molecule[idState]) if regions[j] != f"region={referenceRegion}"]
+                adsorbate_atoms = [
+                    atom for j, atom in enumerate(state2Molecule[idState]) if regions[j] != f"region={referenceRegion}"
+                ]
                 adsorbate = state2Molecule[idState].copy(atoms=adsorbate_atoms)
 
                 adsorbate.guess_bonds()

@@ -4,7 +4,7 @@ dynamic = ["version"]
 description = "Python Library for Automating Zacros Simulations"
 readme = "README.md"
 requires-python = ">=3.8"
-license = { text = "LGPLv3" }
+license = { file = "LICENSE" }
 authors = [
     { name = "Nestor F. Aguirre", email = "aguirre@scm.com" },
     { name = "Pablo Lopez-Tarifa" },
@@ -49,16 +49,19 @@ doc = [
 ]
 
 [project.urls]
-Homepage = "https://www.scm.com/doc/pyzacros/index.html"
+Homepage = "https://www.scm.com"
 Documentation = "https://www.scm.com/doc/pyzacros/index.html"
 GitHub = "https://github.com/SCM-NV/pyZacros"
 
 [build-system]
-requires = ["setuptools >= 61.0"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
 
-[tool.setuptools]
-package-dir = { "scm.pyzacros" = "." }
+[tool.hatch.build.targets.wheel]
+packages = ["src/scm"]
 
-[tool.setuptools.dynamic]
-version = {attr = "__version__.__version__"}
+[tool.hatch.version]
+path = "src/scm/pyzacros/__version__.py"
+
+[tool.scm]
+copy-to-target = ["examples/**/*", "tests/**/*", "doc/ZacrosManual.pdf"]

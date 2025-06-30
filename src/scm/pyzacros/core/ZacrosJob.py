@@ -1,5 +1,9 @@
 """Module containing the ZacrosJob class."""
 
+#### WAIT FOR NEXT FIX VERSION, THEN LOAD SHOULD WORK PROPERLY, REVERT CHANGES TO DATA FILES, THINK ABOUT HOW TO HANDLE EXCEPTION ####
+
+
+
 import os
 import stat
 import shutil
@@ -137,6 +141,8 @@ class ZacrosJob(scm.plams.SingleJob):
 
         check_molar_fraction(self.settings, self.mechanism.gas_species())
 
+        self._executable_path = shutil.which(self._command)
+
     def get_input(self):
         """
         It should generate the Zacros input file. But Zacros has several
@@ -257,8 +263,11 @@ class ZacrosJob(scm.plams.SingleJob):
         """
         Look for the normal termination signal in the output. Note, that it does not mean your calculation was successful!
         """
-        lines = self.results.grep_file(self.results._filenames["general"], pattern="> Normal termination <")
-        return len(lines) > 0
+        try:
+            lines = self.results.grep_file(self.results._filenames["general"], pattern="> Normal termination <")
+            return len(lines) > 0
+        except scm.plams.FileError:
+            return False
 
     def surface_poisoned(self):
         """
@@ -283,8 +292,7 @@ class ZacrosJob(scm.plams.SingleJob):
 
         ``name`` is taken from the class attribute ``_command``. ``-n`` flag is added if ``settings.runscript.nproc`` exists. ``[>jobname.out]`` is used based on ``settings.runscript.stdout_redirect``.
         """
-        path = shutil.which(self._command)
-        if path is None:
+        if self._executable_path is None:
             raise ZacrosExecutableNotFoundError(self._command)
 
         s = self.settings.runscript
@@ -293,7 +301,7 @@ class ZacrosJob(scm.plams.SingleJob):
         ret += "\n"
         ret += "export OMP_NUM_THREADS=" + str(s.get("nproc", 1))
         ret += "\n"
-        ret += path
+        ret += self._executable_path
 
         if self._restart_file_content is not None and "restart" in self.settings:
             if "max_time" in self.settings["restart"]:
