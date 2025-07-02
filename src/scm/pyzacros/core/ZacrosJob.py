@@ -3,6 +3,7 @@
 import os
 import stat
 import shutil
+from typing import Optional
 
 import scm.plams
 
@@ -44,6 +45,7 @@ class ZacrosJob(scm.plams.SingleJob):
     """
 
     _command = os.environ["AMSBIN"] + "/zacros" if "AMSBIN" in os.environ else "zacros.x"
+    _executable_path = shutil.which(_command)
     _result_type = ZacrosResults
     _filenames = {
         "simulation": "simulation_input.dat",
@@ -136,8 +138,6 @@ class ZacrosJob(scm.plams.SingleJob):
                 self._restart_file_content = depFile.readlines()
 
         check_molar_fraction(self.settings, self.mechanism.gas_species())
-
-        self._executable_path = shutil.which(self._command)
 
     def get_input(self):
         """
@@ -254,6 +254,22 @@ class ZacrosJob(scm.plams.SingleJob):
             for line in self._restart_file_content:
                 output += line
         return output
+
+    def run(
+        self,
+        jobrunner: Optional[scm.plams.JobRunner] = None,
+        jobmanager: Optional[scm.plams.JobRunner] = None,
+        **kwargs,
+    ) -> scm.plams.Results:
+        # Check the zacros executable is available before running, and raise an error if not
+        self._check_zacros_executable()
+        return super().run(jobrunner, jobmanager, **kwargs)
+
+    @classmethod
+    def _check_zacros_executable(cls):
+        """Checks if the Zacros executable is in the path, otherwise raises a ``ZacrosExecutableNotFoundError``"""
+        if cls._executable_path is None:
+            raise ZacrosExecutableNotFoundError(cls._command)
 
     def check(self):
         """
