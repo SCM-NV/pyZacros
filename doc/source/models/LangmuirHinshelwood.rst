@@ -5,7 +5,7 @@
 Langmuir-Hinshelwood Model
 --------------------------
 
-For more information, see file :download:`LangmuirHinshelwood.py <../../../models/LangmuirHinshelwood.py>`.
+For more information, see file :download:`LangmuirHinshelwood.py <../../../src/scm/pyzacros/models/LangmuirHinshelwood.py>`.
 
 The LH model includes the following elementary reactions:
 

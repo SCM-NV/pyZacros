@@ -5,7 +5,7 @@
 Ziff-Gulari-Barshad Model
 -------------------------
 
-For more information, see file :download:`ZiffGulariBarshad.py <../../../models/ZiffGulariBarshad.py>`.
+For more information, see file :download:`ZiffGulariBarshad.py <../../../src/scm/pyzacros/models/ZiffGulariBarshad.py>`.
 
 The ZGB model includes the following elementary reactions:
 
