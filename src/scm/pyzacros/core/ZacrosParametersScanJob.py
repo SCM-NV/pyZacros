@@ -227,7 +227,9 @@ class ZacrosParametersScanJob(scm.plams.MultiJob):
         jobmanager: Optional[scm.plams.JobRunner] = None,
         **kwargs,
     ) -> scm.plams.Results:
-        # Check the zacros executable is available before running, and raise an error if not
+        """
+        Run the job. Raises a ``ZacrosExecutableNotFoundError`` if the Zacros executable cannot be found.
+        """
         ZacrosJob._check_zacros_executable()
         return super().run(jobrunner, jobmanager, **kwargs)
 
