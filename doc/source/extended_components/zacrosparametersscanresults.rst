@@ -29,7 +29,7 @@ The following lines of code show an example of how to use the ``ZacrosParameters
                 '%8.2f'%results_dict[i]['x_CO'],
                 '%10.6f'%results_dict[i]['turnover_frequency']['CO2'] )
 
-Lines 1-8 were already discusssed before (see :ref:`ZacrosParametersScanJob <zacrosparametersscanjob>`).
+Lines 1-8 were already discussed before (see :ref:`ZacrosParametersScanJob <zacrosparametersscanjob>`).
 Here, the ``ZacrosParametersScanResults`` object ``results`` is created by calling the method ``run()`` of the corresponding ``ZacrosParametersScanJob`` job (line 8).
 
 Afterward, the method ``ok()`` is invoked to assure that the calculation finished appropriately (line 10), and only after that,

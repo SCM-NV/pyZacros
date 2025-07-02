@@ -7,7 +7,7 @@ import scm.pyzacros.models
 import scm.pyzacros.utils
 
 
-def test_post_process(tmp_path):
+def test_post_process(tmp_path, test_folder):
     print("---------------------------------------------------")
     print(">>> Testing Zacros post_process methods")
     print("---------------------------------------------------")
@@ -50,7 +50,7 @@ def test_post_process(tmp_path):
     scm.plams.finish()
 
     if load_precalculated:
-        job = pz.ZacrosJob.load_external(path="tests/test_ZacrosResults.data/plamsjob")
+        job = pz.ZacrosJob.load_external(path=f"{str(test_folder)}/test_ZacrosResults.data/plamsjob")
     else:
         job = pz.ZacrosJob.load_external(path=workdir / "plamsjob")
 

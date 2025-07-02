@@ -26,7 +26,10 @@ jobs:
       - name: Build
         run: |
           pip3 install .[test,doc]
-          python setup.py install
+          pip3 install build
+          python -m build
+          # use plams<2025 until bug fixed in 2025 for loading legacy dill files
+          pip3 install dist/pyzacros-*.whl plams==2024.106
       - name: Test
         run: |
           pytest tests

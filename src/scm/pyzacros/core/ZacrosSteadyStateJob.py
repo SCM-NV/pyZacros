@@ -5,6 +5,7 @@ import shutil
 import copy
 import numpy
 from collections import OrderedDict
+from typing import Optional
 
 import scm.plams
 
@@ -788,7 +789,6 @@ class ZacrosSteadyStateJob(scm.plams.MultiJob):
 
     def new_children(self):
         """ """
-
         if self._scaling and self._scaling_status != "finished":
             if self._scaling_status == "requested":
                 return self.__scaling_factors_step_start()
@@ -796,6 +796,16 @@ class ZacrosSteadyStateJob(scm.plams.MultiJob):
                 self.__scaling_factors_step_end()
 
         return self.__steady_state_step()
+
+    def run(
+        self,
+        jobrunner: Optional[scm.plams.JobRunner] = None,
+        jobmanager: Optional[scm.plams.JobRunner] = None,
+        **kwargs,
+    ) -> scm.plams.Results:
+        # Check the zacros executable is available before running, and raise an error if not
+        ZacrosJob._check_zacros_executable()
+        return super().run(jobrunner, jobmanager, **kwargs)
 
     def check(self):
         """
