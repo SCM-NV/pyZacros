@@ -76,7 +76,7 @@ be similar to the image below:
    :scale: 80 %
    :align: center
 
-Then, you should see the plot of the number of molecules of each kind as a function of time during the simulation. We have split this information into two Figures for clarity, one for gas-phase species and the other one for surface species, as follows (see script's line 65-66):
+Then, you should see the plot of the number of molecules of each kind as a function of time during the simulation. We have split this information into two figures for clarity, one for gas-phase species and the other one for surface species, as follows (see script's line 65-66):
 
 .. figure:: ../images/ZGB-mol_gas_nums.png
    :scale: 80 %
