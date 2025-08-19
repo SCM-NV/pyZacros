@@ -1,7 +1,7 @@
 import scm.plams
 from typing import Dict
 
-from .__version__ import __version__
+from scm.pyzacros.version import __version__
 
 
 def __autoimport(path, folders):
