@@ -54,14 +54,18 @@ Documentation = "https://www.scm.com/doc/pyzacros/index.html"
 GitHub = "https://github.com/SCM-NV/pyZacros"
 
 [build-system]
-requires = ["hatchling>=1.26"]
+requires = ["hatchling>=1.26", "hatch-vcs>=0.4.0", "setuptools-scm<9"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/scm"]
 
 [tool.hatch.version]
-path = "src/scm/pyzacros/__version__.py"
+source = "vcs"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/scm/pyzacros/version.py"
 
 [tool.scm]
-copy-to-target = ["examples/**/*", "tests/**/*", "doc/ZacrosManual.pdf"]
+copy-to-target = ["examples/**/*", "tests/**/*", "../zacros_manual/ZacrosManual.pdf"]
+copy-to-target-path-mappings = {"../zacros_manual/" = "doc/"}
