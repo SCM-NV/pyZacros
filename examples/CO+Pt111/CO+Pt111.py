@@ -26,6 +26,7 @@ sett_ads.input.ams.PESExploration.StructureComparison.EnergyDifference = 0.05
 sett_ads.input.ams.PESExploration.StructureComparison.CheckSymmetry = "T"
 sett_ads.input.ams.PESExploration.BindingSites.Calculate = "T"
 sett_ads.input.ams.PESExploration.BindingSites.DistanceDifference = 0.1
+sett_ads.input.ams.PESExploration.calculateEnergyReferences = "T"
 
 job = scm.plams.AMSJob(name="pes_exploration", molecule=mol, settings=sett_ads + engine_sett)
 results_ads = job.run()

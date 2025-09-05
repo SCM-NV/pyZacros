@@ -333,16 +333,90 @@ class LatticeState:
         """
         self.fill_sites_random(site_name, species, coverage=1.0)
 
-    def coverage_fractions(self):
+    def coverage_fractions(self, site_names=None, species_symbols=None, normalize=False):
         """
-        Returns a dictionary with the coverage fractions, e.g., ``{ "CO*":0.32, "O*":0.45 }``
+        Returns a dictionary with the coverage fractions, e.g., ``{ "CO*":0.32, "O*":0.45 }``.
+
+        This function uses information from the "history_output.txt" file, which contains extensive details. While it may be a bit slow, it allows filtering by site names and species.
+
+        *   ``site_names`` -- Name of the sites to be included, e.g., ``["fcc","hcp"]``
+        *   ``species_symbols`` -- Name of the species names to be included, e.g., ``["H*","C*"]``
+        *   ``normalize`` -- If set to False, the coverage fraction is normalized to the total number of sites. If True, only the total number of sites filtered by "site_names" are included.
         """
         fractions = {}
+        total_sites = 0
+
         for sp in self.surface_species:
             fractions[sp.symbol] = 0.0
 
-        for sp, nsites in self.__speciesNumbers.items():
-            fractions[sp.symbol] = float(nsites) / self.lattice.number_of_sites()
+        if site_names is None:
+            for sp, nsites in self.__speciesNumbers.items():
+                if sp is not None:
+                    if species_symbols is not None and sp.symbol in species_symbols:
+                        fractions[sp.symbol] = float(nsites)
+                    else:
+                        fractions[sp.symbol] = float(nsites)
+
+            total_sites = self.lattice.number_of_sites()
+        else:
+            for sid,site_name in enumerate(self.lattice.site_types):
+                sp = self.__adsorbed_on_site[sid]
+                if site_name in site_names:
+                    if sp is not None:
+                        if species_symbols is not None and sp.symbol in species_symbols:
+                            fractions[sp.symbol] += 1.0
+                        else:
+                            fractions[sp.symbol] += 1.0
+
+                    total_sites += 1
+
+        if normalize:
+            for symbol in fractions.keys():
+                fractions[symbol] /= total_sites
+        else:
+            for symbol in fractions.keys():
+                fractions[symbol] /= self.lattice.number_of_sites()
+
+        return fractions
+
+    def site_coverage_fractions(self, site_names=None, species_symbols=None, normalize=False):
+        """
+        Returns a dictionary with the coverage fractions per site, e.g., ``{ "fcc":0.32, "hcp":0.45 }``.
+
+        This function uses information from the "history_output.txt" file, which contains extensive details. While it may be a bit slow, it allows filtering by site names and species.
+
+        *   ``site_names`` -- Name of the sites to be included, e.g., ``["fcc","hcp"]``
+        *   ``species_symbols`` -- Name of the species names to be included, e.g., ``["H*","C*"]``
+        *   ``normalize`` -- If set to False, the coverage fraction is normalized to the total number of sites. If True, only the total number of sites filtered by "site_names" are included.
+        """
+        fractions = {}
+
+        for site_name in set(self.lattice.site_types):
+            fractions[site_name] = 0.0
+
+        total_sites = 0
+        for sid,site_name in enumerate(self.lattice.site_types):
+            sp = self.__adsorbed_on_site[sid]
+            if sp is not None:
+                if species_symbols is not None:
+                    if sp.symbol in species_symbols:
+                        if site_names is not None and site_name in site_names:
+                            fractions[site_name] += 1.0
+                        else:
+                            fractions[site_name] += 1.0
+                else:
+                    if site_names is not None and site_name in site_names:
+                        fractions[site_name] += 1.0
+                    else:
+                        fractions[site_name] += 1.0
+            total_sites += 1
+
+        if normalize:
+            for site_name in fractions.keys():
+                fractions[site_name] /= total_sites
+        else:
+            for site_name in fractions.keys():
+                fractions[site_name] /= self.lattice.number_of_sites()
 
         return fractions
 
@@ -365,9 +439,11 @@ class LatticeState:
         if ax is None:
             fig, ax = plt.subplots()
 
-        # markers = ['o', '.', ',', 'x', '+', 'v', '^', '<', '>', 's', 'd']
-        markers = ["o", "s", "v", "^", "x", "s", "d", "+"]
-        colors = ["r", "g", "b", "c", "m", "y", "k", "#eeefff"]
+        markers =   ["v", "s", "o", "D", "p", "^", "+", "x", "*", "P", "H", "X", "d", "h", ",", ".", "<", ">", "1", "2"]
+        colors = ["r", "g", "b", "m", "c", "k",
+          "tab:blue", "tab:orange", "tab:green", "tab:red", "tab:purple",
+          "tab:brown", "tab:pink", "tab:gray", "tab:olive", "tab:cyan",
+          "gold", "turquoise", "lime", "indigo"]
 
         symbols = [sp if sp is None else sp.symbol for sp in self.__adsorbed_on_site]
 

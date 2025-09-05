@@ -395,7 +395,19 @@ class ZacrosResults(scm.plams.Results):
 
     def average_coverage(self, last=5):
         """
-        Returns a dictionary with the average coverage fractions using the last ``last`` lattice states, e.g., ``{ "CO*":0.32, "O*":0.45 }``
+        Returns a dictionary with the average coverage fractions using the last ``last`` lattice states, e.g., ``{ "CO*":0.32, "O*":0.45 }``.
+
+        This function uses the information (provided quantities) from the ``specnum_output.txt`` file. So, it is quite fast.
+        Below is shown an example of the ``specnum_output.txt`` for a zacros calculation.
+
+        .. code-block:: none
+
+            Entry   Nevents        Time   Temperature       Energy   O*  CO*     O2     CO   CO2
+                1         0   0.000E+00   5.00000E+02   -4.089E+01   11   12      0      0     0
+                2        88   1.000E-01   5.00000E+02   -7.269E+01   22   17    -21    -36    31
+                3       176   2.000E-01   5.00000E+02   -9.139E+01   29   19    -41    -71    64
+                4       247   3.000E-01   5.00000E+02   -1.041E+02   34   20    -57    -99    91
+
         """
 
         surface_species_names = self.surface_species_names()
@@ -403,12 +415,6 @@ class ZacrosResults(scm.plams.Results):
         acf = {}
         for sspecies in surface_species_names:
             acf[sspecies] = 0.0
-
-        # for lattice_state in self.lattice_states(last=last):
-        # fractions = lattice_state.coverage_fractions()
-
-        # for sspecies in surface_species_names:
-        # acf[sspecies] += fractions[sspecies]/last
 
         provided_quantities = self.provided_quantities()
         n_items = len(provided_quantities["Entry"])
@@ -423,6 +429,54 @@ class ZacrosResults(scm.plams.Results):
 
         for sspecies in surface_species_names:
             acf[sspecies] /= self.job.lattice.number_of_sites() * last
+
+        return acf
+
+    def average_coverage_fractions(self, last=5, site_names=None, species_symbols=None, normalize=False):
+        """
+        Returns a dictionary with the coverage fractions, e.g., ``{ "CO*":0.32, "O*":0.45 }``.
+
+        This function uses information from the "history_output.txt" file, which contains extensive details. While it may be a bit slow, it allows filtering by site names and species.
+
+        *   ``site_names`` -- Name of the sites to be included, e.g., ``["fcc","hcp"]``
+        *   ``species_symbols`` -- Name of the species names to be included, e.g., ``["H*","C*"]``
+        *   ``normalize`` -- If set to False, the coverage fraction is normalized to the total number of sites. If True, only the total number of sites filtered by "site_names" are included.
+        *   ``last`` -- Number of lattice states to consider in the average, starting from the last one.
+        """
+        acf = {}
+
+        for symbol in self.surface_species_names():
+            acf[symbol] = 0.0
+
+        for state in self.lattice_states( last=last ):
+            cover = state.coverage_fractions(site_names=site_names, species_symbols=species_symbols, normalize=normalize)
+            acf = { symbol: acf[symbol] + cover[symbol] for symbol in acf }
+
+        acf = { symbol: acf[symbol]/last for symbol in acf }
+
+        return acf
+
+    def average_site_coverage_fractions(self, last=5, site_names=None, species_symbols=None, normalize=False):
+        """
+        Returns a dictionary with the coverage fractions per site, e.g., ``{ "fcc":0.32, "hcp":0.45 }``.
+
+        This function uses information from the "history_output.txt" file, which contains extensive details. While it may be a bit slow, it allows filtering by site names and species.
+
+        *   ``site_names`` -- Name of the sites to be included, e.g., ``["fcc","hcp"]``
+        *   ``species_symbols`` -- Name of the species names to be included, e.g., ``["H*","C*"]``
+        *   ``normalize`` -- If set to False, the coverage fraction is normalized to the total number of sites. If True, only the total number of sites filtered by "site_names" are included.
+        *   ``last`` -- Number of lattice states to consider in the average, starting from the last one.
+        """
+        acf = {}
+
+        for site_name in self.site_type_names():
+            acf[site_name] = 0.0
+
+        for state in self.lattice_states( last=last ):
+            cover = state.site_coverage_fractions(site_names=site_names, species_symbols=species_symbols, normalize=normalize)
+            acf = { site_name: acf[site_name] + cover[site_name] for site_name in acf }
+
+        acf = { site_name: acf[site_name]/last for site_name in acf }
 
         return acf
 

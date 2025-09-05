@@ -157,11 +157,16 @@ class ElementaryReaction:
     def __getSpeciesListFullName(species, entity_number, site_types):
         label = ""
 
-        for i in range(len(species)):
+        lsort = [ st for st in site_types ]
+        sorted_ids = sorted(range(len(lsort)), key=lsort.__getitem__)
+
+        entity_number_j = 0
+        for i in sorted_ids:
             label += species[i].symbol
             if len(entity_number) > 1:
-                label += str(entity_number[i] + 1)
+                label += str(entity_number[entity_number_j] + 1)
             label += str(site_types[i])
+            entity_number_j += 1
 
         return label
 

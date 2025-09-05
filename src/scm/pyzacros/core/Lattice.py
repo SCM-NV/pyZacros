@@ -646,6 +646,7 @@ class Lattice:
 
             lcolor = color if color is not None else "k"
             ax.plot(xvalues, yvalues, color=lcolor, linestyle="solid", linewidth=3, zorder=1)
+            # ax.plot(xvalues, yvalues, color=lcolor, linestyle="solid", linewidth=0.5, zorder=1)
 
         # ax.set_xlabel('x ($\AA$)')
         # ax.set_ylabel('y ($\AA$)')
@@ -653,9 +654,11 @@ class Lattice:
         ax.set_xlabel("x (ang.)")
         ax.set_ylabel("y (ang.)")
 
-        # markers = ['o', '.', ',', 'x', '+', 'v', '^', '<', '>', 's', 'd']
-        markers = ["o", "s", "v", "^", "+", "^"]
-        colors = ["r", "g", "b", "m", "c", "k"]
+        markers =   ["v", "s", "o", "D", "p", "^", "+", "x", "*", "P", "H", "X", "d", "h", ",", ".", "<", ">", "1", "2"]
+        colors = ["r", "g", "b", "m", "c", "k",
+          "tab:blue", "tab:orange", "tab:green", "tab:red", "tab:purple",
+          "tab:brown", "tab:pink", "tab:gray", "tab:olive", "tab:cyan",
+          "gold", "turquoise", "lime", "indigo"]
 
         for i, st_i in enumerate(sorted(list(set(self.site_types)))):
             xvalues = [x for (x, y), st in zip(self.site_coordinates, self.site_types) if st == st_i]
@@ -668,6 +671,7 @@ class Lattice:
                 color=lcolor,
                 marker=markers[i],
                 s=440 / math.sqrt(len(self.site_coordinates)),
+                # s=1.5*440 / math.sqrt(len(self.site_coordinates)),
                 zorder=2,
                 label=st_i,
             )
@@ -693,6 +697,7 @@ class Lattice:
                         continue
 
                 lcolor = color if color is not None else "k"
+                # lcolor = "k"
                 ax.plot(
                     xvalues,
                     yvalues,
@@ -704,6 +709,9 @@ class Lattice:
 
         ax.legend(loc="center left", bbox_to_anchor=(1, 0.5))
         plt.tight_layout()
+
+        # plt.gca().set_aspect(3.8)
+        # ax.set_axis_off()
 
         if file_name is not None:
             plt.savefig(file_name)

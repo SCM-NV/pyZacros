@@ -15,7 +15,7 @@ __all__ = ["RKFLoader"]
 
 class RKFLoader:
 
-    def __init__(self, results=None):
+    def __init__(self, results=None, latticeProj2D=None):
         """
         Creates a new RKFLoader object
 
@@ -24,6 +24,13 @@ class RKFLoader:
         self.clusterExpansion = ClusterExpansion()
         self.mechanism = Mechanism()
         self.lattice = None
+
+        if latticeProj2D is None:
+            def projDefault( coord ):
+                return [ coord[0], coord[1] ] # Coordinate z is ignored
+            self.latticeProj2D = projDefault
+        else:
+            self.latticeProj2D = latticeProj2D
 
         if results is not None:
             self.__deriveLatticeAndMechanism(results)
@@ -378,6 +385,7 @@ class RKFLoader:
             return species, entityNumber
 
         def getPropertiesForCluster(species, entityNumber):
+            # All info is read from G1, G1_nodes, G1_shortest_paths, site_types, entityNumber, species
             # This section remove the empty adsorption sites which are not needed for clusters
             data = {}
             data["site_types"] = []
@@ -442,9 +450,9 @@ class RKFLoader:
             if len(energyReference) > 0:
                 for i, atom in enumerate(state2Molecule[idState]):
                     if regions[i] != "region=" + referenceRegion:
-                        fenergy -= energyReference[atom.symbol]
+                        fenergy -= energyReference[atom.symbol] / eV
 
-                if referenceRegion in regions:
+                if "region=" + referenceRegion in regions:
                     fenergy -= energyReference[referenceRegion] / eV
 
             return fenergy
@@ -458,9 +466,10 @@ class RKFLoader:
 
             return fenergy
 
-        # Loop over the TSs to find the species
-        # Each TS defines an ElementaryReaction and at the same time it defines
-        # two Clusters from reactants and products.
+        #---------------------------------------------------------------------------------
+        # 1. Loop over the TSs to find the species
+        #    Each TS defines an ElementaryReaction
+        #---------------------------------------------------------------------------------
         for idState in range(nStates):
             if isTS[idState]:
                 idTS = idState
@@ -541,10 +550,44 @@ class RKFLoader:
                     activation_energy=activationEnergy,
                 )
 
-                # self.clusterExpansion.extend( [clusterReactant, clusterProduct] )
                 self.mechanism.append(reaction)
 
-        # Loop over the Fragmented states to find the species and reactions
+        #---------------------------------------------------------------------------------
+        # 2. Loop over the local minima to find the species
+        #    Each local minima defines a cluster.
+        #---------------------------------------------------------------------------------
+        for idState in range(nStates):
+            if not isTS[idState]:
+
+                # Filters the connection specifically for this cluster
+                G1 = getLatticeRxnSubgraph(state2BindingSites[idState], state2BindingSites[idState])
+                G1_nodes = sorted(list(G1.nodes()))
+                G1_edges = [sorted([G1_nodes.index(pair[0]), G1_nodes.index(pair[1])]) for pair in G1.edges()]
+                G1_shortest_paths = dict(nx.all_pairs_shortest_path(G1))
+
+                site_types = [labels[j] for j in G1_nodes]
+
+                speciesState, entityNumber = getProperties(idState)
+                cluster_data = getPropertiesForCluster(speciesState, entityNumber)
+
+                clusterState = Cluster(
+                    site_types=cluster_data["site_types"],
+                    entity_number=cluster_data["entity_number"],
+                    neighboring=cluster_data["neighboring"],
+                    species=cluster_data["species"],
+                    multiplicity=getMultiplicity(cluster_data),
+                    energy=getFormationEnergy(idState),
+                )
+
+                if not( len(clusterState.species) == 1 and clusterState.species[0].symbol == "*" ):
+                    self.clusterExpansion.append( clusterState )
+
+        #---------------------------------------------------------------------------------
+        # 3. Loop over the Fragmented states to find the species
+        #    Each fragmented reaction defines a cluster and a gas phase reaction
+        #    Maybe there are repeated clusters from step 2 and 3, but they are
+        #    automatically filtered out by the ClusterExpansion class
+        #---------------------------------------------------------------------------------
         for idFState in range(nFStates):
             energy = fStatesEnergy[idFState] / eV
             nFragments = fStatesNFragments[idFState]
@@ -649,13 +692,17 @@ class RKFLoader:
         if None in neighboring_structure:
             raise NameError("Neighboring structure incomplete")
 
-        # Here we omit the z-axis. In the future, we should make a 2D projection of
-        # the 3D lattice instead. This is necessary to be able to study adsorption on nanoclusters.
+        # Here we make the 3D->2D lattice projection
+        coordsFrac2DProj = []
+        for coord in coordsFrac:
+            pCoord = self.latticeProj2D( coord )
+            coordsFrac2DProj.append( pCoord )
+
         self.lattice = Lattice(
             cell_vectors=[[v[0], v[1]] for v in latticeVectors[0:2]],
             repeat_cell=(1, 1),  # Default value.
             site_types=labels,
-            site_coordinates=coordsFrac,
+            site_coordinates=coordsFrac2DProj,
             neighboring_structure=neighboring_structure,
         )
 
