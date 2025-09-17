@@ -4,8 +4,7 @@ End
 
 PESExploration
   BindingSites
-    MaxCoordinationShellsForLabels 3
-    NeighborCutoff 2.4
+    NeighborCutoff 2.9
   End
   CalculateFragments F
   DynamicSeedStates T
@@ -29,14 +28,14 @@ PESExploration
   StructureComparison
     CheckSymmetry F
     DistanceDifference 0.1
-    EnergyDifference 0.05
+    EnergyDifference 0.5
     NeighborCutoff 3.8
   End
 End
 
 Task PESExploration
 
-system
+System
   Atoms
               O       6.4680041600       3.7543098700       9.2360941500 region=adsorbate
              Pt       9.2407020100       6.9552726700       1.3103608300 region=surface

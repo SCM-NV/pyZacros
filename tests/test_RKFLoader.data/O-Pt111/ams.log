@@ -1,3 +1,69 @@
-<Nov17-2022> <12:29:14>  AMS 2022.204  RunTime: Nov17-2022 12:29:14  ShM Nodes: 1  Procs: 4
-<Nov17-2022> <12:29:14>  Restoring energy landscape from: /home/aguirre/Develop/pyzacros/test_RKFLoader/O-Pt111/../O_ads-Pt111/ams.rkf
-<Nov17-2022> <12:29:15>  NORMAL TERMINATION
+<Sep17-2025> <14:09:29>  AMS 2025.205  RunTime: Sep17-2025 14:09:29  ShM Nodes: 1  Procs: 8
+<Sep17-2025> <14:09:30>  Restoring energy landscape from: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/../O_ads-Pt111/ams.rkf
+<Sep17-2025> <14:09:30>  Calculating prefactors
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
+<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
+<Sep17-2025> <14:09:30>  Calculating prefactors
+<Sep17-2025> <14:09:31>  NORMAL TERMINATION
