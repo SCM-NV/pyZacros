@@ -34,8 +34,7 @@ def generateAMSResults(test_folder):
     sett_lat.input.ams.PESExploration.Job = "BindingSites"
     sett_lat.input.ams.PESExploration.LoadEnergyLandscape.GenerateSymmetryImages = "T"
     sett_lat.input.ams.PESExploration.CalculateFragments = "F"
-    sett_lat.input.ams.PESExploration.BindingSites.NeighborCutoff = 2.4
-    sett_lat.input.ams.PESExploration.BindingSites.MaxCoordinationShellsForLabels = 3
+    sett_lat.input.ams.PESExploration.BindingSites.NeighborCutoff = 2.9
     sett_lat.input.ams.PESExploration.StructureComparison.CheckSymmetry = "F"
 
     molO = scm.plams.Molecule(test_folder / "O-Pt111.xyz")
@@ -53,21 +52,21 @@ def generateAMSResults(test_folder):
     jobs = [jobO_ads, jobCO_ads, jobO_lat, jobCO_lat]
 
     for job in jobs:
-        job.run()
+      job.run()
 
     success = True
     for job in jobs:
-        if not job.ok() and "AMSBIN" not in os.environ:
-            print("Warning: The calculation FAILED likely because AMS executable is not available!")
-            print("         For testing purposes, now we load precalculated results.")
-            success = False
+      if not job.ok() and "AMSBIN" not in os.environ:
+        print("Warning: The calculation FAILED likely because AMS executable is not available!")
+        print("         For testing purposes, now we load precalculated results.")
+        success = False
 
     if success:
-        scm.plams.delete_job(jobO_ads)
-        scm.plams.delete_job(jobCO_ads)
+      scm.plams.delete_job(jobO_ads)
+      scm.plams.delete_job(jobCO_ads)
     else:
-        jobO_lat = scm.plams.load(test_folder / "test_RKFLoader.data/O-Pt111/O-Pt111.dill")
-        jobCO_lat = scm.plams.load(test_folder / "test_RKFLoader.data/CO-Pt111/CO-Pt111.dill")
+      jobO_lat = scm.plams.load(test_folder / "test_RKFLoader.data/O-Pt111/O-Pt111.dill")
+      jobCO_lat = scm.plams.load(test_folder / "test_RKFLoader.data/CO-Pt111/CO-Pt111.dill")
 
     return jobO_lat.results, jobCO_lat.results
 
@@ -88,7 +87,7 @@ def test_RKFLoader(test_folder, tmp_path):
     loaderCO = pz.RKFLoader(resultsCO)
 
     loader = pz.RKFLoader.merge([loaderO, loaderCO])
-    loader.replace_site_types(["N33", "N331", "N221"], ["fcc", "hcp", "br"])
+    loader.replace_site_types(["N333", "N331", "N221"], ["fcc", "hcp", "br"])
 
     output = str(loader.clusterExpansion) + "\n\n"
     output += str(loader.mechanism) + "\n\n"
@@ -152,7 +151,7 @@ end_energetics
 
 mechanism
 
-reversible_step O*1hcp*2fcc<->*1hcpO*2fcc;(0,1)
+reversible_step O*1fcc*2hcp<->*1fccO*2hcp;(0,1)
   sites 2
   neighboring 1-2
   initial
@@ -162,21 +161,6 @@ reversible_step O*1hcp*2fcc<->*1hcpO*2fcc;(0,1)
     1 O* 1
     2 * 1
   site_types hcp fcc
-  pre_expon  1.92088e+13
-  pe_ratio  1.11481e+00
-  activ_eng  7.00300e-01
-end_reversible_step
-
-reversible_step O*1fcc*2hcp<->*1fccO*2hcp;(0,1)
-  sites 2
-  neighboring 1-2
-  initial
-    1 O* 1
-    2 * 1
-  final
-    1 * 1
-    2 O* 1
-  site_types fcc hcp
   pre_expon  1.92088e+13
   pe_ratio  1.11481e+00
   activ_eng  7.00300e-01
@@ -208,7 +192,7 @@ reversible_step O*hcp<->*hcp:O
   activ_eng  0.00000e+00
 end_reversible_step
 
-reversible_step CO*1hcp*2br<->*1hcpCO*2br;(0,1)
+reversible_step CO*1br*2hcp<->*1brCO*2hcp;(0,1)
   sites 2
   neighboring 1-2
   initial
@@ -218,12 +202,12 @@ reversible_step CO*1hcp*2br<->*1hcpCO*2br;(0,1)
     1 * 1
     2 CO* 1
   site_types hcp br
-  pre_expon  1.58155e+13
-  pe_ratio  7.07504e+00
-  activ_eng  7.89790e-01
+  pre_expon  1.62480e+13
+  pe_ratio  7.00877e+00
+  activ_eng  7.89803e-01
 end_reversible_step
 
-reversible_step CO*1fcc*2br<->*1fccCO*2br;(0,1)
+reversible_step CO*1br*2fcc<->*1brCO*2fcc;(0,1)
   sites 2
   neighboring 1-2
   initial
@@ -233,9 +217,9 @@ reversible_step CO*1fcc*2br<->*1fccCO*2br;(0,1)
     1 * 1
     2 CO* 1
   site_types fcc br
-  pre_expon  1.56175e+13
-  pe_ratio  7.15629e+00
-  activ_eng  7.94879e-01
+  pre_expon  1.57198e+13
+  pe_ratio  7.11488e+00
+  activ_eng  7.94882e-01
 end_reversible_step
 
 reversible_step CO*fcc<->*fcc:CO
@@ -247,7 +231,7 @@ reversible_step CO*fcc<->*fcc:CO
     1 CO* 1
   site_types fcc
   pre_expon  8.05092e+06
-  pe_ratio  4.84689e-10
+  pe_ratio  4.82946e-10
   activ_eng  0.00000e+00
 end_reversible_step
 
@@ -260,7 +244,7 @@ reversible_step CO*hcp<->*hcp:CO
     1 CO* 1
   site_types hcp
   pre_expon  8.05092e+06
-  pe_ratio  4.90255e-10
+  pe_ratio  4.90258e-10
   activ_eng  0.00000e+00
 end_reversible_step
 
@@ -273,7 +257,7 @@ reversible_step CO*br<->*br:CO
     1 CO* 1
   site_types br
   pre_expon  8.05092e+06
-  pe_ratio  3.46858e-09
+  pe_ratio  3.43610e-09
   activ_eng  0.00000e+00
 end_reversible_step
 
@@ -306,33 +290,33 @@ lattice explicit
       16       9.24042694       3.75450901         fcc     5    39    41    42    14    17
       17       9.24094073       5.35507786         hcp     6    40    41    43    15    16    18
       18      10.62635623       6.15500895         fcc     4    17    43    44    45
-      19       1.60537530       0.94674101          br     2     1     2
-      20       2.31110738       2.16892614          br     2     2     3
-      21       3.01673630       0.94674101          br     2     2     4
-      22       2.99130459       3.34724096          br     2     3     5
-      23       3.69703667       4.56942609          br     2     5     6
-      24       4.37723388       0.94674101          br     2     4     7
-      25       4.40266559       3.34724096          br     2     5     8
-      26       4.37723388       5.74774090          br     2     9     6
-      27       5.08296596       2.16892614          br     2     7     8
-      28       5.08296596       6.96992603          br     1     9
-      29       5.78859488       0.94674101          br     2    10     7
-      30       5.76316317       3.34724096          br     2    11     8
-      31       5.78859488       5.74774090          br     2     9    12
-      32       6.46889525       4.56942609          br     2    11    12
-      33       7.14909246       0.94674101          br     2    10    13
-      34       7.17452417       3.34724096          br     2    11    14
-      35       7.14909246       5.74774090          br     2    12    15
-      36       7.85482455       2.16892614          br     2    13    14
-      37       7.85482454       6.96992603          br     1    15
-      38       8.56045347       0.94674101          br     1    13
-      39       8.53502175       3.34724096          br     2    14    16
-      40       8.56045346       5.74774090          br     2    17    15
-      41       9.24075384       4.56942609          br     2    17    16
-      42       9.94638276       3.34724096          br     1    16
-      43       9.92095104       5.74774090          br     2    17    18
-      44      10.62668313       6.96992603          br     1    18
-      45      11.33231205       5.74774090          br     1    18
+      19       1.60401619       0.94611082          br     2     1     2
+      20       2.31124118       2.17041826          br     2     2     3
+      21       3.01809541       0.94611082          br     2     2     4
+      22       2.98994548       3.34661077          br     2     3     5
+      23       3.69717047       4.57091821          br     2     5     6
+      24       4.37587477       0.94611082          br     2     4     7
+      25       4.40402470       3.34661077          br     2     5     8
+      26       4.37587477       5.74711071          br     2     9     6
+      27       5.08309976       2.17041826          br     2     7     8
+      28       5.08309976       6.97141815          br     1     9
+      29       5.78995399       0.94611082          br     2    10     7
+      30       5.76180406       3.34661077          br     2    11     8
+      31       5.78995399       5.74711071          br     2     9    12
+      32       6.46902905       4.57091821          br     2    11    12
+      33       7.14773335       0.94611082          br     2    10    13
+      34       7.17588328       3.34661077          br     2    11    14
+      35       7.14773335       5.74711071          br     2    12    15
+      36       7.85495835       2.17041826          br     2    13    14
+      37       7.85495834       6.97141815          br     1    15
+      38       8.56181258       0.94611082          br     1    13
+      39       8.53366264       3.34661077          br     2    14    16
+      40       8.56181257       5.74711071          br     2    17    15
+      41       9.24088764       4.57091821          br     2    17    16
+      42       9.94774187       3.34661077          br     1    16
+      43       9.91959193       5.74711071          br     2    17    18
+      44      10.62681693       6.97141815          br     1    18
+      45      11.33367116       5.74711071          br     1    18
   end_lattice_structure
 end_lattice\
 """
