@@ -1,4 +1,4 @@
-![Python application](https://github.com/SCM-NV/pyZacros/workflows/Build/badge.svg?branch=master)
+![Python application](https://github.com/SCM-NV/pyZacros/actions/workflows/build.yml/badge.svg)
 
 What is pyZacros
 ----------------
