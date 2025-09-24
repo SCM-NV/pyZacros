@@ -69,3 +69,10 @@ version-file = "src/scm/pyzacros/version.py"
 [tool.scm]
 copy-to-target = ["examples/**/*", "tests/**/*", "../zacros_manual/ZacrosManual.pdf"]
 copy-to-target-path-mappings = {"../zacros_manual/" = "doc/"}
+
+[[tool.uv.index]]
+name = "gitea"
+url = "https://git.scm.com/api/packages/SCM/pypi/simple"
+publish-url = "https://git.scm.com/api/packages/SCM/pypi"
+explicit = true
+
