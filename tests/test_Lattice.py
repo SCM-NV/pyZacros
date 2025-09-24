@@ -10,10 +10,10 @@ def test_Lattice():
     print("")
     print("From default lattices")
     print("---------------------")
-    myLattice = pz.Lattice( lattice_type=pz.Lattice.HEXAGONAL, lattice_constant=1.0, repeat_cell=[8,10] )
+    myLattice = pz.Lattice(lattice_type=pz.Lattice.HEXAGONAL, lattice_constant=1.0, repeat_cell=[8, 10])
 
     print(myLattice)
-    myLattice.plot( pause=2, close=True )
+    myLattice.plot(pause=2, close=True)
 
     output = str(myLattice)
     expectedOutput = """\
@@ -21,38 +21,44 @@ lattice default_choice
   hexagonal_periodic 1.0 8 10
 end_lattice\
 """
-    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
+    assert pz.utils.compare(output, expectedOutput, 1e-3)
 
     print("")
     print("From unit-cell")
     print("--------------")
-    myLattice = pz.Lattice( cell_vectors=[[2.77185866, 0.00000000],[1.38592933, 2.40050002]],
-                            repeat_cell=[4, 4],
-                            site_types=["b", "h", "b", "b", "f", "t"],
-                            site_coordinates=[[0.00001, 0.49999],
-                                              [0.33333, 0.33333],
-                                              [0.49999, 0.00001],
-                                              [0.49999, 0.49999],
-                                              [0.66667, 0.66667],
-                                              [0.99999, 0.00001]],
-                            neighboring_structure=[ [(0,1), pz.Lattice.SELF],
-                                                    [(1,2), pz.Lattice.SELF],
-                                                    [(1,3), pz.Lattice.SELF],
-                                                    [(3,4), pz.Lattice.SELF],
-                                                    [(4,2), pz.Lattice.NORTH],
-                                                    [(4,0), pz.Lattice.EAST],
-                                                    [(5,5), pz.Lattice.NORTH],
-                                                    [(5,5), pz.Lattice.EAST],
-                                                    [(5,4), pz.Lattice.SELF],
-                                                    [(5,1), pz.Lattice.SELF],
-                                                    [(5,1), pz.Lattice.EAST],
-                                                    [(5,4), pz.Lattice.SOUTHEAST],
-                                                    [(5,1), pz.Lattice.SOUTHEAST],
-                                                    [(4,5), pz.Lattice.NORTH],
-                                                    [(5,5), pz.Lattice.SOUTHEAST] ] )
+    myLattice = pz.Lattice(
+        cell_vectors=[[2.77185866, 0.00000000], [1.38592933, 2.40050002]],
+        repeat_cell=[4, 4],
+        site_types=["b", "h", "b", "b", "f", "t"],
+        site_coordinates=[
+            [0.00001, 0.49999],
+            [0.33333, 0.33333],
+            [0.49999, 0.00001],
+            [0.49999, 0.49999],
+            [0.66667, 0.66667],
+            [0.99999, 0.00001],
+        ],
+        neighboring_structure=[
+            [(0, 1), pz.Lattice.SELF],
+            [(1, 2), pz.Lattice.SELF],
+            [(1, 3), pz.Lattice.SELF],
+            [(3, 4), pz.Lattice.SELF],
+            [(4, 2), pz.Lattice.NORTH],
+            [(4, 0), pz.Lattice.EAST],
+            [(5, 5), pz.Lattice.NORTH],
+            [(5, 5), pz.Lattice.EAST],
+            [(5, 4), pz.Lattice.SELF],
+            [(5, 1), pz.Lattice.SELF],
+            [(5, 1), pz.Lattice.EAST],
+            [(5, 4), pz.Lattice.SOUTHEAST],
+            [(5, 1), pz.Lattice.SOUTHEAST],
+            [(4, 5), pz.Lattice.NORTH],
+            [(5, 5), pz.Lattice.SOUTHEAST],
+        ],
+    )
 
     print(myLattice)
-    myLattice.plot( pause=2, close=True )
+    myLattice.plot(pause=2, close=True)
 
     output = str(myLattice)
     expectedOutput = """\
@@ -91,47 +97,68 @@ lattice periodic_cell
   end_neighboring_structure
 end_lattice\
 """
-    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
+    assert pz.utils.compare(output, expectedOutput, 1e-3)
 
     print("")
     print("From explicitly defined lattices")
     print("--------------------------------")
 
-    myLattice = pz.Lattice( site_types=["cn2", "br42", "cn4", "br42", "cn2", "br42", "br44", "br44",
-                                       "br42", "cn4", "br44", "cn4", "br42", "br42", "cn2"],
-                            site_coordinates=[[0.0000e+0, 0.0000e+0],
-                                              [1.4425e+0, 0.0000e+0],
-                                              [2.8850e+0, 0.0000e+0],
-                                              [4.3275e+0, 0.0000e+0],
-                                              [5.7700e+0, 0.0000e+0],
-                                              [7.2125e-1, 1.2492e+0],
-                                              [2.1637e+0, 1.2492e+0],
-                                              [3.6062e+0, 1.2492e+0],
-                                              [5.0487e+0, 1.2492e+0],
-                                              [1.4425e+0, 2.4985e+0],
-                                              [2.8850e+0, 2.4985e+0],
-                                              [4.3275e+0, 2.4985e+0],
-                                              [2.1637e+0, 3.7477e+0],
-                                              [3.6062e+0, 3.7477e+0],
-                                              [2.8850e+0, 4.9970e+0]],
-                            nearest_neighbors=[[ 1,  5],
-                                               [ 0,  2],
-                                               [ 1,  3,  6, 7],
-                                               [ 2,  4],
-                                               [ 3,  8],
-                                               [ 0,  9],
-                                               [ 2,  9],
-                                               [ 2, 11],
-                                               [ 4, 11],
-                                               [ 5,  6, 10, 12],
-                                               [ 9, 11],
-                                               [ 7,  8, 10, 13],
-                                               [ 9, 14],
-                                               [11, 14],
-                                               [12, 13]] )
+    myLattice = pz.Lattice(
+        site_types=[
+            "cn2",
+            "br42",
+            "cn4",
+            "br42",
+            "cn2",
+            "br42",
+            "br44",
+            "br44",
+            "br42",
+            "cn4",
+            "br44",
+            "cn4",
+            "br42",
+            "br42",
+            "cn2",
+        ],
+        site_coordinates=[
+            [0.0000e0, 0.0000e0],
+            [1.4425e0, 0.0000e0],
+            [2.8850e0, 0.0000e0],
+            [4.3275e0, 0.0000e0],
+            [5.7700e0, 0.0000e0],
+            [7.2125e-1, 1.2492e0],
+            [2.1637e0, 1.2492e0],
+            [3.6062e0, 1.2492e0],
+            [5.0487e0, 1.2492e0],
+            [1.4425e0, 2.4985e0],
+            [2.8850e0, 2.4985e0],
+            [4.3275e0, 2.4985e0],
+            [2.1637e0, 3.7477e0],
+            [3.6062e0, 3.7477e0],
+            [2.8850e0, 4.9970e0],
+        ],
+        nearest_neighbors=[
+            [1, 5],
+            [0, 2],
+            [1, 3, 6, 7],
+            [2, 4],
+            [3, 8],
+            [0, 9],
+            [2, 9],
+            [2, 11],
+            [4, 11],
+            [5, 6, 10, 12],
+            [9, 11],
+            [7, 8, 10, 13],
+            [9, 14],
+            [11, 14],
+            [12, 13],
+        ],
+    )
 
     print(myLattice)
-    myLattice.plot( pause=2, close=True )
+    myLattice.plot(pause=2, close=True)
 
     output = str(myLattice)
     expectedOutput = """\
@@ -159,9 +186,9 @@ lattice explicit
   end_lattice_structure
 end_lattice\
 """
-    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
+    assert pz.utils.compare(output, expectedOutput, 1e-3)
 
     ## reading from yaml
-    #myLattice = pz.Lattice(path_to_slab_yaml="./pyzacros/slabs/pd111.yaml")
-    #output2 = str(myLattice)
-    #assert( pz.utils.compare( output2, expectedOutput, 1e-3 ) )
+    # myLattice = pz.Lattice(path_to_slab_yaml="./pyzacros/slabs/pd111.yaml")
+    # output2 = str(myLattice)
+    # assert( pz.utils.compare( output2, expectedOutput, 1e-3 ) )

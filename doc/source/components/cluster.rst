@@ -50,9 +50,9 @@ The following lines illustrate an example:
 .. code-block:: python
   :linenos:
 
-   # Cluster Expansion
-   ce = pz.ClusterExpansion([CO_p, O_p])
-   print(ce)
+  # Cluster Expansion
+  ce = pz.ClusterExpansion([CO_p, O_p])
+  print(ce)
 
 which produce the following output:
 

@@ -8,36 +8,40 @@ def test_InitialState():
     print(">>> Testing InitialState class")
     print("---------------------------------------------------")
 
-    s0 = pz.Species( "*", 1 )     # Empty adsorption site
-    s1 = pz.Species( "H*", 1 )    # H adsorbed with dentation 1
-    s2 = pz.Species( "H2**", 2 )  # H2 adsorbed with dentation 2
-    s3 = pz.Species( "CO3***", 3) # CO3 adsorbed with dentation 3
+    s0 = pz.Species("*", 1)  # Empty adsorption site
+    s1 = pz.Species("H*", 1)  # H adsorbed with dentation 1
+    s2 = pz.Species("H2**", 2)  # H2 adsorbed with dentation 2
+    s3 = pz.Species("CO3***", 3)  # CO3 adsorbed with dentation 3
 
-    lattice = pz.Lattice(cell_vectors=[[2.814, 0.000],[1.407, 2.437]],
-                           repeat_cell=[3, 3],
-                           site_types=["fcc", "hcp"],
-                           site_coordinates=[[0.33333,0.33333],[0.66667,0.66667]],
-                           neighboring_structure=[[(0,0), pz.Lattice.NORTH],
-                                                  [(0,0), pz.Lattice.EAST],
-                                                  [(0,0), pz.Lattice.SOUTHEAST],
-                                                  [(1,0), pz.Lattice.SELF],
-                                                  [(1,0), pz.Lattice.EAST],
-                                                  [(1,0), pz.Lattice.NORTH],
-                                                  [(1,1), pz.Lattice.NORTH],
-                                                  [(1,1), pz.Lattice.EAST],
-                                                  [(1,1), pz.Lattice.SOUTHEAST]])
+    lattice = pz.Lattice(
+        cell_vectors=[[2.814, 0.000], [1.407, 2.437]],
+        repeat_cell=[3, 3],
+        site_types=["fcc", "hcp"],
+        site_coordinates=[[0.33333, 0.33333], [0.66667, 0.66667]],
+        neighboring_structure=[
+            [(0, 0), pz.Lattice.NORTH],
+            [(0, 0), pz.Lattice.EAST],
+            [(0, 0), pz.Lattice.SOUTHEAST],
+            [(1, 0), pz.Lattice.SELF],
+            [(1, 0), pz.Lattice.EAST],
+            [(1, 0), pz.Lattice.NORTH],
+            [(1, 1), pz.Lattice.NORTH],
+            [(1, 1), pz.Lattice.EAST],
+            [(1, 1), pz.Lattice.SOUTHEAST],
+        ],
+    )
 
-    lattice.plot( show_sites_ids=True, pause=2, close=True )
-    initialState = pz.LatticeState( lattice, [s0,s1,s2] )
+    lattice.plot(show_sites_ids=True, pause=2, close=True)
+    initialState = pz.LatticeState(lattice, [s0, s1, s2])
 
     random.seed(10)
-    initialState.fill_sites_random( site_name="fcc", species="H*", coverage=0.5 )
-    initialState.fill_sites_random( site_name=("fcc","hcp"), species=s2, coverage=0.5 )
-    initialState.fill_site( (0,1), s2 )
-    initialState.fill_sites_random( site_name="hcp", species="H*", coverage=1.0 )
-    initialState.plot( pause=2, show_sites_ids=True, close=True )
+    initialState.fill_sites_random(site_name="fcc", species="H*", coverage=0.5)
+    initialState.fill_sites_random(site_name=("fcc", "hcp"), species=s2, coverage=0.5)
+    initialState.fill_site((0, 1), s2)
+    initialState.fill_sites_random(site_name="hcp", species="H*", coverage=1.0)
+    initialState.plot(pause=2, show_sites_ids=True, close=True)
 
-    print( initialState )
+    print(initialState)
 
     output = str(initialState)
 
@@ -63,15 +67,17 @@ initial_state
   seed_on_sites H* 18
 end_initial_state\
 """
-    assert(output == expectedOutput)
+    assert output == expectedOutput
 
-    initialState = pz.LatticeState( lattice, [s3] )
-    initialState.fill_sites_random( site_name=("fcc","fcc","fcc"), species=s3, coverage=0.1, neighboring=[[0,1],[1,2],[0,2]])
-    initialState.fill_sites_random( site_name=("fcc","fcc","fcc"), species=s3, coverage=0.3 )
-    initialState.fill_site( (12,13,14), s3 )
-    initialState.plot( pause=2, show_sites_ids=True, close=True )
+    initialState = pz.LatticeState(lattice, [s3])
+    initialState.fill_sites_random(
+        site_name=("fcc", "fcc", "fcc"), species=s3, coverage=0.1, neighboring=[[0, 1], [1, 2], [0, 2]]
+    )
+    initialState.fill_sites_random(site_name=("fcc", "fcc", "fcc"), species=s3, coverage=0.3)
+    initialState.fill_site((12, 13, 14), s3)
+    initialState.plot(pause=2, show_sites_ids=True, close=True)
 
-    print( initialState )
+    print(initialState)
 
     output = str(initialState)
 
@@ -85,4 +91,4 @@ initial_state
   seed_on_sites CO3*** 13 14 15
 end_initial_state\
 """
-    assert(output == expectedOutput)
+    assert output == expectedOutput

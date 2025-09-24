@@ -3,38 +3,42 @@ import scm.pyzacros.utils
 
 
 def test_Mechanism():
-    print( "---------------------------------------------------" )
-    print( ">>> Testing Mechanism class" )
-    print( "---------------------------------------------------" )
+    print("---------------------------------------------------")
+    print(">>> Testing Mechanism class")
+    print("---------------------------------------------------")
 
-    s0 = pz.Species( "*", 1 )   # Empty adsorption site
-    s1 = pz.Species( "H*", 1 )  # H adsorbed with dentation 1
-    s2 = pz.Species( "H2*", 1 ) # H2 adsorbed with dentation 1
-    s3 = pz.Species( "H2*", 2 ) # H2 adsorbed with dentation 2
+    s0 = pz.Species("*", 1)  # Empty adsorption site
+    s1 = pz.Species("H*", 1)  # H adsorbed with dentation 1
+    s2 = pz.Species("H2*", 1)  # H2 adsorbed with dentation 1
+    s3 = pz.Species("H2*", 2)  # H2 adsorbed with dentation 2
 
-    myReaction1 = pz.ElementaryReaction( site_types=( "f", "f" ),
-                                        neighboring=[ (0,1) ],
-                                        initial=[ s1, s1 ],
-                                        final=[ s2, s0 ],
-                                        reversible=True,
-                                        pre_expon=1e+13,
-                                        pe_ratio=0.676,
-                                        activation_energy = 0.2 )
+    myReaction1 = pz.ElementaryReaction(
+        site_types=("f", "f"),
+        neighboring=[(0, 1)],
+        initial=[s1, s1],
+        final=[s2, s0],
+        reversible=True,
+        pre_expon=1e13,
+        pe_ratio=0.676,
+        activation_energy=0.2,
+    )
 
-    myReaction2 = pz.ElementaryReaction( site_types=( "f", "f" ),
-                                        neighboring=[ (0,1) ],
-                                        initial=[ s3, s3 ],
-                                        final=[ s2, s0 ],
-                                        reversible=True,
-                                        pre_expon=1e+13,
-                                        pe_ratio=0.676,
-                                        activation_energy = 0.2 )
+    myReaction2 = pz.ElementaryReaction(
+        site_types=("f", "f"),
+        neighboring=[(0, 1)],
+        initial=[s3, s3],
+        final=[s2, s0],
+        reversible=True,
+        pre_expon=1e13,
+        pe_ratio=0.676,
+        activation_energy=0.2,
+    )
 
     myMechanism = pz.Mechanism()
-    myMechanism.append( myReaction1 )
-    myMechanism.append( myReaction2 )
+    myMechanism.append(myReaction1)
+    myMechanism.append(myReaction2)
 
-    print( myMechanism )
+    print(myMechanism)
 
     output = str(myMechanism)
 
@@ -73,4 +77,4 @@ end_reversible_step
 
 end_mechanism\
 """
-    assert( pz.utils.compare( output, expectedOutput, 1e-3 ) )
+    assert pz.utils.compare(output, expectedOutput, 1e-3)

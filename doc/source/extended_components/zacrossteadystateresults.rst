@@ -35,7 +35,7 @@ The following lines of code show an example of how to use the ``ZacrosSteadyStat
               "%15.5f"%step['turnover_frequency_error']['CO2'],
               "%10s"%(all(step['converged'].values())))
 
-Lines 1-11 were already discusssed before (see :ref:`ZacrosSteadyStateJob <zacrosparametersscanjob>`).
+Lines 1-11 were already discussed before (see :ref:`ZacrosSteadyStateJob <zacrosparametersscanjob>`).
 Here, the ``ZacrosSteadyStateResults`` object ``results`` is created by calling the method ``run()`` of the corresponding ``ZacrosSteadyStateJob`` job (line 11).
 
 Afterward, the method ``ok()`` is invoked to assure that the calculation finished appropriately (line 13), and only after that,
