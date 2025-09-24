@@ -17,11 +17,10 @@ def generateAMSResults(test_folder):
     sett_ads.input.ams.PESExploration.RandomSeed = 100
     sett_ads.input.ams.PESExploration.NumExpeditions = 10
     sett_ads.input.ams.PESExploration.NumExplorers = 4
-    sett_ads.input.ams.PESExploration.Optimizer.ConvergedForce = 0.005
+    sett_ads.input.ams.PESExploration.Optimizer.ConvergedForce = 0.0005
     sett_ads.input.ams.PESExploration.SaddleSearch.MaxEnergy = 4.0
     sett_ads.input.ams.PESExploration.DynamicSeedStates = "T"
     sett_ads.input.ams.PESExploration.StructureComparison.DistanceDifference = 0.1
-    sett_ads.input.ams.PESExploration.StructureComparison.NeighborCutoff = 3.8
     sett_ads.input.ams.PESExploration.StructureComparison.EnergyDifference = 0.5
     sett_ads.input.ams.PESExploration.StructureComparison.CheckSymmetry = "T"
     sett_ads.input.ams.PESExploration.CalculateFragments = "T"
