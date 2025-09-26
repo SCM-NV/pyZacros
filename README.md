@@ -75,7 +75,7 @@ Follow these steps in your terminal to get `pyZacros` up and running.
   
        ```bash
        # Create a conda environment named 'pyzacros-env' with a specific python version
-       conda create --name pyzacros-env python=3.9
+       conda create --name pyzacros-env python=3.12
    
        # Activate it
        conda activate pyzacros-env
