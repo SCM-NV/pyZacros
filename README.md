@@ -38,6 +38,112 @@ The most important features of pyZacros:
 * Default plot functions to visualize results like adlayer configurations, process statistics, and species numbers.
 * Reconstruction of the pyZacros objects from Zacros calculation, which were not managed by pyZacros.
 
+Installation
+------------
+
+`pyZacros` is not available on the Python Package Index (PyPI). To install it, you must first clone the repository from GitHub and then install it locally using `pip`.
+
+It is highly recommended to perform the installation within a dedicated virtual environment to avoid conflicts with other packages.
+
+### Prerequisites
+
+* Python 3.8+
+* `pip` and `git` installed and available in your PATH.
+
+### Installation Steps
+
+Follow these steps in your terminal to get `pyZacros` up and running.
+
+1. **Create and Activate a Virtual Environment (Optional, but Recommended)**
+
+   Before cloning, set up an isolated environment to manage dependencies.
+
+   - **Using `venv` (standard library):**
+  
+       ```bash
+       # Create a virtual environment named 'venv'
+       python3 -m venv venv
+      
+       # Activate it
+       # On Windows:
+       # .\venv\Scripts\activate
+       # On macOS and Linux:
+       # source venv/bin/activate
+       ```
+
+   - **Using `conda`:**
+  
+       ```bash
+       # Create a conda environment named 'pyzacros-env' with a specific python version
+       conda create --name pyzacros-env python=3.12
+   
+       # Activate it
+       conda activate pyzacros-env
+       ```
+
+2. **Clone the Repository**
+
+   Use `git` to clone the project to your local machine.
+
+   ```bash
+   git clone https://github.com/SCM-NV/pyZacros.git
+   cd pyZacros
+   ```
+
+3. **Install the Package**
+
+   Once you are inside the cloned pyZacros directory, you have two options for installation.
+
+    - For regular use:
+       This will install the package into your environment like any other standard package.
+    
+       ```bash
+       pip install .
+       ```
+    
+    - For development (Editable Install):
+       This is the recommended method if you plan to modify the source code. The `-e` flag creates a symbolic link, so any changes you make to the code are immediately reflected in your environment without needing to reinstall.
+    
+       ```bash
+       pip install -e .
+       ```
+    
+4. **Verify the Installation**
+
+   To ensure pyZacros was installed correctly, open a Python interpreter:
+
+   ```bash
+   python
+   ```
+
+   Then, in the Python prompt, import the package and check its version:
+
+   ```bash
+   >>> import scm.pyzacros as pz
+   >>> print(pz.__version__)
+   # Expected: It should print the installed version number, e.g., '2025.205'
+   ```
+
+5. **Run the Test Suite (Optional, but Recommended)**
+
+   To confirm that all components are working correctly, you can run the built-in tests.
+
+   First, install `pytest`:
+
+   ```bash
+
+   pip install pytest
+   ```
+
+   Then, run the test suite from the root `pyZacros` directory:
+
+   ```bash
+
+   python -m pytest tests
+   ```
+
+   If the tests run successfully, the output will end with a summary line indicating the number of passed tests (e.g., `... 17 passed ...`). The presence of `warnings` is acceptable and does not indicate a failure.
+
 Simple example
 --------------
 
