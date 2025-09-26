@@ -1,6 +1,11 @@
 name: Build
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - trunk   
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
 
@@ -11,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         os: ['ubuntu-latest']
-        python-version: ['3.8', '3.9']
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12', '3.13']
     steps:
       - uses: actions/checkout@v2
       - name: Setup conda
@@ -22,7 +27,7 @@ jobs:
          conda-channels: anaconda, conda-forge
       - run: conda --version
       - run: python --version
-      - run: conda install python=${{ matrix.python-version }} "certifi=2021.5.30"
+      - run: conda install python=${{ matrix.python-version }}
       - name: Build
         run: |
           pip3 install .[test,doc]
