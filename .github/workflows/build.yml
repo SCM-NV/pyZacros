@@ -1,6 +1,9 @@
 name: Build
 
 on:
+  push:
+    branches:
+      - trunk   
   pull_request:
     types: [opened, synchronize, reopened]
 
