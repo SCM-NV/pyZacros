@@ -17,9 +17,29 @@ class ScmDependenciesMetadataHook(MetadataHookInterface):
         base_version = version.base_version
         major_version = version.major
 
-        scm_dependencies = [
+        dependencies = [
             f"plams>{major_version},<={base_version}",
+            "chemparse>=0.1.1",
+            "matplotlib>=3.5.1",
+            "networkx>=2.7.1",
+            "numpy>=1.21.2,<2",
+            "scipy>=1.8.0",
         ]
 
-        metadata["dependencies"].extend(scm_dependencies)
+        metadata["dependencies"] = dependencies
 
+        optional_dependencies = {
+            "test": [
+                "pytest>=7.4.0",
+                "coverage>=7.5.3",
+                "pytest-cov>=3",
+            ],
+            "doc": [
+                "sphinx>=6.2.1,<8.2",
+                "sphinx-rtd-theme>=3.0.1",
+                "sphinx_copybutton>=0.5.2",
+                "nbconvert>=6.4.5",
+            ],
+        }
+
+        metadata["optional-dependencies"] = optional_dependencies
