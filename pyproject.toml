@@ -31,7 +31,7 @@ dependencies = [
     "networkx>=2.7.1",
     "numpy>=1.21.2,<2",
     "scipy>=1.8.0",
-    "plams>2025,<=2025.299",
+    # SCM deps are injected dynamically by scm_metadata_hook.py
 ]
 
 [project.optional-dependencies]
@@ -65,6 +65,9 @@ source = "vcs"
 
 [tool.hatch.build.hooks.vcs]
 version-file = "src/scm/pyzacros/version.py"
+
+[tool.hatch.metadata.hooks.custom]
+path = "scm_metadata_hook.py"
 
 [tool.scm]
 copy-to-target = ["examples/**/*", "tests/**/*", "../zacros_manual/ZacrosManual.pdf"]
