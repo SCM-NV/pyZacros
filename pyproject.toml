@@ -1,6 +1,6 @@
 [project]
 name = "pyzacros"
-dynamic = ["version"]
+dynamic = ["version", "dependencies", "optional-dependencies"]
 description = "Python Library for Automating Zacros Simulations"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -25,28 +25,7 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 keywords=["molecular modeling", "computational chemistry", "workflow", "python interface"]
-dependencies = [
-    "chemparse>=0.1.1",
-    "matplotlib>=3.5.1",
-    "networkx>=2.7.1",
-    "numpy>=1.21.2,<2",
-    "scipy>=1.8.0",
-    # SCM deps are injected dynamically by scm_metadata_hook.py
-]
-
-[project.optional-dependencies]
-test = [
-    "pytest>=7.4.0",
-    "coverage>=7.5.3",
-    "pytest-cov>=3"
-]
-
-doc = [
-    "sphinx>=6.2.1,<8.2",
-    "sphinx-rtd-theme>=3.0.1",
-    "sphinx_copybutton>=0.5.2",
-    "nbconvert>=6.4.5"
-]
+# Dependencies are injected dynamically by scm_metadata_hook.py
 
 [project.urls]
 Homepage = "https://www.scm.com"
@@ -78,4 +57,3 @@ name = "gitea"
 url = "https://git.scm.com/api/packages/SCM/pypi/simple"
 publish-url = "https://git.scm.com/api/packages/SCM/pypi"
 explicit = true
-
