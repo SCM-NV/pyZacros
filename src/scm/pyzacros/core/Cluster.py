@@ -44,30 +44,36 @@ class Cluster:
         if entity_number is None:
             self.entity_number = SpeciesList.default_entity_numbers(self.sites, self.species)
 
-        # TODO Make a way to check denticity consistency
-        # if( sum([s.denticity for s in self.species]) != self.sites ):
-        # msg  = "\n### ERROR ### Cluster.__init__.\n"
-        # msg += "Inconsistent dimensions for species or site_types\n"
-        # raise NameError(msg)
-
         self.__userLabel = label
         self.__label = None
         self.__updateLabel()
 
         self.__mass = 0.0
         self.__composition = {}
+        total_denticity = 0
 
-        for item in species:
+        entity_checked = {}
+        for i,item in enumerate(species):
+            if self.entity_number[i] in entity_checked: continue
+            entity_checked[ self.entity_number[i] ] = 1
+
             if item != Species.UNSPECIFIED:
                 self.__mass += item.mass()
             else:
                 continue
+
+            total_denticity += item.denticity
 
             for symbol, n in item.composition().items():
                 if not symbol in self.__composition:
                     self.__composition[symbol] = n
                 else:
                     self.__composition[symbol] += n
+
+        if total_denticity > self.sites:
+            msg  = "\n### ERROR ### Cluster.__init__.\n"
+            msg += "Inconsistency between denticity and the number of sites\n"
+            raise NameError(msg)
 
     def __len__(self):
         """

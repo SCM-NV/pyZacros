@@ -30,6 +30,9 @@ cluster H*1fH*2f:(0,1)
 end_cluster\
 """
     assert pz.utils.compare(output, expectedOutput, 1e-3)
+    expectedMass = 2*pz.Species._ATOMIC_MASS["H"]
+    assert abs( expectedMass-cluster.mass() ) < 1e-6
+    assert cluster.composition() == {"H":2}
 
     cluster = pz.Cluster(
         site_types=("f", "f"),
@@ -55,6 +58,9 @@ cluster H2**1fH2**1f:(0,1)
 end_cluster\
 """
     assert pz.utils.compare(output, expectedOutput, 1e-3)
+    expectedMass = 2*pz.Species._ATOMIC_MASS["H"]
+    assert abs( expectedMass-cluster.mass() ) < 1e-6
+    assert cluster.composition() == {"H":2}
 
     cluster = pz.Cluster(
         site_types=("f", "g", "h", "i", "j"),
@@ -85,32 +91,7 @@ cluster my_weird_cluster
 end_cluster\
 """
     assert pz.utils.compare(output, expectedOutput, 1e-3)
+    expectedMass = pz.Species._ATOMIC_MASS["H"]+pz.Species._ATOMIC_MASS["C"]+2*pz.Species._ATOMIC_MASS["O"]
+    assert abs( expectedMass-cluster.mass() ) < 1e-6
+    assert cluster.composition() == {"H":1, "C":1, "O":2}
 
-    cluster = pz.Cluster(
-        site_types=("f", "g", "h", "i", "j"),
-        neighboring=[(0, 1), (1, 2), (2, 3), (3, 0), (2, 4)],
-        species=[pz.Species("CO2**"), pz.Species("*"), pz.Species("CO2**"), pz.Species("H*", 1), pz.Species("*")],
-        multiplicity=1,
-        energy=0.1,
-        label="my_weird_cluster",
-    )
-
-    print(cluster)
-
-    output = str(cluster)
-    expectedOutput = """\
-cluster my_weird_cluster
-  sites 5
-  neighboring 1-2 2-3 3-4 4-1 3-5
-  lattice_state
-    1 CO2** 1
-    2 * 1
-    1 CO2** 2
-    3 H*  1
-    4 *  1
-  site_types f g h i j
-  graph_multiplicity 1
-  cluster_eng 0.100
-end_cluster\
-"""
-    assert pz.utils.compare(output, expectedOutput, 1e-3)

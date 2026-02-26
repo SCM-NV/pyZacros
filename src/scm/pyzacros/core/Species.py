@@ -15,7 +15,7 @@ class Species:
     """
 
     # Mass of the most common isotope in Da
-    __ATOMIC_MASS = {
+    _ATOMIC_MASS = {
         "H": 1.0078,
         "HE": 4.0026,
         "LI": 7.0160,
@@ -133,7 +133,7 @@ class Species:
         if mass is None:
             self.__composition = chemparse.parse_formula(symbol.replace("*", ""))
 
-            if not all([key.upper() in Species.__ATOMIC_MASS.keys() for key in self.__composition.keys()]):
+            if not all([key.upper() in Species._ATOMIC_MASS.keys() for key in self.__composition.keys()]):
 
                 if self.kind == Species.GAS:
                     msg = "\n### ERROR ### Species.__init__.\n"
@@ -150,7 +150,7 @@ class Species:
             else:
 
                 for s, n in self.__composition.items():
-                    self.__mass += n * Species.__ATOMIC_MASS[s.upper()]
+                    self.__mass += n * Species._ATOMIC_MASS[s.upper()]
         else:
             self.__mass = mass
 
