@@ -19,7 +19,7 @@ def test_ZacrosParametersScanJob(test_folder, tmp_path):
     # ---------------------------------------------
     # Calculation Settings
     # ---------------------------------------------
-    scm.plams.init(folder=tmp_path / "test_ZacrosParametersScanJob")
+    scm.plams.init(folder=tmp_path / "test_ParamScan")
 
     ## Run as many job simultaneously as there are cpu on the system
     # maxjobs = multiprocessing.cpu_count()
@@ -54,7 +54,7 @@ def test_ZacrosParametersScanJob(test_folder, tmp_path):
         print("Warning: The calculation FAILED because the zacros executable is not available!")
         print("         For testing purposes, now we load precalculated results.")
 
-        mjob = scm.plams.load(test_folder / "test_ZacrosParametersScanJob.data/plamsjob/plamsjob.dill")
+        mjob = scm.plams.load(test_folder / "test_ParamScan.data/plamsjob/plamsjob.dill")
         results = mjob.results
 
     output = ""
