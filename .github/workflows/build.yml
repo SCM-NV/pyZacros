@@ -31,7 +31,26 @@ jobs:
       - run: conda --version
       - run: python --version
       - run: conda install python=${{ matrix.python-version }}
+      - name: Configure SCM package index
+        shell: bash
+        env:
+          SCM_DOWNLOADS_USERNAME: ${{ secrets.SCM_DOWNLOADS_USERNAME }}
+          SCM_DOWNLOADS_PASSWORD: ${{ secrets.SCM_DOWNLOADS_PASSWORD }}
+        run: |
+          if [[ -z "${SCM_DOWNLOADS_USERNAME}" || -z "${SCM_DOWNLOADS_PASSWORD}" ]]; then
+            echo "Missing SCM_DOWNLOADS_USERNAME or SCM_DOWNLOADS_PASSWORD secret."
+            exit 1
+          fi
+
+          cat << EOF > "${HOME}/.netrc"
+          machine downloads.scm.com
+            login ${SCM_DOWNLOADS_USERNAME}
+            password ${SCM_DOWNLOADS_PASSWORD}
+          EOF
+          chmod 600 "${HOME}/.netrc"
       - name: Build
+        env:
+          PIP_EXTRA_INDEX_URL: https://downloads.scm.com/Downloads/packages/uv/channels/2026.1/simple/
         run: |
           pip3 install .[test,doc]
           pip3 install build

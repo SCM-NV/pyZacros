@@ -17,7 +17,7 @@ def test_ZacrosSteadyStateJob(test_folder, tmp_path):
     # ---------------------------------------------
     # Calculation Settings
     # ---------------------------------------------
-    scm.plams.init(folder=tmp_path / "test_ZacrosSteadyStateJob")
+    scm.plams.init(folder=tmp_path / "test_SteadyState")
 
     try:
         sett = pz.Settings()
@@ -49,7 +49,7 @@ def test_ZacrosSteadyStateJob(test_folder, tmp_path):
         print("Warning: The calculation FAILED because the zacros executable is not available!")
         print("         For testing purposes, now we load precalculated results.")
 
-        mjob = scm.plams.load(test_folder / "test_ZacrosSteadyStateJob.data/plamsjob/plamsjob.dill")
+        mjob = scm.plams.load(test_folder / "test_SteadyState.data/plamsjob/plamsjob.dill")
         results = mjob.results
 
     scm.plams.finish()
