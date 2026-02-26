@@ -13,7 +13,7 @@ Ziff-Gulari-Barshad model: Steady State Conditions.
 
 .. include:: SteadyState.rst.include
 
-Finally, if you run the entire script, replacing ``ss_sett.nreplicas = 1`` with ``ss_sett.nreplicas = 4``, you should get the following result:
+Finally, if you run the entire script, replacing ``ss_sett.turnover_frequency.nreplicas = 1`` with ``ss_sett.turnover_frequency.nreplicas = 4``, you should get the following result:
 
 .. figure:: ../../images/example_ZGB-SS-nrep4.png
    :scale: 90 %
