@@ -3,7 +3,8 @@ name: Build
 on:
   push:
     branches:
-      - trunk   
+      - trunk
+      - fix2026
   pull_request:
     types: [opened, synchronize, reopened]
 
