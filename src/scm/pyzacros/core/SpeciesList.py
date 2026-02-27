@@ -109,7 +109,7 @@ class SpeciesList(UserList):
         Returns the total mass as the sum of its all species (surface and gas) in Da.
 
         *   ``entity_numbers`` -- Avoids double-counting species when they belong to the same entity,
-                                  e.g., ``[0,0,1,2]``means that the first and second species belong
+                                  e.g., [0,0,1,2] means that the first and second species belong
                                   to the same entity. Applies only to surface species.
         """
         if entity_numbers is None:
