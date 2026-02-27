@@ -104,12 +104,25 @@ class SpeciesList(UserList):
 
         return SpeciesList(output)
 
-    def mass(self, entity_numbers):
+    def mass(self, entity_numbers=None):
         """
-        Returns the total mass as the sum of its all species in Da.
+        Returns the total mass as the sum of its all species (surface and gas) in Da.
 
-        *   ``entity_numbers`` -- Avoids double counting of the species if they belong to the same entity.
+        *   ``entity_numbers`` -- Avoids double-counting species when they belong to the same entity,
+                                  e.g., ``[0,0,1,2]``means that the first and second species belong
+                                  to the same entity. Applies only to surface species.
         """
+        if entity_numbers is None:
+            entity_numbers = [ i for i in range(len(self.surface_species())) ]
+
+        if len(entity_numbers) > len(self.surface_species()):
+            msg = "Error: Inconsistent number of elememnts. entity_numbers ("
+            msg += str(len(entity_numbers))
+            msg += ") != surface species ("
+            msg += str(len(self.surface_species()))
+            msg += ")"
+            raise Exception( msg )
+
         mass = 0.0
         mapped_entity = {}
         for i, sp in enumerate(self.surface_species()):
@@ -155,26 +168,43 @@ class SpeciesList(UserList):
         self.__updateLabel()
 
     @staticmethod
-    def default_entity_numbers(nsites, species):
+    def default_entity_numbers(species):
         """
-        Calculates the list of entity numbers assuming that species with the same symbol belong to the same entity.
+        Calculates the list of entity numbers.
+        Assigns entity numbers by grouping connected species until their denticity is saturated.
 
-        *   ``nsites`` --
         *   ``species`` --
         """
-        entity_number = nsites * [None]
+        entity_number = []
 
-        id_map = {}
-        for i in range(nsites):
-            if i == 0:
-                id_map[species[i]] = i
+        # @TODO In the future we should also add the neighboring as a parameter to this function
+
+        # Dictionary to track {species_name: {"id": current_entity_id, "remaining": slots_left}}
+        active_groups = {}
+        next_entity_id = 0
+
+        for sp in species:
+            den = 1 if sp == Species.UNSPECIFIED else sp.denticity
+
+            # 1. If we are currently filling a group for this species
+            if sp in active_groups:
+                current_id = active_groups[sp]["id"]
+                entity_number.append(current_id)
+                active_groups[sp]["remaining"] -= 1
+
+                # If the group has reached its required denticity size, remove it so a new one starts next time
+                if active_groups[sp]["remaining"] == 0:
+                    del active_groups[sp]
+
+            # 2. If we need to start a brand new group for this species
             else:
-                if species[i] not in id_map:
-                    id_map[species[i]] = max(id_map.values()) + 1
-                else:
-                    if species[0 : i + 1].count(species[i]) > species[i].denticity:
-                        id_map[species[i]] = max(id_map.values()) + 1
+                current_id = next_entity_id
+                entity_number.append(current_id)
+                next_entity_id += 1
 
-            entity_number[i] = id_map[species[i]]
+                # Only add to active tracking if it needs more than 1 item to be complete
+                if den > 1:
+                    active_groups[sp] = {"id": current_id, "remaining": den - 1}
 
         return entity_number
+

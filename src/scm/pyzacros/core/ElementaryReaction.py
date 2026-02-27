@@ -75,7 +75,7 @@ class ElementaryReaction:
 
         self.initial_entity_number = initial_entity_number
         if initial_entity_number is None:
-            self.initial_entity_number = SpeciesList.default_entity_numbers(self.sites, self.__initial_adsorbed)
+            self.initial_entity_number = SpeciesList.default_entity_numbers(self.__initial_adsorbed)
 
         self.final = final
         if type(final) == list:
@@ -85,7 +85,7 @@ class ElementaryReaction:
 
         self.final_entity_number = final_entity_number
         if final_entity_number is None:
-            self.final_entity_number = SpeciesList.default_entity_numbers(self.sites, self.__final_adsorbed)
+            self.final_entity_number = SpeciesList.default_entity_numbers(self.__final_adsorbed)
 
         self.reversible = reversible
         self.pre_expon = pre_expon

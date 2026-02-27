@@ -42,7 +42,7 @@ class Cluster:
 
         self.entity_number = entity_number
         if entity_number is None:
-            self.entity_number = SpeciesList.default_entity_numbers(self.sites, self.species)
+            self.entity_number = SpeciesList.default_entity_numbers(self.species)
 
         self.__userLabel = label
         self.__label = None
