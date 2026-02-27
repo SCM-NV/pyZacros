@@ -530,14 +530,152 @@ class ZacrosResults(scm.plams.Results):
                 fig, ax = plt.subplots()
 
             plt.rcParams["figure.autolayout"] = True
+            if len(data) == 0:
+                return
+
+            markers = ["v", "s", "o", "D", "p", "^", "+", "x", "*", "P", "H", "X", "d", "h", ",", ".", "<", ">", "1", "2"]
+            colors = [
+                "r",
+                "g",
+                "b",
+                "m",
+                "c",
+                "k",
+                "tab:blue",
+                "tab:orange",
+                "tab:green",
+                "tab:red",
+                "tab:purple",
+                "tab:brown",
+                "tab:pink",
+                "tab:gray",
+                "tab:olive",
+                "tab:cyan",
+                "gold",
+                "turquoise",
+                "lime",
+                "indigo",
+            ]
+
+            # Draw immutable lattice geometry once; only adsorbates/links are updated per frame.
+            first_state = data[0]
+            first_state.lattice.plot(show=False, ax=ax, close=False, color="0.8", show_sites_ids=False)
+            static_legend = ax.get_legend()
+            if static_legend is not None:
+                static_legend.remove()
+
+            nsites = first_state.lattice.number_of_sites()
+            site_coords = first_state.lattice.site_coordinates
+            site_types = first_state.lattice.site_types
+            nearest_neighbors = first_state.lattice.nearest_neighbors
+            site_types_order = sorted(list(set(first_state.lattice.site_types)))
+            site_type_to_idx = {st: i for i, st in enumerate(site_types_order)}
+            marker_per_site = [markers[site_type_to_idx[st]] for st in site_types]
+            global_species_order = [sp.symbol for sp in list(set(first_state.surface_species))]
+            species_to_color_idx = {sym: i for i, sym in enumerate(global_species_order)}
+            dynamic_artists = []
+
             for i, ls in enumerate(data):
                 ifile_name = None
                 if file_name is not None:
                     prefix, ext = os.path.splitext(file_name)
                     ifile_name = prefix + "-" + "%05d" % i + ext
 
-                ax.cla()
-                ls.plot(show=show, pause=time_perframe, ax=ax, close=False, file_name=ifile_name)
+                for art in dynamic_artists:
+                    art.remove()
+                dynamic_artists = []
+
+                if ls.add_info is not None:
+                    ax.set_title("t = {:.3g} s".format(ls.add_info.get("time")))
+                else:
+                    ax.set_title("")
+
+                adsorbed_on_site = ls._adsorbed_on_site()
+                entity_numbers = ls._LatticeState__entity_number
+
+                species_site_groups = {}
+                for sid, sp in enumerate(adsorbed_on_site):
+                    if sp is None:
+                        continue
+
+                    sym = sp.symbol
+                    if sym not in species_site_groups:
+                        species_site_groups[sym] = []
+                    species_site_groups[sym].append(sid)
+
+                species_order = [sym for sym in global_species_order if sym in species_site_groups]
+                species_order.extend([sym for sym in species_site_groups.keys() if sym not in species_to_color_idx])
+
+                for sym in species_order:
+                    ids = species_site_groups[sym]
+                    if len(ids) == 0:
+                        continue
+
+                    xvalues = [site_coords[sid][0] for sid in ids]
+                    yvalues = [site_coords[sid][1] for sid in ids]
+                    marker = marker_per_site[ids[0]]
+                    color_idx = species_to_color_idx.get(sym, 0)
+                    scatter = ax.scatter(
+                        xvalues,
+                        yvalues,
+                        color=colors[color_idx % len(colors)],
+                        marker=marker,
+                        s=450 / numpy.sqrt(len(site_coords)),
+                        zorder=4,
+                        label=sym,
+                    )
+                    dynamic_artists.append(scatter)
+
+                # Draw links for species with denticity > 1 only once per undirected edge.
+                processed_edges = set()
+                entity_to_sites = {}
+                for sid, entity in enumerate(entity_numbers):
+                    if entity is None:
+                        continue
+                    if entity not in entity_to_sites:
+                        entity_to_sites[entity] = []
+                    entity_to_sites[entity].append(sid)
+
+                for entity_sites in entity_to_sites.values():
+                    entity_set = set(entity_sites)
+                    for sid in entity_sites:
+                        if nearest_neighbors[sid] is None:
+                            continue
+                        for sid2 in nearest_neighbors[sid]:
+                            if sid2 not in entity_set:
+                                continue
+                            edge = (sid, sid2) if sid < sid2 else (sid2, sid)
+                            if edge in processed_edges:
+                                continue
+                            processed_edges.add(edge)
+
+                            sp = adsorbed_on_site[sid]
+                            color_idx = species_to_color_idx.get(sp.symbol, 0)
+                            coords_i = site_coords[sid]
+                            coords_j = site_coords[sid2]
+                            line = ax.plot(
+                                [coords_i[0], coords_j[0]],
+                                [coords_i[1], coords_j[1]],
+                                color=colors[color_idx % len(colors)],
+                                linestyle="solid",
+                                linewidth=5,
+                                zorder=4,
+                            )[0]
+                            dynamic_artists.append(line)
+
+                handles, labels = ax.get_legend_handles_labels()
+                if len(handles) > 0:
+                    legend = ax.legend(handles, labels, loc="center left", bbox_to_anchor=(1, 0.5))
+                    dynamic_artists.append(legend)
+
+                if ifile_name is not None:
+                    plt.savefig(ifile_name)
+
+                if show:
+                    if time_perframe == -1:
+                        plt.show()
+                    else:
+                        plt.pause(time_perframe)
 
             if show:
                 if pause == -1:
