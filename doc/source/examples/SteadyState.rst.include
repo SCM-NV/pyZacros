@@ -78,7 +78,7 @@ steady-state calculation described below.
     z_sett.temperature = 500.0
     z_sett.pressure = 1.0
     z_sett.species_numbers = ('time', 0.1)
-    z_sett.max_time = 100.0*0.1
+    z_sett.max_time = 100.0 * 0.1
     z_sett.random_seed = 953129
     
     job = pz.ZacrosJob( settings=z_sett,
@@ -121,9 +121,9 @@ parameters we just defined:
     ss_sett.turnover_frequency.nreplicas = 1
     
     parameters = pz.ZacrosSteadyStateJob.Parameters()
-    parameters.add( 'max_time', 'restart.max_time', numpy.arange(20.0, 1000.0, 100) )
+    parameters.add('max_time', 'restart.max_time', numpy.arange(20.0, 1000.0, 100))
     
-    ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=job, parameters=parameters )
+    ss_job = pz.ZacrosSteadyStateJob(settings=ss_sett, reference=job, parameters=parameters)
 
 
 .. parsed-literal::
@@ -187,18 +187,22 @@ Notice that the calculation should have been converged at 720 s of
 
 .. code:: ipython3
 
-    print(60*'-')
-    fline = "{0:>8s}{1:>10s}{2:>15s}{3:>12s}{4:>10s}"
-    print( fline.format('iter', 'max_time', 'TOF_CO2', 'error', 'conv?') )
-    print(60*'-')
+    print(60 * '-')
+    fline = '{0:>8s}{1:>10s}{2:>15s}{3:>12s}{4:>10s}'
+    print(fline.format('iter', 'max_time', 'TOF_CO2', 'error', 'conv?'))
+    print(60 * '-')
     
-    for i,step in enumerate(results.history()):
-        fline = "{0:8d}{1:>10.2f}{2:15.5f}{3:>12.5f}{4:>10s}"
-        print( fline.format(i,
-                            step['max_time'],
-                            step['turnover_frequency']['CO2'],
-                            step['turnover_frequency_error']['CO2'],
-                            str(all(step['converged'].values()))) )
+    for i, step in enumerate(results.history()):
+        fline = '{0:8d}{1:>10.2f}{2:15.5f}{3:>12.5f}{4:>10s}'
+        print(
+            fline.format(
+                i,
+                step['max_time'],
+                step['turnover_frequency']['CO2'],
+                step['turnover_frequency_error']['CO2'],
+                str(all(step['converged'].values())),
+            )
+        )
 
 
 .. parsed-literal::
@@ -244,15 +248,21 @@ on “max time” are represented by vertical gray dashed lines.
     fig = plt.figure()
     ax = plt.axes()
     ax.set_xlabel('Time (s)', fontsize=14)
-    ax.set_ylabel("CO$_2$ Production (mol/site)", fontsize=14)
+    ax.set_ylabel('CO$_2$ Production (mol/site)', fontsize=14)
     
     colors = 'bgrcmykb'
     for i in range(results.niterations()):
         for j in range(results.nreplicas()):
-            molecule_numbers = results.children_results(i,j).molecule_numbers(['CO2'], normalize_per_site=True)
-            
-            ax.plot( molecule_numbers['Time'], molecule_numbers['CO2'], lw=3, color=colors[i], zorder=-i )
-            ax.vlines( max(molecule_numbers['Time']) , 0, max(molecule_numbers['CO2']), colors='0.8', linestyles='--',)
+            molecule_numbers = results.children_results(i, j).molecule_numbers(['CO2'], normalize_per_site=True)
+    
+            ax.plot(molecule_numbers['Time'], molecule_numbers['CO2'], lw=3, color=colors[i], zorder=-i)
+            ax.vlines(
+                max(molecule_numbers['Time']),
+                0,
+                max(molecule_numbers['CO2']),
+                colors='0.8',
+                linestyles='--',
+            )
     
     plt.show()
 

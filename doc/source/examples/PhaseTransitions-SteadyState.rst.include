@@ -100,9 +100,9 @@ steady-state calculation described below.
     z_sett.species_numbers = ('time', 0.1)
     z_sett.random_seed = 953129
     
-    z_job = pz.ZacrosJob( settings=z_sett, lattice=zgb.lattice,
-                          mechanism=zgb.mechanism,
-                          cluster_expansion=zgb.cluster_expansion )
+    z_job = pz.ZacrosJob(
+        settings=z_sett, lattice=zgb.lattice, mechanism=zgb.mechanism, cluster_expansion=zgb.cluster_expansion
+    )
 
 **2. Setting up the ZacrosSteadyStateJob**
 
@@ -127,7 +127,7 @@ just defined:
     
     ss_params = pz.ZacrosSteadyStateJob.Parameters()
     ss_params.add( 'max_time', 'restart.max_time',
-                       2*z_sett.max_time*( numpy.arange(10)+1 )**2 )
+                    2 * z_sett.max_time*( numpy.arange(10)+1 )**2 )
     
     ss_job = pz.ZacrosSteadyStateJob( settings=ss_sett, reference=z_job,
                                       parameters=ss_params )
@@ -157,9 +157,9 @@ we just defined (``ps params``), we create the
 
     ps_params = pz.ZacrosParametersScanJob.Parameters()
     ps_params.add( 'x_CO', 'molar_fraction.CO', numpy.arange(0.2, 0.8, 0.01) )
-    ps_params.add( 'x_O2', 'molar_fraction.O2', lambda params: 1.0-params['x_CO'] )
+    ps_params.add( 'x_O2', 'molar_fraction.O2', lambda params: 1.0 - params['x_CO'] )
     
-    ps_job = pz.ZacrosParametersScanJob( reference=ss_job, parameters=ps_params )
+    ps_job = pz.ZacrosParametersScanJob(reference=ss_job, parameters=ps_params)
 
 
 .. parsed-literal::
@@ -190,7 +190,7 @@ executed thread. This step should take less than 10 mins!
     results = ps_job.run()
     
     if not results.job.ok():
-        print('Something went wrong!')    
+        print('Something went wrong!')
 
 
 .. parsed-literal::
@@ -265,20 +265,22 @@ achieve the steady state for that specific composition (“max time”).
     max_time = []
     
     results_dict = results.turnover_frequency()
-    results_dict = results.average_coverage( last=10, update=results_dict )
+    results_dict = results.average_coverage(last=10, update=results_dict)
     
-    for i,idx in enumerate(results.indices()):
-        x_CO.append( results_dict[i]['x_CO'] )
-        ac_O.append( results_dict[i]['average_coverage']['O*'] )
-        ac_CO.append( results_dict[i]['average_coverage']['CO*'] )
-        TOF_CO2.append( results_dict[i]['turnover_frequency']['CO2'] )
-        max_time.append( results.children_results( child_id=idx ).history( pos=-1 )['max_time'] )
+    for i, idx in enumerate(results.indices()):
+        x_CO.append(results_dict[i]['x_CO'])
+        ac_O.append(results_dict[i]['average_coverage']['O*'])
+        ac_CO.append(results_dict[i]['average_coverage']['CO*'])
+        TOF_CO2.append(results_dict[i]['turnover_frequency']['CO2'])
+        max_time.append(results.children_results(child_id=idx).history(pos=-1)['max_time'])
     
-    print( "-----------------------------------------------------------" )
-    print( "%4s"%"cond", "%8s"%"x_CO", "%10s"%"ac_O", "%10s"%"ac_CO", "%12s"%"TOF_CO2", "%10s"%"max_time" )
-    print( "-----------------------------------------------------------" )
+    print('-----------------------------------------------------------')
+    print('%4s'%'cond', '%8s'%'x_CO', '%10s'%'ac_O','%10s'%'ac_CO',
+          '%12s'%'TOF_CO2','%10s'%'max_time')
+    print('-----------------------------------------------------------')
     for i in range(len(x_CO)):
-        print( "%4d"%i, "%8.2f"%x_CO[i], "%10.6f"%ac_O[i], "%10.6f"%ac_CO[i], "%12.6f"%TOF_CO2[i], "%10.3f"%max_time[i] )
+        print('%4d'%i, '%8.2f'%x_CO[i], '%10.6f'%ac_O[i], '%10.6f'%ac_CO[i],
+              '%12.6f'%TOF_CO2[i], '%10.3f'%max_time[i])
 
 
 .. parsed-literal::
@@ -365,16 +367,16 @@ rate of :math:`CO_2`:
     
     ax = plt.axes()
     ax.set_xlabel('Molar fraction CO', fontsize=14)
-    ax.set_ylabel("Coverage Fraction (%)", color="blue", fontsize=14)
-    ax.plot(x_CO, ac_O, color="blue", linestyle="-.", lw=2, zorder=1)
-    ax.plot(x_CO, ac_CO, color="blue", linestyle="-", lw=2, zorder=2)
-    plt.text(0.3, 0.9, 'O', fontsize=18, color="blue")
-    plt.text(0.7, 0.9, 'CO', fontsize=18, color="blue")
+    ax.set_ylabel('Coverage Fraction (%)', color='blue', fontsize=14)
+    ax.plot(x_CO, ac_O, color='blue', linestyle='-.', lw=2, zorder=1)
+    ax.plot(x_CO, ac_CO, color='blue', linestyle='-', lw=2, zorder=2)
+    plt.text(0.3, 0.9, 'O', fontsize=18, color='blue')
+    plt.text(0.7, 0.9, 'CO', fontsize=18, color='blue')
     
     ax2 = ax.twinx()
-    ax2.set_ylabel("TOF (mol/s/site)",color="red", fontsize=14)
-    ax2.plot(x_CO, TOF_CO2, color="red", lw=2, zorder=5)
-    plt.text(0.37, 1.5, 'CO$_2$', fontsize=18, color="red")
+    ax2.set_ylabel('TOF (mol/s/site)', color='red', fontsize=14)
+    ax2.plot(x_CO, TOF_CO2, color='red', lw=2, zorder=5)
+    plt.text(0.37, 1.5, 'CO$_2$', fontsize=18, color='red')
     
     plt.show()
 

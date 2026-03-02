@@ -99,7 +99,7 @@ Please review the code below.
     plt.text(0.7, 0.45, 'CO*', fontsize=18, color='blue')
     
     ax2 = ax.twinx()
-    ax2.set_ylabel('TOF (mol/s/site)',color='red', fontsize=14)
+    ax2.set_ylabel('TOF (mol/s/site)', color='red', fontsize=14)
     ax2.plot(x_CO, TOF_CO2, marker='$\u25EF$', color='red', markersize=4, zorder=6)
     plt.text(0.3, 200.0, 'CO$_2$', fontsize=18, color='red')
     
@@ -142,11 +142,9 @@ below:
 .. math::
 
 
-   \begin{gather}
    \theta_\text{O} = \frac{ \sqrt{B_{\text{O}_2}x_{\text{O}_2}} }{ 1 + B_\text{CO}x_\text{CO} + \sqrt{B_{\text{O}_2}x_{\text{O}_2}} } \\
    \theta_\text{CO} = \frac{ B_\text{CO}x_\text{CO} }{ 1 + B_\text{CO}x_\text{CO} + \sqrt{B_{\text{O}_2}x_{\text{O}_2}} } \\[7mm]
    \text{TOF}_{\text{CO}_2} = 6 \, A_\text{oxi}\theta_\text{CO}\theta_\text{O}
-   \end{gather}
 
 Here :math:`B_\text{CO}`/:math:`B_{\text{O}_2}` represent the ratio of
 the adsorption-desorption pre-exponential terms of
@@ -166,11 +164,9 @@ Zacros tutorial, you need the following equalities:
 .. math::
 
 
-   \begin{gather}
    K_s P_s = \left( \frac{A^\text{ads}_s P^{-1}}{A^\text{des}_s} \right) x_s P = B_s x_s \qquad \therefore\qquad s=\text{CO},\text{O}_2
    \\
    k_\text{oxi} = A_\text{oxi}
-   \end{gather}
 
 The final equality follows from the fact that in pyZacros, the
 activation energy for all elementary reactions is equal to zero.
@@ -188,7 +184,7 @@ using the analytical expression described above:
     B_O2 = lh.mechanism.find_one( 'O2_adsorption' ).pe_ratio
     A_oxi = lh.mechanism.find_one( 'CO_oxidation' ).pre_expon
     
-    x_CO_model = numpy.linspace(0.0,1.0,201)
+    x_CO_model = numpy.linspace(0.0, 1.0, 201)
     
     ac_O_model = []
     ac_CO_model = []
@@ -196,9 +192,9 @@ using the analytical expression described above:
     
     for i in range(len(x_CO_model)):
         x_O2 = 1 - x_CO_model[i]
-        ac_O_model.append( numpy.sqrt(B_O2*x_O2)/( 1 + B_CO*x_CO_model[i] + numpy.sqrt(B_O2*x_O2) ) )
-        ac_CO_model.append( B_CO*x_CO_model[i]/( 1 + B_CO*x_CO_model[i] + numpy.sqrt(B_O2*x_O2) ) )
-        TOF_CO2_model.append( 6*A_oxi*ac_CO_model[i]*ac_O_model[i] )
+        ac_O_model.append( numpy.sqrt(B_O2 * x_O2) / (1 + B_CO * x_CO_model[i] + numpy.sqrt(B_O2 * x_O2)) )
+        ac_CO_model.append( B_CO * x_CO_model[i] / (1 + B_CO * x_CO_model[i] + numpy.sqrt(B_O2 * x_O2)) )
+        TOF_CO2_model.append( 6 * A_oxi * ac_CO_model[i] * ac_O_model[i] )
 
 Additionally, if you have installed the package
 `matplotlib <https://matplotlib.org/>`__, you can see the aforementioned
@@ -211,7 +207,7 @@ results. They are nearly identical.
 
     import matplotlib.pyplot as plt
     
-    x_CO_max = (B_O2/B_CO**2/2.0)*(numpy.sqrt(1.0+4.0*B_CO**2/B_O2)-1.0)
+    x_CO_max = (B_O2 / B_CO**2 / 2.0) * (numpy.sqrt(1.0 + 4.0 * B_CO**2 / B_O2) - 1.0)
     
     fig = plt.figure()
     
@@ -219,7 +215,7 @@ results. They are nearly identical.
     ax.set_xlim([0.0, 1.0])
     ax.set_xlabel('Molar Fraction CO', fontsize=14)
     ax.set_ylabel('Coverage Fraction (%)', color='blue', fontsize=14)
-    ax.vlines( x_CO_max, 0, max(ac_O_model), colors='0.8', linestyles='--',)
+    ax.vlines(x_CO_max, 0, max(ac_O_model), colors='0.8', linestyles='--')
     ax.plot(x_CO_model, ac_O_model, color='blue', linestyle='-.', lw=2, zorder=1)
     ax.plot(x_CO, ac_O, marker='$\u25CF$', color='blue', lw=0, markersize=4, zorder=2)
     ax.plot(x_CO_model, ac_CO_model, color='blue', linestyle='-', lw=2, zorder=3)
@@ -228,7 +224,7 @@ results. They are nearly identical.
     plt.text(0.7, 0.45, 'CO*', fontsize=18, color='blue')
     
     ax2 = ax.twinx()
-    ax2.set_ylabel('TOF (mol/s/site)',color='red', fontsize=14)
+    ax2.set_ylabel('TOF (mol/s/site)', color='red', fontsize=14)
     ax2.plot(x_CO_model, TOF_CO2_model, color='red', linestyle='-', lw=2, zorder=5)
     ax2.plot(x_CO, TOF_CO2, marker='$\u25EF$', color='red', markersize=4, lw=0, zorder=6)
     plt.text(0.3, 200.0, 'CO$_2$', fontsize=18, color='red')
