@@ -2,8 +2,8 @@
 
       <br>
 
-Langmuir-Hinshelwood model: Acceleration by Automated Rescaling of the Rate Constants.
-======================================================================================
+Langmuir-Hinshelwood Model: Acceleration by Automated Rescaling of the Rate Constants
+=====================================================================================
 
 .. Note::
    To follow this tutorial, either:
@@ -11,7 +11,9 @@ Langmuir-Hinshelwood model: Acceleration by Automated Rescaling of the Rate Cons
    * Download :download:`CoveragesAndReactionRate.py <../../../examples/LangmuirHinshelwood/CoveragesAndReactionRate.py>` (run as ``$AMSBIN/amspython CoveragesAndReactionRate.py``).
    * Download :download:`CoveragesAndReactionRate.ipynb <../../../examples/LangmuirHinshelwood/CoveragesAndReactionRate.ipynb>` (see also: how to install `Jupyterlab <../../Scripting/Python_Stack/Python_Stack.html#install-and-run-jupyter-lab-jupyter-notebooks>`__)
 
+
 .. include:: CoveragesAndReactionRate.rst.include
+
 
 Comparing with Traditional Kinetic Models
 -----------------------------------------
@@ -22,5 +24,5 @@ Comparing with Traditional Kinetic Models
    * Download :download:`CoveragesAndReactionRate_ViewResults.py <../../../examples/LangmuirHinshelwood/CoveragesAndReactionRate_ViewResults.py>` (run as ``$AMSBIN/amspython CoveragesAndReactionRate.py``).
    * Download :download:`CoveragesAndReactionRate_ViewResults.ipynb <../../../examples/LangmuirHinshelwood/CoveragesAndReactionRate_ViewResults.ipynb>` (see also: how to install `Jupyterlab <../../Scripting/Python_Stack/Python_Stack.html#install-and-run-jupyter-lab-jupyter-notebooks>`__)
 
-.. include:: CoveragesAndReactionRate_ViewResults.rst.include
 
+.. include:: CoveragesAndReactionRate_ViewResults.rst.include
