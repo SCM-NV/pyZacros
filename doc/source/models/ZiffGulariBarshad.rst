@@ -2,10 +2,12 @@
 
       <br>
 
+.. _label-pyzacros-zgb-model-overview:
+
 Ziff-Gulari-Barshad Model
 -------------------------
 
-For more information, see file :download:`ZiffGulariBarshad.py <../../../src/scm/pyzacros/models/ZiffGulariBarshad.py>`.
+A full overview of the model is provided in: :download:`ZiffGulariBarshad.py <../../../src/scm/pyzacros/models/ZiffGulariBarshad.py>`
 
 The ZGB model includes the following elementary reactions:
 
@@ -13,9 +15,9 @@ The ZGB model includes the following elementary reactions:
    :nowrap:
 
    \begin{align}
-      \text{CO}_{(\text{g})} + \text{*}  & \overset{k_\text{CO}}{\longrightarrow} \text{CO}^\text{*} &\qquad \text{'CO_adsorption'} \\
-      \text{O}_{2(\text{g})} + 2\text{*} & \overset{k_{\text{O}_2}}{\longrightarrow} \text{O}^\text{*} + \text{O}^\text{*}  &\qquad \text{'O2_adsorption'}\\
-      \text{CO}^\text{*} + \text{O}^\text{*} & \overset{k_\text{oxi}}{\longrightarrow} 2\text{*} + \text{CO}_{2(\text{g})} &\qquad \text{'CO_oxidation'} \\
+      \text{CO}_{(\text{g})} + \text{*}  & \overset{k_\text{CO}}{\longrightarrow} \text{CO}^\text{*} &\qquad \text{CO adsorption} \\
+      \text{O}_{2(\text{g})} + 2\text{*} & \overset{k_{\text{O}_2}}{\longrightarrow} \text{O}^\text{*} + \text{O}^\text{*}  &\qquad \text{O2 adsorption}\\
+      \text{CO}^\text{*} + \text{O}^\text{*} & \overset{k_\text{oxi}}{\longrightarrow} 2\text{*} + \text{CO}_{2(\text{g})} &\qquad \text{CO oxidation} \\
    \end{align}
 
 

@@ -1,11 +1,71 @@
-The Ziff-Gulari-Barshad (ZGB) model.
-------------------------------------
+The Ziff-Gulari-Barshad (ZGB) Model
+-----------------------------------
 
-This tutorial is intended to show how to use pyZacros from a Zacros perspective. Thus, we will literally show how to translate the Zacros input files to a pyZacros script. To do that, we use the system described in the Zacros tutorial `Ziff-Gulari-Barshad Model in Zacros <https://zacros.org/index.php/tutorials/4-tutorial-1-ziff-gulari-barshad-model-in-zacros?showall=1>`_. All physical/chemical description of the system is described in detail there. We invited you first to get familiar with the tutorial cited above to quickly appreciate the parallel between the Zacros input files and the pyZacros objects. This will allow you to follow line-by-line the example's python script easily.
+In the :ref:`previous tutorial <pyzacros-wgs-tutorial>`, we have shown how the Zacros input files can be translated to pyZacros scripts.
+Here, we will show some additional examples for post-processing of the simulation output.
 
-You can download the example's python script from this link :download:`ZiffGulariBarshad.py <../../../examples/ZiffGulariBarshad/ZiffGulariBarshad.py>`.
+The example script can be downloaded through this link: :download:`ZiffGulariBarshad.py <../../../examples/ZiffGulariBarshad/ZiffGulariBarshad.py>`.
 
-If everything is working well, you should get the following information in the standard output and the figure shown at the end.
+
+Post-processing Setup
++++++++++++++++++++++
+
+pyZacros scripting can be used to immediately visualize the output of your simulation, enabling automated report generation.
+Various built-in functions are :ref:`available <zacrosresults>` to access commonly-used reports.
+
+The basic structure of the script is much the same as in the :ref:`preceding tutorial <pyzacros-wgs-tutorial>`. We start by defining the species, lattice, reactions and simulation settings.
+The parameters used for the Ziff-Gulari-Barshad model can be found in the :ref:`models overview <label-pyzacros-zgb-model-overview>`.
+
+We use the ``run()`` call to start the Zacros simulation. A ``results`` object is generated once the simulation completes. This ``results`` object gives us access to the simulation output within Python. For this example, we add a check to make sure that the job has finished without errors (``job.ok``) before proceeding with the analysis.
+
+.. code-block:: python
+  :linenos:
+
+  scm.pyzacros.init()
+  results = job.run()
+
+  if job.ok():
+      # Post-processing & visualization
+      results.plot_lattice_states(results.lattice_states())
+
+  scm.pyzacros.finish()
+
+
+Using the ``plot_lattice_states`` function allows us to generate a **.gif** file showing the transient evolution of the lattice during the kMC simulation. In order to customize your own reports, you can simply add additional function calls to this post-processing block.
+
+.. code-block:: python
+  :linenos:
+
+  if job.ok():
+      # Post-processing & visualization
+      results.plot_molecule_numbers(["CO*", "O*"])
+      results.plot_lattice_states(results.lattice_states())
+
+
+pyZacros can also be used to load results from past jobs. This allows you to modify the visualization script without having to re-run the simulation.
+
+.. code-block:: python
+  :linenos:
+
+  job = pz.ZacrosJob.load_external( path="plams_workdir/plamsjob" )
+  job.results.plot_lattice_states(job.results.lattice_states())
+
+
+Running the Simulation
+++++++++++++++++++++++
+
+We will now run the example script using Python. For default AMS installations:
+
+``$AMSBIN/amspython WaterGasShiftOnPt111.py``
+
+An overview of the simulation settings will be shown and the jobs starts running.
+Once the simulation has completed, a movie will play showing the transient evolution of the lattice.
+
+.. image:: ../../images/example_ZGB.gif
+   :scale: 100 %
+   :align: center
+
+The ``StTp`` is the default name for a ``SiteType`` in Zacros. When constructing your own :ref:`lattices <lattice>`, you can provide custom labels for the different sites, which will then also update the legend shown in the graph.
 
 .. code-block:: none
   :linenos:
@@ -118,8 +178,3 @@ If everything is working well, you should get the following information in the s
   [14.02|17:29:41] JOB plamsjob FINISHED
   [14.02|17:29:41] JOB plamsjob SUCCESSFUL
   [14.02|17:32:01] PLAMS run finished. Goodbye
-
-
-.. image:: ../../images/example_ZGB.gif
-   :scale: 100 %
-   :align: center
