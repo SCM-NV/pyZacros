@@ -22,19 +22,28 @@ experience before moving on to more complex systems.
    WaterGasShiftOnPt111.rst
    zgb.rst
 
-.. |example_s1| image:: ../../images/example_WaterGasShiftOnPt111.png
-   :scale: 35 %
-   :target: WaterGasShiftOnPt111.html
 
-.. |example_s2| image:: ../../images/example_ZGB.gif
-   :scale: 35 %
-   :target: zgb.html
+.. grid:: 2
+   :gutter: 2
 
-.. csv-table::
-   :header: |example_s1|, |example_s2|
-   :align: center
+   .. grid-item-card:: Water-Gas Shift Reaction on Pt(111)
+      :link: WaterGasShiftOnPt111.html
 
-   "Water-Gas Shift Reaction on Pt(111)", "Ziff-Gulari-Barshad Model"
+      .. image:: ../../images/example_WaterGasShiftOnPt111.png
+         :scale: 50 %
+
+      +++
+      **Keywords:** Water-gas shift, Pt(111) surface, CO oxidation, surface catalysis
+
+   .. grid-item-card:: Ziff-Gulari-Barshad Model
+      :link: zgb.html
+
+      .. image:: ../../images/example_ZGB.gif
+         :scale: 50 %
+
+      +++
+      **Keywords:** ZGB model, Nearest-neighbor reaction, Adsorption
+
 
 Intermediate examples
 ---------------------
@@ -50,41 +59,49 @@ times and require access to higher computational resources.
 
    zgb_pts.rst
    zgb_ss.rst
+   zgb_pts_ss.rst
+   lh_rrc.rst
 
-.. |example_i1| image:: PhaseTransitions_files/PhaseTransitions_28_0.png
-   :scale: 35 %
-   :target: zgb_pts.html
 
-.. |example_i2| image:: SteadyState_files/SteadyState_19_0.png
-   :scale: 35 %
-   :target: zgb_ss.html
+.. grid:: 2
+   :gutter: 2
 
-.. csv-table::
-   :header: |example_i1|, |example_i2|
-   :align: center
+   .. grid-item-card:: Ziff-Gulari-Barshad Model: Phase Transitions
+      :link: zgb_pts.html
 
-   "Ziff-Gulari-Barshad Model: |br| Phase Transitions |br|", "Ziff-Gulari-Barshad Model: |br| Steady State Conditions"
+      .. image:: PhaseTransitions_files/PhaseTransitions_28_0.png
+         :scale: 50 %
 
-.. toctree::
-   :maxdepth: 1
-   :hidden:
+      +++
+      **Keywords:** First-order transition, Continuous transition, CO poisoning, O poisoning
 
-   zgb_pts_ss
-   lh_rrc
+   .. grid-item-card:: Ziff-Gulari-Barshad Model: Steady State Conditions
+      :link: zgb_ss.html
 
-.. |example_i3| image:: PhaseTransitions-SteadyState_files/PhaseTransitions-SteadyState_21_0.png
-   :scale: 35 %
-   :target: zgb_pts_ss.html
+      .. image:: SteadyState_files/SteadyState_19_0.png
+         :scale: 50 %
 
-.. |example_i4| image:: CoveragesAndReactionRate_ViewResults_files/CoveragesAndReactionRate_ViewResults_10_0.png
-   :scale: 35 %
-   :target: lh_rrc.html
+      +++
+      **Keywords:** Stationary regime, Coverage plateau, Turnover frequency, Time averaging
 
-.. csv-table::
-   :header: |example_i3|, |example_i4|
-   :align: center
+   .. grid-item-card:: Ziff-Gulari-Barshad Model: Phase Transitions under Steady State Conditions
+      :link: zgb_pts_ss.html
 
-   "Ziff-Gulari-Barshad Model: |br| Phase Transitions under Steady |br| State Conditions", "Langmuir-Hinshelwood Model: |br| Acceleration by Automated |br| Rescaling of the Rate Constants |br|"
+      .. image:: PhaseTransitions-SteadyState_files/PhaseTransitions-SteadyState_21_0.png
+         :scale: 50 %
+
+      +++
+      **Keywords:** Steady-state transitions, ZacrosSteadyStateJob, Steady-state convergence
+
+   .. grid-item-card:: Langmuir-Hinshelwood Model: Acceleration by Automated Rescaling of the Rate Constants
+      :link: lh_rrc.html
+
+      .. image:: CoveragesAndReactionRate_ViewResults_files/CoveragesAndReactionRate_ViewResults_10_0.png
+         :scale: 50 %
+
+      +++
+      **Keywords:** Rate-constant rescaling, Timescale separation, Accelerated kMC
+
 
 Advanced examples
 -----------------
@@ -99,16 +116,24 @@ These examples represent industrial problems and showcase state-of-the-art valid
    COPt111
    zgb_pts_sm.rst
 
-.. |example_a1| image:: ../../images/example_CO+Pt111-main.png
-   :scale: 54 %
-   :target: COPt111.html
 
-.. |example_a2| image:: PhaseTransitions-ADP_improved.png
-   :scale: 35 %
-   :target: zgb_pts_sm.html
+.. grid:: 2
+   :gutter: 2
 
-.. csv-table::
-   :header: |example_a1|, |example_a2|
-   :align: center
+   .. grid-item-card:: Poisoning of Pt(111) by CO: From Atomistic to Mesoscopic Modeling
+      :link: COPt111.html
 
-   "Poisoning of Pt(111) by CO: |br| From Atomistic to Mesoscopic |br| Modeling", "Ziff-Gulari-Barshad Model: |br| Phase Transitions and ML-based |br| Surrogate Models |br|"
+      .. image:: ../../images/example_CO+Pt111-main.png
+         :scale: 70 %
+
+      +++
+      **Keywords:** Site blocking, Deactivation, Atomistic energetics, Coarse-grained kinetics, Multiscale
+
+   .. grid-item-card:: Ziff-Gulari-Barshad Model: Phase Transitions and ML-based Surrogate Models
+      :link: zgb_pts_sm.html
+
+      .. image:: PhaseTransitions-ADP_improved.png
+         :scale: 50 %
+
+      +++
+      **Keywords:** Phase transitions, Machine learning surrogate, Training from kMC, Fast parameter scan, Data-driven kinetics
