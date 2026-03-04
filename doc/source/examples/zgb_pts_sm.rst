@@ -20,7 +20,11 @@ Ziff-Gulari-Barshad Model: Phase Transitions and ML-based Surrogate Model
 Model Refinement
 ++++++++++++++++
 
-We can alter the ADP parameters to perform a stricter optimization. Here, we will use the parameters determined by an earlier `benchmark study <https://doi.org/10.1016/j.cej.2020.125469>`__. To improve the surrogate model, we update our ADP script and re-start the calculation:
+We can alter the ADP parameters to perform a stricter optimization.
+The ``dth`` and ``d2th`` parameters are refinement thresholds for the first and second derivatives calculated by the model. When large gradients are encountered in the training set, additional data is generated.
+By lowering the ``dth`` and ``d2th`` thresholds, the resolution of the surrogate model can be improved.
+
+Optimization parameters can be specified in the ADP settings. We update our script and re-start the calculation:
 
 .. code-block:: python
    :emphasize-lines: 2
