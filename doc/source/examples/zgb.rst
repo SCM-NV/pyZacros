@@ -7,8 +7,8 @@ Here, we will show some additional examples for post-processing of the simulatio
 The example script can be downloaded through this link: :download:`ZiffGulariBarshad.py <../../../examples/ZiffGulariBarshad/ZiffGulariBarshad.py>`.
 
 
-Post-processing Setup
-+++++++++++++++++++++
+pyZacros Setup
+++++++++++++++
 
 pyZacros scripting can be used to immediately visualize the output of your simulation, enabling automated report generation.
 Various built-in functions are :ref:`available <zacrosresults>` to access commonly-used reports.
@@ -19,7 +19,6 @@ The parameters used for the Ziff-Gulari-Barshad model can be found in the :ref:`
 We use the ``run()`` call to start the Zacros simulation. A ``results`` object is generated once the simulation completes. This ``results`` object gives us access to the simulation output within Python. For this example, we add a check to make sure that the job has finished without errors (``job.ok``) before proceeding with the analysis.
 
 .. code-block:: python
-  :linenos:
 
   scm.pyzacros.init()
   results = job.run()
@@ -31,24 +30,7 @@ We use the ``run()`` call to start the Zacros simulation. A ``results`` object i
   scm.pyzacros.finish()
 
 
-Using the ``plot_lattice_states`` function allows us to generate a **.gif** file showing the transient evolution of the lattice during the kMC simulation. In order to customize your own reports, you can simply add additional function calls to this post-processing block.
-
-.. code-block:: python
-  :linenos:
-
-  if job.ok():
-      # Post-processing & visualization
-      results.plot_molecule_numbers(["CO*", "O*"])
-      results.plot_lattice_states(results.lattice_states())
-
-
-pyZacros can also be used to load results from past jobs. This allows you to modify the visualization script without having to re-run the simulation.
-
-.. code-block:: python
-  :linenos:
-
-  job = pz.ZacrosJob.load_external( path="plams_workdir/plamsjob" )
-  job.results.plot_lattice_states(job.results.lattice_states())
+Using the ``plot_lattice_states`` function allows us to generate snapshots showing the transient evolution of the lattice during the kMC simulation.
 
 
 Running the Simulation
@@ -178,3 +160,26 @@ The ``StTp`` is the default name for a ``SiteType`` in Zacros. When constructing
   [14.02|17:29:41] JOB plamsjob FINISHED
   [14.02|17:29:41] JOB plamsjob SUCCESSFUL
   [14.02|17:32:01] PLAMS run finished. Goodbye
+
+
+Post-processing
++++++++++++++++
+
+In order to customize your own reports, you can simply add additional function calls to the post-processing block.
+
+.. code-block:: python
+
+  if job.ok():
+      # Post-processing & visualization
+      results.plot_molecule_numbers(["CO*", "O*"])
+      results.plot_lattice_states(results.lattice_states())
+
+
+Here, you can use any of the :ref:`built-in <zacrosresults>` visualization tools provided by pyZacros, or you can make your own analysis scripts by accessing the results data. (Examples for this are shown in the :ref:`intermediate tutorials <label-pyzacros-examples-index>`.)
+
+pyZacros can also be used to load results from past jobs. This allows you to modify the visualization script without having to re-run the simulation.
+
+.. code-block:: python
+
+  job = pz.ZacrosJob.load_external( path="plams_workdir/plamsjob" )
+  job.results.plot_lattice_states(job.results.lattice_states())
