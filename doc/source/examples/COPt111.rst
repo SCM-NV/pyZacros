@@ -422,7 +422,7 @@ Similar to the preceding tutorials, we can now visualize the output of the simul
   scm.plams.finish()
 
 
-Line 77 will generate snapshots with the lattice states:
+Line 77 will generate snapshots of the lattice states:
 
 .. figure:: ../../images/example_CO+Pt111-ls.gif
    :scale: 100 %
