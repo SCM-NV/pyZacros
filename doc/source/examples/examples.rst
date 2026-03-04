@@ -9,7 +9,7 @@ Examples
 
 The following list of examples illustrates how to use pyZacros for running and analyzing kMC simulations.
 
-Simple examples
+Simple Examples
 ---------------
 
 This section contains some simple tutorial examples to gain a basic understanding of the pyZacros classes.
@@ -47,7 +47,7 @@ experience before moving on to more complex systems.
       **Keywords:** ZGB model, Nearest-neighbor reaction, Adsorption
 
 
-Intermediate examples
+Intermediate Examples
 ---------------------
 
 This section contains intermediate-level examples.
@@ -105,7 +105,7 @@ times and require access to higher computational resources.
       **Keywords:** Rate-constant rescaling, Timescale separation, Accelerated kMC
 
 
-Advanced examples
+Advanced Examples
 -----------------
 
 This section contains more complicated scripting examples involving multiphysics by coupling pyZacros with external codes.
