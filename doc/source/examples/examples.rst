@@ -2,6 +2,8 @@
 
       <br>
 
+.. _label-pyzacros-examples-index:
+
 Examples
 ========
 
