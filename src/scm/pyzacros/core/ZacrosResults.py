@@ -14,6 +14,7 @@ from .ClusterExpansion import *
 from .Mechanism import *
 from .LatticeState import *
 from .Settings import *
+from .SharedUtils import DEFAULT_MARKERS, DEFAULT_COLORS
 
 __all__ = ["ZacrosResults"]
 
@@ -506,7 +507,8 @@ class ZacrosResults(scm.plams.Results):
 
         return data
 
-    def plot_lattice_states(self, data, pause=-1, show=True, ax=None, close=False, time_perframe=0.5, file_name=None):
+    def plot_lattice_states(self, data, pause=-1, show=True, ax=None, close=False, time_perframe=0.5, file_name=None, frames=None,
+                            markers=None, marker_size=1.0, colors=None):
         """
         Uses Matplotlib to create an animation of the lattice states.
 
@@ -517,9 +519,14 @@ class ZacrosResults(scm.plams.Results):
         *   ``close`` -- Closes the figure window after pause time.
         *   ``time_perframe`` -- Sets the time interval between frames in seconds.
         *   ``file_name`` -- Saves the figures to the file ``file_name-<id>`` (the corresponding id on the list replaces the ``<id>``). The format is inferred from the extension, and by default, ``.png`` is used.
+        *   ``frames`` -- Optional list where each frame artists list is appended. Useful for ``matplotlib.animation.ArtistAnimation``.
+        *   ``markers`` -- List of marker styles used for site types.
+        *   ``marker_size`` -- Scale factor for marker area.
+        *   ``colors`` -- List of colors used for species.
         """
         if type(data) == LatticeState:
-            data.plot(show=show, pause=pause, ax=ax, close=close, file_name=file_name)
+            data = [data]
+
         if type(data) == list:
             try:
                 import matplotlib.pyplot as plt
@@ -527,53 +534,105 @@ class ZacrosResults(scm.plams.Results):
                 return  # module doesn't exist, deal with it.
 
             if ax is None:
-                fig, ax = plt.subplots()
+                # When collecting frames for ArtistAnimation, prefer the current axes
+                # so users can create fig/ax before calling this method.
+                if frames is not None:
+                    fignums = plt.get_fignums()
+                    if len(fignums) > 0:
+                        fig = plt.figure(fignums[-1])
+                        if len(fig.axes) > 0:
+                            ax = fig.axes[0]
+                        else:
+                            ax = fig.add_subplot(111)
+                    else:
+                        fig, ax = plt.subplots()
+                else:
+                    fig, ax = plt.subplots()
+            else:
+                fig = ax.figure
 
-            plt.rcParams["figure.autolayout"] = True
             if len(data) == 0:
-                return
+                return ax
 
-            markers = ["v", "s", "o", "D", "p", "^", "+", "x", "*", "P", "H", "X", "d", "h", ",", ".", "<", ">", "1", "2"]
-            colors = [
-                "r",
-                "g",
-                "b",
-                "m",
-                "c",
-                "k",
-                "tab:blue",
-                "tab:orange",
-                "tab:green",
-                "tab:red",
-                "tab:purple",
-                "tab:brown",
-                "tab:pink",
-                "tab:gray",
-                "tab:olive",
-                "tab:cyan",
-                "gold",
-                "turquoise",
-                "lime",
-                "indigo",
-            ]
+            if markers is None:
+                markers = list(DEFAULT_MARKERS)
+
+            if colors is None:
+                colors = list(DEFAULT_COLORS)
+            site_types_order = sorted(list(set(data[0].lattice.site_types)))
+            if len(markers) < len(site_types_order):
+                raise Exception(
+                    "Error: ZacrosResults.plot_lattice_states() requires at least "
+                    + str(len(site_types_order))
+                    + " markers (one per site type). Received "
+                    + str(len(markers))
+                    + "."
+                )
 
             # Draw immutable lattice geometry once; only adsorbates/links are updated per frame.
             first_state = data[0]
-            first_state.lattice.plot(show=False, ax=ax, close=False, color="0.8", show_sites_ids=False)
+            first_state.lattice.plot(
+                show=False,
+                ax=ax,
+                close=False,
+                color="0.8",
+                show_sites_ids=False,
+                markers=markers,
+                marker_size=marker_size,
+                colors=colors,
+            )
+            lattice_labels_order = sorted(list(set(first_state.lattice.site_types)))
+            lattice_handles = {}
+            handles0, labels0 = ax.get_legend_handles_labels()
+            for handle, label in zip(handles0, labels0):
+                if label in lattice_labels_order and label not in lattice_handles:
+                    lattice_handles[label] = handle
             static_legend = ax.get_legend()
             if static_legend is not None:
                 static_legend.remove()
 
-            nsites = first_state.lattice.number_of_sites()
             site_coords = first_state.lattice.site_coordinates
             site_types = first_state.lattice.site_types
             nearest_neighbors = first_state.lattice.nearest_neighbors
-            site_types_order = sorted(list(set(first_state.lattice.site_types)))
             site_type_to_idx = {st: i for i, st in enumerate(site_types_order)}
             marker_per_site = [markers[site_type_to_idx[st]] for st in site_types]
             global_species_order = [sp.symbol for sp in list(set(first_state.surface_species))]
+            if len(colors) < len(global_species_order):
+                raise Exception(
+                    "Error: ZacrosResults.plot_lattice_states() requires at least "
+                    + str(len(global_species_order))
+                    + " colors (one per surface species). Received "
+                    + str(len(colors))
+                    + "."
+                )
             species_to_color_idx = {sym: i for i, sym in enumerate(global_species_order)}
             dynamic_artists = []
+
+            if frames is not None:
+                static_labels = []
+                static_handles = []
+
+                for label in lattice_labels_order:
+                    if label in lattice_handles:
+                        static_labels.append(label)
+                        static_handles.append(lattice_handles[label])
+
+                for label in global_species_order:
+                    color_idx = species_to_color_idx.get(label, 0)
+                    proxy = ax.scatter(
+                        [],
+                        [],
+                        color=colors[color_idx % len(colors)],
+                        marker="o",
+                        s=marker_size * 450 / numpy.sqrt(len(site_coords)),
+                        zorder=4,
+                        label=label,
+                    )
+                    static_labels.append(label)
+                    static_handles.append(proxy)
+
+                if len(static_handles) > 0:
+                    ax.legend(static_handles, static_labels, loc="center left", bbox_to_anchor=(1, 0.5))
 
             for i, ls in enumerate(data):
                 ifile_name = None
@@ -581,14 +640,26 @@ class ZacrosResults(scm.plams.Results):
                     prefix, ext = os.path.splitext(file_name)
                     ifile_name = prefix + "-" + "%05d" % i + ext
 
-                for art in dynamic_artists:
-                    art.remove()
-                dynamic_artists = []
-
-                if ls.add_info is not None:
-                    ax.set_title("t = {:.3g} s".format(ls.add_info.get("time")))
+                frame_artists = []
+                if frames is None:
+                    for art in dynamic_artists:
+                        art.remove()
+                    dynamic_artists = []
+                    if ls.add_info is not None:
+                        ax.set_title("t = {:.3g} s".format(ls.add_info.get("time")))
+                    else:
+                        ax.set_title("")
                 else:
-                    ax.set_title("")
+                    if ls.add_info is not None:
+                        title = ax.text(
+                            0.5,
+                            1.02,
+                            "t = {:.3g} s".format(ls.add_info.get("time")),
+                            transform=ax.transAxes,
+                            ha="center",
+                            va="bottom",
+                        )
+                        frame_artists.append(title)
 
                 adsorbed_on_site = ls._adsorbed_on_site()
                 entity_numbers = ls._LatticeState__entity_number
@@ -605,6 +676,7 @@ class ZacrosResults(scm.plams.Results):
 
                 species_order = [sym for sym in global_species_order if sym in species_site_groups]
                 species_order.extend([sym for sym in species_site_groups.keys() if sym not in species_to_color_idx])
+                legend_handles = {}
 
                 for sym in species_order:
                     ids = species_site_groups[sym]
@@ -620,11 +692,14 @@ class ZacrosResults(scm.plams.Results):
                         yvalues,
                         color=colors[color_idx % len(colors)],
                         marker=marker,
-                        s=450 / numpy.sqrt(len(site_coords)),
+                        s=marker_size * 450 / numpy.sqrt(len(site_coords)),
                         zorder=4,
                         label=sym,
                     )
                     dynamic_artists.append(scatter)
+                    frame_artists.append(scatter)
+                    if sym not in legend_handles:
+                        legend_handles[sym] = scatter
 
                 # Draw links for species with denticity > 1 only once per undirected edge.
                 processed_edges = set()
@@ -662,29 +737,64 @@ class ZacrosResults(scm.plams.Results):
                                 zorder=4,
                             )[0]
                             dynamic_artists.append(line)
+                            frame_artists.append(line)
 
-                handles, labels = ax.get_legend_handles_labels()
-                if len(handles) > 0:
-                    legend = ax.legend(handles, labels, loc="center left", bbox_to_anchor=(1, 0.5))
-                    dynamic_artists.append(legend)
+                if frames is None:
+                    labels = []
+                    handles = []
+
+                    for label in lattice_labels_order:
+                        if label in lattice_handles:
+                            labels.append(label)
+                            handles.append(lattice_handles[label])
+
+                    for label in global_species_order:
+                        if label in legend_handles:
+                            labels.append(label)
+                            handles.append(legend_handles[label])
+                        else:
+                            color_idx = species_to_color_idx.get(label, 0)
+                            proxy = ax.scatter(
+                                [],
+                                [],
+                                color=colors[color_idx % len(colors)],
+                                marker="o",
+                                s=marker_size * 450 / numpy.sqrt(len(site_coords)),
+                                zorder=4,
+                                label=label,
+                            )
+                            dynamic_artists.append(proxy)
+                            frame_artists.append(proxy)
+                            labels.append(label)
+                            handles.append(proxy)
+
+                    if len(handles) > 0:
+                        legend = ax.legend(handles, labels, loc="center left", bbox_to_anchor=(1, 0.5))
+                        dynamic_artists.append(legend)
+                        frame_artists.append(legend)
+
+                if frames is not None:
+                    frames.append(frame_artists)
 
                 if ifile_name is not None:
-                    plt.savefig(ifile_name)
+                    fig.savefig(ifile_name)
 
-                if show:
+                if show and frames is None:
                     if time_perframe == -1:
                         plt.show()
                     else:
                         plt.pause(time_perframe)
 
-            if show:
+            if show and frames is None:
                 if pause == -1:
                     plt.show()
                 else:
                     plt.pause(pause)
 
             if close:
-                plt.close("all")
+                plt.close(fig)
+
+            return ax
 
     def plot_molecule_numbers(
         self,

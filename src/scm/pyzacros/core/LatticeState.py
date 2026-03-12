@@ -5,6 +5,7 @@ import numpy
 from .Species import *
 from .SpeciesList import *
 from .Lattice import *
+from .SharedUtils import DEFAULT_MARKERS, DEFAULT_COLORS
 
 __all__ = ["LatticeState"]
 
@@ -420,7 +421,7 @@ class LatticeState:
 
         return fractions
 
-    def plot(self, pause=-1, show=True, ax=None, close=False, show_sites_ids=False, file_name=None):
+    def plot(self, pause=-1, show=True, ax=None, close=False, show_sites_ids=False, file_name=None, markers=None, marker_size=1.0, colors=None):
         """
         Uses matplotlib to visualize the lattice state
 
@@ -430,24 +431,47 @@ class LatticeState:
         *   ``close`` -- Closes the figure window after pause time.
         *   ``show_sites_ids`` -- Shows the binding sites id on the figure.
         *   ``file_name`` -- Saves the figure to the file ``file_name``. The format is inferred from the extension, and by default, ``.png`` is used.
+        *   ``markers`` -- List of marker styles used for site types.
+        *   ``marker_size`` -- Scale factor for marker area.
+        *   ``colors`` -- List of colors used for species.
         """
         try:
             import matplotlib.pyplot as plt
         except ImportError as e:
             return  # module doesn't exist, deal with it.
 
-        if ax is None:
+        created_fig = ax is None
+        if created_fig:
             fig, ax = plt.subplots()
+        else:
+            fig = ax.figure
 
-        markers =   ["v", "s", "o", "D", "p", "^", "+", "x", "*", "P", "H", "X", "d", "h", ",", ".", "<", ">", "1", "2"]
-        colors = ["r", "g", "b", "m", "c", "k",
-          "tab:blue", "tab:orange", "tab:green", "tab:red", "tab:purple",
-          "tab:brown", "tab:pink", "tab:gray", "tab:olive", "tab:cyan",
-          "gold", "turquoise", "lime", "indigo"]
+        if markers is None:
+            markers = list(DEFAULT_MARKERS)
+
+        if colors is None:
+            colors = list(DEFAULT_COLORS)
 
         symbols = [sp if sp is None else sp.symbol for sp in self.__adsorbed_on_site]
 
         items = list(filter(None.__ne__, set(self.__adsorbed_on_site)))
+        n_site_types = len(set(self.lattice.site_types))
+        if len(markers) < n_site_types:
+            raise Exception(
+                "Error: LatticeState.plot() requires at least "
+                + str(n_site_types)
+                + " markers (one per site type). Received "
+                + str(len(markers))
+                + "."
+            )
+        if len(colors) < len(items):
+            raise Exception(
+                "Error: LatticeState.plot() requires at least "
+                + str(len(items))
+                + " colors (one per adsorbed species in this state). Received "
+                + str(len(colors))
+                + "."
+            )
 
         if self.add_info is not None:
             ax.set_title("t = {:.3g} s".format(self.add_info.get("time")))
@@ -455,7 +479,8 @@ class LatticeState:
         # --------------------------------
         # Plots the lattice
         # --------------------------------
-        self.lattice.plot(show=False, ax=ax, close=False, color="0.8", show_sites_ids=show_sites_ids)
+        self.lattice.plot(show=False, ax=ax, close=False, color="0.8", show_sites_ids=show_sites_ids,
+                          markers=markers, marker_size=marker_size, colors=colors)
 
         # --------------------------------
         # Plots the species
@@ -500,7 +525,7 @@ class LatticeState:
                     yvalues,
                     color=colors[i],
                     marker=markers[imarkers[i]],
-                    s=450 / math.sqrt(len(self.lattice.site_coordinates)),
+                    s=marker_size * 450 / math.sqrt(len(self.lattice.site_coordinates)),
                     zorder=4,
                     label=sym_i,
                 )
@@ -529,13 +554,18 @@ class LatticeState:
         ax.legend(loc="center left", bbox_to_anchor=(1, 0.5))
 
         if file_name is not None:
-            plt.savefig(file_name)
+            fig.savefig(file_name)
 
         if show:
-            if pause == -1:
-                plt.show()
+            if created_fig:
+                if pause == -1:
+                    plt.show()
+                else:
+                    plt.pause(pause)
             else:
-                plt.pause(pause)
+                fig.canvas.draw_idle()
 
         if close:
-            plt.close("all")
+            plt.close(fig)
+
+        return ax

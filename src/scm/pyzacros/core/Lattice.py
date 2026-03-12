@@ -3,6 +3,8 @@
 import os
 import math
 
+from .SharedUtils import DEFAULT_MARKERS, DEFAULT_COLORS
+
 __all__ = ["Lattice"]
 
 
@@ -153,7 +155,6 @@ class Lattice:
     SOUTHEAST = (1, -1)
 
     __NeighboringToStr = {SELF: "self", NORTH: "north", NORTHEAST: "northeast", EAST: "east", SOUTHEAST: "southeast"}
-
     def __init__(self, **kwargs):
         self.cell_vectors = None
         self.site_types = None
@@ -596,7 +597,7 @@ class Lattice:
         self.__origin = Lattice.__FROM_EXPLICIT
         # self.__origin = Lattice.__FROM_UNIT_CELL
 
-    def plot(self, pause=-1, show=True, color=None, ax=None, close=False, show_sites_ids=False, file_name=None):
+    def plot(self, pause=-1, show=True, color=None, ax=None, close=False, show_sites_ids=False, file_name=None, markers=None, marker_size=1.0, colors=None):
         """
         Uses Matplotlib to visualize the lattice. Be sure that Matplotlib is installed in your system; otherwise, the function does nothing.
 
@@ -607,6 +608,9 @@ class Lattice:
         *   ``close`` -- Closes the figure window after pause time.
         *   ``show_sites_ids`` -- Shows the binding sites id on the figure.
         *   ``file_name`` -- Saves the figure to the file ``file_name``. The format is inferred from the extension, and by default, ``.png`` is used.
+        *   ``markers`` -- List of marker styles used for site types.
+        *   ``marker_size`` -- Scale factor for marker area.
+        *   ``colors`` -- List of colors used for site types when ``color`` is not set.
         """
         try:
             import math
@@ -615,8 +619,11 @@ class Lattice:
         except ImportError as e:
             return  # module doesn't exist, deal with it.
 
-        if ax is None:
+        created_fig = ax is None
+        if created_fig:
             fig, ax = plt.subplots()
+        else:
+            fig = ax.figure
 
         if self.cell_vectors is not None:
             v1 = self.cell_vectors[0]
@@ -654,11 +661,29 @@ class Lattice:
         ax.set_xlabel("x (ang.)")
         ax.set_ylabel("y (ang.)")
 
-        markers =   ["v", "s", "o", "D", "p", "^", "+", "x", "*", "P", "H", "X", "d", "h", ",", ".", "<", ">", "1", "2"]
-        colors = ["r", "g", "b", "m", "c", "k",
-          "tab:blue", "tab:orange", "tab:green", "tab:red", "tab:purple",
-          "tab:brown", "tab:pink", "tab:gray", "tab:olive", "tab:cyan",
-          "gold", "turquoise", "lime", "indigo"]
+        if markers is None:
+            markers = list(DEFAULT_MARKERS)
+
+        if colors is None:
+            colors = list(DEFAULT_COLORS)
+
+        n_site_types = len(set(self.site_types))
+        if len(markers) < n_site_types:
+            raise Exception(
+                "Error: Lattice.plot() requires at least "
+                + str(n_site_types)
+                + " markers (one per site type). Received "
+                + str(len(markers))
+                + "."
+            )
+        if color is None and len(colors) < n_site_types:
+            raise Exception(
+                "Error: Lattice.plot() requires at least "
+                + str(n_site_types)
+                + " colors (one per site type) when color is None. Received "
+                + str(len(colors))
+                + "."
+            )
 
         for i, st_i in enumerate(sorted(list(set(self.site_types)))):
             xvalues = [x for (x, y), st in zip(self.site_coordinates, self.site_types) if st == st_i]
@@ -670,15 +695,14 @@ class Lattice:
                 yvalues,
                 color=lcolor,
                 marker=markers[i],
-                s=440 / math.sqrt(len(self.site_coordinates)),
-                # s=1.5*440 / math.sqrt(len(self.site_coordinates)),
+                s=marker_size * 440 / math.sqrt(len(self.site_coordinates)),
                 zorder=2,
                 label=st_i,
             )
 
             if show_sites_ids:
                 for i, (x, y) in enumerate(self.site_coordinates):
-                    plt.annotate(str(i), (x, y), ha="center", va="center", zorder=100)
+                    ax.annotate(str(i), (x, y), ha="center", va="center", zorder=100)
 
         for i, ineigh in enumerate(self.nearest_neighbors):
             if ineigh is None:
@@ -697,7 +721,6 @@ class Lattice:
                         continue
 
                 lcolor = color if color is not None else "k"
-                # lcolor = "k"
                 ax.plot(
                     xvalues,
                     yvalues,
@@ -708,22 +731,25 @@ class Lattice:
                 )
 
         ax.legend(loc="center left", bbox_to_anchor=(1, 0.5))
-        plt.tight_layout()
-
-        # plt.gca().set_aspect(3.8)
-        # ax.set_axis_off()
+        if created_fig:
+            fig.tight_layout()
 
         if file_name is not None:
-            plt.savefig(file_name)
+            fig.savefig(file_name)
 
         if show:
-            if pause == -1:
-                plt.show()
+            if created_fig:
+                if pause == -1:
+                    plt.show()
+                else:
+                    plt.pause(pause)
             else:
-                plt.pause(pause)
+                fig.canvas.draw_idle()
 
-                if close:
-                    plt.close("all")
+            if close:
+                plt.close(fig)
+
+        return ax
 
     def __str__(self):
         """
