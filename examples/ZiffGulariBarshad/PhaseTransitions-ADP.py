@@ -38,10 +38,11 @@
 # that contains all of the parameters of the ML model, allowing it to be regenerated
 # and used subsequently. The main goal of this tutorial is to obtain this file.
 
-# First of all, we must install the package **adaptiveDesignProcedure**. You
-# can either follow the procedure described in its GitHub repository
+# First of all, we must install the package **adaptiveDesignProcedure**.
+# If you are using AMS2026, this is included in the `amspython` base stack.
+# Otherwise, you can either follow the install procedure described in the GitHub repository
 # [https://github.com/mbracconi/adaptiveDesignProcedure](https://github.com/mbracconi/adaptiveDesignProcedure),
-# or if you are using AMS, you can do it as follows by typing in a terminal:
+# or if you are using an earlier version of AMS, you can install it via `amspackages`, by typing the following in a terminal:
 # ```
 # $ amspackages install adaptivedesignprocedure
 # ```
