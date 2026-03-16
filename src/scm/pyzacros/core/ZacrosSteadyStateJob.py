@@ -175,7 +175,22 @@ class ZacrosSteadyStateResults(scm.plams.Results):
 
         return acf
 
-    def plot_lattice_states(self, data, pause=-1, show=True, ax=None, close=False, time_perframe=0.5, file_name=None):
+    def plot_lattice_states(
+        self,
+        data,
+        pause=-1,
+        show=True,
+        ax=None,
+        close=False,
+        time_perframe=0.5,
+        file_name=None,
+        frames=None,
+        markers=None,
+        marker_size=1.0,
+        colors=None,
+        lattice_markers=None,
+        lattice_color="0.8",
+    ):
         """
         Uses Matplotlib to create an animation of the lattice states associated to the last children.
 
@@ -186,9 +201,27 @@ class ZacrosSteadyStateResults(scm.plams.Results):
         *   ``close`` -- Closes the figure window after pause time.
         *   ``time_perframe`` -- Sets the time interval between frames in seconds.
         *   ``file_name`` -- Saves the figures to the file ``file_name-<id>`` (the corresponding id on the list replaces the ``<id>``). The format is inferred from the extension, and by default, ``.png`` is used.
+        *   ``frames`` -- Optional list where each frame artists list is appended. Useful for ``matplotlib.animation.ArtistAnimation``.
+        *   ``markers`` -- List of marker styles used for site types.
+        *   ``marker_size`` -- Scale factor for marker area.
+        *   ``colors`` -- List of colors used for species.
+        *   ``lattice_markers`` -- List of marker styles used for lattice site types. If ``None``, ``markers`` is used.
+        *   ``lattice_color`` -- Single color used to draw lattice sites, lattice unit-cell lines, and lattice connections.
         """
-        self.job.children[-1].results.plot_lattice_states(
-            data=data, pause=pause, show=show, ax=ax, close=close, time_perframe=time_perframe, file_name=file_name
+        return self.job.children[-1].results.plot_lattice_states(
+            data=data,
+            pause=pause,
+            show=show,
+            ax=ax,
+            close=close,
+            time_perframe=time_perframe,
+            file_name=file_name,
+            frames=frames,
+            markers=markers,
+            marker_size=marker_size,
+            colors=colors,
+            lattice_markers=lattice_markers,
+            lattice_color=lattice_color,
         )
 
     def plot_molecule_numbers(
@@ -214,7 +247,7 @@ class ZacrosSteadyStateResults(scm.plams.Results):
         *   ``normalize_per_site`` -- Divides the molecule numbers by the total number of sites in the lattice.
         *   ``derivative`` -- Plots the first derivative.
         """
-        self.job.children[-1].results.plot_molecule_numbers(
+        return self.job.children[-1].results.plot_molecule_numbers(
             species_name=species_name,
             pause=pause,
             show=show,
@@ -246,7 +279,7 @@ class ZacrosSteadyStateResults(scm.plams.Results):
         *   ``close`` -- Closes the figure window after pause time.
         *   ``file_name`` -- Saves the figures to the file ``file_name-<id>`` (the corresponding id on the list replaces the ``<id>``). The format is inferred from the extension, and by default, ``.png`` is used.
         """
-        self.job.children[-1].results.plot_process_statistics(
+        return self.job.children[-1].results.plot_process_statistics(
             data=data, key=key, log_scale=log_scale, pause=pause, show=show, ax=ax, close=close, file_name=file_name
         )
 

@@ -421,7 +421,20 @@ class LatticeState:
 
         return fractions
 
-    def plot(self, pause=-1, show=True, ax=None, close=False, show_sites_ids=False, file_name=None, markers=None, marker_size=1.0, colors=None):
+    def plot(
+        self,
+        pause=-1,
+        show=True,
+        ax=None,
+        close=False,
+        show_sites_ids=False,
+        file_name=None,
+        markers=None,
+        marker_size=1.0,
+        colors=None,
+        lattice_markers=None,
+        lattice_color="0.8",
+    ):
         """
         Uses matplotlib to visualize the lattice state
 
@@ -434,6 +447,8 @@ class LatticeState:
         *   ``markers`` -- List of marker styles used for site types.
         *   ``marker_size`` -- Scale factor for marker area.
         *   ``colors`` -- List of colors used for species.
+        *   ``lattice_markers`` -- List of marker styles used for lattice site types. If ``None``, ``markers`` is used.
+        *   ``lattice_color`` -- Single color used to draw lattice sites, lattice unit-cell lines, and lattice connections.
         """
         try:
             import matplotlib.pyplot as plt
@@ -452,9 +467,15 @@ class LatticeState:
         if colors is None:
             colors = list(DEFAULT_COLORS)
 
-        symbols = [sp if sp is None else sp.symbol for sp in self.__adsorbed_on_site]
+        if lattice_markers is None:
+            lattice_markers = markers
 
-        items = list(filter(None.__ne__, set(self.__adsorbed_on_site)))
+        symbols = [sp if sp is None else sp.symbol for sp in self.__adsorbed_on_site]
+        # Keep species plotting order deterministic across runs.
+        # Match ZacrosResults.plot_lattice_states: reverse alphabetical species order.
+        present_symbols = {sp.symbol for sp in self.__adsorbed_on_site if sp is not None}
+        species_order = sorted(present_symbols, reverse=True)
+        species_to_color_idx = {sym: i for i, sym in enumerate(species_order)}
         n_site_types = len(set(self.lattice.site_types))
         if len(markers) < n_site_types:
             raise Exception(
@@ -464,10 +485,18 @@ class LatticeState:
                 + str(len(markers))
                 + "."
             )
-        if len(colors) < len(items):
+        if len(lattice_markers) < n_site_types:
             raise Exception(
                 "Error: LatticeState.plot() requires at least "
-                + str(len(items))
+                + str(n_site_types)
+                + " lattice_markers (one per site type). Received "
+                + str(len(lattice_markers))
+                + "."
+            )
+        if len(colors) < len(species_order):
+            raise Exception(
+                "Error: LatticeState.plot() requires at least "
+                + str(len(species_order))
                 + " colors (one per adsorbed species in this state). Received "
                 + str(len(colors))
                 + "."
@@ -479,14 +508,22 @@ class LatticeState:
         # --------------------------------
         # Plots the lattice
         # --------------------------------
-        self.lattice.plot(show=False, ax=ax, close=False, color="0.8", show_sites_ids=show_sites_ids,
-                          markers=markers, marker_size=marker_size, colors=colors)
+        self.lattice.plot(
+            show=False,
+            ax=ax,
+            close=False,
+            color=lattice_color,
+            show_sites_ids=show_sites_ids,
+            markers=lattice_markers,
+            marker_size=marker_size,
+            colors=colors,
+        )
 
         # --------------------------------
         # Plots the species
         # --------------------------------
         site_types = sorted(list(set(self.lattice.site_types)))
-        for i, sym_i in enumerate([item.symbol for item in items]):
+        for sym_i in species_order:
 
             if all([sym is None for sym in symbols]):
                 continue
@@ -509,12 +546,6 @@ class LatticeState:
                     xvalues.append(x)
                     yvalues.append(y)
 
-                    lSpecies = None
-                    for sp in self.surface_species:
-                        if sp.symbol == sym_i:
-                            lSpecies = sp
-                            break
-
                     imarkers.append(site_types.index(site_type))
 
             if len(xvalues) > 0:
@@ -523,8 +554,8 @@ class LatticeState:
                 ax.scatter(
                     xvalues,
                     yvalues,
-                    color=colors[i],
-                    marker=markers[imarkers[i]],
+                    color=colors[species_to_color_idx[sym_i]],
+                    marker=markers[imarkers[0]],
                     s=marker_size * 450 / math.sqrt(len(self.lattice.site_coordinates)),
                     zorder=4,
                     label=sym_i,
@@ -545,13 +576,15 @@ class LatticeState:
                             ax.plot(
                                 [coords_i[0], coords_j[0]],
                                 [coords_i[1], coords_j[1]],
-                                color=colors[items.index(sp)],
+                                color=colors[species_to_color_idx[sp.symbol]],
                                 linestyle="solid",
                                 linewidth=5,
                                 zorder=4,
                             )
 
         ax.legend(loc="center left", bbox_to_anchor=(1, 0.5))
+        if created_fig:
+            fig.tight_layout()
 
         if file_name is not None:
             fig.savefig(file_name)

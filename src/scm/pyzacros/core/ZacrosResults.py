@@ -507,8 +507,22 @@ class ZacrosResults(scm.plams.Results):
 
         return data
 
-    def plot_lattice_states(self, data, pause=-1, show=True, ax=None, close=False, time_perframe=0.5, file_name=None, frames=None,
-                            markers=None, marker_size=1.0, colors=None):
+    def plot_lattice_states(
+        self,
+        data,
+        pause=-1,
+        show=True,
+        ax=None,
+        close=False,
+        time_perframe=0.5,
+        file_name=None,
+        frames=None,
+        markers=None,
+        marker_size=1.0,
+        colors=None,
+        lattice_markers=None,
+        lattice_color="0.8",
+    ):
         """
         Uses Matplotlib to create an animation of the lattice states.
 
@@ -523,6 +537,8 @@ class ZacrosResults(scm.plams.Results):
         *   ``markers`` -- List of marker styles used for site types.
         *   ``marker_size`` -- Scale factor for marker area.
         *   ``colors`` -- List of colors used for species.
+        *   ``lattice_markers`` -- List of marker styles used for lattice site types. If ``None``, ``markers`` is used.
+        *   ``lattice_color`` -- Single color used to draw lattice sites, lattice unit-cell lines, and lattice connections.
         """
         if type(data) == LatticeState:
             data = [data]
@@ -559,13 +575,24 @@ class ZacrosResults(scm.plams.Results):
 
             if colors is None:
                 colors = list(DEFAULT_COLORS)
-            site_types_order = sorted(list(set(data[0].lattice.site_types)))
+
+            if lattice_markers is None:
+                lattice_markers = markers
+            site_types_order = sorted(set(data[0].lattice.site_types))
             if len(markers) < len(site_types_order):
                 raise Exception(
                     "Error: ZacrosResults.plot_lattice_states() requires at least "
                     + str(len(site_types_order))
                     + " markers (one per site type). Received "
                     + str(len(markers))
+                    + "."
+                )
+            if len(lattice_markers) < len(site_types_order):
+                raise Exception(
+                    "Error: ZacrosResults.plot_lattice_states() requires at least "
+                    + str(len(site_types_order))
+                    + " lattice_markers (one per site type). Received "
+                    + str(len(lattice_markers))
                     + "."
                 )
 
@@ -575,13 +602,13 @@ class ZacrosResults(scm.plams.Results):
                 show=False,
                 ax=ax,
                 close=False,
-                color="0.8",
+                color=lattice_color,
                 show_sites_ids=False,
-                markers=markers,
+                markers=lattice_markers,
                 marker_size=marker_size,
                 colors=colors,
             )
-            lattice_labels_order = sorted(list(set(first_state.lattice.site_types)))
+            lattice_labels_order = sorted(set(first_state.lattice.site_types))
             lattice_handles = {}
             handles0, labels0 = ax.get_legend_handles_labels()
             for handle, label in zip(handles0, labels0):
@@ -596,7 +623,7 @@ class ZacrosResults(scm.plams.Results):
             nearest_neighbors = first_state.lattice.nearest_neighbors
             site_type_to_idx = {st: i for i, st in enumerate(site_types_order)}
             marker_per_site = [markers[site_type_to_idx[st]] for st in site_types]
-            global_species_order = [sp.symbol for sp in list(set(first_state.surface_species))]
+            global_species_order = sorted({sp.symbol for sp in first_state.surface_species}, reverse=True)
             if len(colors) < len(global_species_order):
                 raise Exception(
                     "Error: ZacrosResults.plot_lattice_states() requires at least "
@@ -824,8 +851,11 @@ class ZacrosResults(scm.plams.Results):
         except ImportError as e:
             return  # module doesn't exist, deal with it.
 
-        if ax is None:
+        created_fig = ax is None
+        if created_fig:
             fig, ax = plt.subplots()
+        else:
+            fig = ax.figure
 
         plt.rcParams["figure.autolayout"] = True
         provided_quantities = self.provided_quantities()
@@ -860,16 +890,21 @@ class ZacrosResults(scm.plams.Results):
         ax.legend(loc="best")
 
         if file_name is not None:
-            plt.savefig(file_name)
+            fig.savefig(file_name)
 
         if show:
-            if pause == -1:
-                plt.show()
+            if created_fig:
+                if pause == -1:
+                    plt.show()
+                else:
+                    plt.pause(pause)
             else:
-                plt.pause(pause)
+                fig.canvas.draw_idle()
 
         if close:
-            plt.close("all")
+            plt.close(fig)
+
+        return ax
 
     def get_process_statistics(self):
         """
@@ -1014,8 +1049,11 @@ class ZacrosResults(scm.plams.Results):
         except ImportError as e:
             return  # module doesn't exist, deal with it.
 
-        if ax is None:
+        created_fig = ax is None
+        if created_fig:
             fig, ax = plt.subplots()
+        else:
+            fig = ax.figure
 
         plt.rcParams["figure.autolayout"] = True
 
@@ -1072,16 +1110,21 @@ class ZacrosResults(scm.plams.Results):
         plt.tight_layout()
 
         if file_name is not None:
-            plt.savefig(file_name)
+            fig.savefig(file_name)
 
         if show:
-            if pause == -1:
-                plt.show()
+            if created_fig:
+                if pause == -1:
+                    plt.show()
+                else:
+                    plt.pause(pause)
             else:
-                plt.pause(pause)
+                fig.canvas.draw_idle()
 
         if close:
-            plt.close("all")
+            plt.close(fig)
+
+        return ax
 
     def plot_process_statistics(
         self, data, key, log_scale=False, pause=-1, show=True, ax=None, close=False, file_name=None
@@ -1099,7 +1142,7 @@ class ZacrosResults(scm.plams.Results):
         *   ``file_name`` -- Saves the figures to the file ``file_name-<id>`` (the corresponding id on the list replaces the ``<id>``). The format is inferred from the extension, and by default, ``.png`` is used.
         """
         if type(data) == dict:
-            self.__plot_process_statistics(
+            return self.__plot_process_statistics(
                 data, key, log_scale=log_scale, pause=pause, show=show, close=close, file_name=file_name
             )
         if type(data) == list:
@@ -1108,8 +1151,11 @@ class ZacrosResults(scm.plams.Results):
             except ImportError as e:
                 return  # module doesn't exist, deal with it.
 
-            if ax is None:
+            created_fig = ax is None
+            if created_fig:
                 fig, ax = plt.subplots()
+            else:
+                fig = ax.figure
 
             maxval = -1e8
             for idata in data:
@@ -1136,13 +1182,18 @@ class ZacrosResults(scm.plams.Results):
                 )
 
             if show:
-                if pause == -1:
-                    plt.show()
+                if created_fig:
+                    if pause == -1:
+                        plt.show()
+                    else:
+                        plt.pause(pause)
                 else:
-                    plt.pause(pause)
+                    fig.canvas.draw_idle()
 
             if close:
-                plt.close("all")
+                plt.close(fig)
+
+            return ax
 
     # ---------------------------------------------------------------------
     # Function to compute the rate of production using the
