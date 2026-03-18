@@ -117,6 +117,7 @@ These examples represent industrial problems and showcase state-of-the-art valid
 
    COPt111
    zgb_pts_sm.rst
+   ElectrodepositionDendriteGrowth.rst
 
 
 .. grid:: 2
@@ -139,3 +140,12 @@ These examples represent industrial problems and showcase state-of-the-art valid
 
       +++
       **Keywords:** Phase transitions, Machine learning surrogate, Training from kMC, Fast parameter scan, Data-driven kinetics
+
+   .. grid-item-card:: Modeling Electrodeposition and Dendrite Growth
+      :link: ElectrodepositionDendriteGrowth.html
+
+      .. image:: ../../images/example_Electrodeposition.png
+         :scale: 30 %
+
+      +++
+      **Keywords:** electrodeposition, surface diffusion, electrochemical kinetics, Butler-Volmer, dendrite growth

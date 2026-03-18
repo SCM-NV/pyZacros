@@ -39,6 +39,17 @@ class CutLongOutputFiles(Preprocessor):
 
         return cell, resources
 
+class RemoveHiddenCells(Preprocessor):
+
+    def preprocess_cell(self, cell, resources, index):
+
+        # Check if the cell has the tag "hide", if so
+        # we just replace its text for nothing
+        if "hide" in cell.get('metadata', {}).get('tags', []):
+            cell['source'] = ""
+
+        return cell, resources
+
 class RemoveHtmlBase64Images(Preprocessor):
 
     def preprocess_cell(self, cell, resources, index):
@@ -86,7 +97,8 @@ do
     cp "${filePath}/${fileName}" .
 
     # Converts the .ipynb to rst in this directory
-    $AMSBIN/amspython -m nbconvert --Exporter.preprocessors="__preprocess.PreserveHTML" --Exporter.preprocessors="__preprocess.CutLongOutputFiles" --to rst ${fileName}
+    $AMSBIN/amspython -m nbconvert --Exporter.preprocessors="__preprocess.RemoveHiddenCells" \
+        --Exporter.preprocessors="__preprocess.PreserveHTML" --Exporter.preprocessors="__preprocess.CutLongOutputFiles" --to rst ${fileName}
     mv ${fileName%.ipynb}.rst ${fileName%.ipynb}.rst.include
     sed -i 's#/.*/pyzacros/#/home/user/pyzacros/#g' "${fileName%.ipynb}.rst.include"
 

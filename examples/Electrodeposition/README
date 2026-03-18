@@ -1,0 +1,16 @@
+This Jupiter notebook contains images that were exrternally generated. That makes them special to be updated. To add a new image you have to:
+
+1. Make the image with any external tool and save it in PNG formal e.g. myfig.mpg
+
+2. Get the Base64 representation of the image and add the html img tags. Example:
+
+   $ ifile=Electrodeposition_images/Reduction.png; base64 $ifile | awk 'BEGIN{print "<img original-file=\"'$ifile'\" src=\"data:image/png;base64,"}{print $0}END{print "\" />"}' | kwrite --stdin
+
+   This command will open kwrite to just copy the content ready to be pasted into a dedicated cell in the .ipynb file
+
+3. For that cell, change its type to Markdown and add the tag "html_base64_image"
+
+4. Save the notebook
+
+5. Finally go to $AMSHOME/scripting/scm/pyzacros/doc/source/examples/ and use the command build-ipynb_FILES.sh to generate the rst files ready for the AMS documentation
+
