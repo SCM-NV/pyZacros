@@ -113,7 +113,7 @@ class SpeciesList(UserList):
                                   to the same entity. Applies only to surface species.
         """
         if entity_numbers is None:
-            entity_numbers = [ i for i in range(len(self.surface_species())) ]
+            entity_numbers = [i for i in range(len(self.surface_species()))]
 
         if len(entity_numbers) > len(self.surface_species()):
             msg = "Error: Inconsistent number of elememnts. entity_numbers ("
@@ -121,7 +121,7 @@ class SpeciesList(UserList):
             msg += ") != surface species ("
             msg += str(len(self.surface_species()))
             msg += ")"
-            raise Exception( msg )
+            raise Exception(msg)
 
         mass = 0.0
         mapped_entity = {}
@@ -207,4 +207,3 @@ class SpeciesList(UserList):
                     active_groups[sp] = {"id": current_id, "remaining": den - 1}
 
         return entity_number
-

@@ -449,11 +449,13 @@ class ZacrosResults(scm.plams.Results):
         for symbol in self.surface_species_names():
             acf[symbol] = 0.0
 
-        for state in self.lattice_states( last=last ):
-            cover = state.coverage_fractions(site_names=site_names, species_symbols=species_symbols, normalize=normalize)
-            acf = { symbol: acf[symbol] + cover[symbol] for symbol in acf }
+        for state in self.lattice_states(last=last):
+            cover = state.coverage_fractions(
+                site_names=site_names, species_symbols=species_symbols, normalize=normalize
+            )
+            acf = {symbol: acf[symbol] + cover[symbol] for symbol in acf}
 
-        acf = { symbol: acf[symbol]/last for symbol in acf }
+        acf = {symbol: acf[symbol] / last for symbol in acf}
 
         return acf
 
@@ -473,11 +475,13 @@ class ZacrosResults(scm.plams.Results):
         for site_name in self.site_type_names():
             acf[site_name] = 0.0
 
-        for state in self.lattice_states( last=last ):
-            cover = state.site_coverage_fractions(site_names=site_names, species_symbols=species_symbols, normalize=normalize)
-            acf = { site_name: acf[site_name] + cover[site_name] for site_name in acf }
+        for state in self.lattice_states(last=last):
+            cover = state.site_coverage_fractions(
+                site_names=site_names, species_symbols=species_symbols, normalize=normalize
+            )
+            acf = {site_name: acf[site_name] + cover[site_name] for site_name in acf}
 
-        acf = { site_name: acf[site_name]/last for site_name in acf }
+        acf = {site_name: acf[site_name] / last for site_name in acf}
 
         return acf
 

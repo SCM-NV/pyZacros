@@ -53,9 +53,10 @@ class Cluster:
         total_denticity = 0
 
         entity_checked = {}
-        for i,item in enumerate(species):
-            if self.entity_number[i] in entity_checked: continue
-            entity_checked[ self.entity_number[i] ] = 1
+        for i, item in enumerate(species):
+            if self.entity_number[i] in entity_checked:
+                continue
+            entity_checked[self.entity_number[i]] = 1
 
             if item != Species.UNSPECIFIED:
                 self.__mass += item.mass()
@@ -71,7 +72,7 @@ class Cluster:
                     self.__composition[symbol] += n
 
         if total_denticity > self.sites:
-            msg  = "\n### ERROR ### Cluster.__init__.\n"
+            msg = "\n### ERROR ### Cluster.__init__.\n"
             msg += "Inconsistency between denticity and the number of sites\n"
             raise NameError(msg)
 

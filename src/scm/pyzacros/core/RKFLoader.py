@@ -26,8 +26,10 @@ class RKFLoader:
         self.lattice = None
 
         if latticeProj2D is None:
-            def projDefault( coord ):
-                return [ coord[0], coord[1] ] # Coordinate z is ignored
+
+            def projDefault(coord):
+                return [coord[0], coord[1]]  # Coordinate z is ignored
+
             self.latticeProj2D = projDefault
         else:
             self.latticeProj2D = latticeProj2D
@@ -466,10 +468,10 @@ class RKFLoader:
 
             return fenergy
 
-        #---------------------------------------------------------------------------------
+        # ---------------------------------------------------------------------------------
         # 1. Loop over the TSs to find the species
         #    Each TS defines an ElementaryReaction
-        #---------------------------------------------------------------------------------
+        # ---------------------------------------------------------------------------------
         for idState in range(nStates):
             if isTS[idState]:
                 idTS = idState
@@ -552,10 +554,10 @@ class RKFLoader:
 
                 self.mechanism.append(reaction)
 
-        #---------------------------------------------------------------------------------
+        # ---------------------------------------------------------------------------------
         # 2. Loop over the local minima to find the species
         #    Each local minima defines a cluster.
-        #---------------------------------------------------------------------------------
+        # ---------------------------------------------------------------------------------
         for idState in range(nStates):
             if not isTS[idState]:
 
@@ -579,15 +581,15 @@ class RKFLoader:
                     energy=getFormationEnergy(idState),
                 )
 
-                if not( len(clusterState.species) == 1 and clusterState.species[0].symbol == "*" ):
-                    self.clusterExpansion.append( clusterState )
+                if not (len(clusterState.species) == 1 and clusterState.species[0].symbol == "*"):
+                    self.clusterExpansion.append(clusterState)
 
-        #---------------------------------------------------------------------------------
+        # ---------------------------------------------------------------------------------
         # 3. Loop over the Fragmented states to find the species
         #    Each fragmented reaction defines a cluster and a gas phase reaction
         #    Maybe there are repeated clusters from step 2 and 3, but they are
         #    automatically filtered out by the ClusterExpansion class
-        #---------------------------------------------------------------------------------
+        # ---------------------------------------------------------------------------------
         for idFState in range(nFStates):
             energy = fStatesEnergy[idFState] / eV
             nFragments = fStatesNFragments[idFState]
@@ -695,8 +697,8 @@ class RKFLoader:
         # Here we make the 3D->2D lattice projection
         coordsFrac2DProj = []
         for coord in coordsFrac:
-            pCoord = self.latticeProj2D( coord )
-            coordsFrac2DProj.append( pCoord )
+            pCoord = self.latticeProj2D(coord)
+            coordsFrac2DProj.append(pCoord)
 
         self.lattice = Lattice(
             cell_vectors=[[v[0], v[1]] for v in latticeVectors[0:2]],

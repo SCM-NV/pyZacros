@@ -3,6 +3,7 @@
 We constrain deps to > the last major version and <= the current tag to allow .dev builds.
 Example: 2025.207.dev4 < 2025.207, so <= 2025.207 includes dev releases.
 """
+
 from __future__ import annotations
 
 from hatchling.metadata.plugin.interface import MetadataHookInterface

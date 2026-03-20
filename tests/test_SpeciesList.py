@@ -17,11 +17,11 @@ def test_SpeciesList():
     O2_g = pz.Species("O2", gas_energy=0.0)
 
     mySpeciesList = pz.SpeciesList()
-    mySpeciesList.append( H2_d1 )
-    mySpeciesList.append( O2_d1 )
-    mySpeciesList.append( H2_g )
-    mySpeciesList.append( O2_g )
-    mySpeciesList.append( fas )
+    mySpeciesList.append(H2_d1)
+    mySpeciesList.append(O2_d1)
+    mySpeciesList.append(H2_g)
+    mySpeciesList.append(O2_g)
+    mySpeciesList.append(fas)
 
     print(mySpeciesList)
 
@@ -36,11 +36,13 @@ surf_specs_names         H2*       O2*
 surf_specs_dent            1         1\
 """
     assert pz.utils.compare(output, expectedOutput, 1e-3)
-    assert mySpeciesList.mass() == 2*pz.Species._ATOMIC_MASS["H"] \
-                                    + 2*pz.Species._ATOMIC_MASS["O"] \
-                                    + 2*pz.Species._ATOMIC_MASS["H"] \
-                                    + 2*pz.Species._ATOMIC_MASS["O"]
-
+    assert (
+        mySpeciesList.mass()
+        == 2 * pz.Species._ATOMIC_MASS["H"]
+        + 2 * pz.Species._ATOMIC_MASS["O"]
+        + 2 * pz.Species._ATOMIC_MASS["H"]
+        + 2 * pz.Species._ATOMIC_MASS["O"]
+    )
 
     H2_d2 = pz.Species("H2**")
     mySpeciesList = pz.SpeciesList([H2_d2, O2_d1, H2_d2, H2_g, O2_g, fas])
@@ -58,8 +60,10 @@ surf_specs_names         H2**       O2*       H2**
 surf_specs_dent             2         1        2\
 """
     assert pz.utils.compare(output, expectedOutput, 1e-3)
-    assert mySpeciesList.mass( entity_numbers=[0, 1, 0, 2] ) == \
-                                      2*pz.Species._ATOMIC_MASS["H"] \
-                                    + 2*pz.Species._ATOMIC_MASS["O"] \
-                                    + 2*pz.Species._ATOMIC_MASS["H"] \
-                                    + 2*pz.Species._ATOMIC_MASS["O"]
+    assert (
+        mySpeciesList.mass(entity_numbers=[0, 1, 0, 2])
+        == 2 * pz.Species._ATOMIC_MASS["H"]
+        + 2 * pz.Species._ATOMIC_MASS["O"]
+        + 2 * pz.Species._ATOMIC_MASS["H"]
+        + 2 * pz.Species._ATOMIC_MASS["O"]
+    )

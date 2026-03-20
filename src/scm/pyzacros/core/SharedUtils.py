@@ -23,4 +23,3 @@ DEFAULT_COLORS = (
     "lime",
     "indigo",
 )
-

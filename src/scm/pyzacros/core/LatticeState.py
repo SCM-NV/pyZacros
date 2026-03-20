@@ -360,7 +360,7 @@ class LatticeState:
 
             total_sites = self.lattice.number_of_sites()
         else:
-            for sid,site_name in enumerate(self.lattice.site_types):
+            for sid, site_name in enumerate(self.lattice.site_types):
                 sp = self.__adsorbed_on_site[sid]
                 if site_name in site_names:
                     if sp is not None:
@@ -396,7 +396,7 @@ class LatticeState:
             fractions[site_name] = 0.0
 
         total_sites = 0
-        for sid,site_name in enumerate(self.lattice.site_types):
+        for sid, site_name in enumerate(self.lattice.site_types):
             sp = self.__adsorbed_on_site[sid]
             if sp is not None:
                 if species_symbols is not None:

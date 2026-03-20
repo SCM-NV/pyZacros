@@ -30,9 +30,9 @@ cluster H*1fH*2f:(0,1)
 end_cluster\
 """
     assert pz.utils.compare(output, expectedOutput, 1e-3)
-    expectedMass = 2*pz.Species._ATOMIC_MASS["H"]
-    assert abs( expectedMass-cluster.mass() ) < 1e-6
-    assert cluster.composition() == {"H":2}
+    expectedMass = 2 * pz.Species._ATOMIC_MASS["H"]
+    assert abs(expectedMass - cluster.mass()) < 1e-6
+    assert cluster.composition() == {"H": 2}
 
     cluster = pz.Cluster(
         site_types=("f", "f"),
@@ -58,9 +58,9 @@ cluster H2**1fH2**1f:(0,1)
 end_cluster\
 """
     assert pz.utils.compare(output, expectedOutput, 1e-3)
-    expectedMass = 2*pz.Species._ATOMIC_MASS["H"]
-    assert abs( expectedMass-cluster.mass() ) < 1e-6
-    assert cluster.composition() == {"H":2}
+    expectedMass = 2 * pz.Species._ATOMIC_MASS["H"]
+    assert abs(expectedMass - cluster.mass()) < 1e-6
+    assert cluster.composition() == {"H": 2}
 
     cluster = pz.Cluster(
         site_types=("f", "g", "h", "i", "j"),
@@ -91,9 +91,9 @@ cluster my_weird_cluster
 end_cluster\
 """
     assert pz.utils.compare(output, expectedOutput, 1e-3)
-    expectedMass = pz.Species._ATOMIC_MASS["H"]+pz.Species._ATOMIC_MASS["C"]+2*pz.Species._ATOMIC_MASS["O"]
-    assert abs( expectedMass-cluster.mass() ) < 1e-6
-    assert cluster.composition() == {"H":1, "C":1, "O":2}
+    expectedMass = pz.Species._ATOMIC_MASS["H"] + pz.Species._ATOMIC_MASS["C"] + 2 * pz.Species._ATOMIC_MASS["O"]
+    assert abs(expectedMass - cluster.mass()) < 1e-6
+    assert cluster.composition() == {"H": 1, "C": 1, "O": 2}
 
     # Now we test automatic detection of entity_number
     cluster = pz.Cluster(
@@ -124,7 +124,6 @@ cluster my_weird_cluster2
 end_cluster\
 """
     assert pz.utils.compare(output, expectedOutput, 1e-3)
-    expectedMass = pz.Species._ATOMIC_MASS["H"]+pz.Species._ATOMIC_MASS["C"]+2*pz.Species._ATOMIC_MASS["O"]
-    assert abs( expectedMass-cluster.mass() ) < 1e-6
-    assert cluster.composition() == {"H":1, "C":1, "O":2}
-
+    expectedMass = pz.Species._ATOMIC_MASS["H"] + pz.Species._ATOMIC_MASS["C"] + 2 * pz.Species._ATOMIC_MASS["O"]
+    assert abs(expectedMass - cluster.mass()) < 1e-6
+    assert cluster.composition() == {"H": 1, "C": 1, "O": 2}

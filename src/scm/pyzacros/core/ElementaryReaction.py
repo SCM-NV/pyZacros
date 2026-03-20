@@ -157,7 +157,7 @@ class ElementaryReaction:
     def __getSpeciesListFullName(species, entity_number, site_types):
         label = ""
 
-        lsort = [ st for st in site_types ]
+        lsort = [st for st in site_types]
         sorted_ids = sorted(range(len(lsort)), key=lsort.__getitem__)
 
         entity_number_j = 0

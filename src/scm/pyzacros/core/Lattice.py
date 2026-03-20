@@ -155,6 +155,7 @@ class Lattice:
     SOUTHEAST = (1, -1)
 
     __NeighboringToStr = {SELF: "self", NORTH: "north", NORTHEAST: "northeast", EAST: "east", SOUTHEAST: "southeast"}
+
     def __init__(self, **kwargs):
         self.cell_vectors = None
         self.site_types = None
@@ -597,7 +598,19 @@ class Lattice:
         self.__origin = Lattice.__FROM_EXPLICIT
         # self.__origin = Lattice.__FROM_UNIT_CELL
 
-    def plot(self, pause=-1, show=True, color=None, ax=None, close=False, show_sites_ids=False, file_name=None, markers=None, marker_size=1.0, colors=None):
+    def plot(
+        self,
+        pause=-1,
+        show=True,
+        color=None,
+        ax=None,
+        close=False,
+        show_sites_ids=False,
+        file_name=None,
+        markers=None,
+        marker_size=1.0,
+        colors=None,
+    ):
         """
         Uses Matplotlib to visualize the lattice. Be sure that Matplotlib is installed in your system; otherwise, the function does nothing.
 
