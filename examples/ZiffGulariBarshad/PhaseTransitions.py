@@ -31,17 +31,17 @@ import scm.pyzacros as pz
 # by default is zero unless otherwise stated. That's the case for $CO$ and $O2$,
 # which are used as energy references.
 
-CO_gas = pz.Species('CO')
-O2_gas = pz.Species('O2')
-CO2_gas = pz.Species('CO2", gas_energy=-2.337)
+CO_gas = pz.Species("CO")
+O2_gas = pz.Species("O2")
+CO2_gas = pz.Species("CO2", gas_energy=-2.337)
 
 
 # **2. Three surface species:** $*$, $CO^*$, $O^*$. The species $*$ represents the
 # empty adsorption site. All of them have denticity equal to 1.
 
-s0 = pz.Species('*', 1)
-CO_ads = pz.Species('CO*', 1)
-O_ads = pz.Species('O*', 1)
+s0 = pz.Species("*", 1)
+CO_ads = pz.Species("CO*", 1)
+O_ads = pz.Species("O*", 1)
 
 
 # **3. A rectangular lattice with a single site type**.
@@ -63,11 +63,7 @@ cluster_expansion = [CO_point, O_point]
 
 # CO_adsorption:
 CO_adsorption = pz.ElementaryReaction(
-    initial=[s0, CO_gas],
-    final=[CO_ads],
-    reversible=False,
-    pre_expon=10.0,
-    activation_energy=0.0
+    initial=[s0, CO_gas], final=[CO_ads], reversible=False, pre_expon=10.0, activation_energy=0.0
 )
 
 # O2_adsorption:
@@ -105,12 +101,12 @@ scm.pyzacros.init()
 # In this case, we choose to use the maximum number of simultaneous processes
 # (``maxjobs``) equal to the number of processors in the machine. Additionally,
 # by setting ``nproc =  1`` we establish that only one processor will be used
-# for each zacros instance. 
+# for each zacros instance.
 
 maxjobs = multiprocessing.cpu_count()
 scm.plams.config.default_jobrunner = scm.plams.JobRunner(parallel=True, maxjobs=maxjobs)
 scm.plams.config.job.runscript.nproc = 1
-print('Running up to {} jobs in parallel simultaneously'.format(maxjobs))
+print("Running up to {} jobs in parallel simultaneously".format(maxjobs))
 
 
 # Now we have to set up the calculation using a ``Settings`` object. Firstly,
@@ -131,8 +127,8 @@ sett.molar_fraction.O2 = 0.55
 sett.temperature = 500.0
 sett.pressure = 1.0
 sett.max_time = 10.0
-sett.snapshots = ('time', 0.5)
-sett.species_numbers = ('time', 0.1)
+sett.snapshots = ("time", 0.5)
+sett.species_numbers = ("time", 0.1)
 sett.random_seed = 953129
 
 
@@ -158,16 +154,13 @@ for x in x_CO:
     sett.molar_fraction.CO = x
     sett.molar_fraction.O2 = 1.0 - x
 
-    job = pz.ZacrosJob( settings=sett,
-                        lattice=lattice,
-                        mechanism=mechanism,
-                        cluster_expansion=cluster_expansion)
+    job = pz.ZacrosJob(settings=sett, lattice=lattice, mechanism=mechanism, cluster_expansion=cluster_expansion)
 
     results.append(job.run())
 
 for i, x in enumerate(x_CO):
     if not results[i].job.ok():
-        print('Something went wrong with condition xCO={}!'.format(x))
+        print("Something went wrong with condition xCO={}!".format(x))
 
 
 # If the script worked successfully, you should have seen several
@@ -187,19 +180,19 @@ for i, x in enumerate(x_CO):
     ac = results[i].average_coverage(last=5)
     TOFs, _, _, _ = results[i].turnover_frequency()
 
-    ac_O.append(ac['O*'])
-    ac_CO.append(ac['CO*'])
-    TOF_CO2.append(TOFs['CO2'])
+    ac_O.append(ac["O*"])
+    ac_CO.append(ac["CO*"])
+    TOF_CO2.append(TOFs["CO2"])
 
 
 # Finally, we just nicely print the results in a table.
 
-print('----------------------------------------------')
-print('%4s'%'cond', '%8s'%'x_CO', '%10s'%'ac_O', '%10s'%'ac_CO', '%10s'%'TOF_CO2')
-print('----------------------------------------------')
+print("----------------------------------------------")
+print("%4s" % "cond", "%8s" % "x_CO", "%10s" % "ac_O", "%10s" % "ac_CO", "%10s" % "TOF_CO2")
+print("----------------------------------------------")
 
 for i, x in enumerate(x_CO):
-    print('%4d'%i, '%8.2f'%x_CO[i], '%10.6f'%ac_O[i], '%10.6f'%ac_CO[i], '%10.6f'%TOF_CO2[i])
+    print("%4d" % i, "%8.2f" % x_CO[i], "%10.6f" % ac_O[i], "%10.6f" % ac_CO[i], "%10.6f" % TOF_CO2[i])
 
 
 # The above results are the final aim of the calculation. However, we
@@ -215,17 +208,17 @@ import matplotlib.pyplot as plt
 fig = plt.figure()
 
 ax = plt.axes()
-ax.set_xlabel('Molar Fraction CO', fontsize=14)
-ax.set_ylabel('Coverage Fraction (%)', color='blue', fontsize=14)
-ax.plot(x_CO, ac_O, color='blue', linestyle='-.', lw=2, zorder=1)
-ax.plot(x_CO, ac_CO, color='blue', linestyle='-', lw=2, zorder=2)
-plt.text(0.3, 0.9, 'O', fontsize=18, color='blue')
-plt.text(0.7, 0.9, 'CO', fontsize=18, color='blue')
+ax.set_xlabel("Molar Fraction CO", fontsize=14)
+ax.set_ylabel("Coverage Fraction (%)", color="blue", fontsize=14)
+ax.plot(x_CO, ac_O, color="blue", linestyle="-.", lw=2, zorder=1)
+ax.plot(x_CO, ac_CO, color="blue", linestyle="-", lw=2, zorder=2)
+plt.text(0.3, 0.9, "O", fontsize=18, color="blue")
+plt.text(0.7, 0.9, "CO", fontsize=18, color="blue")
 
 ax2 = ax.twinx()
-ax2.set_ylabel('TOF (mol/s/site)', color='red', fontsize=14)
-ax2.plot(x_CO, TOF_CO2, color='red', lw=2, zorder=5)
-plt.text(0.37, 1.5, 'CO$_2$', fontsize=18, color='red')
+ax2.set_ylabel("TOF (mol/s/site)", color="red", fontsize=14)
+ax2.plot(x_CO, TOF_CO2, color="red", lw=2, zorder=5)
+plt.text(0.37, 1.5, "CO$_2$", fontsize=18, color="red")
 
 plt.show()
 
@@ -236,11 +229,11 @@ plt.show()
 # irreversible because the molecules are sticky to their original sites
 # and remain stationary until they are removed by a reaction. This leads
 # to the figure above having three regions:
-# 
+#
 # 1. Oxygen poisoned state, $x_\text{CO}<0.32$.
 # 2. Reactive state $0.32<x_\text{CO}<0.55$.
 # 3. CO poisoned state $x_\text{CO}>0.55$.
-# 
+#
 # The first transition at $x_\text{CO}=0.32$ is continuous, and therefore
 # it is of the second order. The second transition at $x_\text{CO}=0.55$
 # occurs abruptly, implying that this is of a first-order transition.
@@ -271,21 +264,21 @@ results[34].last_lattice_state().plot()
 # the steady-state for a given composition is characterized when the
 # derivative of the $CO_2$ production (TOF) with respect to time is zero
 # and remains so:
-# 
+#
 # $$
 # \frac{d}{dt}TOF_{\text{CO}_2} = 0, \,\,\text{for all present and future}\,\, t
 # $$
-# 
+#
 # **pyZacros** also offers the function ``plot_molecule_numbers()`` to
 # visualize the molecule numbers and its first derivative as a function
 # of time. See code and figures below:
 
-results[33].plot_molecule_numbers(['CO2'], normalize_per_site=True)
-results[34].plot_molecule_numbers(['CO2'], normalize_per_site=True)
+results[33].plot_molecule_numbers(["CO2"], normalize_per_site=True)
+results[34].plot_molecule_numbers(["CO2"], normalize_per_site=True)
 
 
-results[33].plot_molecule_numbers(['CO2'], normalize_per_site=True, derivative=True)
-results[34].plot_molecule_numbers(['CO2'], normalize_per_site=True, derivative=True)
+results[33].plot_molecule_numbers(["CO2"], normalize_per_site=True, derivative=True)
+results[34].plot_molecule_numbers(["CO2"], normalize_per_site=True, derivative=True)
 
 
 # From the figures above, it is clear that we have reached a steady-state for
@@ -296,4 +289,3 @@ results[34].plot_molecule_numbers(['CO2'], normalize_per_site=True, derivative=T
 # Now, we can close the pyZacros environment:
 
 scm.pyzacros.finish()
-
