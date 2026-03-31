@@ -41,13 +41,15 @@ visualization. We set a deterministic random seed and import the
 .. code:: ipython3
 
     import random
+    
     random_seed = 100
     random.seed(random_seed)
     
     %matplotlib inline
     import matplotlib.pyplot as plt
     import matplotlib.animation as animation
-    plt.rcParams['figure.figsize'] = [7, 7]
+    
+    plt.rcParams["figure.figsize"] = [7, 7]
     
     from IPython.display import HTML
 
@@ -55,10 +57,10 @@ Now, define a convenient set of physical constants:
 
 .. code:: ipython3
 
-    kB = 8.6173e-05   # Boltzmann constant in eV/K
-    F = 96487.0       # Faraday constant in C/mol
-    R = 8.314         # Gas constant in J/mol/K
-    N_a = 6.022e23    # Avogadro constant in 1/mol
+    kB = 8.6173e-05  # Boltzmann constant in eV/K
+    F = 96487.0  # Faraday constant in C/mol
+    R = 8.314  # Gas constant in J/mol/K
+    N_a = 6.022e23  # Avogadro constant in 1/mol
 
 To reproduce these morphological changes, this tutorial will guide you
 through the complete setup of the pyZacros simulation. We will start
@@ -149,9 +151,9 @@ solvent), a solid deposited metal atom ``M``, or a solvated metal cation
 
 .. code:: ipython3
 
-    s = pz.Species('*', denticity=1, kind=pz.Species.SURFACE)
-    M = pz.Species('M', denticity=1, kind=pz.Species.SURFACE, mass=1.0)
-    Mp = pz.Species('M+', denticity=1, kind=pz.Species.SURFACE, mass=1.0)
+    s = pz.Species("*", denticity=1, kind=pz.Species.SURFACE)
+    M = pz.Species("M", denticity=1, kind=pz.Species.SURFACE, mass=1.0)
+    Mp = pz.Species("M+", denticity=1, kind=pz.Species.SURFACE, mass=1.0)
 
 Next, we use Clusters to define the energetics of these species. To keep
 this model minimal, we will stick to one-site energetic terms for ``M``
@@ -162,8 +164,8 @@ cluster expansion is simply a single site (``s``) occupied by either an
 
 .. code:: ipython3
 
-    M_cluster = pz.Cluster( label='M', site_types=['s'], species=[M] )
-    Mp_cluster = pz.Cluster( label='Mp', site_types=['s'], species=[Mp] )
+    M_cluster = pz.Cluster(label="M", site_types=["s"], species=[M])
+    Mp_cluster = pz.Cluster(label="Mp", site_types=["s"], species=[Mp])
 
 The Lattice
 -----------
@@ -186,29 +188,21 @@ setup is correct before moving on.
 
 .. code:: ipython3
 
-    a = 3.5 # Lattice constant in ang
+    a = 3.5  # Lattice constant in ang
     
     lattice = pz.Lattice(
         cell_vectors=[[a, 0.0], [0.0, a]],
         repeat_cell=[100, 100],
-        site_types=['s'],
+        site_types=["s"],
         site_coordinates=[[0.000000, 0.000000]],
-        neighboring_structure=[[(0,0), pz.Lattice.EAST], [(0,0), pz.Lattice.NORTH]]
+        neighboring_structure=[[(0, 0), pz.Lattice.EAST], [(0, 0), pz.Lattice.NORTH]],
     )
     
-    lattice.plot(marker_size=1, markers=['o'], colors=['0.8'])
+    lattice.plot(marker_size=1, markers=["o"], colors=["0.8"]);
 
 
 
 .. image:: Electrodeposition_files/Electrodeposition_14_0.png
-
-
-
-
-.. parsed-literal::
-
-    <AxesSubplot: xlabel='x (ang.)', ylabel='y (ang.)'>
-
 
 
 The Initial State
@@ -226,13 +220,13 @@ rate at which they diffuse along it.
 
 .. code:: ipython3
 
-    initial_state = pz.LatticeState( lattice, [M, Mp, s], initial=True )
+    initial_state = pz.LatticeState(lattice, [M, Mp, s], initial=True)
     
-    for sid in range(0,100*100,100):
-        initial_state.fill_site( sid, M )
-        initial_state.fill_site( sid-1, M )
+    for sid in range(0, 100 * 100, 100):
+        initial_state.fill_site(sid, M)
+        initial_state.fill_site(sid - 1, M)
     
-    initial_state.fill_sites_random('s', Mp, 0.2)
+    initial_state.fill_sites_random("s", Mp, 0.2)
 
 
 
@@ -248,20 +242,11 @@ visualize it using the following code:
 
 .. code:: ipython3
 
-    initial_state.plot( marker_size=2.5, markers=['o', 'o'],
-                        colors=['#98dbff','#0053b6'], lattice_color='0.95' )
+    initial_state.plot(marker_size=2.5, markers=["o", "o"], colors=["#98dbff", "#0053b6"], lattice_color="0.95");
 
 
 
 .. image:: Electrodeposition_files/Electrodeposition_18_0.png
-
-
-
-
-.. parsed-literal::
-
-    <AxesSubplot: xlabel='x (ang.)', ylabel='y (ang.)'>
-
 
 
 Elemental Reactions & Bulk Diffusion
@@ -467,22 +452,22 @@ our rate constant.
 
 .. code:: ipython3
 
-    D = 5.0e-7             # Diffusion coefficient of M+ in the electrolyte in cm^2/s
-    sf = 0.1               # Scaling diffusion factor
-    k_T = (D/a**2)*(1e16)  # Ion diffusion rate in 1/s
+    D = 5.0e-7  # Diffusion coefficient of M+ in the electrolyte in cm^2/s
+    sf = 0.1  # Scaling diffusion factor
+    k_T = (D / a**2) * (1e16)  # Ion diffusion rate in 1/s
     
     MpDiffusion = pz.ElementaryReaction(
-                      label='MpDiffusion',
-                      site_types=['s', 's'],
-                      initial=[Mp, s],
-                      final=[s, Mp],
-                      initial_entity_number=[0, 1],
-                      final_entity_number=[0, 1],
-                      neighboring=[(0, 1)],
-                      reversible=True,
-                      pre_expon=sf*k_T,
-                      pe_ratio=1.0,
-                      activation_energy=0.0
+        label="MpDiffusion",
+        site_types=["s", "s"],
+        initial=[Mp, s],
+        final=[s, Mp],
+        initial_entity_number=[0, 1],
+        final_entity_number=[0, 1],
+        neighboring=[(0, 1)],
+        reversible=True,
+        pre_expon=sf * k_T,
+        pe_ratio=1.0,
+        activation_energy=0.0,
     )
 
 **Electrochemical Reduction**
@@ -650,26 +635,27 @@ for bulk diffusion, we set ``activation_energy = 0``, so our calculated
 
 .. code:: ipython3
 
-    eta = 0.6                                  # Local overpotential in eV
-    i_0 = 5.0                                  # Exchange current density in mA/cm^2
-    alpha = 0.7                                # Charge transfer coefficient alpha
-    beta = 1.0-alpha                           # Charge transfer coefficient beta
-    T = 300.0                                  # Operating temperature in K
-    J = i_0*( math.exp(alpha*F*eta/R/T)        
-             - math.exp(-beta*F*eta/R/T) )     # Faradaic reaction current density in mA/cm^2                         
-    k_R = J*a**2*(N_a/F)*(1.0/1e3)*(1.0/1e16)  # Electrochemical reaction rate in 1/s
+    eta = 0.6  # Local overpotential in eV
+    i_0 = 5.0  # Exchange current density in mA/cm^2
+    alpha = 0.7  # Charge transfer coefficient alpha
+    beta = 1.0 - alpha  # Charge transfer coefficient beta
+    T = 300.0  # Operating temperature in K
+    J = i_0 * (
+        math.exp(alpha * F * eta / R / T) - math.exp(-beta * F * eta / R / T)
+    )  # Faradaic reaction current density in mA/cm^2
+    k_R = J * a**2 * (N_a / F) * (1.0 / 1e3) * (1.0 / 1e16)  # Electrochemical reaction rate in 1/s
     
     MpReduction = pz.ElementaryReaction(
-                      label='MpReduction',
-                      site_types=['s', 's'],
-                      initial=[Mp, M],
-                      final=[M, M],
-                      initial_entity_number=[0, 1],
-                      final_entity_number=[0, 1],
-                      neighboring=[(0, 1)],
-                      reversible=False,
-                      pre_expon=k_R,
-                      activation_energy=0.0
+        label="MpReduction",
+        site_types=["s", "s"],
+        initial=[Mp, M],
+        final=[M, M],
+        initial_entity_number=[0, 1],
+        final_entity_number=[0, 1],
+        neighboring=[(0, 1)],
+        reversible=False,
+        pre_expon=k_R,
+        activation_energy=0.0,
     )
 
 **Surface Diffusion**
@@ -690,7 +676,7 @@ vibrates and “tries” to jump to a new site (typically
 
 .. code:: ipython3
 
-    nu = 2e12         # surface self-diffusion hopping frequency in 1/s
+    nu = 2e12  # surface self-diffusion hopping frequency in 1/s
 
 The activation barrier :math:`E_a` will change depending on the local
 geometry of the hop. We use the values from the reference paper, but you
@@ -1215,16 +1201,15 @@ above into a pyZacros elementary reaction:
     E_a1 = 0.15
     
     MTerraceDiffusion = pz.ElementaryReaction(
-                      label='MTerraceDiffusion',
-                      #            0 ,  1 ,  2 ,  3 ,  4 ,  5 ,  6 ,  7
-                      site_types=['s', 's', 's', 's', 's', 's', 's', 's'],
-                      initial=   [ s ,  s ,  s ,  M,   s ,  s,   M ,  M ],
-                      final=     [ s ,  s ,  s ,  s,   M ,  s,   M ,  M ],
-                      neighboring=[(0,1), (0,3), (1,4), (2,3), (3,4), (3,6),
-                                   (4,5), (4,7), (6,7)],
-                      reversible=False,
-                      pre_expon=nu,
-                      activation_energy=E_a1
+        label="MTerraceDiffusion",
+        #            0 ,  1 ,  2 ,  3 ,  4 ,  5 ,  6 ,  7
+        site_types=["s", "s", "s", "s", "s", "s", "s", "s"],
+        initial=[s, s, s, M, s, s, M, M],
+        final=[s, s, s, s, M, s, M, M],
+        neighboring=[(0, 1), (0, 3), (1, 4), (2, 3), (3, 4), (3, 6), (4, 5), (4, 7), (6, 7)],
+        reversible=False,
+        pre_expon=nu,
+        activation_energy=E_a1,
     )
 
 Next, we define **diffusion away** from a step. Just as before, we
@@ -1784,16 +1769,15 @@ pyZacros reaction:
     E_a2 = 0.30
     
     MDiffusionAwayFromStep = pz.ElementaryReaction(
-                      label='MDiffusionAwayFromStep',
-                      #            0 ,  1 ,  2 ,  3 ,  4 ,  5 ,  6 ,  7 ,  8
-                      site_types=['s', 's', 's', 's', 's', 's', 's', 's', 's'],
-                      initial=   [ s ,  s ,  M ,  M,   s ,  s,   M ,  M ,  M ],
-                      final=     [ s ,  s ,  M ,  s,   M ,  s,   M ,  M ,  M ],
-                      neighboring=[(0,1), (0,3), (1,4), (2,3), (2,6), (3,4),
-                                   (3,7), (4,5), (4,8), (6,7), (7,8)],
-                      reversible=False,
-                      pre_expon=nu,
-                      activation_energy=E_a2
+        label="MDiffusionAwayFromStep",
+        #            0 ,  1 ,  2 ,  3 ,  4 ,  5 ,  6 ,  7 ,  8
+        site_types=["s", "s", "s", "s", "s", "s", "s", "s", "s"],
+        initial=[s, s, M, M, s, s, M, M, M],
+        final=[s, s, M, s, M, s, M, M, M],
+        neighboring=[(0, 1), (0, 3), (1, 4), (2, 3), (2, 6), (3, 4), (3, 7), (4, 5), (4, 8), (6, 7), (7, 8)],
+        reversible=False,
+        pre_expon=nu,
+        activation_energy=E_a2,
     )
 
 **Using a “Fictitious Gas” Strategy to Keep Ions Constant**
@@ -1880,19 +1864,19 @@ replenishment mechanism to our simulation:
 
 .. code:: ipython3
 
-    Mg = pz.Species('Mg', gas_energy=0.0, mass=1.0)
+    Mg = pz.Species("Mg", gas_energy=0.0, mass=1.0)
     
     f_A = 0.0005
-    k_A = f_A*k_R
+    k_A = f_A * k_R
     
     MpAddIons = pz.ElementaryReaction(
-                      label='MpAddIons',
-                      site_types=['s'],
-                      initial=[s, Mg],
-                      final=[Mp],
-                      reversible=False,
-                      pre_expon=k_A,
-                      activation_energy=0.0
+        label="MpAddIons",
+        site_types=["s"],
+        initial=[s, Mg],
+        final=[Mp],
+        reversible=False,
+        pre_expon=k_A,
+        activation_energy=0.0,
     )
 
 Setting up the ZacrosJob and Running the Calculation
@@ -1916,10 +1900,10 @@ growth dynamics and the final surface morphology.
     sett.random_seed = random_seed
     
     dt = 3e-8
-    sett.max_time = 15*dt
-    sett.snapshots = ('time', dt)
-    sett.process_statistics = ('time', dt)
-    sett.species_numbers = ('time', 0.25*dt)
+    sett.max_time = 15 * dt
+    sett.snapshots = ("time", dt)
+    sett.process_statistics = ("time", dt)
+    sett.species_numbers = ("time", 0.25 * dt)
 
 
 
@@ -1934,11 +1918,11 @@ minutes to complete!
     mechanism = [MpDiffusion, MpReduction, MTerraceDiffusion, MDiffusionAwayFromStep, MpAddIons]
     
     job = pz.ZacrosJob(
-            settings=sett,
-            lattice=lattice,
-            mechanism=mechanism,
-            cluster_expansion=cluster_expansion,
-            initial_state=initial_state
+        settings=sett,
+        lattice=lattice,
+        mechanism=mechanism,
+        cluster_expansion=cluster_expansion,
+        initial_state=initial_state,
     )
     
     results = job.run()
@@ -1946,10 +1930,10 @@ minutes to complete!
 
 .. parsed-literal::
 
-    [18.03|08:35:30] JOB plamsjob STARTED
-    [18.03|08:35:32] JOB plamsjob RUNNING
-    [18.03|08:55:21] JOB plamsjob FINISHED
-    [18.03|08:55:21] JOB plamsjob SUCCESSFUL
+    [31.03|10:47:07] JOB plamsjob STARTED
+    [31.03|10:47:09] JOB plamsjob RUNNING
+    [31.03|11:06:04] JOB plamsjob FINISHED
+    [31.03|11:06:04] JOB plamsjob SUCCESSFUL
 
 
 Analyzing the Results
@@ -1964,19 +1948,11 @@ growing from the initial seed surface up to a total of about 1000 atoms.
 
 .. code:: ipython3
 
-    results.plot_molecule_numbers(['M', 'M+'])
+    results.plot_molecule_numbers(["M", "M+"]);
 
 
 
 .. image:: Electrodeposition_files/Electrodeposition_50_0.png
-
-
-
-
-.. parsed-literal::
-
-    <AxesSubplot: xlabel='t (s)', ylabel='Molecule Numbers'>
-
 
 
 To inspect the final spatial distribution of our deposited film, we can
@@ -1985,20 +1961,17 @@ plot the last frame of the ``lattice_states`` trajectory (using index
 
 .. code:: ipython3
 
-    results.plot_lattice_states( results.lattice_states()[-1], marker_size=2.5, markers=['o', 'o'],
-                                 colors=['#98dbff', '#0053b6'], lattice_color='0.95' )
+    results.plot_lattice_states(
+        results.lattice_states()[-1],
+        marker_size=2.5,
+        markers=["o", "o"],
+        colors=["#98dbff", "#0053b6"],
+        lattice_color="0.95",
+    );
 
 
 
 .. image:: Electrodeposition_files/Electrodeposition_52_0.png
-
-
-
-
-.. parsed-literal::
-
-    <AxesSubplot: title={'center': 't = 4.5e-07 s'}, xlabel='x (ang.)', ylabel='y (ang.)'>
-
 
 
 The resulting plot reveals the macroscopic morphology of the
@@ -2027,12 +2000,18 @@ render an interactive HTML5 video player.
     fig, ax = plt.subplots()
     
     frames = []
-    results.plot_lattice_states( results.lattice_states(), show=False, marker_size=2.5,
-                                 markers=['o', 'o'], colors=['#98dbff', '#0053b6'],
-                                 lattice_color='0.95', frames=frames )
+    results.plot_lattice_states(
+        results.lattice_states(),
+        show=False,
+        marker_size=2.5,
+        markers=["o", "o"],
+        colors=["#98dbff", "#0053b6"],
+        lattice_color="0.95",
+        frames=frames,
+    )
     
     ani = animation.ArtistAnimation(fig, frames, interval=500, blit=True)
-    plt.close(fig) # prevent extra static figure display in notebook
+    plt.close(fig)  # prevent extra static figure display in notebook
     
     HTML(ani.to_jshtml())
 
@@ -2226,42 +2205,42 @@ render an interactive HTML5 video player.
     </style>
     
     <div class="animation">
-      <img id="_anim_img3e5fe5a0c7054b52837d1dfbe02f0dd5">
+      <img id="_anim_imgd9f898ad357c488889b6af9f03c326bb">
       <div class="anim-controls">
-        <input id="_anim_slider3e5fe5a0c7054b52837d1dfbe02f0dd5" type="range" class="anim-slider"
+        <input id="_anim_sliderd9f898ad357c488889b6af9f03c326bb" type="range" class="anim-slider"
                name="points" min="0" max="1" step="1" value="0"
-               oninput="anim3e5fe5a0c7054b52837d1dfbe02f0dd5.set_frame(parseInt(this.value));">
+               oninput="animd9f898ad357c488889b6af9f03c326bb.set_frame(parseInt(this.value));">
         <div class="anim-buttons">
-          <button title="Decrease speed" aria-label="Decrease speed" onclick="anim3e5fe5a0c7054b52837d1dfbe02f0dd5.slower()">
+          <button title="Decrease speed" aria-label="Decrease speed" onclick="animd9f898ad357c488889b6af9f03c326bb.slower()">
               <i class="fa fa-minus"></i></button>
-          <button title="First frame" aria-label="First frame" onclick="anim3e5fe5a0c7054b52837d1dfbe02f0dd5.first_frame()">
+          <button title="First frame" aria-label="First frame" onclick="animd9f898ad357c488889b6af9f03c326bb.first_frame()">
             <i class="fa fa-fast-backward"></i></button>
-          <button title="Previous frame" aria-label="Previous frame" onclick="anim3e5fe5a0c7054b52837d1dfbe02f0dd5.previous_frame()">
+          <button title="Previous frame" aria-label="Previous frame" onclick="animd9f898ad357c488889b6af9f03c326bb.previous_frame()">
               <i class="fa fa-step-backward"></i></button>
-          <button title="Play backwards" aria-label="Play backwards" onclick="anim3e5fe5a0c7054b52837d1dfbe02f0dd5.reverse_animation()">
+          <button title="Play backwards" aria-label="Play backwards" onclick="animd9f898ad357c488889b6af9f03c326bb.reverse_animation()">
               <i class="fa fa-play fa-flip-horizontal"></i></button>
-          <button title="Pause" aria-label="Pause" onclick="anim3e5fe5a0c7054b52837d1dfbe02f0dd5.pause_animation()">
+          <button title="Pause" aria-label="Pause" onclick="animd9f898ad357c488889b6af9f03c326bb.pause_animation()">
               <i class="fa fa-pause"></i></button>
-          <button title="Play" aria-label="Play" onclick="anim3e5fe5a0c7054b52837d1dfbe02f0dd5.play_animation()">
+          <button title="Play" aria-label="Play" onclick="animd9f898ad357c488889b6af9f03c326bb.play_animation()">
               <i class="fa fa-play"></i></button>
-          <button title="Next frame" aria-label="Next frame" onclick="anim3e5fe5a0c7054b52837d1dfbe02f0dd5.next_frame()">
+          <button title="Next frame" aria-label="Next frame" onclick="animd9f898ad357c488889b6af9f03c326bb.next_frame()">
               <i class="fa fa-step-forward"></i></button>
-          <button title="Last frame" aria-label="Last frame" onclick="anim3e5fe5a0c7054b52837d1dfbe02f0dd5.last_frame()">
+          <button title="Last frame" aria-label="Last frame" onclick="animd9f898ad357c488889b6af9f03c326bb.last_frame()">
               <i class="fa fa-fast-forward"></i></button>
-          <button title="Increase speed" aria-label="Increase speed" onclick="anim3e5fe5a0c7054b52837d1dfbe02f0dd5.faster()">
+          <button title="Increase speed" aria-label="Increase speed" onclick="animd9f898ad357c488889b6af9f03c326bb.faster()">
               <i class="fa fa-plus"></i></button>
         </div>
-        <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_select3e5fe5a0c7054b52837d1dfbe02f0dd5"
+        <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_selectd9f898ad357c488889b6af9f03c326bb"
               class="anim-state">
-          <input type="radio" name="state" value="once" id="_anim_radio1_3e5fe5a0c7054b52837d1dfbe02f0dd5"
+          <input type="radio" name="state" value="once" id="_anim_radio1_d9f898ad357c488889b6af9f03c326bb"
                  >
-          <label for="_anim_radio1_3e5fe5a0c7054b52837d1dfbe02f0dd5">Once</label>
-          <input type="radio" name="state" value="loop" id="_anim_radio2_3e5fe5a0c7054b52837d1dfbe02f0dd5"
+          <label for="_anim_radio1_d9f898ad357c488889b6af9f03c326bb">Once</label>
+          <input type="radio" name="state" value="loop" id="_anim_radio2_d9f898ad357c488889b6af9f03c326bb"
                  checked>
-          <label for="_anim_radio2_3e5fe5a0c7054b52837d1dfbe02f0dd5">Loop</label>
-          <input type="radio" name="state" value="reflect" id="_anim_radio3_3e5fe5a0c7054b52837d1dfbe02f0dd5"
+          <label for="_anim_radio2_d9f898ad357c488889b6af9f03c326bb">Loop</label>
+          <input type="radio" name="state" value="reflect" id="_anim_radio3_d9f898ad357c488889b6af9f03c326bb"
                  >
-          <label for="_anim_radio3_3e5fe5a0c7054b52837d1dfbe02f0dd5">Reflect</label>
+          <label for="_anim_radio3_d9f898ad357c488889b6af9f03c326bb">Reflect</label>
         </form>
       </div>
     </div>
@@ -2271,9 +2250,9 @@ render an interactive HTML5 video player.
       /* Instantiate the Animation class. */
       /* The IDs given should match those used in the template above. */
       (function() {
-        var img_id = "_anim_img3e5fe5a0c7054b52837d1dfbe02f0dd5";
-        var slider_id = "_anim_slider3e5fe5a0c7054b52837d1dfbe02f0dd5";
-        var loop_select_id = "_anim_loop_select3e5fe5a0c7054b52837d1dfbe02f0dd5";
+        var img_id = "_anim_imgd9f898ad357c488889b6af9f03c326bb";
+        var slider_id = "_anim_sliderd9f898ad357c488889b6af9f03c326bb";
+        var loop_select_id = "_anim_loop_selectd9f898ad357c488889b6af9f03c326bb";
         var frames = new Array(16);
     
       frames[0] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAYAAACmKP9/AAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90\
@@ -15069,7 +15048,7 @@ render an interactive HTML5 video player.
         /* set a timeout to make sure all the above elements are created before
            the object is initialized. */
         setTimeout(function() {
-            anim3e5fe5a0c7054b52837d1dfbe02f0dd5 = new Animation(frames, img_id, slider_id, 500.0,
+            animd9f898ad357c488889b6af9f03c326bb = new Animation(frames, img_id, slider_id, 500.0,
                                      loop_select_id);
         }, 0);
       })()

@@ -2,13 +2,13 @@
 # the Electrodeposition.ipynb file. All changes to this file will be lost
 
 # In battery engineering, controlling how metal grows at the microscopic level is a critical safety requirement. If electrodeposition is uneven, it can form sharp, needle-like dendrites that grow across the electrolyte and cause massive internal short circuits. Therefore, understanding and suppressing this dendrite formation is essential to preventing catastrophic battery failure.
-#
+# 
 # In this tutorial, we will build a minimal kinetic Monte Carlo (KMC) model for metal electrodeposition using pyZacros. By explicitly simulating individual atomic events (such as ion diffusion in the electrolyte, electrochemical reduction at the interface, and surface self-diffusion on the electrode), we can visualize how macroscopic morphologies develop from the electrode.
-#
+# 
 # Inspired by the work of Vishnugopi et al. **Surface diffusion manifestation in electrodeposition of metal anodes** [Phys. Chem. Chem. Phys., 2020,22, 11286-11295](https://pubs.rsc.org/en/content/articlelanding/2020/cp/d0cp01352h), the core goal of this tutorial is to show how the competition between different surface diffusion pathways dictates whether a deposited film grows smooth and flat, or rough and fractal. Here we describe a simplified model. For surface diffusion, we will specifically include terrace diffusion and step-detachment (diffusion away from a step edge). By the end, you will have run a short simulation and visualized the direct link between atomic-scale kinetics and the resulting electrodeposition morphology.
 
 # OK, let's start!
-#
+# 
 # First, we import the main packages we need:
 
 import scm.pyzacros as pz
@@ -22,7 +22,7 @@ import random
 random_seed = 100
 random.seed(random_seed)
 
-get_ipython().run_line_magic("matplotlib", "inline")
+get_ipython().run_line_magic('matplotlib', 'inline')
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
@@ -43,7 +43,7 @@ N_a = 6.022e23  # Avogadro constant in 1/mol
 
 # Species and Energetics (Clusters)
 # ---------------------------------
-#
+# 
 # We first need to define the fundamental building blocks of our system. As shown in the diagram below, we allow each lattice site to take on one of three states: an empty site `*` (representing the background solvent), a solid deposited metal atom `M`, or a solvated metal cation `M+`.
 
 # ![](EMBEDDED_IMAGE)
@@ -61,9 +61,9 @@ Mp_cluster = pz.Cluster(label="Mp", site_types=["s"], species=[Mp])
 
 # The Lattice
 # -----------
-#
+# 
 # Our first step is to construct a 2D square lattice with nearest-neighbor connectivity. We set the distance between adjacent sites to 3.5 Å ($a = 3.5$), which corresponds to the atomic spacing of our metal electrode. The lattice has periodic boundary conditions along both axes. Following the reference paper, we map the liquid electrolyte onto this same crystalline structure. We capture the physical difference between the liquid and solid phases indirectly by assigning different kinetic rates to their respective diffusion mechanisms. For the simulation size, we intentionally chose a 100 x 100 grid. This specific scale strikes the perfect balance: it lets us track individual atomic hops while providing a large enough canvas to clearly see macroscopic features like nucleation density, growth front roughness, and island coalescence.
-#
+# 
 # The code below creates this lattice and plots it so we can verify the setup is correct before moving on.
 
 a = 3.5  # Lattice constant in ang
@@ -76,7 +76,7 @@ lattice = pz.Lattice(
     neighboring_structure=[[(0, 0), pz.Lattice.EAST], [(0, 0), pz.Lattice.NORTH]],
 )
 
-lattice.plot(marker_size=1, markers=["o"], colors=["0.8"])
+lattice.plot(marker_size=1, markers=["o"], colors=["0.8"]);
 
 
 # The Initial State
@@ -94,31 +94,31 @@ initial_state.fill_sites_random("s", Mp, 0.2)
 
 # To verify that our initial state is configured correctly, we can visualize it using the following code:
 
-initial_state.plot(marker_size=2.5, markers=["o", "o"], colors=["#98dbff", "#0053b6"], lattice_color="0.95")
+initial_state.plot(marker_size=2.5, markers=["o", "o"], colors=["#98dbff", "#0053b6"], lattice_color="0.95");
 
 
 # Elemental Reactions & Bulk Diffusion
 # ------------------------------------
-#
+# 
 # The core of any KMC simulation is its reaction network. In our model, the electrodeposition dynamics are driven by four different elementary events:
-#
+# 
 # 1. **Bulk Diffusion**: `M+` ions swap places with neighboring empty sites (`*`) to simulate random walk transport through the liquid electrolyte.
 # 2. **Electrochemical Reduction**: An `M+` ion adjacent to a solid `M` atom receives an electron and is reduced into a newly deposited `M` atom.
 # 3. **Surface Diffusion**: Deposited `M` atoms hop across the surface. We explicitly track two pathways: terrace diffusion (moving along a flat plane) and step-detachment (moving away from a step edge).
 # 4. **Ion Replenishment**: A background source term acts as an infinite reservoir, continuously introducing new `M+` ions to maintain a steady concentration.
-#
+# 
 # Now, let's translate each of these physical steps into pyZacros elementary reactions.
 
 # **Electrolyte Diffusion**
-#
+# 
 # First, let's model how ions move through the liquid. We define ionic electrolyte diffusion as a reversible two-site hop where an solvated `M+` ion swaps places with an adjacent empty site (`*`). On the left side of the image below, there is a representation of this process using graphs, as needed for pyZacros, which in this specific case consists of only two nodes. On the right side is the enumeration of the graph's nodes. This graph is trivial, but it will be very useful later for more complex reactions.
 
 # ![](EMBEDDED_IMAGE)
 
 # Because diffusion in a liquid is faster compared to solid-state surface reactions, inputting raw physical rates introduces a computational "stiffness" problem into our KMC model. The solver would get bogged down simulating millions of fast ion hops without any actual deposition happening. To fix this, we apply a diffusion scaling factor (`sf`). This trick artificially slows down diffusion just enough to keep the simulation efficient, while maintaining the physical rule that bulk transport must remain at faster than the surface processes. For our setup, a scaling factor of 0.1 preserves this physical hierarchy.
-#
+# 
 # We derive our diffusion coefficient from Valoen and Reimers [J. Electrochem. Soc. 152 A882](https://iopscience.iop.org/article/10.1149/1.1872737). Their fitted data for LiPF$_6$ electrolytes suggests that at high concentrations (>4M, as in our case) and around 300 K, a reasonable order-of-magnitude estimate is $D = 5 \cdot 10^{-7}$ cm$^2$/s.
-#
+# 
 # Finally, when translating this into the pyZacros elementary reaction, notice that we set the activation energy to zero (`activation_energy = 0`). Because Zacros calculates rates using the Arrhenius equation, a zero activation barrier forces the exponential term to 1. This ensures that the prefactor we supply becomes equal to our rate constant.
 
 D = 5.0e-7  # Diffusion coefficient of M+ in the electrolyte in cm^2/s
@@ -141,7 +141,7 @@ MpDiffusion = pz.ElementaryReaction(
 
 
 # **Electrochemical Reduction**
-#
+# 
 # In this step, a local pair consisting of a solvated ion and a solid metal atom (`[Mp, M]`) transforms into two solid metal atoms (`[M, M]`). This represents the critical electron transfer event at the metal/electrolyte interface. Just as we did for bulk diffusion, the image below breaks down this process. On the left side, we see the graph representation of the physical reduction event. On the right side, we have the corresponding node enumeration.
 
 # ![](EMBEDDED_IMAGE)
@@ -173,25 +173,25 @@ MpReduction = pz.ElementaryReaction(
 
 
 # **Surface Diffusion**
-#
+# 
 # Once an atom is reduced onto the electrode, it does not necessarily stay where it landed. It can hop to neighboring sites. We model this surface self-diffusion using standard Arrhenius hopping rates:
-#
+# 
 # $$
 # k_T = \nu e^{-E_a / (k_B T)}
 # $$
-#
+# 
 # Here, $\nu$ represents the attempt frequency—how often an atom vibrates and "tries" to jump to a new site (typically $10^{12} - 10^{13}$ s$^{-1}$). For this example, we set $\nu = 2 \cdot 10^{12}$ s$^{-1}$ (nu)
 
 nu = 2e12  # surface self-diffusion hopping frequency in 1/s
 
 
 # The activation barrier $E_a$ will change depending on the local geometry of the hop. We use the values from the reference paper, but you can find inspiration on how to calculate such parameters from scratch using a quantum chemistry package (like the Amsterdam Modeling Suite) in this reference: Jäckle M. et al. **Self-diffusion barriers: possible descriptors for dendrite growth in batteries?** [Energy Environ. Sci., 2018,11, 3400-3407](https://pubs.rsc.org/en/content/articlelanding/2018/ee/c8ee01448e).
-#
+# 
 # To connect our model with the mechanistic discussion in the Vishnugopi et al. paper, we divide surface mobility into two distinct pathways.
-#
+# 
 # 1. Terrace diffusion: An atom hops laterally across a flat layer (intralayer hopping).
 # 2. Diffusion away from a step: An atom escapes from a highly coordinated step-edge environment to a less coordinated site.
-#
+# 
 # The original paper also studies a third pathway: interlayer (across-step) diffusion, where an atom descends from an upper terrace to a lower one. The authors identified this as the predominant mechanism for smoothing the surface and suppressing dendrites. To keep our tutorial model minimal and computationally fast, we have intentionally omitted this descending pathway.
 
 # First up is **terrace diffusion**. To implement this, we must translate the physical mechanism into a graph-based representation. The goal is to keep this representation as small as possible without losing the underlying physics (for instance, we need enough surrounding nodes to guarantee the atom is actually on a flat terrace and not perched on a step). The image below illustrates the diffusion process for our proposed graph representation and the corresponding node enumeration:
@@ -220,7 +220,7 @@ MTerraceDiffusion = pz.ElementaryReaction(
 # ![](EMBEDDED_IMAGE)
 
 # Following the reference paper, we assign this reaction an activation barrier of $0.30$ eV. Notice that this is twice as high as the terrace diffusion barrier ($0.15$ eV)! This energy penalty physically represents the difficulty of breaking the extra atomic bonds associated with a step-edge environment, capturing the reduced mobility of these trapped atoms.
-#
+# 
 # Here is how we translate this graph into our final surface diffusion pyZacros reaction:
 
 E_a2 = 0.30
@@ -239,19 +239,19 @@ MDiffusionAwayFromStep = pz.ElementaryReaction(
 
 
 # **Using a "Fictitious Gas" Strategy to Keep Ions Constant**
-#
+# 
 # To avoid the rapid depletion of M+ ions during deposition, we introduce a numerical replenishment event. We use a fictitious gas species (`Mg`) that continuously produces new `M+` ions on empty sites at a constant rate $k_A$.
 
 # ![](EMBEDDED_IMAGE)
 
 # Assuming a scenario where diffusion in the electrolyte is much faster than the interfacial reduction step, the ion addition rate should depend directly on the surface reduction rate
-#
+# 
 # $$
 # k_A=f_A k_R
 # $$
-#
+# 
 # Here, $f_A$ can be physically interpreted as the probability fraction of having an `M+` ion sitting directly against the electrode, ready to react. In practice, it serves as an empirical tuning parameter adjusted by trial and error to keep the overall ion concentration approximately constant. For our specific setup, we achieved this balance by setting $f_A = 0.0005$.
-#
+# 
 # The following code adds this fictitious gas species and the replenishment mechanism to our simulation:
 
 Mg = pz.Species("Mg", gas_energy=0.0, mass=1.0)
@@ -272,7 +272,7 @@ MpAddIons = pz.ElementaryReaction(
 
 # Setting up the ZacrosJob and Running the Calculation
 # ----------------------------------------------------
-#
+# 
 # Now that we have all that we need, we are ready to configure the calculation. We do this using a `Settings` object, which controls the macroscopic conditions (temperature, pressure), simulation stopping criteria, and sampling time for different properties. Notice that we set the molar fraction of our fictitious gas (`Mg`) to 1.0. We also define an output sampling interval ($\Delta t = 3 \cdot 10^{-8}$ s) to ensure we capture enough frames to properly resolve both the transient growth dynamics and the final surface morphology.
 
 sett = pz.Settings()
@@ -329,10 +329,10 @@ results = job.run()
 
 # Analyzing the Results
 # ---------------------
-#
+# 
 # First, let's look at how the species populations evolve over time. By plotting the molecule numbers, we can verify that our fictitious gas trick worked! The concentration of solvated `M+` ions (the green line) remains approximately constant throughout the entire simulation. Notice the gradual deposition of solid `M` atoms (the red line), steadily growing from the initial seed surface up to a total of about 1000 atoms.
 
-results.plot_molecule_numbers(["M", "M+"])
+results.plot_molecule_numbers(["M", "M+"]);
 
 
 # To inspect the final spatial distribution of our deposited film, we can plot the last frame of the `lattice_states` trajectory (using index `[-1]`):
@@ -343,11 +343,11 @@ results.plot_lattice_states(
     markers=["o", "o"],
     colors=["#98dbff", "#0053b6"],
     lattice_color="0.95",
-)
+);
 
 
 # The resulting plot reveals the macroscopic morphology of the electrodeposited metal (`M`, dark blue). As expected from our kinetic parameters, the growth fronts have advanced inward from the boundaries, but the resulting deposit is highly uneven, exhibiting severe roughening and dendritic branching. This morphology is a direct consequence of our chosen reaction network. The fast electrochemical reduction rate outpaces the lateral surface diffusion (terrace diffusion and step-detachment). Furthermore, because we intentionally excluded interlayer (descending) diffusion from this minimal model, deposited atoms cannot easily relax into lower layers. This forces the system to grow outward into peaks and branches rather than forming a dense, conformal film.
-#
+# 
 # As a final step, we can visualize the entire deposition process as a continuous animation. This dynamic view is often much more informative than a single final snapshot when trying to diagnose which kinetic step limits morphology evolution. The following cell uses `matplotlib.animation.ArtistAnimation` to compile our sequence of lattice states into a movie. We then use the `to_jshtml()` method to render an interactive HTML5 video player.
 
 fig, ax = plt.subplots()
@@ -371,11 +371,11 @@ HTML(ani.to_jshtml())
 
 # Controlling Morphology: The Low Overpotential Regime
 # ----------------------------------------------------
-#
+# 
 # You can easily alter the final morphology by shifting the kinetic balance of the simulation. If you adjust the initial parameters to a lower overpotential (`eta = 0.4`) and a longer time step (`dt = 1e-6`) to account for the slower reactions, the simulation will produce a dense, conformal film rather than dendritic branches.
 
 # ![](EMBEDDED_IMAGE)
 
 # Achieving this film-type deposition is the ultimate goal in metal anode engineering. A flat, uniform morphology minimizes localized current density "hot spots", extends battery cycle life, and eliminates the safety hazards associated with dendrite-induced short circuits.
-#
+# 
 # This shift in growth mode happens because lowering the overpotential exponentially decreases the rate of electrochemical reduction. With a much slower influx of new solid atoms, the system is no longer diffusion-limited. The deposited atoms have ample time to undergo lateral surface diffusion, allowing them to reorganize and relax into highly coordinated, tightly packed configurations before subsequent layers are formed.

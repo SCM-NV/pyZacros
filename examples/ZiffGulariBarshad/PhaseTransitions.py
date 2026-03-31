@@ -31,9 +31,9 @@ import scm.pyzacros as pz
 # by default is zero unless otherwise stated. That's the case for $CO$ and $O2$,
 # which are used as energy references.
 
-CO_gas = pz.Species("CO")
-O2_gas = pz.Species("O2")
-CO2_gas = pz.Species("CO2", gas_energy=-2.337)
+CO_gas = pz.Species('CO')
+O2_gas = pz.Species('O2')
+CO2_gas = pz.Species('CO2", gas_energy=-2.337)
 
 
 # **2. Three surface species:** $*$, $CO^*$, $O^*$. The species $*$ represents the
@@ -101,7 +101,7 @@ scm.pyzacros.init()
 # In this case, we choose to use the maximum number of simultaneous processes
 # (``maxjobs``) equal to the number of processors in the machine. Additionally,
 # by setting ``nproc =  1`` we establish that only one processor will be used
-# for each zacros instance.
+# for each zacros instance. 
 
 maxjobs = multiprocessing.cpu_count()
 scm.plams.config.default_jobrunner = scm.plams.JobRunner(parallel=True, maxjobs=maxjobs)
@@ -229,11 +229,11 @@ plt.show()
 # irreversible because the molecules are sticky to their original sites
 # and remain stationary until they are removed by a reaction. This leads
 # to the figure above having three regions:
-#
+# 
 # 1. Oxygen poisoned state, $x_\text{CO}<0.32$.
 # 2. Reactive state $0.32<x_\text{CO}<0.55$.
 # 3. CO poisoned state $x_\text{CO}>0.55$.
-#
+# 
 # The first transition at $x_\text{CO}=0.32$ is continuous, and therefore
 # it is of the second order. The second transition at $x_\text{CO}=0.55$
 # occurs abruptly, implying that this is of a first-order transition.
@@ -264,11 +264,11 @@ results[34].last_lattice_state().plot()
 # the steady-state for a given composition is characterized when the
 # derivative of the $CO_2$ production (TOF) with respect to time is zero
 # and remains so:
-#
+# 
 # $$
 # \frac{d}{dt}TOF_{\text{CO}_2} = 0, \,\,\text{for all present and future}\,\, t
 # $$
-#
+# 
 # **pyZacros** also offers the function ``plot_molecule_numbers()`` to
 # visualize the molecule numbers and its first derivative as a function
 # of time. See code and figures below:
@@ -289,3 +289,4 @@ results[34].plot_molecule_numbers(["CO2"], normalize_per_site=True, derivative=T
 # Now, we can close the pyZacros environment:
 
 scm.pyzacros.finish()
+

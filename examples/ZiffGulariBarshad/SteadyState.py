@@ -22,7 +22,7 @@ import scm.pyzacros as pz
 import scm.pyzacros.models
 
 
-# Then, we initialize the **pyZacros** environment.
+# Then, we initialize the **pyZacros** environment. 
 
 scm.pyzacros.init()
 
@@ -82,13 +82,13 @@ job = pz.ZacrosJob(
 # ``turnover frequency.nreplicas`` parameter allows several simulations to run in
 # parallel to speed up the calculation at the expense of more computational power.
 # For the time being, we will leave it at 1, but we will return to it later.
-#
+# 
 # In the second block of code, the ``ZacrosSteadyStateJob.Parameters()`` class allows
 # us to specify the grid in ``max time``, which in this case ranges from 20 to 1000
 # every 100 seconds. Take note that the convergence is verified for each point on
 # this grid, and if it has not converged, the calculation is resumed up to the next
 # point in ``max time``.
-#
+# 
 # Finally, we create ``ZacrosSteadyStateJob``, which references the ``ZacrosJob``
 # defined above as well as the ``Settings`` object and parameters we just defined:
 
@@ -116,7 +116,7 @@ if not ss_job.ok():
 
 
 # If the execution got up to this point, everything worked as expected. Hooray!
-#
+# 
 # Now, in the following lines, we just nicely print the results in a table. See
 # the API documentation to learn more about how the ``results`` object is structured.
 # Here we show the history of the simulation and see how it progresses as the
@@ -177,3 +177,4 @@ for i in range(results.niterations()):
         )
 
 plt.show()
+

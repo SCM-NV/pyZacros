@@ -16,7 +16,7 @@
 # reduce the overall computational cost, it would be ideal to generate more
 # points in the more interesting areas automatically. This is the main goal
 # of the **Adaptive Design Procedure (ADP)**.
-#
+# 
 # The ADP was created to generate training data for Machine Learning (ML) algorithms,
 # with a particular emphasis on approximating computationally-intensive
 # first-principles kinetic models in catalysis. The procedure is based on
@@ -29,7 +29,7 @@
 # **Surrogate Model** of the data based on ML techniques,
 # allowing interpolation of points not included in the original data set,
 # which is critical for multiscale simulations of complex chemical reactors.
-#
+# 
 # In this tutorial, we will likewise examine the effects of altering the gas
 # phase's composition in the $CO_2$ Turnover frequency (TOF) in the ZGB model,
 # but we will do so while utilizing the ADP to both suggest the values of the
@@ -75,7 +75,7 @@ warnings.simplefilter("ignore", UserWarning)
 # example, we have ``one input variable``, the molar fraction of CO, and
 # ``three output variables``, the average coverage for $O*$ and $CO*$
 # and the $CO_2$ TOF.
-#
+# 
 # This ``get_rate()`` function performs a ``ZacrosParametersScanJob``
 # calculation. To follow the details, please refer to the example
 # **Phase Transitions in the ZGB model**. In a nutshell, it configures
@@ -86,7 +86,6 @@ warnings.simplefilter("ignore", UserWarning)
 # it retrieves the results for each condition by calling the
 # ``turnover frequency()`` and ``average coverage()`` functions and
 # storing them in the output array in the correct order.
-
 
 def get_rate(conditions):
 
@@ -156,7 +155,7 @@ scm.pyzacros.init()
 # instances as we request. In this case, we choose to use the maximum number of
 # simultaneous processes (``maxjobs``) equal to the number of processors in the
 # machine. Additionally, by setting ``nproc =  1`` we establish that only one
-# processor will be used for each zacros instance.
+# processor will be used for each zacros instance. 
 
 maxjobs = multiprocessing.cpu_count()
 scm.plams.config.default_jobrunner = scm.plams.JobRunner(parallel=True, maxjobs=maxjobs)
@@ -206,7 +205,7 @@ adpML.createTrainingDataAndML()
 
 
 # If the execution got up to this point, everything worked as expected. Hooray!
-#
+# 
 # The results are then collected by accessing the ``trainingData`` attribute of the
 # ``adpML`` object, and they are presented nicely in a table in the lines that follow.
 
@@ -266,7 +265,7 @@ plt.show()
 # the only way to do so is by increasing the number of points in the training
 # set by tuning the ADP parameters' (``algorithmParams``). However, now that
 # we have the surrogate model, we can quickly obtain the average coverage for
-# $O*$ and $CO*$ and the $CO_2$ TOF for any $CO$ molar fraction.
+# $O*$ and $CO*$ and the $CO_2$ TOF for any $CO$ molar fraction. 
 
 # Now, we can close the pyZacros environment:
 
@@ -310,4 +309,4 @@ plt.show()
 # ``forestFile`` in the ADP constructor allows you to alter the prefix ``ml_ExtraTrees``.
 # In the ``adp.predict()`` method, you can provide the complete path to this file, but if
 # a directory is supplied instead, it will try to discover the proper file inside,
-# as shown in the lines of code above.
+# as shown in the lines of code above. 

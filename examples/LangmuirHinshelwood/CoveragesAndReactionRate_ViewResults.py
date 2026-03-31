@@ -11,12 +11,12 @@
 # create a new working directory by appending a sequential number to its name,
 # for example, ``plams_workdir.001``. If this is the case, simply replace
 # ``plams_workdir`` with the appropriate value.
-#
+# 
 # So, let's get started!
-#
+# 
 # First, we load the required packages and retrieve the ``ZacrosParametersScanJob``
 # (``job``) and corresponding results object (``results``) from the working
-# directory, as shown below:
+# directory, as shown below: 
 
 import scm.pyzacros as pz
 import scm.pyzacros.models
@@ -30,7 +30,7 @@ scm.pyzacros.finish()
 
 
 # To be certain, we generate and print the same summary table from the end of
-# the first part of the tutorial. They must be exactly the same:
+# the first part of the tutorial. They must be exactly the same: 
 
 x_CO = []
 ac_O = []
@@ -104,13 +104,13 @@ plt.show()
 # overall quality of our results. Our results should be indistinguishable
 # from the Langmuir-Hinshelwood deterministic equations, which are shown
 # below:
-#
+# 
 # $$
 # \theta_\text{O} = \frac{ \sqrt{B_{\text{O}_2}x_{\text{O}_2}} }{ 1 + B_\text{CO}x_\text{CO} + \sqrt{B_{\text{O}_2}x_{\text{O}_2}} } \\
 # \theta_\text{CO} = \frac{ B_\text{CO}x_\text{CO} }{ 1 + B_\text{CO}x_\text{CO} + \sqrt{B_{\text{O}_2}x_{\text{O}_2}} } \\[7mm]
 # \text{TOF}_{\text{CO}_2} = 6 \, A_\text{oxi}\theta_\text{CO}\theta_\text{O}
 # $$
-#
+# 
 # Here $B_\text{CO}$/$B_{\text{O}_2}$ represent the ratio of the adsorption-desorption
 # pre-exponential terms of $CO$/$O_2$ (``pe_ratio`` in Zacros), $x_\text{CO}$/$x_{\text{O}_2}$
 # the molar fractions of $CO$/$O_2$; $\theta_\text{CO}$/$\theta_\text{O}$
@@ -119,21 +119,21 @@ plt.show()
 # frequency or production rate of $CO_2$. The number 6 is because, in our lattice,
 # each site has 6 neighbors, so the oxidation event is "replicated" across
 # each neighboring site.
-#
+# 
 # Notice that to get the above expressions based on the ones shown in the Zacros
 # tutorial, you need the following equalities:
-#
+# 
 # $$
 # K_s P_s = \left( \frac{A^\text{ads}_s P^{-1}}{A^\text{des}_s} \right) x_s P = B_s x_s \qquad \therefore\qquad s=\text{CO},\text{O}_2
 # \\
 # k_\text{oxi} = A_\text{oxi}
 # $$
-#
+# 
 # The final equality follows from the fact that in pyZacros, the activation energy
 # for all elementary reactions is equal to zero.
-#
+# 
 # The code below simply computes the coverages and TOF of $CO_2$ using the analytical
-# expression described above:
+# expression described above: 
 
 import numpy
 
@@ -160,7 +160,7 @@ for i in range(len(x_CO_model)):
 # you can see the aforementioned results visually. Please look over the code below, and
 # notice we plot the analytical and simulation results together. The points in the
 # figure represent simulation results, while the lines represent analytical model results.
-# They are nearly identical.
+# They are nearly identical. 
 
 import matplotlib.pyplot as plt
 
@@ -192,11 +192,11 @@ plt.show()
 # As a final note, we included in the code above the value of the $CO$ molar fraction
 # ($x_\text{CO}^*$) on which we get the maximum $CO_2$ production rate. The figure shows
 # this value as a vertical gray dashed line. It is simple to deduce it from the
-# preceding analytical expressions:
-#
+# preceding analytical expressions: 
+# 
 # $$
 # x_{CO}^* = \frac{B_{\text{O}_2}}{2 B_\text{CO}^2}\left( \sqrt{1+\frac{4 B_\text{CO}^2}{B_{\text{O}_2}}} - 1 \right)\approx 0.656
 # $$
-#
+# 
 # Notice that the position of this maximum $x_\text{CO}*$ depends exclusively on the ratio
 # of the ``pe_ratio`` parameters for $CO$ and $O_2$ in the Langmuir-Hinshelwood model.

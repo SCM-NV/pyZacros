@@ -10,7 +10,7 @@ import random
 random_seed = 100
 random.seed(random_seed)
 
-get_ipython().run_line_magic("matplotlib", "inline")
+get_ipython().run_line_magic('matplotlib', 'inline')
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
@@ -27,9 +27,9 @@ globals().update(data)
 
 # The Inlet Model: Simulating Diffusion-Limited Growth (Optional)
 # ---------------------------------------------------------------
-#
+# 
 # We can also model a system with a distinct concentration gradient by defining an explicit ion inlet rather than a uniform background reservoir.
-#
+# 
 # In the code below, we define a new species I (Inlet). We initialize the lattice with our standard solid M electrode at the bottom (dark blue) and a solid line of I sites at the top (yellow). We also keep our initial 20% random seeding of M+ ions in the electrolyte solution.
 
 I = pz.Species("I", denticity=1, kind=pz.Species.SURFACE, mass=1.0)
@@ -43,11 +43,11 @@ for sid in range(0, 100 * 100, 100):
 
 initial_state.fill_sites_random("s", Mp, 0.2)
 
-initial_state.plot(marker_size=2.5, markers=["o", "o", "o"], colors=["#98dbff", "#0053b6", "y"], lattice_color="0.95")
+initial_state.plot(marker_size=2.5, markers=["o", "o", "o"], colors=["#98dbff", "#0053b6", "y"], lattice_color="0.95");
 
 
 # In this geometry, new `M+` ions are continuously pumped into the system by the top yellow layer. This means they must physically diffuse across the entire simulation box to reach the bottom electrode before they can be reduced.
-#
+# 
 # To implement this, we define a new elementary reaction where our fictitious `Mg` gas can only generate an `M+` ion on an empty site (`s`) if it is directly adjacent to an Inlet site (`I`). Notice that we also increased our scaling fraction to `f_A = 0.02`. Because ions are now only entering the system from a single boundary row rather than uniformly across the whole grid, we need a higher local injection rate to maintain a steady overall flux.
 
 Mg = pz.Species("Mg", gas_energy=0.0, mass=1.0)
@@ -91,11 +91,11 @@ results = job.run()
 
 # We have successfully run our directional model! First, let's take a look to the population numbers:
 
-results.plot_molecule_numbers(["M", "M+"])
+results.plot_molecule_numbers(["M", "M+"]);
 
 
 # The green line shows that our new injection rate (`f_A = 0.02`) perfectly balances the reduction rate, keeping the overall M+ concentration steady while the solid `M` film grows.
-#
+# 
 # Now, lets see the final spatial distribution of our deposited film:
 
 results.plot_lattice_states(
@@ -104,11 +104,11 @@ results.plot_lattice_states(
     markers=["o", "o", "o"],
     colors=["#98dbff", "#0053b6", "y"],
     lattice_color="0.95",
-)
+);
 
 
 # By introducing a physical distance between the ion source (the `I` inlet at the top) and the reduction surface (the electrode at the bottom), the simulation naturally develops a concentration gradient. The `M+` species (light blue) is highly concentrated near the inlet but significantly depleted near the growth front. Furthermore, we can clearly observe localized depletion zones around the dendrite tips. This indicates a diffusion-limited growth regime. The highest peaks grow so fast that they consume all the nearby ions before those ions can travel down into the lower areas. Because the valleys are left "starved", an even film cannot form, which just causes the dendrites to grow further out of control.
-#
+# 
 # Now, just for fun, let's create an animation to watch the dendritic morphology evolve over time!
 
 fig, ax = plt.subplots()
@@ -128,3 +128,4 @@ ani = animation.ArtistAnimation(fig, frames, interval=500, blit=True)
 plt.close(fig)  # prevent extra static figure display in notebook
 
 HTML(ani.to_jshtml())
+

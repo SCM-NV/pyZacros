@@ -14,7 +14,7 @@
 # considerably increasing the computational cost. This tutorial shows how to speed up
 # the calculation by several orders of magnitude without sacrificing precision by
 # automatically detecting and scaling the rate constants of fast reactions.
-#
+# 
 # We will focus on the net reaction $\text{CO}+\frac{1}{2}\text{O}_2\longrightarrow \text{CO}_2$
 # that takes place at a catalyst's surface and whose reaction mechanism is described by
 # the Langmuir-Hinshelwood model. Because this model has four very fast processes
@@ -35,7 +35,7 @@ import scm.pyzacros as pz
 import scm.pyzacros.models
 
 
-# Then, we initialize the **pyZacros** environment.
+# Then, we initialize the **pyZacros** environment. 
 
 scm.pyzacros.init()
 
@@ -48,7 +48,7 @@ scm.pyzacros.init()
 # it should take around 20 min to complete. So, in order to speed things up, we'll
 # use the ``plams.JobRunner`` class to run as many parallel instances as possible. In this
 # case, we choose to use the maximum number of simultaneous processes (``maxjobs``) equal
-# to the number of processors in the machine.
+# to the number of processors in the machine. 
 
 maxjobs = multiprocessing.cpu_count()
 scm.plams.config.default_jobrunner = scm.plams.JobRunner(parallel=True, maxjobs=maxjobs)
@@ -67,7 +67,7 @@ lh = pz.models.LangmuirHinshelwood()
 # ``ZacrosJob``. So, We will go through them one at a time:
 
 # **1. Setting up the ZacrosJob**
-#
+# 
 # For ``ZacrosJob``, all parameters are set using a ``Setting`` object. To begin,
 # we define the physical parameters: ``temperature`` (in K), and ``pressure``
 # (in bar). The calculation parameters are then set: ``species numbers`` (in s)
@@ -94,7 +94,7 @@ z_job = pz.ZacrosJob(
 
 
 # **2. Setting up the ZacrosSteadyStateJob**
-#
+# 
 # We also need to create a ``Setting`` object for ``ZacrosJob`` There, we ask for a
 # steady-state configuration using a TOFs calculation with a 95% confidence level
 # (``turnover frequency.confidence``), using four replicas to speed up the calculation
@@ -124,7 +124,7 @@ ss_job = pz.ZacrosSteadyStateJob(settings=ss_sett, reference=z_job, parameters=s
 
 
 # **3. Setting up the ZacrosParametersScanJob**
-#
+# 
 # Although the ``ZacrosParametersScanJob`` does not require a ``Setting`` object,
 # it does require a ``ZacrosSteadyStateJob.Parameters`` object to specify which
 # parameters must be modified systematically. In this instance, all we need is a
@@ -134,7 +134,7 @@ ss_job = pz.ZacrosSteadyStateJob(settings=ss_sett, reference=z_job, parameters=s
 # will be used internally to replace ``molar fraction.CO`` and ``molar fraction.O2``
 # in the Zacros input files. Then, using the ``ZacrosSteadyStateJob`` defined
 # earlier (``ss job``) and the parameters we just defined (``ps params``), we
-# create the ``ZacrosParametersScanJob``:
+# create the ``ZacrosParametersScanJob``: 
 
 ps_params = pz.ZacrosParametersScanJob.Parameters()
 ps_params.add("x_CO", "molar_fraction.CO", numpy.linspace(0.05, 0.95, 11))
@@ -157,7 +157,7 @@ if not ps_job.ok():
 
 
 # If the execution got up to this point, everything worked as expected. Hooray!
-#
+# 
 # Finally, in the following lines, we just nicely print the results in a table. See
 # the API documentation to learn more about how the ``results`` object is structured,
 # and the available methods. In this case, we use the ``turnover_frequency()`` and
@@ -199,3 +199,4 @@ for i in range(len(x_CO)):
 # Now, we can close the pyZacros environment:
 
 scm.pyzacros.finish()
+

@@ -39,7 +39,7 @@ scm.pyzacros.init()
 # instances as we request. In this case, we choose to use the maximum number of
 # simultaneous processes (``maxjobs``) equal to the number of processors in the
 # machine. Additionally, by setting ``nproc =  1`` we establish that only one
-# processor will be used for each zacros instance.
+# processor will be used for each zacros instance. 
 
 maxjobs = multiprocessing.cpu_count()
 scm.plams.config.default_jobrunner = scm.plams.JobRunner(parallel=True, maxjobs=maxjobs)
@@ -59,7 +59,7 @@ zgb = pz.models.ZiffGulariBarshad()
 # ``ZacrosJob``. So, We will go through them one at a time:
 
 # **1. Setting up the ZacrosJob**
-#
+# 
 # For ``ZacrosJob``, all parameters are set using a ``Setting`` object. To begin,
 # we define the physical parameters: ``temperature`` (in K), and ``pressure``
 # (in bar). The calculation parameters are then set: ``species numbers`` (in s)
@@ -86,7 +86,7 @@ z_job = pz.ZacrosJob(
 
 
 # **2. Setting up the ZacrosSteadyStateJob**
-#
+# 
 # We also need to create a ``Setting`` object for ``ZacrosJob`` There, we ask for a
 # steady-state configuration using a TOFs calculation with a 96% confidence level
 # (``turnover frequency.confidence``), using four replicas to speed up the calculation
@@ -109,7 +109,7 @@ ss_job = pz.ZacrosSteadyStateJob(settings=ss_sett, reference=z_job, parameters=s
 
 
 # **3. Setting up the ZacrosParametersScanJob**
-#
+# 
 # Although the ``ZacrosParametersScanJob`` does not require a ``Setting`` object,
 # it does require a ``ZacrosSteadyStateJob.Parameters`` object to specify which
 # parameters must be modified systematically. In this instance, all we need is a
@@ -119,7 +119,7 @@ ss_job = pz.ZacrosSteadyStateJob(settings=ss_sett, reference=z_job, parameters=s
 # fractions will be used internally to replace ``molar fraction.CO`` and
 # ``molar fraction.O2`` in the Zacros input files. Then, using the
 # ``ZacrosSteadyStateJob`` defined earlier (``ss job``) and the parameters we just
-# defined (``ps params``), we create the ``ZacrosParametersScanJob``:
+# defined (``ps params``), we create the ``ZacrosParametersScanJob``: 
 
 ps_params = pz.ZacrosParametersScanJob.Parameters()
 ps_params.add("x_CO", "molar_fraction.CO", numpy.arange(0.2, 0.8, 0.01))
@@ -141,7 +141,7 @@ if not results.job.ok():
 
 
 # If the execution got up to this point, everything worked as expected. Hooray!
-#
+# 
 # Finally, in the following lines, we just nicely print the results in a table. See
 # the API documentation to learn more about how the ``results`` object is structured,
 # and the available methods. In this case, we use the ``turnover_frequency()`` and
@@ -154,7 +154,7 @@ if not results.job.ok():
 # parameters, so if you want to access the properties of one of the child jobs, we
 # recommend using a loop like the one we use here. In the lines that follow, we use this
 # ``idx`` to get the maximum time that the simulation required to achieve the steady
-# state for that specific composition ("max time").
+# state for that specific composition ("max time"). 
 
 x_CO = []
 ac_O = []
@@ -226,3 +226,4 @@ plt.show()
 # Now, we can close the pyZacros environment:
 
 scm.pyzacros.finish()
+

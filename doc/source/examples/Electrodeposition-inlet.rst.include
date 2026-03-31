@@ -12,31 +12,22 @@ initial 20% random seeding of M+ ions in the electrolyte solution.
 
 .. code:: ipython3
 
-    I = pz.Species('I', denticity=1, kind=pz.Species.SURFACE, mass=1.0)
-    I_cluster = pz.Cluster( label='I', site_types=['s'], species=[I] )
+    I = pz.Species("I", denticity=1, kind=pz.Species.SURFACE, mass=1.0)
+    I_cluster = pz.Cluster(label="I", site_types=["s"], species=[I])
     
-    initial_state = pz.LatticeState( lattice, [M, Mp, s], initial=True )
+    initial_state = pz.LatticeState(lattice, [M, Mp, s], initial=True)
     
-    for sid in range(0,100*100,100):
-        initial_state.fill_site( sid, M )
-        initial_state.fill_site( sid-1, I )
-                    
-    initial_state.fill_sites_random('s', Mp, 0.2)
+    for sid in range(0, 100 * 100, 100):
+        initial_state.fill_site(sid, M)
+        initial_state.fill_site(sid - 1, I)
     
-    initial_state.plot( marker_size=2.5, markers=['o', 'o', 'o'],
-                        colors=['#98dbff','#0053b6', 'y'], lattice_color='0.95' )
+    initial_state.fill_sites_random("s", Mp, 0.2)
+    
+    initial_state.plot(marker_size=2.5, markers=["o", "o", "o"], colors=["#98dbff", "#0053b6", "y"], lattice_color="0.95");
 
 
 
 .. image:: Electrodeposition-inlet_files/Electrodeposition-inlet_3_0.png
-
-
-
-
-.. parsed-literal::
-
-    <AxesSubplot: xlabel='x (ang.)', ylabel='y (ang.)'>
-
 
 
 In this geometry, new ``M+`` ions are continuously pumped into the
@@ -54,20 +45,21 @@ to maintain a steady overall flux.
 
 .. code:: ipython3
 
-    Mg = pz.Species('Mg', gas_energy=0.0, mass=1.0)
+    Mg = pz.Species("Mg", gas_energy=0.0, mass=1.0)
     
     f_A = 0.02
-    k_A = f_A*k_R
+    k_A = f_A * k_R
     
     MpAddIons = pz.ElementaryReaction(
-                      label='MpAddIons',
-                      site_types=['s', 's'],
-                      initial=[I, s, Mg],
-                      final=[I, Mp],
-                      neighboring=[(0, 1)],
-                      reversible=False,
-                      pre_expon=k_A,
-                      activation_energy=0.0)
+        label="MpAddIons",
+        site_types=["s", "s"],
+        initial=[I, s, Mg],
+        final=[I, Mp],
+        neighboring=[(0, 1)],
+        reversible=False,
+        pre_expon=k_A,
+        activation_energy=0.0,
+    )
 
 Finally, we update our ``cluster_expansion`` to include the new inlet
 species, our ``mechanism`` with the new ``MpAddIons`` reaction and
@@ -84,17 +76,17 @@ this calculation will take around an hour to wrap up.
     mechanism = [MpDiffusion, MpReduction, MTerraceDiffusion, MDiffusionAwayFromStep, MpAddIons]
     
     dt = 1.2e-7
-    sett.max_time = 15*dt
-    sett.snapshots = ('time', dt)
-    sett.process_statistics = ('time', dt)
-    sett.species_numbers = ('time', 0.25*dt)
+    sett.max_time = 15 * dt
+    sett.snapshots = ("time", dt)
+    sett.process_statistics = ("time", dt)
+    sett.species_numbers = ("time", 0.25 * dt)
     
     job = pz.ZacrosJob(
-            settings=sett,
-            lattice=lattice,
-            mechanism=mechanism,
-            cluster_expansion=cluster_expansion,
-            initial_state=initial_state
+        settings=sett,
+        lattice=lattice,
+        mechanism=mechanism,
+        cluster_expansion=cluster_expansion,
+        initial_state=initial_state,
     )
     
     results = job.run()
@@ -102,10 +94,10 @@ this calculation will take around an hour to wrap up.
 
 .. parsed-literal::
 
-    [18.03|08:35:48] JOB plamsjob STARTED
-    [18.03|08:35:50] JOB plamsjob RUNNING
-    [18.03|09:40:41] JOB plamsjob FINISHED
-    [18.03|09:40:41] JOB plamsjob SUCCESSFUL
+    [31.03|11:10:31] JOB plamsjob STARTED
+    [31.03|11:10:33] JOB plamsjob RUNNING
+    [31.03|12:13:49] JOB plamsjob FINISHED
+    [31.03|12:13:49] JOB plamsjob SUCCESSFUL
 
 
 We have successfully run our directional model! First, let’s take a look
@@ -113,19 +105,11 @@ to the population numbers:
 
 .. code:: ipython3
 
-    results.plot_molecule_numbers(['M', 'M+'])
+    results.plot_molecule_numbers(["M", "M+"]);
 
 
 
 .. image:: Electrodeposition-inlet_files/Electrodeposition-inlet_9_0.png
-
-
-
-
-.. parsed-literal::
-
-    <AxesSubplot: xlabel='t (s)', ylabel='Molecule Numbers'>
-
 
 
 The green line shows that our new injection rate (``f_A = 0.02``)
@@ -136,20 +120,17 @@ Now, lets see the final spatial distribution of our deposited film:
 
 .. code:: ipython3
 
-    results.plot_lattice_states( results.lattice_states()[-1], marker_size=2.5, markers=['o', 'o', 'o'],
-                                 colors=['#98dbff', '#0053b6', 'y'], lattice_color='0.95' )
+    results.plot_lattice_states(
+        results.lattice_states()[-1],
+        marker_size=2.5,
+        markers=["o", "o", "o"],
+        colors=["#98dbff", "#0053b6", "y"],
+        lattice_color="0.95",
+    );
 
 
 
 .. image:: Electrodeposition-inlet_files/Electrodeposition-inlet_11_0.png
-
-
-
-
-.. parsed-literal::
-
-    <AxesSubplot: title={'center': 't = 1.8e-06 s'}, xlabel='x (ang.)', ylabel='y (ang.)'>
-
 
 
 By introducing a physical distance between the ion source (the ``I``
@@ -172,12 +153,18 @@ morphology evolve over time!
     fig, ax = plt.subplots()
     
     frames = []
-    results.plot_lattice_states( results.lattice_states(), show=False, marker_size=2.5,
-                                 markers=['o', 'o', 'o'], colors=['#98dbff', '#0053b6', 'y'],
-                                 lattice_color='0.95', frames=frames )
+    results.plot_lattice_states(
+        results.lattice_states(),
+        show=False,
+        marker_size=2.5,
+        markers=["o", "o", "o"],
+        colors=["#98dbff", "#0053b6", "y"],
+        lattice_color="0.95",
+        frames=frames,
+    )
     
     ani = animation.ArtistAnimation(fig, frames, interval=500, blit=True)
-    plt.close(fig) # prevent extra static figure display in notebook
+    plt.close(fig)  # prevent extra static figure display in notebook
     
     HTML(ani.to_jshtml())
 
@@ -371,42 +358,42 @@ morphology evolve over time!
     </style>
     
     <div class="animation">
-      <img id="_anim_img0578d7c904b746fbba3a4c82cf984b02">
+      <img id="_anim_img102ae63fb57a43d3bfcc31a968aec637">
       <div class="anim-controls">
-        <input id="_anim_slider0578d7c904b746fbba3a4c82cf984b02" type="range" class="anim-slider"
+        <input id="_anim_slider102ae63fb57a43d3bfcc31a968aec637" type="range" class="anim-slider"
                name="points" min="0" max="1" step="1" value="0"
-               oninput="anim0578d7c904b746fbba3a4c82cf984b02.set_frame(parseInt(this.value));">
+               oninput="anim102ae63fb57a43d3bfcc31a968aec637.set_frame(parseInt(this.value));">
         <div class="anim-buttons">
-          <button title="Decrease speed" aria-label="Decrease speed" onclick="anim0578d7c904b746fbba3a4c82cf984b02.slower()">
+          <button title="Decrease speed" aria-label="Decrease speed" onclick="anim102ae63fb57a43d3bfcc31a968aec637.slower()">
               <i class="fa fa-minus"></i></button>
-          <button title="First frame" aria-label="First frame" onclick="anim0578d7c904b746fbba3a4c82cf984b02.first_frame()">
+          <button title="First frame" aria-label="First frame" onclick="anim102ae63fb57a43d3bfcc31a968aec637.first_frame()">
             <i class="fa fa-fast-backward"></i></button>
-          <button title="Previous frame" aria-label="Previous frame" onclick="anim0578d7c904b746fbba3a4c82cf984b02.previous_frame()">
+          <button title="Previous frame" aria-label="Previous frame" onclick="anim102ae63fb57a43d3bfcc31a968aec637.previous_frame()">
               <i class="fa fa-step-backward"></i></button>
-          <button title="Play backwards" aria-label="Play backwards" onclick="anim0578d7c904b746fbba3a4c82cf984b02.reverse_animation()">
+          <button title="Play backwards" aria-label="Play backwards" onclick="anim102ae63fb57a43d3bfcc31a968aec637.reverse_animation()">
               <i class="fa fa-play fa-flip-horizontal"></i></button>
-          <button title="Pause" aria-label="Pause" onclick="anim0578d7c904b746fbba3a4c82cf984b02.pause_animation()">
+          <button title="Pause" aria-label="Pause" onclick="anim102ae63fb57a43d3bfcc31a968aec637.pause_animation()">
               <i class="fa fa-pause"></i></button>
-          <button title="Play" aria-label="Play" onclick="anim0578d7c904b746fbba3a4c82cf984b02.play_animation()">
+          <button title="Play" aria-label="Play" onclick="anim102ae63fb57a43d3bfcc31a968aec637.play_animation()">
               <i class="fa fa-play"></i></button>
-          <button title="Next frame" aria-label="Next frame" onclick="anim0578d7c904b746fbba3a4c82cf984b02.next_frame()">
+          <button title="Next frame" aria-label="Next frame" onclick="anim102ae63fb57a43d3bfcc31a968aec637.next_frame()">
               <i class="fa fa-step-forward"></i></button>
-          <button title="Last frame" aria-label="Last frame" onclick="anim0578d7c904b746fbba3a4c82cf984b02.last_frame()">
+          <button title="Last frame" aria-label="Last frame" onclick="anim102ae63fb57a43d3bfcc31a968aec637.last_frame()">
               <i class="fa fa-fast-forward"></i></button>
-          <button title="Increase speed" aria-label="Increase speed" onclick="anim0578d7c904b746fbba3a4c82cf984b02.faster()">
+          <button title="Increase speed" aria-label="Increase speed" onclick="anim102ae63fb57a43d3bfcc31a968aec637.faster()">
               <i class="fa fa-plus"></i></button>
         </div>
-        <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_select0578d7c904b746fbba3a4c82cf984b02"
+        <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_select102ae63fb57a43d3bfcc31a968aec637"
               class="anim-state">
-          <input type="radio" name="state" value="once" id="_anim_radio1_0578d7c904b746fbba3a4c82cf984b02"
+          <input type="radio" name="state" value="once" id="_anim_radio1_102ae63fb57a43d3bfcc31a968aec637"
                  >
-          <label for="_anim_radio1_0578d7c904b746fbba3a4c82cf984b02">Once</label>
-          <input type="radio" name="state" value="loop" id="_anim_radio2_0578d7c904b746fbba3a4c82cf984b02"
+          <label for="_anim_radio1_102ae63fb57a43d3bfcc31a968aec637">Once</label>
+          <input type="radio" name="state" value="loop" id="_anim_radio2_102ae63fb57a43d3bfcc31a968aec637"
                  checked>
-          <label for="_anim_radio2_0578d7c904b746fbba3a4c82cf984b02">Loop</label>
-          <input type="radio" name="state" value="reflect" id="_anim_radio3_0578d7c904b746fbba3a4c82cf984b02"
+          <label for="_anim_radio2_102ae63fb57a43d3bfcc31a968aec637">Loop</label>
+          <input type="radio" name="state" value="reflect" id="_anim_radio3_102ae63fb57a43d3bfcc31a968aec637"
                  >
-          <label for="_anim_radio3_0578d7c904b746fbba3a4c82cf984b02">Reflect</label>
+          <label for="_anim_radio3_102ae63fb57a43d3bfcc31a968aec637">Reflect</label>
         </form>
       </div>
     </div>
@@ -416,9 +403,9 @@ morphology evolve over time!
       /* Instantiate the Animation class. */
       /* The IDs given should match those used in the template above. */
       (function() {
-        var img_id = "_anim_img0578d7c904b746fbba3a4c82cf984b02";
-        var slider_id = "_anim_slider0578d7c904b746fbba3a4c82cf984b02";
-        var loop_select_id = "_anim_loop_select0578d7c904b746fbba3a4c82cf984b02";
+        var img_id = "_anim_img102ae63fb57a43d3bfcc31a968aec637";
+        var slider_id = "_anim_slider102ae63fb57a43d3bfcc31a968aec637";
+        var loop_select_id = "_anim_loop_select102ae63fb57a43d3bfcc31a968aec637";
         var frames = new Array(16);
     
       frames[0] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAYAAACmKP9/AAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90\
@@ -12939,7 +12926,7 @@ morphology evolve over time!
         /* set a timeout to make sure all the above elements are created before
            the object is initialized. */
         setTimeout(function() {
-            anim0578d7c904b746fbba3a4c82cf984b02 = new Animation(frames, img_id, slider_id, 500.0,
+            anim102ae63fb57a43d3bfcc31a968aec637 = new Animation(frames, img_id, slider_id, 500.0,
                                      loop_select_id);
         }, 0);
       })()
