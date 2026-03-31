@@ -22,22 +22,16 @@ The expected mechanisms are sketched in the following figure:
    :scale: 60 %
    :align: center
 
-
-The only necessary information from the system is an initial guess for its geometry. We have used the AMS GUI to generate our CO/Pt(111) system. (If you do not have access to AMS, a link to the generated XYZ file is provided :ref:`below <label-pyzacros-COPt-xyz-download>`.)
+The only necessary information from the system is an initial guess for its geometry. We have used the AMS GUI to generate our CO/Pt(111) system (If you do not have access to AMS, a link to the generated XYZ file is provided :ref:`below <label-pyzacros-COPt-xyz-download>`).
 
 We generated a 3x3 Pt(111) surface, put a CO molecule on top of it, and optimized the geometry while keeping the Pt(111) surface frozen. We created two regions for the "adsorbate" and "surface" respectively. The optimized geometry gives a threefold absorption for the CO molecule.
 
-.. |co_pt111_xyz| image:: ../../images/example_CO+Pt111-initxyz.png
+.. image:: ../../images/example_CO+Pt111-initxyz.png
    :scale: 60 %
-
 
 .. _label-pyzacros-COPt-xyz-download:
 
-.. csv-table::
-   :header: |co_pt111_xyz|
-
-   "Link to download: :download:`CO_ads+Pt111.xyz <../../../examples/CO+Pt111/CO_ads+Pt111.xyz>`"
-
+Link to download: :download:`CO_ads+Pt111.xyz <../../../examples/CO+Pt111/CO_ads+Pt111.xyz>`
 
 .. Note::
   The PES exploration tools used in this tutorial will handle the optimization of the initial geometry. Even if the initial coordinates differ slightly, the script will still generate the same landscape.
@@ -98,7 +92,7 @@ This section aims to get the energy landscape of the system. By exploiting the s
 
   sett_ads = scm.plams.Settings()
   sett_ads.input.ams.Constraints.FixedRegion = 'surface'
-  sett_ads.input.ams.Task = "PESExploration"
+  sett_ads.input.ams.Task = 'PESExploration'
   sett_ads.input.ams.PESExploration.Job = 'ProcessSearch'
   sett_ads.input.ams.PESExploration.RandomSeed = 100
   sett_ads.input.ams.PESExploration.NumExpeditions = 30
@@ -125,10 +119,10 @@ Lines 8-10 enable the `ReaxFF <../../ReaxFF/index.html>`__ engine. We use the CH
 
 Lines 12-28 specify the PESExploration settings. This task generates the critical points that compose the energy landscape.
 
-The positions of the Pt surface atoms are frozen (line 13). The ProcessSearch method is used to find the escape mechanisms from the different states (line 15), distributed in 10 expeditions with 4 explorers each (lines 17-18), allowing transition state crossing within a 2 eV energy window (line 19).
+The positions of the Pt surface atoms are frozen (line 13). The ProcessSearch method is used to find the escape mechanisms from the different states (line 15), distributed in 30 expeditions with 4 explorers each (lines 17-18), allowing transition state crossing within a 2 eV energy window (line 19).
 Any newfound local minimum is used as the origin of a new expedition (line 20). For the definitive set of local minima, a geometry optimization of the corresponding independent fragments (CO and Pt surface) is carried out in order to include the gas-phase configurations in the energy landscape (line 21).
 
-For the structure comparison, we establish that the structures are considered the same if their interatomic distances are less than 0.2 A with energy differences less than 0.05 eV (lines 23-25). Symmetry-equivalent structures are also filtered out (line 26).
+For the structure comparison, we establish that the structures are considered the same if their interatomic distances are less than 0.2 A with energy differences less than 0.05 eV (lines 23-25). Symmetry-equivalent structures are also filtered out (line 25).
 
 We request the calculation of the binding sites (line 27). A distance threshold of 0.1 A is used when comparing sites (line 28). The site labels are based on the number of neighboring atoms within a distance of 2.4 A (line 24), as a lower value for the ``NeighborCutoff`` may fail to distinguish fcc and hcp sites.
 
@@ -268,9 +262,9 @@ The following section of the script shows how to use the RKFLoader object and ac
   :lineno-start: 46
 
   loader_ads = scm.pyzacros.RKFLoader( results_ads )
-  loader_ads.replace_site_types( ['N33','N221','N331'], ['fcc','br','hcp'] )
+  loader_ads.replace_site_types( ['N333','N221','N331'], ['fcc','br','hcp'] )
   loader_bs = scm.pyzacros.RKFLoader( results_bs )
-  loader_bs.replace_site_types( ['N33','N221','N331'], ['fcc','br','hcp'] )
+  loader_bs.replace_site_types( ['N333','N221','N331'], ['fcc','br','hcp'] )
 
   print(loader_ads.clusterExpansion)
   print(loader_ads.mechanism)
@@ -389,10 +383,13 @@ At this point, we finally have all the ingredients we need for our kMC simulatio
   settings.snapshots = ('logtime', dt, 3.5)
   settings.species_numbers = ('time', dt)
 
-  job = scm.pyzacros.ZacrosJob( name='zacros_job', lattice=loader_bs.lattice,
-                                    mechanism=loader_ads.mechanism,
-                                    cluster_expansion=loader_ads.clusterExpansion,
-                                    settings=settings )
+  job = scm.pyzacros.ZacrosJob(
+      name='zacros_job',
+      lattice=loader_bs.lattice,
+      mechanism=loader_ads.mechanism,
+      cluster_expansion=loader_ads.clusterExpansion,
+      settings=settings,
+  )
   results_pz = job.run()
 
 
@@ -413,11 +410,11 @@ Similar to the preceding tutorials, we can now visualize the output of the simul
 
 .. code-block:: python
   :linenos:
-  :lineno-start: 76
+  :lineno-start: 79
 
   if job.ok():
       results_pz.plot_lattice_states( results_pz.lattice_states() )
-      results_pz.plot_molecule_numbers( ["CO*"] )
+      results_pz.plot_molecule_numbers( ['CO*'] )
 
   scm.plams.finish()
 

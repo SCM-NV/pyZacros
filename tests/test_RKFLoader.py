@@ -32,7 +32,6 @@ def generateAMSResults(test_folder):
     sett_lat = sett_ads.copy()
     sett_lat.input.ams.PESExploration.Job = "BindingSites"
     sett_lat.input.ams.PESExploration.LoadEnergyLandscape.GenerateSymmetryImages = "T"
-    sett_lat.input.ams.PESExploration.CalculateFragments = "F"
     sett_lat.input.ams.PESExploration.BindingSites.NeighborCutoff = 2.9
     sett_lat.input.ams.PESExploration.StructureComparison.CheckSymmetry = "F"
 

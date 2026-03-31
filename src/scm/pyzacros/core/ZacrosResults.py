@@ -553,7 +553,8 @@ class ZacrosResults(scm.plams.Results):
             except ImportError as e:
                 return  # module doesn't exist, deal with it.
 
-            if ax is None:
+            created_fig = ax is None
+            if created_fig:
                 # When collecting frames for ArtistAnimation, prefer the current axes
                 # so users can create fig/ax before calling this method.
                 if frames is not None:
@@ -806,6 +807,9 @@ class ZacrosResults(scm.plams.Results):
 
                 if frames is not None:
                     frames.append(frame_artists)
+
+                if created_fig:
+                    fig.tight_layout()
 
                 if ifile_name is not None:
                     fig.savefig(ifile_name)
