@@ -1,3 +1,6 @@
+import os
+import pathlib
+
 import scm.plams
 from typing import Dict
 
@@ -40,7 +43,19 @@ def finish(otherJM=None):
 
 def load(filename):
     """Load previously saved job from ``.dill`` file. It internally calls the scm.plams.load() method."""
-    return scm.plams.load(filename)
+    job = scm.plams.load(filename)
+
+    if job is not None or os.name != "nt":
+        return job
+
+    # PLAMS .dill fixtures created on POSIX may contain pathlib.PosixPath
+    # objects that cannot be instantiated on Windows during unpickling.
+    original_posix_path = pathlib.PosixPath
+    try:
+        pathlib.PosixPath = pathlib.Path
+        return scm.plams.load(filename)
+    finally:
+        pathlib.PosixPath = original_posix_path
 
 
 def load_all(path, jobmanager=None):

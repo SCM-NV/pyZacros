@@ -63,8 +63,8 @@ def generateAMSResults(test_folder):
         scm.plams.delete_job(jobO_ads)
         scm.plams.delete_job(jobCO_ads)
     else:
-        jobO_lat = scm.plams.load(test_folder / "test_RKFLoader.data/O-Pt111/O-Pt111.dill")
-        jobCO_lat = scm.plams.load(test_folder / "test_RKFLoader.data/CO-Pt111/CO-Pt111.dill")
+        jobO_lat = pz.load(test_folder / "test_RKFLoader.data/O-Pt111/O-Pt111.dill")
+        jobCO_lat = pz.load(test_folder / "test_RKFLoader.data/CO-Pt111/CO-Pt111.dill")
 
     return jobO_lat.results, jobCO_lat.results
 
