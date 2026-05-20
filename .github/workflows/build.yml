@@ -98,6 +98,8 @@ jobs:
           PY
 
       - name: Test
+        env:
+          MPLBACKEND: Agg
         run: |
           conda activate build-env
           python -m pytest tests
