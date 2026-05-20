@@ -1,12 +1,6 @@
 name: Build
 
-on:
-  push:
-    branches:
-      - trunk
-      - fix2026
-  pull_request:
-    types: [opened, synchronize, reopened]
+on: [push, pull_request]
 
 jobs:
 
