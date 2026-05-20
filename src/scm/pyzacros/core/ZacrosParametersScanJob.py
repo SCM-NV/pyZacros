@@ -321,13 +321,13 @@ class ZacrosParametersScanJob(scm.plams.MultiJob):
             params = {}
             for i, (name, item) in enumerate(parameters.items()):
                 if item.kind == ZacrosParametersScanJob.Parameter.INDEPENDENT:
-                    value = mesh[i][idx]
+                    value = ParametersBase._normalize_value(mesh[i][idx])
                     eval("settings_idx" + item.name2setitem().replace("$var_value", str(value)))
                     params[name] = value
 
             for i, (name, item) in enumerate(parameters.items()):
                 if item.kind == ZacrosParametersScanJob.Parameter.DEPENDENT:
-                    value = item.values(params)
+                    value = ParametersBase._normalize_value(item.values(params))
                     eval("settings_idx" + item.name2setitem().replace("$var_value", str(value)))
                     params[name] = value
 

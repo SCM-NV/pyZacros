@@ -109,6 +109,12 @@ class ParametersBase(dict):
         return parameters_values
 
     @staticmethod
+    def _normalize_value(value):
+        if isinstance(value, numpy.generic):
+            return value.item()
+        return value
+
+    @staticmethod
     def zipGenerator(reference_settings, parameters):
 
         independent_params = []
@@ -138,13 +144,13 @@ class ParametersBase(dict):
             params = {}
             for i, (name, item) in enumerate(parameters.items()):
                 if item.kind == ParameterBase.INDEPENDENT:
-                    value = independent_params[i][idx]
+                    value = ParametersBase._normalize_value(independent_params[i][idx])
                     eval("settings_idx" + item.name2setitem().replace("$var_value", str(value)))
                     params[name] = value
 
             for i, (name, item) in enumerate(parameters.items()):
                 if item.kind == ParameterBase.DEPENDENT:
-                    value = item.values(params)
+                    value = ParametersBase._normalize_value(item.values(params))
                     eval("settings_idx" + item.name2setitem().replace("$var_value", str(value)))
                     params[name] = value
 
