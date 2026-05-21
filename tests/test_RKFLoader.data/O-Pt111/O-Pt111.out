@@ -7,21 +7,17 @@
     1   scm25-01-fw13                             0          1         -1
     2   scm25-01-fw13                             0          2         -1
     3   scm25-01-fw13                             0          3         -1
-    4   scm25-01-fw13                             0          4         -1
-    5   scm25-01-fw13                             0          5         -1
-    6   scm25-01-fw13                             0          6         -1
-    7   scm25-01-fw13                             0          7         -1
  ==============================================================================
 
 
-May use up to 29606MB of RAM as shared memory on node 0
+May use up to 30318MB of RAM as shared memory on node 0
 
  *******************************************************************************
  *                                                                             *
  *  --------------------------------                                           *
- *   Amsterdam Modeling Suite (AMS)              2025.205                      *
+ *   Amsterdam Modeling Suite (AMS)              2026.103                      *
  *  --------------------------------                                           *
- *                                               r250917 2025-09-17 c44baaa5   *
+ *                                               r260501 2026-05-01 873454b5   *
  *                                                                             *
  *                                                                             *
  *                              =================                              *
@@ -41,23 +37,23 @@ May use up to 29606MB of RAM as shared memory on node 0
  *                                                                             *
  ***********************  x86_64_linux_gnu / intelmpi  *************************
  
- Licensed to: Dr. Nestor Aguirre Castiblanco  / SCM / Amsterdam / NETHERLANDS 2025-04-07 17:55:56
+ Licensed to: Dr. Nestor Aguirre Castiblanco  / SCM / Amsterdam / NETHERLANDS 2026-02-16 15:54:06
  SCM User ID: u22021
   
- AMS 2025.205  RunTime: Sep17-2025 14:09:29  ShM Nodes: 1  Procs: 8
+ AMS 2026.103  RunTime: May21-2026 16:58:27  ShM Nodes: 1  Procs: 4
 
  AMS jobname: O-Pt111
- AMS jobid  : 1177881166
+ AMS jobid  : 1734928960
 
- Start   directory: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/
- Results directory: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/
- Scratch directory: /scratch/aguirre/amstmp_O-Pt111_kid0.1177881166/
+ Start   directory: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/
+ Results directory: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/
+ Scratch directory: /scratch/aguirre/amstmp_O-Pt111_kid0.1734928960/
 
 
- Communication costs MPI_COMM_WORLD:      1.081 usec per message,   0.0206 usec per 8-byte item
- Communication costs for intra-node:      1.138 usec per message,   0.0193 usec per 8-byte item
+ Communication costs MPI_COMM_WORLD:      0.369 usec per message,   0.0016 usec per 8-byte item
+ Communication costs for intra-node:      0.404 usec per message,   0.0015 usec per 8-byte item
 
- RNG seed: -886058153 -2094954584 1536729007 485983173 -1955450199 -770974435 350512316 -1321401272
+ RNG seed: -960243170 -1585248798 1625387535 -725496294 1173166367 1520056052 1178900371 -1234547279
  MPI rank    0: Number of processors available to this process:      16
  MPI rank    0: Default max number of OpenMP threads:                16
  MPI rank    0: The OMP_NUM_THREADS environment variable is not set!
@@ -123,7 +119,7 @@ Unit cell area (angstrom^2)        59.88462
 Total System Charge              0.00000
 
 
- Restoring energy landscape from: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/../O_ads-Pt111/ams.rkf
+ Restoring energy landscape from: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/../O_ads-Pt111/ams.rkf
 
 -------------------------
 Checking Duplicate States
@@ -142,14 +138,14 @@ Checking Duplicate States
 
 Calculating prefactors:
 -----------------------
-  > TS State 3: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 3: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
 
 
-Restoring fragments energy landscape from: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/../O_ads-Pt111/ams.rkf
+Restoring fragments energy landscape from: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/../O_ads-Pt111/ams.rkf
 ----------------
 Energy Landscape
 ----------------
@@ -158,7 +154,7 @@ Energy Landscape
      --------------------------------------------------------------------------------
          1           -7.278562        0.00000         0.0000         1            Min
          2           -7.271255        0.19881         4.5847         1            Min
-         3           -7.252826        0.70030        16.1493        35             TS 1<-->2       1.92E+13:1.72E+13*  
+         3           -7.252826        0.70030        16.1493        36             TS 1<-->2       1.92E+13:1.72E+13*  
 
 *) Pre-exponential factors forward and backward in s^-1 or Hz
 
@@ -174,10 +170,10 @@ Fragments
 
 Number of fragments                                  2
 
-        Id             Formula        Energy(a.u.)              Region
-     -----------------------------------------------------------------
-         1                   O           -0.003993              active
-         2                Pt36           -7.154286             surface
+        Id             Formula  dim        Energy(a.u.)              Region
+     ----------------------------------------------------------------------
+         1                   O    2           -0.003993              active
+         2                Pt36    2           -7.154286             surface
 
 Fragmented States
 -----------------
@@ -186,12 +182,17 @@ Number of fragmented states                          1
 
         Id           Fragments        Energy(a.u.)         RE(eV)   RE(kcal/mol)
      ---------------------------------------------------------------------------
-         1                 1,2           -7.158279        3.27304        75.4782 -->1         1.07E+07:2.58E+14*
-                                                                                 -->2         1.07E+07:2.31E+14 
+         1                 1,2           -7.158279        3.27304        75.4782 -->1         1.07E+07:2.60E+14*
+                                                                                 -->2         1.07E+07:2.33E+14 
 
 
 *) Pre-exponential factors adsorption in (bar*s)^-1 and desorption in s^-1 or Hz
 
+ 
+Saving database on KF file ... OK
+ 
+Saving fragments on KF file ... OK
+ 
 
 --------------------------
 Generating Symmetry Images
@@ -702,140 +703,140 @@ NSymmetryOperators                                 108
 
 Calculating prefactors:
 -----------------------
-  > TS State 3: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 3: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 20: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 20: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 21: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 21: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 22: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 22: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 23: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 23: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 24: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 24: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 25: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 25: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 26: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 26: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 27: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 27: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 28: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 28: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 29: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 29: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 30: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 30: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 31: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 31: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 32: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 32: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 33: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 33: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 34: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 34: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 35: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 35: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 36: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 36: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 37: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 37: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 38: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 38: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 39: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 39: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 40: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 40: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 41: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 41: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 42: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 42: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 43: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 43: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 44: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 44: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
-  > TS State 45: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
-    Reactant: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
+  > TS State 45: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-3.rkf
+    Reactant: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-1.rkf
     Prefactor: 1.92E+13
-    Product: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
+    Product: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/StateFF-2.rkf
     Prefactor: 1.72E+13
 
 ----------------
@@ -846,7 +847,7 @@ Energy Landscape
      --------------------------------------------------------------------------------
          1           -7.278562        0.00000         0.0000        13            Min
          2           -7.271255        0.19881         4.5847        13            Min
-         3           -7.252826        0.70030        16.1493        37             TS 1<-->2       1.92E+13:1.72E+13*  
+         3           -7.252826        0.70030        16.1493        38             TS 1<-->2       1.92E+13:1.72E+13*  
          4           -7.278562        0.00000         0.0000        12            Min
          5           -7.278562        0.00000         0.0000        12            Min
          6           -7.278562        0.00000         0.0000        12            Min
@@ -904,10 +905,10 @@ Fragments
 
 Number of fragments                                  2
 
-        Id             Formula        Energy(a.u.)              Region
-     -----------------------------------------------------------------
-         1                   O           -0.003993              active
-         2                Pt36           -7.154286             surface
+        Id             Formula  dim        Energy(a.u.)              Region
+     ----------------------------------------------------------------------
+         1                   O    2           -0.003993              active
+         2                Pt36    2           -7.154286             surface
 
 Fragmented States
 -----------------
@@ -916,24 +917,24 @@ Number of fragmented states                          1
 
         Id           Fragments        Energy(a.u.)         RE(eV)   RE(kcal/mol)
      ---------------------------------------------------------------------------
-         1                 1,2           -7.158279        3.27304        75.4782 -->1         1.07E+07:2.58E+14*
-                                                                                 -->2         1.07E+07:2.31E+14 
-                                                                                 -->4         1.07E+07:2.58E+14 
-                                                                                 -->5         1.07E+07:2.58E+14 
-                                                                                 -->6         1.07E+07:2.58E+14 
-                                                                                 -->7         1.07E+07:2.58E+14 
-                                                                                 -->8         1.07E+07:2.58E+14 
-                                                                                 -->9         1.07E+07:2.58E+14 
-                                                                                 -->10        1.07E+07:2.58E+14 
-                                                                                 -->11        1.07E+07:2.58E+14 
-                                                                                 -->12        1.07E+07:2.31E+14 
-                                                                                 -->13        1.07E+07:2.31E+14 
-                                                                                 -->14        1.07E+07:2.31E+14 
-                                                                                 -->15        1.07E+07:2.31E+14 
-                                                                                 -->16        1.07E+07:2.31E+14 
-                                                                                 -->17        1.07E+07:2.31E+14 
-                                                                                 -->18        1.07E+07:2.31E+14 
-                                                                                 -->19        1.07E+07:2.31E+14 
+         1                 1,2           -7.158279        3.27304        75.4782 -->1         1.07E+07:2.60E+14*
+                                                                                 -->2         1.07E+07:2.33E+14 
+                                                                                 -->4         1.07E+07:2.60E+14 
+                                                                                 -->5         1.07E+07:2.60E+14 
+                                                                                 -->6         1.07E+07:2.60E+14 
+                                                                                 -->7         1.07E+07:2.60E+14 
+                                                                                 -->8         1.07E+07:2.60E+14 
+                                                                                 -->9         1.07E+07:2.60E+14 
+                                                                                 -->10        1.07E+07:2.60E+14 
+                                                                                 -->11        1.07E+07:2.60E+14 
+                                                                                 -->12        1.07E+07:2.33E+14 
+                                                                                 -->13        1.07E+07:2.33E+14 
+                                                                                 -->14        1.07E+07:2.33E+14 
+                                                                                 -->15        1.07E+07:2.33E+14 
+                                                                                 -->16        1.07E+07:2.33E+14 
+                                                                                 -->17        1.07E+07:2.33E+14 
+                                                                                 -->18        1.07E+07:2.33E+14 
+                                                                                 -->19        1.07E+07:2.33E+14 
 
 
 *) Pre-exponential factors adsorption in (bar*s)^-1 and desorption in s^-1 or Hz
@@ -952,7 +953,7 @@ Exploring 3 degrees of freedom
 
 NegativeEigenvalueTolerance                   -0.00050
 RandomSeed                                         100
-Temperature                                  300.00000
+Temperature                                  298.15000
 FiniteDifference                               0.00265
 WriteHistory                                 converged
 WriteEngineGradients                                 F
@@ -1004,7 +1005,7 @@ ExcludeReflectionAxes                                z
       ---------
       Method                                        cg
       MaxIterations                                400
-      ConvergedForce                           0.00500
+      ConvergedForce                           0.00050
       MaxMove                                  0.20000
       TimeStep                                 1.00000
       MaxTimeStep                              2.50000
@@ -1021,7 +1022,7 @@ ExcludeReflectionAxes                                z
    StructureComparison
    -------------------
    DistanceDifference                          0.10000
-   NeighborCutoff                              3.80000
+   NeighborCutoff                              7.67307
    CheckRotation                                     F
    IndistinguishableAtoms                            T
    CheckSymmetry                                     F
@@ -1038,11 +1039,13 @@ ExcludeReflectionAxes                                z
 
    BindingSites
    ------------
-   Calculate                                         T
-   ReferenceRegion                             surface
-   DistanceDifference                          0.10000
-   NeighborCutoff                              2.90000
-   MaxCoordinationShellsForLabels                    3
+   Calculate                                            T
+   ReferenceRegion                                surface
+   DistanceDifference                             0.10000
+   NeighborCutoff                                 2.90000
+   MaxCoordinationShellsForLabels                       3
+   PositioningMethod                   adsorbedatomcoords
+   SurfaceOffset                                  1.50000
 
 --------
 Geometry
@@ -1162,9 +1165,9 @@ Aligning state #45 ... T
 
 > Sorting Energy Landscape by Energy ... DONE
 
-----------------------
-Final Energy Landscape
-----------------------
+-----------------------
+Sorted Energy Landscape
+-----------------------
 
         Id        Energy(a.u.)         RE(eV)   RE(kcal/mol)    Counts    Crit. point
      --------------------------------------------------------------------------------
@@ -1186,7 +1189,7 @@ Final Energy Landscape
         16           -7.271255        0.19881         4.5847        12            Min
         17           -7.271255        0.19881         4.5847        12            Min
         18           -7.271255        0.19881         4.5847        12            Min
-        19           -7.252826        0.70030        16.1493        37             TS 1<-->10      1.92E+13:1.72E+13*  
+        19           -7.252826        0.70030        16.1493        38             TS 1<-->10      1.92E+13:1.72E+13*  
         20           -7.252826        0.70030        16.1493         2             TS 4<-->12      1.92E+13:1.72E+13   
         21           -7.252826        0.70030        16.1493         2             TS 5<-->13      1.92E+13:1.72E+13   
         22           -7.252826        0.70030        16.1493         2             TS 6<-->14      1.92E+13:1.72E+13   
@@ -1228,10 +1231,10 @@ Fragments
 
 Number of fragments                                  2
 
-        Id             Formula        Energy(a.u.)              Region
-     -----------------------------------------------------------------
-         1                   O           -0.003993              active
-         2                Pt36           -7.154286             surface
+        Id             Formula  dim        Energy(a.u.)              Region
+     ----------------------------------------------------------------------
+         1                   O    2           -0.003993              active
+         2                Pt36    2           -7.154286             surface
 
 Fragmented States
 -----------------
@@ -1240,24 +1243,1600 @@ Number of fragmented states                          1
 
         Id           Fragments        Energy(a.u.)         RE(eV)   RE(kcal/mol)
      ---------------------------------------------------------------------------
-         1                 1,2           -7.158279        3.27304        75.4782 -->1         1.07E+07:2.58E+14*
-                                                                                 -->10        1.07E+07:2.31E+14 
-                                                                                 -->4         1.07E+07:2.58E+14 
-                                                                                 -->5         1.07E+07:2.58E+14 
-                                                                                 -->6         1.07E+07:2.58E+14 
-                                                                                 -->7         1.07E+07:2.58E+14 
-                                                                                 -->8         1.07E+07:2.58E+14 
-                                                                                 -->9         1.07E+07:2.58E+14 
-                                                                                 -->2         1.07E+07:2.58E+14 
-                                                                                 -->3         1.07E+07:2.58E+14 
-                                                                                 -->12        1.07E+07:2.31E+14 
-                                                                                 -->13        1.07E+07:2.31E+14 
-                                                                                 -->14        1.07E+07:2.31E+14 
-                                                                                 -->15        1.07E+07:2.31E+14 
-                                                                                 -->16        1.07E+07:2.31E+14 
-                                                                                 -->17        1.07E+07:2.31E+14 
-                                                                                 -->18        1.07E+07:2.31E+14 
-                                                                                 -->11        1.07E+07:2.31E+14 
+         1                 1,2           -7.158279        3.27304        75.4782 -->1         1.07E+07:2.60E+14*
+                                                                                 -->10        1.07E+07:2.33E+14 
+                                                                                 -->4         1.07E+07:2.60E+14 
+                                                                                 -->5         1.07E+07:2.60E+14 
+                                                                                 -->6         1.07E+07:2.60E+14 
+                                                                                 -->7         1.07E+07:2.60E+14 
+                                                                                 -->8         1.07E+07:2.60E+14 
+                                                                                 -->9         1.07E+07:2.60E+14 
+                                                                                 -->2         1.07E+07:2.60E+14 
+                                                                                 -->3         1.07E+07:2.60E+14 
+                                                                                 -->12        1.07E+07:2.33E+14 
+                                                                                 -->13        1.07E+07:2.33E+14 
+                                                                                 -->14        1.07E+07:2.33E+14 
+                                                                                 -->15        1.07E+07:2.33E+14 
+                                                                                 -->16        1.07E+07:2.33E+14 
+                                                                                 -->17        1.07E+07:2.33E+14 
+                                                                                 -->18        1.07E+07:2.33E+14 
+                                                                                 -->11        1.07E+07:2.33E+14 
+
+
+*) Pre-exponential factors adsorption in (bar*s)^-1 and desorption in s^-1 or Hz
+
+
+=====================================================
+Fragments calculations for state #1
+=====================================================
+
+--------
+Geometry
+--------
+Formula: OPt36
+Atoms
+  Index Symbol   x (angstrom)   y (angstrom)   z (angstrom)
+      1      O     6.46887976     3.75461889     9.23658101 region=adsorbate
+      2     Pt     9.24070201     6.95527267     1.31036083 region=surface
+      3     Pt     9.24070201     2.15427277     1.31036083 region=surface
+      4     Pt    10.62663130     4.55477272     1.31036083 region=surface
+      5     Pt    12.01256059     6.95527267     1.31036083 region=surface
+      6     Pt     3.69698485     2.15427277     8.10000000 region=surface
+      7     Pt     5.08291414     4.55477272     8.10000000 region=surface
+      8     Pt     6.46884343     6.95527267     8.10000000 region=surface
+      9     Pt     6.46884343     2.15427277     8.10000000 region=surface
+     10     Pt     7.85477272     4.55477272     8.10000000 region=surface
+     11     Pt     9.24070201     6.95527267     8.10000000 region=surface
+     12     Pt     9.24070201     2.15427277     8.10000000 region=surface
+     13     Pt    10.62663130     4.55477272     8.10000000 region=surface
+     14     Pt    12.01256059     6.95527267     8.10000000 region=surface
+     15     Pt     5.08291414     2.95443942     5.83678694 region=surface
+     16     Pt     6.46884343     5.35493937     5.83678694 region=surface
+     17     Pt     7.85477272     7.75543932     5.83678694 region=surface
+     18     Pt     7.85477272     2.95443942     5.83678694 region=surface
+     19     Pt     9.24070201     5.35493937     5.83678694 region=surface
+     20     Pt    10.62663130     7.75543932     5.83678694 region=surface
+     21     Pt    10.62663130     2.95443942     5.83678694 region=surface
+     22     Pt    12.01256059     5.35493937     5.83678694 region=surface
+     23     Pt    13.39848987     7.75543932     5.83678694 region=surface
+     24     Pt     2.31105556     1.35410612     3.57357389 region=surface
+     25     Pt     3.69698485     3.75460607     3.57357389 region=surface
+     26     Pt     5.08291414     6.15510602     3.57357389 region=surface
+     27     Pt     5.08291414     1.35410612     3.57357389 region=surface
+     28     Pt     6.46884343     3.75460607     3.57357389 region=surface
+     29     Pt     7.85477272     6.15510602     3.57357389 region=surface
+     30     Pt     7.85477272     1.35410612     3.57357389 region=surface
+     31     Pt     9.24070201     3.75460607     3.57357389 region=surface
+     32     Pt    10.62663130     6.15510602     3.57357389 region=surface
+     33     Pt     3.69698485     2.15427277     1.31036083 region=surface
+     34     Pt     5.08291414     4.55477272     1.31036083 region=surface
+     35     Pt     6.46884343     6.95527267     1.31036083 region=surface
+     36     Pt     6.46884343     2.15427277     1.31036083 region=surface
+     37     Pt     7.85477272     4.55477272     1.31036083 region=surface
+
+Lattice vectors (angstrom)
+      1     8.31557575     0.00000000     0.00000000
+      2     4.15778787     7.20149984     0.00000000
+
+Unit cell area (angstrom^2)        59.88462
+
+Total System Charge              0.00000
+
+--------------------
+Optimizing adsorbate
+--------------------
+
+       Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+------------------
+Optimizing surface
+------------------
+
+Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+
+Collecting fragments' results:
+
+      Id             Formula   Success              Energy      DB
+   ---------------------------------------------------------------
+       1                   O         T         -0.00399301     OLD
+       2                Pt36         T         -7.15428639     OLD
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+
+   Fragmented state: OLD
+
+
+=====================================================
+Fragments calculations for state #2
+=====================================================
+
+--------
+Geometry
+--------
+Formula: OPt36
+Atoms
+  Index Symbol   x (angstrom)   y (angstrom)   z (angstrom)
+      1      O     7.85480905     6.15511883     9.23658101 region=adsorbate
+      2     Pt     9.24070201     6.95527267     1.31036083 region=surface
+      3     Pt     9.24070201     2.15427277     1.31036083 region=surface
+      4     Pt    10.62663130     4.55477272     1.31036083 region=surface
+      5     Pt    12.01256059     6.95527267     1.31036083 region=surface
+      6     Pt     3.69698485     2.15427277     8.10000000 region=surface
+      7     Pt     5.08291414     4.55477272     8.10000000 region=surface
+      8     Pt     6.46884343     6.95527267     8.10000000 region=surface
+      9     Pt     6.46884343     2.15427277     8.10000000 region=surface
+     10     Pt     7.85477272     4.55477272     8.10000000 region=surface
+     11     Pt     9.24070201     6.95527267     8.10000000 region=surface
+     12     Pt     9.24070201     2.15427277     8.10000000 region=surface
+     13     Pt    10.62663130     4.55477272     8.10000000 region=surface
+     14     Pt    12.01256059     6.95527267     8.10000000 region=surface
+     15     Pt     5.08291414     2.95443942     5.83678694 region=surface
+     16     Pt     6.46884343     5.35493937     5.83678694 region=surface
+     17     Pt     7.85477272     7.75543932     5.83678694 region=surface
+     18     Pt     7.85477272     2.95443942     5.83678694 region=surface
+     19     Pt     9.24070201     5.35493937     5.83678694 region=surface
+     20     Pt    10.62663130     7.75543932     5.83678694 region=surface
+     21     Pt    10.62663130     2.95443942     5.83678694 region=surface
+     22     Pt    12.01256059     5.35493937     5.83678694 region=surface
+     23     Pt    13.39848987     7.75543932     5.83678694 region=surface
+     24     Pt     2.31105556     1.35410612     3.57357389 region=surface
+     25     Pt     3.69698485     3.75460607     3.57357389 region=surface
+     26     Pt     5.08291414     6.15510602     3.57357389 region=surface
+     27     Pt     5.08291414     1.35410612     3.57357389 region=surface
+     28     Pt     6.46884343     3.75460607     3.57357389 region=surface
+     29     Pt     7.85477272     6.15510602     3.57357389 region=surface
+     30     Pt     7.85477272     1.35410612     3.57357389 region=surface
+     31     Pt     9.24070201     3.75460607     3.57357389 region=surface
+     32     Pt    10.62663130     6.15510602     3.57357389 region=surface
+     33     Pt     3.69698485     2.15427277     1.31036083 region=surface
+     34     Pt     5.08291414     4.55477272     1.31036083 region=surface
+     35     Pt     6.46884343     6.95527267     1.31036083 region=surface
+     36     Pt     6.46884343     2.15427277     1.31036083 region=surface
+     37     Pt     7.85477272     4.55477272     1.31036083 region=surface
+
+Lattice vectors (angstrom)
+      1     8.31557575     0.00000000     0.00000000
+      2     4.15778787     7.20149984     0.00000000
+
+Unit cell area (angstrom^2)        59.88462
+
+Total System Charge              0.00000
+
+--------------------
+Optimizing adsorbate
+--------------------
+
+       Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+------------------
+Optimizing surface
+------------------
+
+Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+
+Collecting fragments' results:
+
+      Id             Formula   Success              Energy      DB
+   ---------------------------------------------------------------
+       1                   O         T         -0.00399301     OLD
+       2                Pt36         T         -7.15428639     OLD
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+
+   Fragmented state: OLD
+
+
+=====================================================
+Fragments calculations for state #3
+=====================================================
+
+--------
+Geometry
+--------
+Formula: OPt36
+Atoms
+  Index Symbol   x (angstrom)   y (angstrom)   z (angstrom)
+      1      O     5.08295047     1.35411894     9.23658101 region=adsorbate
+      2     Pt     9.24070201     6.95527267     1.31036083 region=surface
+      3     Pt     9.24070201     2.15427277     1.31036083 region=surface
+      4     Pt    10.62663130     4.55477272     1.31036083 region=surface
+      5     Pt    12.01256059     6.95527267     1.31036083 region=surface
+      6     Pt     3.69698485     2.15427277     8.10000000 region=surface
+      7     Pt     5.08291414     4.55477272     8.10000000 region=surface
+      8     Pt     6.46884343     6.95527267     8.10000000 region=surface
+      9     Pt     6.46884343     2.15427277     8.10000000 region=surface
+     10     Pt     7.85477272     4.55477272     8.10000000 region=surface
+     11     Pt     9.24070201     6.95527267     8.10000000 region=surface
+     12     Pt     9.24070201     2.15427277     8.10000000 region=surface
+     13     Pt    10.62663130     4.55477272     8.10000000 region=surface
+     14     Pt    12.01256059     6.95527267     8.10000000 region=surface
+     15     Pt     5.08291414     2.95443942     5.83678694 region=surface
+     16     Pt     6.46884343     5.35493937     5.83678694 region=surface
+     17     Pt     7.85477272     7.75543932     5.83678694 region=surface
+     18     Pt     7.85477272     2.95443942     5.83678694 region=surface
+     19     Pt     9.24070201     5.35493937     5.83678694 region=surface
+     20     Pt    10.62663130     7.75543932     5.83678694 region=surface
+     21     Pt    10.62663130     2.95443942     5.83678694 region=surface
+     22     Pt    12.01256059     5.35493937     5.83678694 region=surface
+     23     Pt    13.39848987     7.75543932     5.83678694 region=surface
+     24     Pt     2.31105556     1.35410612     3.57357389 region=surface
+     25     Pt     3.69698485     3.75460607     3.57357389 region=surface
+     26     Pt     5.08291414     6.15510602     3.57357389 region=surface
+     27     Pt     5.08291414     1.35410612     3.57357389 region=surface
+     28     Pt     6.46884343     3.75460607     3.57357389 region=surface
+     29     Pt     7.85477272     6.15510602     3.57357389 region=surface
+     30     Pt     7.85477272     1.35410612     3.57357389 region=surface
+     31     Pt     9.24070201     3.75460607     3.57357389 region=surface
+     32     Pt    10.62663130     6.15510602     3.57357389 region=surface
+     33     Pt     3.69698485     2.15427277     1.31036083 region=surface
+     34     Pt     5.08291414     4.55477272     1.31036083 region=surface
+     35     Pt     6.46884343     6.95527267     1.31036083 region=surface
+     36     Pt     6.46884343     2.15427277     1.31036083 region=surface
+     37     Pt     7.85477272     4.55477272     1.31036083 region=surface
+
+Lattice vectors (angstrom)
+      1     8.31557575     0.00000000     0.00000000
+      2     4.15778787     7.20149984     0.00000000
+
+Unit cell area (angstrom^2)        59.88462
+
+Total System Charge              0.00000
+
+--------------------
+Optimizing adsorbate
+--------------------
+
+       Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+------------------
+Optimizing surface
+------------------
+
+Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+
+Collecting fragments' results:
+
+      Id             Formula   Success              Energy      DB
+   ---------------------------------------------------------------
+       1                   O         T         -0.00399301     OLD
+       2                Pt36         T         -7.15428639     OLD
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+
+   Fragmented state: OLD
+
+
+=====================================================
+Fragments calculations for state #4
+=====================================================
+
+--------
+Geometry
+--------
+Formula: OPt36
+Atoms
+  Index Symbol   x (angstrom)   y (angstrom)   z (angstrom)
+      1      O    10.62666763     6.15511883     9.23658101 region=adsorbate
+      2     Pt     9.24070201     6.95527267     1.31036083 region=surface
+      3     Pt     9.24070201     2.15427277     1.31036083 region=surface
+      4     Pt    10.62663130     4.55477272     1.31036083 region=surface
+      5     Pt    12.01256059     6.95527267     1.31036083 region=surface
+      6     Pt     3.69698485     2.15427277     8.10000000 region=surface
+      7     Pt     5.08291414     4.55477272     8.10000000 region=surface
+      8     Pt     6.46884343     6.95527267     8.10000000 region=surface
+      9     Pt     6.46884343     2.15427277     8.10000000 region=surface
+     10     Pt     7.85477272     4.55477272     8.10000000 region=surface
+     11     Pt     9.24070201     6.95527267     8.10000000 region=surface
+     12     Pt     9.24070201     2.15427277     8.10000000 region=surface
+     13     Pt    10.62663130     4.55477272     8.10000000 region=surface
+     14     Pt    12.01256059     6.95527267     8.10000000 region=surface
+     15     Pt     5.08291414     2.95443942     5.83678694 region=surface
+     16     Pt     6.46884343     5.35493937     5.83678694 region=surface
+     17     Pt     7.85477272     7.75543932     5.83678694 region=surface
+     18     Pt     7.85477272     2.95443942     5.83678694 region=surface
+     19     Pt     9.24070201     5.35493937     5.83678694 region=surface
+     20     Pt    10.62663130     7.75543932     5.83678694 region=surface
+     21     Pt    10.62663130     2.95443942     5.83678694 region=surface
+     22     Pt    12.01256059     5.35493937     5.83678694 region=surface
+     23     Pt    13.39848987     7.75543932     5.83678694 region=surface
+     24     Pt     2.31105556     1.35410612     3.57357389 region=surface
+     25     Pt     3.69698485     3.75460607     3.57357389 region=surface
+     26     Pt     5.08291414     6.15510602     3.57357389 region=surface
+     27     Pt     5.08291414     1.35410612     3.57357389 region=surface
+     28     Pt     6.46884343     3.75460607     3.57357389 region=surface
+     29     Pt     7.85477272     6.15510602     3.57357389 region=surface
+     30     Pt     7.85477272     1.35410612     3.57357389 region=surface
+     31     Pt     9.24070201     3.75460607     3.57357389 region=surface
+     32     Pt    10.62663130     6.15510602     3.57357389 region=surface
+     33     Pt     3.69698485     2.15427277     1.31036083 region=surface
+     34     Pt     5.08291414     4.55477272     1.31036083 region=surface
+     35     Pt     6.46884343     6.95527267     1.31036083 region=surface
+     36     Pt     6.46884343     2.15427277     1.31036083 region=surface
+     37     Pt     7.85477272     4.55477272     1.31036083 region=surface
+
+Lattice vectors (angstrom)
+      1     8.31557575     0.00000000     0.00000000
+      2     4.15778787     7.20149984     0.00000000
+
+Unit cell area (angstrom^2)        59.88462
+
+Total System Charge              0.00000
+
+--------------------
+Optimizing adsorbate
+--------------------
+
+       Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+------------------
+Optimizing surface
+------------------
+
+Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+
+Collecting fragments' results:
+
+      Id             Formula   Success              Energy      DB
+   ---------------------------------------------------------------
+       1                   O         T         -0.00399301     OLD
+       2                Pt36         T         -7.15428639     OLD
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+
+   Fragmented state: OLD
+
+
+=====================================================
+Fragments calculations for state #5
+=====================================================
+
+--------
+Geometry
+--------
+Formula: OPt36
+Atoms
+  Index Symbol   x (angstrom)   y (angstrom)   z (angstrom)
+      1      O     7.85480905     1.35411894     9.23658101 region=adsorbate
+      2     Pt     9.24070201     6.95527267     1.31036083 region=surface
+      3     Pt     9.24070201     2.15427277     1.31036083 region=surface
+      4     Pt    10.62663130     4.55477272     1.31036083 region=surface
+      5     Pt    12.01256059     6.95527267     1.31036083 region=surface
+      6     Pt     3.69698485     2.15427277     8.10000000 region=surface
+      7     Pt     5.08291414     4.55477272     8.10000000 region=surface
+      8     Pt     6.46884343     6.95527267     8.10000000 region=surface
+      9     Pt     6.46884343     2.15427277     8.10000000 region=surface
+     10     Pt     7.85477272     4.55477272     8.10000000 region=surface
+     11     Pt     9.24070201     6.95527267     8.10000000 region=surface
+     12     Pt     9.24070201     2.15427277     8.10000000 region=surface
+     13     Pt    10.62663130     4.55477272     8.10000000 region=surface
+     14     Pt    12.01256059     6.95527267     8.10000000 region=surface
+     15     Pt     5.08291414     2.95443942     5.83678694 region=surface
+     16     Pt     6.46884343     5.35493937     5.83678694 region=surface
+     17     Pt     7.85477272     7.75543932     5.83678694 region=surface
+     18     Pt     7.85477272     2.95443942     5.83678694 region=surface
+     19     Pt     9.24070201     5.35493937     5.83678694 region=surface
+     20     Pt    10.62663130     7.75543932     5.83678694 region=surface
+     21     Pt    10.62663130     2.95443942     5.83678694 region=surface
+     22     Pt    12.01256059     5.35493937     5.83678694 region=surface
+     23     Pt    13.39848987     7.75543932     5.83678694 region=surface
+     24     Pt     2.31105556     1.35410612     3.57357389 region=surface
+     25     Pt     3.69698485     3.75460607     3.57357389 region=surface
+     26     Pt     5.08291414     6.15510602     3.57357389 region=surface
+     27     Pt     5.08291414     1.35410612     3.57357389 region=surface
+     28     Pt     6.46884343     3.75460607     3.57357389 region=surface
+     29     Pt     7.85477272     6.15510602     3.57357389 region=surface
+     30     Pt     7.85477272     1.35410612     3.57357389 region=surface
+     31     Pt     9.24070201     3.75460607     3.57357389 region=surface
+     32     Pt    10.62663130     6.15510602     3.57357389 region=surface
+     33     Pt     3.69698485     2.15427277     1.31036083 region=surface
+     34     Pt     5.08291414     4.55477272     1.31036083 region=surface
+     35     Pt     6.46884343     6.95527267     1.31036083 region=surface
+     36     Pt     6.46884343     2.15427277     1.31036083 region=surface
+     37     Pt     7.85477272     4.55477272     1.31036083 region=surface
+
+Lattice vectors (angstrom)
+      1     8.31557575     0.00000000     0.00000000
+      2     4.15778787     7.20149984     0.00000000
+
+Unit cell area (angstrom^2)        59.88462
+
+Total System Charge              0.00000
+
+--------------------
+Optimizing adsorbate
+--------------------
+
+       Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+------------------
+Optimizing surface
+------------------
+
+Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+
+Collecting fragments' results:
+
+      Id             Formula   Success              Energy      DB
+   ---------------------------------------------------------------
+       1                   O         T         -0.00399301     OLD
+       2                Pt36         T         -7.15428639     OLD
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+
+   Fragmented state: OLD
+
+
+=====================================================
+Fragments calculations for state #6
+=====================================================
+
+--------
+Geometry
+--------
+Formula: OPt36
+Atoms
+  Index Symbol   x (angstrom)   y (angstrom)   z (angstrom)
+      1      O     9.24073834     3.75461889     9.23658101 region=adsorbate
+      2     Pt     9.24070201     6.95527267     1.31036083 region=surface
+      3     Pt     9.24070201     2.15427277     1.31036083 region=surface
+      4     Pt    10.62663130     4.55477272     1.31036083 region=surface
+      5     Pt    12.01256059     6.95527267     1.31036083 region=surface
+      6     Pt     3.69698485     2.15427277     8.10000000 region=surface
+      7     Pt     5.08291414     4.55477272     8.10000000 region=surface
+      8     Pt     6.46884343     6.95527267     8.10000000 region=surface
+      9     Pt     6.46884343     2.15427277     8.10000000 region=surface
+     10     Pt     7.85477272     4.55477272     8.10000000 region=surface
+     11     Pt     9.24070201     6.95527267     8.10000000 region=surface
+     12     Pt     9.24070201     2.15427277     8.10000000 region=surface
+     13     Pt    10.62663130     4.55477272     8.10000000 region=surface
+     14     Pt    12.01256059     6.95527267     8.10000000 region=surface
+     15     Pt     5.08291414     2.95443942     5.83678694 region=surface
+     16     Pt     6.46884343     5.35493937     5.83678694 region=surface
+     17     Pt     7.85477272     7.75543932     5.83678694 region=surface
+     18     Pt     7.85477272     2.95443942     5.83678694 region=surface
+     19     Pt     9.24070201     5.35493937     5.83678694 region=surface
+     20     Pt    10.62663130     7.75543932     5.83678694 region=surface
+     21     Pt    10.62663130     2.95443942     5.83678694 region=surface
+     22     Pt    12.01256059     5.35493937     5.83678694 region=surface
+     23     Pt    13.39848987     7.75543932     5.83678694 region=surface
+     24     Pt     2.31105556     1.35410612     3.57357389 region=surface
+     25     Pt     3.69698485     3.75460607     3.57357389 region=surface
+     26     Pt     5.08291414     6.15510602     3.57357389 region=surface
+     27     Pt     5.08291414     1.35410612     3.57357389 region=surface
+     28     Pt     6.46884343     3.75460607     3.57357389 region=surface
+     29     Pt     7.85477272     6.15510602     3.57357389 region=surface
+     30     Pt     7.85477272     1.35410612     3.57357389 region=surface
+     31     Pt     9.24070201     3.75460607     3.57357389 region=surface
+     32     Pt    10.62663130     6.15510602     3.57357389 region=surface
+     33     Pt     3.69698485     2.15427277     1.31036083 region=surface
+     34     Pt     5.08291414     4.55477272     1.31036083 region=surface
+     35     Pt     6.46884343     6.95527267     1.31036083 region=surface
+     36     Pt     6.46884343     2.15427277     1.31036083 region=surface
+     37     Pt     7.85477272     4.55477272     1.31036083 region=surface
+
+Lattice vectors (angstrom)
+      1     8.31557575     0.00000000     0.00000000
+      2     4.15778787     7.20149984     0.00000000
+
+Unit cell area (angstrom^2)        59.88462
+
+Total System Charge              0.00000
+
+--------------------
+Optimizing adsorbate
+--------------------
+
+       Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+------------------
+Optimizing surface
+------------------
+
+Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+
+Collecting fragments' results:
+
+      Id             Formula   Success              Energy      DB
+   ---------------------------------------------------------------
+       1                   O         T         -0.00399301     OLD
+       2                Pt36         T         -7.15428639     OLD
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+
+   Fragmented state: OLD
+
+
+=====================================================
+Fragments calculations for state #7
+=====================================================
+
+--------
+Geometry
+--------
+Formula: OPt36
+Atoms
+  Index Symbol   x (angstrom)   y (angstrom)   z (angstrom)
+      1      O     5.08295047     6.15511883     9.23658101 region=adsorbate
+      2     Pt     9.24070201     6.95527267     1.31036083 region=surface
+      3     Pt     9.24070201     2.15427277     1.31036083 region=surface
+      4     Pt    10.62663130     4.55477272     1.31036083 region=surface
+      5     Pt    12.01256059     6.95527267     1.31036083 region=surface
+      6     Pt     3.69698485     2.15427277     8.10000000 region=surface
+      7     Pt     5.08291414     4.55477272     8.10000000 region=surface
+      8     Pt     6.46884343     6.95527267     8.10000000 region=surface
+      9     Pt     6.46884343     2.15427277     8.10000000 region=surface
+     10     Pt     7.85477272     4.55477272     8.10000000 region=surface
+     11     Pt     9.24070201     6.95527267     8.10000000 region=surface
+     12     Pt     9.24070201     2.15427277     8.10000000 region=surface
+     13     Pt    10.62663130     4.55477272     8.10000000 region=surface
+     14     Pt    12.01256059     6.95527267     8.10000000 region=surface
+     15     Pt     5.08291414     2.95443942     5.83678694 region=surface
+     16     Pt     6.46884343     5.35493937     5.83678694 region=surface
+     17     Pt     7.85477272     7.75543932     5.83678694 region=surface
+     18     Pt     7.85477272     2.95443942     5.83678694 region=surface
+     19     Pt     9.24070201     5.35493937     5.83678694 region=surface
+     20     Pt    10.62663130     7.75543932     5.83678694 region=surface
+     21     Pt    10.62663130     2.95443942     5.83678694 region=surface
+     22     Pt    12.01256059     5.35493937     5.83678694 region=surface
+     23     Pt    13.39848987     7.75543932     5.83678694 region=surface
+     24     Pt     2.31105556     1.35410612     3.57357389 region=surface
+     25     Pt     3.69698485     3.75460607     3.57357389 region=surface
+     26     Pt     5.08291414     6.15510602     3.57357389 region=surface
+     27     Pt     5.08291414     1.35410612     3.57357389 region=surface
+     28     Pt     6.46884343     3.75460607     3.57357389 region=surface
+     29     Pt     7.85477272     6.15510602     3.57357389 region=surface
+     30     Pt     7.85477272     1.35410612     3.57357389 region=surface
+     31     Pt     9.24070201     3.75460607     3.57357389 region=surface
+     32     Pt    10.62663130     6.15510602     3.57357389 region=surface
+     33     Pt     3.69698485     2.15427277     1.31036083 region=surface
+     34     Pt     5.08291414     4.55477272     1.31036083 region=surface
+     35     Pt     6.46884343     6.95527267     1.31036083 region=surface
+     36     Pt     6.46884343     2.15427277     1.31036083 region=surface
+     37     Pt     7.85477272     4.55477272     1.31036083 region=surface
+
+Lattice vectors (angstrom)
+      1     8.31557575     0.00000000     0.00000000
+      2     4.15778787     7.20149984     0.00000000
+
+Unit cell area (angstrom^2)        59.88462
+
+Total System Charge              0.00000
+
+--------------------
+Optimizing adsorbate
+--------------------
+
+       Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+------------------
+Optimizing surface
+------------------
+
+Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+
+Collecting fragments' results:
+
+      Id             Formula   Success              Energy      DB
+   ---------------------------------------------------------------
+       1                   O         T         -0.00399301     OLD
+       2                Pt36         T         -7.15428639     OLD
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+
+   Fragmented state: OLD
+
+
+=====================================================
+Fragments calculations for state #8
+=====================================================
+
+--------
+Geometry
+--------
+Formula: OPt36
+Atoms
+  Index Symbol   x (angstrom)   y (angstrom)   z (angstrom)
+      1      O     2.31109189     1.35411894     9.23658101 region=adsorbate
+      2     Pt     9.24070201     6.95527267     1.31036083 region=surface
+      3     Pt     9.24070201     2.15427277     1.31036083 region=surface
+      4     Pt    10.62663130     4.55477272     1.31036083 region=surface
+      5     Pt    12.01256059     6.95527267     1.31036083 region=surface
+      6     Pt     3.69698485     2.15427277     8.10000000 region=surface
+      7     Pt     5.08291414     4.55477272     8.10000000 region=surface
+      8     Pt     6.46884343     6.95527267     8.10000000 region=surface
+      9     Pt     6.46884343     2.15427277     8.10000000 region=surface
+     10     Pt     7.85477272     4.55477272     8.10000000 region=surface
+     11     Pt     9.24070201     6.95527267     8.10000000 region=surface
+     12     Pt     9.24070201     2.15427277     8.10000000 region=surface
+     13     Pt    10.62663130     4.55477272     8.10000000 region=surface
+     14     Pt    12.01256059     6.95527267     8.10000000 region=surface
+     15     Pt     5.08291414     2.95443942     5.83678694 region=surface
+     16     Pt     6.46884343     5.35493937     5.83678694 region=surface
+     17     Pt     7.85477272     7.75543932     5.83678694 region=surface
+     18     Pt     7.85477272     2.95443942     5.83678694 region=surface
+     19     Pt     9.24070201     5.35493937     5.83678694 region=surface
+     20     Pt    10.62663130     7.75543932     5.83678694 region=surface
+     21     Pt    10.62663130     2.95443942     5.83678694 region=surface
+     22     Pt    12.01256059     5.35493937     5.83678694 region=surface
+     23     Pt    13.39848987     7.75543932     5.83678694 region=surface
+     24     Pt     2.31105556     1.35410612     3.57357389 region=surface
+     25     Pt     3.69698485     3.75460607     3.57357389 region=surface
+     26     Pt     5.08291414     6.15510602     3.57357389 region=surface
+     27     Pt     5.08291414     1.35410612     3.57357389 region=surface
+     28     Pt     6.46884343     3.75460607     3.57357389 region=surface
+     29     Pt     7.85477272     6.15510602     3.57357389 region=surface
+     30     Pt     7.85477272     1.35410612     3.57357389 region=surface
+     31     Pt     9.24070201     3.75460607     3.57357389 region=surface
+     32     Pt    10.62663130     6.15510602     3.57357389 region=surface
+     33     Pt     3.69698485     2.15427277     1.31036083 region=surface
+     34     Pt     5.08291414     4.55477272     1.31036083 region=surface
+     35     Pt     6.46884343     6.95527267     1.31036083 region=surface
+     36     Pt     6.46884343     2.15427277     1.31036083 region=surface
+     37     Pt     7.85477272     4.55477272     1.31036083 region=surface
+
+Lattice vectors (angstrom)
+      1     8.31557575     0.00000000     0.00000000
+      2     4.15778787     7.20149984     0.00000000
+
+Unit cell area (angstrom^2)        59.88462
+
+Total System Charge              0.00000
+
+--------------------
+Optimizing adsorbate
+--------------------
+
+       Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+------------------
+Optimizing surface
+------------------
+
+Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+
+Collecting fragments' results:
+
+      Id             Formula   Success              Energy      DB
+   ---------------------------------------------------------------
+       1                   O         T         -0.00399301     OLD
+       2                Pt36         T         -7.15428639     OLD
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+
+   Fragmented state: OLD
+
+
+=====================================================
+Fragments calculations for state #9
+=====================================================
+
+--------
+Geometry
+--------
+Formula: OPt36
+Atoms
+  Index Symbol   x (angstrom)   y (angstrom)   z (angstrom)
+      1      O     3.69702118     3.75461889     9.23658101 region=adsorbate
+      2     Pt     9.24070201     6.95527267     1.31036083 region=surface
+      3     Pt     9.24070201     2.15427277     1.31036083 region=surface
+      4     Pt    10.62663130     4.55477272     1.31036083 region=surface
+      5     Pt    12.01256059     6.95527267     1.31036083 region=surface
+      6     Pt     3.69698485     2.15427277     8.10000000 region=surface
+      7     Pt     5.08291414     4.55477272     8.10000000 region=surface
+      8     Pt     6.46884343     6.95527267     8.10000000 region=surface
+      9     Pt     6.46884343     2.15427277     8.10000000 region=surface
+     10     Pt     7.85477272     4.55477272     8.10000000 region=surface
+     11     Pt     9.24070201     6.95527267     8.10000000 region=surface
+     12     Pt     9.24070201     2.15427277     8.10000000 region=surface
+     13     Pt    10.62663130     4.55477272     8.10000000 region=surface
+     14     Pt    12.01256059     6.95527267     8.10000000 region=surface
+     15     Pt     5.08291414     2.95443942     5.83678694 region=surface
+     16     Pt     6.46884343     5.35493937     5.83678694 region=surface
+     17     Pt     7.85477272     7.75543932     5.83678694 region=surface
+     18     Pt     7.85477272     2.95443942     5.83678694 region=surface
+     19     Pt     9.24070201     5.35493937     5.83678694 region=surface
+     20     Pt    10.62663130     7.75543932     5.83678694 region=surface
+     21     Pt    10.62663130     2.95443942     5.83678694 region=surface
+     22     Pt    12.01256059     5.35493937     5.83678694 region=surface
+     23     Pt    13.39848987     7.75543932     5.83678694 region=surface
+     24     Pt     2.31105556     1.35410612     3.57357389 region=surface
+     25     Pt     3.69698485     3.75460607     3.57357389 region=surface
+     26     Pt     5.08291414     6.15510602     3.57357389 region=surface
+     27     Pt     5.08291414     1.35410612     3.57357389 region=surface
+     28     Pt     6.46884343     3.75460607     3.57357389 region=surface
+     29     Pt     7.85477272     6.15510602     3.57357389 region=surface
+     30     Pt     7.85477272     1.35410612     3.57357389 region=surface
+     31     Pt     9.24070201     3.75460607     3.57357389 region=surface
+     32     Pt    10.62663130     6.15510602     3.57357389 region=surface
+     33     Pt     3.69698485     2.15427277     1.31036083 region=surface
+     34     Pt     5.08291414     4.55477272     1.31036083 region=surface
+     35     Pt     6.46884343     6.95527267     1.31036083 region=surface
+     36     Pt     6.46884343     2.15427277     1.31036083 region=surface
+     37     Pt     7.85477272     4.55477272     1.31036083 region=surface
+
+Lattice vectors (angstrom)
+      1     8.31557575     0.00000000     0.00000000
+      2     4.15778787     7.20149984     0.00000000
+
+Unit cell area (angstrom^2)        59.88462
+
+Total System Charge              0.00000
+
+--------------------
+Optimizing adsorbate
+--------------------
+
+       Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+------------------
+Optimizing surface
+------------------
+
+Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+
+Collecting fragments' results:
+
+      Id             Formula   Success              Energy      DB
+   ---------------------------------------------------------------
+       1                   O         T         -0.00399301     OLD
+       2                Pt36         T         -7.15428639     OLD
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+
+   Fragmented state: OLD
+
+
+=====================================================
+Fragments calculations for state #10
+=====================================================
+
+--------
+Geometry
+--------
+Formula: OPt36
+Atoms
+  Index Symbol   x (angstrom)   y (angstrom)   z (angstrom)
+      1      O     5.08292604     2.95444631     9.22901456 region=adsorbate
+      2     Pt     9.24070197     6.95527260     1.31036083 region=surface
+      3     Pt     9.24070197     2.15427284     1.31036083 region=surface
+      4     Pt    10.62663122     4.55477272     1.31036083 region=surface
+      5     Pt    12.01256046     6.95527260     1.31036083 region=surface
+      6     Pt     3.69698498     2.15427284     8.10000000 region=surface
+      7     Pt     5.08291422     4.55477272     8.10000000 region=surface
+      8     Pt     6.46884347     6.95527260     8.10000000 region=surface
+      9     Pt     6.46884347     2.15427284     8.10000000 region=surface
+     10     Pt     7.85477272     4.55477272     8.10000000 region=surface
+     11     Pt     9.24070197     6.95527260     8.10000000 region=surface
+     12     Pt     9.24070197     2.15427284     8.10000000 region=surface
+     13     Pt    10.62663122     4.55477272     8.10000000 region=surface
+     14     Pt    12.01256046     6.95527260     8.10000000 region=surface
+     15     Pt     5.08291422     2.95443947     5.83678694 region=surface
+     16     Pt     6.46884347     5.35493935     5.83678694 region=surface
+     17     Pt     7.85477272     7.75543922     5.83678694 region=surface
+     18     Pt     7.85477272     2.95443947     5.83678694 region=surface
+     19     Pt     9.24070197     5.35493935     5.83678694 region=surface
+     20     Pt    10.62663122     7.75543922     5.83678694 region=surface
+     21     Pt    10.62663122     2.95443947     5.83678694 region=surface
+     22     Pt    12.01256046     5.35493935     5.83678694 region=surface
+     23     Pt    13.39848970     7.75543922     5.83678694 region=surface
+     24     Pt     2.31105573     1.35410622     3.57357389 region=surface
+     25     Pt     3.69698498     3.75460609     3.57357389 region=surface
+     26     Pt     5.08291422     6.15510597     3.57357389 region=surface
+     27     Pt     5.08291423     1.35410622     3.57357389 region=surface
+     28     Pt     6.46884347     3.75460609     3.57357389 region=surface
+     29     Pt     7.85477272     6.15510597     3.57357389 region=surface
+     30     Pt     7.85477272     1.35410622     3.57357389 region=surface
+     31     Pt     9.24070197     3.75460609     3.57357389 region=surface
+     32     Pt    10.62663122     6.15510597     3.57357389 region=surface
+     33     Pt     3.69698498     2.15427284     1.31036083 region=surface
+     34     Pt     5.08291422     4.55477272     1.31036083 region=surface
+     35     Pt     6.46884347     6.95527260     1.31036083 region=surface
+     36     Pt     6.46884347     2.15427284     1.31036083 region=surface
+     37     Pt     7.85477272     4.55477272     1.31036083 region=surface
+
+Lattice vectors (angstrom)
+      1     8.31557575     0.00000000     0.00000000
+      2     4.15778787     7.20149984     0.00000000
+
+Unit cell area (angstrom^2)        59.88462
+
+Total System Charge              0.00000
+
+--------------------
+Optimizing adsorbate
+--------------------
+
+       Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+------------------
+Optimizing surface
+------------------
+
+Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+
+Collecting fragments' results:
+
+      Id             Formula   Success              Energy      DB
+   ---------------------------------------------------------------
+       1                   O         T         -0.00399301     OLD
+       2                Pt36         T         -7.15428639     OLD
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+
+   Fragmented state: OLD
+
+
+=====================================================
+Fragments calculations for state #11
+=====================================================
+
+--------
+Geometry
+--------
+Formula: OPt36
+Atoms
+  Index Symbol   x (angstrom)   y (angstrom)   z (angstrom)
+      1      O     3.69699675     0.55394636     9.22901456 region=adsorbate
+      2     Pt     9.24070197     6.95527260     1.31036083 region=surface
+      3     Pt     9.24070197     2.15427284     1.31036083 region=surface
+      4     Pt    10.62663122     4.55477272     1.31036083 region=surface
+      5     Pt    12.01256046     6.95527260     1.31036083 region=surface
+      6     Pt     3.69698498     2.15427284     8.10000000 region=surface
+      7     Pt     5.08291422     4.55477272     8.10000000 region=surface
+      8     Pt     6.46884347     6.95527260     8.10000000 region=surface
+      9     Pt     6.46884347     2.15427284     8.10000000 region=surface
+     10     Pt     7.85477272     4.55477272     8.10000000 region=surface
+     11     Pt     9.24070197     6.95527260     8.10000000 region=surface
+     12     Pt     9.24070197     2.15427284     8.10000000 region=surface
+     13     Pt    10.62663122     4.55477272     8.10000000 region=surface
+     14     Pt    12.01256046     6.95527260     8.10000000 region=surface
+     15     Pt     5.08291422     2.95443947     5.83678694 region=surface
+     16     Pt     6.46884347     5.35493935     5.83678694 region=surface
+     17     Pt     7.85477272     7.75543922     5.83678694 region=surface
+     18     Pt     7.85477272     2.95443947     5.83678694 region=surface
+     19     Pt     9.24070197     5.35493935     5.83678694 region=surface
+     20     Pt    10.62663122     7.75543922     5.83678694 region=surface
+     21     Pt    10.62663122     2.95443947     5.83678694 region=surface
+     22     Pt    12.01256046     5.35493935     5.83678694 region=surface
+     23     Pt    13.39848970     7.75543922     5.83678694 region=surface
+     24     Pt     2.31105573     1.35410622     3.57357389 region=surface
+     25     Pt     3.69698498     3.75460609     3.57357389 region=surface
+     26     Pt     5.08291422     6.15510597     3.57357389 region=surface
+     27     Pt     5.08291423     1.35410622     3.57357389 region=surface
+     28     Pt     6.46884347     3.75460609     3.57357389 region=surface
+     29     Pt     7.85477272     6.15510597     3.57357389 region=surface
+     30     Pt     7.85477272     1.35410622     3.57357389 region=surface
+     31     Pt     9.24070197     3.75460609     3.57357389 region=surface
+     32     Pt    10.62663122     6.15510597     3.57357389 region=surface
+     33     Pt     3.69698498     2.15427284     1.31036083 region=surface
+     34     Pt     5.08291422     4.55477272     1.31036083 region=surface
+     35     Pt     6.46884347     6.95527260     1.31036083 region=surface
+     36     Pt     6.46884347     2.15427284     1.31036083 region=surface
+     37     Pt     7.85477272     4.55477272     1.31036083 region=surface
+
+Lattice vectors (angstrom)
+      1     8.31557575     0.00000000     0.00000000
+      2     4.15778787     7.20149984     0.00000000
+
+Unit cell area (angstrom^2)        59.88462
+
+Total System Charge              0.00000
+
+--------------------
+Optimizing adsorbate
+--------------------
+
+       Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+------------------
+Optimizing surface
+------------------
+
+Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+
+Collecting fragments' results:
+
+      Id             Formula   Success              Energy      DB
+   ---------------------------------------------------------------
+       1                   O         T         -0.00399301     OLD
+       2                Pt36         T         -7.15428639     OLD
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+
+   Fragmented state: OLD
+
+
+=====================================================
+Fragments calculations for state #12
+=====================================================
+
+--------
+Geometry
+--------
+Formula: OPt36
+Atoms
+  Index Symbol   x (angstrom)   y (angstrom)   z (angstrom)
+      1      O     9.24071391     5.35494625     9.22901456 region=adsorbate
+      2     Pt     9.24070197     6.95527260     1.31036083 region=surface
+      3     Pt     9.24070197     2.15427284     1.31036083 region=surface
+      4     Pt    10.62663122     4.55477272     1.31036083 region=surface
+      5     Pt    12.01256046     6.95527260     1.31036083 region=surface
+      6     Pt     3.69698498     2.15427284     8.10000000 region=surface
+      7     Pt     5.08291422     4.55477272     8.10000000 region=surface
+      8     Pt     6.46884347     6.95527260     8.10000000 region=surface
+      9     Pt     6.46884347     2.15427284     8.10000000 region=surface
+     10     Pt     7.85477272     4.55477272     8.10000000 region=surface
+     11     Pt     9.24070197     6.95527260     8.10000000 region=surface
+     12     Pt     9.24070197     2.15427284     8.10000000 region=surface
+     13     Pt    10.62663122     4.55477272     8.10000000 region=surface
+     14     Pt    12.01256046     6.95527260     8.10000000 region=surface
+     15     Pt     5.08291422     2.95443947     5.83678694 region=surface
+     16     Pt     6.46884347     5.35493935     5.83678694 region=surface
+     17     Pt     7.85477272     7.75543922     5.83678694 region=surface
+     18     Pt     7.85477272     2.95443947     5.83678694 region=surface
+     19     Pt     9.24070197     5.35493935     5.83678694 region=surface
+     20     Pt    10.62663122     7.75543922     5.83678694 region=surface
+     21     Pt    10.62663122     2.95443947     5.83678694 region=surface
+     22     Pt    12.01256046     5.35493935     5.83678694 region=surface
+     23     Pt    13.39848970     7.75543922     5.83678694 region=surface
+     24     Pt     2.31105573     1.35410622     3.57357389 region=surface
+     25     Pt     3.69698498     3.75460609     3.57357389 region=surface
+     26     Pt     5.08291422     6.15510597     3.57357389 region=surface
+     27     Pt     5.08291423     1.35410622     3.57357389 region=surface
+     28     Pt     6.46884347     3.75460609     3.57357389 region=surface
+     29     Pt     7.85477272     6.15510597     3.57357389 region=surface
+     30     Pt     7.85477272     1.35410622     3.57357389 region=surface
+     31     Pt     9.24070197     3.75460609     3.57357389 region=surface
+     32     Pt    10.62663122     6.15510597     3.57357389 region=surface
+     33     Pt     3.69698498     2.15427284     1.31036083 region=surface
+     34     Pt     5.08291422     4.55477272     1.31036083 region=surface
+     35     Pt     6.46884347     6.95527260     1.31036083 region=surface
+     36     Pt     6.46884347     2.15427284     1.31036083 region=surface
+     37     Pt     7.85477272     4.55477272     1.31036083 region=surface
+
+Lattice vectors (angstrom)
+      1     8.31557575     0.00000000     0.00000000
+      2     4.15778787     7.20149984     0.00000000
+
+Unit cell area (angstrom^2)        59.88462
+
+Total System Charge              0.00000
+
+--------------------
+Optimizing adsorbate
+--------------------
+
+       Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+------------------
+Optimizing surface
+------------------
+
+Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+
+Collecting fragments' results:
+
+      Id             Formula   Success              Energy      DB
+   ---------------------------------------------------------------
+       1                   O         T         -0.00399301     OLD
+       2                Pt36         T         -7.15428639     OLD
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+
+   Fragmented state: OLD
+
+
+=====================================================
+Fragments calculations for state #13
+=====================================================
+
+--------
+Geometry
+--------
+Formula: OPt36
+Atoms
+  Index Symbol   x (angstrom)   y (angstrom)   z (angstrom)
+      1      O     6.46885533     0.55394636     9.22901456 region=adsorbate
+      2     Pt     9.24070197     6.95527260     1.31036083 region=surface
+      3     Pt     9.24070197     2.15427284     1.31036083 region=surface
+      4     Pt    10.62663122     4.55477272     1.31036083 region=surface
+      5     Pt    12.01256046     6.95527260     1.31036083 region=surface
+      6     Pt     3.69698498     2.15427284     8.10000000 region=surface
+      7     Pt     5.08291422     4.55477272     8.10000000 region=surface
+      8     Pt     6.46884347     6.95527260     8.10000000 region=surface
+      9     Pt     6.46884347     2.15427284     8.10000000 region=surface
+     10     Pt     7.85477272     4.55477272     8.10000000 region=surface
+     11     Pt     9.24070197     6.95527260     8.10000000 region=surface
+     12     Pt     9.24070197     2.15427284     8.10000000 region=surface
+     13     Pt    10.62663122     4.55477272     8.10000000 region=surface
+     14     Pt    12.01256046     6.95527260     8.10000000 region=surface
+     15     Pt     5.08291422     2.95443947     5.83678694 region=surface
+     16     Pt     6.46884347     5.35493935     5.83678694 region=surface
+     17     Pt     7.85477272     7.75543922     5.83678694 region=surface
+     18     Pt     7.85477272     2.95443947     5.83678694 region=surface
+     19     Pt     9.24070197     5.35493935     5.83678694 region=surface
+     20     Pt    10.62663122     7.75543922     5.83678694 region=surface
+     21     Pt    10.62663122     2.95443947     5.83678694 region=surface
+     22     Pt    12.01256046     5.35493935     5.83678694 region=surface
+     23     Pt    13.39848970     7.75543922     5.83678694 region=surface
+     24     Pt     2.31105573     1.35410622     3.57357389 region=surface
+     25     Pt     3.69698498     3.75460609     3.57357389 region=surface
+     26     Pt     5.08291422     6.15510597     3.57357389 region=surface
+     27     Pt     5.08291423     1.35410622     3.57357389 region=surface
+     28     Pt     6.46884347     3.75460609     3.57357389 region=surface
+     29     Pt     7.85477272     6.15510597     3.57357389 region=surface
+     30     Pt     7.85477272     1.35410622     3.57357389 region=surface
+     31     Pt     9.24070197     3.75460609     3.57357389 region=surface
+     32     Pt    10.62663122     6.15510597     3.57357389 region=surface
+     33     Pt     3.69698498     2.15427284     1.31036083 region=surface
+     34     Pt     5.08291422     4.55477272     1.31036083 region=surface
+     35     Pt     6.46884347     6.95527260     1.31036083 region=surface
+     36     Pt     6.46884347     2.15427284     1.31036083 region=surface
+     37     Pt     7.85477272     4.55477272     1.31036083 region=surface
+
+Lattice vectors (angstrom)
+      1     8.31557575     0.00000000     0.00000000
+      2     4.15778787     7.20149984     0.00000000
+
+Unit cell area (angstrom^2)        59.88462
+
+Total System Charge              0.00000
+
+--------------------
+Optimizing adsorbate
+--------------------
+
+       Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+------------------
+Optimizing surface
+------------------
+
+Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+
+Collecting fragments' results:
+
+      Id             Formula   Success              Energy      DB
+   ---------------------------------------------------------------
+       1                   O         T         -0.00399301     OLD
+       2                Pt36         T         -7.15428639     OLD
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+
+   Fragmented state: OLD
+
+
+=====================================================
+Fragments calculations for state #14
+=====================================================
+
+--------
+Geometry
+--------
+Formula: OPt36
+Atoms
+  Index Symbol   x (angstrom)   y (angstrom)   z (angstrom)
+      1      O     7.85478462     2.95444631     9.22901456 region=adsorbate
+      2     Pt     9.24070197     6.95527260     1.31036083 region=surface
+      3     Pt     9.24070197     2.15427284     1.31036083 region=surface
+      4     Pt    10.62663122     4.55477272     1.31036083 region=surface
+      5     Pt    12.01256046     6.95527260     1.31036083 region=surface
+      6     Pt     3.69698498     2.15427284     8.10000000 region=surface
+      7     Pt     5.08291422     4.55477272     8.10000000 region=surface
+      8     Pt     6.46884347     6.95527260     8.10000000 region=surface
+      9     Pt     6.46884347     2.15427284     8.10000000 region=surface
+     10     Pt     7.85477272     4.55477272     8.10000000 region=surface
+     11     Pt     9.24070197     6.95527260     8.10000000 region=surface
+     12     Pt     9.24070197     2.15427284     8.10000000 region=surface
+     13     Pt    10.62663122     4.55477272     8.10000000 region=surface
+     14     Pt    12.01256046     6.95527260     8.10000000 region=surface
+     15     Pt     5.08291422     2.95443947     5.83678694 region=surface
+     16     Pt     6.46884347     5.35493935     5.83678694 region=surface
+     17     Pt     7.85477272     7.75543922     5.83678694 region=surface
+     18     Pt     7.85477272     2.95443947     5.83678694 region=surface
+     19     Pt     9.24070197     5.35493935     5.83678694 region=surface
+     20     Pt    10.62663122     7.75543922     5.83678694 region=surface
+     21     Pt    10.62663122     2.95443947     5.83678694 region=surface
+     22     Pt    12.01256046     5.35493935     5.83678694 region=surface
+     23     Pt    13.39848970     7.75543922     5.83678694 region=surface
+     24     Pt     2.31105573     1.35410622     3.57357389 region=surface
+     25     Pt     3.69698498     3.75460609     3.57357389 region=surface
+     26     Pt     5.08291422     6.15510597     3.57357389 region=surface
+     27     Pt     5.08291423     1.35410622     3.57357389 region=surface
+     28     Pt     6.46884347     3.75460609     3.57357389 region=surface
+     29     Pt     7.85477272     6.15510597     3.57357389 region=surface
+     30     Pt     7.85477272     1.35410622     3.57357389 region=surface
+     31     Pt     9.24070197     3.75460609     3.57357389 region=surface
+     32     Pt    10.62663122     6.15510597     3.57357389 region=surface
+     33     Pt     3.69698498     2.15427284     1.31036083 region=surface
+     34     Pt     5.08291422     4.55477272     1.31036083 region=surface
+     35     Pt     6.46884347     6.95527260     1.31036083 region=surface
+     36     Pt     6.46884347     2.15427284     1.31036083 region=surface
+     37     Pt     7.85477272     4.55477272     1.31036083 region=surface
+
+Lattice vectors (angstrom)
+      1     8.31557575     0.00000000     0.00000000
+      2     4.15778787     7.20149984     0.00000000
+
+Unit cell area (angstrom^2)        59.88462
+
+Total System Charge              0.00000
+
+--------------------
+Optimizing adsorbate
+--------------------
+
+       Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+------------------
+Optimizing surface
+------------------
+
+Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+
+Collecting fragments' results:
+
+      Id             Formula   Success              Energy      DB
+   ---------------------------------------------------------------
+       1                   O         T         -0.00399301     OLD
+       2                Pt36         T         -7.15428639     OLD
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+
+   Fragmented state: OLD
+
+
+=====================================================
+Fragments calculations for state #15
+=====================================================
+
+--------
+Geometry
+--------
+Formula: OPt36
+Atoms
+  Index Symbol   x (angstrom)   y (angstrom)   z (angstrom)
+      1      O     3.69699675     5.35494625     9.22901456 region=adsorbate
+      2     Pt     9.24070197     6.95527260     1.31036083 region=surface
+      3     Pt     9.24070197     2.15427284     1.31036083 region=surface
+      4     Pt    10.62663122     4.55477272     1.31036083 region=surface
+      5     Pt    12.01256046     6.95527260     1.31036083 region=surface
+      6     Pt     3.69698498     2.15427284     8.10000000 region=surface
+      7     Pt     5.08291422     4.55477272     8.10000000 region=surface
+      8     Pt     6.46884347     6.95527260     8.10000000 region=surface
+      9     Pt     6.46884347     2.15427284     8.10000000 region=surface
+     10     Pt     7.85477272     4.55477272     8.10000000 region=surface
+     11     Pt     9.24070197     6.95527260     8.10000000 region=surface
+     12     Pt     9.24070197     2.15427284     8.10000000 region=surface
+     13     Pt    10.62663122     4.55477272     8.10000000 region=surface
+     14     Pt    12.01256046     6.95527260     8.10000000 region=surface
+     15     Pt     5.08291422     2.95443947     5.83678694 region=surface
+     16     Pt     6.46884347     5.35493935     5.83678694 region=surface
+     17     Pt     7.85477272     7.75543922     5.83678694 region=surface
+     18     Pt     7.85477272     2.95443947     5.83678694 region=surface
+     19     Pt     9.24070197     5.35493935     5.83678694 region=surface
+     20     Pt    10.62663122     7.75543922     5.83678694 region=surface
+     21     Pt    10.62663122     2.95443947     5.83678694 region=surface
+     22     Pt    12.01256046     5.35493935     5.83678694 region=surface
+     23     Pt    13.39848970     7.75543922     5.83678694 region=surface
+     24     Pt     2.31105573     1.35410622     3.57357389 region=surface
+     25     Pt     3.69698498     3.75460609     3.57357389 region=surface
+     26     Pt     5.08291422     6.15510597     3.57357389 region=surface
+     27     Pt     5.08291423     1.35410622     3.57357389 region=surface
+     28     Pt     6.46884347     3.75460609     3.57357389 region=surface
+     29     Pt     7.85477272     6.15510597     3.57357389 region=surface
+     30     Pt     7.85477272     1.35410622     3.57357389 region=surface
+     31     Pt     9.24070197     3.75460609     3.57357389 region=surface
+     32     Pt    10.62663122     6.15510597     3.57357389 region=surface
+     33     Pt     3.69698498     2.15427284     1.31036083 region=surface
+     34     Pt     5.08291422     4.55477272     1.31036083 region=surface
+     35     Pt     6.46884347     6.95527260     1.31036083 region=surface
+     36     Pt     6.46884347     2.15427284     1.31036083 region=surface
+     37     Pt     7.85477272     4.55477272     1.31036083 region=surface
+
+Lattice vectors (angstrom)
+      1     8.31557575     0.00000000     0.00000000
+      2     4.15778787     7.20149984     0.00000000
+
+Unit cell area (angstrom^2)        59.88462
+
+Total System Charge              0.00000
+
+--------------------
+Optimizing adsorbate
+--------------------
+
+       Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+------------------
+Optimizing surface
+------------------
+
+Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+
+Collecting fragments' results:
+
+      Id             Formula   Success              Energy      DB
+   ---------------------------------------------------------------
+       1                   O         T         -0.00399301     OLD
+       2                Pt36         T         -7.15428639     OLD
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+
+   Fragmented state: OLD
+
+
+=====================================================
+Fragments calculations for state #16
+=====================================================
+
+--------
+Geometry
+--------
+Formula: OPt36
+Atoms
+  Index Symbol   x (angstrom)   y (angstrom)   z (angstrom)
+      1      O     0.92513817     0.55394636     9.22901456 region=adsorbate
+      2     Pt     9.24070197     6.95527260     1.31036083 region=surface
+      3     Pt     9.24070197     2.15427284     1.31036083 region=surface
+      4     Pt    10.62663122     4.55477272     1.31036083 region=surface
+      5     Pt    12.01256046     6.95527260     1.31036083 region=surface
+      6     Pt     3.69698498     2.15427284     8.10000000 region=surface
+      7     Pt     5.08291422     4.55477272     8.10000000 region=surface
+      8     Pt     6.46884347     6.95527260     8.10000000 region=surface
+      9     Pt     6.46884347     2.15427284     8.10000000 region=surface
+     10     Pt     7.85477272     4.55477272     8.10000000 region=surface
+     11     Pt     9.24070197     6.95527260     8.10000000 region=surface
+     12     Pt     9.24070197     2.15427284     8.10000000 region=surface
+     13     Pt    10.62663122     4.55477272     8.10000000 region=surface
+     14     Pt    12.01256046     6.95527260     8.10000000 region=surface
+     15     Pt     5.08291422     2.95443947     5.83678694 region=surface
+     16     Pt     6.46884347     5.35493935     5.83678694 region=surface
+     17     Pt     7.85477272     7.75543922     5.83678694 region=surface
+     18     Pt     7.85477272     2.95443947     5.83678694 region=surface
+     19     Pt     9.24070197     5.35493935     5.83678694 region=surface
+     20     Pt    10.62663122     7.75543922     5.83678694 region=surface
+     21     Pt    10.62663122     2.95443947     5.83678694 region=surface
+     22     Pt    12.01256046     5.35493935     5.83678694 region=surface
+     23     Pt    13.39848970     7.75543922     5.83678694 region=surface
+     24     Pt     2.31105573     1.35410622     3.57357389 region=surface
+     25     Pt     3.69698498     3.75460609     3.57357389 region=surface
+     26     Pt     5.08291422     6.15510597     3.57357389 region=surface
+     27     Pt     5.08291423     1.35410622     3.57357389 region=surface
+     28     Pt     6.46884347     3.75460609     3.57357389 region=surface
+     29     Pt     7.85477272     6.15510597     3.57357389 region=surface
+     30     Pt     7.85477272     1.35410622     3.57357389 region=surface
+     31     Pt     9.24070197     3.75460609     3.57357389 region=surface
+     32     Pt    10.62663122     6.15510597     3.57357389 region=surface
+     33     Pt     3.69698498     2.15427284     1.31036083 region=surface
+     34     Pt     5.08291422     4.55477272     1.31036083 region=surface
+     35     Pt     6.46884347     6.95527260     1.31036083 region=surface
+     36     Pt     6.46884347     2.15427284     1.31036083 region=surface
+     37     Pt     7.85477272     4.55477272     1.31036083 region=surface
+
+Lattice vectors (angstrom)
+      1     8.31557575     0.00000000     0.00000000
+      2     4.15778787     7.20149984     0.00000000
+
+Unit cell area (angstrom^2)        59.88462
+
+Total System Charge              0.00000
+
+--------------------
+Optimizing adsorbate
+--------------------
+
+       Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+------------------
+Optimizing surface
+------------------
+
+Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+
+Collecting fragments' results:
+
+      Id             Formula   Success              Energy      DB
+   ---------------------------------------------------------------
+       1                   O         T         -0.00399301     OLD
+       2                Pt36         T         -7.15428639     OLD
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+
+   Fragmented state: OLD
+
+
+=====================================================
+Fragments calculations for state #17
+=====================================================
+
+--------
+Geometry
+--------
+Formula: OPt36
+Atoms
+  Index Symbol   x (angstrom)   y (angstrom)   z (angstrom)
+      1      O     2.31106746     2.95444631     9.22901456 region=adsorbate
+      2     Pt     9.24070197     6.95527260     1.31036083 region=surface
+      3     Pt     9.24070197     2.15427284     1.31036083 region=surface
+      4     Pt    10.62663122     4.55477272     1.31036083 region=surface
+      5     Pt    12.01256046     6.95527260     1.31036083 region=surface
+      6     Pt     3.69698498     2.15427284     8.10000000 region=surface
+      7     Pt     5.08291422     4.55477272     8.10000000 region=surface
+      8     Pt     6.46884347     6.95527260     8.10000000 region=surface
+      9     Pt     6.46884347     2.15427284     8.10000000 region=surface
+     10     Pt     7.85477272     4.55477272     8.10000000 region=surface
+     11     Pt     9.24070197     6.95527260     8.10000000 region=surface
+     12     Pt     9.24070197     2.15427284     8.10000000 region=surface
+     13     Pt    10.62663122     4.55477272     8.10000000 region=surface
+     14     Pt    12.01256046     6.95527260     8.10000000 region=surface
+     15     Pt     5.08291422     2.95443947     5.83678694 region=surface
+     16     Pt     6.46884347     5.35493935     5.83678694 region=surface
+     17     Pt     7.85477272     7.75543922     5.83678694 region=surface
+     18     Pt     7.85477272     2.95443947     5.83678694 region=surface
+     19     Pt     9.24070197     5.35493935     5.83678694 region=surface
+     20     Pt    10.62663122     7.75543922     5.83678694 region=surface
+     21     Pt    10.62663122     2.95443947     5.83678694 region=surface
+     22     Pt    12.01256046     5.35493935     5.83678694 region=surface
+     23     Pt    13.39848970     7.75543922     5.83678694 region=surface
+     24     Pt     2.31105573     1.35410622     3.57357389 region=surface
+     25     Pt     3.69698498     3.75460609     3.57357389 region=surface
+     26     Pt     5.08291422     6.15510597     3.57357389 region=surface
+     27     Pt     5.08291423     1.35410622     3.57357389 region=surface
+     28     Pt     6.46884347     3.75460609     3.57357389 region=surface
+     29     Pt     7.85477272     6.15510597     3.57357389 region=surface
+     30     Pt     7.85477272     1.35410622     3.57357389 region=surface
+     31     Pt     9.24070197     3.75460609     3.57357389 region=surface
+     32     Pt    10.62663122     6.15510597     3.57357389 region=surface
+     33     Pt     3.69698498     2.15427284     1.31036083 region=surface
+     34     Pt     5.08291422     4.55477272     1.31036083 region=surface
+     35     Pt     6.46884347     6.95527260     1.31036083 region=surface
+     36     Pt     6.46884347     2.15427284     1.31036083 region=surface
+     37     Pt     7.85477272     4.55477272     1.31036083 region=surface
+
+Lattice vectors (angstrom)
+      1     8.31557575     0.00000000     0.00000000
+      2     4.15778787     7.20149984     0.00000000
+
+Unit cell area (angstrom^2)        59.88462
+
+Total System Charge              0.00000
+
+--------------------
+Optimizing adsorbate
+--------------------
+
+       Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+------------------
+Optimizing surface
+------------------
+
+Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+
+Collecting fragments' results:
+
+      Id             Formula   Success              Energy      DB
+   ---------------------------------------------------------------
+       1                   O         T         -0.00399301     OLD
+       2                Pt36         T         -7.15428639     OLD
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+
+   Fragmented state: OLD
+
+
+=====================================================
+Fragments calculations for state #18
+=====================================================
+
+--------
+Geometry
+--------
+Formula: OPt36
+Atoms
+  Index Symbol   x (angstrom)   y (angstrom)   z (angstrom)
+      1      O     6.46885533     5.35494625     9.22901456 region=adsorbate
+      2     Pt     9.24070197     6.95527260     1.31036083 region=surface
+      3     Pt     9.24070197     2.15427284     1.31036083 region=surface
+      4     Pt    10.62663122     4.55477272     1.31036083 region=surface
+      5     Pt    12.01256046     6.95527260     1.31036083 region=surface
+      6     Pt     3.69698498     2.15427284     8.10000000 region=surface
+      7     Pt     5.08291422     4.55477272     8.10000000 region=surface
+      8     Pt     6.46884347     6.95527260     8.10000000 region=surface
+      9     Pt     6.46884347     2.15427284     8.10000000 region=surface
+     10     Pt     7.85477272     4.55477272     8.10000000 region=surface
+     11     Pt     9.24070197     6.95527260     8.10000000 region=surface
+     12     Pt     9.24070197     2.15427284     8.10000000 region=surface
+     13     Pt    10.62663122     4.55477272     8.10000000 region=surface
+     14     Pt    12.01256046     6.95527260     8.10000000 region=surface
+     15     Pt     5.08291422     2.95443947     5.83678694 region=surface
+     16     Pt     6.46884347     5.35493935     5.83678694 region=surface
+     17     Pt     7.85477272     7.75543922     5.83678694 region=surface
+     18     Pt     7.85477272     2.95443947     5.83678694 region=surface
+     19     Pt     9.24070197     5.35493935     5.83678694 region=surface
+     20     Pt    10.62663122     7.75543922     5.83678694 region=surface
+     21     Pt    10.62663122     2.95443947     5.83678694 region=surface
+     22     Pt    12.01256046     5.35493935     5.83678694 region=surface
+     23     Pt    13.39848970     7.75543922     5.83678694 region=surface
+     24     Pt     2.31105573     1.35410622     3.57357389 region=surface
+     25     Pt     3.69698498     3.75460609     3.57357389 region=surface
+     26     Pt     5.08291422     6.15510597     3.57357389 region=surface
+     27     Pt     5.08291423     1.35410622     3.57357389 region=surface
+     28     Pt     6.46884347     3.75460609     3.57357389 region=surface
+     29     Pt     7.85477272     6.15510597     3.57357389 region=surface
+     30     Pt     7.85477272     1.35410622     3.57357389 region=surface
+     31     Pt     9.24070197     3.75460609     3.57357389 region=surface
+     32     Pt    10.62663122     6.15510597     3.57357389 region=surface
+     33     Pt     3.69698498     2.15427284     1.31036083 region=surface
+     34     Pt     5.08291422     4.55477272     1.31036083 region=surface
+     35     Pt     6.46884347     6.95527260     1.31036083 region=surface
+     36     Pt     6.46884347     2.15427284     1.31036083 region=surface
+     37     Pt     7.85477272     4.55477272     1.31036083 region=surface
+
+Lattice vectors (angstrom)
+      1     8.31557575     0.00000000     0.00000000
+      2     4.15778787     7.20149984     0.00000000
+
+Unit cell area (angstrom^2)        59.88462
+
+Total System Charge              0.00000
+
+--------------------
+Optimizing adsorbate
+--------------------
+
+       Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+------------------
+Optimizing surface
+------------------
+
+Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+
+Collecting fragments' results:
+
+      Id             Formula   Success              Energy      DB
+   ---------------------------------------------------------------
+       1                   O         T         -0.00399301     OLD
+       2                Pt36         T         -7.15428639     OLD
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+ Geometry symmetrized to: C1
+ Geometry reoriented with symmetry: ATOM
+
+   Fragmented state: OLD
+
+----------------------
+Final Energy Landscape
+----------------------
+
+        Id        Energy(a.u.)         RE(eV)   RE(kcal/mol)    Counts    Crit. point
+     --------------------------------------------------------------------------------
+         1           -7.278562        0.00000         0.0000        13            Min
+         2           -7.278562        0.00000         0.0000        12            Min
+         3           -7.278562        0.00000         0.0000        12            Min
+         4           -7.278562        0.00000         0.0000        12            Min
+         5           -7.278562        0.00000         0.0000        12            Min
+         6           -7.278562        0.00000         0.0000        12            Min
+         7           -7.278562        0.00000         0.0000        12            Min
+         8           -7.278562        0.00000         0.0000        12            Min
+         9           -7.278562        0.00000         0.0000        12            Min
+        10           -7.271255        0.19881         4.5847        13            Min
+        11           -7.271255        0.19881         4.5847        12            Min
+        12           -7.271255        0.19881         4.5847        12            Min
+        13           -7.271255        0.19881         4.5847        12            Min
+        14           -7.271255        0.19881         4.5847        12            Min
+        15           -7.271255        0.19881         4.5847        12            Min
+        16           -7.271255        0.19881         4.5847        12            Min
+        17           -7.271255        0.19881         4.5847        12            Min
+        18           -7.271255        0.19881         4.5847        12            Min
+        19           -7.252826        0.70030        16.1493        38             TS 1<-->10      1.92E+13:1.72E+13*  
+        20           -7.252826        0.70030        16.1493         2             TS 4<-->12      1.92E+13:1.72E+13   
+        21           -7.252826        0.70030        16.1493         2             TS 5<-->13      1.92E+13:1.72E+13   
+        22           -7.252826        0.70030        16.1493         2             TS 6<-->14      1.92E+13:1.72E+13   
+        23           -7.252826        0.70030        16.1493         2             TS 7<-->15      1.92E+13:1.72E+13   
+        24           -7.252826        0.70030        16.1493         2             TS 8<-->16      1.92E+13:1.72E+13   
+        25           -7.252826        0.70030        16.1493         2             TS 9<-->17      1.92E+13:1.72E+13   
+        26           -7.252826        0.70030        16.1493         2             TS 2<-->18      1.92E+13:1.72E+13   
+        27           -7.252826        0.70030        16.1493         2             TS 3<-->11      1.92E+13:1.72E+13   
+        28           -7.252826        0.70030        16.1493         2             TS 9<-->10      1.92E+13:1.72E+13   
+        29           -7.252826        0.70030        16.1493         2             TS 2<-->12      1.92E+13:1.72E+13   
+        30           -7.252826        0.70030        16.1493         2             TS 3<-->13      1.92E+13:1.72E+13   
+        31           -7.252826        0.70030        16.1493         2             TS 1<-->14      1.92E+13:1.72E+13   
+        32           -7.252826        0.70030        16.1493         2             TS 4<-->15      1.92E+13:1.72E+13   
+        33           -7.252826        0.70030        16.1493         2             TS 5<-->16      1.92E+13:1.72E+13   
+        34           -7.252826        0.70030        16.1493         2             TS 6<-->17      1.92E+13:1.72E+13   
+        35           -7.252826        0.70030        16.1493         2             TS 7<-->18      1.92E+13:1.72E+13   
+        36           -7.252826        0.70030        16.1493         2             TS 8<-->11      1.92E+13:1.72E+13   
+        37           -7.252826        0.70030        16.1493         2             TS 9<-->15      1.92E+13:1.72E+13   
+        38           -7.252826        0.70030        16.1493         2             TS 2<-->11      1.92E+13:1.72E+13   
+        39           -7.252826        0.70030        16.1493         2             TS 3<-->10      1.92E+13:1.72E+13   
+        40           -7.252826        0.70030        16.1493         2             TS 1<-->18      1.92E+13:1.72E+13   
+        41           -7.252826        0.70030        16.1493         2             TS 4<-->13      1.92E+13:1.72E+13   
+        42           -7.252826        0.70030        16.1493         2             TS 5<-->14      1.92E+13:1.72E+13   
+        43           -7.252826        0.70030        16.1493         2             TS 6<-->12      1.92E+13:1.72E+13   
+        44           -7.252826        0.70030        16.1493         2             TS 7<-->16      1.92E+13:1.72E+13   
+        45           -7.252826        0.70030        16.1493         2             TS 8<-->17      1.92E+13:1.72E+13   
+
+*) Pre-exponential factors forward and backward in s^-1 or Hz
+
+Number of configurations                            45
+Number of local minima                              18
+Number of transition states                         27
+Energy range (a.u.)                           0.025736
+Energy range (eV)                              0.70030
+Energy range (kcal/mol)                        16.1493
+
+Fragments
+---------
+
+Number of fragments                                  2
+
+        Id             Formula  dim        Energy(a.u.)              Region
+     ----------------------------------------------------------------------
+         1                   O    2           -0.003993              active
+         2                Pt36    2           -7.154286             surface
+
+Fragmented States
+-----------------
+
+Number of fragmented states                          1
+
+        Id           Fragments        Energy(a.u.)         RE(eV)   RE(kcal/mol)
+     ---------------------------------------------------------------------------
+         1                 1,2           -7.158279        3.27304        75.4782 -->1         1.07E+07:2.60E+14*
+                                                                                 -->10        1.07E+07:2.33E+14 
+                                                                                 -->4         1.07E+07:2.60E+14 
+                                                                                 -->5         1.07E+07:2.60E+14 
+                                                                                 -->6         1.07E+07:2.60E+14 
+                                                                                 -->7         1.07E+07:2.60E+14 
+                                                                                 -->8         1.07E+07:2.60E+14 
+                                                                                 -->9         1.07E+07:2.60E+14 
+                                                                                 -->2         1.07E+07:2.60E+14 
+                                                                                 -->3         1.07E+07:2.60E+14 
+                                                                                 -->12        1.07E+07:2.33E+14 
+                                                                                 -->13        1.07E+07:2.33E+14 
+                                                                                 -->14        1.07E+07:2.33E+14 
+                                                                                 -->15        1.07E+07:2.33E+14 
+                                                                                 -->16        1.07E+07:2.33E+14 
+                                                                                 -->17        1.07E+07:2.33E+14 
+                                                                                 -->18        1.07E+07:2.33E+14 
+                                                                                 -->11        1.07E+07:2.33E+14 
+                                                                                 -->1         1.07E+07:2.60E+14 
+                                                                                 -->2         1.07E+07:2.60E+14 
+                                                                                 -->3         1.07E+07:2.60E+14 
+                                                                                 -->4         1.07E+07:2.60E+14 
+                                                                                 -->5         1.07E+07:2.60E+14 
+                                                                                 -->6         1.07E+07:2.60E+14 
+                                                                                 -->7         1.07E+07:2.60E+14 
+                                                                                 -->8         1.07E+07:2.60E+14 
+                                                                                 -->9         1.07E+07:2.60E+14 
+                                                                                 -->10        1.07E+07:2.33E+14 
+                                                                                 -->11        1.07E+07:2.33E+14 
+                                                                                 -->12        1.07E+07:2.33E+14 
+                                                                                 -->13        1.07E+07:2.33E+14 
+                                                                                 -->14        1.07E+07:2.33E+14 
+                                                                                 -->15        1.07E+07:2.33E+14 
+                                                                                 -->16        1.07E+07:2.33E+14 
+                                                                                 -->17        1.07E+07:2.33E+14 
+                                                                                 -->18        1.07E+07:2.33E+14 
 
 
 *) Pre-exponential factors adsorption in (bar*s)^-1 and desorption in s^-1 or Hz
@@ -1265,8 +2844,8 @@ Number of fragmented states                          1
 Configurations
 --------------
  37
- Id 1 Energy(hartree)     -7.27856154 Min
- O 6.468568361711154 3.7545090122950477 9.236644723364297 region=adsorbate
+ Id 1 Energy(hartree)     -7.27856156 Min
+ O 6.468879756302664 3.7546188919204546 9.236581006196182 region=adsorbate
  Pt 9.24070201000001 6.955272670000003 1.3103608300000145 region=surface
  Pt 9.24070201000001 2.15427277 1.3103608300000145 region=surface
  Pt 10.626631300000003 4.554772720000002 1.3103608300000145 region=surface
@@ -1306,8 +2885,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 2 Energy(hartree)     -7.27856154 Min
- O 7.854497651711154 6.155008952295049 9.236644723364297 region=adsorbate
+ Id 2 Energy(hartree)     -7.27856156 Min
+ O 7.854809046302665 6.155118831920455 9.236581006196182 region=adsorbate
  Pt 9.240702010000014 6.955272670000005 1.3103608300000145 region=surface
  Pt 9.240702010000014 2.15427277 1.3103608300000145 region=surface
  Pt 10.626631300000003 4.554772720000003 1.3103608300000145 region=surface
@@ -1347,8 +2926,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 3 Energy(hartree)     -7.27856154 Min
- O 5.082639071711153 1.3540090622950454 9.236644723364297 region=adsorbate
+ Id 3 Energy(hartree)     -7.27856156 Min
+ O 5.082950466302664 1.3541189419204522 9.236581006196182 region=adsorbate
  Pt 9.240702010000014 6.955272670000005 1.3103608300000145 region=surface
  Pt 9.240702010000014 2.15427277 1.3103608300000145 region=surface
  Pt 10.626631300000003 4.554772720000003 1.3103608300000145 region=surface
@@ -1388,8 +2967,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 4 Energy(hartree)     -7.27856154 Min
- O 10.626356231711155 6.155008952295049 9.236644723364297 region=adsorbate
+ Id 4 Energy(hartree)     -7.27856156 Min
+ O 10.626667626302664 6.155118831920455 9.236581006196182 region=adsorbate
  Pt 9.240702010000014 6.955272670000005 1.3103608300000145 region=surface
  Pt 9.240702010000014 2.15427277 1.3103608300000145 region=surface
  Pt 10.626631300000003 4.554772720000003 1.3103608300000145 region=surface
@@ -1429,8 +3008,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 5 Energy(hartree)     -7.27856154 Min
- O 7.854497651711154 1.3540090622950454 9.236644723364297 region=adsorbate
+ Id 5 Energy(hartree)     -7.27856156 Min
+ O 7.854809046302667 1.3541189419204522 9.236581006196182 region=adsorbate
  Pt 9.240702010000014 6.955272670000005 1.3103608300000145 region=surface
  Pt 9.240702010000014 2.15427277 1.3103608300000145 region=surface
  Pt 10.626631300000003 4.554772720000003 1.3103608300000145 region=surface
@@ -1470,8 +3049,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 6 Energy(hartree)     -7.27856154 Min
- O 9.240426941711162 3.754509012295049 9.236644723364297 region=adsorbate
+ Id 6 Energy(hartree)     -7.27856156 Min
+ O 9.240738336302673 3.7546188919204555 9.236581006196182 region=adsorbate
  Pt 9.240702010000014 6.955272670000005 1.3103608300000145 region=surface
  Pt 9.240702010000014 2.15427277 1.3103608300000145 region=surface
  Pt 10.626631300000003 4.554772720000003 1.3103608300000145 region=surface
@@ -1511,8 +3090,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 7 Energy(hartree)     -7.27856154 Min
- O 5.082639071711153 6.155008952295049 9.236644723364297 region=adsorbate
+ Id 7 Energy(hartree)     -7.27856156 Min
+ O 5.0829504663026635 6.155118831920455 9.236581006196182 region=adsorbate
  Pt 9.240702010000014 6.955272670000005 1.3103608300000145 region=surface
  Pt 9.240702010000014 2.15427277 1.3103608300000145 region=surface
  Pt 10.626631300000003 4.554772720000003 1.3103608300000145 region=surface
@@ -1552,8 +3131,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 8 Energy(hartree)     -7.27856154 Min
- O 2.31078049171115 1.3540090622950454 9.236644723364297 region=adsorbate
+ Id 8 Energy(hartree)     -7.27856156 Min
+ O 2.3110918863026626 1.3541189419204522 9.236581006196182 region=adsorbate
  Pt 9.240702010000014 6.955272670000005 1.3103608300000145 region=surface
  Pt 9.240702010000014 2.15427277 1.3103608300000145 region=surface
  Pt 10.626631300000003 4.554772720000003 1.3103608300000145 region=surface
@@ -1593,8 +3172,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 9 Energy(hartree)     -7.27856154 Min
- O 3.6967097817111507 3.754509012295049 9.236644723364297 region=adsorbate
+ Id 9 Energy(hartree)     -7.27856156 Min
+ O 3.6970211763026635 3.7546188919204555 9.236581006196182 region=adsorbate
  Pt 9.240702010000014 6.955272670000005 1.3103608300000145 region=surface
  Pt 9.240702010000014 2.15427277 1.3103608300000145 region=surface
  Pt 10.626631300000003 4.554772720000003 1.3103608300000145 region=surface
@@ -1634,8 +3213,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 10 Energy(hartree)     -7.27125529 Min
- O 5.083152863046994 2.954577918911531 9.228909167308963 region=adsorbate
+ Id 10 Energy(hartree)     -7.27125530 Min
+ O 5.082926035870694 2.954446312256029 9.229014557350103 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.3103608300000145 region=surface
  Pt 9.240701969895271 2.1542728442549994 1.3103608300000145 region=surface
  Pt 10.626631216561936 4.554772719888275 1.3103608300000145 region=surface
@@ -1675,8 +3254,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 11 Energy(hartree)     -7.27125529 Min
- O 3.6972235730469962 0.5540779689115273 9.228909167308963 region=adsorbate
+ Id 11 Energy(hartree)     -7.27125530 Min
+ O 3.696996745870692 0.5539463622560256 9.229014557350103 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -1716,8 +3295,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 12 Energy(hartree)     -7.27125529 Min
- O 9.240940733046996 5.35507785891153 9.228909167308963 region=adsorbate
+ Id 12 Energy(hartree)     -7.27125530 Min
+ O 9.240713905870694 5.354946252256026 9.229014557350103 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -1757,8 +3336,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 13 Energy(hartree)     -7.27125529 Min
- O 6.469082153046996 0.5540779689115273 9.228909167308963 region=adsorbate
+ Id 13 Energy(hartree)     -7.27125530 Min
+ O 6.468855325870695 0.5539463622560256 9.229014557350103 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -1798,8 +3377,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 14 Energy(hartree)     -7.27125529 Min
- O 7.855011443046995 2.954577918911529 9.228909167308963 region=adsorbate
+ Id 14 Energy(hartree)     -7.27125530 Min
+ O 7.854784615870698 2.9544463122560276 9.229014557350103 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -1839,8 +3418,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 15 Energy(hartree)     -7.27125529 Min
- O 3.6972235730469962 5.35507785891153 9.228909167308963 region=adsorbate
+ Id 15 Energy(hartree)     -7.27125530 Min
+ O 3.696996745870693 5.354946252256026 9.229014557350103 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -1880,8 +3459,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 16 Energy(hartree)     -7.27125529 Min
- O 0.925364993046995 0.5540779689115273 9.228909167308963 region=adsorbate
+ Id 16 Energy(hartree)     -7.27125530 Min
+ O 0.9251381658706928 0.5539463622560256 9.229014557350103 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -1921,8 +3500,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 17 Energy(hartree)     -7.27125529 Min
- O 2.3112942830469936 2.954577918911529 9.228909167308963 region=adsorbate
+ Id 17 Energy(hartree)     -7.27125530 Min
+ O 2.311067455870691 2.9544463122560276 9.229014557350103 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -1962,8 +3541,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 18 Energy(hartree)     -7.27125529 Min
- O 6.469082153046993 5.35507785891153 9.228909167308963 region=adsorbate
+ Id 18 Energy(hartree)     -7.27125530 Min
+ O 6.468855325870695 5.354946252256026 9.229014557350103 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -2003,8 +3582,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 19 Energy(hartree)     -7.25282600 TS
- O 5.593327082962159 3.2501195293631633 9.393952245462604 region=adsorbate
+ Id 19 Energy(hartree)     -7.25282604 TS
+ O 5.5944290890404575 3.249734348131078 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.3103608300000145 region=surface
  Pt 9.240701969895271 2.1542728442549994 1.3103608300000145 region=surface
  Pt 10.626631216561936 4.554772719888275 1.3103608300000145 region=surface
@@ -2044,8 +3623,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 20 Energy(hartree)     -7.25282600 TS
- O 9.751114952962165 5.650619469363162 9.393952245462604 region=adsorbate
+ Id 20 Energy(hartree)     -7.25282604 TS
+ O 9.752216959040457 5.650234288131077 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -2085,8 +3664,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 21 Energy(hartree)     -7.25282600 TS
- O 6.979256372962164 0.8496195793631607 9.393952245462604 region=adsorbate
+ Id 21 Energy(hartree)     -7.25282604 TS
+ O 6.980358379040461 0.8492343981310759 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -2126,8 +3705,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 22 Energy(hartree)     -7.25282600 TS
- O 8.365185662962164 3.2501195293631633 9.393952245462604 region=adsorbate
+ Id 22 Energy(hartree)     -7.25282604 TS
+ O 8.366287669040462 3.249734348131076 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -2167,8 +3746,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 23 Energy(hartree)     -7.25282600 TS
- O 4.207397792962162 5.650619469363162 9.393952245462604 region=adsorbate
+ Id 23 Energy(hartree)     -7.25282604 TS
+ O 4.20849979904046 5.650234288131077 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -2208,8 +3787,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 24 Energy(hartree)     -7.25282600 TS
- O 1.4355392129621594 0.8496195793631607 9.393952245462604 region=adsorbate
+ Id 24 Energy(hartree)     -7.25282604 TS
+ O 1.4366412190404585 0.8492343981310759 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -2249,8 +3828,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 25 Energy(hartree)     -7.25282600 TS
- O 2.8214685029621616 3.2501195293631633 9.393952245462604 region=adsorbate
+ Id 25 Energy(hartree)     -7.25282604 TS
+ O 2.8225705090404576 3.249734348131076 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -2290,8 +3869,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 26 Energy(hartree)     -7.25282600 TS
- O 6.979256372962161 5.650619469363162 9.393952245462604 region=adsorbate
+ Id 26 Energy(hartree)     -7.25282604 TS
+ O 6.980358379040462 5.650234288131077 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -2331,8 +3910,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 27 Energy(hartree)     -7.25282600 TS
- O 4.207397792962158 0.8496195793631607 9.393952245462604 region=adsorbate
+ Id 27 Energy(hartree)     -7.25282604 TS
+ O 4.208499799040455 0.8492343981310759 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -2372,8 +3951,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 28 Energy(hartree)     -7.25282600 TS
- O 4.572501670800338 3.2501195293631633 9.393952245462604 region=adsorbate
+ Id 28 Energy(hartree)     -7.25282604 TS
+ O 4.571399664722577 3.249734348131076 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -2413,8 +3992,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 29 Energy(hartree)     -7.25282600 TS
- O 8.730289540800333 5.650619469363162 9.393952245462604 region=adsorbate
+ Id 29 Energy(hartree)     -7.25282604 TS
+ O 8.729187534722572 5.650234288131077 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -2454,8 +4033,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 30 Energy(hartree)     -7.25282600 TS
- O 5.958430960800335 0.8496195793631607 9.393952245462604 region=adsorbate
+ Id 30 Energy(hartree)     -7.25282604 TS
+ O 5.957328954722569 0.8492343981310759 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -2495,8 +4074,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 31 Energy(hartree)     -7.25282600 TS
- O 7.344360250800338 3.2501195293631633 9.393952245462604 region=adsorbate
+ Id 31 Energy(hartree)     -7.25282604 TS
+ O 7.343258244722576 3.249734348131076 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -2536,8 +4115,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 32 Energy(hartree)     -7.25282600 TS
- O 11.50214813080033 5.650619469363162 9.393952245462604 region=adsorbate
+ Id 32 Energy(hartree)     -7.25282604 TS
+ O 11.50104612472258 5.650234288131077 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -2577,8 +4156,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 33 Energy(hartree)     -7.25282600 TS
- O 8.730289550800336 0.8496195793631607 9.393952245462604 region=adsorbate
+ Id 33 Energy(hartree)     -7.25282604 TS
+ O 8.729187544722574 0.8492343981310759 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -2618,8 +4197,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 34 Energy(hartree)     -7.25282600 TS
- O 10.116218840800338 3.2501195293631633 9.393952245462604 region=adsorbate
+ Id 34 Energy(hartree)     -7.25282604 TS
+ O 10.115116834722576 3.249734348131076 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -2659,8 +4238,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 35 Energy(hartree)     -7.25282600 TS
- O 5.958430960800331 5.650619469363162 9.393952245462604 region=adsorbate
+ Id 35 Energy(hartree)     -7.25282604 TS
+ O 5.957328954722574 5.650234288131077 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -2700,8 +4279,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 36 Energy(hartree)     -7.25282600 TS
- O 3.186572380800327 0.8496195793631607 9.393952245462604 region=adsorbate
+ Id 36 Energy(hartree)     -7.25282604 TS
+ O 3.1854703747225703 0.8492343981310759 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -2741,8 +4320,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 37 Energy(hartree)     -7.25282600 TS
- O 3.6978450904468922 4.765069162500843 9.393952245462604 region=adsorbate
+ Id 37 Energy(hartree)     -7.25282604 TS
+ O 3.6969605106760532 4.764307387859059 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -2782,8 +4361,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 38 Energy(hartree)     -7.25282600 TS
- O 7.855632960446891 7.1655691025008394 9.393952245462604 region=adsorbate
+ Id 38 Energy(hartree)     -7.25282604 TS
+ O 7.854748380676057 7.164807327859059 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -2823,8 +4402,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 39 Energy(hartree)     -7.25282600 TS
- O 5.083774380446895 2.364569212500844 9.393952245462604 region=adsorbate
+ Id 39 Energy(hartree)     -7.25282604 TS
+ O 5.082889800676057 2.363807437859057 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -2864,8 +4443,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 40 Energy(hartree)     -7.25282600 TS
- O 6.469703670446894 4.765069162500843 9.393952245462604 region=adsorbate
+ Id 40 Energy(hartree)     -7.25282604 TS
+ O 6.468819090676056 4.764307387859059 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -2905,8 +4484,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 41 Energy(hartree)     -7.25282600 TS
- O 10.627491550446889 7.1655691025008394 9.393952245462604 region=adsorbate
+ Id 41 Energy(hartree)     -7.25282604 TS
+ O 10.62660697067606 7.164807327859059 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -2946,8 +4525,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 42 Energy(hartree)     -7.25282600 TS
- O 7.855632970446891 2.364569212500844 9.393952245462604 region=adsorbate
+ Id 42 Energy(hartree)     -7.25282604 TS
+ O 7.854748390676052 2.363807437859057 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -2987,8 +4566,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 43 Energy(hartree)     -7.25282600 TS
- O 9.241562260446894 4.765069162500843 9.393952245462604 region=adsorbate
+ Id 43 Energy(hartree)     -7.25282604 TS
+ O 9.240677680676056 4.764307387859059 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -3028,8 +4607,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 44 Energy(hartree)     -7.25282600 TS
- O 5.083774380446891 7.1655691025008394 9.393952245462604 region=adsorbate
+ Id 44 Energy(hartree)     -7.25282604 TS
+ O 5.082889800676057 7.164807327859059 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -3069,8 +4648,8 @@ Configurations
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  37
- Id 45 Energy(hartree)     -7.25282600 TS
- O 2.311915800446892 2.364569212500844 9.393952245462604 region=adsorbate
+ Id 45 Energy(hartree)     -7.25282604 TS
+ O 2.3110312206760506 2.363807437859057 9.393879553323183 region=adsorbate
  Pt 9.240701966561929 6.955272595521545 1.310360830000022 region=surface
  Pt 9.240701969895273 2.1542728442549977 1.310360830000022 region=surface
  Pt 10.626631216561938 4.554772719888275 1.310360830000022 region=surface
@@ -3107,6 +4686,53 @@ Configurations
  Pt 6.468843469895262 6.955272595521545 1.310360830000022 region=surface
  Pt 6.468843473228594 2.1542728442549977 1.310360830000022 region=surface
  Pt 7.854772719895264 4.554772719888275 1.310360830000022 region=surface
+ VEC1 8.31557575 0 0
+ VEC2 4.15778787 7.20149984 0
+Configurations (Fragments)
+--------------------------
+ 1
+ fId 1 Energy(hartree)     -0.00399301
+ O 6.468879756302664 3.7546188919204546 9.236581006196182 region=adsorbate
+ VEC1 8.31557575 0 0
+ VEC2 4.15778787 7.20149984 0
+ 36
+ fId 2 Energy(hartree)     -7.15428639
+ Pt 9.24070201000001 6.955272670000003 1.3103608300000145 region=surface
+ Pt 9.24070201000001 2.15427277 1.3103608300000145 region=surface
+ Pt 10.626631300000003 4.554772720000002 1.3103608300000145 region=surface
+ Pt 12.012560590000007 6.955272670000003 1.3103608300000145 region=surface
+ Pt 3.696984850000004 2.15427277 8.10000000000001 region=surface
+ Pt 5.0829141400000015 4.554772720000002 8.10000000000001 region=surface
+ Pt 6.468843430000004 6.955272670000003 8.10000000000001 region=surface
+ Pt 6.468843430000003 2.15427277 8.10000000000001 region=surface
+ Pt 7.854772720000004 4.554772720000002 8.10000000000001 region=surface
+ Pt 9.24070201000001 6.955272670000003 8.10000000000001 region=surface
+ Pt 9.24070201000001 2.15427277 8.10000000000001 region=surface
+ Pt 10.626631300000003 4.554772720000002 8.10000000000001 region=surface
+ Pt 12.012560590000007 6.955272670000003 8.10000000000001 region=surface
+ Pt 5.082914140000002 2.9544394200000013 5.836786940000008 region=surface
+ Pt 6.468843430000004 5.354939370000002 5.836786940000008 region=surface
+ Pt 7.854772720000002 7.7554393200000025 5.836786940000008 region=surface
+ Pt 7.854772720000002 2.9544394200000013 5.836786940000008 region=surface
+ Pt 9.240702010000009 5.354939370000002 5.836786940000008 region=surface
+ Pt 10.626631300000003 7.7554393200000025 5.836786940000008 region=surface
+ Pt 10.626631300000003 2.9544394200000013 5.836786940000008 region=surface
+ Pt 12.012560590000007 5.354939370000002 5.836786940000008 region=surface
+ Pt 13.39848987000001 7.7554393200000025 5.836786940000008 region=surface
+ Pt 2.3110555600000025 1.3541061199999995 3.5735738900000165 region=surface
+ Pt 3.6969848500000033 3.7546060700000012 3.5735738900000165 region=surface
+ Pt 5.0829141400000015 6.1551060200000025 3.5735738900000165 region=surface
+ Pt 5.082914140000003 1.3541061199999995 3.5735738900000165 region=surface
+ Pt 6.468843430000003 3.7546060700000012 3.5735738900000165 region=surface
+ Pt 7.8547727200000015 6.1551060200000025 3.5735738900000165 region=surface
+ Pt 7.854772720000003 1.3541061199999995 3.5735738900000165 region=surface
+ Pt 9.240702010000007 3.7546060700000012 3.5735738900000165 region=surface
+ Pt 10.626631300000003 6.1551060200000025 3.5735738900000165 region=surface
+ Pt 3.6969848500000033 2.15427277 1.3103608300000145 region=surface
+ Pt 5.0829141400000015 4.554772720000002 1.3103608300000145 region=surface
+ Pt 6.468843430000004 6.955272670000003 1.3103608300000145 region=surface
+ Pt 6.468843430000003 2.15427277 1.3103608300000145 region=surface
+ Pt 7.854772720000004 4.554772720000002 1.3103608300000145 region=surface
  VEC1 8.31557575 0 0
  VEC2 4.15778787 7.20149984 0
  
@@ -3187,78 +4813,78 @@ Number of connections:                              27
 Binding sites:
 
    id   Label   State    Atom   Energy(a.u.)              x              y              z
-    1    N333       1       1      -7.278562        6.46857        3.75451        9.23664
-    2    N333       2       1      -7.278562        7.85450        6.15501        9.23664
-    3    N333       3       1      -7.278562        5.08264        1.35401        9.23664
-    4    N333       4       1      -7.278562       10.62636        6.15501        9.23664
-    5    N333       5       1      -7.278562        7.85450        1.35401        9.23664
-    6    N333       6       1      -7.278562        9.24043        3.75451        9.23664
-    7    N333       7       1      -7.278562        5.08264        6.15501        9.23664
-    8    N333       8       1      -7.278562        2.31078        1.35401        9.23664
-    9    N333       9       1      -7.278562        3.69671        3.75451        9.23664
-   10    N331      10       1      -7.271255        5.08315        2.95458        9.22891
-   11    N331      11       1      -7.271255        3.69722        0.55408        9.22891
-   12    N331      12       1      -7.271255        9.24094        5.35508        9.22891
-   13    N331      13       1      -7.271255        6.46908        0.55408        9.22891
-   14    N331      14       1      -7.271255        7.85501        2.95458        9.22891
-   15    N331      15       1      -7.271255        3.69722        5.35508        9.22891
-   16    N331      16       1      -7.271255        0.92536        0.55408        9.22891
-   17    N331      17       1      -7.271255        2.31129        2.95458        9.22891
-   18    N331      18       1      -7.271255        6.46908        5.35508        9.22891
-   19    N333       1       1      -7.278562        6.46857        3.75451        9.23664
-   20    N331      10       1      -7.271255        5.08315        2.95458        9.22891
-   21    N333       4       1      -7.278562       10.62636        6.15501        9.23664
-   22    N331      12       1      -7.271255        9.24094        5.35508        9.22891
-   23    N333       5       1      -7.278562        7.85450        1.35401        9.23664
-   24    N331      13       1      -7.271255        6.46908        0.55408        9.22891
-   25    N333       6       1      -7.278562        9.24043        3.75451        9.23664
-   26    N331      14       1      -7.271255        7.85501        2.95458        9.22891
-   27    N333       7       1      -7.278562        5.08264        6.15501        9.23664
-   28    N331      15       1      -7.271255        3.69722        5.35508        9.22891
-   29    N333       8       1      -7.278562        2.31078        1.35401        9.23664
-   30    N331      16       1      -7.271255        0.92536        0.55408        9.22891
-   31    N333       9       1      -7.278562        3.69671        3.75451        9.23664
-   32    N331      17       1      -7.271255        2.31129        2.95458        9.22891
-   33    N333       2       1      -7.278562        7.85450        6.15501        9.23664
-   34    N331      18       1      -7.271255        6.46908        5.35508        9.22891
-   35    N333       3       1      -7.278562        5.08264        1.35401        9.23664
-   36    N331      11       1      -7.271255        3.69722        0.55408        9.22891
-   37    N333       9       1      -7.278562        3.69671        3.75451        9.23664
-   38    N331      10       1      -7.271255        5.08315        2.95458        9.22891
-   39    N333       2       1      -7.278562        7.85450        6.15501        9.23664
-   40    N331      12       1      -7.271255        9.24094        5.35508        9.22891
-   41    N333       3       1      -7.278562        5.08264        1.35401        9.23664
-   42    N331      13       1      -7.271255        6.46908        0.55408        9.22891
-   43    N333       1       1      -7.278562        6.46857        3.75451        9.23664
-   44    N331      14       1      -7.271255        7.85501        2.95458        9.22891
-   45    N333       4       1      -7.278562       10.62636        6.15501        9.23664
-   46    N331      15       1      -7.271255        3.69722        5.35508        9.22891
-   47    N333       5       1      -7.278562        7.85450        1.35401        9.23664
-   48    N331      16       1      -7.271255        0.92536        0.55408        9.22891
-   49    N333       6       1      -7.278562        9.24043        3.75451        9.23664
-   50    N331      17       1      -7.271255        2.31129        2.95458        9.22891
-   51    N333       7       1      -7.278562        5.08264        6.15501        9.23664
-   52    N331      18       1      -7.271255        6.46908        5.35508        9.22891
-   53    N333       8       1      -7.278562        2.31078        1.35401        9.23664
-   54    N331      11       1      -7.271255        3.69722        0.55408        9.22891
-   55    N333       9       1      -7.278562        3.69671        3.75451        9.23664
-   56    N331      15       1      -7.271255        3.69722        5.35508        9.22891
-   57    N333       2       1      -7.278562        7.85450        6.15501        9.23664
-   58    N331      11       1      -7.271255        3.69722        0.55408        9.22891
-   59    N333       3       1      -7.278562        5.08264        1.35401        9.23664
-   60    N331      10       1      -7.271255        5.08315        2.95458        9.22891
-   61    N333       1       1      -7.278562        6.46857        3.75451        9.23664
-   62    N331      18       1      -7.271255        6.46908        5.35508        9.22891
-   63    N333       4       1      -7.278562       10.62636        6.15501        9.23664
-   64    N331      13       1      -7.271255        6.46908        0.55408        9.22891
-   65    N333       5       1      -7.278562        7.85450        1.35401        9.23664
-   66    N331      14       1      -7.271255        7.85501        2.95458        9.22891
-   67    N333       6       1      -7.278562        9.24043        3.75451        9.23664
-   68    N331      12       1      -7.271255        9.24094        5.35508        9.22891
-   69    N333       7       1      -7.278562        5.08264        6.15501        9.23664
-   70    N331      16       1      -7.271255        0.92536        0.55408        9.22891
-   71    N333       8       1      -7.278562        2.31078        1.35401        9.23664
-   72    N331      17       1      -7.271255        2.31129        2.95458        9.22891
+    1    N333       1       1      -7.278562        6.46888        3.75462        9.23658
+    2    N333       2       1      -7.278562        7.85481        6.15512        9.23658
+    3    N333       3       1      -7.278562        5.08295        1.35412        9.23658
+    4    N333       4       1      -7.278562       10.62667        6.15512        9.23658
+    5    N333       5       1      -7.278562        7.85481        1.35412        9.23658
+    6    N333       6       1      -7.278562        9.24074        3.75462        9.23658
+    7    N333       7       1      -7.278562        5.08295        6.15512        9.23658
+    8    N333       8       1      -7.278562        2.31109        1.35412        9.23658
+    9    N333       9       1      -7.278562        3.69702        3.75462        9.23658
+   10    N331      10       1      -7.271255        5.08293        2.95445        9.22901
+   11    N331      11       1      -7.271255        3.69700        0.55395        9.22901
+   12    N331      12       1      -7.271255        9.24071        5.35495        9.22901
+   13    N331      13       1      -7.271255        6.46886        0.55395        9.22901
+   14    N331      14       1      -7.271255        7.85478        2.95445        9.22901
+   15    N331      15       1      -7.271255        3.69700        5.35495        9.22901
+   16    N331      16       1      -7.271255        0.92514        0.55395        9.22901
+   17    N331      17       1      -7.271255        2.31107        2.95445        9.22901
+   18    N331      18       1      -7.271255        6.46886        5.35495        9.22901
+   19    N333       1       1      -7.278562        6.46888        3.75462        9.23658
+   20    N331      10       1      -7.271255        5.08293        2.95445        9.22901
+   21    N333       4       1      -7.278562       10.62667        6.15512        9.23658
+   22    N331      12       1      -7.271255        9.24071        5.35495        9.22901
+   23    N333       5       1      -7.278562        7.85481        1.35412        9.23658
+   24    N331      13       1      -7.271255        6.46886        0.55395        9.22901
+   25    N333       6       1      -7.278562        9.24074        3.75462        9.23658
+   26    N331      14       1      -7.271255        7.85478        2.95445        9.22901
+   27    N333       7       1      -7.278562        5.08295        6.15512        9.23658
+   28    N331      15       1      -7.271255        3.69700        5.35495        9.22901
+   29    N333       8       1      -7.278562        2.31109        1.35412        9.23658
+   30    N331      16       1      -7.271255        0.92514        0.55395        9.22901
+   31    N333       9       1      -7.278562        3.69702        3.75462        9.23658
+   32    N331      17       1      -7.271255        2.31107        2.95445        9.22901
+   33    N333       2       1      -7.278562        7.85481        6.15512        9.23658
+   34    N331      18       1      -7.271255        6.46886        5.35495        9.22901
+   35    N333       3       1      -7.278562        5.08295        1.35412        9.23658
+   36    N331      11       1      -7.271255        3.69700        0.55395        9.22901
+   37    N333       9       1      -7.278562        3.69702        3.75462        9.23658
+   38    N331      10       1      -7.271255        5.08293        2.95445        9.22901
+   39    N333       2       1      -7.278562        7.85481        6.15512        9.23658
+   40    N331      12       1      -7.271255        9.24071        5.35495        9.22901
+   41    N333       3       1      -7.278562        5.08295        1.35412        9.23658
+   42    N331      13       1      -7.271255        6.46886        0.55395        9.22901
+   43    N333       1       1      -7.278562        6.46888        3.75462        9.23658
+   44    N331      14       1      -7.271255        7.85478        2.95445        9.22901
+   45    N333       4       1      -7.278562       10.62667        6.15512        9.23658
+   46    N331      15       1      -7.271255        3.69700        5.35495        9.22901
+   47    N333       5       1      -7.278562        7.85481        1.35412        9.23658
+   48    N331      16       1      -7.271255        0.92514        0.55395        9.22901
+   49    N333       6       1      -7.278562        9.24074        3.75462        9.23658
+   50    N331      17       1      -7.271255        2.31107        2.95445        9.22901
+   51    N333       7       1      -7.278562        5.08295        6.15512        9.23658
+   52    N331      18       1      -7.271255        6.46886        5.35495        9.22901
+   53    N333       8       1      -7.278562        2.31109        1.35412        9.23658
+   54    N331      11       1      -7.271255        3.69700        0.55395        9.22901
+   55    N333       9       1      -7.278562        3.69702        3.75462        9.23658
+   56    N331      15       1      -7.271255        3.69700        5.35495        9.22901
+   57    N333       2       1      -7.278562        7.85481        6.15512        9.23658
+   58    N331      11       1      -7.271255        3.69700        0.55395        9.22901
+   59    N333       3       1      -7.278562        5.08295        1.35412        9.23658
+   60    N331      10       1      -7.271255        5.08293        2.95445        9.22901
+   61    N333       1       1      -7.278562        6.46888        3.75462        9.23658
+   62    N331      18       1      -7.271255        6.46886        5.35495        9.22901
+   63    N333       4       1      -7.278562       10.62667        6.15512        9.23658
+   64    N331      13       1      -7.271255        6.46886        0.55395        9.22901
+   65    N333       5       1      -7.278562        7.85481        1.35412        9.23658
+   66    N331      14       1      -7.271255        7.85478        2.95445        9.22901
+   67    N333       6       1      -7.278562        9.24074        3.75462        9.23658
+   68    N331      12       1      -7.271255        9.24071        5.35495        9.22901
+   69    N333       7       1      -7.278562        5.08295        6.15512        9.23658
+   70    N331      16       1      -7.271255        0.92514        0.55395        9.22901
+   71    N333       8       1      -7.278562        2.31109        1.35412        9.23658
+   72    N331      17       1      -7.271255        2.31107        2.95445        9.22901
 
 Connections:
 
@@ -3301,46 +4927,46 @@ Number of connections:                              27
 Binding sites:
 
    id   Label   Aver.E(a.u.)  Stdev.E(a.u.)              x              y              z     Parents
-    1    N331      -7.271255       0.000000        0.92536        0.55408        9.22891     16(1)
-    2    N333      -7.278562       0.000000        2.31078        1.35401        9.23664     8(1)
-    3    N331      -7.271255       0.000000        2.31129        2.95458        9.22891     17(1)
-    4    N331      -7.271255       0.000000        3.69722        0.55408        9.22891     11(1)
-    5    N333      -7.278562       0.000000        3.69671        3.75451        9.23664     9(1)
-    6    N331      -7.271255       0.000000        3.69722        5.35508        9.22891     15(1)
-    7    N333      -7.278562       0.000000        5.08264        1.35401        9.23664     3(1)
-    8    N331      -7.271255       0.000000        5.08315        2.95458        9.22891     10(1)
-    9    N333      -7.278562       0.000000        5.08264        6.15501        9.23664     7(1)
-   10    N331      -7.271255       0.000000        6.46908        0.55408        9.22891     13(1)
-   11    N333      -7.278562       0.000000        6.46857        3.75451        9.23664     1(1)
-   12    N331      -7.271255       0.000000        6.46908        5.35508        9.22891     18(1)
-   13    N333      -7.278562       0.000000        7.85450        1.35401        9.23664     5(1)
-   14    N331      -7.271255       0.000000        7.85501        2.95458        9.22891     14(1)
-   15    N333      -7.278562       0.000000        7.85450        6.15501        9.23664     2(1)
-   16    N333      -7.278562       0.000000        9.24043        3.75451        9.23664     6(1)
-   17    N331      -7.271255       0.000000        9.24094        5.35508        9.22891     12(1)
-   18    N333      -7.278562       0.000000       10.62636        6.15501        9.23664     4(1)
+    1    N331      -7.271255       0.000000        0.92514        0.55395        9.22901     16(1)
+    2    N333      -7.278562       0.000000        2.31109        1.35412        9.23658     8(1)
+    3    N331      -7.271255       0.000000        2.31107        2.95445        9.22901     17(1)
+    4    N331      -7.271255       0.000000        3.69700        0.55395        9.22901     11(1)
+    5    N333      -7.278562       0.000000        3.69702        3.75462        9.23658     9(1)
+    6    N331      -7.271255       0.000000        3.69700        5.35495        9.22901     15(1)
+    7    N333      -7.278562       0.000000        5.08295        1.35412        9.23658     3(1)
+    8    N331      -7.271255       0.000000        5.08293        2.95445        9.22901     10(1)
+    9    N333      -7.278562       0.000000        5.08295        6.15512        9.23658     7(1)
+   10    N331      -7.271255       0.000000        6.46886        0.55395        9.22901     13(1)
+   11    N333      -7.278562       0.000000        6.46888        3.75462        9.23658     1(1)
+   12    N331      -7.271255       0.000000        6.46886        5.35495        9.22901     18(1)
+   13    N333      -7.278562       0.000000        7.85481        1.35412        9.23658     5(1)
+   14    N331      -7.271255       0.000000        7.85478        2.95445        9.22901     14(1)
+   15    N333      -7.278562       0.000000        7.85481        6.15512        9.23658     2(1)
+   16    N333      -7.278562       0.000000        9.24074        3.75462        9.23658     6(1)
+   17    N331      -7.271255       0.000000        9.24071        5.35495        9.22901     12(1)
+   18    N333      -7.278562       0.000000       10.62667        6.15512        9.23658     4(1)
 
 Binding sites (fractional):
 
    id   Label   Aver.E(a.u.)  Stdev.E(a.u.)              x              y              z     Parents
-    1    N331      -7.271255       0.000000        0.07281        0.07694       17.44011     16(1)
-    2    N333      -7.278562       0.000000        0.18388        0.18802       17.45473     8(1)
-    3    N331      -7.271255       0.000000        0.07281        0.41027       17.44011     17(1)
-    4    N331      -7.271255       0.000000        0.40614        0.07694       17.44011     11(1)
-    5    N333      -7.278562       0.000000        0.18388        0.52135       17.45473     9(1)
-    6    N331      -7.271255       0.000000        0.07281        0.74361       17.44011     15(1)
-    7    N333      -7.278562       0.000000        0.51721        0.18802       17.45473     3(1)
-    8    N331      -7.271255       0.000000        0.40614        0.41027       17.44011     10(1)
-    9    N333      -7.278562       0.000000        0.18388        0.85468       17.45473     7(1)
-   10    N331      -7.271255       0.000000        0.73948        0.07694       17.44011     13(1)
-   11    N333      -7.278562       0.000000        0.51721        0.52135       17.45473     1(1)
-   12    N331      -7.271255       0.000000        0.40614        0.74361       17.44011     18(1)
-   13    N333      -7.278562       0.000000        0.85054        0.18802       17.45473     5(1)
-   14    N331      -7.271255       0.000000        0.73948        0.41027       17.44011     14(1)
-   15    N333      -7.278562       0.000000        0.51721        0.85468       17.45473     2(1)
-   16    N333      -7.278562       0.000000        0.85054        0.52135       17.45473     6(1)
-   17    N331      -7.271255       0.000000        0.73948        0.74361       17.44011     12(1)
-   18    N333      -7.278562       0.000000        0.85054        0.85468       17.45473     4(1)
+    1    N331      -7.271255       0.000000        0.07279        0.07692       17.44031     16(1)
+    2    N333      -7.278562       0.000000        0.18391        0.18803       17.45461     8(1)
+    3    N331      -7.271255       0.000000        0.07279        0.41025       17.44031     17(1)
+    4    N331      -7.271255       0.000000        0.40613        0.07692       17.44031     11(1)
+    5    N333      -7.278562       0.000000        0.18391        0.52137       17.45461     9(1)
+    6    N331      -7.271255       0.000000        0.07279        0.74359       17.44031     15(1)
+    7    N333      -7.278562       0.000000        0.51724        0.18803       17.45461     3(1)
+    8    N331      -7.271255       0.000000        0.40613        0.41025       17.44031     10(1)
+    9    N333      -7.278562       0.000000        0.18391        0.85470       17.45461     7(1)
+   10    N331      -7.271255       0.000000        0.73946        0.07692       17.44031     13(1)
+   11    N333      -7.278562       0.000000        0.51724        0.52137       17.45461     1(1)
+   12    N331      -7.271255       0.000000        0.40613        0.74359       17.44031     18(1)
+   13    N333      -7.278562       0.000000        0.85057        0.18803       17.45461     5(1)
+   14    N331      -7.271255       0.000000        0.73946        0.41025       17.44031     14(1)
+   15    N333      -7.278562       0.000000        0.51724        0.85470       17.45461     2(1)
+   16    N333      -7.278562       0.000000        0.85057        0.52137       17.45461     6(1)
+   17    N331      -7.271255       0.000000        0.73946        0.74359       17.44031     12(1)
+   18    N333      -7.278562       0.000000        0.85057        0.85470       17.45461     4(1)
 
 Connections:
 
@@ -3383,8 +5009,163 @@ Labels details:
                                             3.53 - 3.63
                                             3.76 - 3.86
 
+
+ ==================================
+ Memory not completely deallocated!
+ ==================================
+
+ Number of unbalanced allocate calls:             144
+ Maximum number of active allocate calls:         145
+
+
 AMS application finished. Exiting.
 NORMAL TERMINATION
-     Total cpu time:       2.20
-  Total system time:       0.15
- Total elapsed time:       2.38
+ WARNING: Nr of shared arrays in use at the end:          144
+ Names of the Shared Arrays that have not been deleted
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+ RxfConnTableType%bo
+ RxfConnTableType%neighb
+ RxfConnTableType%bonds
+ RxfConnTableType%cellShift
+     Total cpu time:       4.14
+  Total system time:       0.09
+ Total elapsed time:       4.25

@@ -1,0 +1,449 @@
+<May21-2026> <16:58:12>  AMS 2026.103  RunTime: May21-2026 16:58:12  ShM Nodes: 1  Procs: 4
+<May21-2026> <16:58:13>  *** Loading Energy Landscape to refine ***
+<May21-2026> <16:58:13>  Adding states to the energy landscape from input file:
+<May21-2026> <16:58:13>  Loaded 1 states for refinement.
+<May21-2026> <16:58:13>  *** Running Single Points for Initial Energy Landscape ***
+<May21-2026> <16:58:13>  Single point for state #1 successful (InputState-1.rkf).
+<May21-2026> <16:58:13>  *** Running Refinement for Initial Energy Landscape ***
+<May21-2026> <16:58:13>  *** Refining state  #1 ***
+<May21-2026> <16:58:13>      Calculation on initial geometry ...
+<May21-2026> <16:58:13>      Starting inertial relaxation ...
+<May21-2026> <16:58:13>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May21-2026> <16:58:13>      ======================================================================================
+<May21-2026> <16:58:13>              1   -----      -7.651572    0.000283    0.000000    0.00000000  0.2500  0.1000
+<May21-2026> <16:58:13>              2   E--Ss      -7.651572    0.000267    0.000018    0.00000000  0.2500  0.1000
+<May21-2026> <16:58:13>              3   E--Ss      -7.651572    0.000222    0.000034    0.00000000  0.2500  0.1000
+<May21-2026> <16:58:13>              4   E--Ss      -7.651572    0.000204    0.000046    0.00000000  0.2500  0.1000
+<May21-2026> <16:58:13>              5   E--Ss      -7.651572    0.000236    0.000054    0.00000000  0.2500  0.1000
+<May21-2026> <16:58:13>              6   E--Ss      -7.651572    0.000243    0.000064    0.00000000  0.2500  0.1000
+<May21-2026> <16:58:13>              7   E--Ss      -7.651572    0.000221    0.000081    0.00000000  0.2500  0.1000
+<May21-2026> <16:58:13>              8   E--Ss      -7.651572    0.000172    0.000096    0.00000000  0.2750  0.0990
+<May21-2026> <16:58:13>              9   E--Ss      -7.651572    0.000152    0.000107    0.00000000  0.3025  0.0980
+<May21-2026> <16:58:13>             10   E--Ss      -7.651572    0.000149    0.000113    0.00000000  0.3328  0.0970
+<May21-2026> <16:58:13>             11   E--Ss      -7.651572    0.000119    0.000118    0.00000000  0.3660  0.0961
+<May21-2026> <16:58:13>             12   E--Ss      -7.651572    0.000132    0.000131    0.00000000  0.4026  0.0951
+<May21-2026> <16:58:13>             13   E--Ss      -7.651572    0.000113    0.000146    0.00000000  0.4429  0.0941
+<May21-2026> <16:58:13>             14   E--Ss      -7.651572    0.000148    0.000154    0.00000000  0.4872  0.0932
+<May21-2026> <16:58:13>             15   E--Ss      -7.651572    0.000136    0.000156    0.00000000  0.5000  0.0923
+<May21-2026> <16:58:13>             16   E--Ss      -7.651572    0.000138    0.000164    0.00000000  0.5000  0.0914
+<May21-2026> <16:58:13>             17   E--Ss      -7.651572    0.000132    0.000172    0.00000000  0.5000  0.0904
+<May21-2026> <16:58:13>             18   E--Ss      -7.651572    0.000167    0.000181    0.00000000  0.5000  0.0895
+<May21-2026> <16:58:13>             19   E--Ss      -7.651572    0.000120    0.000193    0.00000000  0.5000  0.0886
+<May21-2026> <16:58:13>             20   E--Ss      -7.651572    0.000099    0.000204    0.00000000  0.5000  0.0878
+<May21-2026> <16:58:13>             21   E--Ss      -7.651572    0.000108    0.000213    0.00000000  0.5000  0.0869
+<May21-2026> <16:58:13>             22   E--Ss      -7.651572    0.000090    0.000226    0.00000000  0.5000  0.0860
+<May21-2026> <16:58:13>             23   E--Ss      -7.651572    0.000103    0.000237    0.00000000  0.5000  0.0851
+<May21-2026> <16:58:13>             24   E--Ss      -7.651572    0.000077    0.000240    0.00000000  0.5000  0.0843
+<May21-2026> <16:58:13>             25   E--Ss      -7.651572    0.000083    0.000245    0.00000000  0.5000  0.0835
+<May21-2026> <16:58:13>             26   E--Ss      -7.651572    0.000109    0.000247    0.00000000  0.5000  0.0826
+<May21-2026> <16:58:13>             27   E--Ss      -7.651572    0.000081    0.000247    0.00000000  0.5000  0.0818
+<May21-2026> <16:58:13>             28   E--Ss      -7.651572    0.000066    0.000247    0.00000000  0.5000  0.0810
+<May21-2026> <16:58:13>             29   E--Ss      -7.651572    0.000065    0.000250    0.00000000  0.5000  0.0802
+<May21-2026> <16:58:13>             30   E--Ss      -7.651572    0.000062    0.000252    0.00000000  0.5000  0.0794
+<May21-2026> <16:58:13>             31   E--Ss      -7.651572    0.000072    0.000244    0.00000000  0.5000  0.0786
+<May21-2026> <16:58:13>             32   E--Ss      -7.651572    0.000059    0.000237    0.00000000  0.5000  0.0778
+<May21-2026> <16:58:13>             33   E--Ss      -7.651572    0.000042    0.000229    0.00000000  0.5000  0.0770
+<May21-2026> <16:58:13>             34   E--Ss      -7.651572    0.000057    0.000221    0.00000000  0.5000  0.0762
+<May21-2026> <16:58:13>             35   E--Ss      -7.651572    0.000068    0.000212    0.00000000  0.5000  0.0755
+<May21-2026> <16:58:13>             36   E--Ss      -7.651572    0.000058    0.000203    0.00000000  0.5000  0.0747
+<May21-2026> <16:58:13>             37   E--Ss      -7.651572    0.000035    0.000192    0.00000000  0.5000  0.0740
+<May21-2026> <16:58:13>             38   E--Ss      -7.651572    0.000045    0.000183    0.00000000  0.5000  0.0732
+<May21-2026> <16:58:13>             39   E--Ss      -7.651572    0.000055    0.000168   -0.00000000  0.5000  0.0725
+<May21-2026> <16:58:13>      ===> Uphill motion detected. Freezing atoms!
+<May21-2026> <16:58:13>             40   E--Ss      -7.651572    0.000049    0.000003    0.00000000  0.2500  0.1000
+<May21-2026> <16:58:13>             41   E--Ss      -7.651572    0.000034    0.000006    0.00000000  0.2500  0.1000
+<May21-2026> <16:58:13>             42   E--Ss      -7.651572    0.000020    0.000008    0.00000000  0.2500  0.1000
+<May21-2026> <16:58:13>             43   E--Ss      -7.651572    0.000035    0.000008    0.00000000  0.2500  0.1000
+<May21-2026> <16:58:13>             44   E--Ss      -7.651572    0.000041    0.000006    0.00000000  0.2500  0.1000
+<May21-2026> <16:58:13>             45   E--Ss      -7.651572    0.000036    0.000008    0.00000000  0.2500  0.1000
+<May21-2026> <16:58:13>             46   E--Ss      -7.651572    0.000021    0.000010    0.00000000  0.2750  0.0990
+<May21-2026> <16:58:13>             47   E--Ss      -7.651572    0.000021    0.000011    0.00000000  0.3025  0.0980
+<May21-2026> <16:58:13>             48   E--Ss      -7.651572    0.000030    0.000009    0.00000000  0.3328  0.0970
+<May21-2026> <16:58:13>             49   E--Ss      -7.651572    0.000020    0.000010    0.00000000  0.3660  0.0961
+<May21-2026> <16:58:13>             50   EGgSs      -7.651572    0.000010    0.000011   -0.00000000  0.4026  0.0951
+<May21-2026> <16:58:13>      Geometry optimization converged
+<May21-2026> <16:58:13>  Optimization of state #1 converged.
+<May21-2026> <16:58:13>  Frequency calculation on optimized state #1:
+<May21-2026> <16:58:13>  Refining state #1 successful.
+<May21-2026> <16:58:13>  Refinement of state #1 (local minimum) successful.
+<May21-2026> <16:58:13>  Calculating prefactors
+<May21-2026> <16:58:13>  Seed for expedition 1: state #1
+<May21-2026> <16:58:13>  Starting expedition 1/10
+<May21-2026> <16:58:13>      Parallel evaluation by 4 processes with static scheduling
+<May21-2026> <16:58:13>      PES explorer: 1/4
+<May21-2026> <16:58:13>  Expedition 1 discovered: 0 minima, 0 transition states
+<May21-2026> <16:58:13>  Seed for expedition 2: state #1
+<May21-2026> <16:58:13>  Starting expedition 2/10
+<May21-2026> <16:58:13>      PES explorer: 1/4
+<May21-2026> <16:58:14>  Expedition 2 discovered: 0 minima, 0 transition states
+<May21-2026> <16:58:14>  Seed for expedition 3: state #1
+<May21-2026> <16:58:14>  Starting expedition 3/10
+<May21-2026> <16:58:14>      PES explorer: 1/4
+<May21-2026> <16:58:15>      Running SinglePoints and PESPointCharacterizations for located states
+<May21-2026> <16:58:15>          This state already exists: #1
+<May21-2026> <16:58:15>          Running single point for StateFromSearch-3.1.1 (only energy)
+<May21-2026> <16:58:15>          Loading gradients from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/Refined1_MIN.rkf
+<May21-2026> <16:58:15>          Loading hessian from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/Refined1_MIN.rkf
+<May21-2026> <16:58:15>          This state is new
+<May21-2026> <16:58:15>          Running single point for StateFromSearch-3.1.2. Requested: gradients,normalModes
+<May21-2026> <16:58:15>          Storing results in StateFromSearch-3.1.2
+<May21-2026> <16:58:15>          This state is new
+<May21-2026> <16:58:15>          Running single point for StateFromSearch-3.1.3. Requested: gradients,normalModes
+<May21-2026> <16:58:15>          Storing results in StateFromSearch-3.1.3
+<May21-2026> <16:58:15>      Added new product to database StateFromSearch-3.1.2
+<May21-2026> <16:58:15>      Added new TS to database StateFromSearch-3.1.3
+<May21-2026> <16:58:15>          This state already exists: #1
+<May21-2026> <16:58:15>          Running single point for StateFromSearch-3.3.1 (only energy)
+<May21-2026> <16:58:15>          Loading gradients from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/Refined1_MIN.rkf
+<May21-2026> <16:58:15>          Loading hessian from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/Refined1_MIN.rkf
+<May21-2026> <16:58:15>          This state already exists: #2
+<May21-2026> <16:58:15>          Running single point for StateFromSearch-3.3.2 (only energy)
+<May21-2026> <16:58:15>          Loading gradients from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.2.rkf
+<May21-2026> <16:58:15>          Loading hessian from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.2.rkf
+<May21-2026> <16:58:15>          This state already exists: #3
+<May21-2026> <16:58:15>          Running single point for StateFromSearch-3.3.3 (only energy)
+<May21-2026> <16:58:15>          Loading gradients from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.3.rkf
+<May21-2026> <16:58:15>          Loading hessian from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.3.rkf
+<May21-2026> <16:58:15>          This state already exists: #1
+<May21-2026> <16:58:15>          Running single point for StateFromSearch-3.4.1 (only energy)
+<May21-2026> <16:58:15>          Loading gradients from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/Refined1_MIN.rkf
+<May21-2026> <16:58:15>          Loading hessian from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/Refined1_MIN.rkf
+<May21-2026> <16:58:15>          This state already exists: #2
+<May21-2026> <16:58:15>          Running single point for StateFromSearch-3.4.2 (only energy)
+<May21-2026> <16:58:15>          Loading gradients from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.2.rkf
+<May21-2026> <16:58:15>          Loading hessian from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.2.rkf
+<May21-2026> <16:58:15>          This state already exists: #3
+<May21-2026> <16:58:15>          Running single point for StateFromSearch-3.4.3 (only energy)
+<May21-2026> <16:58:15>          Loading gradients from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.3.rkf
+<May21-2026> <16:58:15>          Loading hessian from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.3.rkf
+<May21-2026> <16:58:15>  Expedition 3 discovered: 1 minima, 1 transition states
+<May21-2026> <16:58:15>  Seed for expedition 4: state #2
+<May21-2026> <16:58:15>  Starting expedition 4/10
+<May21-2026> <16:58:15>      PES explorer: 1/4
+<May21-2026> <16:58:17>      Running SinglePoints and PESPointCharacterizations for located states
+<May21-2026> <16:58:17>          This state already exists: #2
+<May21-2026> <16:58:17>          Running single point for StateFromSearch-4.3.1 (only energy)
+<May21-2026> <16:58:17>          Loading gradients from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.2.rkf
+<May21-2026> <16:58:17>          Loading hessian from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.2.rkf
+<May21-2026> <16:58:17>          This state already exists: #1
+<May21-2026> <16:58:17>          Running single point for StateFromSearch-4.3.2 (only energy)
+<May21-2026> <16:58:17>          Loading gradients from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/Refined1_MIN.rkf
+<May21-2026> <16:58:17>          Loading hessian from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/Refined1_MIN.rkf
+<May21-2026> <16:58:17>          This state already exists: #3
+<May21-2026> <16:58:17>          Running single point for StateFromSearch-4.3.3 (only energy)
+<May21-2026> <16:58:17>          Loading gradients from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.3.rkf
+<May21-2026> <16:58:17>          Loading hessian from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.3.rkf
+<May21-2026> <16:58:17>          This state already exists: #2
+<May21-2026> <16:58:17>          Running single point for StateFromSearch-4.4.1 (only energy)
+<May21-2026> <16:58:17>          Loading gradients from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.2.rkf
+<May21-2026> <16:58:17>          Loading hessian from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.2.rkf
+<May21-2026> <16:58:17>          This state is new
+<May21-2026> <16:58:17>          Running single point for StateFromSearch-4.4.2. Requested: gradients,normalModes
+<May21-2026> <16:58:17>          Storing results in StateFromSearch-4.4.2
+<May21-2026> <16:58:17>          This state is new
+<May21-2026> <16:58:17>          Running single point for StateFromSearch-4.4.3. Requested: gradients,normalModes
+<May21-2026> <16:58:17>          Storing results in StateFromSearch-4.4.3
+<May21-2026> <16:58:17>      Added new product to database StateFromSearch-4.4.2
+<May21-2026> <16:58:17>      Added new TS to database StateFromSearch-4.4.3
+<May21-2026> <16:58:17>  Expedition 4 discovered: 1 minima, 1 transition states
+<May21-2026> <16:58:17>  Seed for expedition 5: state #4
+<May21-2026> <16:58:17>  Starting expedition 5/10
+<May21-2026> <16:58:17>      PES explorer: 1/4
+<May21-2026> <16:58:19>  Expedition 5 discovered: 0 minima, 0 transition states
+<May21-2026> <16:58:19>  Seed for expedition 6: state #1
+<May21-2026> <16:58:19>  Starting expedition 6/10
+<May21-2026> <16:58:19>      PES explorer: 1/4
+<May21-2026> <16:58:19>  Expedition 6 discovered: 0 minima, 0 transition states
+<May21-2026> <16:58:19>  Seed for expedition 7: state #2
+<May21-2026> <16:58:19>  Starting expedition 7/10
+<May21-2026> <16:58:19>      PES explorer: 1/4
+<May21-2026> <16:58:20>      Running SinglePoints and PESPointCharacterizations for located states
+<May21-2026> <16:58:20>          This state already exists: #2
+<May21-2026> <16:58:20>          Running single point for StateFromSearch-7.4.1 (only energy)
+<May21-2026> <16:58:20>          Loading gradients from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.2.rkf
+<May21-2026> <16:58:20>          Loading hessian from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.2.rkf
+<May21-2026> <16:58:20>          This state already exists: #1
+<May21-2026> <16:58:20>          Running single point for StateFromSearch-7.4.2 (only energy)
+<May21-2026> <16:58:20>          Loading gradients from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/Refined1_MIN.rkf
+<May21-2026> <16:58:20>          Loading hessian from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/Refined1_MIN.rkf
+<May21-2026> <16:58:20>          This state already exists: #3
+<May21-2026> <16:58:20>          Running single point for StateFromSearch-7.4.3 (only energy)
+<May21-2026> <16:58:20>          Loading gradients from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.3.rkf
+<May21-2026> <16:58:20>          Loading hessian from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.3.rkf
+<May21-2026> <16:58:20>  Expedition 7 discovered: 0 minima, 0 transition states
+<May21-2026> <16:58:20>  Seed for expedition 8: state #4
+<May21-2026> <16:58:20>  Starting expedition 8/10
+<May21-2026> <16:58:20>      PES explorer: 1/4
+<May21-2026> <16:58:22>      Running SinglePoints and PESPointCharacterizations for located states
+<May21-2026> <16:58:22>          This state already exists: #4
+<May21-2026> <16:58:22>          Running single point for StateFromSearch-8.1.1 (only energy)
+<May21-2026> <16:58:22>          Loading gradients from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-4.4.2.rkf
+<May21-2026> <16:58:22>          Loading hessian from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-4.4.2.rkf
+<May21-2026> <16:58:22>          This state already exists: #2
+<May21-2026> <16:58:22>          Running single point for StateFromSearch-8.1.2 (only energy)
+<May21-2026> <16:58:22>          Loading gradients from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.2.rkf
+<May21-2026> <16:58:22>          Loading hessian from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.2.rkf
+<May21-2026> <16:58:22>          This state already exists: #5
+<May21-2026> <16:58:22>          Running single point for StateFromSearch-8.1.3 (only energy)
+<May21-2026> <16:58:22>          Loading gradients from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-4.4.3.rkf
+<May21-2026> <16:58:22>          Loading hessian from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-4.4.3.rkf
+<May21-2026> <16:58:22>  Expedition 8 discovered: 0 minima, 0 transition states
+<May21-2026> <16:58:22>  Seed for expedition 9: state #1
+<May21-2026> <16:58:22>  Starting expedition 9/10
+<May21-2026> <16:58:22>      PES explorer: 1/4
+<May21-2026> <16:58:23>      Running SinglePoints and PESPointCharacterizations for located states
+<May21-2026> <16:58:23>          This state already exists: #1
+<May21-2026> <16:58:23>          Running single point for StateFromSearch-9.2.1 (only energy)
+<May21-2026> <16:58:23>          Loading gradients from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/Refined1_MIN.rkf
+<May21-2026> <16:58:23>          Loading hessian from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/Refined1_MIN.rkf
+<May21-2026> <16:58:23>          This state already exists: #2
+<May21-2026> <16:58:23>          Running single point for StateFromSearch-9.2.2 (only energy)
+<May21-2026> <16:58:23>          Loading gradients from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.2.rkf
+<May21-2026> <16:58:23>          Loading hessian from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.2.rkf
+<May21-2026> <16:58:23>          This state already exists: #3
+<May21-2026> <16:58:23>          Running single point for StateFromSearch-9.2.3 (only energy)
+<May21-2026> <16:58:23>          Loading gradients from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.3.rkf
+<May21-2026> <16:58:23>          Loading hessian from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.3.rkf
+<May21-2026> <16:58:23>          This state already exists: #1
+<May21-2026> <16:58:23>          Running single point for StateFromSearch-9.4.1 (only energy)
+<May21-2026> <16:58:23>          Loading gradients from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/Refined1_MIN.rkf
+<May21-2026> <16:58:23>          Loading hessian from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/Refined1_MIN.rkf
+<May21-2026> <16:58:23>          This state already exists: #2
+<May21-2026> <16:58:23>          Running single point for StateFromSearch-9.4.2 (only energy)
+<May21-2026> <16:58:23>          Loading gradients from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.2.rkf
+<May21-2026> <16:58:23>          Loading hessian from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.2.rkf
+<May21-2026> <16:58:23>          This state already exists: #3
+<May21-2026> <16:58:23>          Running single point for StateFromSearch-9.4.3 (only energy)
+<May21-2026> <16:58:23>          Loading gradients from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.3.rkf
+<May21-2026> <16:58:23>          Loading hessian from file /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/CO_ads-Pt111/StateFromSearch-3.1.3.rkf
+<May21-2026> <16:58:23>  Expedition 9 discovered: 0 minima, 0 transition states
+<May21-2026> <16:58:23>  Seed for expedition 10: state #2
+<May21-2026> <16:58:23>  Starting expedition 10/10
+<May21-2026> <16:58:23>      PES explorer: 1/4
+<May21-2026> <16:58:26>  Expedition 10 discovered: 0 minima, 0 transition states
+<May21-2026> <16:58:26>  Calculating prefactors
+<May21-2026> <16:58:26>  Calculating fragmented states ...
+<May21-2026> <16:58:26>  Fragmented state #1 (1/3)
+<May21-2026> <16:58:26>      STEP 1: Optimizing adsorbate
+<May21-2026> <16:58:26>      Calculation on initial geometry ...
+<May21-2026> <16:58:26>      Starting inertial relaxation ...
+<May21-2026> <16:58:26>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May21-2026> <16:58:26>      ======================================================================================
+<May21-2026> <16:58:26>              1   -----      -0.335330    0.017820    0.000000    0.00000000  0.2500  0.1000
+<May21-2026> <16:58:26>              2   E--Ss      -0.335335    0.016592    0.001129    0.00000091  0.2500  0.1000
+<May21-2026> <16:58:26>              3   E--Ss      -0.335347    0.013425    0.002114    0.00000137  0.2500  0.1000
+<May21-2026> <16:58:26>              4   E--Ss      -0.335362    0.009647    0.002872    0.00000134  0.2500  0.1000
+<May21-2026> <16:58:26>              5   E--Ss      -0.335375    0.006890    0.003414    0.00000114  0.2500  0.1000
+<May21-2026> <16:58:26>              6   E--Ss      -0.335387    0.006664    0.003859    0.00000124  0.2500  0.1000
+<May21-2026> <16:58:26>              7   E--Ss      -0.335403    0.010464    0.004421    0.00000224  0.2500  0.1000
+<May21-2026> <16:58:26>              8   ---Ss      -0.335445    0.022273    0.005603    0.00000604  0.2750  0.0990
+<May21-2026> <16:58:26>              9   ---Ss      -0.335590    0.055039    0.008673    0.00002309  0.3025  0.0980
+<May21-2026> <16:58:26>             10   ---Ss      -0.336362    0.163704    0.018228    0.00014436  0.3328  0.0970
+<May21-2026> <16:58:26>             11   ---S-      -0.343300    0.561156    0.053058    0.00144039  0.3660  0.0961
+<May21-2026> <16:58:26>             12   -----      -0.413262    1.232701    0.147872    0.00881838  0.4026  0.0951
+<May21-2026> <16:58:26>             13   -----      -0.129190    1.391478    0.138641   -0.00933280  0.4429  0.0941
+<May21-2026> <16:58:26>      ===> Uphill motion detected. Freezing atoms!
+<May21-2026> <16:58:26>             14   ---S-      -0.155379    1.539454    0.085203    0.00634550  0.2214  0.1000
+<May21-2026> <16:58:26>             15   -----      -0.263859    2.231642    0.194829    0.02103410  0.2214  0.1000
+<May21-2026> <16:58:26>             16   -----      -0.417686    0.983374    0.231117   -0.01099500  0.2214  0.1000
+<May21-2026> <16:58:26>      ===> Uphill motion detected. Freezing atoms!
+<May21-2026> <16:58:26>             17   ---Ss      -0.420441    0.755302    0.025272    0.00092343  0.1107  0.1000
+<May21-2026> <16:58:26>             18   ---Ss      -0.424175    0.187357    0.038973    0.00035325  0.1107  0.1000
+<May21-2026> <16:58:26>             19   ---Ss      -0.423380    0.334502    0.036835   -0.00059608  0.1107  0.1000
+<May21-2026> <16:58:26>      ===> Uphill motion detected. Freezing atoms!
+<May21-2026> <16:58:26>             20   ---Ss      -0.423469    0.321304    0.004766    0.00007408  0.0554  0.1000
+<May21-2026> <16:58:26>             21   ---Ss      -0.423706    0.282140    0.009152    0.00012491  0.0554  0.1000
+<May21-2026> <16:58:26>             22   ---Ss      -0.424017    0.218434    0.012790    0.00013515  0.0554  0.1000
+<May21-2026> <16:58:26>             23   ---Ss      -0.424297    0.132996    0.015344    0.00009872  0.0554  0.1000
+<May21-2026> <16:58:26>             24   ---Ss      -0.424446    0.030716    0.016533    0.00002457  0.0554  0.1000
+<May21-2026> <16:58:26>             25   ---Ss      -0.424400    0.080626    0.016171   -0.00006307  0.0554  0.1000
+<May21-2026> <16:58:26>      ===> Uphill motion detected. Freezing atoms!
+<May21-2026> <16:58:26>             26   E--Ss      -0.424402    0.079625    0.000582    0.00000224  0.0277  0.1000
+<May21-2026> <16:58:26>             27   E--Ss      -0.424405    0.076648    0.001150    0.00000426  0.0277  0.1000
+<May21-2026> <16:58:26>             28   E--Ss      -0.424411    0.071779    0.001690    0.00000587  0.0277  0.1000
+<May21-2026> <16:58:26>             29   E--Ss      -0.424419    0.065151    0.002187    0.00000689  0.0277  0.1000
+<May21-2026> <16:58:26>             30   E--Ss      -0.424427    0.056944    0.002631    0.00000725  0.0277  0.1000
+<May21-2026> <16:58:26>             31   E--Ss      -0.424435    0.047379    0.003010    0.00000690  0.0277  0.1000
+<May21-2026> <16:58:26>             32   E--Ss      -0.424443    0.035583    0.003341    0.00000575  0.0304  0.0990
+<May21-2026> <16:58:26>             33   E--Ss      -0.424450    0.021490    0.003592    0.00000373  0.0335  0.0980
+<May21-2026> <16:58:26>             34   E--Ss      -0.424453    0.005238    0.003722    0.00000094  0.0368  0.0970
+<May21-2026> <16:58:26>             35   E--Ss      -0.424452    0.012733    0.003682   -0.00000227  0.0405  0.0961
+<May21-2026> <16:58:26>      ===> Uphill motion detected. Freezing atoms!
+<May21-2026> <16:58:27>             36   E--Ss      -0.424452    0.012652    0.000068    0.00000004  0.0203  0.1000
+<May21-2026> <16:58:27>             37   E--Ss      -0.424452    0.012410    0.000134    0.00000008  0.0203  0.1000
+<May21-2026> <16:58:27>             38   E--Ss      -0.424452    0.012012    0.000199    0.00000012  0.0203  0.1000
+<May21-2026> <16:58:27>             39   E--Ss      -0.424453    0.011460    0.000262    0.00000015  0.0203  0.1000
+<May21-2026> <16:58:27>             40   E--Ss      -0.424453    0.010763    0.000321    0.00000017  0.0203  0.1000
+<May21-2026> <16:58:27>             41   E--Ss      -0.424453    0.009929    0.000376    0.00000018  0.0203  0.1000
+<May21-2026> <16:58:27>             42   E--Ss      -0.424453    0.008865    0.000431    0.00000018  0.0223  0.0990
+<May21-2026> <16:58:27>             43   E--Ss      -0.424453    0.007536    0.000484    0.00000018  0.0245  0.0980
+<May21-2026> <16:58:27>             44   E--Ss      -0.424453    0.005911    0.000531    0.00000015  0.0270  0.0970
+<May21-2026> <16:58:27>             45   E--Ss      -0.424454    0.003968    0.000570    0.00000011  0.0297  0.0961
+<May21-2026> <16:58:27>             46   E--Ss      -0.424454    0.001703    0.000594    0.00000005  0.0326  0.0951
+<May21-2026> <16:58:27>             47   E--Ss      -0.424454    0.000857    0.000598   -0.00000002  0.0359  0.0941
+<May21-2026> <16:58:27>      ===> Uphill motion detected. Freezing atoms!
+<May21-2026> <16:58:27>             48   E--Ss      -0.424454    0.000852    0.000004    0.00000000  0.0179  0.1000
+<May21-2026> <16:58:27>             49   E--Ss      -0.424454    0.000840    0.000008    0.00000000  0.0179  0.1000
+<May21-2026> <16:58:27>             50   E--Ss      -0.424454    0.000818    0.000012    0.00000000  0.0179  0.1000
+<May21-2026> <16:58:27>             51   E--Ss      -0.424454    0.000789    0.000016    0.00000000  0.0179  0.1000
+<May21-2026> <16:58:27>             52   E--Ss      -0.424454    0.000752    0.000019    0.00000000  0.0179  0.1000
+<May21-2026> <16:58:27>             53   E--Ss      -0.424454    0.000707    0.000023    0.00000000  0.0179  0.1000
+<May21-2026> <16:58:27>             54   E--Ss      -0.424454    0.000649    0.000026    0.00000000  0.0197  0.0990
+<May21-2026> <16:58:27>             55   E--Ss      -0.424454    0.000577    0.000030    0.00000000  0.0217  0.0980
+<May21-2026> <16:58:27>             56   E--Ss      -0.424454    0.000487    0.000033    0.00000000  0.0239  0.0970
+<May21-2026> <16:58:27>             57   E--Ss      -0.424454    0.000379    0.000036    0.00000000  0.0263  0.0961
+<May21-2026> <16:58:27>             58   E--Ss      -0.424454    0.000250    0.000038    0.00000000  0.0289  0.0951
+<May21-2026> <16:58:27>             59   E--Ss      -0.424454    0.000101    0.000040    0.00000000  0.0318  0.0941
+<May21-2026> <16:58:27>             60   E--Ss      -0.424454    0.000066    0.000040   -0.00000000  0.0350  0.0932
+<May21-2026> <16:58:27>      ===> Uphill motion detected. Freezing atoms!
+<May21-2026> <16:58:27>             61   E--Ss      -0.424454    0.000066    0.000000    0.00000000  0.0175  0.1000
+<May21-2026> <16:58:27>             62   E--Ss      -0.424454    0.000065    0.000001    0.00000000  0.0175  0.1000
+<May21-2026> <16:58:27>             63   E--Ss      -0.424454    0.000064    0.000001    0.00000000  0.0175  0.1000
+<May21-2026> <16:58:27>             64   E--Ss      -0.424454    0.000061    0.000001    0.00000000  0.0175  0.1000
+<May21-2026> <16:58:27>             65   E--Ss      -0.424454    0.000059    0.000001    0.00000000  0.0175  0.1000
+<May21-2026> <16:58:27>             66   E--Ss      -0.424454    0.000055    0.000002    0.00000000  0.0175  0.1000
+<May21-2026> <16:58:27>             67   E--Ss      -0.424454    0.000051    0.000002    0.00000000  0.0192  0.0990
+<May21-2026> <16:58:27>             68   E--Ss      -0.424454    0.000046    0.000002    0.00000000  0.0212  0.0980
+<May21-2026> <16:58:27>             69   E--Ss      -0.424454    0.000039    0.000003    0.00000000  0.0233  0.0970
+<May21-2026> <16:58:27>             70   E--Ss      -0.424454    0.000031    0.000003    0.00000000  0.0256  0.0961
+<May21-2026> <16:58:27>             71   E--Ss      -0.424454    0.000021    0.000003    0.00000000  0.0282  0.0951
+<May21-2026> <16:58:27>             72   EGgSs      -0.424454    0.000010    0.000003    0.00000000  0.0310  0.0941
+<May21-2026> <16:58:27>      Geometry optimization converged
+<May21-2026> <16:58:27>      STEP 2: Optimizing surface
+<May21-2026> <16:58:27>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:27>      Geometry symmetrized to: C1
+<May21-2026> <16:58:27>      Geometry reoriented with symmetry: C(LIN)
+<May21-2026> <16:58:27>      Geometry symmetrized to: C1
+<May21-2026> <16:58:27>      Geometry reoriented with symmetry: C(LIN)
+<May21-2026> <16:58:27>  Fragmented state #2 (2/3)
+<May21-2026> <16:58:27>      STEP 1: Optimizing adsorbate
+<May21-2026> <16:58:27>      Calculation on initial geometry ...
+<May21-2026> <16:58:27>      Starting inertial relaxation ...
+<May21-2026> <16:58:27>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May21-2026> <16:58:27>      ======================================================================================
+<May21-2026> <16:58:27>              1   -----      -0.335331    0.017569    0.000000    0.00000000  0.2500  0.1000
+<May21-2026> <16:58:27>              2   E--Ss      -0.335336    0.016370    0.001114    0.00000088  0.2500  0.1000
+<May21-2026> <16:58:27>              3   E--Ss      -0.335348    0.013276    0.002087    0.00000134  0.2500  0.1000
+<May21-2026> <16:58:27>              4   E--Ss      -0.335362    0.009583    0.002837    0.00000132  0.2500  0.1000
+<May21-2026> <16:58:27>              5   E--Ss      -0.335375    0.006882    0.003377    0.00000112  0.2500  0.1000
+<May21-2026> <16:58:27>              6   E--Ss      -0.335386    0.006656    0.003822    0.00000123  0.2500  0.1000
+<May21-2026> <16:58:27>              7   E--Ss      -0.335403    0.010378    0.004381    0.00000220  0.2500  0.1000
+<May21-2026> <16:58:27>              8   ---Ss      -0.335444    0.021955    0.005548    0.00000589  0.2750  0.0990
+<May21-2026> <16:58:27>              9   ---Ss      -0.335585    0.054034    0.008565    0.00002239  0.3025  0.0980
+<May21-2026> <16:58:27>             10   ---Ss      -0.336330    0.160134    0.017921    0.00013883  0.3328  0.0970
+<May21-2026> <16:58:27>             11   ---S-      -0.342996    0.551147    0.052098    0.00138909  0.3660  0.0961
+<May21-2026> <16:58:27>             12   -----      -0.411033    1.318808    0.150934    0.00962973  0.4026  0.0951
+<May21-2026> <16:58:27>      ===> Large step detected. Limiting dt!
+<May21-2026> <16:58:27>             13   -----      -0.124705    1.368866    0.148047   -0.00980405  0.4393  0.0941
+<May21-2026> <16:58:27>      ===> Uphill motion detected. Freezing atoms!
+<May21-2026> <16:58:27>             14   ---S-      -0.149564    1.504092    0.082849    0.00602850  0.2197  0.1000
+<May21-2026> <16:58:27>             15   -----      -0.250799    2.176770    0.188997    0.01990272  0.2197  0.1000
+<May21-2026> <16:58:27>             16   -----      -0.423989    0.244258    0.244726   -0.00289184  0.2197  0.1000
+<May21-2026> <16:58:27>      ===> Uphill motion detected. Freezing atoms!
+<May21-2026> <16:58:27>             17   ---Ss      -0.424158    0.193337    0.006310    0.00005902  0.1098  0.1000
+<May21-2026> <16:58:27>             18   ---Ss      -0.424417    0.066974    0.010063    0.00003260  0.1098  0.1000
+<May21-2026> <16:58:27>             19   E--Ss      -0.424403    0.076135    0.009931   -0.00003658  0.1098  0.1000
+<May21-2026> <16:58:27>      ===> Uphill motion detected. Freezing atoms!
+<May21-2026> <16:58:27>             20   E--Ss      -0.424408    0.072705    0.001073    0.00000377  0.0549  0.1000
+<May21-2026> <16:58:27>             21   E--Ss      -0.424420    0.062688    0.002049    0.00000621  0.0549  0.1000
+<May21-2026> <16:58:27>             22   E--Ss      -0.424435    0.046888    0.002839    0.00000644  0.0549  0.1000
+<May21-2026> <16:58:27>             23   E--Ss      -0.424448    0.026619    0.003369    0.00000434  0.0549  0.1000
+<May21-2026> <16:58:27>             24   E--Ss      -0.424454    0.003632    0.003587    0.00000063  0.0549  0.1000
+<May21-2026> <16:58:27>             25   E--Ss      -0.424450    0.019984    0.003469   -0.00000335  0.0549  0.1000
+<May21-2026> <16:58:27>      ===> Uphill motion detected. Freezing atoms!
+<May21-2026> <16:58:27>             26   E--Ss      -0.424450    0.019747    0.000143    0.00000014  0.0275  0.1000
+<May21-2026> <16:58:27>             27   E--Ss      -0.424451    0.019043    0.000283    0.00000026  0.0275  0.1000
+<May21-2026> <16:58:27>             28   E--Ss      -0.424451    0.017887    0.000416    0.00000036  0.0275  0.1000
+<May21-2026> <16:58:27>             29   E--Ss      -0.424451    0.016309    0.000539    0.00000043  0.0275  0.1000
+<May21-2026> <16:58:27>             30   E--Ss      -0.424452    0.014347    0.000650    0.00000045  0.0275  0.1000
+<May21-2026> <16:58:27>             31   E--Ss      -0.424452    0.012047    0.000745    0.00000043  0.0275  0.1000
+<May21-2026> <16:58:27>             32   E--Ss      -0.424453    0.009194    0.000829    0.00000037  0.0302  0.0990
+<May21-2026> <16:58:27>             33   E--Ss      -0.424453    0.005757    0.000895    0.00000025  0.0332  0.0980
+<May21-2026> <16:58:27>             34   E--Ss      -0.424454    0.001755    0.000931    0.00000008  0.0365  0.0970
+<May21-2026> <16:58:27>             35   E--Ss      -0.424454    0.002721    0.000925   -0.00000012  0.0402  0.0961
+<May21-2026> <16:58:27>      ===> Uphill motion detected. Freezing atoms!
+<May21-2026> <16:58:27>             36   E--Ss      -0.424454    0.002704    0.000014    0.00000000  0.0201  0.1000
+<May21-2026> <16:58:27>             37   E--Ss      -0.424454    0.002653    0.000028    0.00000000  0.0201  0.1000
+<May21-2026> <16:58:27>             38   E--Ss      -0.424454    0.002568    0.000042    0.00000001  0.0201  0.1000
+<May21-2026> <16:58:27>             39   E--Ss      -0.424454    0.002452    0.000055    0.00000001  0.0201  0.1000
+<May21-2026> <16:58:27>             40   E--Ss      -0.424454    0.002304    0.000068    0.00000001  0.0201  0.1000
+<May21-2026> <16:58:27>             41   E--Ss      -0.424454    0.002128    0.000080    0.00000001  0.0201  0.1000
+<May21-2026> <16:58:27>             42   E--Ss      -0.424454    0.001903    0.000091    0.00000001  0.0221  0.0990
+<May21-2026> <16:58:27>             43   E--Ss      -0.424454    0.001623    0.000103    0.00000001  0.0243  0.0980
+<May21-2026> <16:58:27>             44   E--Ss      -0.424454    0.001279    0.000113    0.00000001  0.0268  0.0970
+<May21-2026> <16:58:27>             45   E--Ss      -0.424454    0.000869    0.000121    0.00000001  0.0294  0.0961
+<May21-2026> <16:58:27>             46   E--Ss      -0.424454    0.000390    0.000127    0.00000000  0.0324  0.0951
+<May21-2026> <16:58:27>             47   E--Ss      -0.424454    0.000152    0.000128   -0.00000000  0.0356  0.0941
+<May21-2026> <16:58:27>      ===> Uphill motion detected. Freezing atoms!
+<May21-2026> <16:58:27>             48   E--Ss      -0.424454    0.000151    0.000001    0.00000000  0.0178  0.1000
+<May21-2026> <16:58:27>             49   E--Ss      -0.424454    0.000149    0.000001    0.00000000  0.0178  0.1000
+<May21-2026> <16:58:27>             50   E--Ss      -0.424454    0.000145    0.000002    0.00000000  0.0178  0.1000
+<May21-2026> <16:58:27>             51   E--Ss      -0.424454    0.000140    0.000003    0.00000000  0.0178  0.1000
+<May21-2026> <16:58:27>             52   E--Ss      -0.424454    0.000133    0.000003    0.00000000  0.0178  0.1000
+<May21-2026> <16:58:27>             53   E--Ss      -0.424454    0.000126    0.000004    0.00000000  0.0178  0.1000
+<May21-2026> <16:58:27>             54   E--Ss      -0.424454    0.000116    0.000005    0.00000000  0.0196  0.0990
+<May21-2026> <16:58:27>             55   E--Ss      -0.424454    0.000103    0.000005    0.00000000  0.0215  0.0980
+<May21-2026> <16:58:27>             56   E--Ss      -0.424454    0.000087    0.000006    0.00000000  0.0237  0.0970
+<May21-2026> <16:58:27>             57   E--Ss      -0.424454    0.000068    0.000006    0.00000000  0.0261  0.0961
+<May21-2026> <16:58:27>             58   E--Ss      -0.424454    0.000046    0.000007    0.00000000  0.0287  0.0951
+<May21-2026> <16:58:27>             59   E--Ss      -0.424454    0.000020    0.000007    0.00000000  0.0315  0.0941
+<May21-2026> <16:58:27>             60   EGgSs      -0.424454    0.000010    0.000007   -0.00000000  0.0347  0.0932
+<May21-2026> <16:58:27>      Geometry optimization converged
+<May21-2026> <16:58:27>      STEP 2: Optimizing surface
+<May21-2026> <16:58:27>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:27>      Geometry symmetrized to: C1
+<May21-2026> <16:58:27>      Geometry reoriented with symmetry: C(LIN)
+<May21-2026> <16:58:27>      Geometry symmetrized to: C1
+<May21-2026> <16:58:27>      Geometry reoriented with symmetry: C(LIN)
+<May21-2026> <16:58:27>  Fragmented state #3 (3/3)
+<May21-2026> <16:58:27>      STEP 1: Optimizing adsorbate
+<May21-2026> <16:58:27>      Calculation on initial geometry ...
+<May21-2026> <16:58:27>      Starting inertial relaxation ...
+<May21-2026> <16:58:27>      FIRE Step   Conv?         Energy    maxForce      maxVel         Power      dt   alpha
+<May21-2026> <16:58:27>      ======================================================================================
+<May21-2026> <16:58:27>              1   -----      -0.335321    0.019894    0.000000    0.00000000  0.2500  0.1000
+<May21-2026> <16:58:27>              2   E--Ss      -0.335327    0.018420    0.001257    0.00000112  0.2500  0.1000
+<May21-2026> <16:58:27>              3   E--Ss      -0.335343    0.014634    0.002342    0.00000166  0.2500  0.1000
+<May21-2026> <16:58:27>              4   E--Ss      -0.335360    0.010157    0.003156    0.00000155  0.2500  0.1000
+<May21-2026> <16:58:27>              5   E--Ss      -0.335374    0.006944    0.003717    0.00000125  0.2500  0.1000
+<May21-2026> <16:58:27>              6   E--Ss      -0.335387    0.006748    0.004166    0.00000136  0.2500  0.1000
+<May21-2026> <16:58:27>              7   E--Ss      -0.335406    0.011258    0.004757    0.00000259  0.2500  0.1000
+<May21-2026> <16:58:27>              8   ---Ss      -0.335456    0.025133    0.006071    0.00000738  0.2750  0.0990
+<May21-2026> <16:58:27>              9   ---Ss      -0.335638    0.064052    0.009613    0.00002979  0.3025  0.0980
+<May21-2026> <16:58:27>             10   ---Ss      -0.336666    0.195904    0.020968    0.00019872  0.3328  0.0970
+<May21-2026> <16:58:27>             11   -----      -0.346375    0.703025    0.064161    0.00218218  0.3660  0.0961
+<May21-2026> <16:58:27>             12   -----      -0.424377    0.093979    0.096353   -0.00043806  0.4026  0.0951
+<May21-2026> <16:58:27>      ===> Uphill motion detected. Freezing atoms!
+<May21-2026> <16:58:27>             13   ---Ss      -0.424442    0.036810    0.003456    0.00000616  0.2013  0.1000
+<May21-2026> <16:58:27>             14   ---Ss      -0.424414    0.069738    0.002586   -0.00000873  0.2013  0.1000
+<May21-2026> <16:58:27>      ===> Uphill motion detected. Freezing atoms!
+<May21-2026> <16:58:27>             15   E--Ss      -0.424426    0.058376    0.001693    0.00000478  0.1007  0.1000
+<May21-2026> <16:58:27>             16   ---Ss      -0.424447    0.028310    0.002838    0.00000389  0.1007  0.1000
+<May21-2026> <16:58:27>             17   E--Ss      -0.424453    0.010189    0.003078   -0.00000152  0.1007  0.1000
+<May21-2026> <16:58:27>      ===> Uphill motion detected. Freezing atoms!
+<May21-2026> <16:58:27>             18   E--Ss      -0.424453    0.009790    0.000132    0.00000006  0.0503  0.1000
+<May21-2026> <16:58:27>             19   E--Ss      -0.424453    0.008622    0.000254    0.00000011  0.0503  0.1000
+<May21-2026> <16:58:27>             20   E--Ss      -0.424453    0.006778    0.000355    0.00000012  0.0503  0.1000
+<May21-2026> <16:58:27>             21   E--Ss      -0.424454    0.004398    0.000429    0.00000009  0.0503  0.1000
+<May21-2026> <16:58:27>             22   E--Ss      -0.424454    0.001670    0.000469    0.00000004  0.0503  0.1000
+<May21-2026> <16:58:27>             23   E--Ss      -0.424454    0.001195    0.000472   -0.00000003  0.0503  0.1000
+<May21-2026> <16:58:27>      ===> Uphill motion detected. Freezing atoms!
+<May21-2026> <16:58:27>             24   E--Ss      -0.424454    0.001183    0.000008    0.00000000  0.0252  0.1000
+<May21-2026> <16:58:27>             25   E--Ss      -0.424454    0.001148    0.000016    0.00000000  0.0252  0.1000
+<May21-2026> <16:58:27>             26   E--Ss      -0.424454    0.001090    0.000023    0.00000000  0.0252  0.1000
+<May21-2026> <16:58:27>             27   E--Ss      -0.424454    0.001011    0.000030    0.00000000  0.0252  0.1000
+<May21-2026> <16:58:27>             28   E--Ss      -0.424454    0.000912    0.000036    0.00000000  0.0252  0.1000
+<May21-2026> <16:58:27>             29   E--Ss      -0.424454    0.000795    0.000042    0.00000000  0.0252  0.1000
+<May21-2026> <16:58:27>             30   E--Ss      -0.424454    0.000648    0.000047    0.00000000  0.0277  0.0990
+<May21-2026> <16:58:27>             31   E--Ss      -0.424454    0.000468    0.000052    0.00000000  0.0304  0.0980
+<May21-2026> <16:58:27>             32   E--Ss      -0.424454    0.000255    0.000055    0.00000000  0.0335  0.0970
+<May21-2026> <16:58:27>             33   EGgSs      -0.424454    0.000011    0.000056    0.00000000  0.0368  0.0961
+<May21-2026> <16:58:27>      Geometry optimization converged
+<May21-2026> <16:58:27>      STEP 2: Optimizing surface
+<May21-2026> <16:58:27>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:27>      Geometry symmetrized to: C1
+<May21-2026> <16:58:27>      Geometry reoriented with symmetry: C(LIN)
+<May21-2026> <16:58:27>      Geometry symmetrized to: C1
+<May21-2026> <16:58:27>      Geometry reoriented with symmetry: C(LIN)
+<May21-2026> <16:58:27>  WARNING: not all shared arrays have been deleted
+<May21-2026> <16:58:27>  NORMAL TERMINATION

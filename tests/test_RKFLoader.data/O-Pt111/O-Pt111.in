@@ -6,7 +6,7 @@ PESExploration
   BindingSites
     NeighborCutoff 2.9
   End
-  CalculateFragments F
+  CalculateFragments T
   DynamicSeedStates T
   Job BindingSites
   LoadEnergyLandscape
@@ -16,7 +16,7 @@ PESExploration
   NumExpeditions 10
   NumExplorers 4
   Optimizer
-    ConvergedForce 0.005
+    ConvergedForce 0.0005
   End
   RandomSeed 100
   SaddleSearch
@@ -29,7 +29,6 @@ PESExploration
     CheckSymmetry F
     DistanceDifference 0.1
     EnergyDifference 0.5
-    NeighborCutoff 3.8
   End
 End
 

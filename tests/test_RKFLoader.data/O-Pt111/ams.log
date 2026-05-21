@@ -1,69 +1,233 @@
-<Sep17-2025> <14:09:29>  AMS 2025.205  RunTime: Sep17-2025 14:09:29  ShM Nodes: 1  Procs: 8
-<Sep17-2025> <14:09:30>  Restoring energy landscape from: /home/aguirre/Develop/ams.NewEONMatching/scripting/scm/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/../O_ads-Pt111/ams.rkf
-<Sep17-2025> <14:09:30>  Calculating prefactors
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Geometry symmetrized to: C1
-<Sep17-2025> <14:09:30>  Geometry reoriented with symmetry: ATOM
-<Sep17-2025> <14:09:30>  Calculating prefactors
-<Sep17-2025> <14:09:31>  NORMAL TERMINATION
+<May21-2026> <16:58:27>  AMS 2026.103  RunTime: May21-2026 16:58:27  ShM Nodes: 1  Procs: 4
+<May21-2026> <16:58:28>  Restoring energy landscape from: /home/aguirre/Develop/pyzacros/mydir/test_RKFLoader0/test_RKFLoader/O-Pt111/../O_ads-Pt111/ams.rkf
+<May21-2026> <16:58:28>  Calculating prefactors
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Geometry symmetrized to: C1
+<May21-2026> <16:58:28>  Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Calculating prefactors
+<May21-2026> <16:58:28>  Calculating fragmented states ...
+<May21-2026> <16:58:28>  Fragmented state #1 (1/18)
+<May21-2026> <16:58:28>      STEP 1: Optimizing adsorbate
+<May21-2026> <16:58:28>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:28>      STEP 2: Optimizing surface
+<May21-2026> <16:58:28>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:28>      Geometry symmetrized to: C1
+<May21-2026> <16:58:28>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>      Geometry symmetrized to: C1
+<May21-2026> <16:58:28>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Fragmented state #2 (2/18)
+<May21-2026> <16:58:28>      STEP 1: Optimizing adsorbate
+<May21-2026> <16:58:28>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:28>      STEP 2: Optimizing surface
+<May21-2026> <16:58:28>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:28>      Geometry symmetrized to: C1
+<May21-2026> <16:58:28>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>      Geometry symmetrized to: C1
+<May21-2026> <16:58:28>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Fragmented state #3 (3/18)
+<May21-2026> <16:58:28>      STEP 1: Optimizing adsorbate
+<May21-2026> <16:58:28>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:28>      STEP 2: Optimizing surface
+<May21-2026> <16:58:28>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:28>      Geometry symmetrized to: C1
+<May21-2026> <16:58:28>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>      Geometry symmetrized to: C1
+<May21-2026> <16:58:28>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:28>  Fragmented state #4 (4/18)
+<May21-2026> <16:58:28>      STEP 1: Optimizing adsorbate
+<May21-2026> <16:58:28>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:28>      STEP 2: Optimizing surface
+<May21-2026> <16:58:28>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:29>      Geometry symmetrized to: C1
+<May21-2026> <16:58:29>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:29>      Geometry symmetrized to: C1
+<May21-2026> <16:58:29>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:29>  Fragmented state #5 (5/18)
+<May21-2026> <16:58:29>      STEP 1: Optimizing adsorbate
+<May21-2026> <16:58:29>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:29>      STEP 2: Optimizing surface
+<May21-2026> <16:58:29>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:29>      Geometry symmetrized to: C1
+<May21-2026> <16:58:29>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:29>      Geometry symmetrized to: C1
+<May21-2026> <16:58:29>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:29>  Fragmented state #6 (6/18)
+<May21-2026> <16:58:29>      STEP 1: Optimizing adsorbate
+<May21-2026> <16:58:29>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:29>      STEP 2: Optimizing surface
+<May21-2026> <16:58:29>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:29>      Geometry symmetrized to: C1
+<May21-2026> <16:58:29>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:29>      Geometry symmetrized to: C1
+<May21-2026> <16:58:29>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:29>  Fragmented state #7 (7/18)
+<May21-2026> <16:58:29>      STEP 1: Optimizing adsorbate
+<May21-2026> <16:58:29>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:29>      STEP 2: Optimizing surface
+<May21-2026> <16:58:29>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:29>      Geometry symmetrized to: C1
+<May21-2026> <16:58:29>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:29>      Geometry symmetrized to: C1
+<May21-2026> <16:58:29>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:29>  Fragmented state #8 (8/18)
+<May21-2026> <16:58:29>      STEP 1: Optimizing adsorbate
+<May21-2026> <16:58:29>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:29>      STEP 2: Optimizing surface
+<May21-2026> <16:58:29>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:29>      Geometry symmetrized to: C1
+<May21-2026> <16:58:29>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:29>      Geometry symmetrized to: C1
+<May21-2026> <16:58:29>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:29>  Fragmented state #9 (9/18)
+<May21-2026> <16:58:29>      STEP 1: Optimizing adsorbate
+<May21-2026> <16:58:29>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:29>      STEP 2: Optimizing surface
+<May21-2026> <16:58:29>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:29>      Geometry symmetrized to: C1
+<May21-2026> <16:58:29>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:29>      Geometry symmetrized to: C1
+<May21-2026> <16:58:29>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:29>  Fragmented state #10 (10/18)
+<May21-2026> <16:58:29>      STEP 1: Optimizing adsorbate
+<May21-2026> <16:58:29>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:29>      STEP 2: Optimizing surface
+<May21-2026> <16:58:29>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:30>      Geometry symmetrized to: C1
+<May21-2026> <16:58:30>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:30>      Geometry symmetrized to: C1
+<May21-2026> <16:58:30>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:30>  Fragmented state #11 (11/18)
+<May21-2026> <16:58:30>      STEP 1: Optimizing adsorbate
+<May21-2026> <16:58:30>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:30>      STEP 2: Optimizing surface
+<May21-2026> <16:58:30>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:30>      Geometry symmetrized to: C1
+<May21-2026> <16:58:30>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:30>      Geometry symmetrized to: C1
+<May21-2026> <16:58:30>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:30>  Fragmented state #12 (12/18)
+<May21-2026> <16:58:30>      STEP 1: Optimizing adsorbate
+<May21-2026> <16:58:30>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:30>      STEP 2: Optimizing surface
+<May21-2026> <16:58:30>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:30>      Geometry symmetrized to: C1
+<May21-2026> <16:58:30>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:30>      Geometry symmetrized to: C1
+<May21-2026> <16:58:30>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:30>  Fragmented state #13 (13/18)
+<May21-2026> <16:58:30>      STEP 1: Optimizing adsorbate
+<May21-2026> <16:58:30>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:30>      STEP 2: Optimizing surface
+<May21-2026> <16:58:30>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:30>      Geometry symmetrized to: C1
+<May21-2026> <16:58:30>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:30>      Geometry symmetrized to: C1
+<May21-2026> <16:58:30>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:30>  Fragmented state #14 (14/18)
+<May21-2026> <16:58:30>      STEP 1: Optimizing adsorbate
+<May21-2026> <16:58:30>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:30>      STEP 2: Optimizing surface
+<May21-2026> <16:58:30>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:30>      Geometry symmetrized to: C1
+<May21-2026> <16:58:30>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:30>      Geometry symmetrized to: C1
+<May21-2026> <16:58:30>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:30>  Fragmented state #15 (15/18)
+<May21-2026> <16:58:30>      STEP 1: Optimizing adsorbate
+<May21-2026> <16:58:30>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:30>      STEP 2: Optimizing surface
+<May21-2026> <16:58:30>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:30>      Geometry symmetrized to: C1
+<May21-2026> <16:58:30>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:30>      Geometry symmetrized to: C1
+<May21-2026> <16:58:30>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:30>  Fragmented state #16 (16/18)
+<May21-2026> <16:58:30>      STEP 1: Optimizing adsorbate
+<May21-2026> <16:58:30>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:30>      STEP 2: Optimizing surface
+<May21-2026> <16:58:30>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:30>      Geometry symmetrized to: C1
+<May21-2026> <16:58:30>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:30>      Geometry symmetrized to: C1
+<May21-2026> <16:58:30>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:30>  Fragmented state #17 (17/18)
+<May21-2026> <16:58:31>      STEP 1: Optimizing adsorbate
+<May21-2026> <16:58:31>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:31>      STEP 2: Optimizing surface
+<May21-2026> <16:58:31>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:31>      Geometry symmetrized to: C1
+<May21-2026> <16:58:31>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:31>      Geometry symmetrized to: C1
+<May21-2026> <16:58:31>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:31>  Fragmented state #18 (18/18)
+<May21-2026> <16:58:31>      STEP 1: Optimizing adsorbate
+<May21-2026> <16:58:31>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:31>      STEP 2: Optimizing surface
+<May21-2026> <16:58:31>             Optimization converged (pretended; all atoms are fixed or nAtoms=1)
+<May21-2026> <16:58:31>      Geometry symmetrized to: C1
+<May21-2026> <16:58:31>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:31>      Geometry symmetrized to: C1
+<May21-2026> <16:58:31>      Geometry reoriented with symmetry: ATOM
+<May21-2026> <16:58:31>  WARNING: not all shared arrays have been deleted
+<May21-2026> <16:58:31>  NORMAL TERMINATION
