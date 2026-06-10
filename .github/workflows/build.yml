@@ -34,7 +34,7 @@ jobs:
 
       - name: Ensure pip
         run: |
-          conda install -y -n build-env python=${{ matrix.python-version }} pip
+          conda install -y -n build-env python=${{ matrix.python-version }} pip=24.3.1
 
       - name: Show environment
         run: |
@@ -64,18 +64,25 @@ jobs:
       - name: Install build and test dependencies
         env:
           PIP_EXTRA_INDEX_URL: https://downloads.scm.com/Downloads/packages/uv/channels/2026.1/simple/
+          PIP_DISABLE_PIP_VERSION_CHECK: "1"
+          PIP_USE_DEPRECATED: legacy-certs
         run: |
           conda activate build-env
-          python -m pip install --upgrade pip
           python -m pip install build
           python -m pip install ".[test,doc]"
 
       - name: Build wheel
+        env:
+          PIP_DISABLE_PIP_VERSION_CHECK: "1"
+          PIP_USE_DEPRECATED: legacy-certs
         run: |
           conda activate build-env
           python -m build
 
       - name: Install built wheel
+        env:
+          PIP_DISABLE_PIP_VERSION_CHECK: "1"
+          PIP_USE_DEPRECATED: legacy-certs
         run: |
           conda activate build-env
           python - <<'PY'
