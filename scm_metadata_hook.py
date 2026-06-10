@@ -23,7 +23,7 @@ class ScmDependenciesMetadataHook(MetadataHookInterface):
             "chemparse>=0.1.1",
             "matplotlib>=3.5.1",
             "networkx>=2.7.1",
-            "numpy>=1.21.2,<2",
+            "numpy>=1.21.2",
             "scipy>=1.8.0",
         ]
 
