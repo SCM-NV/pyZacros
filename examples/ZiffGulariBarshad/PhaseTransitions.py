@@ -33,7 +33,7 @@ import scm.pyzacros as pz
 
 CO_gas = pz.Species('CO')
 O2_gas = pz.Species('O2')
-CO2_gas = pz.Species('CO2", gas_energy=-2.337)
+CO2_gas = pz.Species('CO2', gas_energy=-2.337)
 
 
 # **2. Three surface species:** $*$, $CO^*$, $O^*$. The species $*$ represents the
@@ -289,4 +289,3 @@ results[34].plot_molecule_numbers(["CO2"], normalize_per_site=True, derivative=T
 # Now, we can close the pyZacros environment:
 
 scm.pyzacros.finish()
-

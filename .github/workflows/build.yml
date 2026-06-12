@@ -1,38 +1,50 @@
 name: Build
 
-on:
-  push:
-    branches:
-      - trunk
-      - fix2026
-  pull_request:
-    types: [opened, synchronize, reopened]
+on: [push, pull_request]
 
 jobs:
-
   build:
     name: Build for (${{ matrix.python-version }}, ${{ matrix.os }})
     runs-on: ${{ matrix.os }}
+
+    defaults:
+      run:
+        shell: bash -el {0}
+
     strategy:
       fail-fast: false
       matrix:
-        os: ['ubuntu-latest']
+        os: ['ubuntu-latest', 'windows-latest', 'macos-latest']
         python-version: ['3.8', '3.9', '3.10', '3.11', '3.12', '3.13']
+
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Setup conda
-        uses: s-weigand/setup-conda@v1
+
+      - name: Setup Miniconda
+        uses: conda-incubator/setup-miniconda@v4
         with:
-         update-conda: false
-         python-version: ${{ matrix.python-version }}
-         conda-channels: anaconda, conda-forge
-      - run: conda --version
-      - run: python --version
-      - run: conda install python=${{ matrix.python-version }}
+          python-version: ${{ matrix.python-version }}
+          channels: anaconda,conda-forge
+          channel-priority: flexible
+          activate-environment: build-env
+          auto-activate-base: false
+          auto-update-conda: false
+
+      - name: Ensure pip
+        run: |
+          conda install -y -n build-env python=${{ matrix.python-version }} pip=24.3.1
+
+      - name: Show environment
+        run: |
+          conda activate build-env
+          conda --version
+          python --version
+          python -m pip --version
+          which python || where python
+
       - name: Configure SCM package index
-        shell: bash
         env:
           SCM_DOWNLOADS_USERNAME: ${{ secrets.SCM_DOWNLOADS_USERNAME }}
           SCM_DOWNLOADS_PASSWORD: ${{ secrets.SCM_DOWNLOADS_PASSWORD }}
@@ -42,20 +54,59 @@ jobs:
             exit 1
           fi
 
-          cat << EOF > "${HOME}/.netrc"
+          cat > "${HOME}/.netrc" << EOF
           machine downloads.scm.com
             login ${SCM_DOWNLOADS_USERNAME}
             password ${SCM_DOWNLOADS_PASSWORD}
           EOF
           chmod 600 "${HOME}/.netrc"
-      - name: Build
+
+      - name: Install build and test dependencies
         env:
           PIP_EXTRA_INDEX_URL: https://downloads.scm.com/Downloads/packages/uv/channels/2026.1/simple/
+          PIP_DISABLE_PIP_VERSION_CHECK: "1"
+          PIP_USE_DEPRECATED: legacy-certs
         run: |
-          pip3 install .[test,doc]
-          pip3 install build
+          conda activate build-env
+          python -m pip install build
+          python -m pip install ".[test,doc]"
+
+      - name: Build wheel
+        env:
+          PIP_DISABLE_PIP_VERSION_CHECK: "1"
+          PIP_USE_DEPRECATED: legacy-certs
+        run: |
+          conda activate build-env
           python -m build
-          pip3 install dist/pyzacros-*.whl
-      - name: Test
+
+      - name: Install built wheel
+        env:
+          PIP_DISABLE_PIP_VERSION_CHECK: "1"
+          PIP_USE_DEPRECATED: legacy-certs
         run: |
-          pytest tests
+          conda activate build-env
+          python - <<'PY'
+          import glob
+          import subprocess
+          import sys
+
+          wheels = glob.glob("dist/pyzacros-*.whl")
+          if len(wheels) != 1:
+              raise SystemExit(f"Expected exactly one wheel, found {len(wheels)}: {wheels}")
+
+          subprocess.check_call([
+              sys.executable,
+              "-m",
+              "pip",
+              "install",
+              "--force-reinstall",
+              wheels[0],
+          ])
+          PY
+
+      - name: Test
+        env:
+          MPLBACKEND: Agg
+        run: |
+          conda activate build-env
+          python -m pytest tests

@@ -67,7 +67,7 @@ def test_ZacrosParametersScanSteadyStateJob(test_folder, tmp_path):
         print("Warning: The calculation FAILED because the zacros executable is not available!")
         print("         For testing purposes, now we load precalculated results.")
 
-        ps_job = scm.plams.load(test_folder / "test_ParamScanSteadyState.data/plamsjob/plamsjob.dill")
+        ps_job = pz.load(test_folder / "test_ParamScanSteadyState.data/plamsjob/plamsjob.dill")
         results = ps_job.results
 
     output = ""
