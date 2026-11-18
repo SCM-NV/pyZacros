@@ -34,7 +34,7 @@ jobs:
 
       - name: Ensure pip
         run: |
-          conda install -y -n build-env python=${{ matrix.python-version }} pip=24.3.1
+          conda install -y -n build-env python=${{ matrix.python-version }} pip
 
       - name: Show environment
         run: |
