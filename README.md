@@ -47,7 +47,7 @@ It is highly recommended to perform the installation within a dedicated virtual 
 
 ### Prerequisites
 
-* Python 3.8+
+* Python 3.10+
 * `pip` and `git` installed and available in your PATH.
 
 ### Installation Steps
